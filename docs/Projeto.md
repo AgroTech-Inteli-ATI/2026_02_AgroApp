@@ -212,11 +212,19 @@ Esta seção reúne os requisitos do módulo de diagnóstico visual previstos na
 
 ### Requisitos não funcionais e restrições técnicas
 
-**Documentação — a preencher**
+Consolidação dos requisitos não funcionais levantados para o módulo de diagnóstico visual, em formato verificável. Valores marcados com ⧗ dependem de resposta do parceiro e estão preenchidos com proposta da equipe.
 
-| ID | Requisito ou restrição | Tipo | Valor ou limite | Critério de aceitação | Fonte |
-| --- | --- | --- | --- | --- | --- |
-| A definir | A preencher | A definir | A definir | A preencher | A preencher |
+| ID | Requisito | Métrica | Valor | Verificação |
+| --- | --- | --- | --- | --- |
+| RNF-01 | Tamanho do modelo embarcado | MB do .tflite | ≤ 8 MB ⧗ | Medição do arquivo gerado |
+| RNF-02 | Acréscimo total ao pacote | MB | ≤ 9 MB ⧗ | Modelo + rótulos + índice |
+| RNF-03 | Latência fim a fim | p95, device de referência | ≤ 3 s ⧗ | 50 execuções, modo avião |
+| RNF-04 | Latência de inferência isolada | p95 | ≤ 300 ms ⧗ | TFLite Benchmark Tool |
+| RNF-05 | Operação offline | Chamadas de rede no fluxo | 0 | Modo avião + inspeção de tráfego |
+| RNF-06 | Perda por quantização | Δ acurácia macro float → int8 | ≤ 2 p.p. ⧗ | Avaliação no conjunto de teste |
+| RNF-07 | Pico de memória na inferência | MB de RAM | ⧗ (RQ-C07) | Profiler no device de referência |
+| RNF-08 | Resolução de rota do diagnóstico | % de classes que resolvem para conteúdo válido | 100% | Teste automatizado sobre o índice |
+| RNF-09 | Degradação sem aceleração | Funcionamento com XNNPACK/CPU apenas | Obrigatório | Execução com delegates desativados |
 
 **Ambiente de execução:** a definir.
 
