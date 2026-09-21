@@ -29,7 +29,40 @@
 
 ## 1.1 Matriz de riscos
 
-A matriz de riscos identifica os eventos que podem comprometer o desenvolvimento e os resultados do Módulo de Identificação de Pragas por Reconhecimento Visual, avaliando cada um por probabilidade e impacto para priorizar as ações de mitigação. O levantamento parte dos riscos da Seção 12 do TAP (R01 a R05) e da Seção 17 (R08), complementados por riscos derivados dos requisitos do módulo, como nível mínimo de confiança, qualidade da imagem e rastreabilidade. A tabela está ordenada por nível de risco.
+A matriz de riscos identifica os eventos que podem comprometer o desenvolvimento e os resultados do Módulo de Identificação de Pragas por Reconhecimento Visual integrado ao Agro App, avaliando cada um por probabilidade e impacto para priorizar as ações de mitigação. Foram levantados 12 riscos, dos quais 6 vêm do Termo de Abertura do Projeto (TAP) e 6 derivam dos requisitos do módulo, como nível mínimo de confiança, qualidade da imagem e rastreabilidade.
+
+### Matriz de probabilidade e impacto
+
+A Figura 1 mostra onde cada risco se posiciona ao cruzar probabilidade (eixo vertical) e impacto (eixo horizontal). Quanto mais próximo do canto superior direito, maior a prioridade de tratamento.
+
+<div align="center">
+  <p><strong>Figura 1 — Matriz de probabilidade e impacto</strong></p>
+  <img src="../assets/matriz-de-risco.jpg" alt="Matriz de risco cruzando probabilidade e impacto, com os riscos R01 a R12 posicionados por nível">
+  <p><em>Fonte: feito pela própria equipe, 2026.</em></p>
+</div>
+
+### Critérios de classificação
+
+Cada risco recebeu uma nota de 1 a 3 em probabilidade e em impacto. A probabilidade indica a chance de o risco ocorrer ao longo do projeto, e o impacto indica o quanto ele compromete a qualidade do modelo, o cronograma ou a entrega do MVP.
+
+| Nota | Probabilidade | Impacto |
+| --- | --- | --- |
+| 1 | **Baixa:** ocorrência improvável ao longo do projeto | **Baixo:** efeito pequeno, absorvido na própria sprint |
+| 2 | **Média:** pode ocorrer, dependendo de decisões ou condições em aberto | **Médio:** atrasa etapas ou reduz a qualidade de parte da solução, mas o MVP continua viável |
+| 3 | **Alta:** ocorrência provável ou já esperada, dadas as características dos dados e do contexto de uso | **Alto:** compromete o desempenho do modelo, o cronograma ou os critérios de sucesso do MVP |
+
+O nível de risco é o produto entre as duas notas:
+
+| Produto | Nível de risco | Tratamento |
+| --- | --- | --- |
+| 1 a 2 | Baixo | Acompanhamento simples, sem ação imediata |
+| 3 a 4 | Médio | Monitoramento e manutenção da mitigação planejada |
+| 6 | Alto | Mitigação ativa, revisada a cada sprint |
+| 9 | Crítico | Prioridade máxima, tratado desde as primeiras fases |
+
+### Riscos identificados
+
+A tabela apresenta os riscos ordenados por nível.
 
 | Risco | Probabilidade | Impacto | Nível | Mitigação | Responsável |
 | --- | --- | --- | --- | --- | --- |
@@ -46,10 +79,9 @@ A matriz de riscos identifica os eventos que podem comprometer o desenvolvimento
 | **R12.** Aumento de escopo por funcionalidades ainda não detalhadas no TAP, como diálogo com o usuário e logs de rastreabilidade | Média (2) | Médio (2) | 4 (Médio) | Definir com o parceiro o que entra no MVP e o que fica para ciclos posteriores, com registro formal da decisão | Gestão do projeto |
 | **R10.** Diagnóstico direciona a um conteúdo técnico errado ou inexistente na base do Agro App | Baixa (1) | Alto (3) | 3 (Médio) | Mapeamento classe-conteúdo validado pelo parceiro, testes em todas as classes do MVP e sugestão de conteúdos relacionados quando não houver validação | Equipe de desenvolvimento e Agro App |
 
-**Critérios de classificação:** cada risco foi avaliado em probabilidade e impacto, ambos em escala de 1 a 3 (Baixa/Baixo, Média/Médio e Alta/Alto). A probabilidade indica a chance de o risco ocorrer ao longo do projeto, e o impacto indica o quanto ele compromete a qualidade do modelo, o cronograma ou a entrega do MVP. O nível de risco é o produto dos dois valores: 1 a 2 é baixo, 3 a 4 é médio, 6 é alto e 9 é crítico. Riscos altos e críticos têm prioridade no acompanhamento e devem ser revisados a cada sprint.
+### Análise da distribuição dos riscos
 
-
----
+Dos 12 riscos, 2 são críticos, 6 são altos e 4 são médios, e nenhum ficou no nível baixo. Os críticos (R01 e R04) decorrem das características dos dados, que são o volume de imagens por classe e a semelhança visual entre sintomas, e por isso suas mitigações devem orientar já as Fases 1 e 2 do cronograma. Os altos se concentram no desempenho e no uso do módulo, como qualidade das fotos, limites de tamanho e latência, limiar de confiança, diferença entre o acervo e o campo e interpretação do resultado, e vários dependem de decisões ainda em aberto com o parceiro. Os médios estão ligados à equipe, ao parceiro e ao escopo. O R10 tem baixa probabilidade porque o Agro App já organiza o conteúdo por cultura e praga, mas alto impacto, pois um direcionamento errado comprometeria a recomendação de manejo.
 
 ---
 
