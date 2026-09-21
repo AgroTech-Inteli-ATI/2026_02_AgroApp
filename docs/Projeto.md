@@ -63,10 +63,34 @@ Mapear as dores e ganhos do produtor, diferenciando o que o Agro App já resolve
 
 Uma persona é uma representação fictícia de um usuário, criada com base nas características, nos objetivos, nas necessidades e nas dificuldades do público que se pretende atender. Em nosso projeto, as personas funcionam como uma forma de validar se a solução proposta está realmente alinhada aos problemas e às expectativas de seus futuros usuários. Elas orientam as decisões da equipe ao longo do desenvolvimento, ajudando a avaliar funcionalidades, formas de interação e situações de uso do Módulo de Identificação de Pragas por Reconhecimento Visual integrado ao Agro App. Foram definidas duas personas para o projeto, e Vitória Lima, apresentada a seguir, é uma delas.
 
+### Persona 1 — Rafael Mendes
+
+<div align="center">
+  <p><strong>Figura 2 — Persona Rafael Mendes</strong></p>
+  <img src="../assets/persona_agronomo.png" alt="Persona Rafael Mendes, produtor rural e engenheiro agrônomo">
+  <p><em>Fonte: feito pela própria equipe, 2026.</em></p>
+</div>
+
+Rafael Mendes tem 38 anos, é engenheiro agrônomo e produtor rural em Rio Verde, Goiás. Ele cuida da própria lavoura e, durante as rondas nos talhões, fotografa plantas com sintomas para descobrir o que está acontecendo e como tratar. Ele busca identificar rapidamente pragas, doenças e deficiências nutricionais, encontrar a recomendação de manejo adequada e evitar a aplicação de defensivo errado, mas encontra dificuldades para diferenciar sintomas visualmente semelhantes, nem sempre tem um consultor por perto e nem sempre conta com internet na lavoura. Por isso, precisa de um módulo que apresente as hipóteses mais prováveis, informe o grau de confiança do resultado, permita esclarecer dúvidas antes de uma conclusão e leve do diagnóstico ao manejo, inclusive offline.
+
+### Jornada do usuário — Rafael Mendes
+
+A jornada do usuário representa as etapas percorridas por uma pessoa ao interagir com uma solução, considerando suas ações, seus pensamentos, suas emoções e as dificuldades encontradas durante a experiência. No projeto, esse mapeamento permite compreender como Rafael utilizaria o módulo em uma situação real e identificar pontos de fricção e oportunidades de melhoria.
+
+<div align="center">
+  <p><strong>Figura 3 — Mapa da jornada do usuário de Rafael Mendes</strong></p>
+  <img src="../assets/jornada_agronomo.png" alt="Mapa da jornada do usuário de Rafael Mendes">
+  <p><em>Fonte: feito pela própria equipe, 2026.</em></p>
+</div>
+
+Na jornada mapeada, Rafael percebe plantas com aspecto diferente durante a ronda no talhão e fotografa a área afetada pelo módulo integrado ao Agro App. A análise é feita no próprio aparelho, mesmo sem conexão, e ele recebe as hipóteses com seus respectivos níveis de confiança. Caso a confiança fique abaixo do mínimo, o módulo não afirma o diagnóstico e pede uma nova foto ou mais informações. Em seguida, Rafael compara as hipóteses, esclarece suas dúvidas, consulta o conteúdo técnico relacionado e usa a recomendação de manejo para decidir o que fazer na lavoura.
+
+O mapa evidencia necessidades importantes para o módulo, como validar a qualidade da imagem antes da análise, indicar o andamento do processamento, explicar o grau de confiança dos resultados, sugerir conteúdos do aplicativo quando não houver validação e conduzir do diagnóstico direto ao manejo. Como o custo de uma decisão equivocada recai sobre a própria safra, esses elementos aumentam a segurança de Rafael ao decidir e tornam o uso do módulo mais útil no dia a dia da lavoura.
+
 ### Persona 2 — Vitória Lima
 
 <div align="center">
-  <p><strong>Figura 1 — Persona Vitória Lima</strong></p>
+  <p><strong>Figura 4 — Persona Vitória Lima</strong></p>
   <img src="../assets/persona_estudante.png" alt="Persona Vitória Lima, estudante e pesquisadora de Agronomia">
   <p><em>Fonte: feito pela própria equipe, 2026.</em></p>
 </div>
@@ -78,7 +102,7 @@ Vitória Lima tem 22 anos, cursa Agronomia e atua como pesquisadora em Piracicab
 A jornada do usuário representa as etapas percorridas por uma pessoa ao interagir com uma solução, considerando suas ações, seus pensamentos, suas emoções e as dificuldades encontradas durante a experiência. No projeto, esse mapeamento permite compreender como Vitória utilizaria o módulo em uma situação real e identificar pontos de fricção e oportunidades de melhoria.
 
 <div align="center">
-  <p><strong>Figura 2 — Mapa da jornada do usuário de Vitória Lima</strong></p>
+  <p><strong>Figura 5 — Mapa da jornada do usuário de Vitória Lima</strong></p>
   <img src="../assets/jornada_estudante.png" alt="Mapa da jornada do usuário de Vitória Lima">
   <p><em>Fonte: feito pela própria equipe, 2026.</em></p>
 </div>
