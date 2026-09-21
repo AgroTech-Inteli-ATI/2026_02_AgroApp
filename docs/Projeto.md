@@ -61,20 +61,31 @@ Mapear as dores e ganhos do produtor, diferenciando o que o Agro App já resolve
 
 ## 1.3 Persona e jornada do usuário
 
-Construir a persona e estruturar a jornada do usuário desde a observação do sintoma em campo até a decisão de manejo.
+Uma persona é uma representação fictícia de um usuário, criada com base nas características, nos objetivos, nas necessidades e nas dificuldades do público que se pretende atender. Em nosso projeto, as personas funcionam como uma forma de validar se a solução proposta está realmente alinhada aos problemas e às expectativas de seus futuros usuários. Elas orientam as decisões da equipe ao longo do desenvolvimento, ajudando a avaliar funcionalidades, formas de interação e situações de uso do Módulo de Identificação de Pragas por Reconhecimento Visual integrado ao Agro App. Foram definidas duas personas para o projeto, e Vitória Lima, apresentada a seguir, é uma delas.
 
-**Documentação — a preencher**
+### Persona 2 — Vitória Lima
 
-**Persona:** descrever perfil, contexto de trabalho, objetivos, dificuldades e familiaridade com tecnologia.
+<div align="center">
+  <p><strong>Figura 1 — Persona Vitória Lima</strong></p>
+  <img src="../assets/persona_estudante.png" alt="Persona Vitória Lima, estudante e pesquisadora de Agronomia">
+  <p><em>Fonte: feito pela própria equipe, 2026.</em></p>
+</div>
 
-| Etapa da jornada | Ação do usuário | Dificuldade | Oportunidade de melhoria |
-| --- | --- | --- | --- |
-| Observação do sintoma em campo | A preencher | A preencher | A preencher |
-| Captura da imagem | A preencher | A preencher | A preencher |
-| Consulta ao diagnóstico | A preencher | A preencher | A preencher |
-| Decisão de manejo | A preencher | A preencher | A preencher |
+Vitória Lima tem 22 anos, cursa Agronomia e atua como pesquisadora em Piracicaba, São Paulo. Durante atividades de campo, fotografa sintomas em folhas e frutos para comparar possíveis doenças, pragas e deficiências nutricionais. Ela busca desenvolver experiência prática em diagnóstico vegetal e consultar referências técnicas confiáveis, mas encontra dificuldades para diferenciar sintomas visualmente semelhantes, avaliar hipóteses com segurança e acessar a internet em campo. Por isso, precisa de um módulo que apresente as hipóteses mais prováveis, informe o grau de confiança do resultado e permita acesso offline a conteúdos técnicos relacionados.
 
-**Referências:** a preencher.
+### Jornada do usuário — Vitória Lima
+
+A jornada do usuário representa as etapas percorridas por uma pessoa ao interagir com uma solução, considerando suas ações, seus pensamentos, suas emoções e as dificuldades encontradas durante a experiência. No projeto, esse mapeamento permite compreender como Vitória utilizaria o módulo em uma situação real e identificar pontos de fricção e oportunidades de melhoria.
+
+<div align="center">
+  <p><strong>Figura 2 — Mapa da jornada do usuário de Vitória Lima</strong></p>
+  <img src="../assets/jornada_estudante.png" alt="Mapa da jornada do usuário de Vitória Lima">
+  <p><em>Fonte: feito pela própria equipe, 2026.</em></p>
+</div>
+
+Na jornada mapeada, Vitória encontra uma alteração em uma planta durante uma aula de campo e registra uma fotografia pelo módulo integrado ao Agro App. Caso esteja sem conexão, a imagem permanece salva no dispositivo até que possa ser enviada e processada. Em seguida, ela consulta as hipóteses apresentadas e seus respectivos níveis de confiança, compara os sinais com o conteúdo técnico disponível e registra as informações necessárias para discutir o resultado e o próximo passo com o professor.
+
+O mapa evidencia necessidades importantes para o módulo, como orientar a captura de imagens com qualidade, informar claramente o estado do envio e do processamento, explicar o grau de confiança dos resultados e manter um histórico com fotos, análises e anotações. Esses elementos reduzem dúvidas ao longo da experiência e tornam seu uso mais seguro e útil em atividades de campo.
 
 ---
 
