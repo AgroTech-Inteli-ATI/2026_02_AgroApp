@@ -328,3 +328,61 @@ Finalizar os requisitos e restrições técnicas com os valores acordados com o 
 | --- | --- | --- | --- | --- |
 | A preencher | A validar | A preencher | A preencher | A preencher |
 
+
+# Entendimento dos dados
+
+## Inventário do acervo
+
+### Objetivo
+
+Realizar a contagem das imagens do Agro App por cultura,
+classe e ocorrência, consolidando os dados para análise
+do conjunto recebido.
+
+### Metodologia
+
+O inventário foi realizado automaticamente com Python
+no Google Colab, percorrendo a estrutura de diretórios
+do conjunto de dados armazenado no Google Drive.
+
+[Link do Colab](https://colab.research.google.com/drive/18igL8eeSBvpOwm9mstFra3c0GXk4uCVB)
+
+Estrutura considerada:
+
+```text
+Agro App/
+├── Soja/
+│   ├── Doencas/
+│   └── Pragas/
+└── Milho/
+    └── Pragas/
+```
+
+Cada subpasta de ocorrência foi identificada e a quantidade
+de imagens presente nela foi contabilizada.
+
+### Resultados
+
+| Cultura | Classe | Quantidade de imagens |
+|---------|---------|----------------------:|
+| Soja | Doenças | 97 |
+| Soja | Pragas | 13 |
+| Milho | Pragas | 16 |
+| **Total** | | **126** |
+
+Foram identificadas 126 imagens distribuídas em 55
+ocorrências.
+
+A relação completa das imagens por cultura, classe e ocorrência está disponível em:
+
+[Inventário do Agro App](https://docs.google.com/spreadsheets/d/1VAnspzW3pkyijLxPsg4IY85lJJX28dmgtZ5hci610FI/edit?usp=sharing)
+
+Além disso, a planilha do inventário também está versionada no repositório em:
+
+`assets/data/inventario-acervo.xlsx`
+
+### Observação
+
+A associação formal entre os nomes das ocorrências e seus
+respectivos agentes causais será complementada a partir do
+dicionário de classes desenvolvido na T3.4.
