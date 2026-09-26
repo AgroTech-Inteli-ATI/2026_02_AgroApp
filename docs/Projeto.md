@@ -521,3 +521,143 @@ Além disso, a planilha do inventário também está versionada no repositório 
 A associação formal entre os nomes das ocorrências e seus
 respectivos agentes causais será complementada a partir do
 dicionário de classes desenvolvido na T3.4.
+
+## Análise exploratória visual
+
+### Objetivo
+
+Analisar amostras representativas de cada classe do acervo (Milho e Soja) e registrar
+as principais características visuais que ajudam a diferenciar classes semelhantes,
+identificando os pares e clusters de classes com maior risco de confusão para o modelo
+e o que, na prática, permite distingui-los (cor, formato da lesão, textura, parte da
+planta afetada).
+
+### Metodologia
+
+
+Etapas:
+
+1. Observação em bloco. As imagens de cada classe foram reunidas em folhas de
+   contato por bloco — Milho/Pragas, Soja/Pragas e Soja/Doenças —
+   para permitir uma primeira varredura comparativa entre classes vizinhas.
+2. Levantamento de pares candidatos. A partir da varredura e da semelhança de
+   nomenclatura entre classes (ex.: várias classes com "podridão", "mancha" ou
+   "nematóide" no nome), foram levantados pares e clusters candidatos a confusão.
+3. Validação Cada par candidato só foi considerado
+   efetivamente confuso após a checagem individual das imagens, pares com nomes parecidos mas distintas nessa
+   checagem foram descartados (ver [Pares avaliados e descartados](#pares-avaliados-e-descartados)).
+
+4. Registro. Para cada par/cluster confirmado, foi registrado o que efetivamente
+   causa a confusão e o que permite diferenciar as classes, consolidado nas pranchas comparativas desta seção.
+
+Como o acervo ainda é pequeno, todas as imagens disponíveis foram observadas, não
+apenas uma amostra de 5 a 10 por classe.
+
+### Resultados
+
+#### Classes e imagens observadas
+
+| Cultura | Bloco | Classes | Imagens observadas |
+| --- | --- | --- | --- |
+| Milho | Pragas | 4 | 16  |
+| Soja | Pragas | 10 | 13  |
+| Soja | Doenças | 41 | 97  |
+| **Total** | | **55** | **126** |
+
+#### Características visuais por classe
+
+**Milho — Pragas**
+
+| Classe | Característica visual predominante |
+| --- | --- |
+| Percevejo-do-milho | corpo em escudo, marrom-escuro/preto com faixa clara e pernas com pontas laranja; ninfas em cluster avermelhado; ovos em fileira |
+| Pulgão-do-milho | sempre em colônia densa (nunca inseto isolado), concentrada no cartucho/base do pendão; textura granulada verde-escura/cinza com pontos brancos |
+| Coró-do-milho | larva em "C", branco-acinzentada/azulada, cabeça marrom-alaranjada, sempre em ambiente de solo |
+| Cigarrinha do milho | inseto adulto minúsculo, alongado, amarelo-pálido (raro nas fotos); maioria das imagens mostra o sintoma indireto — estrias cloróticas ou avermelhamento da folha |
+
+**Soja — Pragas**
+
+| Classe | Característica visual predominante |
+| --- | --- |
+| Percevejo da Soja | inseto escudo verde-acinzentado, adulto, sobre vagem |
+| Broca-das-axilas-da-soja | lagarta verde-clara, corpo mole segmentado, dentro de broto/folha enrolada |
+| Broca das vagens | mesma lagarta verde-clara, dentro da vagem |
+| Lagarta-da-soja | lagarta listrada verde/preta, borda da folha consumida |
+| Cascudinho-da-soja | besouro pequeno marrom-acinzentado, corpo oval compacto |
+| Gorgulho-da-soja, Tamanduá-da-soja | besouro preto pequeno com marca clara em cruz/X sobre os élitros |
+| Tamanduá-da-soja | mesmo padrão de besouro preto com marca clara em cruz/X |
+| Coró da soja / Coró-da-soja, bicho-bolo / Coró-da-soja-do-cerrado | larva branca em "C", cabeça marrom, corpo translúcido, sobre terra |
+
+**Soja — Doenças (agrupadas por padrão visual)**
+
+| Grupo | Classes | Característica visual predominante |
+| --- | --- | --- |
+| Podridões de raiz/colo/haste | Podridão-de-raízes; Podridão-preta-das-raízes/Podridão-cinzenta-do-caule; Podridão-radicular; Estiolamento/Tombamento-de-mudas; Cancro-da-haste; Macrophomina; Podridão radicular de Phytophthora; Murcha-de-fusarium; Podridão-vermelha-da-raiz; Fusariose | raiz ou caule escurecido/apodrecido; variações vão de fibras enegrecidas a lesão roxo-avermelhada no colo |
+| Manchas foliares | Mancha-aureolada; Mancha-parda/Septoriose; Crestamento bacteriano; Mancha alvo; Mancha-olho-de-rã; Pústula bacteriana; Clodosporiose/Verrugose; Oídio; Mela ou requeima; Ferrugem asiática; Míldio | folha verde/amarelada com manchas ou pontuações escuras; diferenciadores no detalhe, halo, formato circular, tamanho e densidade dos pontos |
+| Nematoides | Nematóide-reniforme; nematóide de cisto da soja (NCS); Nematóide-espiralado; Nematóide de galhas; Nematóide das lesões; Nematóide de cisto | sintoma indireto (reboleira, planta atrofiada) ou sinal direto na raiz |
+| Sementes/grãos e vagens armazenados | Fungo-de-armazenamento; Fungo de pós colheita; Tombamento; Fungo-de-pós-colheita/Podridão-dos-grãos-armazenados; Phomopsis-da-semente; Antracnose; Podridão da semente/Podridão de Fusarium; Seca da haste e da vagem |  semente/vagem coberta por esporos, cor e textura do mofo variam  |
+| Sistêmicas / murcha / vírus | Mofo-branco/Podridão-de-sclerotinia; Murcha-de-Sclerotium; Damping-off/Podridão-aquosa; Nematoide-da-haste verde/Ponta Branca; Mosaico comum da soja | planta murcha ou com micélio branco visível no colo; mosaico é a única com padrão de mosqueado na folha e no grão |
+
+#### Pares e clusters de classes visualmente confundíveis
+
+| # | Classes | O que causa a confusão | O que diferencia | Prancha |
+| --- | --- | --- | --- | --- |
+| 1 | Coró da soja × Coró-da-soja, bicho-bolo × Coró-da-soja-do-cerrado | mesma larva branca em "C", cabeça marrom, sobre terra | sem escala de referência ou o besouro adulto ao lado, a foto isolada não identifica a espécie | Figura 1 |
+| 2 | Tombamento × Fungo-de-pós-colheita, Podridão-dos-grãos-armazenados | textura granular idêntica (esporulação dourada/marrom cobrindo a semente) | praticamente nenhuma, pelo visual isolado, diferenciação depende do estágio/local relatado, não da imagem | Figura 1 |
+| 3 | Ferrugem asiática × Míldio | folha verde/amarelada com pequenos pontos marrom-avermelhados espalhados entre nervuras | diferença real (pústula com esporulação × halo anguloso) só aparece de perto, na face inferior da folha | Figura 1 |
+| 4 | Podridão-vermelha-da-raiz × Fusariose, Podridão vermelha da raiz | mesma lesão — estria roxo-avermelhada sobre caule bege, na altura da raiz | nenhuma diferença visual identificada; ver [duplicidades de rótulo](#possíveis-duplicidades-de-rótulo) | Figura 1 |
+| 5 | Tamanduá-da-soja × Gorgulho-da-soja, Tamanduá-da-soja | mesmo besouro preto pequeno com marca clara em cruz/X sobre os élitros | não identificado no material disponível | Figura 2 |
+| 6 | Broca das vagens × Broca-das-axilas-da-soja | mesma lagarta verde-clara, corpo mole segmentado, cabeça marrom | local da foto (dentro da vagem × dentro do broto/axila), sem esse contexto, a lagarta isolada é praticamente idêntica | Figura 2 |
+| 7 | Podridão-preta-das-raízes/Podridão-cinzenta-do-caule × Podridão-cinzenta-do-caule/Podridão-preta-das-raízes | mesmo nome invertido; mesma imagem de caule acinzentado com casca descascando | nenhuma diferença visual identificada; ver [duplicidades de rótulo](#possíveis-duplicidades-de-rótulo) | Figura 3 |
+| 8 | Mancha-parda/Septoriose × Crestamento bacteriano × Clodosporiose/Verrugose × Mancha alvo × Pústula bacteriana | folha verde/amarelada coberta de pequenas manchas escuras — padrão geral confunde à primeira vista | Mancha alvo: anéis concêntricos nítidos (único padrão "alvo"). Crestamento bacteriano: manchas angulares, delimitadas pelas nervuras. Pústula bacteriana: pontos muito menores e mais numerosos. Clodosporiose/Verrugose: manchas redondas maiores, levemente ásperas. Mancha-parda/Septoriose: manchas irregulares, mais escuras e densas, sem halo definido | Figura 4 |
+
+
+
+#### Possíveis duplicidades de rótulo
+
+Alguns pares acima não parecem ser apenas visualmente parecidos, mas sim a mesma
+doença cadastrada duas vezes no acervo:
+
+- **Podridão-vermelha-da-raiz** × **Fusariose, Podridão vermelha da raiz**, nomes já
+  se sobrepõem; imagens mostram a mesma lesão.
+- **Podridão-preta-das-raízes, Podridão-cinzenta-do-caule** × **Podridão-cinzenta-do-caule,
+  Podridão-preta-das-raízes** , mesmo nome, apenas invertido.
+- **nematóide de cisto da soja (NCS)** × **Nematóide de cisto**, mesmo padrão visual,
+  raízes com pequenos cistos esféricos aderidos.
+
+
+#### Pranchas comparativas
+
+<div align="center">
+  <p><strong>Figura 1 — Prancha comparativa, Soja (clusters de doenças e pragas)</strong></p>
+  <img src="../assets/prancha-soja-clusters-1.png" alt="Prancha comparativa dos clusters confusos da Soja: corós, mofo granular, Ferrugem asiática x Míldio, Podridão-vermelha-da-raiz x Fusariose">
+  <p><em>Fonte: Próprios autores (2026).</em></p>
+</div>
+
+<div align="center">
+  <p><strong>Figura 2 — Prancha comparativa, Soja (pragas, continuação)</strong></p>
+  <img src="../assets/prancha-soja-pragas-2.png" alt="Prancha comparativa: Tamanduá-da-soja x Gorgulho-da-soja e Broca das vagens x Broca-das-axilas-da-soja">
+  <p><em>Fonte: Próprios autores (2026).</em></p>
+</div>
+
+<div align="center">
+  <p><strong>Figura 3 — Prancha comparativa, Soja (duplicidade de rótulo — caule/raiz)</strong></p>
+  <img src="../assets/prancha-soja-duplicidade-caule.png" alt="Prancha comparativa entre as classes 03 e 16, com nomes invertidos e mesma imagem de caule">
+  <p><em>Fonte: Próprios autores (2026).</em></p>
+</div>
+
+<div align="center">
+  <p><strong>Figura 4 — Prancha comparativa, Soja (cluster de manchas foliares)</strong></p>
+  <img src="../assets/prancha-soja-manchas-foliares.png" alt="Prancha comparativa das cinco doencas foliares de folha manchada: Mancha-parda, Crestamento bacteriano, Clodosporiose, Mancha alvo e Pustula bacteriana">
+  <p><em>Fonte: Próprios autores (2026).</em></p>
+</div>
+
+### Observação
+
+Boa parte das classes de Soja/Doenças tem hoje apenas 1 a 3 imagens, abaixo do volume
+desejável de 5 a 10 indicado como objetivo mínimo para avaliação visual, a análise foi feita com
+todo o material disponível, mas os pares e clusters aqui identificados devem ser
+revisados quando o acervo for complementado pelo parceiro ou por bases públicas
+validadas (Seção 1.4, item 7). A associação formal entre os pares/clusters aqui
+levantados e a decisão de unificar ou manter classes separadas será complementada a
+partir do dicionário de classes desenvolvido na T3.4.
