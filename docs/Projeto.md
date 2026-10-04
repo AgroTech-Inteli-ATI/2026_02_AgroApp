@@ -23,6 +23,15 @@
 
 </details>
 
+<details>
+<summary><strong>3. Entendimento dos dados</strong></summary>
+
+- [3.1 Inventário do acervo](#31-inventário-do-acervo)
+- [3.2 Análise exploratória visual](#32-análise-exploratória-visual)
+- [3.3 Diagnóstico de qualidade do acervo](#33-diagnóstico-de-qualidade-do-acervo)
+
+</details>
+
 ---
 
 # 1. Entendimento de Negócio
@@ -464,9 +473,11 @@ Finalizar os requisitos e restrições técnicas com os valores acordados com o 
 | A preencher | A validar | A preencher | A preencher | A preencher |
 
 
-# Entendimento dos dados
+# 3. Entendimento dos dados
 
-## Inventário do acervo
+Para consultar o código e as etapas de geração dos arquivos desta seção, acesse o [notebook do AgroApp no Google Colab](https://colab.research.google.com/drive/18igL8eeSBvpOwm9mstFra3c0GXk4uCVB).
+
+## 3.1 Inventário do acervo
 
 ### Objetivo
 
@@ -522,7 +533,7 @@ A associação formal entre os nomes das ocorrências e seus
 respectivos agentes causais será complementada a partir do
 dicionário de classes desenvolvido na T3.4.
 
-## Análise exploratória visual
+## 3.2 Análise exploratória visual
 
 ### Objetivo
 
@@ -661,3 +672,160 @@ revisados quando o acervo for complementado pelo parceiro ou por bases públicas
 validadas (Seção 1.4, item 7). A associação formal entre os pares/clusters aqui
 levantados e a decisão de unificar ou manter classes separadas será complementada a
 partir do dicionário de classes desenvolvido na T3.4.
+
+## 3.3 Diagnóstico de qualidade do acervo
+
+### Objetivo
+
+Avaliar resolução, enquadramento, presença de duplicatas e proporção de imagens de campo e de catálogo no acervo de soja e milho. O diagnóstico registra como esses fatores podem afetar a generalização do modelo de reconhecimento visual.
+
+**Fonte das imagens analisadas:** imagens disponibilizadas pela equipe do Agro APP.
+
+### Metodologia
+
+A análise foi feita sobre as **126 imagens** inventariadas. A planilha registra, para cada imagem, a cultura, a categoria, a ocorrência, o caminho do arquivo, as dimensões, a legibilidade, o hash SHA-256, o hash perceptual e os campos de avaliação visual. A verificação de qualidade seguiu estas etapas:
+
+1. **Resolução e leitura:** conferir se o arquivo era legível, registrar largura e altura e sinalizar imagens cuja menor dimensão fosse inferior à referência de 224 pixels.
+2. **Duplicatas:** comparar hashes SHA-256 para arquivos idênticos e examinar candidatos apontados pelo hash perceptual para identificar versões da mesma foto. Registrar os pares, conferir se estavam associados à mesma ocorrência e indicar o ID correspondente na coluna `imagem_duplicada_de` da planilha revisada.
+3. **Revisão por imagem:** registrar enquadramento, tipo de imagem, visibilidade do problema, situação de duplicata, decisão (**manter**, **revisar** ou **excluir**) e justificativa na aba **Revisao por imagem**. A aba **Instrucoes** da planilha de diagnóstico traz os valores sugeridos para esses campos.
+4. **Consolidação por classe:** agrupar os registros por cultura, categoria e ocorrência, reunir as medidas de resolução e legibilidade, contar os tipos de imagem, decisões, enquadramentos inadequados e imagens em grupos de duplicatas exatas, e calcular as proporções de campo e catálogo. Os textos das colunas de avaliação foram normalizados para minúsculas e sem acentos antes da contagem.
+
+A unidade de contagem é o **registro de imagem**. Se uma mesma fotografia aparece em duas classes, ela contribui com um registro para cada classe. A revisão por imagem e o resumo por classe são abas diferentes da mesma entrega, permitindo rastrear cada número até as imagens que o compõem.
+
+### Planilhas de diagnóstico e revisão
+
+| Arquivo | Conteúdo e função |
+| --- | --- |
+| [Diagnóstico de qualidade](../assets/data/diagnostico_qualidade.xlsx) | Planilha gerada antes da revisão manual, ainda incompleta. Contém as abas **Revisao por imagem**, **Resumo automatico**, **Duplicatas exatas**, **Possiveis duplicatas** e **Instrucoes**. Serve de base para o preenchimento da revisão. |
+| [Resultado final de qualidade](../assets/data/resultado_final_qualidade.xlsx) | **Planilha atual para uso na revisão.** Duas abas: **Revisao por imagem**, com 126 registros, suas dimensões, megapixels e decisões, e **Resumo final por classe**, com 55 linhas e os indicadores de qualidade atualizados. É a fonte dos resultados abaixo. |
+
+ <p><em>Fonte: Próprios autores (2026).</em></p>
+
+A aba **Revisao por imagem** preserva `largura`, `altura`, `menor_dimensao`, `megapixels`, `arquivo_legivel` e `abaixo_referencia_224px` para cada foto. A aba **Resumo final por classe** apresenta `imagens_legiveis`, `menor_largura`, `menor_altura`, `mediana_menor_dimensao`, `menor_megapixels`, `mediana_megapixels` e `alertas_resolucao` para cada classe. Esses indicadores descrevem os **126 registros avaliados**, incluindo os marcados como excluir; as colunas de decisão mostram separadamente quais imagens foram aprovadas para o uso pretendido. Megapixels medem o tamanho total da imagem, enquanto a menor dimensão e o enquadramento ajudam a verificar se o sinal relevante terá detalhe suficiente na entrada do modelo.
+
+### Resultados
+
+#### Visão geral
+
+| Indicador | Resultado |
+| --- | ---: |
+| Imagens avaliadas | 126 |
+| Classes | 55 |
+| Imagens legíveis | 126 |
+| Imagens com menor dimensão abaixo de 224 pixels | 12 (9,5%) |
+| Imagens com enquadramento inadequado | 6 (4,8%) |
+| Imagens de campo | 76 (60,3%) |
+| Imagens de catálogo | 50 (39,7%) |
+| Imagens marcadas para manter | 106 |
+| Imagens ainda marcadas para revisar | 4 |
+| Imagens marcadas para excluir | 16 |
+
+ <p><em>Fonte: Próprios autores (2026).</em></p>
+
+O limite de **224 pixels na menor dimensão** é a referência registrada na planilha para sinalizar imagens pequenas. Ele não constitui, por si só, uma prova de que a imagem seja inutilizável; o detalhe relevante precisa ser conferido após o redimensionamento usado pelo modelo. O enquadramento foi contado como inadequado quando recebeu o valor **distante**, **cortado** ou **encoberto**; os seis casos registrados estão marcados como **distante**.
+
+#### Duplicatas: critério essencial
+
+Foram identificados **dois pares**, ou **quatro registros de imagem**, associados a fotografias repetidas ou quase iguais. Os dois pares atravessam classes diferentes. A duplicata exata foi identificada pelo mesmo hash SHA-256; o outro par consta como versões da mesma fotografia na revisão e tem distância zero entre hashes perceptuais. As contagens por classe são:
+
+| Classe de soja/doenças | Duplicatas exatas na classe | Versões quase iguais na classe | Imagem | Repetida de |
+| --- | ---: | ---: | --- | --- |
+| Estiolamento, Podridão-de-raízes, Tombamento-de-mudas | 1 | 0 | IMG_0030 | IMG_0098 |
+| Podridão-de-raízes | 1 | 0 | IMG_0098 | IMG_0030 |
+| Phomopsis-da-semente | 0 | 1 | IMG_0090 | IMG_0108 |
+| Seca da haste e da vagem, Phomopsis-da-semente | 0 | 1 | IMG_0108 | IMG_0090 |
+
+ <p><em>Fonte: Próprios autores (2026).</em></p>
+
+As outras **51 classes não têm duplicatas identificadas** na planilha revisada. IMG_0030 e IMG_0098 formam o par exato; IMG_0090 e IMG_0108 são versões da mesma foto. Na aba **Revisao por imagem**, a coluna `revisao_duplicata` marca esses registros como **repetida exata** ou **repetida - versao da mesma foto**, e `imagem_duplicada_de` aponta para o ID correspondente. Os quatro registros permanecem com decisão **revisar** porque os pares têm rótulos diferentes; é preciso validar a classe correta antes de escolher qual versão manter. Antes de separar dados de treino e teste, deve-se manter versões da mesma fotografia no mesmo conjunto ou remover a redundância. Caso contrário, o modelo pode memorizar a imagem e a avaliação aparentar um desempenho maior do que teria em fotos novas. Rótulos conflitantes também podem ensinar associações contraditórias.
+
+#### Campo e catálogo: critério essencial
+
+**Campo** representa a imagem no contexto da lavoura. **Catálogo** representa uma imagem de referência, frequentemente isolada ou com apresentação controlada. É uma classificação do tipo de foto, não uma decisão automática de descarte.
+
+| Cultura | Campo | Catálogo | Total |
+| --- | ---: | ---: | ---: |
+| Milho | 14 | 2 | 16 |
+| Soja | 62 | 48 | 110 |
+| **Total** | **76** | **50** | **126** |
+
+ <p><em>Fonte: Próprios autores (2026).</em></p>
+
+Em **15 classes**, todas as imagens são de catálogo; em **18**, todas são de campo; **22** têm os dois tipos. Se o uso real do AgroApp for fotografar plantas em campo, um modelo treinado em excesso com imagens de catálogo pode aprender fundos, iluminação ou enquadramentos que não representam esse uso. Isso pode reduzir sua capacidade de reconhecer a mesma ocorrência em fotos reais. Recomenda-se avaliar o modelo em fotos de campo separadas por fotografia de origem e acompanhar o desempenho por tipo de imagem e por classe. Este diagnóstico aponta um risco de generalização; ele não quantifica uma queda de desempenho.
+
+#### Resolução e enquadramento: critério desejável
+
+Há **12 imagens pequenas** e **6 com enquadramento distante**. Após a revisão, **5 das 12** imagens pequenas e **todas as 6** imagens distantes foram marcadas como **excluir**. As outras **7 imagens pequenas foram marcadas como manter** por decisão da revisão manual, pois o elemento relevante foi considerado identificável. O limite de 224 pixels funciona como alerta; ele não determina sozinho a exclusão. As 11 imagens marcadas como excluir nesse grupo não devem ser usadas no treinamento do modelo.
+
+##### Imagens pequenas mantidas
+
+| Imagem | Classe | Dimensões | Decisão |
+| --- | --- | ---: | --- |
+| IMG_0017 | Antracnose | 216 × 322 pixels | Manter |
+| IMG_0018 | Antracnose | 322 × 211 pixels | Manter |
+| IMG_0045 | Mancha-aureolada | 259 × 194 pixels | Manter |
+| IMG_0099 | Podridão-preta-das-raízes, Podridão-cinzenta-do-caule | 259 × 195 pixels | Manter |
+| IMG_0119 | Coró-da-soja-do-cerrado | 279 × 181 pixels | Manter |
+| IMG_0121 | Coró-da-soja, bicho-bolo | 200 × 190 pixels | Manter |
+| IMG_0122 | Gorgulho-da-soja, Tamanduá-da-soja | 287 × 220 pixels | Manter |
+
+*Fonte: imagens disponibilizadas pela equipe do Agro APP.*
+
+A decisão de manter essas imagens não elimina o alerta de resolução. A qualidade do sinal deve continuar sendo acompanhada após o redimensionamento do fluxo de treinamento.
+
+##### Imagens pequenas excluídas
+
+As cinco imagens abaixo foram retiradas da seleção para treinamento porque sua resolução é inferior à referência de 224 pixels na menor dimensão e o detalhe útil foi considerado insuficiente na revisão. A planilha preserva cada arquivo e registra **excluir** na coluna `decisao`, com a justificativa individual.
+
+| Foto | Classe e dimensões | Por que excluir |
+| --- | --- | --- |
+| ![IMG_0021: três folhas com manchas escuras em imagem pequena](../assets/revisão_imagens/IMG_0021.jpg) | **IMG_0021** — Clodosporiose, Verrugose; 300 × 214 pixels | As lesões perdem detalhe com a baixa resolução.Além da imagem possuir outra imagem sobreposta. |
+| ![IMG_0055: detalhe de folha com pequenos sinais claros em imagem pequena](../assets/revisão_imagens/IMG_0055.jpg) | **IMG_0055** — Míldio; 340 × 210 pixels | O detalhe do sintoma fica limitado pelo tamanho do arquivo. |
+| ![IMG_0087: elemento claro muito pequeno sobre haste em imagem pequena](../assets/revisão_imagens/IMG_0087.jpg) | **IMG_0087** — Nematóide-reniforme; 251 × 200 pixels | O elemento observado dispõe de poucos pixels para reconhecimento junto a imagem ser de microcóspio. |
+| ![IMG_0117: dois insetos em fotografia pequena](../assets/revisão_imagens/IMG_0117.jpg) | **IMG_0117** — Cascudinho-da-soja; 274 × 184 pixels | Os insetos têm detalhe insuficiente para uma entrada de treinamento confiável. |
+| ![IMG_0125: percevejo em fotografia de resolução muito baixa](../assets/revisão_imagens/IMG_0125.jpg) | **IMG_0125** — Percevejo da Soja; 121 × 136 pixels | A resolução é muito baixa e limita fortemente a identificação do inseto. |
+
+*Fonte: imagens disponibilizadas pela equipe do Agro APP.*
+
+##### Imagens com enquadramento distante excluídas
+
+Foram marcadas como **excluir** as imagens **IMG_0014**, **IMG_0029**, **IMG_0042**, **IMG_0072**, **IMG_0073** e **IMG_0078**. Nelas, a infestação, a muda ou os sinais associados à classe aparecem pequenos demais ou não são visíveis. Mesmo quando o arquivo tem dimensões grandes, a informação necessária para reconhecer a ocorrência ocupa poucos pixels. Por isso, essas fotos não são adequadas para treinar o reconhecimento da ocorrência específica. A justificativa de cada uma está na aba **Revisao por imagem** da planilha revisada.
+
+| Foto | Classe e motivo da exclusão |
+| --- | --- |
+| ![IMG_0042: vista ampla de lavoura de soja, sem detalhe de lesões individuais](../assets/revisão_imagens/IMG_0042.jpg) | **IMG_0042 — Macrophomina.** A fotografia mostra a lavoura à distância. O sinal específico da classe não pode ser distinguido na imagem. |
+| ![IMG_0078: vista panorâmica de lavoura de soja, sem raízes ou cistos visíveis](../assets/revisão_imagens/IMG_0078.jpg) | **IMG_0078 — Nematóide de cisto.** A fotografia mostra as linhas da lavoura, mas não as raízes ou os cistos necessários para identificar a ocorrência. |
+
+*Fonte: imagens disponibilizadas pela equipe do Agro APP.*
+
+As fotos acima são exemplos de um problema de **escala do objeto na cena**, não de tamanho do arquivo. Fotos distantes podem levar o modelo a aprender características gerais da lavoura ou do fundo em vez dos sinais da classe, prejudicando a generalização para novas capturas.
+
+#### Imagem incompatível com o rótulo
+
+A **IMG_0067** também foi marcada como **excluir**. Ela está na pasta `Soja/Doencas/21 - Murcha-de-fusarium, Murcha`, mas mostra plantas com **frutos vermelhos** e tem baixa qualidade visual. O conteúdo não corresponde de forma confiável à cultura e à ocorrência registradas. Não deve ser usada no treinamento do modelo; o rótulo precisa de validação técnica antes de qualquer reaproveitamento.
+
+![IMG_0067: plantas com frutos vermelhos; imagem de baixa qualidade, incompatível com a classe de soja registrada](../assets/revisão_imagens/IMG_0067.jpg)
+
+*Fonte: imagens disponibilizadas pela equipe do Agro APP.*
+
+Imagens com conteúdo incompatível com a classe, cultura não confirmada ou qualidade visual insuficiente devem ser retiradas da seleção de treinamento. Caso se deseje reaproveitá-las em outro conjunto, é necessário validar a origem e o rótulo antes.
+
+
+
+#### Imagens em formato técnico ou de montagem
+
+As imagens **IMG_0031**, **IMG_0036** e **IMG_0070** também foram marcadas como **excluir**. A [persona e sua jornada](#13-persona-e-jornada-do-usuário) descrevem uma estudante que fotografa plantas durante atividades de campo com o AgroApp. A entrada esperada para o modelo é, portanto, uma fotografia única capturada nessa situação. Uma imagem de microscópio ou uma montagem preparada apresenta enquadramento e pistas visuais diferentes dos que o aplicativo receberá. Incluí-las no treinamento pode fazer o modelo aprender características do material técnico, como bordas, margens e divisão da imagem, em vez dos sinais da ocorrência.
+
+| Foto | Classe e justificativa da exclusão |
+| --- | --- |
+| ![IMG_0031: detalhe microscópico com campo circular e bordas escuras](../assets/revisão_imagens/IMG_0031.jpg) | **IMG_0031 — Ferrugem asiática.** O campo circular indica uma captura microscópica de laboratório, que não corresponde à fotografia da planta feita pela persona em campo. |
+| ![IMG_0036: montagem de duas imagens de sementes sobre fundo branco amplo](../assets/revisão_imagens/IMG_0036.jpg) | **IMG_0036 — Fungo-de-armazenamento.** Duas imagens pequenas foram reunidas em uma apresentação técnica com margens amplas; o arquivo não representa uma captura única no aplicativo. |
+| ![IMG_0070: montagem lado a lado de duas cenas de plantas](../assets/revisão_imagens/IMG_0070.jpg) | **IMG_0070 — Nematoide-da-haste verde, Ponta Branca.** A montagem compara duas cenas em um único arquivo. Embora as cenas mostrem plantas, esse formato preparado não corresponde à foto única que a persona enviará. |
+
+*Fonte: imagens disponibilizadas pela equipe do Agro APP.*
+
+Essas exclusões se referem ao treinamento do modelo de reconhecimento por fotos capturadas no uso previsto. Os arquivos originais continuam preservados como material técnico de referência.
+
+### Observação
+
+O resultado revisado ainda registra **4 imagens para revisar**: os dois pares de fotografias repetidas com rótulos diferentes. Portanto, as contagens acima descrevem o estado atual da planilha, não uma seleção definitivamente aprovada para treinamento. A marcação **excluir** é uma decisão de seleção do acervo; os arquivos de imagem originais foram preservados. O resumo por classe da planilha revisada contabiliza duplicatas **exatas**; as versões quase iguais foram identificadas na coluna `revisao_duplicata` da aba **Revisao por imagem**. Não foram feitos testes de desempenho do modelo para quantificar o efeito das exclusões.
