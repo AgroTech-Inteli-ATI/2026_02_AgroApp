@@ -683,25 +683,25 @@ Avaliar resolução, enquadramento, presença de duplicatas e proporção de ima
 
 ### Metodologia
 
-A análise foi feita sobre as **126 imagens** inventariadas. A planilha registra, para cada imagem, a cultura, a categoria, a ocorrência, o caminho do arquivo, as dimensões, a legibilidade, o hash SHA-256, o hash perceptual e os campos de avaliação visual. A verificação de qualidade seguiu estas etapas:
+A análise reúne **3.460 imagens** de três fontes: **3.334** da pasta `dataset` e **126** dos acervos de Milho e Soja. As planilhas registram, para cada imagem, a cultura, a categoria, a ocorrência, o caminho do arquivo, as dimensões, a legibilidade, o hash SHA-256, o hash perceptual, os alertas de qualidade e a decisão de seleção. A verificação seguiu estas etapas:
 
 1. **Resolução e leitura:** conferir se o arquivo era legível, registrar largura e altura e sinalizar imagens cuja menor dimensão fosse inferior à referência de 224 pixels.
-2. **Duplicatas:** comparar hashes SHA-256 para arquivos idênticos e examinar candidatos apontados pelo hash perceptual para identificar versões da mesma foto. Registrar os pares, conferir se estavam associados à mesma ocorrência e indicar o ID correspondente na coluna `imagem_duplicada_de` da planilha revisada.
-3. **Revisão por imagem:** registrar enquadramento, tipo de imagem, visibilidade do problema, situação de duplicata, decisão (**manter**, **revisar** ou **excluir**) e justificativa na aba **Revisao por imagem**. A aba **Instrucoes** da planilha de diagnóstico traz os valores sugeridos para esses campos.
-4. **Consolidação por classe:** agrupar os registros por cultura, categoria e ocorrência, reunir as medidas de resolução e legibilidade, contar os tipos de imagem, decisões, enquadramentos inadequados e imagens em grupos de duplicatas exatas, e calcular as proporções de campo e catálogo. Os textos das colunas de avaliação foram normalizados para minúsculas e sem acentos antes da contagem.
+2. **Duplicatas:** comparar hashes SHA-256 para localizar arquivos idênticos e examinar os pares sugeridos pelo hash perceptual para identificar versões da mesma fotografia, inclusive quando aparecem em classes diferentes.
+3. **Revisão por imagem:** conferir o enquadramento, a visibilidade do problema, o formato da imagem, a duplicidade e a coerência do rótulo; registrar a decisão (**manter**, **revisar** ou **excluir**) e sua justificativa. As 379 pendências foram examinadas visualmente. Outras 2.953 imagens de `dataset` conservam decisões de triagem automática, ainda sem inspeção visual individual.
+4. **Consolidação:** agrupar os registros por fonte e classe, contar os alertas de qualidade e as decisões, e calcular as proporções de imagens de campo e de catálogo. Os alertas de resolução, desfoque e exposição podem se sobrepor e não determinam, isoladamente, a exclusão.
 
-A unidade de contagem é o **registro de imagem**. Se uma mesma fotografia aparece em duas classes, ela contribui com um registro para cada classe. A revisão por imagem e o resumo por classe são abas diferentes da mesma entrega, permitindo rastrear cada número até as imagens que o compõem.
+A unidade de contagem é o **registro de imagem**. Se uma mesma fotografia aparece em duas classes, ela contribui com um registro para cada classe. As abas de revisão e os resumos da planilha de decisões permitem rastrear os totais até cada imagem.
 
 ### Planilhas de diagnóstico e revisão
 
 | Arquivo | Conteúdo e função |
 | --- | --- |
-| [Diagnóstico de qualidade](../assets/data/diagnostico_qualidade.xlsx) | Planilha gerada antes da revisão manual, ainda incompleta. Contém as abas **Revisao por imagem**, **Resumo automatico**, **Duplicatas exatas**, **Possiveis duplicatas** e **Instrucoes**. Serve de base para o preenchimento da revisão. |
-| [Resultado final de qualidade](../assets/data/resultado_final_qualidade.xlsx) | **Planilha atual para uso na revisão.** Duas abas: **Revisao por imagem**, com 126 registros, suas dimensões, megapixels e decisões, e **Resumo final por classe**, com 55 linhas e os indicadores de qualidade atualizados. É a fonte dos resultados abaixo. |
+| [Diagnóstico das três fontes](../assets/data/diagnostico_qualidade_T3_3_tres_fontes.xlsx) | Relatório de diagnóstico das 3.460 imagens de `dataset`, Milho e Soja, com indicadores de qualidade, resumos por classe e candidatos a duplicata. |
+| [Planilha de decisões](../assets/data/diagnostico_qualidade_T3_3_revisado.xlsx) | Decisão **manter**, **excluir** ou **revisar** e justificativa por registro, além dos resumos e da conclusão dos pares de duplicatas visuais. |
 
  <p><em>Fonte: Próprios autores (2026).</em></p>
 
-A aba **Revisao por imagem** preserva `largura`, `altura`, `menor_dimensao`, `megapixels`, `arquivo_legivel` e `abaixo_referencia_224px` para cada foto. A aba **Resumo final por classe** apresenta `imagens_legiveis`, `menor_largura`, `menor_altura`, `mediana_menor_dimensao`, `menor_megapixels`, `mediana_megapixels` e `alertas_resolucao` para cada classe. Esses indicadores descrevem os **126 registros avaliados**, incluindo os marcados como excluir; as colunas de decisão mostram separadamente quais imagens foram aprovadas para o uso pretendido. Megapixels medem o tamanho total da imagem, enquanto a menor dimensão e o enquadramento ajudam a verificar se o sinal relevante terá detalhe suficiente na entrada do modelo.
+As abas de revisão preservam `largura`, `altura`, `menor_dimensao`, `megapixels`, `arquivo_legivel`, os alertas de nitidez e exposição, a decisão e a justificativa de cada foto. O **Resumo por classe** reúne os indicadores e as decisões por cultura, ocorrência e fonte. Megapixels medem o tamanho total da imagem, enquanto a menor dimensão e o enquadramento ajudam a verificar se o sinal relevante terá detalhe suficiente na entrada do modelo.
 
 ### Resultados
 
@@ -709,24 +709,29 @@ A aba **Revisao por imagem** preserva `largura`, `altura`, `menor_dimensao`, `me
 
 | Indicador | Resultado |
 | --- | ---: |
-| Imagens avaliadas | 126 |
-| Classes | 55 |
-| Imagens legíveis | 126 |
-| Imagens com menor dimensão abaixo de 224 pixels | 12 (9,5%) |
-| Imagens com enquadramento inadequado | 6 (4,8%) |
-| Imagens de campo | 76 (60,3%) |
-| Imagens de catálogo | 50 (39,7%) |
-| Imagens marcadas para manter | 106 |
-| Imagens ainda marcadas para revisar | 4 |
-| Imagens marcadas para excluir | 16 |
+| Imagens avaliadas | 3.460 |
+| Ocorrências distintas registradas | 69 |
+| Imagens legíveis | 3.460 |
+| Imagens com menor dimensão abaixo de 224 pixels | 129 (3,7%) |
+| Imagens possivelmente borradas | 29 (0,8%) |
+| Imagens com exposição inadequada | 75 (2,2%) |
+| Imagens de campo | 1.900 (54,9%) |
+| Imagens de catálogo | 1.560 (45,1%) |
+| Imagens marcadas para manter | 3.262 |
+| Imagens marcadas para revisar | 0 |
+| Imagens marcadas para excluir | 198 |
 
- <p><em>Fonte: Próprios autores (2026).</em></p>
+*Fonte: diagnóstico das três fontes e planilha de decisões (2026).*
 
-O limite de **224 pixels na menor dimensão** é a referência registrada na planilha para sinalizar imagens pequenas. Ele não constitui, por si só, uma prova de que a imagem seja inutilizável; o detalhe relevante precisa ser conferido após o redimensionamento usado pelo modelo. O enquadramento foi contado como inadequado quando recebeu o valor **distante**, **cortado** ou **encoberto**; os seis casos registrados estão marcados como **distante**.
+Os **3.460 registros** incluem **1.824** fotos de campo e **1.510** imagens de catálogo de `dataset`, além de **16** imagens do acervo de Milho e **110** do acervo de Soja. Na pasta `dataset`, as decisões são **3.156 manter** e **178 excluir**. Das **379** pendências encontradas no conjunto, a inspeção visual indicou **214 manter** e **165 excluir**. Uma imagem adicional, anteriormente marcada para manter, foi excluída por repetir uma fotografia com rótulo conflitante. As justificativas individuais constam da planilha de decisões.
+
+O limite de **224 pixels na menor dimensão** sinaliza imagens pequenas, mas não prova que sejam inutilizáveis; o detalhe relevante precisa ser conferido após o redimensionamento usado pelo modelo. O enquadramento manual foi registrado nas **126 imagens** dos acervos anteriores: **seis** receberam a marcação *distante*. Esse indicador não foi medido manualmente para as outras 3.334 imagens e, por isso, não aparece como total geral no quadro.
 
 #### Duplicatas: critério essencial
 
-Foram identificados **dois pares**, ou **quatro registros de imagem**, associados a fotografias repetidas ou quase iguais. Os dois pares atravessam classes diferentes. A duplicata exata foi identificada pelo mesmo hash SHA-256; o outro par consta como versões da mesma fotografia na revisão e tem distância zero entre hashes perceptuais. As contagens por classe são:
+Nas três fontes, foram encontrados **15 grupos de duplicatas exatas**, com **30 registros**, e **99 pares candidatos a duplicata visual** pelo hash perceptual. A inspeção dos 99 pares identificou **4 falsos positivos**, **2 pares da mesma foto com rótulos conflitantes** e **93 pares da mesma foto ou cena com versões redundantes**. Pares podem compartilhar imagens e não representam, necessariamente, 99 exclusões adicionais. Entre os 15 grupos exatos, **12** conservaram uma cópia; em **dois**, ambas foram excluídas por rótulos conflitantes; no grupo restante, foi selecionada uma versão equivalente fora do par exato. Os 30 registros desses grupos somam **12 manter** e **18 excluir**.
+
+O quadro abaixo detalha **dois pares do acervo de Soja** que atravessam classes diferentes: um par exato, confirmado pelo SHA-256, e outro formado por versões da mesma fotografia. Esses casos exemplificam o risco de rótulos conflitantes preservado na análise visual:
 
 | Classe de soja/doenças | Duplicatas exatas na classe | Versões quase iguais na classe | Imagem | Repetida de |
 | --- | ---: | ---: | --- | --- |
@@ -737,25 +742,26 @@ Foram identificados **dois pares**, ou **quatro registros de imagem**, associado
 
  <p><em>Fonte: Próprios autores (2026).</em></p>
 
-As outras **51 classes não têm duplicatas identificadas** na planilha revisada. IMG_0030 e IMG_0098 formam o par exato; IMG_0090 e IMG_0108 são versões da mesma foto. Na aba **Revisao por imagem**, a coluna `revisao_duplicata` marca esses registros como **repetida exata** ou **repetida - versao da mesma foto**, e `imagem_duplicada_de` aponta para o ID correspondente. Os quatro registros permanecem com decisão **revisar** porque os pares têm rótulos diferentes; é preciso validar a classe correta antes de escolher qual versão manter. Antes de separar dados de treino e teste, deve-se manter versões da mesma fotografia no mesmo conjunto ou remover a redundância. Caso contrário, o modelo pode memorizar a imagem e a avaliação aparentar um desempenho maior do que teria em fotos novas. Rótulos conflitantes também podem ensinar associações contraditórias.
+IMG_0030 e IMG_0098 formam o par exato; IMG_0090 e IMG_0108 são versões da mesma foto. Os quatro registros foram excluídos da seleção para treinamento até que seus rótulos sejam conferidos e corrigidos. Antes de separar dados de treino e teste, deve-se manter versões da mesma fotografia no mesmo conjunto ou remover a redundância. Caso contrário, o modelo pode memorizar a imagem e a avaliação aparentar um desempenho maior do que teria em fotos novas. Rótulos conflitantes também podem ensinar associações contraditórias. A conclusão de cada par candidato está na aba **Duplicatas visuais** da planilha de decisões.
 
 #### Campo e catálogo: critério essencial
 
 **Campo** representa a imagem no contexto da lavoura. **Catálogo** representa uma imagem de referência, frequentemente isolada ou com apresentação controlada. É uma classificação do tipo de foto, não uma decisão automática de descarte.
 
-| Cultura | Campo | Catálogo | Total |
+| Fonte | Campo | Catálogo | Total |
 | --- | ---: | ---: | ---: |
+| `dataset` | 1.824 | 1.510 | 3.334 |
 | Milho | 14 | 2 | 16 |
 | Soja | 62 | 48 | 110 |
-| **Total** | **76** | **50** | **126** |
+| **Total** | **1.900** | **1.560** | **3.460** |
 
  <p><em>Fonte: Próprios autores (2026).</em></p>
 
-Em **15 classes**, todas as imagens são de catálogo; em **18**, todas são de campo; **22** têm os dois tipos. Se o uso real do AgroApp for fotografar plantas em campo, um modelo treinado em excesso com imagens de catálogo pode aprender fundos, iluminação ou enquadramentos que não representam esse uso. Isso pode reduzir sua capacidade de reconhecer a mesma ocorrência em fotos reais. Recomenda-se avaliar o modelo em fotos de campo separadas por fotografia de origem e acompanhar o desempenho por tipo de imagem e por classe. Este diagnóstico aponta um risco de generalização; ele não quantifica uma queda de desempenho.
+Em `dataset`, **54,7%** das imagens são de campo e **45,3%** de catálogo. Na avaliação manual dos acervos anteriores, **15 classes** tinham apenas imagens de catálogo, **18** apenas imagens de campo e **22** apresentavam os dois tipos. Se o uso real do AgroApp for fotografar plantas em campo, um modelo treinado em excesso com imagens de catálogo pode aprender fundos, iluminação ou enquadramentos que não representam esse uso. Isso pode reduzir sua capacidade de reconhecer a mesma ocorrência em fotos reais. Recomenda-se avaliar o modelo em fotos de campo separadas por fotografia de origem e acompanhar o desempenho por tipo de imagem e por classe. Este diagnóstico aponta um risco de generalização; ele não quantifica uma queda de desempenho.
 
 #### Resolução e enquadramento: critério desejável
 
-Há **12 imagens pequenas** e **6 com enquadramento distante**. Após a revisão, **5 das 12** imagens pequenas e **todas as 6** imagens distantes foram marcadas como **excluir**. As outras **7 imagens pequenas foram marcadas como manter** por decisão da revisão manual, pois o elemento relevante foi considerado identificável. O limite de 224 pixels funciona como alerta; ele não determina sozinho a exclusão. As 11 imagens marcadas como excluir nesse grupo não devem ser usadas no treinamento do modelo.
+No conjunto das três fontes, **129 imagens** têm menor dimensão abaixo de 224 pixels, **29** foram sinalizadas como possivelmente borradas e **75** apresentam exposição inadequada. Esses alertas podem se sobrepor. Entre as **12 imagens pequenas** dos acervos anteriores, **5** foram excluídas e **7** mantidas após inspeção visual; as **6** com enquadramento distante foram excluídas. O limite de 224 pixels funciona como alerta, não como critério isolado de exclusão. As imagens abaixo preservam exemplos das decisões e justificativas da inspeção.
 
 ##### Imagens pequenas mantidas
 
@@ -789,7 +795,7 @@ As cinco imagens abaixo foram retiradas da seleção para treinamento porque sua
 
 ##### Imagens com enquadramento distante excluídas
 
-Foram marcadas como **excluir** as imagens **IMG_0014**, **IMG_0029**, **IMG_0042**, **IMG_0072**, **IMG_0073** e **IMG_0078**. Nelas, a infestação, a muda ou os sinais associados à classe aparecem pequenos demais ou não são visíveis. Mesmo quando o arquivo tem dimensões grandes, a informação necessária para reconhecer a ocorrência ocupa poucos pixels. Por isso, essas fotos não são adequadas para treinar o reconhecimento da ocorrência específica. A justificativa de cada uma está na aba **Revisao por imagem** da planilha revisada.
+Foram marcadas como **excluir** as imagens **IMG_0014**, **IMG_0029**, **IMG_0042**, **IMG_0072**, **IMG_0073** e **IMG_0078**. Nelas, a infestação, a muda ou os sinais associados à classe aparecem pequenos demais ou não são visíveis. Mesmo quando o arquivo tem dimensões grandes, a informação necessária para reconhecer a ocorrência ocupa poucos pixels. Por isso, essas fotos não são adequadas para treinar o reconhecimento da ocorrência específica. Os exemplos abaixo preservam as justificativas dessa inspeção visual.
 
 | Foto | Classe e motivo da exclusão |
 | --- | --- |
@@ -828,4 +834,4 @@ Essas exclusões se referem ao treinamento do modelo de reconhecimento por fotos
 
 ### Observação
 
-O resultado revisado ainda registra **4 imagens para revisar**: os dois pares de fotografias repetidas com rótulos diferentes. Portanto, as contagens acima descrevem o estado atual da planilha, não uma seleção definitivamente aprovada para treinamento. A marcação **excluir** é uma decisão de seleção do acervo; os arquivos de imagem originais foram preservados. O resumo por classe da planilha revisada contabiliza duplicatas **exatas**; as versões quase iguais foram identificadas na coluna `revisao_duplicata` da aba **Revisao por imagem**. Não foram feitos testes de desempenho do modelo para quantificar o efeito das exclusões.
+**Nenhuma imagem permanece em revisar** na planilha de decisões. A inspeção visual cobriu as **126 imagens** dos acervos anteriores e **381 imagens distintas de `dataset`**, incluindo as pendências e amostras adicionais. Outras **2.953 imagens de `dataset`** conservam decisões de triagem automática e ainda precisam de inspeção individual antes da definição do conjunto final de treinamento. A marcação **excluir** retira a imagem da seleção de treinamento; os arquivos originais foram preservados. Não foram feitos testes de desempenho do modelo para quantificar o efeito das exclusões.
