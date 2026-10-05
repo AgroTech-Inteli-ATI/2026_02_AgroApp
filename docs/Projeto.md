@@ -35,6 +35,13 @@
 
 </details>
 
+<details>
+<summary><strong>4. Preparação dos dados</strong></summary>
+
+- [4.2 Particionamento por grupo (T4.2)](#42-particionamento-por-grupo-t42)
+
+</details>
+
 ---
 
 # 1. Entendimento de Negócio
@@ -1018,3 +1025,37 @@ Enquanto `chave_conteudo` for `null` ou o status não for `validado`, a integra�
 As associações usam como referência os [manuais de doenças de soja da Embrapa](https://www.embrapa.br/en/web/soja/busca-de-publicacoes/-/publicacao/991687/manual-de-identificacao-de-doencas-de-soja) e de [insetos e outros invertebrados da soja](https://www.embrapa.br/en/busca-de-publicacoes/-/publicacao/991685/manual-de-identificacao-de-insetos-e-outros-invertebrados-da-cultura-da-soja). As referências complementares estão identificadas no JSON por registro. Essa bibliografia não comprova a identidade dos exemplares do acervo nem substitui o catálogo técnico do parceiro.
 
 Para atualizar a tabela após editar o JSON: `python assets/data/gerar_dicionario.py`. Para verificar cobertura do inventário, contagens, unicidade e integridade das relações: `python tests/validar_dicionario.py`. Os comandos usam somente a biblioteca padrão do Python.
+
+# 4. Preparação dos dados
+
+## 4.2 Particionamento por grupo
+
+### Objetivo e entradas
+
+Separar as imagens selecionadas em treino, validação e teste sem colocar registros da mesma origem, da mesma planta conhecida ou de uma duplicata confirmada em partições diferentes. O [notebook da T4.2](../notebooks/T4_2_particionamento_por_grupo.ipynb) usa a [planilha de decisões da T3.3](../assets/data/diagnostico_qualidade_T3_3_revisado.xlsx) e o [dicionário de classes da T3.4](../assets/data/dicionario-classes.json). A execução registrada usou a semente **42** e selecionou as **3.262 imagens** marcadas como *manter* dentre os **3.460 registros** do diagnóstico.
+
+Os rótulos ainda são **candidatos a classes do modelo**. Os registros dos acervos anteriores recebem os IDs `AGRO-*` da T3.4; os rótulos de `dataset` recebem IDs `DATASET-*`. Semelhanças de nome ou de agente causal não provocam fusão automática de classes. Entre as imagens selecionadas, há **64 classes candidatas**; a definição das classes finais depende de validação agronômica e do escopo do MVP.
+
+### Método
+
+1. **Formar grupos indivisíveis:** reunir imagens com o mesmo `grupo_origem`, duplicatas exatas e pares visuais confirmados na revisão da T3.3. Os vínculos são transitivos: se A compartilha origem com B e B é duplicata confirmada de C, os três registros ficam no mesmo grupo. Dos **99 pares visuais** comparados, **95** foram confirmados como mesma foto ou cena e **4** eram falsos positivos; estes quatro não criam vínculo. Vínculos adicionais da mesma planta ou sessão podem ser informados em `assets/data/vinculos_mesma_planta.csv`, com as colunas `image_id_1,image_id_2`.
+2. **Distribuir os grupos:** usar **70% treino, 15% validação e 15% teste** como metas de quantidade de imagens, com equilíbrio por classe candidata e fonte. A integridade do grupo tem prioridade sobre essas proporções. Classes com menos de três grupos independentes ficam apenas no treino e recebem o status *exploratória*, sem métricas próprias de validação ou teste. As demais recebem, quando possível, ao menos um grupo em cada partição.
+3. **Auditar:** confirmar que nenhum `grupo_particao`, `grupo_origem`, hash SHA-256 ou par visual confirmado com ambas as imagens selecionadas atravessa partições. Registrar a semente, os hashes dos arquivos de entrada e a cobertura por classe para permitir a reprodução da divisão.
+
+### Resultado da execução provisória
+
+| Partição | Grupos | Imagens |
+| --- | ---: | ---: |
+| Treino | 1.666 | 2.287 |
+| Validação | 366 | 488 |
+| Teste | 366 | 487 |
+| **Total** | **2.398** | **3.262** |
+
+Das **64 classes candidatas**, **36** têm menos de três grupos e ficaram identificadas como exploratórias. As outras **28** têm grupos nas três partições nesta execução. A auditoria não encontrou vazamento entre os grupos de origem, hashes exatos ou pares visuais confirmados registrados. A divisão não copia nem aumenta imagens; ela atribui uma partição a cada registro selecionado.
+
+Os resultados estão no [manifesto por imagem](../assets/data/particionamento_T4_2/manifesto_provisorio.csv), no [resumo por classe](../assets/data/particionamento_T4_2/resumo_por_classe.csv) e na [auditoria reproduzível](../assets/data/particionamento_T4_2/auditoria.json). O código de agrupamento e distribuição está em [`src/particionamento_t4_2.py`](../src/particionamento_t4_2.py). Para refazer a separação, execute todas as células do notebook após atualizar as entradas ou os vínculos manuais.
+
+### Limites e próximos passos
+
+Este particionamento é **provisório**. **2.953 imagens de `dataset`** ainda mantêm decisões de triagem automática sem inspeção visual individual; os rótulos finais do modelo não foram aprovados; e não foram fornecidos vínculos manuais adicionais da mesma planta (**zero vínculos** nesta execução). Em parte do catálogo, `grupo_origem` identifica apenas o arquivo, sem provar que fotografias diferentes vieram de plantas independentes. Portanto, a auditoria confirma ausência de vazamento **identificável pelos metadados e pares revisados**.
+Antes da avaliação final, é necessário completar a revisão visual, confirmar as classes e acrescentar os vínculos de planta ou captura disponíveis. Depois disso, a divisão deve ser refeita e o conjunto de teste mantido reservado para a avaliação final.
