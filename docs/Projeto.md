@@ -23,6 +23,13 @@
 
 </details>
 
+<details>
+<summary><strong>4. Preparação dos dados</strong></summary>
+
+- [4.3 Estratégia de balanceamento (T4.3)](#43-estratégia-de-balanceamento-t43)
+
+</details>
+
 ---
 
 # 1. Entendimento de Negócio
@@ -724,3 +731,103 @@ revisados quando o acervo for complementado pelo parceiro ou por bases públicas
 validadas (Seção 1.4, item 7). A associação formal entre os pares/clusters aqui
 levantados e a decisão de unificar ou manter classes separadas será complementada a
 partir do dicionário de classes desenvolvido na T3.4.
+
+---
+
+# 4. Preparação dos dados
+
+## 4.3 Estratégia de balanceamento (T4.3)
+
+### Objetivo e decisão
+
+Adotar **ponderação de classes na função de perda**, com amostragem natural das imagens de treino, como estratégia inicial para reduzir a preferência do modelo pelas classes mais frequentes. A reamostragem será avaliada em um experimento separado caso a ponderação não ofereça recuperação adequada das classes minoritárias. Não aplicar as duas correções simultaneamente na configuração inicial.
+
+Esta é uma decisão de preparação para o treinamento, ainda sem resultados experimentais: o repositório contém o inventário e a análise exploratória, mas não um modelo treinado nem partições definitivas. Os pesos finais serão calculados após a revisão dos rótulos e a divisão dos dados. A estratégia atende à mitigação do risco R02 e deve ser reavaliada quando o acervo for ampliado.
+
+### Diagnóstico do acervo
+
+As contagens abaixo foram obtidas do [inventário versionado](../assets/data/inventario-acervo.xlsx). Cada ocorrência foi considerada um rótulo candidato; as 55 ocorrências ainda não representam necessariamente 55 classes finais, pois a T3.4 e a revisão agronômica podem confirmar duplicidades ou alterar o escopo do MVP.
+
+| Cultura e categoria | Ocorrências | Imagens | Menor / maior contagem por ocorrência |
+| --- | ---: | ---: | ---: |
+| Milho — Pragas | 4 | 16 | 2 / 5 |
+| Soja — Pragas | 10 | 13 | 1 / 2 |
+| Soja — Doenças | 41 | 97 | 1 / 5 |
+| **Total** | **55** | **126** | **1 / 5** |
+
+| Imagens por ocorrência | Quantidade de ocorrências | Total de imagens |
+| ---: | ---: | ---: |
+| 1 | 15 | 15 |
+| 2 | 21 | 42 |
+| 3 | 10 | 30 |
+| 4 | 6 | 24 |
+| 5 | 3 | 15 |
+| **Total** | **55** | **126** |
+
+A razão entre a maior e a menor ocorrência é **5:1**, e **36 de 55 ocorrências (65,5%)** possuem no máximo duas imagens. Soja/doenças reúne 97 de 126 imagens (77,0%), mas esse total é distribuído entre 41 ocorrências: ponderar apenas por cultura ou categoria não resolve o desbalanceamento das classes reconhecidas pelo modelo. Se houver modelos separados por cultura, as frequências e os pesos serão calculados separadamente para cada modelo.
+
+A limitação principal combina desbalanceamento e escassez de exemplos independentes. Nenhuma técnica de balanceamento substitui a coleta de imagens novas, a revisão de rótulos ambíguos ou a definição de classes visualmente distinguíveis.
+
+### Comparação das abordagens
+
+| Abordagem | Benefício | Limitação no acervo atual | Decisão |
+| --- | --- | --- | --- |
+| Ponderação de classes | Aumenta a contribuição das classes raras na perda e conserva todas as imagens disponíveis. | Também aumenta a influência de erros de rótulo e pode favorecer memorização de classes com poucos exemplos. | Estratégia inicial, após revisão dos rótulos. |
+| Sobreamostragem | Faz as classes raras aparecerem mais vezes nos lotes de treino. | Repete os mesmos exemplares; não acrescenta diversidade independente e pode causar sobreajuste. | Alternativa a comparar, sem pesos inversos simultâneos. |
+| Subamostragem | Reduz a participação das classes mais frequentes. | Descartaria imagens de classes que já possuem somente até cinco exemplos. | Não adotar no acervo atual. |
+| Ponderação + sobreamostragem | Permite ajustar frequência e contribuição na perda separadamente. | Aplicar ambas integralmente sobrecorrige as classes raras e dificulta atribuir a origem de um ganho. | Não adotar inicialmente; exige novo experimento com pesos ajustados à distribuição efetivamente amostrada. |
+
+A [documentação do TensorFlow sobre dados desbalanceados](https://www.tensorflow.org/tutorials/structured_data/imbalanced_data) apresenta ponderação e sobreamostragem e discute suas diferenças na atualização por lotes. Essa referência trata de classificação binária; a comparação experimental aqui será multiclasse, no acervo do Agro App, sem assumir transferência dos resultados do tutorial.
+
+### Cálculo e aplicação dos pesos
+
+Para cada classe aprovada `c`, calcular:
+
+```text
+N = número de imagens originais no conjunto de treino do modelo
+K = número de classes aprovadas para esse modelo
+n_c = número de imagens originais da classe c no treino
+w_c = N / (K × n_c)
+```
+
+Essa é a regra de ponderação balanceada descrita pelo [scikit-learn em `compute_class_weight`](https://scikit-learn.org/stable/modules/generated/sklearn.utils.class_weight.compute_class_weight.html). Com amostragem natural, a contribuição potencial de cada classe passa a ser `n_c × w_c = N/K`. A média dos pesos sobre as imagens de treino é 1, preservando a escala média da ponderação.
+
+No treinamento multiclasse, multiplicar a entropia cruzada de cada exemplo pelo peso de sua classe antes de calcular a média do lote. No fluxo Keras previsto para os experimentos, fornecer o mapa de índices de saída para pesos por meio de `class_weight`; não aplicar simultaneamente o mesmo peso via `sample_weight`. O mapa de índices deve corresponder exatamente ao manifesto de classes do modelo.
+
+Como exemplo **ilustrativo**, usando todo o inventário como se fosse treino (`N = 126`, `K = 55`), uma ocorrência com uma imagem receberia peso `2,291`, enquanto uma com cinco receberia `0,458`. Esses valores demonstram a regra, mas **não são os pesos finais**: o inventário completo inclui imagens que poderão pertencer à validação ou ao teste e rótulos ainda em revisão.
+
+Recalcular os pesos em cada partição de treinamento, inclusive em cada rodada de validação cruzada. Não utilizar as frequências de validação ou teste, nem contar versões aumentadas como novas imagens originais. Uma classe com `n_c = 0` torna a configuração inválida: revisar a partição ou o escopo antes de treinar, sem substituir a divisão por zero por um peso arbitrário.
+
+### Partições, classes escassas e aumento de dados
+
+1. Revisar rótulos e duplicatas antes de definir as classes e contar os exemplos. Registrar as decisões de fusão ou exclusão com rastreabilidade até o inventário.
+2. Separar treino, validação e teste por grupos de origem: imagens idênticas, versões derivadas e fotos correlacionadas da mesma planta ou captura devem permanecer na mesma partição. Preservar as proporções de classes quando houver grupos suficientes; a separação por grupos tem prioridade sobre a estratificação. A [documentação do scikit-learn sobre validação cruzada](https://scikit-learn.org/stable/modules/cross_validation.html) descreve a combinação de grupos e estratificação.
+3. Conferir a presença de exemplos independentes de cada classe nas partições. Uma única imagem não permite avaliar a mesma classe em treino e em uma partição independente. Duas imagens ou grupos não permitem representá-la simultaneamente em treino, validação e teste. Não forçar uma divisão percentual fixa nas 55 ocorrências atuais.
+4. Priorizar a complementação das classes insuficientes. Até que haja grupos independentes para treinamento, seleção e avaliação, tratá-las como exploratórias e não declarar desempenho validado para elas. Se for necessário restringir o MVP, registrar o escopo efetivamente avaliado; agrupamentos só podem decorrer de decisão agronômica, não da necessidade de aumentar contagens.
+5. Aplicar aumento de dados somente depois da divisão, durante o treino, preservando o ID e a partição do original. Usar transformações moderadas e agronomicamente plausíveis, que não removam lesões nem alterem cores diagnósticas. As transformações deverão ser inspecionadas por amostra; não fixar parâmetros sem observar as imagens.
+
+Validação e teste manterão suas imagens originais, com apenas o pré-processamento determinístico exigido pelo modelo, sem sobreamostragem, subamostragem ou pesos de balanceamento nas métricas. O conjunto de teste será reservado para avaliação final. Quando se usar validação cruzada para selecionar a estratégia, verificar previamente se cada classe possui grupos suficientes para as rodadas escolhidas e manter o teste separado.
+
+### Plano de comparação e seleção
+
+Comparar as configurações abaixo no mesmo escopo de classes avaliáveis e nas mesmas partições. Manter arquitetura, inicialização, transformações, orçamento de atualizações do otimizador e regra de parada equivalentes; registrar as sementes. Quando viável, usar três sementes por configuração e apresentar média e dispersão dos resultados.
+
+| Experimento | Amostragem de treino | Peso na perda | Finalidade |
+| --- | --- | --- | --- |
+| E0 — Referência | Natural, embaralhada | 1 para todas as classes | Medir o comportamento sem correção. |
+| E1 — Estratégia inicial | Natural, embaralhada | `N / (K × n_c)` | Medir o efeito da ponderação. |
+| E2 — Alternativa | Selecionar a classe uniformemente e depois uma imagem dessa classe, com reposição | 1 para todas as classes | Medir o efeito da sobreamostragem sem dupla correção. |
+
+Em E2, realizar exatamente o mesmo número de atualizações que nos demais experimentos e gerar transformações de treino a cada apresentação da imagem. A repetição não será registrada como aumento do número de imagens independentes. Não usar a quantidade de épocas isoladamente para igualar o orçamento se o tamanho lógico do conjunto amostrado mudar.
+
+Selecionar a configuração pela **F1 macro na validação**, reportando também precisão, recall, F1 e suporte por classe, balanced accuracy (média do recall das classes) e matriz de confusão. A acurácia global será complementar. Classes sem exemplos em uma partição devem ser indicadas como não avaliadas, com a cobertura explicitada; não omitir silenciosamente essas classes nem interpretar métricas sem suporte como desempenho observado.
+
+Verificar especialmente as classes minoritárias e os pares confundíveis apontados na análise visual. Se a correção elevar recall às custas de muitas identificações incorretas, investigar a matriz de confusão e a precisão por classe antes de adotá-la. Em caso de resultados próximos à variação entre sementes, preferir a configuração mais simples; se E1 não apresentar benefício demonstrável frente a E0, registrar o resultado e rever a decisão inicial. Não escolher a estratégia a partir do teste final.
+
+Depois da seleção, ajustar a política de confiança usando somente dados de validação independentes: o balanceamento pode mudar a distribuição das saídas do modelo. Confirmar o desempenho e o comportamento inconclusivo no teste final, inclusive após a quantização. Não interpretar a confiança bruta como probabilidade calibrada sem avaliação.
+
+### Registros e critérios de conclusão
+
+O experimento deverá guardar versão do dataset, classes aprovadas e respectivos índices, IDs e grupos de cada partição, contagens originais de treino por classe, pesos aplicados, configuração de amostragem, transformações, sementes, orçamento de treinamento e métricas por classe. Esses registros permitem reproduzir o cálculo e identificar alterações após a ampliação do acervo.
+
+A **definição da T4.3** fica consolidada nesta seção: ponderação como escolha inicial, justificativa baseada no inventário, comparação das alternativas e protocolo de avaliação. A **validação experimental** ficará concluída quando houver classes e partições avaliáveis, execução de E0/E1 (e E2 se necessário), registro das métricas e justificativa da configuração selecionada. Até lá, não há evidência para afirmar melhora de desempenho ou generalização nas 55 ocorrências.
