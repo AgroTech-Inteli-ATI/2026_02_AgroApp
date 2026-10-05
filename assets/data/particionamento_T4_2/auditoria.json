@@ -1,0 +1,35 @@
+{
+  "diagnostico_sha256": "6aecd46f952d5ea21f23f9f865ffcb924daa1e2b4845a4e58609032377da1666",
+  "dicionario_sha256": "58b329445390d51cf71fad61744e845bac8422ae1efa342630f80cd471c4a1a2",
+  "total_diagnostico": 3460,
+  "total_mantidas": 3262,
+  "classes_candidatas": 64,
+  "grupos_independentes_provisorios": 2398,
+  "pares_visuais_confirmados": 95,
+  "pares_visuais_falsos": 4,
+  "vinculos_manuais": 0,
+  "vinculos_manuais_sha256": null,
+  "semente": 42,
+  "proporcoes_alvo": {
+    "treino": 0.7,
+    "validacao": 0.15,
+    "teste": 0.15
+  },
+  "imagens_por_particao": {
+    "treino": 2287,
+    "validacao": 488,
+    "teste": 487
+  },
+  "grupos_por_particao": {
+    "treino": 1666,
+    "validacao": 366,
+    "teste": 366
+  },
+  "classes_exploratorias": 36,
+  "classes_candidatas_a_avaliacao": 28,
+  "classes_candidatas_sem_cobertura": [],
+  "pendencias_da_ancoragem": [],
+  "rotulos_finais_aprovados": false,
+  "inspecao_visual_completa": false,
+  "independencia_de_planta_confirmada_para_catalogo": false
+}
