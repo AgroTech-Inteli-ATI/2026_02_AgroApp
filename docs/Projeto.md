@@ -724,3 +724,76 @@ revisados quando o acervo for complementado pelo parceiro ou por bases públicas
 validadas (Seção 1.4, item 7). A associação formal entre os pares/clusters aqui
 levantados e a decisão de unificar ou manter classes separadas será complementada a
 partir do dicionário de classes desenvolvido na T3.4.
+
+## Classes do MVP
+
+### Objetivo
+
+Definir quais classes de pragas e doenças entram e quais ficam de fora do MVP, com a justificativa de cada decisão.
+
+### Metodologia
+
+A definição partiu do [Inventário do acervo](#inventário-do-acervo) do Agro App, complementado por fotos de campo do iNaturalist e pelas imagens do AgroInsect. Os dados foram tratados como uma base única, desconsiderando imagens repetidas e figuras que não são fotografias. Classes com mais de uma pasta ou nome na base foram reunidas em uma só (por exemplo, os corós e as duas espécies da lagarta-das-vagens).
+
+A decisão considerou dois pontos: o **volume de imagens**, principal critério, porque um volume maior dá melhores condições de treinar e avaliar o modelo, e a **qualidade das imagens**, isto é, se o inseto ou o sintoma aparece com nitidez. Entram as classes com maior volume e imagens adequadas; ficam de fora as que têm poucas imagens.
+
+As doenças têm volume bem menor que as pragas, com no máximo 6 imagens por classe. Para que o MVP também cubra doenças, entram as de maior volume e com sinal visível na imagem, e a tabela indica o critério que cada uma não atende. As demais ficam de fora.
+
+**Fontes e créditos.** Acervo do Agro App; fotos do iNaturalist, observações do Brasil com identificação confirmada pela comunidade, sob licenças CC0 e CC BY, em que o crédito de cada autor deve acompanhar o uso das fotos; e o conjunto AgroInsect, sob licença CC BY 4.0.
+
+### Resultados
+
+#### Resumo
+
+| Grupo | Status | Classes | Imagens |
+| --- | --- | --- | --- |
+| Pragas | Entra | 13 | 3.233 |
+| Pragas | Fora do MVP | 7 | 18 |
+| Doenças | Entra | 8 | 36 |
+| Doenças | Fora do MVP | 28 | 59 |
+| **Total** | | **56** | **3.346** |
+
+#### Classes que entram no MVP
+
+| Classe | Cultura | Fontes | Imagens | Justificativa | Critério não atendido |
+| --- | --- | --- | --- | --- | --- |
+| **Vaquinha (Diabrotica speciosa)** | Milho/Soja | iNaturalist, AgroInsect | 1.055 | Maior volume da base, com o inseto nítido e um padrão verde com manchas alaranjadas inconfundível. | — |
+| **Astylus variegatus** | Milho | iNaturalist | 480 | Alto volume, com o besouro nítido e o padrão preto e amarelo marcante. | — |
+| **Lagarta-do-cartucho (Spodoptera frugiperda)** | Milho/Soja | iNaturalist, AgroInsect | 434 | Alto volume, com o inseto bem visível em fundos e posições variadas. | — |
+| **Percevejo-barriga-verde (Dichelops/Diceraeus)** | Milho/Soja | iNaturalist, AgroInsect | 283 | Alto volume, com o percevejo em diferentes plantas e posições. | — |
+| **Cigarrinha-do-milho (Dalbulus maidis)** | Milho | Acervo, AgroInsect | 212 | Alto volume, com a cigarrinha em posições variadas; as imagens do acervo mostram também o sintoma na folha. | — |
+| **Cigarrinha-das-pastagens (Deois flavopicta)** | Milho | iNaturalist | 168 | Bom volume, com o inseto nítido e o padrão preto e amarelo característico. | — |
+| **Lagarta-das-vagens (Spodoptera eridania e S. cosmioides)** | Soja | iNaturalist | 159 | Bom volume e a maior presença de lagartas (larvas) entre as classes de lagartas. | — |
+| **Percevejo-verde (Nezara viridula)** | Soja | iNaturalist | 94 | Bom volume, com adultos e ninfas de cores diferentes. | — |
+| **Percevejo-do-milho (Leptoglossus zonatus)** | Milho | Acervo, iNaturalist | 83 | Bom volume, com adultos, ninfas e ovos; as pernas dilatadas ficam bem visíveis. | — |
+| **Lagarta-falsa-medideira (Chrysodeixis includens)** | Soja | iNaturalist | 82 | Bom volume, com a mariposa nítida e as marcas prateadas nas asas. | — |
+| **Percevejo-asa-preta (Edessa meditabunda)** | Soja | iNaturalist | 75 | Bom volume e padrão de cor verde e marrom bem distinto. | — |
+| **Percevejo-marrom (Euschistus heros)** | Soja | iNaturalist | 65 | Volume adequado, com o inseto bem visível e a mancha clara característica no dorso. | — |
+| **Lagarta-da-soja (Anticarsia gemmatalis)** | Soja | Acervo, iNaturalist | 43 | Menor volume entre as pragas que entram, mas ainda com dezenas de imagens e a mariposa bem visível. | — |
+| **Nematóide de cisto** | Soja | Acervo | 6 | Entre as maiores classes de doenças, com os cistos esféricos aparecendo nítidos nas raízes de parte das imagens. | Volume e qualidade (parte das imagens) |
+| **Podridão-cinzenta-do-caule (Macrophomina)** | Soja | Acervo | 6 | Entre as maiores classes de doenças, com o caule acinzentado característico em várias imagens. | Volume e qualidade (parte das imagens) |
+| **Ferrugem asiática** | Soja | Acervo | 4 | Pústulas visíveis na folha, em imagens de perto e de folha inteira. | Volume |
+| **Mancha-olho-de-rã** | Soja | Acervo | 4 | Lesões redondas de centro claro e borda avermelhada, nítidas nas imagens. | Volume |
+| **Mosaico comum da soja** | Soja | Acervo | 4 | Padrão próprio de mosqueado e deformação das folhas, além da semente manchada. | Volume |
+| **Míldio** | Soja | Acervo | 4 | Manchas bem visíveis na folha; entra junto da ferrugem asiática, de aspecto parecido, para que as duas sejam treinadas em conjunto. | Volume |
+| **Phomopsis / Seca da haste e da vagem** | Soja | Acervo | 4 | Haste e vagem com pontuações pretas bem visíveis. | Volume |
+| **Podridão-vermelha-da-raiz** | Soja | Acervo | 4 | Lesão roxo-avermelhada no colo e na raiz, visível na maioria das imagens (uma mostra o sintoma na folha). | Volume |
+
+#### Classes fora do MVP
+
+| Grupo | Classes | Imagens por classe | Justificativa |
+| --- | --- | --- | --- |
+| Pragas | Pulgão-do-milho; Coró-da-soja; Brocas-da-soja (vagens + axilas); Coró-do-milho; Tamanduá-da-soja; Cascudinho-da-soja; Percevejo da Soja (sem espécie definida) | 1 a 5 | Poucas imagens por classe, o que não permite ao modelo aprender e ser avaliado de forma confiável. |
+| Doenças | Nematóide das lesões; Estiolamento, Podridão-de-raízes, Tombamento-de-mudas | 3 a 5 | Volume próximo ao das doenças que entram, mas as imagens mostram sinais indiretos (planta atrofiada ou murcha, raízes escuras), sem um padrão visual claro. |
+| Doenças | Damping-off, Podridão-aquosa, Tombamento; Mancha-aureolada; Murcha-de-Sclerotium; Murcha-de-fusarium; Nematóide de galhas; Nematóide-espiralado, Nematóide; Antracnose; Cancro-da-haste; Crestamento bacteriano; Mancha alvo; Mancha-parda / Septoriose; Nematoide-da-haste verde, Ponta Branca; Nematóide-reniforme; Oídio; Podridão radicular de Phytophthora; Podridão-de-raízes; Podridão-radicular; Pústula bacteriana; Tombamento | 2 a 3 | Muito poucas imagens por classe. |
+| Doenças | Clodosporiose, Verrugose; Fungo de pós colheita; Fungo-de-armazenamento; Fungo-de-pós-colheita, Podridão-dos-grãos-armazenados; Mela ou requeima; Mofo-branco, Podridão-de-sclerotinia; Podridão da semente, Podridão de Fusarium | 1 | Uma única imagem por classe. |
+
+### Observação
+
+As doenças que entram têm volume bem abaixo do das pragas e dependem do complemento do acervo para o modelo reconhecê-las com segurança; as que ficaram de fora podem entrar à medida que o acervo for complementado. Nas classes de lagartas, parte das imagens mostra o inseto adulto; complementar com fotos de lagartas e do dano na planta deixa a base mais próxima do uso em campo.
+
+### Referências
+
+ALMEIDA, G.; NAZARIO, L.; TEIXEIRA, M.; STIRLE, J.; FRANCA, H.; OLIVEIRA, M.; OLIVEIRA, R.; NOVAK, S.; BAILÃO, A.; GONTIJO, P. **AGROINSECT: A dataset for identifying agricultural insects and pests of interest**. Versão 2. Mendeley Data, 2026. DOI: 10.17632/4jyp4m9gxj.2.
+
+INATURALIST. **Observações de pragas de soja e milho no Brasil**. Disponível em: https://www.inaturalist.org. Acesso em: 4 out. 2026. Os créditos individuais das fotos acompanham os metadados da base.
