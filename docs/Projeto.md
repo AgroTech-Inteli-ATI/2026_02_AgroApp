@@ -535,13 +535,15 @@ Esta seção registra inicialmente o inventário produzido a partir do primeiro 
 recebido pelo projeto. A atualização referente à base ampliada disponibilizada pelo
 parceiro é apresentada na sequência.
 
-### Objetivo
+### Inventário inicial
+
+#### Objetivo
 
 Realizar a contagem das imagens do Agro App por cultura,
 classe e ocorrência, consolidando os dados para análise
 do conjunto recebido.
 
-### Metodologia
+#### Metodologia
 
 O inventário foi realizado automaticamente com Python
 no Google Colab, percorrendo a estrutura de diretórios
@@ -563,7 +565,7 @@ Agro App/
 Cada subpasta de ocorrência foi identificada e a quantidade
 de imagens presente nela foi contabilizada.
 
-### Resultados
+#### Resultados
 
 | Cultura | Classe | Quantidade de imagens |
 |---------|---------|----------------------:|
@@ -583,7 +585,7 @@ Além disso, a planilha do inventário também está versionada no repositório 
 
 `assets/data/inventario-acervo.xlsx`
 
-### Observação
+#### Observação
 
 A associação formal entre os nomes das ocorrências e seus
 respectivos agentes causais será complementada a partir do
