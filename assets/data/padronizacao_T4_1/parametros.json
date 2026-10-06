@@ -1,0 +1,13 @@
+{
+  "tamanho_entrada": 224,
+  "cor_preenchimento": [
+    128,
+    128,
+    128
+  ],
+  "redimensionamento": "proporcional, sem recorte, reamostragem bicubica",
+  "normalizacao": "float32 em [0, 1]",
+  "orientacao": "EXIF aplicada antes do redimensionamento",
+  "pillow": "12.2.0",
+  "falhas_de_leitura": []
+}

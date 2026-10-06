@@ -38,7 +38,9 @@
 <details>
 <summary><strong>4. Preparação dos dados</strong></summary>
 
+- [4.1 Padronização das imagens (T4.1)](#41-padronização-das-imagens)
 - [4.2 Particionamento por grupo (T4.2)](#42-particionamento-por-grupo-t42)
+- [4.4 Rotinas de aumento de dados (T4.4)](#44-rotinas-de-aumento-de-dados)
 
 </details>
 
@@ -1101,6 +1103,41 @@ INATURALIST. **Observações de pragas de soja e milho no Brasil**. Disponível 
 
 # 4. Preparação dos dados
 
+## 4.1 Padronização das imagens
+
+### Objetivo e entradas
+
+Definir um único processamento de entrada para o modelo, aplicado da mesma forma no treinamento e na inferência, para que as fotos dos acervos e as fotos tiradas em campo cheguem ao modelo no mesmo formato. O [notebook da T4.1](../notebooks/T4_1_padronizacao_imagens.ipynb) usa como entrada o [manifesto da T4.2](../assets/data/particionamento_T4_2/manifesto_provisorio.csv), com as **3.262 imagens** marcadas como *manter*. A lógica fica em [`src/preprocessamento.py`](../src/preprocessamento.py), para que o notebook e o restante do código usem a mesma função.
+
+### Método
+
+A função `preparar_imagem` executa, nesta ordem:
+
+1. **Orientação EXIF:** aplica a rotação gravada pelo celular, para que fotos tiradas em retrato não cheguem deitadas ao modelo.
+2. **Conversão para RGB:** imagens em escala de cinza ou com canal alfa passam a ter três canais.
+3. **Redimensionamento proporcional para 224 × 224 px:** a maior dimensão é ajustada a 224 px e a proporção é preservada, com reamostragem bicúbica.
+4. **Preenchimento neutro:** o restante do quadro recebe cinza `(128, 128, 128)`. Não há recorte, para não remover lesões nas bordas da foto.
+5. **Normalização:** os valores de pixel são convertidos para `float32` no intervalo [0, 1].
+
+As decisões e o motivo de cada uma estão registradas no notebook. O tamanho de 224 px segue a referência do diagnóstico da T3.3 e do candidato EfficientNet-Lite0, mas é um parâmetro, porque a arquitetura final ainda não foi escolhida.
+
+**Verificação automatizada.** O script [`tests/validar_preprocessamento.py`](../tests/validar_preprocessamento.py) usa imagens sintéticas para checar o contrato da função: formato e faixa de valores, preservação da proporção com faixas de preenchimento, ampliação de imagens menores que 224 px, conversão de modos de cor, aplicação da orientação EXIF e determinismo. Para executar, use `python tests/validar_preprocessamento.py`.
+
+### Resultado da execução
+
+- **Leitura:** as **3.262 imagens** foram processadas sem falhas de leitura.
+- **Dimensões:** a menor dimensão tem mediana de 682 px. **79 imagens** têm a menor dimensão abaixo de 224 px e, por isso, são ampliadas para a entrada do modelo.
+- **Distribuição por partição:** 2.287 imagens de treino, 488 de validação e 487 de teste, mesma divisão da T4.2.
+- **Referência de hashes:** o arquivo [`referencia_entrada.csv`](../assets/data/padronizacao_T4_1/referencia_entrada.csv) registra o SHA-256 da saída de `preparar_imagem` para cada imagem. O hash permite comparar a implementação usada no aparelho com a referência gerada aqui.
+- **Parâmetros:** o arquivo [`parametros.json`](../assets/data/padronizacao_T4_1/parametros.json) registra tamanho, cor de preenchimento, normalização, tratamento de EXIF e a versão do Pillow usada (12.2.0).
+
+### Limites e próximos passos
+
+- A normalização em [0, 1] é uma escolha simples. Antes do treinamento, a faixa exigida pelo backbone escolhido deve ser confirmada, e a normalização ajustada se necessário.
+- Os hashes foram gerados em um ambiente específico. Se outro ambiente usar outra versão do Pillow ou outra implementação de reamostragem, os valores podem diferir e a referência deve ser regenerada.
+- A inspeção visual foi feita por uma amostra fixa de 8 imagens, e não por revisão individual do conjunto.
+- A padronização trata a geometria e a cor de entrada. Ela não corrige a qualidade da foto; essa validação precisa ser tratada na etapa de validação da imagem.
+
 ## 4.2 Particionamento por grupo
 
 ### Objetivo e entradas
@@ -1132,3 +1169,41 @@ Os resultados estão no [manifesto por imagem](../assets/data/particionamento_T4
 
 Este particionamento é **provisório**. **2.953 imagens de `dataset`** ainda mantêm decisões de triagem automática sem inspeção visual individual; os rótulos finais do modelo não foram aprovados; e não foram fornecidos vínculos manuais adicionais da mesma planta (**zero vínculos** nesta execução). Em parte do catálogo, `grupo_origem` identifica apenas o arquivo, sem provar que fotografias diferentes vieram de plantas independentes. Portanto, a auditoria confirma ausência de vazamento **identificável pelos metadados e pares revisados**.
 Antes da avaliação final, é necessário completar a revisão visual, confirmar as classes e acrescentar os vínculos de planta ou captura disponíveis. Depois disso, a divisão deve ser refeita e o conjunto de teste mantido reservado para a avaliação final.
+
+## 4.4 Rotinas de aumento de dados
+
+### Objetivo e entradas
+
+Ampliar a diversidade das imagens de treino com variações que aparecem na captura em campo, como luz do sol, sombra, balanço de branco do celular, ângulo da folha, tremor e ruído do sensor. O aumento responde ao risco **R09** (diferença entre o acervo e as fotos reais de campo) e ajuda a mitigar o **R01** (poucas imagens por classe). O [notebook da T4.4](../notebooks/T4_4_aumento_dados.ipynb) usa como entrada o [manifesto da T4.2](../assets/data/particionamento_T4_2/manifesto_provisorio.csv) e a saída de `preparar_imagem` da T4.1. A lógica fica em [`src/aumento.py`](../src/aumento.py).
+
+### Método
+
+A função `aplicar_aumento` recebe a imagem já padronizada (224 × 224 px, float32 em [0, 1]) e a partição de origem. Cada uma das cinco transformações é sorteada de forma independente, com probabilidade de 50%:
+
+1. **Brilho e contraste:** simula sol forte e sombra, com contraste entre 0,8 e 1,2 e brilho entre 0,75 e 1,25.
+2. **Balanço de branco:** ganho de ±5% em cada canal de cor, para representar celulares com correções de cor diferentes.
+3. **Ângulo de captura:** rotação de 0°, 90°, 180° ou 270°, com espelhamento horizontal em metade dos casos. Não há rotação arbitrária, para não criar bordas de interpolação.
+4. **Tremor ou foco leve:** desfoque gaussiano com raio entre 0,5 e 1,5 px.
+5. **Ruído do sensor:** ruído gaussiano com desvio-padrão entre 0,005 e 0,03.
+
+**Aplicação restrita ao treino.** A função recusa qualquer partição diferente de `treino` com `ValueError`. Assim, validação e teste nunca recebem uma variação aumentada, nem por engano de quem chama a função.
+
+**Sem recorte.** Como na T4.1, o aumento não corta a imagem, para não remover lesões nas bordas.
+
+**Preenchimento preservado.** As faixas de cinza adicionadas pela T4.1 são artificiais e não representam a cena fotografada. Por isso, brilho, balanço de branco, desfoque e ruído são aplicados somente ao conteúdo da imagem. Em rotações e espelhamentos, a máscara do preenchimento acompanha a transformação e as faixas permanecem no cinza neutro original.
+
+A função recebe um gerador de números aleatórios com semente explícita (o notebook usa a semente 42), e os parâmetros são gravados em [`parametros.json`](../assets/data/aumento_T4_4/parametros.json) para permitir a reprodução.
+
+### Resultado da execução
+
+- **Aplicação:** das **3.262 imagens** do manifesto, **2.287** são de treino e aceitam aumento. As **975** de validação e teste foram recusadas, como esperado.
+- **Inspeção visual:** o notebook gera uma grade com quatro imagens de treino, cada uma com a entrada original e três variações sorteadas. As transformações geométricas e de luz são visualmente plausíveis, e a lesão ou o inseto permanece visível.
+- **Verificação automatizada:** o script [`tests/validar_aumento.py`](../tests/validar_aumento.py) confirma formato e faixa de valores, entrada não alterada, determinismo com semente fixa, preservação do preenchimento neutro, variação real (menos de 10% das saídas iguais à entrada) e bloqueio fora do treino em todas as linhas do manifesto.
+
+### Limites e próximos passos
+
+- **Imagens sem variação suficiente:** classes com 1 ou 2 imagens no treino continuam com pouca diversidade. Aumentar uma única foto gera variações parecidas, então essas classes seguem como exploratórias, sem ganho real de generalização.
+- **Cor como sinal diagnóstico:** o balanço de branco foi limitado a ±5% porque a cor pode indicar sintomas como amarelamento. Uma faixa maior precisa ser validada com o parceiro.
+- **Fundo e condições reais:** o aumento não simula fundos de campo nem chuva ou poeira. Esses casos dependem de fotos reais, previstas nos testes com celular da fase de validação.
+- **Balanceamento:** esta task não equilibra as classes. Essa decisão pertence à T4.3, que trata da estratégia de balanceamento.
+- **Probabilidade fixa:** a probabilidade de 50% por transformação ainda não foi comparada com outras opções. Ela pode ser ajustada depois de um primeiro treino.
