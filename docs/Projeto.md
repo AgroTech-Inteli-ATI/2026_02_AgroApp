@@ -21,6 +21,27 @@
 - [2.4 Diagrama da arquitetura da solução](#24-diagrama-da-arquitetura-da-solução)
 - [2.5 Consolidação técnica](#25-consolidação-técnica)
 
+- [Entendimento dos dados](#entendimento-dos-dados)
+- [T3.4 — Dicionário de classes](#dicionário-de-classes-t34)
+
+</details>
+
+<details>
+<summary><strong>3. Entendimento dos dados</strong></summary>
+
+- [3.1 Inventário do acervo](#31-inventário-do-acervo)
+- [3.2 Análise exploratória visual](#32-análise-exploratória-visual)
+- [3.3 Diagnóstico de qualidade do acervo](#33-diagnóstico-de-qualidade-do-acervo)
+
+</details>
+
+<details>
+<summary><strong>4. Preparação dos dados</strong></summary>
+
+- [4.1 Padronização das imagens (T4.1)](#41-padronização-das-imagens)
+- [4.2 Particionamento por grupo (T4.2)](#42-particionamento-por-grupo-t42)
+- [4.4 Rotinas de aumento de dados (T4.4)](#44-rotinas-de-aumento-de-dados)
+
 </details>
 
 <details>
@@ -534,9 +555,11 @@ Finalizar os requisitos e restrições técnicas com os valores acordados com o 
 | A preencher | A validar | A preencher | A preencher | A preencher |
 
 
-# Entendimento dos dados
+# 3. Entendimento dos dados
 
-## Inventário do acervo
+Para consultar o código e as etapas de geração dos arquivos desta seção, acesse o [notebook do AgroApp no Google Colab](https://colab.research.google.com/drive/18igL8eeSBvpOwm9mstFra3c0GXk4uCVB).
+
+## 3.1 Inventário do acervo
 
 ### Objetivo
 
@@ -589,10 +612,9 @@ Além disso, a planilha do inventário também está versionada no repositório 
 ### Observação
 
 A associação formal entre os nomes das ocorrências e seus
-respectivos agentes causais será complementada a partir do
-dicionário de classes desenvolvido na T3.4.
+respectivos agentes causais está registrada no [dicionário de classes da T3.4](#dicionário-de-classes-t34), com referências a validar e pendências explícitas para os rótulos ambíguos.
 
-## Análise exploratória visual
+## 3.2 Análise exploratória visual
 
 ### Objetivo
 
@@ -728,6 +750,7 @@ Boa parte das classes de Soja/Doenças tem hoje apenas 1 a 3 imagens, abaixo do 
 desejável de 5 a 10 indicado como objetivo mínimo para avaliação visual, a análise foi feita com
 todo o material disponível, mas os pares e clusters aqui identificados devem ser
 revisados quando o acervo for complementado pelo parceiro ou por bases públicas
+
 validadas (Seção 1.4, item 7). A associação formal entre os pares/clusters aqui
 levantados e a decisão de unificar ou manter classes separadas será complementada a
 partir do dicionário de classes desenvolvido na T3.4.
@@ -831,3 +854,469 @@ Depois da seleção, ajustar a política de confiança usando somente dados de v
 O experimento deverá guardar versão do dataset, classes aprovadas e respectivos índices, IDs e grupos de cada partição, contagens originais de treino por classe, pesos aplicados, configuração de amostragem, transformações, sementes, orçamento de treinamento e métricas por classe. Esses registros permitem reproduzir o cálculo e identificar alterações após a ampliação do acervo.
 
 A **definição da T4.3** fica consolidada nesta seção: ponderação como escolha inicial, justificativa baseada no inventário, comparação das alternativas e protocolo de avaliação. A **validação experimental** ficará concluída quando houver classes e partições avaliáveis, execução de E0/E1 (e E2 se necessário), registro das métricas e justificativa da configuração selecionada. Até lá, não há evidência para afirmar melhora de desempenho ou generalização nas 55 ocorrências.
+
+validadas (Seção 1.4, item 7). O [dicionário de classes da T3.4](#dicionário-de-classes-t34)
+registra as relações entre os rótulos candidatos a duplicidade. A decisão de unificar
+ou manter classes separadas depende de validação agronômica e do conteúdo técnico do parceiro.
+
+## 3.3 Diagnóstico de qualidade do acervo
+
+### Objetivo
+
+Avaliar resolução, enquadramento, presença de duplicatas e proporção de imagens de campo e de catálogo no acervo de soja e milho. O diagnóstico registra como esses fatores podem afetar a generalização do modelo de reconhecimento visual.
+
+**Fonte das imagens analisadas:** imagens disponibilizadas pela equipe do Agro APP.
+
+### Metodologia
+
+A análise reúne **3.460 imagens** de três fontes: **3.334** da pasta `dataset` e **126** dos acervos de Milho e Soja. As planilhas registram, para cada imagem, a cultura, a categoria, a ocorrência, o caminho do arquivo, as dimensões, a legibilidade, o hash SHA-256, o hash perceptual, os alertas de qualidade e a decisão de seleção. A verificação seguiu estas etapas:
+
+1. **Resolução e leitura:** conferir se o arquivo era legível, registrar largura e altura e sinalizar imagens cuja menor dimensão fosse inferior à referência de 224 pixels.
+2. **Duplicatas:** comparar hashes SHA-256 para localizar arquivos idênticos e examinar os pares sugeridos pelo hash perceptual para identificar versões da mesma fotografia, inclusive quando aparecem em classes diferentes.
+3. **Revisão por imagem:** conferir o enquadramento, a visibilidade do problema, o formato da imagem, a duplicidade e a coerência do rótulo; registrar a decisão (**manter**, **revisar** ou **excluir**) e sua justificativa. As 379 pendências foram examinadas visualmente. Outras 2.953 imagens de `dataset` conservam decisões de triagem automática, ainda sem inspeção visual individual.
+4. **Consolidação:** agrupar os registros por fonte e classe, contar os alertas de qualidade e as decisões, e calcular as proporções de imagens de campo e de catálogo. Os alertas de resolução, desfoque e exposição podem se sobrepor e não determinam, isoladamente, a exclusão.
+
+A unidade de contagem é o **registro de imagem**. Se uma mesma fotografia aparece em duas classes, ela contribui com um registro para cada classe. As abas de revisão e os resumos da planilha de decisões permitem rastrear os totais até cada imagem.
+
+### Planilhas de diagnóstico e revisão
+
+| Arquivo | Conteúdo e função |
+| --- | --- |
+| [Diagnóstico das três fontes](../assets/data/diagnostico_qualidade_T3_3_tres_fontes.xlsx) | Relatório de diagnóstico das 3.460 imagens de `dataset`, Milho e Soja, com indicadores de qualidade, resumos por classe e candidatos a duplicata. |
+| [Planilha de decisões](../assets/data/diagnostico_qualidade_T3_3_revisado.xlsx) | Decisão **manter**, **excluir** ou **revisar** e justificativa por registro, além dos resumos e da conclusão dos pares de duplicatas visuais. |
+
+ <p><em>Fonte: Próprios autores (2026).</em></p>
+
+As abas de revisão preservam `largura`, `altura`, `menor_dimensao`, `megapixels`, `arquivo_legivel`, os alertas de nitidez e exposição, a decisão e a justificativa de cada foto. O **Resumo por classe** reúne os indicadores e as decisões por cultura, ocorrência e fonte. Megapixels medem o tamanho total da imagem, enquanto a menor dimensão e o enquadramento ajudam a verificar se o sinal relevante terá detalhe suficiente na entrada do modelo.
+
+### Resultados
+
+#### Visão geral
+
+| Indicador | Resultado |
+| --- | ---: |
+| Imagens avaliadas | 3.460 |
+| Ocorrências distintas registradas | 69 |
+| Imagens legíveis | 3.460 |
+| Imagens com menor dimensão abaixo de 224 pixels | 129 (3,7%) |
+| Imagens possivelmente borradas | 29 (0,8%) |
+| Imagens com exposição inadequada | 75 (2,2%) |
+| Imagens de campo | 1.900 (54,9%) |
+| Imagens de catálogo | 1.560 (45,1%) |
+| Imagens marcadas para manter | 3.262 |
+| Imagens marcadas para revisar | 0 |
+| Imagens marcadas para excluir | 198 |
+
+*Fonte: diagnóstico das três fontes e planilha de decisões (2026).*
+
+Os **3.460 registros** incluem **1.824** fotos de campo e **1.510** imagens de catálogo de `dataset`, além de **16** imagens do acervo de Milho e **110** do acervo de Soja. Na pasta `dataset`, as decisões são **3.156 manter** e **178 excluir**. Das **379** pendências encontradas no conjunto, a inspeção visual indicou **214 manter** e **165 excluir**. Uma imagem adicional, anteriormente marcada para manter, foi excluída por repetir uma fotografia com rótulo conflitante. As justificativas individuais constam da planilha de decisões.
+
+O limite de **224 pixels na menor dimensão** sinaliza imagens pequenas, mas não prova que sejam inutilizáveis; o detalhe relevante precisa ser conferido após o redimensionamento usado pelo modelo. O enquadramento manual foi registrado nas **126 imagens** dos acervos anteriores: **seis** receberam a marcação *distante*. Esse indicador não foi medido manualmente para as outras 3.334 imagens e, por isso, não aparece como total geral no quadro.
+
+#### Duplicatas: critério essencial
+
+Nas três fontes, foram encontrados **15 grupos de duplicatas exatas**, com **30 registros**, e **99 pares candidatos a duplicata visual** pelo hash perceptual. A inspeção dos 99 pares identificou **4 falsos positivos**, **2 pares da mesma foto com rótulos conflitantes** e **93 pares da mesma foto ou cena com versões redundantes**. Pares podem compartilhar imagens e não representam, necessariamente, 99 exclusões adicionais. Entre os 15 grupos exatos, **12** conservaram uma cópia; em **dois**, ambas foram excluídas por rótulos conflitantes; no grupo restante, foi selecionada uma versão equivalente fora do par exato. Os 30 registros desses grupos somam **12 manter** e **18 excluir**.
+
+O quadro abaixo detalha **dois pares do acervo de Soja** que atravessam classes diferentes: um par exato, confirmado pelo SHA-256, e outro formado por versões da mesma fotografia. Esses casos exemplificam o risco de rótulos conflitantes preservado na análise visual:
+
+| Classe de soja/doenças | Duplicatas exatas na classe | Versões quase iguais na classe | Imagem | Repetida de |
+| --- | ---: | ---: | --- | --- |
+| Estiolamento, Podridão-de-raízes, Tombamento-de-mudas | 1 | 0 | IMG_0030 | IMG_0098 |
+| Podridão-de-raízes | 1 | 0 | IMG_0098 | IMG_0030 |
+| Phomopsis-da-semente | 0 | 1 | IMG_0090 | IMG_0108 |
+| Seca da haste e da vagem, Phomopsis-da-semente | 0 | 1 | IMG_0108 | IMG_0090 |
+
+ <p><em>Fonte: Próprios autores (2026).</em></p>
+
+IMG_0030 e IMG_0098 formam o par exato; IMG_0090 e IMG_0108 são versões da mesma foto. Os quatro registros foram excluídos da seleção para treinamento até que seus rótulos sejam conferidos e corrigidos. Antes de separar dados de treino e teste, deve-se manter versões da mesma fotografia no mesmo conjunto ou remover a redundância. Caso contrário, o modelo pode memorizar a imagem e a avaliação aparentar um desempenho maior do que teria em fotos novas. Rótulos conflitantes também podem ensinar associações contraditórias. A conclusão de cada par candidato está na aba **Duplicatas visuais** da planilha de decisões.
+
+#### Campo e catálogo: critério essencial
+
+**Campo** representa a imagem no contexto da lavoura. **Catálogo** representa uma imagem de referência, frequentemente isolada ou com apresentação controlada. É uma classificação do tipo de foto, não uma decisão automática de descarte.
+
+| Fonte | Campo | Catálogo | Total |
+| --- | ---: | ---: | ---: |
+| `dataset` | 1.824 | 1.510 | 3.334 |
+| Milho | 14 | 2 | 16 |
+| Soja | 62 | 48 | 110 |
+| **Total** | **1.900** | **1.560** | **3.460** |
+
+ <p><em>Fonte: Próprios autores (2026).</em></p>
+
+Em `dataset`, **54,7%** das imagens são de campo e **45,3%** de catálogo. Na avaliação manual dos acervos anteriores, **15 classes** tinham apenas imagens de catálogo, **18** apenas imagens de campo e **22** apresentavam os dois tipos. Se o uso real do AgroApp for fotografar plantas em campo, um modelo treinado em excesso com imagens de catálogo pode aprender fundos, iluminação ou enquadramentos que não representam esse uso. Isso pode reduzir sua capacidade de reconhecer a mesma ocorrência em fotos reais. Recomenda-se avaliar o modelo em fotos de campo separadas por fotografia de origem e acompanhar o desempenho por tipo de imagem e por classe. Este diagnóstico aponta um risco de generalização; ele não quantifica uma queda de desempenho.
+
+#### Resolução e enquadramento: critério desejável
+
+No conjunto das três fontes, **129 imagens** têm menor dimensão abaixo de 224 pixels, **29** foram sinalizadas como possivelmente borradas e **75** apresentam exposição inadequada. Esses alertas podem se sobrepor. Entre as **12 imagens pequenas** dos acervos anteriores, **5** foram excluídas e **7** mantidas após inspeção visual; as **6** com enquadramento distante foram excluídas. O limite de 224 pixels funciona como alerta, não como critério isolado de exclusão. As imagens abaixo preservam exemplos das decisões e justificativas da inspeção.
+
+##### Imagens pequenas mantidas
+
+| Imagem | Classe | Dimensões | Decisão |
+| --- | --- | ---: | --- |
+| IMG_0017 | Antracnose | 216 × 322 pixels | Manter |
+| IMG_0018 | Antracnose | 322 × 211 pixels | Manter |
+| IMG_0045 | Mancha-aureolada | 259 × 194 pixels | Manter |
+| IMG_0099 | Podridão-preta-das-raízes, Podridão-cinzenta-do-caule | 259 × 195 pixels | Manter |
+| IMG_0119 | Coró-da-soja-do-cerrado | 279 × 181 pixels | Manter |
+| IMG_0121 | Coró-da-soja, bicho-bolo | 200 × 190 pixels | Manter |
+| IMG_0122 | Gorgulho-da-soja, Tamanduá-da-soja | 287 × 220 pixels | Manter |
+
+*Fonte: imagens disponibilizadas pela equipe do Agro APP.*
+
+A decisão de manter essas imagens não elimina o alerta de resolução. A qualidade do sinal deve continuar sendo acompanhada após o redimensionamento do fluxo de treinamento.
+
+##### Imagens pequenas excluídas
+
+As cinco imagens abaixo foram retiradas da seleção para treinamento porque sua resolução é inferior à referência de 224 pixels na menor dimensão e o detalhe útil foi considerado insuficiente na revisão. A planilha preserva cada arquivo e registra **excluir** na coluna `decisao`, com a justificativa individual.
+
+| Foto | Classe e dimensões | Por que excluir |
+| --- | --- | --- |
+| ![IMG_0021: três folhas com manchas escuras em imagem pequena](../assets/revisão_imagens/IMG_0021.jpg) | **IMG_0021** — Clodosporiose, Verrugose; 300 × 214 pixels | As lesões perdem detalhe com a baixa resolução.Além da imagem possuir outra imagem sobreposta. |
+| ![IMG_0055: detalhe de folha com pequenos sinais claros em imagem pequena](../assets/revisão_imagens/IMG_0055.jpg) | **IMG_0055** — Míldio; 340 × 210 pixels | O detalhe do sintoma fica limitado pelo tamanho do arquivo. |
+| ![IMG_0087: elemento claro muito pequeno sobre haste em imagem pequena](../assets/revisão_imagens/IMG_0087.jpg) | **IMG_0087** — Nematóide-reniforme; 251 × 200 pixels | O elemento observado dispõe de poucos pixels para reconhecimento junto a imagem ser de microcóspio. |
+| ![IMG_0117: dois insetos em fotografia pequena](../assets/revisão_imagens/IMG_0117.jpg) | **IMG_0117** — Cascudinho-da-soja; 274 × 184 pixels | Os insetos têm detalhe insuficiente para uma entrada de treinamento confiável. |
+| ![IMG_0125: percevejo em fotografia de resolução muito baixa](../assets/revisão_imagens/IMG_0125.jpg) | **IMG_0125** — Percevejo da Soja; 121 × 136 pixels | A resolução é muito baixa e limita fortemente a identificação do inseto. |
+
+*Fonte: imagens disponibilizadas pela equipe do Agro APP.*
+
+##### Imagens com enquadramento distante excluídas
+
+Foram marcadas como **excluir** as imagens **IMG_0014**, **IMG_0029**, **IMG_0042**, **IMG_0072**, **IMG_0073** e **IMG_0078**. Nelas, a infestação, a muda ou os sinais associados à classe aparecem pequenos demais ou não são visíveis. Mesmo quando o arquivo tem dimensões grandes, a informação necessária para reconhecer a ocorrência ocupa poucos pixels. Por isso, essas fotos não são adequadas para treinar o reconhecimento da ocorrência específica. Os exemplos abaixo preservam as justificativas dessa inspeção visual.
+
+| Foto | Classe e motivo da exclusão |
+| --- | --- |
+| ![IMG_0042: vista ampla de lavoura de soja, sem detalhe de lesões individuais](../assets/revisão_imagens/IMG_0042.jpg) | **IMG_0042 — Macrophomina.** A fotografia mostra a lavoura à distância. O sinal específico da classe não pode ser distinguido na imagem. |
+| ![IMG_0078: vista panorâmica de lavoura de soja, sem raízes ou cistos visíveis](../assets/revisão_imagens/IMG_0078.jpg) | **IMG_0078 — Nematóide de cisto.** A fotografia mostra as linhas da lavoura, mas não as raízes ou os cistos necessários para identificar a ocorrência. |
+
+*Fonte: imagens disponibilizadas pela equipe do Agro APP.*
+
+As fotos acima são exemplos de um problema de **escala do objeto na cena**, não de tamanho do arquivo. Fotos distantes podem levar o modelo a aprender características gerais da lavoura ou do fundo em vez dos sinais da classe, prejudicando a generalização para novas capturas.
+
+#### Imagem incompatível com o rótulo
+
+A **IMG_0067** também foi marcada como **excluir**. Ela está na pasta `Soja/Doencas/21 - Murcha-de-fusarium, Murcha`, mas mostra plantas com **frutos vermelhos** e tem baixa qualidade visual. O conteúdo não corresponde de forma confiável à cultura e à ocorrência registradas. Não deve ser usada no treinamento do modelo; o rótulo precisa de validação técnica antes de qualquer reaproveitamento.
+
+![IMG_0067: plantas com frutos vermelhos; imagem de baixa qualidade, incompatível com a classe de soja registrada](../assets/revisão_imagens/IMG_0067.jpg)
+
+*Fonte: imagens disponibilizadas pela equipe do Agro APP.*
+
+Imagens com conteúdo incompatível com a classe, cultura não confirmada ou qualidade visual insuficiente devem ser retiradas da seleção de treinamento. Caso se deseje reaproveitá-las em outro conjunto, é necessário validar a origem e o rótulo antes.
+
+
+
+#### Imagens em formato técnico ou de montagem
+
+As imagens **IMG_0031**, **IMG_0036** e **IMG_0070** também foram marcadas como **excluir**. A [persona e sua jornada](#13-persona-e-jornada-do-usuário) descrevem uma estudante que fotografa plantas durante atividades de campo com o AgroApp. A entrada esperada para o modelo é, portanto, uma fotografia única capturada nessa situação. Uma imagem de microscópio ou uma montagem preparada apresenta enquadramento e pistas visuais diferentes dos que o aplicativo receberá. Incluí-las no treinamento pode fazer o modelo aprender características do material técnico, como bordas, margens e divisão da imagem, em vez dos sinais da ocorrência.
+
+| Foto | Classe e justificativa da exclusão |
+| --- | --- |
+| ![IMG_0031: detalhe microscópico com campo circular e bordas escuras](../assets/revisão_imagens/IMG_0031.jpg) | **IMG_0031 — Ferrugem asiática.** O campo circular indica uma captura microscópica de laboratório, que não corresponde à fotografia da planta feita pela persona em campo. |
+| ![IMG_0036: montagem de duas imagens de sementes sobre fundo branco amplo](../assets/revisão_imagens/IMG_0036.jpg) | **IMG_0036 — Fungo-de-armazenamento.** Duas imagens pequenas foram reunidas em uma apresentação técnica com margens amplas; o arquivo não representa uma captura única no aplicativo. |
+| ![IMG_0070: montagem lado a lado de duas cenas de plantas](../assets/revisão_imagens/IMG_0070.jpg) | **IMG_0070 — Nematoide-da-haste verde, Ponta Branca.** A montagem compara duas cenas em um único arquivo. Embora as cenas mostrem plantas, esse formato preparado não corresponde à foto única que a persona enviará. |
+
+*Fonte: imagens disponibilizadas pela equipe do Agro APP.*
+
+Essas exclusões se referem ao treinamento do modelo de reconhecimento por fotos capturadas no uso previsto. Os arquivos originais continuam preservados como material técnico de referência.
+
+### Observação
+
+**Nenhuma imagem permanece em revisar** na planilha de decisões. A inspeção visual cobriu as **126 imagens** dos acervos anteriores e **381 imagens distintas de `dataset`**, incluindo as pendências e amostras adicionais. Outras **2.953 imagens de `dataset`** conservam decisões de triagem automática e ainda precisam de inspeção individual antes da definição do conjunto final de treinamento. A marcação **excluir** retira a imagem da seleção de treinamento; os arquivos originais foram preservados. Não foram feitos testes de desempenho do modelo para quantificar o efeito das exclusões.
+## Dicionário de classes (T3.4)
+
+O dicionário relaciona as **55 ocorrências e 126 imagens** do inventário às culturas, aos agentes causais de referência e ao vínculo de conteúdo técnico. Cobre 4 ocorrências de milho/pragas (16 imagens), 10 de soja/pragas (13 imagens) e 41 de soja/doenças (97 imagens). Não inclui classes de plantas daninhas, deficiências ou plantas sadias, pois não há registros dessas categorias no inventário recebido.
+
+O arquivo [dicionario-classes.json](../assets/data/dicionario-classes.json) é a fonte estruturada desta entrega. A origem dos rótulos e das contagens é o [inventário versionado](../assets/data/inventario-acervo.xlsx). Os agentes são referências bibliográficas para revisão agronômica, não diagnósticos confirmados das imagens. A confirmação da identidade de cada ocorrência depende do parceiro.
+
+### Campos e convenções
+
+| Campo JSON | Significado e regra |
+| --- | --- |
+| `id` | Identificador único e estável, de `AGRO-001` a `AGRO-055`. A ordem inicial acompanha as linhas preenchidas do inventário. Não reutilizar IDs nem renumerar após revisão. Não representa o índice de saída do modelo. |
+| `cultura` | Soja ou Milho; faz parte da identidade da ocorrência. |
+| `categoria` | Pragas ou Doenças; o campo `classe` da planilha representa esta categoria, não uma classe individual de treinamento. |
+| `rotulo_origem` | Texto exato da planilha, inclusive acentos decompostos, grafias e separadores. Permite rastrear a ocorrência. |
+| `nome_comum` | Rótulo convertido para Unicode NFC para exibição, preservando a nomenclatura recebida. Correções de nomes exigem revisão, mantendo o rótulo de origem. |
+| `quantidade_imagens` | Contagem registrada no inventário. |
+| `agente_causal` | Táxon ou conjunto de táxons de referência; `null` quando o rótulo não permite associação suficientemente segura. Gênero seguido de `spp.` não identifica uma espécie. |
+| `status_agente` | `referencia_a_validar` ou `indeterminado`; nenhuma imagem foi confirmada agronomicamente nesta entrega. |
+| `fontes` | Códigos de referências bibliográficas definidos no objeto `fontes` do JSON. Lista vazia para agentes indeterminados. |
+| `chave_conteudo` | Chave **oficial** do conteúdo técnico do Agro App. Atualmente `null` em todos os registros: o catálogo oficial não está no repositório. |
+| `chave_conteudo_proposta` | Chave local única em ASCII (`cultura.ocorrencia.agro-NNN`) para organizar a futura integração. Não é uma URL, rota ou identificador existente do aplicativo. |
+| `status_conteudo` | `aguardando_catalogo_agroapp`; mudar para `validado` somente após confirmar a chave oficial e a abertura do conteúdo correto. |
+| `relacoes` | IDs de ocorrências candidatas a duplicidade ou revisão de identidade. Não autoriza união de classes. |
+
+### Catálogo
+
+Todas as chaves abaixo são **propostas locais**, ainda sem correspondência oficial validada. “Indeterminado” é uma pendência explícita, não uma nova classe do modelo.
+
+<!-- tabela:inicio -->
+| ID | Cultura | Categoria | Rótulo no inventário / nome comum | Agente causal de referência | Chave proposta |
+| --- | --- | --- | --- | --- | --- |
+| AGRO-001 | Milho | Pragas | Cigarrinha do milho | Dalbulus maidis | `milho.ocorrencia.agro-001` |
+| AGRO-002 | Milho | Pragas | Coró-do-milho | Indeterminado — revisão necessária | `milho.ocorrencia.agro-002` |
+| AGRO-003 | Milho | Pragas | Percevejo-do-milho | Indeterminado — revisão necessária | `milho.ocorrencia.agro-003` |
+| AGRO-004 | Milho | Pragas | Pulgão-do-milho | Rhopalosiphum maidis | `milho.ocorrencia.agro-004` |
+| AGRO-005 | Soja | Doenças | Antracnose | Colletotrichum truncatum | `soja.ocorrencia.agro-005` |
+| AGRO-006 | Soja | Doenças | Cancro-da-haste | Diaporthe aspalathi; Diaporthe caulivora | `soja.ocorrencia.agro-006` |
+| AGRO-007 | Soja | Doenças | Clodosporiose, Verrugose | Indeterminado — revisão necessária | `soja.ocorrencia.agro-007` |
+| AGRO-008 | Soja | Doenças | Crestamento bacteriano | Pseudomonas savastanoi pv. glycinea | `soja.ocorrencia.agro-008` |
+| AGRO-009 | Soja | Doenças | Damping-off, Podridão-aquosa, Tombamento | Indeterminado — revisão necessária | `soja.ocorrencia.agro-009` |
+| AGRO-010 | Soja | Doenças | Estiolamento, Podridão-de-raízes, Tombamento-de-mudas | Indeterminado — revisão necessária | `soja.ocorrencia.agro-010` |
+| AGRO-011 | Soja | Doenças | Ferrugem asiática | Phakopsora pachyrhizi | `soja.ocorrencia.agro-011` |
+| AGRO-012 | Soja | Doenças | Fungo de pós colheita | Indeterminado — revisão necessária | `soja.ocorrencia.agro-012` |
+| AGRO-013 | Soja | Doenças | Fungo-de-armazenamento | Indeterminado — revisão necessária | `soja.ocorrencia.agro-013` |
+| AGRO-014 | Soja | Doenças | Fungo-de-pós-colheita, Podridão-dos-grãos-armazenados | Indeterminado — revisão necessária | `soja.ocorrencia.agro-014` |
+| AGRO-015 | Soja | Doenças | Fusariose, Podridão vermelha da raiz | Fusarium spp. (complexo de podridão vermelha da raiz) | `soja.ocorrencia.agro-015` |
+| AGRO-016 | Soja | Doenças | Macrophomina | Macrophomina phaseolina | `soja.ocorrencia.agro-016` |
+| AGRO-017 | Soja | Doenças | Mancha alvo | Corynespora cassiicola | `soja.ocorrencia.agro-017` |
+| AGRO-018 | Soja | Doenças | Mancha-aureolada | Indeterminado — revisão necessária | `soja.ocorrencia.agro-018` |
+| AGRO-019 | Soja | Doenças | Mancha-olho-de-rã | Cercospora sojina | `soja.ocorrencia.agro-019` |
+| AGRO-020 | Soja | Doenças | Mancha-parda, Septoriose | Septoria glycines | `soja.ocorrencia.agro-020` |
+| AGRO-021 | Soja | Doenças | Mela ou requeima | Rhizoctonia solani AG1 | `soja.ocorrencia.agro-021` |
+| AGRO-022 | Soja | Doenças | Míldio | Peronospora manshurica | `soja.ocorrencia.agro-022` |
+| AGRO-023 | Soja | Doenças | Mofo-branco, Podridão-de-sclerotinia | Sclerotinia sclerotiorum | `soja.ocorrencia.agro-023` |
+| AGRO-024 | Soja | Doenças | Mosaico comum da soja | Soybean mosaic virus (SMV) | `soja.ocorrencia.agro-024` |
+| AGRO-025 | Soja | Doenças | Murcha-de-Sclerotium | Sclerotium rolfsii | `soja.ocorrencia.agro-025` |
+| AGRO-026 | Soja | Doenças | Murcha-de-fusarium, Murcha | Fusarium spp. | `soja.ocorrencia.agro-026` |
+| AGRO-027 | Soja | Doenças | Nematoide-da-haste verde, Ponta Branca | Aphelenchoides besseyi | `soja.ocorrencia.agro-027` |
+| AGRO-028 | Soja | Doenças | Nematóide das lesões | Pratylenchus spp. | `soja.ocorrencia.agro-028` |
+| AGRO-029 | Soja | Doenças | Nematóide de cisto | Heterodera glycines | `soja.ocorrencia.agro-029` |
+| AGRO-030 | Soja | Doenças | Nematóide de galhas | Meloidogyne spp. | `soja.ocorrencia.agro-030` |
+| AGRO-031 | Soja | Doenças | Nematóide-espiralado, Nematóide | Helicotylenchus spp. | `soja.ocorrencia.agro-031` |
+| AGRO-032 | Soja | Doenças | Nematóide-reniforme | Rotylenchulus reniformis | `soja.ocorrencia.agro-032` |
+| AGRO-033 | Soja | Doenças | Oídio | Microsphaera diffusa (sinônimo: Erysiphe diffusa) | `soja.ocorrencia.agro-033` |
+| AGRO-034 | Soja | Doenças | Phomopsis-da-semente | Diaporthe spp. (Phomopsis spp.) | `soja.ocorrencia.agro-034` |
+| AGRO-035 | Soja | Doenças | Podridão da semente, Podridão de Fusarium | Fusarium spp. | `soja.ocorrencia.agro-035` |
+| AGRO-036 | Soja | Doenças | Podridão radicular de Phytophthora | Phytophthora sojae | `soja.ocorrencia.agro-036` |
+| AGRO-037 | Soja | Doenças | Podridão-cinzenta-do-caule, Podridão-preta-das-raízes | Macrophomina phaseolina | `soja.ocorrencia.agro-037` |
+| AGRO-038 | Soja | Doenças | Podridão-de-raízes | Indeterminado — revisão necessária | `soja.ocorrencia.agro-038` |
+| AGRO-039 | Soja | Doenças | Podridão-preta-das-raízes, Podridão-cinzenta-do-caule | Macrophomina phaseolina | `soja.ocorrencia.agro-039` |
+| AGRO-040 | Soja | Doenças | Podridão-radicular | Indeterminado — revisão necessária | `soja.ocorrencia.agro-040` |
+| AGRO-041 | Soja | Doenças | Podridão-vermelha-da-raiz | Fusarium spp. (complexo de podridão vermelha da raiz) | `soja.ocorrencia.agro-041` |
+| AGRO-042 | Soja | Doenças | Pústula bacteriana | Xanthomonas axonopodis pv. glycines | `soja.ocorrencia.agro-042` |
+| AGRO-043 | Soja | Doenças | Seca da haste e da vagem, Phomopsis-da-semente | Diaporthe spp. (Phomopsis spp.) | `soja.ocorrencia.agro-043` |
+| AGRO-044 | Soja | Doenças | Tombamento | Indeterminado — revisão necessária | `soja.ocorrencia.agro-044` |
+| AGRO-045 | Soja | Doenças | nematóide de cisto da soja (NCS) | Heterodera glycines | `soja.ocorrencia.agro-045` |
+| AGRO-046 | Soja | Pragas | Broca das vagens - Soja | Indeterminado — revisão necessária | `soja.ocorrencia.agro-046` |
+| AGRO-047 | Soja | Pragas | Broca-das-axilas-da-soja | Crocidosema aporema | `soja.ocorrencia.agro-047` |
+| AGRO-048 | Soja | Pragas | Cascudinho-da-soja | Myochrous armatus | `soja.ocorrencia.agro-048` |
+| AGRO-049 | Soja | Pragas | Coró da soja | Indeterminado — revisão necessária | `soja.ocorrencia.agro-049` |
+| AGRO-050 | Soja | Pragas | Coró-da-soja-do-cerrado | Phyllophaga capillata | `soja.ocorrencia.agro-050` |
+| AGRO-051 | Soja | Pragas | Coró-da-soja_ bicho-bolo | Indeterminado — revisão necessária | `soja.ocorrencia.agro-051` |
+| AGRO-052 | Soja | Pragas | Gorgulho-da-soja_ Tamanduá-da-soja | Sternechus subsignatus | `soja.ocorrencia.agro-052` |
+| AGRO-053 | Soja | Pragas | Lagarta-da-soja | Anticarsia gemmatalis | `soja.ocorrencia.agro-053` |
+| AGRO-054 | Soja | Pragas | Percevejo da Soja | Indeterminado — revisão necessária | `soja.ocorrencia.agro-054` |
+| AGRO-055 | Soja | Pragas | Tamanduá-da-soja | Sternechus subsignatus | `soja.ocorrencia.agro-055` |
+<!-- tabela:fim -->
+
+### Ambiguidades e duplicidades
+
+- **AGRO-015 / AGRO-041:** fusariose e podridão vermelha da raiz; revisar a identidade e o complexo de espécies antes de unificar.
+- **AGRO-016 / AGRO-037 / AGRO-039:** Macrophomina e os nomes invertidos de podridão cinzenta/preta; verificar se representam o mesmo conteúdo e a mesma classe.
+- **AGRO-029 / AGRO-045:** nematoide de cisto, com agente de referência comum; preservar os registros até confirmação.
+- **AGRO-052 / AGRO-055:** gorgulho/tamanduá; possível duplicidade de nomenclatura.
+- **AGRO-049 / AGRO-050 / AGRO-051:** os nomes de corós não justificam atribuir a mesma espécie a todos. A referência de AGRO-050 é específica ao coró-do-cerrado; os demais permanecem indeterminados.
+- **AGRO-046 / AGRO-047:** broca das vagens e broca das axilas requerem revisão de espécie e do local de ataque. Semelhança visual não confirma igualdade de agente.
+- **AGRO-012 / AGRO-013 / AGRO-014 / AGRO-044:** fungos pós-colheita, armazenamento e tombamento são rótulos abrangentes. Não atribuir Aspergillus, Penicillium ou outro agente apenas pela aparência das sementes.
+- **AGRO-002 / AGRO-003 / AGRO-054:** coró e percevejos podem representar diferentes espécies; o rótulo disponível não resolve essa escolha.
+- **AGRO-007 / AGRO-018:** manter “Clodosporiose” e “Mancha-aureolada” como recebidos, aguardando correção ou confirmação agronômica.
+- **AGRO-009 / AGRO-010 / AGRO-038 / AGRO-040:** tombamentos e podridões genéricos admitem causas distintas; não completar o agente por inferência do nome.
+
+As relações registradas não modificam as 55 ocorrências do inventário. A seleção das classes do MVP e qualquer fusão devem registrar os IDs de origem, a justificativa e a evidência da decisão. O modelo deverá ter um manifesto próprio que associe cada índice de saída ao ID aprovado, sem depender da posição no JSON.
+
+### Vinculação ao conteúdo técnico
+
+1. Receber do Agro App o catálogo com chaves oficiais, cultura, título e mecanismo de acesso ao conteúdo.
+2. Conferir, para cada ocorrência, cultura, agente e nome comum; obter confirmação agronômica nos casos ambíguos.
+3. Preencher `chave_conteudo` com a chave real, mantendo a chave proposta apenas como referência local. Mais de uma ocorrência pode apontar ao mesmo conteúdo após aprovação.
+4. Registrar a evidência e o responsável pela validação em novo campo `validacao_conteudo` (responsável, data e evidência) e mudar `status_conteudo` para `validado`.
+5. Verificar a abertura do conteúdo correto, inclusive offline, para todas as classes selecionadas para o MVP, conforme RF-07, RF-08 e RNF-08.
+
+Enquanto `chave_conteudo` for `null` ou o status não for `validado`, a integração não deve tentar navegar usando a chave proposta. Tratar a associação como indisponível. A entrega organiza o mapeamento, mas a resolução de 100% das rotas permanece dependente do catálogo oficial.
+
+### Referências e manutenção
+
+As associações usam como referência os [manuais de doenças de soja da Embrapa](https://www.embrapa.br/en/web/soja/busca-de-publicacoes/-/publicacao/991687/manual-de-identificacao-de-doencas-de-soja) e de [insetos e outros invertebrados da soja](https://www.embrapa.br/en/busca-de-publicacoes/-/publicacao/991685/manual-de-identificacao-de-insetos-e-outros-invertebrados-da-cultura-da-soja). As referências complementares estão identificadas no JSON por registro. Essa bibliografia não comprova a identidade dos exemplares do acervo nem substitui o catálogo técnico do parceiro.
+
+Para atualizar a tabela após editar o JSON: `python assets/data/gerar_dicionario.py`. Para verificar cobertura do inventário, contagens, unicidade e integridade das relações: `python tests/validar_dicionario.py`. Os comandos usam somente a biblioteca padrão do Python.
+
+## 3.5. Classes do MVP
+
+### Objetivo
+
+Definir quais classes de pragas e doenças entram e quais ficam de fora do MVP, com a justificativa de cada decisão.
+
+### Metodologia
+
+A definição partiu do [Inventário do acervo](#inventário-do-acervo) do Agro App, complementado por fotos de campo do iNaturalist e pelas imagens do AgroInsect. Os dados foram tratados como uma base única, desconsiderando imagens repetidas e figuras que não são fotografias. Classes com mais de uma pasta ou nome na base foram reunidas em uma só (por exemplo, os corós e as duas espécies da lagarta-das-vagens).
+
+A decisão considerou dois pontos: o **volume de imagens**, principal critério, porque um volume maior dá melhores condições de treinar e avaliar o modelo, e a **qualidade das imagens**, isto é, se o inseto ou o sintoma aparece com nitidez. Entram as classes com maior volume e imagens adequadas; ficam de fora as que têm poucas imagens.
+
+As doenças têm volume bem menor que as pragas, com no máximo 6 imagens por classe. Para que o MVP também cubra doenças, entram as de maior volume e com sinal visível na imagem, e a tabela indica o critério que cada uma não atende. As demais ficam de fora.
+
+**Fontes e créditos.** Acervo do Agro App; fotos do iNaturalist, observações do Brasil com identificação confirmada pela comunidade, sob licenças CC0 e CC BY, em que o crédito de cada autor deve acompanhar o uso das fotos; e o conjunto AgroInsect, sob licença CC BY 4.0.
+
+### Resultados
+
+#### Resumo
+
+| Grupo | Status | Classes | Imagens |
+| --- | --- | --- | --- |
+| Pragas | Entra | 13 | 3.233 |
+| Pragas | Fora do MVP | 7 | 18 |
+| Doenças | Entra | 8 | 36 |
+| Doenças | Fora do MVP | 28 | 59 |
+| **Total** | | **56** | **3.346** |
+
+#### Classes que entram no MVP
+
+| Classe | Cultura | Fontes | Imagens | Justificativa | Critério não atendido |
+| --- | --- | --- | --- | --- | --- |
+| **Vaquinha (Diabrotica speciosa)** | Milho/Soja | iNaturalist, AgroInsect | 1.055 | Maior volume da base, com o inseto nítido e um padrão verde com manchas alaranjadas inconfundível. | — |
+| **Astylus variegatus** | Milho | iNaturalist | 480 | Alto volume, com o besouro nítido e o padrão preto e amarelo marcante. | — |
+| **Lagarta-do-cartucho (Spodoptera frugiperda)** | Milho/Soja | iNaturalist, AgroInsect | 434 | Alto volume, com o inseto bem visível em fundos e posições variadas. | — |
+| **Percevejo-barriga-verde (Dichelops/Diceraeus)** | Milho/Soja | iNaturalist, AgroInsect | 283 | Alto volume, com o percevejo em diferentes plantas e posições. | — |
+| **Cigarrinha-do-milho (Dalbulus maidis)** | Milho | Acervo, AgroInsect | 212 | Alto volume, com a cigarrinha em posições variadas; as imagens do acervo mostram também o sintoma na folha. | — |
+| **Cigarrinha-das-pastagens (Deois flavopicta)** | Milho | iNaturalist | 168 | Bom volume, com o inseto nítido e o padrão preto e amarelo característico. | — |
+| **Lagarta-das-vagens (Spodoptera eridania e S. cosmioides)** | Soja | iNaturalist | 159 | Bom volume e a maior presença de lagartas (larvas) entre as classes de lagartas. | — |
+| **Percevejo-verde (Nezara viridula)** | Soja | iNaturalist | 94 | Bom volume, com adultos e ninfas de cores diferentes. | — |
+| **Percevejo-do-milho (Leptoglossus zonatus)** | Milho | Acervo, iNaturalist | 83 | Bom volume, com adultos, ninfas e ovos; as pernas dilatadas ficam bem visíveis. | — |
+| **Lagarta-falsa-medideira (Chrysodeixis includens)** | Soja | iNaturalist | 82 | Bom volume, com a mariposa nítida e as marcas prateadas nas asas. | — |
+| **Percevejo-asa-preta (Edessa meditabunda)** | Soja | iNaturalist | 75 | Bom volume e padrão de cor verde e marrom bem distinto. | — |
+| **Percevejo-marrom (Euschistus heros)** | Soja | iNaturalist | 65 | Volume adequado, com o inseto bem visível e a mancha clara característica no dorso. | — |
+| **Lagarta-da-soja (Anticarsia gemmatalis)** | Soja | Acervo, iNaturalist | 43 | Menor volume entre as pragas que entram, mas ainda com dezenas de imagens e a mariposa bem visível. | — |
+| **Nematóide de cisto** | Soja | Acervo | 6 | Entre as maiores classes de doenças, com os cistos esféricos aparecendo nítidos nas raízes de parte das imagens. | Volume e qualidade (parte das imagens) |
+| **Podridão-cinzenta-do-caule (Macrophomina)** | Soja | Acervo | 6 | Entre as maiores classes de doenças, com o caule acinzentado característico em várias imagens. | Volume e qualidade (parte das imagens) |
+| **Ferrugem asiática** | Soja | Acervo | 4 | Pústulas visíveis na folha, em imagens de perto e de folha inteira. | Volume |
+| **Mancha-olho-de-rã** | Soja | Acervo | 4 | Lesões redondas de centro claro e borda avermelhada, nítidas nas imagens. | Volume |
+| **Mosaico comum da soja** | Soja | Acervo | 4 | Padrão próprio de mosqueado e deformação das folhas, além da semente manchada. | Volume |
+| **Míldio** | Soja | Acervo | 4 | Manchas bem visíveis na folha; entra junto da ferrugem asiática, de aspecto parecido, para que as duas sejam treinadas em conjunto. | Volume |
+| **Phomopsis / Seca da haste e da vagem** | Soja | Acervo | 4 | Haste e vagem com pontuações pretas bem visíveis. | Volume |
+| **Podridão-vermelha-da-raiz** | Soja | Acervo | 4 | Lesão roxo-avermelhada no colo e na raiz, visível na maioria das imagens (uma mostra o sintoma na folha). | Volume |
+
+#### Classes fora do MVP
+
+| Grupo | Classes | Imagens por classe | Justificativa |
+| --- | --- | --- | --- |
+| Pragas | Pulgão-do-milho; Coró-da-soja; Brocas-da-soja (vagens + axilas); Coró-do-milho; Tamanduá-da-soja; Cascudinho-da-soja; Percevejo da Soja (sem espécie definida) | 1 a 5 | Poucas imagens por classe, o que não permite ao modelo aprender e ser avaliado de forma confiável. |
+| Doenças | Nematóide das lesões; Estiolamento, Podridão-de-raízes, Tombamento-de-mudas | 3 a 5 | Volume próximo ao das doenças que entram, mas as imagens mostram sinais indiretos (planta atrofiada ou murcha, raízes escuras), sem um padrão visual claro. |
+| Doenças | Damping-off, Podridão-aquosa, Tombamento; Mancha-aureolada; Murcha-de-Sclerotium; Murcha-de-fusarium; Nematóide de galhas; Nematóide-espiralado, Nematóide; Antracnose; Cancro-da-haste; Crestamento bacteriano; Mancha alvo; Mancha-parda / Septoriose; Nematoide-da-haste verde, Ponta Branca; Nematóide-reniforme; Oídio; Podridão radicular de Phytophthora; Podridão-de-raízes; Podridão-radicular; Pústula bacteriana; Tombamento | 2 a 3 | Muito poucas imagens por classe. |
+| Doenças | Clodosporiose, Verrugose; Fungo de pós colheita; Fungo-de-armazenamento; Fungo-de-pós-colheita, Podridão-dos-grãos-armazenados; Mela ou requeima; Mofo-branco, Podridão-de-sclerotinia; Podridão da semente, Podridão de Fusarium | 1 | Uma única imagem por classe. |
+
+### Observação
+
+As doenças que entram têm volume bem abaixo do das pragas e dependem do complemento do acervo para o modelo reconhecê-las com segurança; as que ficaram de fora podem entrar à medida que o acervo for complementado. Nas classes de lagartas, parte das imagens mostra o inseto adulto; complementar com fotos de lagartas e do dano na planta deixa a base mais próxima do uso em campo.
+
+### Referências
+
+ALMEIDA, G.; NAZARIO, L.; TEIXEIRA, M.; STIRLE, J.; FRANCA, H.; OLIVEIRA, M.; OLIVEIRA, R.; NOVAK, S.; BAILÃO, A.; GONTIJO, P. **AGROINSECT: A dataset for identifying agricultural insects and pests of interest**. Versão 2. Mendeley Data, 2026. DOI: 10.17632/4jyp4m9gxj.2.
+
+INATURALIST. **Observações de pragas de soja e milho no Brasil**. Disponível em: https://www.inaturalist.org. Acesso em: 4 out. 2026. Os créditos individuais das fotos acompanham os metadados da base.
+
+# 4. Preparação dos dados
+
+## 4.1 Padronização das imagens
+
+### Objetivo e entradas
+
+Definir um único processamento de entrada para o modelo, aplicado da mesma forma no treinamento e na inferência, para que as fotos dos acervos e as fotos tiradas em campo cheguem ao modelo no mesmo formato. O [notebook da T4.1](../notebooks/T4_1_padronizacao_imagens.ipynb) usa como entrada o [manifesto da T4.2](../assets/data/particionamento_T4_2/manifesto_provisorio.csv), com as **3.262 imagens** marcadas como *manter*. A lógica fica em [`src/preprocessamento.py`](../src/preprocessamento.py), para que o notebook e o restante do código usem a mesma função.
+
+### Método
+
+A função `preparar_imagem` executa, nesta ordem:
+
+1. **Orientação EXIF:** aplica a rotação gravada pelo celular, para que fotos tiradas em retrato não cheguem deitadas ao modelo.
+2. **Conversão para RGB:** imagens em escala de cinza ou com canal alfa passam a ter três canais.
+3. **Redimensionamento proporcional para 224 × 224 px:** a maior dimensão é ajustada a 224 px e a proporção é preservada, com reamostragem bicúbica.
+4. **Preenchimento neutro:** o restante do quadro recebe cinza `(128, 128, 128)`. Não há recorte, para não remover lesões nas bordas da foto.
+5. **Normalização:** os valores de pixel são convertidos para `float32` no intervalo [0, 1].
+
+As decisões e o motivo de cada uma estão registradas no notebook. O tamanho de 224 px segue a referência do diagnóstico da T3.3 e do candidato EfficientNet-Lite0, mas é um parâmetro, porque a arquitetura final ainda não foi escolhida.
+
+**Verificação automatizada.** O script [`tests/validar_preprocessamento.py`](../tests/validar_preprocessamento.py) usa imagens sintéticas para checar o contrato da função: formato e faixa de valores, preservação da proporção com faixas de preenchimento, ampliação de imagens menores que 224 px, conversão de modos de cor, aplicação da orientação EXIF e determinismo. Para executar, use `python tests/validar_preprocessamento.py`.
+
+### Resultado da execução
+
+- **Leitura:** as **3.262 imagens** foram processadas sem falhas de leitura.
+- **Dimensões:** a menor dimensão tem mediana de 682 px. **79 imagens** têm a menor dimensão abaixo de 224 px e, por isso, são ampliadas para a entrada do modelo.
+- **Distribuição por partição:** 2.287 imagens de treino, 488 de validação e 487 de teste, mesma divisão da T4.2.
+- **Referência de hashes:** o arquivo [`referencia_entrada.csv`](../assets/data/padronizacao_T4_1/referencia_entrada.csv) registra o SHA-256 da saída de `preparar_imagem` para cada imagem. O hash permite comparar a implementação usada no aparelho com a referência gerada aqui.
+- **Parâmetros:** o arquivo [`parametros.json`](../assets/data/padronizacao_T4_1/parametros.json) registra tamanho, cor de preenchimento, normalização, tratamento de EXIF e a versão do Pillow usada (12.2.0).
+
+### Limites e próximos passos
+
+- A normalização em [0, 1] é uma escolha simples. Antes do treinamento, a faixa exigida pelo backbone escolhido deve ser confirmada, e a normalização ajustada se necessário.
+- Os hashes foram gerados em um ambiente específico. Se outro ambiente usar outra versão do Pillow ou outra implementação de reamostragem, os valores podem diferir e a referência deve ser regenerada.
+- A inspeção visual foi feita por uma amostra fixa de 8 imagens, e não por revisão individual do conjunto.
+- A padronização trata a geometria e a cor de entrada. Ela não corrige a qualidade da foto; essa validação precisa ser tratada na etapa de validação da imagem.
+
+## 4.2 Particionamento por grupo
+
+### Objetivo e entradas
+
+Separar as imagens selecionadas em treino, validação e teste sem colocar registros da mesma origem, da mesma planta conhecida ou de uma duplicata confirmada em partições diferentes. O [notebook da T4.2](../notebooks/T4_2_particionamento_por_grupo.ipynb) usa a [planilha de decisões da T3.3](../assets/data/diagnostico_qualidade_T3_3_revisado.xlsx) e o [dicionário de classes da T3.4](../assets/data/dicionario-classes.json). A execução registrada usou a semente **42** e selecionou as **3.262 imagens** marcadas como *manter* dentre os **3.460 registros** do diagnóstico.
+
+Os rótulos ainda são **candidatos a classes do modelo**. Os registros dos acervos anteriores recebem os IDs `AGRO-*` da T3.4; os rótulos de `dataset` recebem IDs `DATASET-*`. Semelhanças de nome ou de agente causal não provocam fusão automática de classes. Entre as imagens selecionadas, há **64 classes candidatas**; a definição das classes finais depende de validação agronômica e do escopo do MVP.
+
+### Método
+
+1. **Formar grupos indivisíveis:** reunir imagens com o mesmo `grupo_origem`, duplicatas exatas e pares visuais confirmados na revisão da T3.3. Os vínculos são transitivos: se A compartilha origem com B e B é duplicata confirmada de C, os três registros ficam no mesmo grupo. Dos **99 pares visuais** comparados, **95** foram confirmados como mesma foto ou cena e **4** eram falsos positivos; estes quatro não criam vínculo. Vínculos adicionais da mesma planta ou sessão podem ser informados em `assets/data/vinculos_mesma_planta.csv`, com as colunas `image_id_1,image_id_2`.
+2. **Distribuir os grupos:** usar **70% treino, 15% validação e 15% teste** como metas de quantidade de imagens, com equilíbrio por classe candidata e fonte. A integridade do grupo tem prioridade sobre essas proporções. Classes com menos de três grupos independentes ficam apenas no treino e recebem o status *exploratória*, sem métricas próprias de validação ou teste. As demais recebem, quando possível, ao menos um grupo em cada partição.
+3. **Auditar:** confirmar que nenhum `grupo_particao`, `grupo_origem`, hash SHA-256 ou par visual confirmado com ambas as imagens selecionadas atravessa partições. Registrar a semente, os hashes dos arquivos de entrada e a cobertura por classe para permitir a reprodução da divisão.
+
+### Resultado da execução provisória
+
+| Partição | Grupos | Imagens |
+| --- | ---: | ---: |
+| Treino | 1.666 | 2.287 |
+| Validação | 366 | 488 |
+| Teste | 366 | 487 |
+| **Total** | **2.398** | **3.262** |
+
+Das **64 classes candidatas**, **36** têm menos de três grupos e ficaram identificadas como exploratórias. As outras **28** têm grupos nas três partições nesta execução. A auditoria não encontrou vazamento entre os grupos de origem, hashes exatos ou pares visuais confirmados registrados. A divisão não copia nem aumenta imagens; ela atribui uma partição a cada registro selecionado.
+
+Os resultados estão no [manifesto por imagem](../assets/data/particionamento_T4_2/manifesto_provisorio.csv), no [resumo por classe](../assets/data/particionamento_T4_2/resumo_por_classe.csv) e na [auditoria reproduzível](../assets/data/particionamento_T4_2/auditoria.json). O código de agrupamento e distribuição está em [`src/particionamento_t4_2.py`](../src/particionamento_t4_2.py). Para refazer a separação, execute todas as células do notebook após atualizar as entradas ou os vínculos manuais.
+
+### Limites e próximos passos
+
+Este particionamento é **provisório**. **2.953 imagens de `dataset`** ainda mantêm decisões de triagem automática sem inspeção visual individual; os rótulos finais do modelo não foram aprovados; e não foram fornecidos vínculos manuais adicionais da mesma planta (**zero vínculos** nesta execução). Em parte do catálogo, `grupo_origem` identifica apenas o arquivo, sem provar que fotografias diferentes vieram de plantas independentes. Portanto, a auditoria confirma ausência de vazamento **identificável pelos metadados e pares revisados**.
+Antes da avaliação final, é necessário completar a revisão visual, confirmar as classes e acrescentar os vínculos de planta ou captura disponíveis. Depois disso, a divisão deve ser refeita e o conjunto de teste mantido reservado para a avaliação final.
+
+## 4.4 Rotinas de aumento de dados
+
+### Objetivo e entradas
+
+Ampliar a diversidade das imagens de treino com variações que aparecem na captura em campo, como luz do sol, sombra, balanço de branco do celular, ângulo da folha, tremor e ruído do sensor. O aumento responde ao risco **R09** (diferença entre o acervo e as fotos reais de campo) e ajuda a mitigar o **R01** (poucas imagens por classe). O [notebook da T4.4](../notebooks/T4_4_aumento_dados.ipynb) usa como entrada o [manifesto da T4.2](../assets/data/particionamento_T4_2/manifesto_provisorio.csv) e a saída de `preparar_imagem` da T4.1. A lógica fica em [`src/aumento.py`](../src/aumento.py).
+
+### Método
+
+A função `aplicar_aumento` recebe a imagem já padronizada (224 × 224 px, float32 em [0, 1]) e a partição de origem. Cada uma das cinco transformações é sorteada de forma independente, com probabilidade de 50%:
+
+1. **Brilho e contraste:** simula sol forte e sombra, com contraste entre 0,8 e 1,2 e brilho entre 0,75 e 1,25.
+2. **Balanço de branco:** ganho de ±5% em cada canal de cor, para representar celulares com correções de cor diferentes.
+3. **Ângulo de captura:** rotação de 0°, 90°, 180° ou 270°, com espelhamento horizontal em metade dos casos. Não há rotação arbitrária, para não criar bordas de interpolação.
+4. **Tremor ou foco leve:** desfoque gaussiano com raio entre 0,5 e 1,5 px.
+5. **Ruído do sensor:** ruído gaussiano com desvio-padrão entre 0,005 e 0,03.
+
+**Aplicação restrita ao treino.** A função recusa qualquer partição diferente de `treino` com `ValueError`. Assim, validação e teste nunca recebem uma variação aumentada, nem por engano de quem chama a função.
+
+**Sem recorte.** Como na T4.1, o aumento não corta a imagem, para não remover lesões nas bordas.
+
+**Preenchimento preservado.** As faixas de cinza adicionadas pela T4.1 são artificiais e não representam a cena fotografada. Por isso, brilho, balanço de branco, desfoque e ruído são aplicados somente ao conteúdo da imagem. Em rotações e espelhamentos, a máscara do preenchimento acompanha a transformação e as faixas permanecem no cinza neutro original.
+
+A função recebe um gerador de números aleatórios com semente explícita (o notebook usa a semente 42), e os parâmetros são gravados em [`parametros.json`](../assets/data/aumento_T4_4/parametros.json) para permitir a reprodução.
+
+### Resultado da execução
+
+- **Aplicação:** das **3.262 imagens** do manifesto, **2.287** são de treino e aceitam aumento. As **975** de validação e teste foram recusadas, como esperado.
+- **Inspeção visual:** o notebook gera uma grade com quatro imagens de treino, cada uma com a entrada original e três variações sorteadas. As transformações geométricas e de luz são visualmente plausíveis, e a lesão ou o inseto permanece visível.
+- **Verificação automatizada:** o script [`tests/validar_aumento.py`](../tests/validar_aumento.py) confirma formato e faixa de valores, entrada não alterada, determinismo com semente fixa, preservação do preenchimento neutro, variação real (menos de 10% das saídas iguais à entrada) e bloqueio fora do treino em todas as linhas do manifesto.
+
+### Limites e próximos passos
+
+- **Imagens sem variação suficiente:** classes com 1 ou 2 imagens no treino continuam com pouca diversidade. Aumentar uma única foto gera variações parecidas, então essas classes seguem como exploratórias, sem ganho real de generalização.
+- **Cor como sinal diagnóstico:** o balanço de branco foi limitado a ±5% porque a cor pode indicar sintomas como amarelamento. Uma faixa maior precisa ser validada com o parceiro.
+- **Fundo e condições reais:** o aumento não simula fundos de campo nem chuva ou poeira. Esses casos dependem de fotos reais, previstas nos testes com celular da fase de validação.
+- **Balanceamento:** esta task não equilibra as classes. Essa decisão pertence à T4.3, que trata da estratégia de balanceamento.
+- **Probabilidade fixa:** a probabilidade de 50% por transformação ainda não foi comparada com outras opções. Ela pode ser ajustada depois de um primeiro treino.
+

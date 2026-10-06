@@ -1,0 +1,1065 @@
+{
+  "versao": "1.0.0",
+  "origem": "assets/data/inventario-acervo.xlsx",
+  "status": "preliminar_aguardando_validacao_do_parceiro",
+  "fontes": {
+    "D": "https://www.embrapa.br/en/web/soja/busca-de-publicacoes/-/publicacao/991687/manual-de-identificacao-de-doencas-de-soja",
+    "P": "https://www.embrapa.br/en/busca-de-publicacoes/-/publicacao/991685/manual-de-identificacao-de-insetos-e-outros-invertebrados-da-cultura-da-soja",
+    "C": "https://ainfo.cnptia.embrapa.br/digital/bitstream/item/219418/1/p.-197-226-de-SP-17-2020-online.pdf",
+    "N": "https://www.embrapa.br/en/web/agencia-de-informacao-tecnologica/cultivos/feijao/pre-producao/nematoide",
+    "M": "https://www.infoteca.cnptia.embrapa.br/infoteca/bitstream/doc/694968/1/0052002milhodaniel.pdf",
+    "F": "https://www.bdpa.cnptia.embrapa.br/consulta/busca?b=ad&biblioteca=&busca=%28autoria%3A%22MEYER%2C+M.%22%29&id=460877&paginaAtual=3&paginacao=t&qFacets=%28autoria%3A%22MEYER%2C+M.%22%29&sort=",
+    "G": "https://www.embrapa.br/en/busca-de-publicacoes/-/publicacao/1179329/estrategias-contra-a-cigarrinha-do-milho"
+  },
+  "classes": [
+    {
+      "id": "AGRO-001",
+      "cultura": "Milho",
+      "categoria": "Pragas",
+      "rotulo_origem": "Cigarrinha do milho",
+      "nome_comum": "Cigarrinha do milho",
+      "quantidade_imagens": 5,
+      "agente_causal": "Dalbulus maidis",
+      "status_agente": "referencia_a_validar",
+      "fontes": [
+        "G"
+      ],
+      "chave_conteudo": null,
+      "chave_conteudo_proposta": "milho.ocorrencia.agro-001",
+      "status_conteudo": "aguardando_catalogo_agroapp",
+      "relacoes": []
+    },
+    {
+      "id": "AGRO-002",
+      "cultura": "Milho",
+      "categoria": "Pragas",
+      "rotulo_origem": "Coró-do-milho",
+      "nome_comum": "Coró-do-milho",
+      "quantidade_imagens": 2,
+      "agente_causal": null,
+      "status_agente": "indeterminado",
+      "fontes": [],
+      "chave_conteudo": null,
+      "chave_conteudo_proposta": "milho.ocorrencia.agro-002",
+      "status_conteudo": "aguardando_catalogo_agroapp",
+      "relacoes": []
+    },
+    {
+      "id": "AGRO-003",
+      "cultura": "Milho",
+      "categoria": "Pragas",
+      "rotulo_origem": "Percevejo-do-milho",
+      "nome_comum": "Percevejo-do-milho",
+      "quantidade_imagens": 4,
+      "agente_causal": null,
+      "status_agente": "indeterminado",
+      "fontes": [],
+      "chave_conteudo": null,
+      "chave_conteudo_proposta": "milho.ocorrencia.agro-003",
+      "status_conteudo": "aguardando_catalogo_agroapp",
+      "relacoes": []
+    },
+    {
+      "id": "AGRO-004",
+      "cultura": "Milho",
+      "categoria": "Pragas",
+      "rotulo_origem": "Pulgão-do-milho",
+      "nome_comum": "Pulgão-do-milho",
+      "quantidade_imagens": 5,
+      "agente_causal": "Rhopalosiphum maidis",
+      "status_agente": "referencia_a_validar",
+      "fontes": [
+        "M"
+      ],
+      "chave_conteudo": null,
+      "chave_conteudo_proposta": "milho.ocorrencia.agro-004",
+      "status_conteudo": "aguardando_catalogo_agroapp",
+      "relacoes": []
+    },
+    {
+      "id": "AGRO-005",
+      "cultura": "Soja",
+      "categoria": "Doenças",
+      "rotulo_origem": "Antracnose",
+      "nome_comum": "Antracnose",
+      "quantidade_imagens": 2,
+      "agente_causal": "Colletotrichum truncatum",
+      "status_agente": "referencia_a_validar",
+      "fontes": [
+        "D"
+      ],
+      "chave_conteudo": null,
+      "chave_conteudo_proposta": "soja.ocorrencia.agro-005",
+      "status_conteudo": "aguardando_catalogo_agroapp",
+      "relacoes": []
+    },
+    {
+      "id": "AGRO-006",
+      "cultura": "Soja",
+      "categoria": "Doenças",
+      "rotulo_origem": "Cancro-da-haste",
+      "nome_comum": "Cancro-da-haste",
+      "quantidade_imagens": 2,
+      "agente_causal": "Diaporthe aspalathi; Diaporthe caulivora",
+      "status_agente": "referencia_a_validar",
+      "fontes": [
+        "D"
+      ],
+      "chave_conteudo": null,
+      "chave_conteudo_proposta": "soja.ocorrencia.agro-006",
+      "status_conteudo": "aguardando_catalogo_agroapp",
+      "relacoes": []
+    },
+    {
+      "id": "AGRO-007",
+      "cultura": "Soja",
+      "categoria": "Doenças",
+      "rotulo_origem": "Clodosporiose, Verrugose",
+      "nome_comum": "Clodosporiose, Verrugose",
+      "quantidade_imagens": 1,
+      "agente_causal": null,
+      "status_agente": "indeterminado",
+      "fontes": [],
+      "chave_conteudo": null,
+      "chave_conteudo_proposta": "soja.ocorrencia.agro-007",
+      "status_conteudo": "aguardando_catalogo_agroapp",
+      "relacoes": []
+    },
+    {
+      "id": "AGRO-008",
+      "cultura": "Soja",
+      "categoria": "Doenças",
+      "rotulo_origem": "Crestamento bacteriano",
+      "nome_comum": "Crestamento bacteriano",
+      "quantidade_imagens": 2,
+      "agente_causal": "Pseudomonas savastanoi pv. glycinea",
+      "status_agente": "referencia_a_validar",
+      "fontes": [
+        "D"
+      ],
+      "chave_conteudo": null,
+      "chave_conteudo_proposta": "soja.ocorrencia.agro-008",
+      "status_conteudo": "aguardando_catalogo_agroapp",
+      "relacoes": []
+    },
+    {
+      "id": "AGRO-009",
+      "cultura": "Soja",
+      "categoria": "Doenças",
+      "rotulo_origem": "Damping-off, Podridão-aquosa, Tombamento",
+      "nome_comum": "Damping-off, Podridão-aquosa, Tombamento",
+      "quantidade_imagens": 3,
+      "agente_causal": null,
+      "status_agente": "indeterminado",
+      "fontes": [],
+      "chave_conteudo": null,
+      "chave_conteudo_proposta": "soja.ocorrencia.agro-009",
+      "status_conteudo": "aguardando_catalogo_agroapp",
+      "relacoes": []
+    },
+    {
+      "id": "AGRO-010",
+      "cultura": "Soja",
+      "categoria": "Doenças",
+      "rotulo_origem": "Estiolamento, Podridão-de-raízes, Tombamento-de-mudas",
+      "nome_comum": "Estiolamento, Podridão-de-raízes, Tombamento-de-mudas",
+      "quantidade_imagens": 4,
+      "agente_causal": null,
+      "status_agente": "indeterminado",
+      "fontes": [],
+      "chave_conteudo": null,
+      "chave_conteudo_proposta": "soja.ocorrencia.agro-010",
+      "status_conteudo": "aguardando_catalogo_agroapp",
+      "relacoes": []
+    },
+    {
+      "id": "AGRO-011",
+      "cultura": "Soja",
+      "categoria": "Doenças",
+      "rotulo_origem": "Ferrugem asiática",
+      "nome_comum": "Ferrugem asiática",
+      "quantidade_imagens": 4,
+      "agente_causal": "Phakopsora pachyrhizi",
+      "status_agente": "referencia_a_validar",
+      "fontes": [
+        "D"
+      ],
+      "chave_conteudo": null,
+      "chave_conteudo_proposta": "soja.ocorrencia.agro-011",
+      "status_conteudo": "aguardando_catalogo_agroapp",
+      "relacoes": []
+    },
+    {
+      "id": "AGRO-012",
+      "cultura": "Soja",
+      "categoria": "Doenças",
+      "rotulo_origem": "Fungo de pós colheita",
+      "nome_comum": "Fungo de pós colheita",
+      "quantidade_imagens": 1,
+      "agente_causal": null,
+      "status_agente": "indeterminado",
+      "fontes": [],
+      "chave_conteudo": null,
+      "chave_conteudo_proposta": "soja.ocorrencia.agro-012",
+      "status_conteudo": "aguardando_catalogo_agroapp",
+      "relacoes": [
+        {
+          "id": "AGRO-013",
+          "tipo": "revisao_de_identidade"
+        },
+        {
+          "id": "AGRO-014",
+          "tipo": "revisao_de_identidade"
+        },
+        {
+          "id": "AGRO-044",
+          "tipo": "revisao_de_identidade"
+        }
+      ]
+    },
+    {
+      "id": "AGRO-013",
+      "cultura": "Soja",
+      "categoria": "Doenças",
+      "rotulo_origem": "Fungo-de-armazenamento",
+      "nome_comum": "Fungo-de-armazenamento",
+      "quantidade_imagens": 1,
+      "agente_causal": null,
+      "status_agente": "indeterminado",
+      "fontes": [],
+      "chave_conteudo": null,
+      "chave_conteudo_proposta": "soja.ocorrencia.agro-013",
+      "status_conteudo": "aguardando_catalogo_agroapp",
+      "relacoes": [
+        {
+          "id": "AGRO-012",
+          "tipo": "revisao_de_identidade"
+        },
+        {
+          "id": "AGRO-014",
+          "tipo": "revisao_de_identidade"
+        },
+        {
+          "id": "AGRO-044",
+          "tipo": "revisao_de_identidade"
+        }
+      ]
+    },
+    {
+      "id": "AGRO-014",
+      "cultura": "Soja",
+      "categoria": "Doenças",
+      "rotulo_origem": "Fungo-de-pós-colheita, Podridão-dos-grãos-armazenados",
+      "nome_comum": "Fungo-de-pós-colheita, Podridão-dos-grãos-armazenados",
+      "quantidade_imagens": 1,
+      "agente_causal": null,
+      "status_agente": "indeterminado",
+      "fontes": [],
+      "chave_conteudo": null,
+      "chave_conteudo_proposta": "soja.ocorrencia.agro-014",
+      "status_conteudo": "aguardando_catalogo_agroapp",
+      "relacoes": [
+        {
+          "id": "AGRO-012",
+          "tipo": "revisao_de_identidade"
+        },
+        {
+          "id": "AGRO-013",
+          "tipo": "revisao_de_identidade"
+        },
+        {
+          "id": "AGRO-044",
+          "tipo": "revisao_de_identidade"
+        }
+      ]
+    },
+    {
+      "id": "AGRO-015",
+      "cultura": "Soja",
+      "categoria": "Doenças",
+      "rotulo_origem": "Fusariose, Podridão vermelha da raiz",
+      "nome_comum": "Fusariose, Podridão vermelha da raiz",
+      "quantidade_imagens": 2,
+      "agente_causal": "Fusarium spp. (complexo de podridão vermelha da raiz)",
+      "status_agente": "referencia_a_validar",
+      "fontes": [
+        "F"
+      ],
+      "chave_conteudo": null,
+      "chave_conteudo_proposta": "soja.ocorrencia.agro-015",
+      "status_conteudo": "aguardando_catalogo_agroapp",
+      "relacoes": [
+        {
+          "id": "AGRO-041",
+          "tipo": "possivel_duplicidade"
+        }
+      ]
+    },
+    {
+      "id": "AGRO-016",
+      "cultura": "Soja",
+      "categoria": "Doenças",
+      "rotulo_origem": "Macrophomina",
+      "nome_comum": "Macrophomina",
+      "quantidade_imagens": 3,
+      "agente_causal": "Macrophomina phaseolina",
+      "status_agente": "referencia_a_validar",
+      "fontes": [
+        "D"
+      ],
+      "chave_conteudo": null,
+      "chave_conteudo_proposta": "soja.ocorrencia.agro-016",
+      "status_conteudo": "aguardando_catalogo_agroapp",
+      "relacoes": [
+        {
+          "id": "AGRO-037",
+          "tipo": "possivel_duplicidade"
+        },
+        {
+          "id": "AGRO-039",
+          "tipo": "possivel_duplicidade"
+        }
+      ]
+    },
+    {
+      "id": "AGRO-017",
+      "cultura": "Soja",
+      "categoria": "Doenças",
+      "rotulo_origem": "Mancha alvo",
+      "nome_comum": "Mancha alvo",
+      "quantidade_imagens": 2,
+      "agente_causal": "Corynespora cassiicola",
+      "status_agente": "referencia_a_validar",
+      "fontes": [
+        "D"
+      ],
+      "chave_conteudo": null,
+      "chave_conteudo_proposta": "soja.ocorrencia.agro-017",
+      "status_conteudo": "aguardando_catalogo_agroapp",
+      "relacoes": []
+    },
+    {
+      "id": "AGRO-018",
+      "cultura": "Soja",
+      "categoria": "Doenças",
+      "rotulo_origem": "Mancha-aureolada",
+      "nome_comum": "Mancha-aureolada",
+      "quantidade_imagens": 3,
+      "agente_causal": null,
+      "status_agente": "indeterminado",
+      "fontes": [],
+      "chave_conteudo": null,
+      "chave_conteudo_proposta": "soja.ocorrencia.agro-018",
+      "status_conteudo": "aguardando_catalogo_agroapp",
+      "relacoes": []
+    },
+    {
+      "id": "AGRO-019",
+      "cultura": "Soja",
+      "categoria": "Doenças",
+      "rotulo_origem": "Mancha-olho-de-rã",
+      "nome_comum": "Mancha-olho-de-rã",
+      "quantidade_imagens": 4,
+      "agente_causal": "Cercospora sojina",
+      "status_agente": "referencia_a_validar",
+      "fontes": [
+        "D"
+      ],
+      "chave_conteudo": null,
+      "chave_conteudo_proposta": "soja.ocorrencia.agro-019",
+      "status_conteudo": "aguardando_catalogo_agroapp",
+      "relacoes": []
+    },
+    {
+      "id": "AGRO-020",
+      "cultura": "Soja",
+      "categoria": "Doenças",
+      "rotulo_origem": "Mancha-parda, Septoriose",
+      "nome_comum": "Mancha-parda, Septoriose",
+      "quantidade_imagens": 2,
+      "agente_causal": "Septoria glycines",
+      "status_agente": "referencia_a_validar",
+      "fontes": [
+        "D"
+      ],
+      "chave_conteudo": null,
+      "chave_conteudo_proposta": "soja.ocorrencia.agro-020",
+      "status_conteudo": "aguardando_catalogo_agroapp",
+      "relacoes": []
+    },
+    {
+      "id": "AGRO-021",
+      "cultura": "Soja",
+      "categoria": "Doenças",
+      "rotulo_origem": "Mela ou requeima",
+      "nome_comum": "Mela ou requeima",
+      "quantidade_imagens": 1,
+      "agente_causal": "Rhizoctonia solani AG1",
+      "status_agente": "referencia_a_validar",
+      "fontes": [
+        "D"
+      ],
+      "chave_conteudo": null,
+      "chave_conteudo_proposta": "soja.ocorrencia.agro-021",
+      "status_conteudo": "aguardando_catalogo_agroapp",
+      "relacoes": []
+    },
+    {
+      "id": "AGRO-022",
+      "cultura": "Soja",
+      "categoria": "Doenças",
+      "rotulo_origem": "Míldio",
+      "nome_comum": "Míldio",
+      "quantidade_imagens": 4,
+      "agente_causal": "Peronospora manshurica",
+      "status_agente": "referencia_a_validar",
+      "fontes": [
+        "D"
+      ],
+      "chave_conteudo": null,
+      "chave_conteudo_proposta": "soja.ocorrencia.agro-022",
+      "status_conteudo": "aguardando_catalogo_agroapp",
+      "relacoes": []
+    },
+    {
+      "id": "AGRO-023",
+      "cultura": "Soja",
+      "categoria": "Doenças",
+      "rotulo_origem": "Mofo-branco, Podridão-de-sclerotinia",
+      "nome_comum": "Mofo-branco, Podridão-de-sclerotinia",
+      "quantidade_imagens": 1,
+      "agente_causal": "Sclerotinia sclerotiorum",
+      "status_agente": "referencia_a_validar",
+      "fontes": [
+        "D"
+      ],
+      "chave_conteudo": null,
+      "chave_conteudo_proposta": "soja.ocorrencia.agro-023",
+      "status_conteudo": "aguardando_catalogo_agroapp",
+      "relacoes": []
+    },
+    {
+      "id": "AGRO-024",
+      "cultura": "Soja",
+      "categoria": "Doenças",
+      "rotulo_origem": "Mosaico comum da soja",
+      "nome_comum": "Mosaico comum da soja",
+      "quantidade_imagens": 4,
+      "agente_causal": "Soybean mosaic virus (SMV)",
+      "status_agente": "referencia_a_validar",
+      "fontes": [
+        "D"
+      ],
+      "chave_conteudo": null,
+      "chave_conteudo_proposta": "soja.ocorrencia.agro-024",
+      "status_conteudo": "aguardando_catalogo_agroapp",
+      "relacoes": []
+    },
+    {
+      "id": "AGRO-025",
+      "cultura": "Soja",
+      "categoria": "Doenças",
+      "rotulo_origem": "Murcha-de-Sclerotium",
+      "nome_comum": "Murcha-de-Sclerotium",
+      "quantidade_imagens": 3,
+      "agente_causal": "Sclerotium rolfsii",
+      "status_agente": "referencia_a_validar",
+      "fontes": [
+        "D"
+      ],
+      "chave_conteudo": null,
+      "chave_conteudo_proposta": "soja.ocorrencia.agro-025",
+      "status_conteudo": "aguardando_catalogo_agroapp",
+      "relacoes": []
+    },
+    {
+      "id": "AGRO-026",
+      "cultura": "Soja",
+      "categoria": "Doenças",
+      "rotulo_origem": "Murcha-de-fusarium, Murcha",
+      "nome_comum": "Murcha-de-fusarium, Murcha",
+      "quantidade_imagens": 3,
+      "agente_causal": "Fusarium spp.",
+      "status_agente": "referencia_a_validar",
+      "fontes": [
+        "D"
+      ],
+      "chave_conteudo": null,
+      "chave_conteudo_proposta": "soja.ocorrencia.agro-026",
+      "status_conteudo": "aguardando_catalogo_agroapp",
+      "relacoes": []
+    },
+    {
+      "id": "AGRO-027",
+      "cultura": "Soja",
+      "categoria": "Doenças",
+      "rotulo_origem": "Nematoide-da-haste verde, Ponta Branca",
+      "nome_comum": "Nematoide-da-haste verde, Ponta Branca",
+      "quantidade_imagens": 2,
+      "agente_causal": "Aphelenchoides besseyi",
+      "status_agente": "referencia_a_validar",
+      "fontes": [
+        "N"
+      ],
+      "chave_conteudo": null,
+      "chave_conteudo_proposta": "soja.ocorrencia.agro-027",
+      "status_conteudo": "aguardando_catalogo_agroapp",
+      "relacoes": []
+    },
+    {
+      "id": "AGRO-028",
+      "cultura": "Soja",
+      "categoria": "Doenças",
+      "rotulo_origem": "Nematóide das lesões",
+      "nome_comum": "Nematóide das lesões",
+      "quantidade_imagens": 5,
+      "agente_causal": "Pratylenchus spp.",
+      "status_agente": "referencia_a_validar",
+      "fontes": [
+        "D"
+      ],
+      "chave_conteudo": null,
+      "chave_conteudo_proposta": "soja.ocorrencia.agro-028",
+      "status_conteudo": "aguardando_catalogo_agroapp",
+      "relacoes": []
+    },
+    {
+      "id": "AGRO-029",
+      "cultura": "Soja",
+      "categoria": "Doenças",
+      "rotulo_origem": "Nematóide de cisto",
+      "nome_comum": "Nematóide de cisto",
+      "quantidade_imagens": 3,
+      "agente_causal": "Heterodera glycines",
+      "status_agente": "referencia_a_validar",
+      "fontes": [
+        "N"
+      ],
+      "chave_conteudo": null,
+      "chave_conteudo_proposta": "soja.ocorrencia.agro-029",
+      "status_conteudo": "aguardando_catalogo_agroapp",
+      "relacoes": [
+        {
+          "id": "AGRO-045",
+          "tipo": "possivel_duplicidade"
+        }
+      ]
+    },
+    {
+      "id": "AGRO-030",
+      "cultura": "Soja",
+      "categoria": "Doenças",
+      "rotulo_origem": "Nematóide de galhas",
+      "nome_comum": "Nematóide de galhas",
+      "quantidade_imagens": 3,
+      "agente_causal": "Meloidogyne spp.",
+      "status_agente": "referencia_a_validar",
+      "fontes": [
+        "D"
+      ],
+      "chave_conteudo": null,
+      "chave_conteudo_proposta": "soja.ocorrencia.agro-030",
+      "status_conteudo": "aguardando_catalogo_agroapp",
+      "relacoes": []
+    },
+    {
+      "id": "AGRO-031",
+      "cultura": "Soja",
+      "categoria": "Doenças",
+      "rotulo_origem": "Nematóide-espiralado, Nematóide",
+      "nome_comum": "Nematóide-espiralado, Nematóide",
+      "quantidade_imagens": 3,
+      "agente_causal": "Helicotylenchus spp.",
+      "status_agente": "referencia_a_validar",
+      "fontes": [
+        "D"
+      ],
+      "chave_conteudo": null,
+      "chave_conteudo_proposta": "soja.ocorrencia.agro-031",
+      "status_conteudo": "aguardando_catalogo_agroapp",
+      "relacoes": []
+    },
+    {
+      "id": "AGRO-032",
+      "cultura": "Soja",
+      "categoria": "Doenças",
+      "rotulo_origem": "Nematóide-reniforme",
+      "nome_comum": "Nematóide-reniforme",
+      "quantidade_imagens": 2,
+      "agente_causal": "Rotylenchulus reniformis",
+      "status_agente": "referencia_a_validar",
+      "fontes": [
+        "D"
+      ],
+      "chave_conteudo": null,
+      "chave_conteudo_proposta": "soja.ocorrencia.agro-032",
+      "status_conteudo": "aguardando_catalogo_agroapp",
+      "relacoes": []
+    },
+    {
+      "id": "AGRO-033",
+      "cultura": "Soja",
+      "categoria": "Doenças",
+      "rotulo_origem": "Oídio",
+      "nome_comum": "Oídio",
+      "quantidade_imagens": 2,
+      "agente_causal": "Microsphaera diffusa (sinônimo: Erysiphe diffusa)",
+      "status_agente": "referencia_a_validar",
+      "fontes": [
+        "D"
+      ],
+      "chave_conteudo": null,
+      "chave_conteudo_proposta": "soja.ocorrencia.agro-033",
+      "status_conteudo": "aguardando_catalogo_agroapp",
+      "relacoes": []
+    },
+    {
+      "id": "AGRO-034",
+      "cultura": "Soja",
+      "categoria": "Doenças",
+      "rotulo_origem": "Phomopsis-da-semente",
+      "nome_comum": "Phomopsis-da-semente",
+      "quantidade_imagens": 2,
+      "agente_causal": "Diaporthe spp. (Phomopsis spp.)",
+      "status_agente": "referencia_a_validar",
+      "fontes": [
+        "D"
+      ],
+      "chave_conteudo": null,
+      "chave_conteudo_proposta": "soja.ocorrencia.agro-034",
+      "status_conteudo": "aguardando_catalogo_agroapp",
+      "relacoes": []
+    },
+    {
+      "id": "AGRO-035",
+      "cultura": "Soja",
+      "categoria": "Doenças",
+      "rotulo_origem": "Podridão da semente, Podridão de Fusarium",
+      "nome_comum": "Podridão da semente, Podridão de Fusarium",
+      "quantidade_imagens": 1,
+      "agente_causal": "Fusarium spp.",
+      "status_agente": "referencia_a_validar",
+      "fontes": [
+        "D"
+      ],
+      "chave_conteudo": null,
+      "chave_conteudo_proposta": "soja.ocorrencia.agro-035",
+      "status_conteudo": "aguardando_catalogo_agroapp",
+      "relacoes": []
+    },
+    {
+      "id": "AGRO-036",
+      "cultura": "Soja",
+      "categoria": "Doenças",
+      "rotulo_origem": "Podridão radicular de Phytophthora",
+      "nome_comum": "Podridão radicular de Phytophthora",
+      "quantidade_imagens": 2,
+      "agente_causal": "Phytophthora sojae",
+      "status_agente": "referencia_a_validar",
+      "fontes": [
+        "D"
+      ],
+      "chave_conteudo": null,
+      "chave_conteudo_proposta": "soja.ocorrencia.agro-036",
+      "status_conteudo": "aguardando_catalogo_agroapp",
+      "relacoes": []
+    },
+    {
+      "id": "AGRO-037",
+      "cultura": "Soja",
+      "categoria": "Doenças",
+      "rotulo_origem": "Podridão-cinzenta-do-caule, Podridão-preta-das-raízes",
+      "nome_comum": "Podridão-cinzenta-do-caule, Podridão-preta-das-raízes",
+      "quantidade_imagens": 2,
+      "agente_causal": "Macrophomina phaseolina",
+      "status_agente": "referencia_a_validar",
+      "fontes": [
+        "D"
+      ],
+      "chave_conteudo": null,
+      "chave_conteudo_proposta": "soja.ocorrencia.agro-037",
+      "status_conteudo": "aguardando_catalogo_agroapp",
+      "relacoes": [
+        {
+          "id": "AGRO-016",
+          "tipo": "possivel_duplicidade"
+        },
+        {
+          "id": "AGRO-039",
+          "tipo": "possivel_duplicidade"
+        }
+      ]
+    },
+    {
+      "id": "AGRO-038",
+      "cultura": "Soja",
+      "categoria": "Doenças",
+      "rotulo_origem": "Podridão-de-raízes",
+      "nome_comum": "Podridão-de-raízes",
+      "quantidade_imagens": 2,
+      "agente_causal": null,
+      "status_agente": "indeterminado",
+      "fontes": [],
+      "chave_conteudo": null,
+      "chave_conteudo_proposta": "soja.ocorrencia.agro-038",
+      "status_conteudo": "aguardando_catalogo_agroapp",
+      "relacoes": []
+    },
+    {
+      "id": "AGRO-039",
+      "cultura": "Soja",
+      "categoria": "Doenças",
+      "rotulo_origem": "Podridão-preta-das-raízes, Podridão-cinzenta-do-caule",
+      "nome_comum": "Podridão-preta-das-raízes, Podridão-cinzenta-do-caule",
+      "quantidade_imagens": 1,
+      "agente_causal": "Macrophomina phaseolina",
+      "status_agente": "referencia_a_validar",
+      "fontes": [
+        "D"
+      ],
+      "chave_conteudo": null,
+      "chave_conteudo_proposta": "soja.ocorrencia.agro-039",
+      "status_conteudo": "aguardando_catalogo_agroapp",
+      "relacoes": [
+        {
+          "id": "AGRO-016",
+          "tipo": "possivel_duplicidade"
+        },
+        {
+          "id": "AGRO-037",
+          "tipo": "possivel_duplicidade"
+        }
+      ]
+    },
+    {
+      "id": "AGRO-040",
+      "cultura": "Soja",
+      "categoria": "Doenças",
+      "rotulo_origem": "Podridão-radicular",
+      "nome_comum": "Podridão-radicular",
+      "quantidade_imagens": 2,
+      "agente_causal": null,
+      "status_agente": "indeterminado",
+      "fontes": [],
+      "chave_conteudo": null,
+      "chave_conteudo_proposta": "soja.ocorrencia.agro-040",
+      "status_conteudo": "aguardando_catalogo_agroapp",
+      "relacoes": []
+    },
+    {
+      "id": "AGRO-041",
+      "cultura": "Soja",
+      "categoria": "Doenças",
+      "rotulo_origem": "Podridão-vermelha-da-raiz",
+      "nome_comum": "Podridão-vermelha-da-raiz",
+      "quantidade_imagens": 2,
+      "agente_causal": "Fusarium spp. (complexo de podridão vermelha da raiz)",
+      "status_agente": "referencia_a_validar",
+      "fontes": [
+        "F"
+      ],
+      "chave_conteudo": null,
+      "chave_conteudo_proposta": "soja.ocorrencia.agro-041",
+      "status_conteudo": "aguardando_catalogo_agroapp",
+      "relacoes": [
+        {
+          "id": "AGRO-015",
+          "tipo": "possivel_duplicidade"
+        }
+      ]
+    },
+    {
+      "id": "AGRO-042",
+      "cultura": "Soja",
+      "categoria": "Doenças",
+      "rotulo_origem": "Pústula bacteriana",
+      "nome_comum": "Pústula bacteriana",
+      "quantidade_imagens": 2,
+      "agente_causal": "Xanthomonas axonopodis pv. glycines",
+      "status_agente": "referencia_a_validar",
+      "fontes": [
+        "D"
+      ],
+      "chave_conteudo": null,
+      "chave_conteudo_proposta": "soja.ocorrencia.agro-042",
+      "status_conteudo": "aguardando_catalogo_agroapp",
+      "relacoes": []
+    },
+    {
+      "id": "AGRO-043",
+      "cultura": "Soja",
+      "categoria": "Doenças",
+      "rotulo_origem": "Seca da haste e da vagem, Phomopsis-da-semente",
+      "nome_comum": "Seca da haste e da vagem, Phomopsis-da-semente",
+      "quantidade_imagens": 3,
+      "agente_causal": "Diaporthe spp. (Phomopsis spp.)",
+      "status_agente": "referencia_a_validar",
+      "fontes": [
+        "D"
+      ],
+      "chave_conteudo": null,
+      "chave_conteudo_proposta": "soja.ocorrencia.agro-043",
+      "status_conteudo": "aguardando_catalogo_agroapp",
+      "relacoes": []
+    },
+    {
+      "id": "AGRO-044",
+      "cultura": "Soja",
+      "categoria": "Doenças",
+      "rotulo_origem": "Tombamento",
+      "nome_comum": "Tombamento",
+      "quantidade_imagens": 2,
+      "agente_causal": null,
+      "status_agente": "indeterminado",
+      "fontes": [],
+      "chave_conteudo": null,
+      "chave_conteudo_proposta": "soja.ocorrencia.agro-044",
+      "status_conteudo": "aguardando_catalogo_agroapp",
+      "relacoes": [
+        {
+          "id": "AGRO-012",
+          "tipo": "revisao_de_identidade"
+        },
+        {
+          "id": "AGRO-013",
+          "tipo": "revisao_de_identidade"
+        },
+        {
+          "id": "AGRO-014",
+          "tipo": "revisao_de_identidade"
+        }
+      ]
+    },
+    {
+      "id": "AGRO-045",
+      "cultura": "Soja",
+      "categoria": "Doenças",
+      "rotulo_origem": "nematóide de cisto da soja (NCS)",
+      "nome_comum": "nematóide de cisto da soja (NCS)",
+      "quantidade_imagens": 3,
+      "agente_causal": "Heterodera glycines",
+      "status_agente": "referencia_a_validar",
+      "fontes": [
+        "N"
+      ],
+      "chave_conteudo": null,
+      "chave_conteudo_proposta": "soja.ocorrencia.agro-045",
+      "status_conteudo": "aguardando_catalogo_agroapp",
+      "relacoes": [
+        {
+          "id": "AGRO-029",
+          "tipo": "possivel_duplicidade"
+        }
+      ]
+    },
+    {
+      "id": "AGRO-046",
+      "cultura": "Soja",
+      "categoria": "Pragas",
+      "rotulo_origem": "Broca das vagens - Soja",
+      "nome_comum": "Broca das vagens - Soja",
+      "quantidade_imagens": 2,
+      "agente_causal": null,
+      "status_agente": "indeterminado",
+      "fontes": [],
+      "chave_conteudo": null,
+      "chave_conteudo_proposta": "soja.ocorrencia.agro-046",
+      "status_conteudo": "aguardando_catalogo_agroapp",
+      "relacoes": [
+        {
+          "id": "AGRO-047",
+          "tipo": "revisao_de_identidade"
+        }
+      ]
+    },
+    {
+      "id": "AGRO-047",
+      "cultura": "Soja",
+      "categoria": "Pragas",
+      "rotulo_origem": "Broca-das-axilas-da-soja",
+      "nome_comum": "Broca-das-axilas-da-soja",
+      "quantidade_imagens": 1,
+      "agente_causal": "Crocidosema aporema",
+      "status_agente": "referencia_a_validar",
+      "fontes": [
+        "P"
+      ],
+      "chave_conteudo": null,
+      "chave_conteudo_proposta": "soja.ocorrencia.agro-047",
+      "status_conteudo": "aguardando_catalogo_agroapp",
+      "relacoes": [
+        {
+          "id": "AGRO-046",
+          "tipo": "revisao_de_identidade"
+        }
+      ]
+    },
+    {
+      "id": "AGRO-048",
+      "cultura": "Soja",
+      "categoria": "Pragas",
+      "rotulo_origem": "Cascudinho-da-soja",
+      "nome_comum": "Cascudinho-da-soja",
+      "quantidade_imagens": 1,
+      "agente_causal": "Myochrous armatus",
+      "status_agente": "referencia_a_validar",
+      "fontes": [
+        "P"
+      ],
+      "chave_conteudo": null,
+      "chave_conteudo_proposta": "soja.ocorrencia.agro-048",
+      "status_conteudo": "aguardando_catalogo_agroapp",
+      "relacoes": []
+    },
+    {
+      "id": "AGRO-049",
+      "cultura": "Soja",
+      "categoria": "Pragas",
+      "rotulo_origem": "Coró da soja",
+      "nome_comum": "Coró da soja",
+      "quantidade_imagens": 1,
+      "agente_causal": null,
+      "status_agente": "indeterminado",
+      "fontes": [],
+      "chave_conteudo": null,
+      "chave_conteudo_proposta": "soja.ocorrencia.agro-049",
+      "status_conteudo": "aguardando_catalogo_agroapp",
+      "relacoes": [
+        {
+          "id": "AGRO-050",
+          "tipo": "revisao_de_identidade"
+        },
+        {
+          "id": "AGRO-051",
+          "tipo": "revisao_de_identidade"
+        }
+      ]
+    },
+    {
+      "id": "AGRO-050",
+      "cultura": "Soja",
+      "categoria": "Pragas",
+      "rotulo_origem": "Coró-da-soja-do-cerrado",
+      "nome_comum": "Coró-da-soja-do-cerrado",
+      "quantidade_imagens": 1,
+      "agente_causal": "Phyllophaga capillata",
+      "status_agente": "referencia_a_validar",
+      "fontes": [
+        "C"
+      ],
+      "chave_conteudo": null,
+      "chave_conteudo_proposta": "soja.ocorrencia.agro-050",
+      "status_conteudo": "aguardando_catalogo_agroapp",
+      "relacoes": [
+        {
+          "id": "AGRO-049",
+          "tipo": "revisao_de_identidade"
+        },
+        {
+          "id": "AGRO-051",
+          "tipo": "revisao_de_identidade"
+        }
+      ]
+    },
+    {
+      "id": "AGRO-051",
+      "cultura": "Soja",
+      "categoria": "Pragas",
+      "rotulo_origem": "Coró-da-soja_ bicho-bolo",
+      "nome_comum": "Coró-da-soja_ bicho-bolo",
+      "quantidade_imagens": 2,
+      "agente_causal": null,
+      "status_agente": "indeterminado",
+      "fontes": [],
+      "chave_conteudo": null,
+      "chave_conteudo_proposta": "soja.ocorrencia.agro-051",
+      "status_conteudo": "aguardando_catalogo_agroapp",
+      "relacoes": [
+        {
+          "id": "AGRO-049",
+          "tipo": "revisao_de_identidade"
+        },
+        {
+          "id": "AGRO-050",
+          "tipo": "revisao_de_identidade"
+        }
+      ]
+    },
+    {
+      "id": "AGRO-052",
+      "cultura": "Soja",
+      "categoria": "Pragas",
+      "rotulo_origem": "Gorgulho-da-soja_ Tamanduá-da-soja",
+      "nome_comum": "Gorgulho-da-soja_ Tamanduá-da-soja",
+      "quantidade_imagens": 1,
+      "agente_causal": "Sternechus subsignatus",
+      "status_agente": "referencia_a_validar",
+      "fontes": [
+        "P"
+      ],
+      "chave_conteudo": null,
+      "chave_conteudo_proposta": "soja.ocorrencia.agro-052",
+      "status_conteudo": "aguardando_catalogo_agroapp",
+      "relacoes": [
+        {
+          "id": "AGRO-055",
+          "tipo": "possivel_duplicidade"
+        }
+      ]
+    },
+    {
+      "id": "AGRO-053",
+      "cultura": "Soja",
+      "categoria": "Pragas",
+      "rotulo_origem": "Lagarta-da-soja",
+      "nome_comum": "Lagarta-da-soja",
+      "quantidade_imagens": 2,
+      "agente_causal": "Anticarsia gemmatalis",
+      "status_agente": "referencia_a_validar",
+      "fontes": [
+        "P"
+      ],
+      "chave_conteudo": null,
+      "chave_conteudo_proposta": "soja.ocorrencia.agro-053",
+      "status_conteudo": "aguardando_catalogo_agroapp",
+      "relacoes": []
+    },
+    {
+      "id": "AGRO-054",
+      "cultura": "Soja",
+      "categoria": "Pragas",
+      "rotulo_origem": "Percevejo da Soja",
+      "nome_comum": "Percevejo da Soja",
+      "quantidade_imagens": 1,
+      "agente_causal": null,
+      "status_agente": "indeterminado",
+      "fontes": [],
+      "chave_conteudo": null,
+      "chave_conteudo_proposta": "soja.ocorrencia.agro-054",
+      "status_conteudo": "aguardando_catalogo_agroapp",
+      "relacoes": []
+    },
+    {
+      "id": "AGRO-055",
+      "cultura": "Soja",
+      "categoria": "Pragas",
+      "rotulo_origem": "Tamanduá-da-soja",
+      "nome_comum": "Tamanduá-da-soja",
+      "quantidade_imagens": 1,
+      "agente_causal": "Sternechus subsignatus",
+      "status_agente": "referencia_a_validar",
+      "fontes": [
+        "P"
+      ],
+      "chave_conteudo": null,
+      "chave_conteudo_proposta": "soja.ocorrencia.agro-055",
+      "status_conteudo": "aguardando_catalogo_agroapp",
+      "relacoes": [
+        {
+          "id": "AGRO-052",
+          "tipo": "possivel_duplicidade"
+        }
+      ]
+    }
+  ]
+}

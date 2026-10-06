@@ -1,0 +1,13 @@
+/.work/
+node_modules/
+.venv/
+venv/
+
+.env
+.env.*
+!.env.example
+!.env.sample
+
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
