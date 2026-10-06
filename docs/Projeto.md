@@ -1117,13 +1117,15 @@ A função `aplicar_aumento` recebe a imagem já padronizada (224 × 224 px, flo
 
 **Sem recorte.** Como na T4.1, o aumento não corta a imagem, para não remover lesões nas bordas.
 
+**Preenchimento preservado.** As faixas de cinza adicionadas pela T4.1 são artificiais e não representam a cena fotografada. Por isso, brilho, balanço de branco, desfoque e ruído são aplicados somente ao conteúdo da imagem. Em rotações e espelhamentos, a máscara do preenchimento acompanha a transformação e as faixas permanecem no cinza neutro original.
+
 A função recebe um gerador de números aleatórios com semente explícita (o notebook usa a semente 42), e os parâmetros são gravados em [`parametros.json`](../assets/data/aumento_T4_4/parametros.json) para permitir a reprodução.
 
 ### Resultado da execução
 
 - **Aplicação:** das **3.262 imagens** do manifesto, **2.287** são de treino e aceitam aumento. As **975** de validação e teste foram recusadas, como esperado.
 - **Inspeção visual:** o notebook gera uma grade com quatro imagens de treino, cada uma com a entrada original e três variações sorteadas. As transformações geométricas e de luz são visualmente plausíveis, e a lesão ou o inseto permanece visível.
-- **Verificação automatizada:** o script [`tests/validar_aumento.py`](../tests/validar_aumento.py) confirma formato e faixa de valores, entrada não alterada, determinismo com semente fixa, variação real (menos de 10% das saídas iguais à entrada) e bloqueio fora do treino em todas as linhas do manifesto.
+- **Verificação automatizada:** o script [`tests/validar_aumento.py`](../tests/validar_aumento.py) confirma formato e faixa de valores, entrada não alterada, determinismo com semente fixa, preservação do preenchimento neutro, variação real (menos de 10% das saídas iguais à entrada) e bloqueio fora do treino em todas as linhas do manifesto.
 
 ### Limites e próximos passos
 

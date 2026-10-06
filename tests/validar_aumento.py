@@ -4,11 +4,13 @@ from pathlib import Path
 import sys
 
 import numpy as np
+from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.dont_write_bytecode = True
 sys.path.insert(0, str(ROOT / 'src'))
 from aumento import aplicar_aumento
+from preprocessamento import COR_PREENCHIMENTO, preparar_imagem
 
 MANIFESTO = ROOT / 'assets/data/particionamento_T4_2/manifesto_provisorio.csv'
 
@@ -27,6 +29,15 @@ def validar():
     a = aplicar_aumento(base, 'treino', np.random.default_rng(7))
     b = aplicar_aumento(base, 'treino', np.random.default_rng(7))
     assert np.array_equal(a, b)
+
+    # O preenchimento sintético da T4.1 não representa a cena e deve permanecer neutro.
+    larga = preparar_imagem(Image.new('RGB', (448, 112), (0, 255, 0)))
+    cinza = np.asarray(COR_PREENCHIMENTO, dtype=np.float32) / 255.0
+    for semente in range(20):
+        aumentada = aplicar_aumento(larga, 'treino', np.random.default_rng(semente))
+        horizontal = np.allclose(aumentada[0], cinza) and np.allclose(aumentada[-1], cinza)
+        vertical = np.allclose(aumentada[:, 0], cinza) and np.allclose(aumentada[:, -1], cinza)
+        assert horizontal or vertical, f'preenchimento alterado com a semente {semente}'
 
     # Há variação real: a maioria dos sorteios altera a imagem
     rng = np.random.default_rng(2)
@@ -58,7 +69,7 @@ def validar():
     treino = sum(1 for linha in linhas if linha['particao'] == 'treino')
     assert recusadas == len(linhas) - treino
 
-    print(f'OK: contrato, determinismo, variação e bloqueio fora do treino '
+    print(f'OK: contrato, determinismo, preenchimento neutro, variação e bloqueio fora do treino '
           f'({treino} de treino, {recusadas} recusadas no manifesto).')
 
 

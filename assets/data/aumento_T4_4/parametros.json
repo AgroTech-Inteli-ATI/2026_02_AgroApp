@@ -41,5 +41,6 @@
   },
   "aplicado_somente_em": "treino",
   "recorte": "nenhum, para não remover lesões nas bordas",
+  "preenchimento_sintetico": "preservado em cinza neutro; transformações aplicadas somente ao conteúdo",
   "tamanho_entrada": 224
 }
