@@ -531,6 +531,10 @@ Finalizar os requisitos e restrições técnicas com os valores acordados com o 
 
 ## Inventário do acervo
 
+Esta seção registra inicialmente o inventário produzido a partir do primeiro acervo
+recebido pelo projeto. A atualização referente à base ampliada disponibilizada pelo
+parceiro é apresentada na sequência.
+
 ### Objetivo
 
 Realizar a contagem das imagens do Agro App por cultura,
@@ -584,6 +588,59 @@ Além disso, a planilha do inventário também está versionada no repositório 
 A associação formal entre os nomes das ocorrências e seus
 respectivos agentes causais será complementada a partir do
 dicionário de classes desenvolvido na T3.4.
+
+### Atualização do inventário com o novo dataset
+
+Após a elaboração do inventário inicial, o parceiro disponibilizou um novo dataset,
+maior e mais estruturado, voltado à identificação de pragas das culturas de soja e
+milho. Para atender ao objetivo da T3.1 com a base ampliada, foi realizada uma nova
+consolidação das imagens por classe, cultura e agente causal.
+
+#### Metodologia da atualização
+
+O dataset atualizado reúne duas fontes:
+
+- **AgroInsect:** 1.510 imagens de 4 classes, com metadados disponíveis em
+  `labels.csv`;
+- **iNaturalist / field:** 1.824 imagens de 13 classes, com metadados disponíveis
+  em `field/field_labels.csv`.
+
+Os metadados das duas fontes foram consolidados por `class_id` e associados a uma
+taxonomia unificada de 14 classes. Para cada classe, foram registrados o nome
+padronizado, o agente causal, o nome comum, a cultura relacionada e a quantidade
+de imagens em cada fonte. O total de cada classe corresponde à soma das colunas
+`agroinsect_imagens` e `field_imagens`.
+
+Quando a coluna `cultura` apresenta `milho/soja`, a classe está relacionada às duas
+culturas. Essa indicação não representa uma divisão das imagens entre elas, pois
+as contagens disponibilizadas estão agregadas por classe e fonte.
+
+#### Resultados da atualização
+
+O acervo atualizado contém **3.334 imagens**, distribuídas em **14 classes**:
+**1.510 imagens do AgroInsect** e **1.824 imagens do iNaturalist / field**.
+
+| class_id | class_name | agente_causal | nome_comum | cultura | agroinsect_imagens | field_imagens | total_imagens |
+| ---: | --- | --- | --- | --- | ---: | ---: | ---: |
+| 0 | diabrotica_speciosa | Diabrotica speciosa | vaquinha | milho/soja | 631 | 486 | 1.117 |
+| 1 | dalbulus_maidis | Dalbulus maidis | cigarrinha-do-milho | milho | 217 | 0 | 217 |
+| 2 | dichelops_sp | Diceraeus spp. | percevejo-barriga-verde | milho/soja | 279 | 14 | 293 |
+| 3 | spodoptera_frugiperda | Spodoptera frugiperda | lagarta-do-cartucho | milho/soja | 383 | 79 | 462 |
+| 4 | euschistus_heros | Euschistus heros | percevejo-marrom | soja | 0 | 65 | 65 |
+| 5 | nezara_viridula | Nezara viridula | percevejo-verde | soja | 0 | 95 | 95 |
+| 6 | edessa_meditabunda | Edessa meditabunda | percevejo-asa-preta | soja | 0 | 75 | 75 |
+| 7 | leptoglossus_zonatus | Leptoglossus zonatus | percevejo-do-milho | milho | 0 | 79 | 79 |
+| 8 | chrysodeixis_includens | Chrysodeixis includens | lagarta-falsa-medideira | soja | 0 | 82 | 82 |
+| 9 | anticarsia_gemmatalis | Anticarsia gemmatalis | lagarta-da-soja | soja | 0 | 41 | 41 |
+| 10 | spodoptera_eridania | Spodoptera eridania | lagarta-das-vagens | soja | 0 | 99 | 99 |
+| 11 | spodoptera_cosmioides | Spodoptera cosmioides | lagarta-das-vagens | soja | 0 | 60 | 60 |
+| 12 | astylus_variegatus | Astylus variegatus | larva-angorá | milho | 0 | 481 | 481 |
+| 13 | deois_flavopicta | Deois flavopicta | cigarrinha-das-pastagens | milho | 0 | 168 | 168 |
+| **Total** | **14 classes** |  |  | **soja e milho** | **1.510** | **1.824** | **3.334** |
+
+#### Conclusão
+
+O inventário atualizado consolida 3.334 imagens distribuídas em 14 classes de pragas associadas às culturas de soja e milho. A base combina imagens do AgroInsect e do iNaturalist, permitindo visualizar a distribuição das amostras por classe e fonte. Esses dados servirão de base para as etapas seguintes de análise de qualidade, definição das classes do MVP e preparação do dataset.
 
 ## Análise exploratória visual
 
