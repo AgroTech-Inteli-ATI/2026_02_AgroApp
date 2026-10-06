@@ -38,6 +38,7 @@
 <details>
 <summary><strong>4. Preparação dos dados</strong></summary>
 
+- [4.1 Padronização das imagens (T4.1)](#41-padronização-das-imagens)
 - [4.2 Particionamento por grupo (T4.2)](#42-particionamento-por-grupo-t42)
 
 </details>
@@ -1027,6 +1028,41 @@ As associações usam como referência os [manuais de doenças de soja da Embrap
 Para atualizar a tabela após editar o JSON: `python assets/data/gerar_dicionario.py`. Para verificar cobertura do inventário, contagens, unicidade e integridade das relações: `python tests/validar_dicionario.py`. Os comandos usam somente a biblioteca padrão do Python.
 
 # 4. Preparação dos dados
+
+## 4.1 Padronização das imagens
+
+### Objetivo e entradas
+
+Definir um único processamento de entrada para o modelo, aplicado da mesma forma no treinamento e na inferência, para que as fotos dos acervos e as fotos tiradas em campo cheguem ao modelo no mesmo formato. O [notebook da T4.1](../notebooks/T4_1_padronizacao_imagens.ipynb) usa como entrada o [manifesto da T4.2](../assets/data/particionamento_T4_2/manifesto_provisorio.csv), com as **3.262 imagens** marcadas como *manter*. A lógica fica em [`src/preprocessamento.py`](../src/preprocessamento.py), para que o notebook e o restante do código usem a mesma função.
+
+### Método
+
+A função `preparar_imagem` executa, nesta ordem:
+
+1. **Orientação EXIF:** aplica a rotação gravada pelo celular, para que fotos tiradas em retrato não cheguem deitadas ao modelo.
+2. **Conversão para RGB:** imagens em escala de cinza ou com canal alfa passam a ter três canais.
+3. **Redimensionamento proporcional para 224 × 224 px:** a maior dimensão é ajustada a 224 px e a proporção é preservada, com reamostragem bicúbica.
+4. **Preenchimento neutro:** o restante do quadro recebe cinza `(128, 128, 128)`. Não há recorte, para não remover lesões nas bordas da foto.
+5. **Normalização:** os valores de pixel são convertidos para `float32` no intervalo [0, 1].
+
+As decisões e o motivo de cada uma estão registradas no notebook. O tamanho de 224 px segue a referência do diagnóstico da T3.3 e do candidato EfficientNet-Lite0, mas é um parâmetro, porque a arquitetura final ainda não foi escolhida.
+
+**Verificação automatizada.** O script [`tests/validar_preprocessamento.py`](../tests/validar_preprocessamento.py) usa imagens sintéticas para checar o contrato da função: formato e faixa de valores, preservação da proporção com faixas de preenchimento, ampliação de imagens menores que 224 px, conversão de modos de cor, aplicação da orientação EXIF e determinismo. Para executar, use `python tests/validar_preprocessamento.py`.
+
+### Resultado da execução
+
+- **Leitura:** as **3.262 imagens** foram processadas sem falhas de leitura.
+- **Dimensões:** a menor dimensão tem mediana de 682 px. **79 imagens** têm a menor dimensão abaixo de 224 px e, por isso, são ampliadas para a entrada do modelo.
+- **Distribuição por partição:** 2.287 imagens de treino, 488 de validação e 487 de teste, mesma divisão da T4.2.
+- **Referência de hashes:** o arquivo [`referencia_entrada.csv`](../assets/data/padronizacao_T4_1/referencia_entrada.csv) registra o SHA-256 da saída de `preparar_imagem` para cada imagem. O hash permite comparar a implementação usada no aparelho com a referência gerada aqui.
+- **Parâmetros:** o arquivo [`parametros.json`](../assets/data/padronizacao_T4_1/parametros.json) registra tamanho, cor de preenchimento, normalização, tratamento de EXIF e a versão do Pillow usada (12.2.0).
+
+### Limites e próximos passos
+
+- A normalização em [0, 1] é uma escolha simples. Antes do treinamento, a faixa exigida pelo backbone escolhido deve ser confirmada, e a normalização ajustada se necessário.
+- Os hashes foram gerados em um ambiente específico. Se outro ambiente usar outra versão do Pillow ou outra implementação de reamostragem, os valores podem diferir e a referência deve ser regenerada.
+- A inspeção visual foi feita por uma amostra fixa de 8 imagens, e não por revisão individual do conjunto.
+- A padronização trata a geometria e a cor de entrada. Ela não corrige a qualidade da foto; essa validação precisa ser tratada na etapa de validação da imagem.
 
 ## 4.2 Particionamento por grupo
 
