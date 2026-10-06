@@ -40,6 +40,7 @@
 
 - [4.1 Padronização das imagens (T4.1)](#41-padronização-das-imagens)
 - [4.2 Particionamento por grupo (T4.2)](#42-particionamento-por-grupo-t42)
+- [4.4 Rotinas de aumento de dados (T4.4)](#44-rotinas-de-aumento-de-dados)
 
 </details>
 
@@ -1095,3 +1096,39 @@ Os resultados estão no [manifesto por imagem](../assets/data/particionamento_T4
 
 Este particionamento é **provisório**. **2.953 imagens de `dataset`** ainda mantêm decisões de triagem automática sem inspeção visual individual; os rótulos finais do modelo não foram aprovados; e não foram fornecidos vínculos manuais adicionais da mesma planta (**zero vínculos** nesta execução). Em parte do catálogo, `grupo_origem` identifica apenas o arquivo, sem provar que fotografias diferentes vieram de plantas independentes. Portanto, a auditoria confirma ausência de vazamento **identificável pelos metadados e pares revisados**.
 Antes da avaliação final, é necessário completar a revisão visual, confirmar as classes e acrescentar os vínculos de planta ou captura disponíveis. Depois disso, a divisão deve ser refeita e o conjunto de teste mantido reservado para a avaliação final.
+
+## 4.4 Rotinas de aumento de dados
+
+### Objetivo e entradas
+
+Ampliar a diversidade das imagens de treino com variações que aparecem na captura em campo, como luz do sol, sombra, balanço de branco do celular, ângulo da folha, tremor e ruído do sensor. O aumento responde ao risco **R09** (diferença entre o acervo e as fotos reais de campo) e ajuda a mitigar o **R01** (poucas imagens por classe). O [notebook da T4.4](../notebooks/T4_4_aumento_dados.ipynb) usa como entrada o [manifesto da T4.2](../assets/data/particionamento_T4_2/manifesto_provisorio.csv) e a saída de `preparar_imagem` da T4.1. A lógica fica em [`src/aumento.py`](../src/aumento.py).
+
+### Método
+
+A função `aplicar_aumento` recebe a imagem já padronizada (224 × 224 px, float32 em [0, 1]) e a partição de origem. Cada uma das cinco transformações é sorteada de forma independente, com probabilidade de 50%:
+
+1. **Brilho e contraste:** simula sol forte e sombra, com contraste entre 0,8 e 1,2 e brilho entre 0,75 e 1,25.
+2. **Balanço de branco:** ganho de ±5% em cada canal de cor, para representar celulares com correções de cor diferentes.
+3. **Ângulo de captura:** rotação de 0°, 90°, 180° ou 270°, com espelhamento horizontal em metade dos casos. Não há rotação arbitrária, para não criar bordas de interpolação.
+4. **Tremor ou foco leve:** desfoque gaussiano com raio entre 0,5 e 1,5 px.
+5. **Ruído do sensor:** ruído gaussiano com desvio-padrão entre 0,005 e 0,03.
+
+**Aplicação restrita ao treino.** A função recusa qualquer partição diferente de `treino` com `ValueError`. Assim, validação e teste nunca recebem uma variação aumentada, nem por engano de quem chama a função.
+
+**Sem recorte.** Como na T4.1, o aumento não corta a imagem, para não remover lesões nas bordas.
+
+A função recebe um gerador de números aleatórios com semente explícita (o notebook usa a semente 42), e os parâmetros são gravados em [`parametros.json`](../assets/data/aumento_T4_4/parametros.json) para permitir a reprodução.
+
+### Resultado da execução
+
+- **Aplicação:** das **3.262 imagens** do manifesto, **2.287** são de treino e aceitam aumento. As **975** de validação e teste foram recusadas, como esperado.
+- **Inspeção visual:** o notebook gera uma grade com quatro imagens de treino, cada uma com a entrada original e três variações sorteadas. As transformações geométricas e de luz são visualmente plausíveis, e a lesão ou o inseto permanece visível.
+- **Verificação automatizada:** o script [`tests/validar_aumento.py`](../tests/validar_aumento.py) confirma formato e faixa de valores, entrada não alterada, determinismo com semente fixa, variação real (menos de 10% das saídas iguais à entrada) e bloqueio fora do treino em todas as linhas do manifesto.
+
+### Limites e próximos passos
+
+- **Imagens sem variação suficiente:** classes com 1 ou 2 imagens no treino continuam com pouca diversidade. Aumentar uma única foto gera variações parecidas, então essas classes seguem como exploratórias, sem ganho real de generalização.
+- **Cor como sinal diagnóstico:** o balanço de branco foi limitado a ±5% porque a cor pode indicar sintomas como amarelamento. Uma faixa maior precisa ser validada com o parceiro.
+- **Fundo e condições reais:** o aumento não simula fundos de campo nem chuva ou poeira. Esses casos dependem de fotos reais, previstas nos testes com celular da fase de validação.
+- **Balanceamento:** esta task não equilibra as classes. Essa decisão pertence à T4.3, que trata da estratégia de balanceamento.
+- **Probabilidade fixa:** a probabilidade de 50% por transformação ainda não foi comparada com outras opções. Ela pode ser ajustada depois de um primeiro treino.

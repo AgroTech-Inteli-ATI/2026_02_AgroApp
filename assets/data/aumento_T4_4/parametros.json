@@ -1,0 +1,45 @@
+{
+  "probabilidade_por_transformacao": 0.5,
+  "transformacoes": {
+    "brilho_contraste": {
+      "contraste": [
+        0.8,
+        1.2
+      ],
+      "brilho": [
+        0.75,
+        1.25
+      ]
+    },
+    "balanco_de_branco": {
+      "ganho_por_canal": [
+        0.95,
+        1.05
+      ]
+    },
+    "angulo": {
+      "rotacao_graus": [
+        0,
+        90,
+        180,
+        270
+      ],
+      "espelhamento_horizontal": 0.5
+    },
+    "desfoque_gaussiano": {
+      "raio_px": [
+        0.5,
+        1.5
+      ]
+    },
+    "ruido_gaussiano": {
+      "desvio_padrao": [
+        0.005,
+        0.03
+      ]
+    }
+  },
+  "aplicado_somente_em": "treino",
+  "recorte": "nenhum, para não remover lesões nas bordas",
+  "tamanho_entrada": 224
+}
