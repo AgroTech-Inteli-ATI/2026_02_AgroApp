@@ -1,0 +1,6 @@
+pandas==3.0.2
+openpyxl==3.1.5
+pillow==12.2.0
+numpy==2.4.4
+jupyter==1.1.1
+ipykernel==7.3.0
