@@ -1212,9 +1212,12 @@ A definição partiu do [Inventário do acervo](#inventário-do-acervo) do Agro 
 
 A decisão considerou dois pontos: o **volume de imagens**, principal critério, porque um volume maior dá melhores condições de treinar e avaliar o modelo, e a **qualidade das imagens**, isto é, se o inseto ou o sintoma aparece com nitidez. Entram as classes com maior volume e imagens adequadas; ficam de fora as que têm poucas imagens.
 
-As doenças têm volume bem menor que as pragas, com no máximo 6 imagens por classe. Para que o MVP também cubra doenças, entram as de maior volume e com sinal visível na imagem, e a tabela indica o critério que cada uma não atende. As demais ficam de fora.
-
 **Fontes e créditos.** Acervo do Agro App; fotos do iNaturalist, observações do Brasil com identificação confirmada pela comunidade, sob licenças CC0 e CC BY, em que o crédito de cada autor deve acompanhar o uso das fotos; e o conjunto AgroInsect, sob licença CC BY 4.0.
+
+### Decisões
+
+- **Base do primeiro modelo:** as 14 espécies do novo dataset (13 classes, pelo agrupamento abaixo), com as imagens do acervo das três pragas que também estão no novo dataset (Cigarrinha-do-milho, Percevejo-do-milho e Lagarta-da-soja). As demais classes do acervo anterior ficam fora.
+- **Spodoptera eridania e S. cosmioides:** agrupadas na classe Lagarta-das-vagens (IDs 10 e 11). Têm o mesmo nome comum no dataset, as larvas são visualmente muito parecidas e juntas somam 159 imagens. A Spodoptera frugiperda (ID 3) continua separada.
 
 ### Resultados
 
@@ -1228,44 +1231,38 @@ As doenças têm volume bem menor que as pragas, com no máximo 6 imagens por cl
 | Doenças | Fora do MVP | 28 | 59 |
 | **Total** | | **56** | **3.346** |
 
-#### Classes que entram no MVP
+#### Lista definitiva de classes do modelo
 
-| Classe | Cultura | Fontes | Imagens | Justificativa | Critério não atendido |
+| Índice | Classe | Cultura | ID e nome no inventário | Imagens | Justificativa |
 | --- | --- | --- | --- | --- | --- |
-| **Vaquinha (Diabrotica speciosa)** | Milho/Soja | iNaturalist, AgroInsect | 1.055 | Maior volume da base, com o inseto nítido e um padrão verde com manchas alaranjadas inconfundível. | — |
-| **Astylus variegatus** | Milho | iNaturalist | 480 | Alto volume, com o besouro nítido e o padrão preto e amarelo marcante. | — |
-| **Lagarta-do-cartucho (Spodoptera frugiperda)** | Milho/Soja | iNaturalist, AgroInsect | 434 | Alto volume, com o inseto bem visível em fundos e posições variadas. | — |
-| **Percevejo-barriga-verde (Dichelops/Diceraeus)** | Milho/Soja | iNaturalist, AgroInsect | 283 | Alto volume, com o percevejo em diferentes plantas e posições. | — |
-| **Cigarrinha-do-milho (Dalbulus maidis)** | Milho | Acervo, AgroInsect | 212 | Alto volume, com a cigarrinha em posições variadas; as imagens do acervo mostram também o sintoma na folha. | — |
-| **Cigarrinha-das-pastagens (Deois flavopicta)** | Milho | iNaturalist | 168 | Bom volume, com o inseto nítido e o padrão preto e amarelo característico. | — |
-| **Lagarta-das-vagens (Spodoptera eridania e S. cosmioides)** | Soja | iNaturalist | 159 | Bom volume e a maior presença de lagartas (larvas) entre as classes de lagartas. | — |
-| **Percevejo-verde (Nezara viridula)** | Soja | iNaturalist | 94 | Bom volume, com adultos e ninfas de cores diferentes. | — |
-| **Percevejo-do-milho (Leptoglossus zonatus)** | Milho | Acervo, iNaturalist | 83 | Bom volume, com adultos, ninfas e ovos; as pernas dilatadas ficam bem visíveis. | — |
-| **Lagarta-falsa-medideira (Chrysodeixis includens)** | Soja | iNaturalist | 82 | Bom volume, com a mariposa nítida e as marcas prateadas nas asas. | — |
-| **Percevejo-asa-preta (Edessa meditabunda)** | Soja | iNaturalist | 75 | Bom volume e padrão de cor verde e marrom bem distinto. | — |
-| **Percevejo-marrom (Euschistus heros)** | Soja | iNaturalist | 65 | Volume adequado, com o inseto bem visível e a mancha clara característica no dorso. | — |
-| **Lagarta-da-soja (Anticarsia gemmatalis)** | Soja | Acervo, iNaturalist | 43 | Menor volume entre as pragas que entram, mas ainda com dezenas de imagens e a mariposa bem visível. | — |
-| **Nematóide de cisto** | Soja | Acervo | 6 | Entre as maiores classes de doenças, com os cistos esféricos aparecendo nítidos nas raízes de parte das imagens. | Volume e qualidade (parte das imagens) |
-| **Podridão-cinzenta-do-caule (Macrophomina)** | Soja | Acervo | 6 | Entre as maiores classes de doenças, com o caule acinzentado característico em várias imagens. | Volume e qualidade (parte das imagens) |
-| **Ferrugem asiática** | Soja | Acervo | 4 | Pústulas visíveis na folha, em imagens de perto e de folha inteira. | Volume |
-| **Mancha-olho-de-rã** | Soja | Acervo | 4 | Lesões redondas de centro claro e borda avermelhada, nítidas nas imagens. | Volume |
-| **Mosaico comum da soja** | Soja | Acervo | 4 | Padrão próprio de mosqueado e deformação das folhas, além da semente manchada. | Volume |
-| **Míldio** | Soja | Acervo | 4 | Manchas bem visíveis na folha; entra junto da ferrugem asiática, de aspecto parecido, para que as duas sejam treinadas em conjunto. | Volume |
-| **Phomopsis / Seca da haste e da vagem** | Soja | Acervo | 4 | Haste e vagem com pontuações pretas bem visíveis. | Volume |
-| **Podridão-vermelha-da-raiz** | Soja | Acervo | 4 | Lesão roxo-avermelhada no colo e na raiz, visível na maioria das imagens (uma mostra o sintoma na folha). | Volume |
+| 0 | **Vaquinha (Diabrotica speciosa)** | Milho/Soja | 0 · diabrotica_speciosa | 1.055 | Maior volume da base, com o inseto nítido e um padrão verde com manchas alaranjadas inconfundível. |
+| 1 | **Cigarrinha-do-milho (Dalbulus maidis)** | Milho | 1 · dalbulus_maidis; AGRO-001 | 212 | Alto volume, com a cigarrinha em posições variadas; as imagens do acervo mostram também o sintoma na folha. |
+| 2 | **Percevejo-barriga-verde (Dichelops/Diceraeus)** | Milho/Soja | 2 · dichelops_sp | 283 | Alto volume, com o percevejo em diferentes plantas e posições. |
+| 3 | **Lagarta-do-cartucho (Spodoptera frugiperda)** | Milho/Soja | 3 · spodoptera_frugiperda | 434 | Alto volume, com o inseto bem visível em fundos e posições variadas. |
+| 4 | **Percevejo-marrom (Euschistus heros)** | Soja | 4 · euschistus_heros | 65 | Volume adequado, com o inseto bem visível e a mancha clara característica no dorso. |
+| 5 | **Percevejo-verde (Nezara viridula)** | Soja | 5 · nezara_viridula | 94 | Bom volume, com adultos e ninfas de cores diferentes. |
+| 6 | **Percevejo-asa-preta (Edessa meditabunda)** | Soja | 6 · edessa_meditabunda | 75 | Bom volume e padrão de cor verde e marrom bem distinto. |
+| 7 | **Percevejo-do-milho (Leptoglossus zonatus)** | Milho | 7 · leptoglossus_zonatus; AGRO-003 | 83 | Bom volume, com adultos, ninfas e ovos; as pernas dilatadas ficam bem visíveis. |
+| 8 | **Lagarta-falsa-medideira (Chrysodeixis includens)** | Soja | 8 · chrysodeixis_includens | 82 | Bom volume, com a mariposa nítida e as marcas prateadas nas asas. |
+| 9 | **Lagarta-da-soja (Anticarsia gemmatalis)** | Soja | 9 · anticarsia_gemmatalis; AGRO-053 | 43 | Menor volume entre as pragas que entram, mas ainda com dezenas de imagens e a mariposa bem visível. |
+| 10 | **Lagarta-das-vagens (Spodoptera eridania e S. cosmioides)** | Soja | 10 · spodoptera_eridania; 11 · spodoptera_cosmioides | 159 | Bom volume e a maior presença de lagartas (larvas) entre as classes de lagartas. |
+| 11 | **Astylus variegatus** | Milho | 12 · astylus_variegatus | 480 | Alto volume, com o besouro nítido e o padrão preto e amarelo marcante. |
+| 12 | **Cigarrinha-das-pastagens (Deois flavopicta)** | Milho | 13 · deois_flavopicta | 168 | Bom volume, com o inseto nítido e o padrão preto e amarelo característico. |
+
+O índice é a posição da classe na saída do modelo, e não o ID do inventário, as classes seguem a ordem do `class_id`. As imagens são as aproveitáveis, sem repetidas nem figuras, as contagens do inventário estão em `assets/data/classes-modelo.csv`.
 
 #### Classes fora do MVP
 
 | Grupo | Classes | Imagens por classe | Justificativa |
 | --- | --- | --- | --- |
 | Pragas | Pulgão-do-milho; Coró-da-soja; Brocas-da-soja (vagens + axilas); Coró-do-milho; Tamanduá-da-soja; Cascudinho-da-soja; Percevejo da Soja (sem espécie definida) | 1 a 5 | Poucas imagens por classe, o que não permite ao modelo aprender e ser avaliado de forma confiável. |
-| Doenças | Nematóide das lesões; Estiolamento, Podridão-de-raízes, Tombamento-de-mudas | 3 a 5 | Volume próximo ao das doenças que entram, mas as imagens mostram sinais indiretos (planta atrofiada ou murcha, raízes escuras), sem um padrão visual claro. |
-| Doenças | Damping-off, Podridão-aquosa, Tombamento; Mancha-aureolada; Murcha-de-Sclerotium; Murcha-de-fusarium; Nematóide de galhas; Nematóide-espiralado, Nematóide; Antracnose; Cancro-da-haste; Crestamento bacteriano; Mancha alvo; Mancha-parda / Septoriose; Nematoide-da-haste verde, Ponta Branca; Nematóide-reniforme; Oídio; Podridão radicular de Phytophthora; Podridão-de-raízes; Podridão-radicular; Pústula bacteriana; Tombamento | 2 a 3 | Muito poucas imagens por classe. |
+| Doenças | Nematóide de cisto; Podridão-cinzenta-do-caule (Macrophomina); Nematóide das lesões; Ferrugem asiática; Mancha-olho-de-rã; Mosaico comum da soja; Míldio; Phomopsis / Seca da haste e da vagem; Podridão-vermelha-da-raiz | 4 a 6 | Poucas imagens por classe. |
+| Doenças | Damping-off, Podridão-aquosa, Tombamento; Estiolamento, Podridão-de-raízes, Tombamento-de-mudas; Mancha-aureolada; Murcha-de-Sclerotium; Murcha-de-fusarium; Nematóide de galhas; Nematóide-espiralado, Nematóide; Antracnose; Cancro-da-haste; Crestamento bacteriano; Mancha alvo; Mancha-parda / Septoriose; Nematoide-da-haste verde, Ponta Branca; Nematóide-reniforme; Oídio; Podridão radicular de Phytophthora; Podridão-de-raízes; Podridão-radicular; Pústula bacteriana; Tombamento | 2 a 3 | Muito poucas imagens por classe. |
 | Doenças | Clodosporiose, Verrugose; Fungo de pós colheita; Fungo-de-armazenamento; Fungo-de-pós-colheita, Podridão-dos-grãos-armazenados; Mela ou requeima; Mofo-branco, Podridão-de-sclerotinia; Podridão da semente, Podridão de Fusarium | 1 | Uma única imagem por classe. |
 
 ### Observação
 
-As doenças que entram têm volume bem abaixo do das pragas e dependem do complemento do acervo para o modelo reconhecê-las com segurança; as que ficaram de fora podem entrar à medida que o acervo for complementado. Nas classes de lagartas, parte das imagens mostra o inseto adulto; complementar com fotos de lagartas e do dano na planta deixa a base mais próxima do uso em campo.
+As classes que ficaram de fora podem entrar à medida que o acervo for complementado. Nas classes de lagartas, parte das imagens mostra o inseto adulto; complementar com fotos de lagartas e do dano na planta deixa a base mais próxima do uso em campo.
 
 ### Referências
 
