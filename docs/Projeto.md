@@ -825,11 +825,11 @@ partir do dicionário de classes desenvolvido na T3.4.
 
 Adotar **ponderação de classes na função de perda**, com amostragem natural das imagens de treino, como estratégia inicial para reduzir a preferência do modelo pelas classes mais frequentes. A reamostragem será avaliada em um experimento separado caso a ponderação não ofereça recuperação adequada das classes minoritárias. Não aplicar as duas correções simultaneamente na configuração inicial.
 
-Esta é uma decisão de preparação para o treinamento, ainda sem resultados experimentais: o repositório contém o inventário e a análise exploratória, mas não um modelo treinado nem partições definitivas. Os pesos finais serão calculados após a revisão dos rótulos e a divisão dos dados. A estratégia atende à mitigação do risco R02 e deve ser reavaliada quando o acervo for ampliado.
+Esta é uma decisão de preparação para o treinamento, ainda sem resultados experimentais. O repositório já contém um [particionamento das 13 classes do modelo](../assets/data/particionamento_T4_2/manifesto_modelo.csv), que aguarda revisão; não há modelo treinado. Os pesos para os experimentos deverão ser calculados a partir das contagens de treino dessa versão após a revisão. A estratégia atende à mitigação do risco R02 e deve ser reavaliada quando o acervo for ampliado.
 
 ### Diagnóstico do acervo
 
-As contagens abaixo foram obtidas do [inventário versionado](../assets/data/inventario-acervo.xlsx). Cada ocorrência foi considerada um rótulo candidato; as 55 ocorrências ainda não representam necessariamente 55 classes finais, pois a T3.4 e a revisão agronômica podem confirmar duplicidades ou alterar o escopo do MVP.
+As tabelas abaixo registram o **inventário inicial** do acervo, obtido do [inventário versionado](../assets/data/inventario-acervo.xlsx). Suas 55 ocorrências foram tratadas como rótulos candidatos, não como classes do modelo atual. O particionamento provisório posterior reuniu **64 rótulos candidatos** dos acervos antigo e novo; a [T3.5](#35-classes-do-mvp) selecionou **13 classes de saída**. O [resumo do particionamento do modelo](../assets/data/particionamento_T4_2/resumo_modelo.csv) registra 2.214 imagens de treino nessas 13 classes, de 30 a 735 por classe. É essa distribuição de treino que deve orientar os pesos dos experimentos, após a revisão do manifesto.
 
 | Cultura e categoria | Ocorrências | Imagens | Menor / maior contagem por ocorrência |
 | --- | ---: | ---: | ---: |
@@ -847,7 +847,7 @@ As contagens abaixo foram obtidas do [inventário versionado](../assets/data/inv
 | 5 | 3 | 15 |
 | **Total** | **55** | **126** |
 
-A razão entre a maior e a menor ocorrência é **5:1**, e **36 de 55 ocorrências (65,5%)** possuem no máximo duas imagens. Soja/doenças reúne 97 de 126 imagens (77,0%), mas esse total é distribuído entre 41 ocorrências: ponderar apenas por cultura ou categoria não resolve o desbalanceamento das classes reconhecidas pelo modelo. Se houver modelos separados por cultura, as frequências e os pesos serão calculados separadamente para cada modelo.
+A razão entre a maior e a menor ocorrência **nesse inventário inicial** é **5:1**, e **36 de 55 ocorrências (65,5%)** possuem no máximo duas imagens. Soja/doenças reúne 97 de 126 imagens (77,0%), distribuídas entre 41 ocorrências. Esses dados justificaram a análise inicial de balanceamento, mas não descrevem a distribuição das 13 classes selecionadas. Se houver modelos separados por cultura, as frequências e os pesos serão calculados separadamente para cada modelo.
 
 A limitação principal combina desbalanceamento e escassez de exemplos independentes. Nenhuma técnica de balanceamento substitui a coleta de imagens novas, a revisão de rótulos ambíguos ou a definição de classes visualmente distinguíveis.
 
@@ -857,7 +857,7 @@ A limitação principal combina desbalanceamento e escassez de exemplos independ
 | --- | --- | --- | --- |
 | Ponderação de classes | Aumenta a contribuição das classes raras na perda e conserva todas as imagens disponíveis. | Também aumenta a influência de erros de rótulo e pode favorecer memorização de classes com poucos exemplos. | Estratégia inicial, após revisão dos rótulos. |
 | Sobreamostragem | Faz as classes raras aparecerem mais vezes nos lotes de treino. | Repete os mesmos exemplares; não acrescenta diversidade independente e pode causar sobreajuste. | Alternativa a comparar, sem pesos inversos simultâneos. |
-| Subamostragem | Reduz a participação das classes mais frequentes. | Descartaria imagens de classes que já possuem somente até cinco exemplos. | Não adotar no acervo atual. |
+| Subamostragem | Reduz a participação das classes mais frequentes. | Descartaria imagens úteis das classes majoritárias sem acrescentar diversidade às minoritárias. | Não adotar inicialmente. |
 | Ponderação + sobreamostragem | Permite ajustar frequência e contribuição na perda separadamente. | Aplicar ambas integralmente sobrecorrige as classes raras e dificulta atribuir a origem de um ganho. | Não adotar inicialmente; exige novo experimento com pesos ajustados à distribuição efetivamente amostrada. |
 
 A [documentação do TensorFlow sobre dados desbalanceados](https://www.tensorflow.org/tutorials/structured_data/imbalanced_data) apresenta ponderação e sobreamostragem e discute suas diferenças na atualização por lotes. Essa referência trata de classificação binária; a comparação experimental aqui será multiclasse, no acervo do Agro App, sem assumir transferência dos resultados do tutorial.
@@ -885,7 +885,7 @@ Recalcular os pesos em cada partição de treinamento, inclusive em cada rodada 
 
 1. Revisar rótulos e duplicatas antes de definir as classes e contar os exemplos. Registrar as decisões de fusão ou exclusão com rastreabilidade até o inventário.
 2. Separar treino, validação e teste por grupos de origem: imagens idênticas, versões derivadas e fotos correlacionadas da mesma planta ou captura devem permanecer na mesma partição. Preservar as proporções de classes quando houver grupos suficientes; a separação por grupos tem prioridade sobre a estratificação. A [documentação do scikit-learn sobre validação cruzada](https://scikit-learn.org/stable/modules/cross_validation.html) descreve a combinação de grupos e estratificação.
-3. Conferir a presença de exemplos independentes de cada classe nas partições. Uma única imagem não permite avaliar a mesma classe em treino e em uma partição independente. Duas imagens ou grupos não permitem representá-la simultaneamente em treino, validação e teste. Não forçar uma divisão percentual fixa nas 55 ocorrências atuais.
+3. Conferir a presença de exemplos independentes de cada classe nas partições. Uma única imagem não permite avaliar a mesma classe em treino e em uma partição independente. Duas imagens ou grupos não permitem representá-la simultaneamente em treino, validação e teste. Não forçar uma divisão percentual fixa quando a integridade dos grupos exigir outra distribuição.
 4. Priorizar a complementação das classes insuficientes. Até que haja grupos independentes para treinamento, seleção e avaliação, tratá-las como exploratórias e não declarar desempenho validado para elas. Se for necessário restringir o MVP, registrar o escopo efetivamente avaliado; agrupamentos só podem decorrer de decisão agronômica, não da necessidade de aumentar contagens.
 5. Aplicar aumento de dados somente depois da divisão, durante o treino, preservando o ID e a partição do original. Usar transformações moderadas e agronomicamente plausíveis, que não removam lesões nem alterem cores diagnósticas. As transformações deverão ser inspecionadas por amostra; não fixar parâmetros sem observar as imagens.
 
@@ -913,7 +913,7 @@ Depois da seleção, ajustar a política de confiança usando somente dados de v
 
 O experimento deverá guardar versão do dataset, classes aprovadas e respectivos índices, IDs e grupos de cada partição, contagens originais de treino por classe, pesos aplicados, configuração de amostragem, transformações, sementes, orçamento de treinamento e métricas por classe. Esses registros permitem reproduzir o cálculo e identificar alterações após a ampliação do acervo.
 
-A **definição da T4.3** fica consolidada nesta seção: ponderação como escolha inicial, justificativa baseada no inventário, comparação das alternativas e protocolo de avaliação. A **validação experimental** ficará concluída quando houver classes e partições avaliáveis, execução de E0/E1 (e E2 se necessário), registro das métricas e justificativa da configuração selecionada. Até lá, não há evidência para afirmar melhora de desempenho ou generalização nas 55 ocorrências.
+A **definição da T4.3** fica consolidada nesta seção: ponderação como escolha inicial, justificativa baseada no inventário, comparação das alternativas e protocolo de avaliação. A **validação experimental** ficará concluída após a revisão do particionamento das 13 classes, execução de E0/E1 (e E2 se necessário), registro das métricas e justificativa da configuração selecionada. Até lá, não há evidência para afirmar melhora de desempenho ou generalização nas classes do modelo.
 
 validadas (Seção 1.4, item 7). O [dicionário de classes da T3.4](#dicionário-de-classes-t34)
 registra as relações entre os rótulos candidatos a duplicidade. A decisão de unificar
@@ -1227,8 +1227,8 @@ A decisão considerou dois pontos: o **volume de imagens**, principal critério,
 | --- | --- | --- | --- |
 | Pragas | Entra | 13 | 3.233 |
 | Pragas | Fora do MVP | 7 | 18 |
-| Doenças | Entra | 8 | 36 |
-| Doenças | Fora do MVP | 28 | 59 |
+| Doenças | Entra | 0 | 0 |
+| Doenças | Fora do MVP | 36 | 95 |
 | **Total** | | **56** | **3.346** |
 
 #### Lista definitiva de classes do modelo
@@ -1276,7 +1276,7 @@ INATURALIST. **Observações de pragas de soja e milho no Brasil**. Disponível 
 
 ### Objetivo e entradas
 
-Definir um único processamento de entrada para o modelo, aplicado da mesma forma no treinamento e na inferência, para que as fotos dos acervos e as fotos tiradas em campo cheguem ao modelo no mesmo formato. O [notebook da T4.1](../notebooks/T4_1_padronizacao_imagens.ipynb) usa como entrada o [manifesto da T4.2](../assets/data/particionamento_T4_2/manifesto_provisorio.csv), com as **3.262 imagens** marcadas como *manter*. A lógica fica em [`src/preprocessamento.py`](../src/preprocessamento.py), para que o notebook e o restante do código usem a mesma função.
+Definir um único processamento de entrada para o modelo, aplicado da mesma forma no treinamento e na inferência, para que as fotos dos acervos e as fotos tiradas em campo cheguem ao modelo no mesmo formato. O [notebook da T4.1](../notebooks/T4_1_padronizacao_imagens.ipynb) usa como entrada o [manifesto das 13 classes da T4.2](../assets/data/particionamento_T4_2/manifesto_modelo.csv), com **3.163 imagens**. A lógica fica em [`src/preprocessamento.py`](../src/preprocessamento.py), para que o notebook e o restante do código usem a mesma função.
 
 ### Método
 
@@ -1292,13 +1292,9 @@ As decisões e o motivo de cada uma estão registradas no notebook. O tamanho de
 
 **Verificação automatizada.** O script [`tests/validar_preprocessamento.py`](../tests/validar_preprocessamento.py) usa imagens sintéticas para checar o contrato da função: formato e faixa de valores, preservação da proporção com faixas de preenchimento, ampliação de imagens menores que 224 px, conversão de modos de cor, aplicação da orientação EXIF e determinismo. Para executar, use `python tests/validar_preprocessamento.py`.
 
-### Resultado da execução
+### Resultado e atualização da entrada
 
-- **Leitura:** as **3.262 imagens** foram processadas sem falhas de leitura.
-- **Dimensões:** a menor dimensão tem mediana de 682 px. **79 imagens** têm a menor dimensão abaixo de 224 px e, por isso, são ampliadas para a entrada do modelo.
-- **Distribuição por partição:** 2.287 imagens de treino, 488 de validação e 487 de teste, mesma divisão da T4.2.
-- **Referência de hashes:** o arquivo [`referencia_entrada.csv`](../assets/data/padronizacao_T4_1/referencia_entrada.csv) registra o SHA-256 da saída de `preparar_imagem` para cada imagem. O hash permite comparar a implementação usada no aparelho com a referência gerada aqui.
-- **Parâmetros:** o arquivo [`parametros.json`](../assets/data/padronizacao_T4_1/parametros.json) registra tamanho, cor de preenchimento, normalização, tratamento de EXIF e a versão do Pillow usada (12.2.0).
+O notebook agora lê o manifesto das 13 classes. O arquivo [`referencia_entrada.csv`](../assets/data/padronizacao_T4_1/referencia_entrada.csv) foi reduzido às **3.163 imagens** desse manifesto e recebeu as partições atuais. Os hashes de entrada foram preservados da execução anterior para as mesmas imagens, pois o pré-processamento não depende da partição. A inspeção visual e o recálculo dos hashes com os arquivos originais ainda precisam ser repetidos. O arquivo de [parâmetros](../assets/data/padronizacao_T4_1/parametros.json) registra tamanho, cor de preenchimento, normalização, EXIF e versão do Pillow da execução anterior.
 
 ### Limites e próximos passos
 
@@ -1309,41 +1305,43 @@ As decisões e o motivo de cada uma estão registradas no notebook. O tamanho de
 
 ## 4.2 Particionamento por grupo
 
-### Objetivo e entradas
+### Escopo
 
-Separar as imagens selecionadas em treino, validação e teste sem colocar registros da mesma origem, da mesma planta conhecida ou de uma duplicata confirmada em partições diferentes. O [notebook da T4.2](../notebooks/T4_2_particionamento_por_grupo.ipynb) usa a [planilha de decisões da T3.3](../assets/data/diagnostico_qualidade_T3_3_revisado.xlsx) e o [dicionário de classes da T3.4](../assets/data/dicionario-classes.json). A execução registrada usou a semente **42** e selecionou as **3.262 imagens** marcadas como *manter* dentre os **3.460 registros** do diagnóstico.
+O particionamento atual distribui **3.163 imagens das 13 classes do primeiro modelo** entre treino, validação e teste. As classes e seus índices vêm da [lista T3.5](../assets/data/classes-modelo.csv); as decisões de qualidade por imagem vêm da [T3.3](../assets/data/diagnostico_qualidade_T3_3_revisado.xlsx), e os IDs do acervo anterior vêm do [dicionário T3.4](../assets/data/dicionario-classes.json).
 
-Os rótulos ainda são **candidatos a classes do modelo**. Os registros dos acervos anteriores recebem os IDs `AGRO-*` da T3.4; os rótulos de `dataset` recebem IDs `DATASET-*`. Semelhanças de nome ou de agente causal não provocam fusão automática de classes. Entre as imagens selecionadas, há **64 classes candidatas**; a definição das classes finais depende de validação agronômica e do escopo do MVP.
+As imagens `AGRO-001` e `AGRO-053` complementam classes já existentes. `DATASET-10` e `DATASET-11` compartilham a classe de índice 10 (*Spodoptera eridania* e *S. cosmioides*). As quatro imagens `AGRO-003` não entram enquanto a espécie estiver indeterminada; a classe *Leptoglossus zonatus* permanece no modelo com as imagens `DATASET-07`. Outras **95 imagens** mantidas na triagem ficam fora do escopo das 13 classes.
 
 ### Método
 
-1. **Formar grupos indivisíveis:** reunir imagens com o mesmo `grupo_origem`, duplicatas exatas e pares visuais confirmados na revisão da T3.3. Os vínculos são transitivos: se A compartilha origem com B e B é duplicata confirmada de C, os três registros ficam no mesmo grupo. Dos **99 pares visuais** comparados, **95** foram confirmados como mesma foto ou cena e **4** eram falsos positivos; estes quatro não criam vínculo. Vínculos adicionais da mesma planta ou sessão podem ser informados em `assets/data/vinculos_mesma_planta.csv`, com as colunas `image_id_1,image_id_2`.
-2. **Distribuir os grupos:** usar **70% treino, 15% validação e 15% teste** como metas de quantidade de imagens, com equilíbrio por classe candidata e fonte. A integridade do grupo tem prioridade sobre essas proporções. Classes com menos de três grupos independentes ficam apenas no treino e recebem o status *exploratória*, sem métricas próprias de validação ou teste. As demais recebem, quando possível, ao menos um grupo em cada partição.
-3. **Auditar:** confirmar que nenhum `grupo_particao`, `grupo_origem`, hash SHA-256 ou par visual confirmado com ambas as imagens selecionadas atravessa partições. Registrar a semente, os hashes dos arquivos de entrada e a cobertura por classe para permitir a reprodução da divisão.
+1. **Selecionar as imagens:** manter apenas registros aprovados na triagem que correspondem às 13 classes e aplicar seus índices de saída.
+2. **Formar grupos indivisíveis:** unir registros com o mesmo `grupo_origem`, duplicatas exatas e pares visuais confirmados. Vínculos adicionais da mesma planta ou sessão podem ser registrados em `assets/data/vinculos_mesma_planta.csv`.
+3. **Distribuir os grupos:** usar a semente **42** e metas de **70% treino, 15% validação e 15% teste**, equilibrando classes e fontes. A integridade dos grupos tem prioridade sobre as proporções.
+4. **Auditar:** verificar se nenhum grupo de origem, grupo de partição ou hash SHA-256 aparece em mais de uma partição e se cada classe avaliável tem exemplos nas três.
 
-### Resultado da execução provisória
+### Resultado
 
 | Partição | Grupos | Imagens |
 | --- | ---: | ---: |
-| Treino | 1.666 | 2.287 |
-| Validação | 366 | 488 |
-| Teste | 366 | 487 |
-| **Total** | **2.398** | **3.262** |
+| Treino | 1.594 | 2.214 |
+| Validação | 352 | 475 |
+| Teste | 353 | 474 |
+| **Total** | **2.299** | **3.163** |
 
-Das **64 classes candidatas**, **36** têm menos de três grupos e ficaram identificadas como exploratórias. As outras **28** têm grupos nas três partições nesta execução. A auditoria não encontrou vazamento entre os grupos de origem, hashes exatos ou pares visuais confirmados registrados. A divisão não copia nem aumenta imagens; ela atribui uma partição a cada registro selecionado.
+Todas as **13 classes** têm grupos em treino, validação e teste. Nenhuma ficou exploratória por falta de grupos. A auditoria não encontrou cruzamento entre os grupos de origem, grupos de partição ou hashes exatos registrados. As **99 imagens mantidas na triagem mas fora do modelo** estão resumidas em [fora_modelo.csv](../assets/data/particionamento_T4_2/fora_modelo.csv).
 
-Os resultados estão no [manifesto por imagem](../assets/data/particionamento_T4_2/manifesto_provisorio.csv), no [resumo por classe](../assets/data/particionamento_T4_2/resumo_por_classe.csv) e na [auditoria reproduzível](../assets/data/particionamento_T4_2/auditoria.json). O código de agrupamento e distribuição está em [`src/particionamento_t4_2.py`](../src/particionamento_t4_2.py). Para refazer a separação, execute todas as células do notebook após atualizar as entradas ou os vínculos manuais.
+Os resultados estão no [manifesto do modelo](../assets/data/particionamento_T4_2/manifesto_modelo.csv), no [resumo por classe](../assets/data/particionamento_T4_2/resumo_modelo.csv) e na [auditoria reproduzível](../assets/data/particionamento_T4_2/auditoria_modelo.json). O código está em [`src/gerar_manifesto_modelo_t4_2.py`](../src/gerar_manifesto_modelo_t4_2.py) e [`src/particionamento_t4_2.py`](../src/particionamento_t4_2.py). Para refazer a separação, execute `python -m src.gerar_manifesto_modelo_t4_2` na raiz do repositório.
 
 ### Limites e próximos passos
 
-Este particionamento é **provisório**. **2.953 imagens de `dataset`** ainda mantêm decisões de triagem automática sem inspeção visual individual; os rótulos finais do modelo não foram aprovados; e não foram fornecidos vínculos manuais adicionais da mesma planta (**zero vínculos** nesta execução). Em parte do catálogo, `grupo_origem` identifica apenas o arquivo, sem provar que fotografias diferentes vieram de plantas independentes. Portanto, a auditoria confirma ausência de vazamento **identificável pelos metadados e pares revisados**.
-Antes da avaliação final, é necessário completar a revisão visual, confirmar as classes e acrescentar os vínculos de planta ou captura disponíveis. Depois disso, a divisão deve ser refeita e o conjunto de teste mantido reservado para a avaliação final.
+O CSV T3.5 informa **3.233 imagens aproveitáveis**, enquanto o manifesto contém **3.163**. A [auditoria](../assets/data/particionamento_T4_2/auditoria_modelo.json) detalha a diferença por classe; as contagens ainda precisam ser conciliadas. A revisão de Glauco e a aprovação interna dos rótulos também estão pendentes.
+
+Parte das imagens de `dataset` manteve decisões de triagem automática sem inspeção visual individual. Não foram fornecidos vínculos manuais adicionais da mesma planta; em parte do catálogo, `grupo_origem` identifica apenas o arquivo. A auditoria confirma ausência de vazamento **identificável pelos metadados e pares revisados**, sem comprovar independência completa das plantas. Se a revisão visual, os rótulos ou os vínculos mudarem, a divisão deve ser refeita e o teste mantido reservado para avaliação final.
 
 ## 4.4 Rotinas de aumento de dados
 
 ### Objetivo e entradas
 
-Ampliar a diversidade das imagens de treino com variações que aparecem na captura em campo, como luz do sol, sombra, balanço de branco do celular, ângulo da folha, tremor e ruído do sensor. O aumento responde ao risco **R09** (diferença entre o acervo e as fotos reais de campo) e ajuda a mitigar o **R01** (poucas imagens por classe). O [notebook da T4.4](../notebooks/T4_4_aumento_dados.ipynb) usa como entrada o [manifesto da T4.2](../assets/data/particionamento_T4_2/manifesto_provisorio.csv) e a saída de `preparar_imagem` da T4.1. A lógica fica em [`src/aumento.py`](../src/aumento.py).
+Ampliar a diversidade das imagens de treino com variações que aparecem na captura em campo, como luz do sol, sombra, balanço de branco do celular, ângulo da folha, tremor e ruído do sensor. O aumento responde ao risco **R09** (diferença entre o acervo e as fotos reais de campo) e ajuda a mitigar o **R01** (poucas imagens por classe). O [notebook da T4.4](../notebooks/T4_4_aumento_dados.ipynb) usa como entrada o [manifesto das 13 classes da T4.2](../assets/data/particionamento_T4_2/manifesto_modelo.csv) e a saída de `preparar_imagem` da T4.1. A lógica fica em [`src/aumento.py`](../src/aumento.py).
 
 ### Método
 
@@ -1365,8 +1363,8 @@ A função recebe um gerador de números aleatórios com semente explícita (o n
 
 ### Resultado da execução
 
-- **Aplicação:** das **3.262 imagens** do manifesto, **2.287** são de treino e aceitam aumento. As **975** de validação e teste foram recusadas, como esperado.
-- **Inspeção visual:** o notebook gera uma grade com quatro imagens de treino, cada uma com a entrada original e três variações sorteadas. As transformações geométricas e de luz são visualmente plausíveis, e a lesão ou o inseto permanece visível.
+- **Aplicação:** das **3.163 imagens** do manifesto atual, **2.214** são de treino e aceitam aumento. As **949** de validação e teste foram recusadas no teste automatizado.
+- **Inspeção visual:** o notebook gera uma grade com quatro imagens de treino, cada uma com a entrada original e três variações sorteadas. A inspeção precisa ser repetida com as imagens do manifesto atual.
 - **Verificação automatizada:** o script [`tests/validar_aumento.py`](../tests/validar_aumento.py) confirma formato e faixa de valores, entrada não alterada, determinismo com semente fixa, preservação do preenchimento neutro, variação real (menos de 10% das saídas iguais à entrada) e bloqueio fora do treino em todas as linhas do manifesto.
 
 ### Limites e próximos passos
