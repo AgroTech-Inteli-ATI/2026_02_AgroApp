@@ -1,7 +1,7 @@
-"""Particionamento provisório por origem para o diagnóstico T3.3.
+"""Agrupamento por origem e distribuição das classes selecionadas na T4.2.
 
-Não define classes finais do modelo nem comprova que arquivos de catálogo
-retratem plantas independentes. Essas decisões exigem validação externa.
+Os grupos identificados não comprovam que fotos de catálogo retratem plantas
+independentes quando faltam metadados de planta ou sessão.
 """
 
 from __future__ import annotations
@@ -131,7 +131,7 @@ def construir_grupos(
     dados["grupo_particao"] = dados["image_id"].map(grupo_por_id)
     assert dados["grupo_particao"].notna().all()
     return dados, {
-        "grupos_independentes_provisorios": len(componentes),
+        "grupos_independentes": len(componentes),
         "pares_visuais_confirmados": pares_confirmados,
         "pares_visuais_falsos": pares_falsos,
         "vinculos_manuais": vinculos_manuais,
@@ -276,24 +276,3 @@ def separar_grupos(
         "independencia_de_planta_confirmada_para_catalogo": False,
     }
     return resultado, resumo, auditoria
-
-
-def salvar_resultados(
-    raiz: Path, resultado: pd.DataFrame, resumo: pd.DataFrame, auditoria: dict, proveniencia: dict
-) -> Path:
-    pasta = raiz / "assets/data/particionamento_T4_2"
-    pasta.mkdir(parents=True, exist_ok=True)
-    colunas = [
-        "image_id", "caminho_relativo", "cultura", "classe", "ocorrencia",
-        "classe_candidata", "fonte", "grupo_origem", "grupo_duplicata_exata",
-        "grupo_duplicata_visual", "grupo_particao", "particao", "status_classe",
-        "decisao_final", "sha256", "revisor",
-    ]
-    resultado[colunas].sort_values("image_id").to_csv(
-        pasta / "manifesto_provisorio.csv", index=False, encoding="utf-8-sig"
-    )
-    resumo.to_csv(pasta / "resumo_por_classe.csv", index=False, encoding="utf-8-sig")
-    (pasta / "auditoria.json").write_text(
-        json.dumps({**proveniencia, **auditoria}, ensure_ascii=False, indent=2), encoding="utf-8"
-    )
-    return pasta

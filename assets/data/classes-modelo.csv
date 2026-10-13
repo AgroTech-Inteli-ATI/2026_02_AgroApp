@@ -1,0 +1,14 @@
+﻿indice_modelo;classe;cultura;ids_inventario;nomes_inventario;ids_acervo;imagens_inventario;imagens_acervo;imagens_aproveitaveis
+0;Vaquinha (Diabrotica speciosa);Milho/Soja;0;diabrotica_speciosa;;1117;0;1055
+1;Cigarrinha-do-milho (Dalbulus maidis);Milho;1;dalbulus_maidis;AGRO-001;217;5;212
+2;Percevejo-barriga-verde (Dichelops/Diceraeus);Milho/Soja;2;dichelops_sp;;293;0;283
+3;Lagarta-do-cartucho (Spodoptera frugiperda);Milho/Soja;3;spodoptera_frugiperda;;462;0;434
+4;Percevejo-marrom (Euschistus heros);Soja;4;euschistus_heros;;65;0;65
+5;Percevejo-verde (Nezara viridula);Soja;5;nezara_viridula;;95;0;94
+6;Percevejo-asa-preta (Edessa meditabunda);Soja;6;edessa_meditabunda;;75;0;75
+7;Percevejo-do-milho (Leptoglossus zonatus);Milho;7;leptoglossus_zonatus;AGRO-003;79;4;83
+8;Lagarta-falsa-medideira (Chrysodeixis includens);Soja;8;chrysodeixis_includens;;82;0;82
+9;Lagarta-da-soja (Anticarsia gemmatalis);Soja;9;anticarsia_gemmatalis;AGRO-053;41;2;43
+10;Lagarta-das-vagens (Spodoptera eridania e S. cosmioides);Soja;"10;11";"spodoptera_eridania;spodoptera_cosmioides";;159;0;159
+11;Astylus variegatus;Milho;12;astylus_variegatus;;481;0;480
+12;Cigarrinha-das-pastagens (Deois flavopicta);Milho;13;deois_flavopicta;;168;0;168

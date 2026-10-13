@@ -12,7 +12,7 @@ sys.path.insert(0, str(ROOT / 'src'))
 from aumento import aplicar_aumento
 from preprocessamento import COR_PREENCHIMENTO, preparar_imagem
 
-MANIFESTO = ROOT / 'assets/data/particionamento_T4_2/manifesto_provisorio.csv'
+MANIFESTO = ROOT / 'assets/data/particionamento_T4_2/manifesto_modelo.csv'
 
 
 def validar():

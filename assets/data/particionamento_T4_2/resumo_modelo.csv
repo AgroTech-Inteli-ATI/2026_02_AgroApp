@@ -1,0 +1,14 @@
+﻿indice_modelo,nome_classe_modelo,status_classe,imagens,grupos,imagens_treino,grupos_treino,imagens_validacao,grupos_validacao,imagens_teste,grupos_teste,cobertura_tres_particoes
+0,Vaquinha (Diabrotica speciosa),avaliavel,1049,846,735,592,157,127,157,127,True
+1,Cigarrinha-do-milho (Dalbulus maidis),avaliavel,198,198,138,138,30,30,30,30,True
+2,Percevejo-barriga-verde (Dichelops/Diceraeus),avaliavel,282,272,198,189,42,42,42,41,True
+3,Lagarta-do-cartucho (Spodoptera frugiperda),avaliavel,407,358,285,250,61,54,61,54,True
+4,Percevejo-marrom (Euschistus heros),avaliavel,65,46,45,31,10,7,10,8,True
+5,Percevejo-verde (Nezara viridula),avaliavel,92,49,64,33,14,8,14,8,True
+6,Percevejo-asa-preta (Edessa meditabunda),avaliavel,75,28,53,18,11,5,11,5,True
+7,Percevejo-do-milho (Leptoglossus zonatus),avaliavel,79,33,55,21,12,6,12,6,True
+8,Lagarta-falsa-medideira (Chrysodeixis includens),avaliavel,79,40,55,26,12,7,12,7,True
+9,Lagarta-da-soja (Anticarsia gemmatalis),avaliavel,43,33,30,22,7,6,6,5,True
+10,Lagarta-das-vagens (Spodoptera eridania e S. cosmioides),avaliavel,158,67,110,45,24,11,24,11,True
+11,Astylus variegatus,avaliavel,474,261,332,182,71,39,71,40,True
+12,Cigarrinha-das-pastagens (Deois flavopicta),avaliavel,162,68,114,47,24,10,24,11,True
