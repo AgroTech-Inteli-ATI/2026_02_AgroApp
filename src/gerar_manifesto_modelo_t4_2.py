@@ -42,7 +42,7 @@ def carregar_classes(caminho: Path) -> tuple[pd.DataFrame, dict[str, tuple[int, 
     return classes, mapa
 
 
-def gerar(raiz: Path) -> Path:
+def gerar(raiz: Path, pasta_saida: Path | None = None) -> Path:
     caminho_classes = raiz / "assets/data/classes-modelo.csv"
     classes, mapa = carregar_classes(caminho_classes)
     mantidas, pares_visuais, proveniencia = carregar_dados(raiz)
@@ -81,7 +81,7 @@ def gerar(raiz: Path) -> Path:
     ]
     resumo = resumo[cols]
 
-    pasta = raiz / "assets/data/particionamento_T4_2"
+    pasta = pasta_saida or raiz / "assets/data/particionamento_T4_2"
     pasta.mkdir(parents=True, exist_ok=True)
     colunas = [
         "image_id", "caminho_relativo", "indice_modelo", "nome_classe_modelo",
@@ -114,7 +114,7 @@ def gerar(raiz: Path) -> Path:
     auditoria_modelo = {
         **proveniencia, **grupos, **auditoria,
         "classes_modelo_sha256": sha256(caminho_classes.read_bytes()).hexdigest(),
-        "status_revisao": "aguardando_revisao_glauco",
+        "status_revisao": "aprovado_por_glauco_no_pr_21",
         "rotulos_finais_aprovados": False,
         "criterio_rotulos": "lista T3.5 aplicada como escopo interno; AGRO-003 retido até identificação da espécie",
         "classes_modelo": len(classes),
