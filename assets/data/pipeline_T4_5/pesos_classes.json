@@ -1,0 +1,73 @@
+{
+  "formula": "N / (K * n_c)",
+  "calculado_somente_sobre": "imagens originais de treino",
+  "total_treino": 2214,
+  "quantidade_classes": 13,
+  "classes": {
+    "0": {
+      "nome_classe": "Vaquinha (Diabrotica speciosa)",
+      "imagens_treino": 735,
+      "peso": 0.2317111459968603
+    },
+    "1": {
+      "nome_classe": "Cigarrinha-do-milho (Dalbulus maidis)",
+      "imagens_treino": 138,
+      "peso": 1.234113712374582
+    },
+    "2": {
+      "nome_classe": "Percevejo-barriga-verde (Dichelops/Diceraeus)",
+      "imagens_treino": 198,
+      "peso": 0.8601398601398601
+    },
+    "3": {
+      "nome_classe": "Lagarta-do-cartucho (Spodoptera frugiperda)",
+      "imagens_treino": 285,
+      "peso": 0.5975708502024292
+    },
+    "4": {
+      "nome_classe": "Percevejo-marrom (Euschistus heros)",
+      "imagens_treino": 45,
+      "peso": 3.7846153846153845
+    },
+    "5": {
+      "nome_classe": "Percevejo-verde (Nezara viridula)",
+      "imagens_treino": 64,
+      "peso": 2.6610576923076925
+    },
+    "6": {
+      "nome_classe": "Percevejo-asa-preta (Edessa meditabunda)",
+      "imagens_treino": 53,
+      "peso": 3.2133526850507983
+    },
+    "7": {
+      "nome_classe": "Percevejo-do-milho (Leptoglossus zonatus)",
+      "imagens_treino": 55,
+      "peso": 3.0965034965034963
+    },
+    "8": {
+      "nome_classe": "Lagarta-falsa-medideira (Chrysodeixis includens)",
+      "imagens_treino": 55,
+      "peso": 3.0965034965034963
+    },
+    "9": {
+      "nome_classe": "Lagarta-da-soja (Anticarsia gemmatalis)",
+      "imagens_treino": 30,
+      "peso": 5.676923076923077
+    },
+    "10": {
+      "nome_classe": "Lagarta-das-vagens (Spodoptera eridania e S. cosmioides)",
+      "imagens_treino": 110,
+      "peso": 1.5482517482517482
+    },
+    "11": {
+      "nome_classe": "Astylus variegatus",
+      "imagens_treino": 332,
+      "peso": 0.5129749768303985
+    },
+    "12": {
+      "nome_classe": "Cigarrinha-das-pastagens (Deois flavopicta)",
+      "imagens_treino": 114,
+      "peso": 1.4939271255060729
+    }
+  }
+}

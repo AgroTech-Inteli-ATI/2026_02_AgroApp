@@ -41,6 +41,7 @@
 - [4.1 Padronização das imagens (T4.1)](#41-padronização-das-imagens)
 - [4.2 Particionamento por grupo (T4.2)](#42-particionamento-por-grupo-t42)
 - [4.4 Rotinas de aumento de dados (T4.4)](#44-rotinas-de-aumento-de-dados)
+- [4.5 Pipeline reprodutível (T4.5)](#45-pipeline-reprodutível-t45)
 
 </details>
 
@@ -1374,5 +1375,80 @@ A função recebe um gerador de números aleatórios com semente explícita (o n
 - **Fundo e condições reais:** o aumento não simula fundos de campo nem chuva ou poeira. Esses casos dependem de fotos reais, previstas nos testes com celular da fase de validação.
 - **Balanceamento:** esta task não equilibra as classes. Essa decisão pertence à T4.3, que trata da estratégia de balanceamento.
 - **Probabilidade fixa:** a probabilidade de 50% por transformação ainda não foi comparada com outras opções. Ela pode ser ajustada depois de um primeiro treino.
+
+## 4.5 Pipeline reprodutível (T4.5)
+
+### Objetivo e entradas
+
+Executar a preparação dos dados por um único ponto de entrada, preservando os
+contratos definidos nas etapas anteriores. O pipeline usa a lista das **13 classes**
+da T3.5, recompõe o particionamento da T4.2, incorpora os parâmetros de
+padronização da T4.1, calcula os pesos da T4.3 e associa o augmentation da T4.4
+exclusivamente às amostras de treino.
+
+As entradas versionadas são:
+
+- `assets/data/classes-modelo.csv`;
+- `assets/data/diagnostico_qualidade_T3_3_revisado.xlsx`;
+- `assets/data/dicionario-classes.json`;
+- parâmetros de T4.1 e T4.4;
+- manifesto aprovado da T4.2, usado como referência de reprodução.
+
+### Execução
+
+O ponto de entrada é [`src/pipeline_preparacao_t4_5.py`](../src/pipeline_preparacao_t4_5.py):
+
+```bash
+python -m src.pipeline_preparacao_t4_5
+```
+
+Esse modo não precisa das imagens originais: ele recompõe e compara as partições,
+calcula os pesos e gera o índice consumido pelo treinamento. Quando todas as fontes
+de imagem estiverem disponíveis em uma pasta que contenha `dataset/`, `Milho/` e
+`Soja/`, a mesma execução também pode abrir e processar todas as entradas:
+
+```bash
+python -m src.pipeline_preparacao_t4_5 --raiz-imagens /caminho/para/as/fontes
+```
+
+### Reprodutibilidade e isolamento
+
+- A semente global é **42**.
+- A T4.2 é executada novamente em uma pasta temporária; seus quatro artefatos devem
+  ser idênticos aos arquivos aprovados antes que o pipeline continue.
+- Cada imagem de treino recebe uma semente estável derivada de `semente + image_id`.
+- Os pesos seguem `N / (K × n_c)` e usam somente as imagens originais de treino.
+- Validação e teste não recebem peso de treino nem augmentation.
+- As imagens não são copiadas para o repositório; o pipeline versiona somente
+  índices, parâmetros, pesos e hashes de auditoria.
+
+### Saídas
+
+Os artefatos ficam em `assets/data/pipeline_T4_5/`:
+
+| Arquivo | Conteúdo |
+| --- | --- |
+| `indice_pipeline.csv` | Classe, grupo, partição, peso e decisão de augmentation por imagem. |
+| `pesos_classes.json` | Contagens de treino e peso calculado para cada uma das 13 classes. |
+| `parametros.json` | Semente e parâmetros consolidados de T4.1, T4.3 e T4.4. |
+| `auditoria.json` | Prova de reprodução da T4.2, contagens e regras de isolamento. |
+
+### Verificação automatizada
+
+O teste [`tests/validar_pipeline_t4_5.py`](../tests/validar_pipeline_t4_5.py) executa
+o pipeline duas vezes em pastas vazias e exige saídas idênticas. Ele também confirma
+as 3.163 imagens, as 13 classes, as partições 2.214/475/474, a média ponderada dos
+pesos igual a 1 e a ausência de augmentation em validação e teste.
+
+```bash
+python tests/validar_pipeline_t4_5.py
+```
+
+### Limites
+
+A execução sem `--raiz-imagens` valida integralmente os índices e as decisões do
+pipeline, mas não reabre as fotografias. A validação dos hashes de preprocessamento
+e das variações aumentadas exige acesso às três fontes externas, que não são
+versionadas neste repositório.
 
 

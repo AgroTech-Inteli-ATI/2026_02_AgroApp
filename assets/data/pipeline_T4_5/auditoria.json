@@ -1,0 +1,34 @@
+{
+  "semente": 42,
+  "ambiente": {
+    "python": "3.14.5",
+    "pandas": "3.0.2",
+    "numpy": "2.4.4",
+    "pillow": "12.2.0"
+  },
+  "entradas_sha256": {
+    "classes_modelo": "917fb14444b397646c23c73b2d1670f9e40fe3eddc73ae8411f0a45138552e1c",
+    "referencia_T4_1": "b5ba58294209d50191ce0c2d0edb764db054ab419d16eec764f09ed486e33502",
+    "parametros_T4_1": "c43a85c28d3fa0223ede408aa1f9e382dd22a36bab48eea73a06eee343f903b3",
+    "parametros_T4_4": "6a6d2ed0a50cbac1f802373de283f19f7a78040b9a881038291af29351e90d69"
+  },
+  "particionamento_reproduzido": true,
+  "hashes_particionamento": {
+    "manifesto_modelo.csv": "ae44089134194ed0c2602373a9a77784c9c0fd0bcc62e8c63c818a1211eb8794",
+    "resumo_modelo.csv": "378d51a9a4784a37682d48237dc175d2c5e7ea882b3b7cb126f03d352cb3289e",
+    "fora_modelo.csv": "c90f7ec7e7ac97a03d2cab4c41cec12e6c25bd593039e899145c6752cdefe051",
+    "auditoria_modelo.json": "af05afc23f71da04028d39b6eeb0bdab53ce87dbc6de3f66dc2b8473bec64590"
+  },
+  "total_imagens": 3163,
+  "classes_modelo": 13,
+  "imagens_por_particao": {
+    "treino": 2214,
+    "validacao": 475,
+    "teste": 474
+  },
+  "augmentation_somente_treino": true,
+  "pesos_calculados_somente_no_treino": true,
+  "imagens_verificadas": false,
+  "imagens_ausentes": 0,
+  "indice_pipeline_sha256": "183e152eeeeba878822d9a8558f62cbe48fd1193e56f560a39e92248479bfdbf"
+}

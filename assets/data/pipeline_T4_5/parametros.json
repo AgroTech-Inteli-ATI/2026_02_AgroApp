@@ -1,0 +1,71 @@
+{
+  "semente_global": 42,
+  "manifesto": "assets/data/particionamento_T4_2/manifesto_modelo.csv",
+  "classes": "assets/data/classes-modelo.csv",
+  "padronizacao_T4_1": {
+    "tamanho_entrada": 224,
+    "cor_preenchimento": [
+      128,
+      128,
+      128
+    ],
+    "redimensionamento": "proporcional, sem recorte, reamostragem bicubica",
+    "normalizacao": "float32 em [0, 1]",
+    "orientacao": "EXIF aplicada antes do redimensionamento",
+    "pillow": "12.2.0",
+    "falhas_de_leitura": []
+  },
+  "balanceamento_T4_3": {
+    "estrategia_inicial": "ponderacao_de_classes",
+    "formula": "N / (K * n_c)",
+    "somente_treino": true
+  },
+  "augmentation_T4_4": {
+    "probabilidade_por_transformacao": 0.5,
+    "transformacoes": {
+      "brilho_contraste": {
+        "contraste": [
+          0.8,
+          1.2
+        ],
+        "brilho": [
+          0.75,
+          1.25
+        ]
+      },
+      "balanco_de_branco": {
+        "ganho_por_canal": [
+          0.95,
+          1.05
+        ]
+      },
+      "angulo": {
+        "rotacao_graus": [
+          0,
+          90,
+          180,
+          270
+        ],
+        "espelhamento_horizontal": 0.5
+      },
+      "desfoque_gaussiano": {
+        "raio_px": [
+          0.5,
+          1.5
+        ]
+      },
+      "ruido_gaussiano": {
+        "desvio_padrao": [
+          0.005,
+          0.03
+        ]
+      }
+    },
+    "aplicado_somente_em": "treino",
+    "recorte": "nenhum, para não remover lesões nas bordas",
+    "preenchimento_sintetico": "preservado em cinza neutro; transformações aplicadas somente ao conteúdo",
+    "tamanho_entrada": 224
+  },
+  "augmentation_em_validacao": false,
+  "augmentation_em_teste": false
+}
