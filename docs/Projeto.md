@@ -52,6 +52,13 @@
 
 </details>
 
+<details>
+<summary><strong>5. Treinamento do modelo</strong></summary>
+
+- [5.1 Pipeline de treinamento modular (T5.1)](#51-pipeline-de-treinamento-modular-t51)
+
+</details>
+
 ---
 
 # 1. Entendimento de Negócio
@@ -1450,5 +1457,100 @@ A execução sem `--raiz-imagens` valida integralmente os índices e as decisõe
 pipeline, mas não reabre as fotografias. A validação dos hashes de preprocessamento
 e das variações aumentadas exige acesso às três fontes externas, que não são
 versionadas neste repositório.
+
+# 5. Treinamento do modelo
+
+## 5.1 Pipeline de treinamento modular (T5.1)
+
+### Objetivo
+
+Treinar qualquer backbone candidato com o mesmo protocolo de treino e avaliação,
+controlado por um arquivo de configuração. Trocar de arquitetura exige alterar
+apenas a linha `backbone` da configuração, sem criar outro notebook. O pipeline
+consome o contrato da T4.5 (índice, sementes e pesos), a padronização da T4.1 e o
+augmentation da T4.4, e segue o guia de transfer learning do TensorFlow/Keras.
+
+### Como funciona
+
+- **Configuração:** [`config_base.json`](../assets/data/treino_T5_1/config_base.json)
+  define backbone, semente, determinismo, otimizador e taxa de aprendizado, lote,
+  épocas, critério de parada (`val_f1_macro` ou `val_loss`, paciência e restauração
+  dos melhores pesos), augmentation, `class_weight`, dropout da cabeça e fine-tuning.
+  O tamanho de entrada não é configurável: ele vem do backbone.
+- **Backbones:** [`src/backbones.py`](../src/backbones.py) registra
+  `mobilenet_v3_small`, `mobilenet_v3_large`, `mobilenet_v3_large_075`,
+  `mobilenet_v2`, `efficientnet_b0` e `efficientnet_lite0`, com tamanho de entrada,
+  faixa esperada e origem dos pesos. A conversão a partir de [0, 1] é a primeira
+  camada do modelo; assim, a entrada do modelo continua sendo a saída de
+  `preparar_imagem`, como no aparelho. A EfficientNet-Lite0 vem do KerasHub
+  (preset `efficientnet_lite0_ra_imagenet`). Um backbone novo exige só uma entrada
+  no registro.
+- **Modelo:** entrada em [0, 1] → conversão → base congelada chamada com
+  `training=False` → `GlobalAveragePooling2D` → `Dropout` → `Dense` com softmax.
+- **Fine-tuning:** opcional. Tem o mesmo significado para todos os backbones:
+  descongelar os N últimos blocos da base (o stem permanece congelado, o topo
+  convolucional acompanha o último bloco e as camadas de BatchNormalization
+  continuam congeladas), recompilando com taxa de aprendizado menor.
+- **Dados:** [`src/dados_treino.py`](../src/dados_treino.py) lê o índice e os pesos da
+  T4.5, confere o hash de cada original, padroniza cada imagem uma vez no tamanho do
+  backbone e a mantém em memória. No treino, a ordem é embaralhada a cada época e o
+  augmentation usa a semente da imagem registrada na T4.5 combinada com o número da
+  época: a variação muda a cada época e se repete na mesma (imagem, época). A
+  validação nunca recebe augmentation, e a partição de teste é recusada.
+- **Avaliação:** [`src/avaliacao.py`](../src/avaliacao.py) calcula, em NumPy, F1 macro,
+  precisão, recall, F1 e suporte por classe, balanced accuracy e matriz de confusão.
+  As mesmas funções alimentam o critério de parada a cada época e a avaliação final
+  da validação. Classes sem exemplos são marcadas como não avaliadas.
+
+### Execução
+
+As dependências de treino estão em
+[`requirements-treino.txt`](../requirements-treino.txt) (Python 3.12, TensorFlow
+2.21, Keras 3.15 e KerasHub 0.32):
+
+```bash
+python -m src.treinamento_t5_1 --config assets/data/treino_T5_1/config_base.json --raiz-imagens /caminho/para/as/fontes
+```
+
+A pasta informada em `--raiz-imagens` deve conter `dataset/`, `Milho/` e `Soja/`,
+como na T4.5. A opção `--saida` muda a pasta das rodadas (padrão: `runs/`).
+
+### Saídas
+
+Cada rodada grava `runs/<AAAAMMDD-HHMMSS>_<backbone>_s<semente>/`, que não é versionada:
+
+| Arquivo | Conteúdo |
+| --- | --- |
+| `config_usada.json` | Cópia da configuração da rodada. |
+| `ambiente.json` | Versões de Python, TensorFlow, Keras, KerasHub, NumPy e Pillow, commit do git e sha256 do índice, dos pesos e da configuração. |
+| `historico.csv` | Perda, acurácia, `val_loss` e `val_f1_macro` por época e fase (cabeça e fine-tuning). |
+| `metricas_validacao.json` | Esquema fixo: backbone, origem dos pesos, épocas, melhor época, parâmetros totais e treináveis e as métricas da validação. |
+| `melhor_modelo.keras` | Modelo com os pesos finais (os da melhor época, se configurado). |
+
+### Verificação automatizada
+
+O teste [`tests/validar_treinamento_t5_1.py`](../tests/validar_treinamento_t5_1.py)
+confere o esquema da configuração, a montagem e a conversão de entrada de cada
+backbone, o fine-tuning por blocos, a recusa do teste, o `class_weight`, o
+augmentation por época, as métricas num caso calculado à mão e, com imagens
+sintéticas, um treino de ponta a ponta de duas configurações que diferem só na
+linha `backbone`. As partes que dependem de TensorFlow são puladas se ele não
+estiver instalado.
+
+```bash
+python tests/validar_treinamento_t5_1.py
+```
+
+### Limites
+
+- O pipeline foi verificado com imagens sintéticas. O primeiro treino com o acervo
+  real e a comparação entre backbones ficam para as próximas tasks.
+- A EfficientNet-Lite2 ficou fora do registro: o Keras 3/KerasHub não oferece preset
+  nem conversor para essa variante. Os pesos da Lite0 são do timm
+  (`efficientnet_lite0.ra_in1k`, ImageNet-1k), e não o checkpoint original do Google.
+- O TensorFlow 2.11 em diante não usa GPU no Windows nativo; treinos longos devem
+  rodar no Colab ou em Linux/WSL2.
+- A validação é usada tanto na parada antecipada quanto na seleção; o teste
+  permanece reservado para a avaliação final.
 
 
