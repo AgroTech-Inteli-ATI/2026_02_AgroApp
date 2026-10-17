@@ -1,0 +1,24 @@
+{
+  "regra_inclusao": "caminho_relativo começa com dataset/",
+  "indice_origem": "assets/data/pipeline_T4_5/indice_pipeline.csv",
+  "indice_origem_sha256": "183e152eeeeba878822d9a8558f62cbe48fd1193e56f560a39e92248479bfdbf",
+  "imagens_incluidas": 3156,
+  "imagens_excluidas": 7,
+  "ids_excluidos": [
+    "IMG_00946",
+    "IMG_00947",
+    "IMG_00948",
+    "IMG_00949",
+    "IMG_00950",
+    "IMG_03457",
+    "IMG_03458"
+  ],
+  "imagens_por_particao": {
+    "validacao": 474,
+    "treino": 2209,
+    "teste": 473
+  },
+  "classes": 13,
+  "indice_dataset_sha256": "28ee662885202f0bda3dec9660e44b28f99b8bd183210bcbdd795b103269b2eb",
+  "pesos_dataset_sha256": "b342f9a821778840d6a86024ddaef8ccbe6ff18b250b540f0025fadf222046b9"
+}
