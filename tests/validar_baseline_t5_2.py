@@ -3,6 +3,7 @@
 from pathlib import Path
 import csv
 import hashlib
+import importlib.util
 import json
 import sys
 import tempfile
@@ -52,6 +53,25 @@ def validar() -> None:
     assert config["fine_tuning"]["ativo"] is False
     assert config["augmentation"]["ativo"] is True
     assert config["balanceamento"]["class_weight"] is True
+
+    pasta_modelo = ROOT / "assets/modelos/baseline_T5_2"
+    metricas = json.loads((pasta_modelo / "metricas_validacao.json").read_text(encoding="utf-8"))
+    reproducao = json.loads((pasta_modelo / "reprodutibilidade.json").read_text(encoding="utf-8"))
+    assert metricas["backbone"] == "cnn_baseline"
+    assert metricas["imagens"] == {"treino": 2209, "validacao": 474}
+    assert metricas["melhor_epoca"] == 10
+    assert abs(metricas["validacao"]["f1_macro"] - 0.12027512666905406) < 1e-15
+    assert reproducao["historicos_identicos"] is True
+    assert reproducao["metricas_identicas"] is True
+    assert reproducao["pesos_identicos"] is True
+
+    if importlib.util.find_spec("keras"):
+        import keras
+
+        modelo = keras.models.load_model(pasta_modelo / "melhor_modelo.keras")
+        assert modelo.input_shape == (None, 224, 224, 3)
+        assert modelo.output_shape == (None, 13)
+        assert modelo.count_params() == 24429
     print("OK: baseline usa somente dataset/, preserva 13 classes e recalcula os pesos do treino.")
 
 

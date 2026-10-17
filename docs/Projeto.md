@@ -56,6 +56,7 @@
 <summary><strong>5. Treinamento do modelo</strong></summary>
 
 - [5.1 Pipeline de treinamento modular (T5.1)](#51-pipeline-de-treinamento-modular-t51)
+- [5.2 Baseline de referência (T5.2)](#52-baseline-de-referência-t52)
 
 </details>
 
@@ -1478,15 +1479,16 @@ augmentation da T4.4, e segue o guia de transfer learning do TensorFlow/Keras.
   dos melhores pesos), augmentation, `class_weight`, dropout da cabeça e fine-tuning.
   O tamanho de entrada não é configurável: ele vem do backbone.
 - **Backbones:** [`src/backbones.py`](../src/backbones.py) registra
-  `mobilenet_v3_small`, `mobilenet_v3_large`, `mobilenet_v3_large_075`,
+  `cnn_baseline`, `mobilenet_v3_small`, `mobilenet_v3_large`, `mobilenet_v3_large_075`,
   `mobilenet_v2`, `efficientnet_b0` e `efficientnet_lite0`, com tamanho de entrada,
   faixa esperada e origem dos pesos. A conversão a partir de [0, 1] é a primeira
   camada do modelo; assim, a entrada do modelo continua sendo a saída de
   `preparar_imagem`, como no aparelho. A EfficientNet-Lite0 vem do KerasHub
   (preset `efficientnet_lite0_ra_imagenet`). Um backbone novo exige só uma entrada
   no registro.
-- **Modelo:** entrada em [0, 1] → conversão → base congelada chamada com
-  `training=False` → `GlobalAveragePooling2D` → `Dropout` → `Dense` com softmax.
+- **Modelo:** entrada em [0, 1] → conversão → base chamada com `training=False` →
+  `GlobalAveragePooling2D` → `Dropout` → `Dense` com softmax. As bases pré-treinadas
+  começam congeladas; a CNN de referência, sem pesos prévios, treina desde o início.
 - **Fine-tuning:** opcional. Tem o mesmo significado para todos os backbones:
   descongelar os N últimos blocos da base (o stem permanece congelado, o topo
   convolucional acompanha o último bloco e as camadas de BatchNormalization
@@ -1543,8 +1545,8 @@ python tests/validar_treinamento_t5_1.py
 
 ### Limites
 
-- O pipeline foi verificado com imagens sintéticas. O primeiro treino com o acervo
-  real e a comparação entre backbones ficam para as próximas tasks.
+- O pipeline foi verificado com imagens sintéticas e com o baseline no acervo real.
+  A comparação entre backbones fica para as próximas etapas.
 - A EfficientNet-Lite2 ficou fora do registro: o Keras 3/KerasHub não oferece preset
   nem conversor para essa variante. Os pesos da Lite0 são do timm
   (`efficientnet_lite0.ra_in1k`, ImageNet-1k), e não o checkpoint original do Google.
@@ -1552,5 +1554,76 @@ python tests/validar_treinamento_t5_1.py
   rodar no Colab ou em Linux/WSL2.
 - A validação é usada tanto na parada antecipada quanto na seleção; o teste
   permanece reservado para a avaliação final.
+
+## 5.2 Baseline de referência (T5.2)
+
+### Objetivo
+
+Estabelecer um piso reproduzível de desempenho para os experimentos seguintes. O
+baseline usa uma CNN pequena treinada do zero pelo pipeline modular da seção 5.1,
+sem transferência de aprendizado, para que os backbones candidatos possam ser
+comparados contra uma referência simples.
+
+### Dados e arquitetura
+
+O recorte inclui somente as imagens da fonte `dataset/`. As sete imagens dos
+acervos antigos não entram nesta execução, sem alteração do manifesto original da
+T4.5. O índice específico e a auditoria registram **3.156 imagens** de **13 classes**:
+**2.209** no treino, **474** na validação e **473** no teste. Os pesos foram
+recalculados exclusivamente sobre o treino desse recorte.
+
+A arquitetura possui três blocos convolucionais, com 16, 32 e 64 filtros, cada um
+seguido de max pooling. A saída passa por global average pooling, dropout de 0,2 e
+uma camada softmax de 13 classes. O modelo completo tem **24.429 parâmetros**.
+
+### Protocolo
+
+- entrada de 224 × 224 px, normalizada em [0, 1];
+- Adam com taxa de aprendizado 0,001 e lotes de 32 imagens;
+- ponderação de classes e augmentation somente no treino;
+- semente 42 e operações determinísticas;
+- máximo de 20 épocas;
+- parada antecipada por F1 macro de validação, com paciência de 4 épocas;
+- restauração dos pesos da melhor época;
+- conjunto de teste preservado, sem carregamento durante o treinamento.
+
+### Resultado
+
+O treinamento terminou após **14 épocas** e restaurou os pesos da época **10**.
+
+| Métrica de validação | Resultado |
+| --- | ---: |
+| F1 macro | 0,1203 |
+| Balanced accuracy | 0,1596 |
+| Acurácia | 0,1709 |
+
+Duas execuções independentes com a mesma configuração produziram históricos e
+métricas idênticos. Os oito arrays de pesos carregados dos modelos também foram
+idênticos, confirmando a reprodução da rodada.
+
+### Artefatos
+
+Os arquivos de entrada ficam em `assets/data/treino_T5_2/`, e o modelo e seus
+resultados ficam em `assets/modelos/baseline_T5_2/`:
+
+| Arquivo | Conteúdo |
+| --- | --- |
+| `config_baseline.json` | Configuração completa do treinamento. |
+| `indice_dataset.csv` | Recorte versionado com somente a fonte `dataset/`. |
+| `pesos_dataset.json` | Pesos recalculados sobre as 2.209 imagens de treino. |
+| `auditoria_dataset.json` | Regra de inclusão, contagens, hashes e IDs excluídos. |
+| `melhor_modelo.keras` | Modelo restaurado na melhor época. |
+| `historico.csv` | Métricas das 14 épocas executadas. |
+| `metricas_validacao.json` | Métricas globais, por classe e matriz de confusão. |
+| `ambiente.json` | Versões, commit e hashes das entradas. |
+| `reprodutibilidade.json` | Comparação das duas execuções independentes. |
+
+### Interpretação e limites
+
+O resultado representa deliberadamente um piso: quatro classes tiveram F1 igual a
+zero na validação, e a F1 macro baixa mostra que uma CNN pequena treinada do zero
+não é suficiente para o objetivo final. O valor serve como referência para medir o
+ganho dos modelos pré-treinados nas próximas comparações. Nenhuma métrica do
+conjunto de teste foi usada nesta etapa.
 
 
