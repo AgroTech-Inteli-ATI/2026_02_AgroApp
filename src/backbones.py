@@ -35,6 +35,7 @@ class Backbone:
     fonte: str
     padrao_bloco: str
     suporta_fine_tuning: bool = True
+    congelar_inicialmente: bool = True
 
     def camada_conversao(self) -> keras.layers.Layer:
         """Leva [0, 1] para a faixa esperada: x * escala + deslocamento."""
@@ -77,6 +78,18 @@ def _lite0(tamanho: int, pesos_pre_treinados: bool) -> keras.Model:
     return keras_hub.models.Backbone.from_preset(PRESET_LITE0, load_weights=pesos_pre_treinados)
 
 
+def _cnn_baseline(tamanho: int, pesos_pre_treinados: bool) -> keras.Model:
+    """CNN pequena, sem pré-treino, baseada no tutorial de classificação de imagens."""
+    entrada = keras.Input((tamanho, tamanho, 3))
+    x = keras.layers.Conv2D(16, 3, padding="same", activation="relu", name="block1_conv")(entrada)
+    x = keras.layers.MaxPooling2D(name="block1_pool")(x)
+    x = keras.layers.Conv2D(32, 3, padding="same", activation="relu", name="block2_conv")(x)
+    x = keras.layers.MaxPooling2D(name="block2_pool")(x)
+    x = keras.layers.Conv2D(64, 3, padding="same", activation="relu", name="block3_conv")(x)
+    x = keras.layers.MaxPooling2D(name="block3_pool")(x)
+    return keras.Model(entrada, x, name="cnn_baseline_base")
+
+
 _PADRAO_MOBILENET_V3 = r"^(expanded_conv(?:_\d+)?)_"
 _PADRAO_MOBILENET_V2 = r"^(expanded_conv|block_\d+)_"
 _PADRAO_EFFICIENTNET = r"^(block\d+[a-z])_"
@@ -85,6 +98,18 @@ _FAIXA_0_255 = "[0, 255]; Rescaling e normalização ficam dentro do modelo Kera
 REGISTRO: dict[str, Backbone] = {
     entrada.nome: entrada
     for entrada in (
+        Backbone(
+            nome="cnn_baseline",
+            tamanho_entrada=224,
+            construtor=_cnn_baseline,
+            escala=1.0,
+            deslocamento=0.0,
+            faixa_esperada="[0, 1], sem conversão adicional",
+            fonte="CNN simples treinada do zero, sem pesos pré-treinados",
+            padrao_bloco=r"^(block\d+)_",
+            suporta_fine_tuning=False,
+            congelar_inicialmente=False,
+        ),
         Backbone(
             nome="mobilenet_v3_small",
             tamanho_entrada=224,
