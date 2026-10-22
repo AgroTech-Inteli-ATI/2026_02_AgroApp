@@ -40,20 +40,17 @@
 
 - [4.1 Padronização das imagens (T4.1)](#41-padronização-das-imagens)
 - [4.2 Particionamento por grupo (T4.2)](#42-particionamento-por-grupo-t42)
-- [4.4 Rotinas de aumento de dados (T4.4)](#44-rotinas-de-aumento-de-dados)
-
-</details>
-
-<details>
-<summary><strong>4. Preparação dos dados</strong></summary>
-
 - [4.3 Estratégia de balanceamento](#43-estratégia-de-balanceamento)
+- [4.4 Rotinas de aumento de dados (T4.4)](#44-rotinas-de-aumento-de-dados)
+- [4.5 Pipeline reprodutível (T4.5)](#45-pipeline-reprodutível-t45)
 
 </details>
 
 <details>
 <summary><strong>5. Modelagem</strong></summary>
 
+- [5.1 Pipeline de treinamento modular (T5.1)](#51-pipeline-de-treinamento-modular-t51)
+- [5.2 Baseline de referência (T5.2)](#52-baseline-de-referência-t52)
 - [5.3 Varredura de arquiteturas (T5.3)](#53-varredura-de-arquiteturas-t53)
 
 </details>
@@ -812,29 +809,32 @@ partir do dicionário de classes desenvolvido na T3.4.
 
 Adotar **ponderação de classes na função de perda**, com amostragem natural das imagens de treino, como estratégia inicial para reduzir a preferência do modelo pelas classes mais frequentes. A reamostragem será avaliada em um experimento separado caso a ponderação não ofereça recuperação adequada das classes minoritárias. Não aplicar as duas correções simultaneamente na configuração inicial.
 
-Esta é a decisão inicial de balanceamento. A [T5.3](#53-varredura-de-arquiteturas-t53) já treinou quatro modelos **exploratoriamente**, usando pesos calculados apenas com as contagens das 2.214 imagens de treino do [particionamento das 13 classes](../assets/data/particionamento_T4_2/manifesto_modelo.csv). Se o conjunto mudar, os pesos e os treinos terão de ser refeitos. A T5.3 não comparou os experimentos E0 e E1 previstos abaixo, portanto ainda não demonstra o ganho causado pela ponderação. A estratégia atende à mitigação do risco R02 e deve ser reavaliada quando o acervo for ampliado.
+Esta é a decisão inicial de balanceamento. O [pipeline T4.5](../assets/data/pipeline_T4_5/pesos_classes.json) calcula os pesos a partir do [particionamento das 13 classes](../assets/data/particionamento_T4_2/manifesto_modelo.csv). A [T5.3](#53-varredura-de-arquiteturas-t53) já treinou quatro modelos **exploratoriamente** com ponderação calculada somente a partir das 2.214 imagens de treino. A T5.3 não comparou os experimentos E0 e E1 previstos abaixo, portanto ainda não demonstra o ganho causado pela ponderação. Se o acervo, as classes ou a partição de treino mudarem, os pesos e os treinos terão de ser refeitos. A estratégia atende à mitigação do risco R02.
 
 ### Diagnóstico do acervo
 
-As tabelas abaixo registram o **inventário inicial** do acervo, obtido do [inventário versionado](../assets/data/inventario-acervo.xlsx). Suas 55 ocorrências foram tratadas como rótulos candidatos, não como classes do modelo atual. O particionamento provisório posterior reuniu **64 rótulos candidatos** dos acervos antigo e novo; a [T3.5](#35-classes-do-mvp) selecionou **13 classes de saída**. O [resumo do particionamento do modelo](../assets/data/particionamento_T4_2/resumo_modelo.csv) registra 2.214 imagens de treino nessas 13 classes, de 30 a 735 por classe. Essa distribuição orientou os pesos da T5.3 exploratória; eles deverão ser recalculados se o manifesto mudar.
+O [inventário atualizado da T3.1](#31-inventário-do-acervo) reúne **3.334 imagens em 14 classes de origem**: 1.510 do AgroInsect e 1.824 do iNaturalist / field. A T3.5 define **13 classes de saída**, reunindo *Spodoptera eridania* e *S. cosmioides* em lagarta-das-vagens. Após as decisões de qualidade e escopo da T4.2, incluindo os complementos do acervo anterior, o manifesto atual contém **3.163 imagens**: **2.214 de treino, 475 de validação e 474 de teste**. As contagens de seleção da T3.5 e as do inventário bruto representam etapas anteriores; para balanceamento, prevalece o manifesto por imagem da T4.2.
 
-| Cultura e categoria | Ocorrências | Imagens | Menor / maior contagem por ocorrência |
-| --- | ---: | ---: | ---: |
-| Milho — Pragas | 4 | 16 | 2 / 5 |
-| Soja — Pragas | 10 | 13 | 1 / 2 |
-| Soja — Doenças | 41 | 97 | 1 / 5 |
-| **Total** | **55** | **126** | **1 / 5** |
+A tabela usa o [resumo atual por classe](../assets/data/particionamento_T4_2/resumo_modelo.csv), com os mesmos índices da [lista definitiva](../assets/data/classes-modelo.csv). Os pesos foram calculados exclusivamente com os originais de treino e conferidos contra o [artefato da T4.5](../assets/data/pipeline_T4_5/pesos_classes.json); são exibidos com seis casas decimais, mantendo a precisão completa no JSON.
 
-| Imagens por ocorrência | Quantidade de ocorrências | Total de imagens |
-| ---: | ---: | ---: |
-| 1 | 15 | 15 |
-| 2 | 21 | 42 |
-| 3 | 10 | 30 |
-| 4 | 6 | 24 |
-| 5 | 3 | 15 |
-| **Total** | **55** | **126** |
+| Índice | Classe | Total no modelo | Treino | Validação | Teste | Peso de treino |
+| ---: | --- | ---: | ---: | ---: | ---: | ---: |
+| 0 | Vaquinha (Diabrotica speciosa) | 1.049 | 735 | 157 | 157 | 0,231711 |
+| 1 | Cigarrinha-do-milho (Dalbulus maidis) | 198 | 138 | 30 | 30 | 1,234114 |
+| 2 | Percevejo-barriga-verde (Dichelops/Diceraeus) | 282 | 198 | 42 | 42 | 0,860140 |
+| 3 | Lagarta-do-cartucho (Spodoptera frugiperda) | 407 | 285 | 61 | 61 | 0,597571 |
+| 4 | Percevejo-marrom (Euschistus heros) | 65 | 45 | 10 | 10 | 3,784615 |
+| 5 | Percevejo-verde (Nezara viridula) | 92 | 64 | 14 | 14 | 2,661058 |
+| 6 | Percevejo-asa-preta (Edessa meditabunda) | 75 | 53 | 11 | 11 | 3,213353 |
+| 7 | Percevejo-do-milho (Leptoglossus zonatus) | 79 | 55 | 12 | 12 | 3,096503 |
+| 8 | Lagarta-falsa-medideira (Chrysodeixis includens) | 79 | 55 | 12 | 12 | 3,096503 |
+| 9 | Lagarta-da-soja (Anticarsia gemmatalis) | 43 | 30 | 7 | 6 | 5,676923 |
+| 10 | Lagarta-das-vagens (Spodoptera eridania e S. cosmioides) | 158 | 110 | 24 | 24 | 1,548252 |
+| 11 | Astylus variegatus | 474 | 332 | 71 | 71 | 0,512975 |
+| 12 | Cigarrinha-das-pastagens (Deois flavopicta) | 162 | 114 | 24 | 24 | 1,493927 |
+| **Total** | **13 classes** | **3.163** | **2.214** | **475** | **474** | — |
 
-A razão entre a maior e a menor ocorrência **nesse inventário inicial** é **5:1**, e **36 de 55 ocorrências (65,5%)** possuem no máximo duas imagens. Soja/doenças reúne 97 de 126 imagens (77,0%), distribuídas entre 41 ocorrências. Esses dados justificaram a análise inicial de balanceamento, mas não descrevem a distribuição das 13 classes selecionadas. Se houver modelos separados por cultura, as frequências e os pesos serão calculados separadamente para cada modelo.
+No treino, a razão entre a maior e a menor classe é **735/30 = 24,5:1**. A vaquinha concentra **33,2%** das imagens de treino, enquanto a lagarta-da-soja representa **1,4%**. Todas as classes têm grupos nas três partições, conforme a auditoria da T4.2. Essa distribuição fundamenta a ponderação inicial. Se houver modelos separados por cultura, as frequências e os pesos deverão ser recalculados separadamente para cada modelo.
 
 A limitação principal combina desbalanceamento e escassez de exemplos independentes. Nenhuma técnica de balanceamento substitui a coleta de imagens novas ou a definição de classes visualmente distinguíveis.
 
@@ -864,7 +864,9 @@ Essa é a regra de ponderação balanceada descrita pelo [scikit-learn em `compu
 
 No treinamento multiclasse, multiplicar a entropia cruzada de cada exemplo pelo peso de sua classe antes de calcular a média do lote. No fluxo Keras previsto para os experimentos, fornecer o mapa de índices de saída para pesos por meio de `class_weight`; não aplicar simultaneamente o mesmo peso via `sample_weight`. O mapa de índices deve corresponder exatamente ao manifesto de classes do modelo.
 
-Como exemplo **ilustrativo**, usando todo o inventário como se fosse treino (`N = 126`, `K = 55`), uma ocorrência com uma imagem receberia peso `2,291`, enquanto uma com cinco receberia `0,458`. Esses valores demonstram a regra, mas **não são os pesos finais**: o inventário completo inclui imagens que poderão pertencer à validação ou ao teste.
+Na partição atual, **`N = 2.214` e `K = 13`**. Assim, vaquinha (`n_c = 735`) recebe `2214 / (13 × 735) ≈ 0,231711`, e lagarta-da-soja (`n_c = 30`) recebe `2214 / (13 × 30) ≈ 5,676923`. Validação, teste e versões aumentadas não entram em `N` nem em `n_c`.
+
+O cálculo está implementado em `_pesos_balanceados` no [pipeline T4.5](../src/pipeline_preparacao_t4_5.py), que filtra `particao == "treino"` antes de contar os registros originais. Para reproduzir os pesos, executar `python -m src.pipeline_preparacao_t4_5` na raiz do repositório. O treinamento T5.1 consome esse contrato por meio de [dados_treino.py](../src/dados_treino.py). A sobreamostragem permanece apenas como alternativa E2 para comparação; não integra a configuração inicial.
 
 Recalcular os pesos em cada partição de treinamento, inclusive em cada rodada de validação cruzada. Não utilizar as frequências de validação ou teste, nem contar versões aumentadas como novas imagens originais. Uma classe com `n_c = 0` torna a configuração inválida: revisar a partição ou o escopo antes de treinar, sem substituir a divisão por zero por um peso arbitrário.
 
@@ -900,7 +902,7 @@ Depois da seleção, ajustar a política de confiança usando somente dados de v
 
 O experimento deverá guardar versão do dataset, classes aprovadas e respectivos índices, IDs e grupos de cada partição, contagens originais de treino por classe, pesos aplicados, configuração de amostragem, transformações, sementes, orçamento de treinamento e métricas por classe. Esses registros permitem reproduzir o cálculo e identificar alterações após a ampliação do acervo.
 
-A **definição da T4.3** fica consolidada nesta seção: ponderação como escolha inicial, justificativa baseada no inventário, comparação das alternativas e protocolo de avaliação. A **validação experimental** ficará concluída após a revisão do particionamento das 13 classes, execução de E0/E1 (e E2 se necessário), registro das métricas e justificativa da configuração selecionada. Até lá, não há evidência para afirmar melhora de desempenho ou generalização nas classes do modelo.
+A **definição da T4.3** fica consolidada nesta seção: ponderação como escolha inicial, justificativa baseada no dataset atualizado e nas 13 classes finais, pesos calculados somente sobre os originais de treino e integração com o contrato da T4.5. A verificação reproduzível está em `python tests/validar_pipeline_t4_5.py`, que confere as partições, o cálculo dos pesos e sua média ponderada igual a 1. A **validação experimental** ficará concluída após a execução de E0/E1 (e E2 se necessário), registro das métricas e justificativa da configuração selecionada. Até lá, não há evidência para afirmar melhora de desempenho ou generalização nas classes do modelo.
 
 validadas (Seção 1.4, item 7). O [dicionário de classes da T3.4](#dicionário-de-classes-t34)
 registra as relações entre os rótulos candidatos a duplicidade. A decisão de unificar
@@ -1368,9 +1370,253 @@ A função recebe um gerador de números aleatórios com semente explícita (o n
 - **Balanceamento:** esta task não equilibra as classes. Essa decisão pertence à T4.3, que trata da estratégia de balanceamento.
 - **Probabilidade fixa:** a probabilidade de 50% por transformação ainda não foi comparada com outras opções. Ela pode ser ajustada depois de um primeiro treino.
 
+## 4.5 Pipeline reprodutível (T4.5)
+
+### Objetivo e entradas
+
+Executar a preparação dos dados por um único ponto de entrada, preservando os
+contratos definidos nas etapas anteriores. O pipeline usa a lista das **13 classes**
+da T3.5, recompõe o particionamento da T4.2, incorpora os parâmetros de
+padronização da T4.1, calcula os pesos da T4.3 e associa o augmentation da T4.4
+exclusivamente às amostras de treino.
+
+As entradas versionadas são:
+
+- `assets/data/classes-modelo.csv`;
+- `assets/data/diagnostico_qualidade_T3_3_revisado.xlsx`;
+- `assets/data/dicionario-classes.json`;
+- parâmetros de T4.1 e T4.4;
+- manifesto aprovado da T4.2, usado como referência de reprodução.
+
+### Execução
+
+O ponto de entrada é [`src/pipeline_preparacao_t4_5.py`](../src/pipeline_preparacao_t4_5.py):
+
+```bash
+python -m src.pipeline_preparacao_t4_5
+```
+
+Esse modo não precisa das imagens originais: ele recompõe e compara as partições,
+calcula os pesos e gera o índice consumido pelo treinamento. Quando todas as fontes
+de imagem estiverem disponíveis em uma pasta que contenha `dataset/`, `Milho/` e
+`Soja/`, a mesma execução também pode abrir e processar todas as entradas:
+
+```bash
+python -m src.pipeline_preparacao_t4_5 --raiz-imagens /caminho/para/as/fontes
+```
+
+### Reprodutibilidade e isolamento
+
+- A semente global é **42**.
+- A T4.2 é executada novamente em uma pasta temporária; seus quatro artefatos devem
+  ser idênticos aos arquivos aprovados antes que o pipeline continue.
+- Cada imagem de treino recebe uma semente estável derivada de `semente + image_id`.
+- Os pesos seguem `N / (K × n_c)` e usam somente as imagens originais de treino.
+- Validação e teste não recebem peso de treino nem augmentation.
+- As imagens não são copiadas para o repositório; o pipeline versiona somente
+  índices, parâmetros, pesos e hashes de auditoria.
+
+### Saídas
+
+Os artefatos ficam em `assets/data/pipeline_T4_5/`:
+
+| Arquivo | Conteúdo |
+| --- | --- |
+| `indice_pipeline.csv` | Classe, grupo, partição, peso e decisão de augmentation por imagem. |
+| `pesos_classes.json` | Contagens de treino e peso calculado para cada uma das 13 classes. |
+| `parametros.json` | Semente e parâmetros consolidados de T4.1, T4.3 e T4.4. |
+| `auditoria.json` | Prova de reprodução da T4.2, contagens e regras de isolamento. |
+
+### Verificação automatizada
+
+O teste [`tests/validar_pipeline_t4_5.py`](../tests/validar_pipeline_t4_5.py) executa
+o pipeline duas vezes em pastas vazias e exige saídas idênticas. Ele também confirma
+as 3.163 imagens, as 13 classes, as partições 2.214/475/474, a média ponderada dos
+pesos igual a 1 e a ausência de augmentation em validação e teste.
+
+```bash
+python tests/validar_pipeline_t4_5.py
+```
+
+### Limites
+
+A execução sem `--raiz-imagens` valida integralmente os índices e as decisões do
+pipeline, mas não reabre as fotografias. A validação dos hashes de preprocessamento
+e das variações aumentadas exige acesso às três fontes externas, que não são
+versionadas neste repositório.
+
 # 5. Modelagem
 
-## 5.3 Varredura de arquiteturas
+## 5.1 Pipeline de treinamento modular (T5.1)
+
+### Objetivo
+
+Treinar qualquer backbone candidato com o mesmo protocolo de treino e avaliação,
+controlado por um arquivo de configuração. Trocar de arquitetura exige alterar
+apenas a linha `backbone` da configuração, sem criar outro notebook. O pipeline
+consome o contrato da T4.5 (índice, sementes e pesos), a padronização da T4.1 e o
+augmentation da T4.4, e segue o guia de transfer learning do TensorFlow/Keras.
+
+### Como funciona
+
+- **Configuração:** [`config_base.json`](../assets/data/treino_T5_1/config_base.json)
+  define backbone, semente, determinismo, otimizador e taxa de aprendizado, lote,
+  épocas, critério de parada (`val_f1_macro` ou `val_loss`, paciência e restauração
+  dos melhores pesos), augmentation, `class_weight`, dropout da cabeça e fine-tuning.
+  O tamanho de entrada não é configurável: ele vem do backbone.
+- **Backbones:** [`src/backbones.py`](../src/backbones.py) registra
+  `cnn_baseline`, `mobilenet_v3_small`, `mobilenet_v3_large`, `mobilenet_v3_large_075`,
+  `mobilenet_v2`, `efficientnet_b0` e `efficientnet_lite0`, com tamanho de entrada,
+  faixa esperada e origem dos pesos. A conversão a partir de [0, 1] é a primeira
+  camada do modelo; assim, a entrada do modelo continua sendo a saída de
+  `preparar_imagem`, como no aparelho. A EfficientNet-Lite0 vem do KerasHub
+  (preset `efficientnet_lite0_ra_imagenet`). Um backbone novo exige só uma entrada
+  no registro.
+- **Modelo:** entrada em [0, 1] → conversão → base chamada com `training=False` →
+  `GlobalAveragePooling2D` → `Dropout` → `Dense` com softmax. As bases pré-treinadas
+  começam congeladas; a CNN de referência, sem pesos prévios, treina desde o início.
+- **Fine-tuning:** opcional. Tem o mesmo significado para todos os backbones:
+  descongelar os N últimos blocos da base (o stem permanece congelado, o topo
+  convolucional acompanha o último bloco e as camadas de BatchNormalization
+  continuam congeladas), recompilando com taxa de aprendizado menor.
+- **Dados:** [`src/dados_treino.py`](../src/dados_treino.py) lê o índice e os pesos da
+  T4.5, confere o hash de cada original, padroniza cada imagem uma vez no tamanho do
+  backbone e a mantém em memória. No treino, a ordem é embaralhada a cada época e o
+  augmentation usa a semente da imagem registrada na T4.5 combinada com o número da
+  época: a variação muda a cada época e se repete na mesma (imagem, época). A
+  validação nunca recebe augmentation, e a partição de teste é recusada.
+- **Avaliação:** [`src/avaliacao.py`](../src/avaliacao.py) calcula, em NumPy, F1 macro,
+  precisão, recall, F1 e suporte por classe, balanced accuracy e matriz de confusão.
+  As mesmas funções alimentam o critério de parada a cada época e a avaliação final
+  da validação. Classes sem exemplos são marcadas como não avaliadas.
+
+### Execução
+
+As dependências de treino estão em
+[`requirements-treino.txt`](../requirements-treino.txt) (Python 3.12, TensorFlow
+2.21, Keras 3.15 e KerasHub 0.32):
+
+```bash
+python -m src.treinamento_t5_1 --config assets/data/treino_T5_1/config_base.json --raiz-imagens /caminho/para/as/fontes
+```
+
+A pasta informada em `--raiz-imagens` deve conter `dataset/`, `Milho/` e `Soja/`,
+como na T4.5. A opção `--saida` muda a pasta das rodadas (padrão: `runs/`).
+
+### Saídas
+
+Cada rodada grava `runs/<AAAAMMDD-HHMMSS>_<backbone>_s<semente>/`, que não é versionada:
+
+| Arquivo | Conteúdo |
+| --- | --- |
+| `config_usada.json` | Cópia da configuração da rodada. |
+| `ambiente.json` | Versões de Python, TensorFlow, Keras, KerasHub, NumPy e Pillow, commit do git e sha256 do índice, dos pesos e da configuração. |
+| `historico.csv` | Perda, acurácia, `val_loss` e `val_f1_macro` por época e fase (cabeça e fine-tuning). |
+| `metricas_validacao.json` | Esquema fixo: backbone, origem dos pesos, épocas, melhor época, parâmetros totais e treináveis e as métricas da validação. |
+| `melhor_modelo.keras` | Modelo com os pesos finais (os da melhor época, se configurado). |
+
+### Verificação automatizada
+
+O teste [`tests/validar_treinamento_t5_1.py`](../tests/validar_treinamento_t5_1.py)
+confere o esquema da configuração, a montagem e a conversão de entrada de cada
+backbone, o fine-tuning por blocos, a recusa do teste, o `class_weight`, o
+augmentation por época, as métricas num caso calculado à mão e, com imagens
+sintéticas, um treino de ponta a ponta de duas configurações que diferem só na
+linha `backbone`. As partes que dependem de TensorFlow são puladas se ele não
+estiver instalado.
+
+```bash
+python tests/validar_treinamento_t5_1.py
+```
+
+### Limites
+
+- O pipeline T5.1 foi verificado com imagens sintéticas e com o baseline no acervo real.
+  A varredura T5.3 comparou quatro backbones em notebooks independentes; ela ainda
+  não demonstra uma comparação executada pelo pipeline modular T5.1.
+- A EfficientNet-Lite2 ficou fora do registro: o Keras 3/KerasHub não oferece preset
+  nem conversor para essa variante. Os pesos da Lite0 são do timm
+  (`efficientnet_lite0.ra_in1k`, ImageNet-1k), e não o checkpoint original do Google.
+- O TensorFlow 2.11 em diante não usa GPU no Windows nativo; treinos longos devem
+  rodar no Colab ou em Linux/WSL2.
+- A validação é usada tanto na parada antecipada quanto na seleção no T5.1; o
+  carregador desse pipeline recusa a partição de teste durante o treino. As 474
+  imagens dessa partição foram consultadas separadamente na T5.3, e a avaliação
+  final independente exigirá um novo conjunto.
+
+## 5.2 Baseline de referência (T5.2)
+
+### Objetivo
+
+Estabelecer um piso reproduzível de desempenho para os experimentos seguintes. O
+baseline usa uma CNN pequena treinada do zero pelo pipeline modular da seção 5.1,
+sem transferência de aprendizado, para que os backbones candidatos possam ser
+comparados contra uma referência simples.
+
+### Dados e arquitetura
+
+O recorte inclui somente as imagens da fonte `dataset/`. As sete imagens dos
+acervos antigos não entram nesta execução, sem alteração do manifesto original da
+T4.5. O índice específico e a auditoria registram **3.156 imagens** de **13 classes**:
+**2.209** no treino, **474** na validação e **473** no teste. Os pesos foram
+recalculados exclusivamente sobre o treino desse recorte.
+
+A arquitetura possui três blocos convolucionais, com 16, 32 e 64 filtros, cada um
+seguido de max pooling. A saída passa por global average pooling, dropout de 0,2 e
+uma camada softmax de 13 classes. O modelo completo tem **24.429 parâmetros**.
+
+### Protocolo
+
+- entrada de 224 × 224 px, normalizada em [0, 1];
+- Adam com taxa de aprendizado 0,001 e lotes de 32 imagens;
+- ponderação de classes e augmentation somente no treino;
+- semente 42 e operações determinísticas;
+- máximo de 20 épocas;
+- parada antecipada por F1 macro de validação, com paciência de 4 épocas;
+- restauração dos pesos da melhor época;
+- conjunto de teste preservado, sem carregamento durante o treinamento.
+
+### Resultado
+
+O treinamento terminou após **14 épocas** e restaurou os pesos da época **10**.
+
+| Métrica de validação | Resultado |
+| --- | ---: |
+| F1 macro | 0,1203 |
+| Balanced accuracy | 0,1596 |
+| Acurácia | 0,1709 |
+
+Duas execuções independentes com a mesma configuração produziram históricos e
+métricas idênticos. Os oito arrays de pesos carregados dos modelos também foram
+idênticos, confirmando a reprodução da rodada.
+
+### Artefatos
+
+Os arquivos de entrada ficam em `assets/data/treino_T5_2/`, e o modelo e seus
+resultados ficam em `assets/modelos/baseline_T5_2/`:
+
+| Arquivo | Conteúdo |
+| --- | --- |
+| `config_baseline.json` | Configuração completa do treinamento. |
+| `indice_dataset.csv` | Recorte versionado com somente a fonte `dataset/`. |
+| `pesos_dataset.json` | Pesos recalculados sobre as 2.209 imagens de treino. |
+| `auditoria_dataset.json` | Regra de inclusão, contagens, hashes e IDs excluídos. |
+| `melhor_modelo.keras` | Modelo restaurado na melhor época. |
+| `historico.csv` | Métricas das 14 épocas executadas. |
+| `metricas_validacao.json` | Métricas globais, por classe e matriz de confusão. |
+| `ambiente.json` | Versões, commit e hashes das entradas. |
+| `reprodutibilidade.json` | Comparação das duas execuções independentes. |
+
+### Interpretação e limites
+
+O resultado representa deliberadamente um piso: quatro classes tiveram F1 igual a
+zero na validação, e a F1 macro baixa mostra que uma CNN pequena treinada do zero
+não é suficiente para o objetivo final. O valor serve como referência para medir o
+ganho dos modelos pré-treinados em futuras rodadas com o mesmo recorte e protocolo.
+As métricas desta validação não são diretamente comparáveis às métricas de teste da
+T5.3. Nenhuma métrica do conjunto de teste foi usada nesta etapa.
+
+## 5.3 Varredura de arquiteturas (T5.3)
 
 ### Objetivo e entradas
 

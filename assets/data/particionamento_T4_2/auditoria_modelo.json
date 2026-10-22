@@ -32,7 +32,7 @@
   "inspecao_visual_completa": false,
   "independencia_de_planta_confirmada_para_catalogo": false,
   "classes_modelo_sha256": "5338b34df4cf6424b5e611e349067f45f94c07ac36c47ad6260661f48c59e067",
-  "status_revisao": "aguardando_revisao_glauco",
+  "status_revisao": "aprovado_por_glauco_no_pr_21",
   "criterio_rotulos": "lista T3.5 aplicada como escopo interno; AGRO-003 retido até identificação da espécie",
   "classes_modelo": 13,
   "imagens_no_modelo": 3163,

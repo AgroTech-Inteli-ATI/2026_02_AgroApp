@@ -13,7 +13,10 @@ from __future__ import annotations
 import numpy as np
 from PIL import Image, ImageFilter
 
-from preprocessamento import COR_PREENCHIMENTO
+try:  # execução como pacote: python -m src.pipeline_preparacao_t4_5
+    from .preprocessamento import COR_PREENCHIMENTO
+except ImportError:  # execução direta e testes existentes, com src no sys.path
+    from preprocessamento import COR_PREENCHIMENTO
 
 PARTICAO_TREINO = "treino"
 PROBABILIDADE = 0.5
