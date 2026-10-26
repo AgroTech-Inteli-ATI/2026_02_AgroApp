@@ -55,6 +55,13 @@
 
 </details>
 
+<details>
+<summary><strong>6. Avaliação do modelo</strong></summary>
+
+- [6.1 Métricas por classe (T6.1)](#61-métricas-por-classe-t61)
+
+</details>
+
 ---
 
 # 1. Entendimento de Negócio
@@ -1717,3 +1724,96 @@ As diferenças relevantes são: Lite0 usa o preset `efficientnet_lite0_ra_imagen
 - [Keras Applications](https://keras.io/api/applications/) — modelos com pesos pré-treinados e uso para extração de características e fine-tuning.
 - [Keras MobileNetV3](https://keras.io/api/applications/mobilenet/mobilenet_models/) — contrato de entrada e pré-processamento.
 - [CS231n Transfer Learning](https://cs231n.github.io/transfer-learning/) — extrator congelado e ajuste das camadas finais.
+- A validação é usada tanto na parada antecipada quanto na seleção; o teste
+  permanece reservado para a avaliação final.
+
+# 6. Avaliação do modelo
+
+## 6.1 Métricas por classe (T6.1)
+
+### Objetivo e protocolo
+
+Calcular precisão, recall e F1 individualmente para cada classe na **partição de
+teste**, usando **macro F1 como métrica principal**. A acurácia global é apenas
+complementar. A base de estudo é o [Scikit-learn Model Evaluation — métricas de
+classificação](https://scikit-learn.org/stable/modules/model_evaluation.html#classification-metrics).
+
+O fluxo está em [`src/avaliacao_t6_1.py`](../src/avaliacao_t6_1.py) e reutiliza
+[`src/avaliacao.py`](../src/avaliacao.py). Para cada classe `c`:
+
+```text
+precisão_c = TP_c / (TP_c + FP_c)
+recall_c = TP_c / (TP_c + FN_c)
+F1_c = 2 × precisão_c × recall_c / (precisão_c + recall_c)
+macro F1 = média aritmética dos F1 das classes com suporte no teste
+```
+
+Uma classe com suporte, mas sem previsões positivas, recebe precisão e F1 iguais
+a zero, seguindo `zero_division=0`. Classes sem exemplos no teste permanecem na
+tabela com suporte zero, status `não avaliada` e métricas nulas; são excluídas da
+média macro, conforme a convenção já usada pela T5.1. A cobertura é reportada
+explicitamente. No índice atual, as 13 classes têm suporte no teste, de modo que
+a macro F1 considera todas elas com o mesmo peso, independentemente da frequência.
+
+Escolher a arquitetura, os hiperparâmetros e o checkpoint usando somente treino e
+validação antes desta etapa. Executar a avaliação final no modelo escolhido, sem
+usar o resultado para escolher candidatos, ajustar limiares ou retreinar. O bloqueio
+da partição de teste em `dados_treino.py` continua ativo. Esta separação é um
+protocolo de avaliação: o comando não impede que alguém o execute novamente em
+outro diretório, mas recusa sobrescrever relatórios existentes.
+
+### Execução
+
+Usar o ambiente de treinamento com as dependências de `requirements-treino.txt`,
+uma rodada real concluída da T5.1 e os arquivos originais das imagens:
+
+```bash
+python -m src.avaliacao_t6_1 --rodada runs/<rodada_selecionada> --raiz-imagens /caminho/para/fontes --saida runs/<rodada_selecionada>/avaliacao_teste
+```
+
+A raiz das fontes contém `dataset/`, `Milho/` e `Soja/`. `--indice` permite indicar
+o índice da T4.5 (padrão: `assets/data/pipeline_T4_5/indice_pipeline.csv`);
+`--batch` controla apenas o tamanho do lote de inferência (padrão: 32).
+
+O avaliador confere o hash do índice contra `ambiente.json` da rodada, os nomes e
+índices das classes contra `metricas_validacao.json`, IDs únicos e ausência de
+grupos ou hashes originais compartilhados entre partições. Carrega
+`melhor_modelo.keras` sem recompilar nem treinar e verifica suas dimensões de
+entrada e saída. Somente registros com `particao == "teste"` são abertos; os hashes
+das imagens são verificados antes da padronização T4.1. A inferência usa ordem fixa,
+sem augmentation, reamostragem ou pesos de balanceamento. O rótulo previsto é o
+argmax da saída softmax; valores inválidos interrompem a avaliação.
+
+### Saídas e rastreabilidade
+
+| Arquivo | Conteúdo |
+| --- | --- |
+| `metricas_teste.json` | Macro F1, precisão/recall/F1/suporte por classe, cobertura, matriz de confusão (real nas linhas, previsto nas colunas), balanced accuracy e acurácia complementar; hashes do modelo e do índice, ambiente de treinamento e configuração da avaliação. |
+| `metricas_por_classe.csv` | Uma linha para cada classe, incluindo as não avaliadas. |
+| `predicoes_teste.csv` | ID de cada imagem de teste, índice real e índice previsto, para auditoria dos cálculos. |
+| `relatorio_teste.md` | Macro F1 em destaque e tabela de precisão, recall, F1 e suporte por classe. |
+
+O tamanho atual da partição de teste é **474 imagens em 13 classes**. Esse número
+vem do manifesto e não constitui resultado de desempenho. O comando aceita o
+índice efetivamente usado pela rodada, em vez de fixar essa contagem no código.
+
+### Verificação e situação da entrega
+
+```bash
+python tests/validar_avaliacao_t6_1.py
+```
+
+Os testes usam imagens e um preditor sintéticos em diretórios temporários. Conferem
+os resultados com um caso calculado à mão e com `precision_recall_fscore_support`
+e `f1_score` do scikit-learn (necessário para executar esse teste). Também verificam
+que somente imagens de teste são abertas, classes sem suporte são explicitadas,
+relatórios não são sobrescritos, e índices, hashes, grupos cruzados e saídas
+inválidas são rejeitados. Esses testes não substituem a inferência com um modelo
+Keras real e os arquivos originais.
+
+O fluxo de avaliação está implementado. **Ainda não há modelo treinado nem imagens
+originais disponíveis neste checkout para produzir métricas reais de teste**.
+O critério de aceite experimental será concluído ao executar o comando com a
+rodada selecionada e registrar os quatro artefatos, sem preencher valores fictícios.
+
+
