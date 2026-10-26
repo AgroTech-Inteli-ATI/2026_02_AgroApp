@@ -21,6 +21,11 @@ PARTICOES = ("treino", "validacao", "teste")
 PROPORCOES = {"treino": 0.70, "validacao": 0.15, "teste": 0.15}
 
 
+def hash_texto_versionado(caminho: Path) -> str:
+    """Calcula o SHA-256 do texto com as quebras LF usadas no repositório."""
+    return sha256(caminho.read_bytes().replace(b"\r\n", b"\n")).hexdigest()
+
+
 def normalizar(valor: object) -> str:
     return unicodedata.normalize("NFC", str(valor)).strip().casefold()
 
@@ -72,7 +77,7 @@ def carregar_dados(raiz: Path) -> tuple[pd.DataFrame, pd.DataFrame, dict]:
     mantidas["classe_candidata"] = mantidas.apply(classe_candidata, axis=1)
     proveniencia = {
         "diagnostico_sha256": sha256(caminho.read_bytes()).hexdigest(),
-        "dicionario_sha256": sha256(dicionario.read_bytes()).hexdigest(),
+        "dicionario_sha256": hash_texto_versionado(dicionario),
         "total_diagnostico": len(registros),
         "total_mantidas": len(mantidas),
         "classes_candidatas": mantidas["classe_candidata"].nunique(),
