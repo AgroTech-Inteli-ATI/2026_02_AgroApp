@@ -1817,37 +1817,48 @@ pasta de saída.
 As execuções de referência abaixo precedem a garantia de cobertura. Seus
 resultados são históricos: na execução completa, o MobileNetV3-Large não
 recebeu trial sem fine-tuning, então ela não demonstra a avaliação de todas
-as políticas nesse backbone. É necessária uma nova execução com a versão
-corrigida para comprovar integralmente o critério de aceite com métricas reais.
+as políticas nesse backbone. Se os artefatos das 24 rodadas históricas estiverem
+disponíveis e forem comparáveis pelo mesmo índice e protocolo, basta executar
+um trial complementar sem fine-tuning para esse backbone, em vez de repetir
+toda a busca. Sem os artefatos individuais, a tabela histórica sozinha não
+permite auditar a cobertura e a comparabilidade da consolidação.
 
 ### Pendência para a próxima execução (26/10/2026)
 
 **Estado:** a implementação e os testes da amostragem, da auditoria de cobertura
-e da verificação das entradas estão prontos. A busca corrigida ainda não foi
-executada com o acervo completo; portanto, o critério de aceite da T5.4 ainda
-não está comprovado experimentalmente. Esta rodada pode ser feita na próxima
+e da verificação das entradas estão prontos. O ambiente de treino e o acervo
+estão disponíveis fora deste workspace; a limitação para repetir os 24 trials
+agora é o tempo de execução. O critério de aceite da T5.4 ainda não está
+comprovado integralmente: falta a política sem fine-tuning no MobileNetV3-Large
+e a auditoria consolidada dos resultados. Isso pode ficar para a próxima
 etapa, sem bloquear a revisão do código agora.
 
-1. Usar Python 3.12 e instalar `requirements-treino.txt` em um ambiente com
-   memória suficiente. Montar ou transferir a pasta `Agro_App` do Drive para
-   que `dataset/`, `Milho/` e `Soja/` fiquem sob a mesma raiz local.
-2. Rodar `--verificar-entradas` pelo comando acima. Prosseguir somente se ele
-   encontrar todas as imagens de treino e validação. O índice e os pesos da
-   T4.5 já estão no repositório.
-3. Rodar a busca padrão acima: são 24 trials, oito para cada um dos três
-   backbones. Em CPU, reservar aproximadamente 8 a 24 horas, conforme a
-   máquina; a execução histórica levou várias horas e sofreu interrupções por
-   falta de memória. Não há retomada automática: guardar os artefatos de
-   `runs/` fora do repositório durante a execução.
-4. Conferir `runs/busca_t5_4/melhores_por_backbone.json`: os três backbones
-   devem constar em `por_backbone`, e `cobertura.<backbone>.cobertura_completa`
-   deve ser `true` para cada um. Inspecionar os erros em `resultados.csv` e
-   executar nova busca em outra pasta se alguma opção ficar sem avaliação
-   concluída; a retomada individual ainda não está implementada.
-5. Acrescentar a esta seção o ranking e as métricas da nova rodada, mantendo
-   os resultados anteriores identificados como exploratórios. Registrar o
-   ambiente, o tempo total e o caminho dos
-   artefatos para permitir a reprodução.
+1. Localizar os CSVs, configurações e métricas por trial das 24 rodadas
+   históricas. Conferir o índice da T4.5, o protocolo e os valores das quatro
+   dimensões em cada backbone. A tabela abaixo indica apenas uma lacuna:
+   `mobilenet_v3_large` sem fine-tuning.
+2. No ambiente de treino já disponível, rodar `--verificar-entradas` pelo
+   comando acima. Se os artefatos históricos forem comparáveis, executar só o
+   [trial complementar](../assets/data/treino_T5_4/config_complemento_mobilenet_v3_large_sem_ft.json)
+   com o mesmo orçamento de 12 épocas de cabeça e paciência 3:
+
+   ```
+   python -m src.treinamento_t5_1 \
+       --config assets/data/treino_T5_4/config_complemento_mobilenet_v3_large_sem_ft.json \
+       --raiz-imagens <pasta com dataset/, Milho/ e Soja/> \
+       --saida runs/busca_t5_4_complemento
+   ```
+
+3. Conferir o F1 macro de validação e a configuração em
+   `metricas_validacao.json` e `config_usada.json` da nova rodada. Consolidar
+   os resultados por backbone e por dimensão, contando apenas trials
+   concluídos, e registrar a origem de cada artefato. A cobertura deve incluir
+   as três políticas de fine-tuning em cada backbone.
+4. Acrescentar a esta seção a métrica complementar e a auditoria consolidada,
+   mantendo os resultados anteriores identificados como exploratórios. Se os
+   artefatos históricos não estiverem acessíveis ou não forem comparáveis,
+   então executar a busca padrão completa (24 trials, cerca de 8 a 24 horas em
+   CPU). A retomada automática ainda não está implementada.
 
 ### Execução de referência (orçamento reduzido, CPU)
 
