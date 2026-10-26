@@ -9,6 +9,7 @@ import math
 from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parents[1]
+ENTRADA_PADRAO = RAIZ / "assets/modelos"
 CAMPOS = (
     "execucao", "status", "motivo_descarte", "arquitetura", "hiperparametros",
     "f1_macro_validacao", "desempenho_por_classe", "tamanho_modelo_bytes",
@@ -123,7 +124,8 @@ def gerar(entrada: Path, saida: Path) -> list[dict]:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--entrada", type=Path, default=RAIZ / "runs")
+    parser.add_argument("--entrada", type=Path, default=ENTRADA_PADRAO,
+                        help="Pasta de rodadas (padrão: assets/modelos, incluindo o baseline versionado)")
     parser.add_argument("--saida", type=Path, default=RAIZ / "assets/data/experimentos_T5_5")
     args = parser.parse_args()
     print(f"{len(gerar(args.entrada, args.saida))} execuções registradas")

@@ -21,6 +21,3 @@ Repositório do projeto AgroApp — AgroTech Inteli ATI, 2026/02.
 ├── tests/            # Testes automatizados
 └── README.md         # Apresentação e sumário do projeto
 ```
-
-As instruções de instalação, execução e testes serão adicionadas quando as
-tecnologias do projeto forem definidas.

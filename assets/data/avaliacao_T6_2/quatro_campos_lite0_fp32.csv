@@ -1,0 +1,14 @@
+indice_modelo;classe;VP;FP;FN;VN;suporte
+0;Vaquinha (Diabrotica speciosa);136;5;21;312;157
+1;Cigarrinha-do-milho (Dalbulus maidis);30;3;0;441;30
+2;Percevejo-barriga-verde (Dichelops/Diceraeus);26;5;16;427;42
+3;Lagarta-do-cartucho (Spodoptera frugiperda);54;12;7;401;61
+4;Percevejo-marrom (Euschistus heros);4;3;6;461;10
+5;Percevejo-verde (Nezara viridula);8;12;6;448;14
+6;Percevejo-asa-preta (Edessa meditabunda);5;7;6;456;11
+7;Percevejo-do-milho (Leptoglossus zonatus);11;10;1;452;12
+8;Lagarta-falsa-medideira (Chrysodeixis includens);3;6;9;456;12
+9;Lagarta-da-soja (Anticarsia gemmatalis);6;5;0;463;6
+10;Lagarta-das-vagens (Spodoptera eridania e S. cosmioides);13;10;11;440;24
+11;Astylus variegatus;64;12;7;391;71
+12;Cigarrinha-das-pastagens (Deois flavopicta);21;3;3;447;24

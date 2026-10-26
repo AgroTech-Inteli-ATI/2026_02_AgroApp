@@ -133,6 +133,7 @@ def validar_backbones() -> None:
     media = np.array(backbones.MEDIA_IMAGENET, np.float32)
     desvio = np.array(backbones.DESVIO_IMAGENET, np.float32)
     esperado = {
+        "cnn_baseline": (0.0, 1.0),
         "mobilenet_v2": (-1.0, 1.0),
         "efficientnet_lite0": (-media / desvio, (1 - media) / desvio),
     }
@@ -150,12 +151,18 @@ def validar_backbones() -> None:
             raise
         t = backbone.tamanho_entrada
         assert modelo.input_shape == (None, t, t, 3) and modelo.output_shape == (None, 13), nome
-        assert modelo.layers[1].name == "conversao_entrada" and not base.trainable
+        assert modelo.layers[1].name == "conversao_entrada"
+        assert base.trainable == (not backbone.congelar_inicialmente), nome
         assert modelo.layers[1](np.ones((1, t, t, 3), np.float32)).shape == (1, t, t, 3)
         blocos = backbone.blocos(base)
-        assert base.layers[1] not in blocos[0], f"{nome}: stem não deveria contar como bloco"
         blocos_por_backbone[nome] = len(blocos)
 
+        if not backbone.suporta_fine_tuning:
+            _espera_erro(lambda: descongelar_blocos(base, backbone, 1), "não suporta")
+            assert base.trainable, f"{nome}: a base do baseline deve treinar desde o início"
+            continue
+
+        assert base.layers[1] not in blocos[0], f"{nome}: stem não deveria contar como bloco"
         # fine-tuning: últimos 2 blocos, BatchNorm congelado, stem congelado
         total = descongelar_blocos(base, backbone, 2)
         selecionadas = {id(c) for bloco in blocos[-2:] for c in bloco}

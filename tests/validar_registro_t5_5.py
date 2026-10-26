@@ -1,4 +1,4 @@
-"""Casos sintéticos do consolidador, sem TensorFlow e sem resultados fictícios na entrega."""
+"""Valida o consolidador com casos sintéticos e o baseline real, sem TensorFlow."""
 
 import csv
 import json
@@ -8,7 +8,7 @@ import tempfile
 import unittest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from src.registro_experimentos_t5_5 import consolidar, gerar
+from src.registro_experimentos_t5_5 import ENTRADA_PADRAO, consolidar, gerar
 
 
 class RegistroTest(unittest.TestCase):
@@ -64,6 +64,21 @@ class RegistroTest(unittest.TestCase):
         saida = self.raiz / "saida"
         self.assertEqual(gerar(self.entrada, saida), [])
         self.assertIn("Nenhuma execução", (saida / "experimentos.md").read_text(encoding="utf-8"))
+
+    def test_baseline_versionado(self):
+        """O comando padrão inclui o modelo real e preserva métricas e ausências."""
+        baseline = ENTRADA_PADRAO / "baseline_T5_2"
+        metricas = json.loads((baseline / "metricas_validacao.json").read_text(encoding="utf-8"))
+        linhas = consolidar(ENTRADA_PADRAO)
+        linha = next(l for l in linhas if l["execucao"] == "baseline_T5_2")
+        self.assertEqual(linha["arquitetura"], "cnn_baseline")
+        self.assertEqual(linha["status"], "concluida")
+        self.assertEqual(linha["f1_macro_validacao"], metricas["validacao"]["f1_macro"])
+        self.assertEqual(json.loads(linha["desempenho_por_classe"]),
+                         metricas["validacao"]["por_classe"])
+        self.assertEqual(linha["tamanho_modelo_bytes"], (baseline / "melhor_modelo.keras").stat().st_size)
+        self.assertIsNone(linha["latencia_estimada_ms"])
+        self.assertEqual(linha["pendencias"], "latência")
 
     def test_recusa_descarte_sem_motivo_e_latencia_sem_contexto(self):
         for registro in ({"status": "descartada"}, {"latencia": {"estimativa_ms": 5}},
