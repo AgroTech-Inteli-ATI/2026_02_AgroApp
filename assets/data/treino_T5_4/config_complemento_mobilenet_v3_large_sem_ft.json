@@ -1,0 +1,31 @@
+{
+  "backbone": "mobilenet_v3_large",
+  "semente": 42,
+  "deterministico": true,
+  "otimizador": {
+    "nome": "adam",
+    "taxa_aprendizado": 0.01
+  },
+  "batch": 64,
+  "epocas_max": 12,
+  "parada": {
+    "monitor": "val_f1_macro",
+    "paciencia": 3,
+    "restaurar_melhores_pesos": true
+  },
+  "augmentation": {
+    "ativo": true
+  },
+  "balanceamento": {
+    "class_weight": true
+  },
+  "cabeca": {
+    "dropout": 0.2
+  },
+  "fine_tuning": {
+    "ativo": false,
+    "blocos_descongelados": 0,
+    "taxa_aprendizado": 1e-05,
+    "epocas_max": 0
+  }
+}
