@@ -1749,8 +1749,10 @@ terceira candidata leve no lugar dele.
 ### Espaço de busca e amostragem
 
 [`src/busca_hiperparametros_t5_3.py`](../src/busca_hiperparametros_t5_3.py)
-faz uma busca aleatória (não uma grade completa, para manter o custo viável) e
-sorteia, para cada backbone, combinações sem repetição de:
+faz uma busca com cobertura obrigatória seguida de amostragem aleatória (não
+uma grade completa, para manter o custo viável). Para cada backbone, três
+combinações reservadas cobrem todos os valores de cada dimensão; os demais
+trials são sorteados sem repetição de:
 
 | Dimensão | Valores |
 | --- | ---: |
@@ -1758,6 +1760,13 @@ sorteia, para cada backbone, combinações sem repetição de:
 | Tamanho de lote | 16 / 32 / 64 |
 | Augmentation | ativo / inativo |
 | Política de fine-tuning | sem fine-tuning / raso / profundo |
+
+A execução exige dois ou três backbones distintos e de 3 a 54 trials por
+backbone. A mesma semente reproduz a amostragem. Ao final, o campo `cobertura`
+de `melhores_por_backbone.json` registra, por dimensão, os valores sem avaliação
+de validação concluída. Se um trial falhar e deixar algum valor descoberto, a
+busca grava os artefatos e termina com erro, para não declarar o critério
+atendido indevidamente.
 
 A política de fine-tuning é expressa como **fração dos blocos da base**, não
 contagem fixa, porque os candidatos têm quantidades de blocos muito diferentes
@@ -1774,17 +1783,71 @@ que fica fora do escopo desta busca.
 
 ### Execução
 
+Antes da busca, instalar as dependências de `requirements-treino.txt` em um
+ambiente Python compatível e conferir o acervo. As imagens estão na pasta
+[Agro_App do Drive](https://drive.google.com/drive/folders/1INVwX0RAXV_X8Z_riEtdvcM9rzyN6SEE),
+que contém `dataset/`, `Milho/` e `Soja/`. A pasta deve ser montada ou
+transferida para o ambiente que executará o treino:
+
 ```
-python -m src.busca_hiperparametros_t5_3 \
+python -m src.busca_hiperparametros_t5_4 \
+    --raiz-imagens <pasta com dataset/, Milho/ e Soja/> \
+    --verificar-entradas
+```
+
+Essa verificação confere o índice, os pesos e a presença das imagens de treino
+e validação antes de carregar Keras. Não usa as imagens de teste. No workspace
+local atual, 2.689 imagens de treino/validação do índice estão ausentes; a
+existência da pasta no Drive não as torna acessíveis pelo Python local. Depois
+de disponibilizar o acervo e passar na verificação:
+
+```
+python -m src.busca_hiperparametros_t5_4 \
     --raiz-imagens <pasta com dataset/, Milho/ e Soja/> \
     --backbones efficientnet_lite0 mobilenet_v3_large mobilenet_v2 \
     --trials-por-backbone 8
 ```
 
 Cada trial reaproveita `treinar()` da T5.1 e grava sua rodada normalmente em
-`runs/<prefixo>/<backbone>/`; a busca acrescenta `resultados.csv` (todas as
+`runs/busca_t5_4/<backbone>/`; a busca acrescenta `resultados.csv` (todas as
 rodadas, grava incrementalmente) e `melhores_por_backbone.json` (a melhor
-configuração de cada backbone e o ranking geral) na pasta de saída.
+configuração de cada backbone, o ranking geral e a auditoria de cobertura) na
+pasta de saída.
+
+As execuções de referência abaixo precedem a garantia de cobertura. Seus
+resultados são históricos: na execução completa, o MobileNetV3-Large não
+recebeu trial sem fine-tuning, então ela não demonstra a avaliação de todas
+as políticas nesse backbone. É necessária uma nova execução com a versão
+corrigida para comprovar integralmente o critério de aceite com métricas reais.
+
+### Pendência para a próxima execução (26/10/2026)
+
+**Estado:** a implementação e os testes da amostragem, da auditoria de cobertura
+e da verificação das entradas estão prontos. A busca corrigida ainda não foi
+executada com o acervo completo; portanto, o critério de aceite da T5.4 ainda
+não está comprovado experimentalmente. Esta rodada pode ser feita na próxima
+etapa, sem bloquear a revisão do código agora.
+
+1. Usar Python 3.12 e instalar `requirements-treino.txt` em um ambiente com
+   memória suficiente. Montar ou transferir a pasta `Agro_App` do Drive para
+   que `dataset/`, `Milho/` e `Soja/` fiquem sob a mesma raiz local.
+2. Rodar `--verificar-entradas` pelo comando acima. Prosseguir somente se ele
+   encontrar todas as imagens de treino e validação. O índice e os pesos da
+   T4.5 já estão no repositório.
+3. Rodar a busca padrão acima: são 24 trials, oito para cada um dos três
+   backbones. Em CPU, reservar aproximadamente 8 a 24 horas, conforme a
+   máquina; a execução histórica levou várias horas e sofreu interrupções por
+   falta de memória. Não há retomada automática: guardar os artefatos de
+   `runs/` fora do repositório durante a execução.
+4. Conferir `runs/busca_t5_4/melhores_por_backbone.json`: os três backbones
+   devem constar em `por_backbone`, e `cobertura.<backbone>.cobertura_completa`
+   deve ser `true` para cada um. Inspecionar os erros em `resultados.csv` e
+   executar nova busca em outra pasta se alguma opção ficar sem avaliação
+   concluída; a retomada individual ainda não está implementada.
+5. Acrescentar a esta seção o ranking e as métricas da nova rodada, mantendo
+   os resultados anteriores identificados como exploratórios. Registrar o
+   ambiente, o tempo total e o caminho dos
+   artefatos para permitir a reprodução.
 
 ### Execução de referência (orçamento reduzido, CPU)
 
@@ -2065,6 +2128,7 @@ originais.
 | Arquivo | Conteúdo |
 | --- | --- |
 | `src/busca_hiperparametros_t5_3.py` | Módulo da busca: amostragem, montagem de config e execução. |
+| `src/busca_hiperparametros_t5_4.py` | Entrada de execução da T5.4; mantém o nome histórico do módulo compatível. |
 | `tests/validar_busca_hiperparametros_t5_3.py` | Testes da amostragem, montagem de config e um smoke test com dados sintéticos. |
 | `runs/busca_t5_3/resultados.csv` | Execução reduzida (3 trials/backbone): uma linha por trial, grau incremental (não versionado). |
 | `runs/busca_t5_3/melhores_por_backbone.json` | Melhor configuração de cada backbone na execução reduzida (não versionado). |

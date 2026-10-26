@@ -23,6 +23,7 @@ Exemplo:
 from __future__ import annotations
 
 from dataclasses import dataclass
+from itertools import product
 from pathlib import Path
 import argparse
 import csv
@@ -38,7 +39,7 @@ from src.dados_treino import INDICE_PADRAO, PESOS_PADRAO
 # TensorFlow) continuem testáveis isoladamente, como em dados_treino.py.
 
 RAIZ = Path(__file__).resolve().parents[1]
-SAIDA_BUSCA_PADRAO = RAIZ / "runs" / "busca_t5_3"
+SAIDA_BUSCA_PADRAO = RAIZ / "runs" / "busca_t5_4"
 
 # Backbones mais promissores: EfficientNet-Lite0 é a recomendação principal do
 # projeto (docs/Projeto.md §4), com MobileNetV3-Large como candidata de
@@ -94,24 +95,30 @@ def politicas_validas(nome_backbone: str) -> list[str]:
 def amostrar_trials(
     backbone: str, quantidade: int, rng: np.random.Generator, semente_base: int
 ) -> list[Trial]:
-    """Sorteia combinações sem repetição (até 20x tentativas por trial pedido)."""
+    """Garante cada valor de cada dimensão e completa com combinações aleatórias."""
     politicas = politicas_validas(backbone)
-    trials: list[Trial] = []
-    vistos: set[tuple] = set()
-    tentativas = 0
-    while len(trials) < quantidade and tentativas < quantidade * 20:
-        tentativas += 1
-        combo = (
-            float(rng.choice(TAXAS_APRENDIZADO)),
-            int(rng.choice(TAMANHOS_LOTE)),
-            bool(rng.choice(AUGMENTATION)),
-            str(rng.choice(politicas)),
+    dimensoes = (TAXAS_APRENDIZADO, TAMANHOS_LOTE, AUGMENTATION, politicas)
+    minimo = max(map(len, dimensoes))
+    total = int(np.prod([len(valores) for valores in dimensoes]))
+    if not minimo <= quantidade <= total:
+        raise ValueError(
+            f"trials_por_backbone deve estar entre {minimo} e {total} para {backbone}; "
+            "cada valor de cada parâmetro precisa ser avaliado"
         )
-        if combo in vistos:
-            continue
-        vistos.add(combo)
-        trials.append(Trial(backbone, *combo, semente=semente_base))
-    return trials
+
+    # Permutações independentes cobrem todas as opções já nos primeiros trials.
+    embaralhadas = [list(rng.permutation(valores)) for valores in dimensoes]
+    obrigatorias = [
+        tuple(valores[indice % len(valores)] for valores in embaralhadas)
+        for indice in range(minimo)
+    ]
+    vistos = set(obrigatorias)
+    restantes = [combo for combo in product(*dimensoes) if combo not in vistos]
+    rng.shuffle(restantes)
+    combos = obrigatorias + restantes[:quantidade - minimo]
+    rng.shuffle(combos)
+    return [Trial(backbone, float(lr), int(lote), bool(aumento), str(politica), semente_base)
+            for lr, lote, aumento, politica in combos]
 
 
 def construir_config(trial: Trial, blocos_base: int, epocas_max_cabeca: int, paciencia: int) -> dict:
@@ -173,6 +180,55 @@ def _selecionar_melhores(linhas: list[dict]) -> dict:
     return {"por_backbone": melhores, "ranking_geral": ranking}
 
 
+def _auditar_cobertura(linhas: list[dict], backbones_candidatos: tuple[str, ...]) -> dict:
+    """Confere se cada opção produziu ao menos uma avaliação de validação."""
+    dimensoes = {
+        "taxa_aprendizado": TAXAS_APRENDIZADO,
+        "batch": TAMANHOS_LOTE,
+        "augmentation": AUGMENTATION,
+    }
+    auditoria = {}
+    for backbone in backbones_candidatos:
+        concluidos = [linha for linha in linhas if linha["backbone"] == backbone
+                      and linha["val_f1_macro"] is not None]
+        esperados = {**dimensoes, "politica_fine_tuning": politicas_validas(backbone)}
+        faltantes = {campo: [valor for valor in valores
+                             if not any(linha[campo] == valor for linha in concluidos)]
+                     for campo, valores in esperados.items()}
+        auditoria[backbone] = {
+            "trials_concluidos": len(concluidos),
+            "valores_sem_avaliacao": faltantes,
+            "cobertura_completa": all(not valores for valores in faltantes.values()),
+        }
+    return auditoria
+
+
+def verificar_entradas(raiz_imagens: Path, caminho_indice: Path, caminho_pesos: Path) -> dict:
+    """Valida o acervo antes de iniciar uma busca longa, sem depender de Keras."""
+    from src.dados_treino import carregar_class_weight, carregar_indice, nomes_classes
+    from src.pipeline_preparacao_t4_5 import _resolver_imagem
+
+    indice = carregar_indice(caminho_indice)
+    carregar_class_weight(caminho_pesos, len(nomes_classes(indice)))
+    contagens = {"treino": 0, "validacao": 0}
+    ausentes = []
+    for linha in indice:
+        particao = linha["particao"]
+        if particao not in contagens:
+            continue  # a busca não consulta a partição de teste
+        contagens[particao] += 1
+        if not _resolver_imagem(Path(raiz_imagens), linha["caminho_relativo"]).is_file():
+            ausentes.append(linha["caminho_relativo"])
+    if not all(contagens.values()):
+        raise ValueError(f"índice precisa conter treino e validação: {contagens}")
+    if ausentes:
+        raise FileNotFoundError(
+            f"{len(ausentes)} imagens de treino/validação ausentes em {raiz_imagens}; "
+            f"exemplos: {', '.join(ausentes[:3])}"
+        )
+    return contagens
+
+
 def executar_busca(
     backbones_candidatos: tuple[str, ...],
     trials_por_backbone: int,
@@ -186,6 +242,11 @@ def executar_busca(
     verbose: int = 2,
 ) -> Path:
     """Roda a busca e grava resultados.csv (incremental) e melhores_por_backbone.json."""
+    if len(backbones_candidatos) not in (2, 3) or len(set(backbones_candidatos)) != len(backbones_candidatos):
+        raise ValueError("informe dois ou três backbones distintos")
+    if trials_por_backbone < 3:
+        raise ValueError("trials_por_backbone deve ser no mínimo 3 para cobrir todos os parâmetros")
+    verificar_entradas(raiz_imagens, caminho_indice, caminho_pesos)
     import gc
 
     import keras
@@ -242,14 +303,17 @@ def executar_busca(
             keras.backend.clear_session()
             gc.collect()
     melhores = _selecionar_melhores(linhas)
+    melhores["cobertura"] = _auditar_cobertura(linhas, backbones_candidatos)
     (saida / "melhores_por_backbone.json").write_text(
         json.dumps(melhores, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
     )
+    if not all(item["cobertura_completa"] for item in melhores["cobertura"].values()):
+        raise RuntimeError(f"busca incompleta: confira a cobertura e os erros dos trials em {saida}")
     return saida
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Busca de hiperparâmetros T5.3")
+    parser = argparse.ArgumentParser(description="Busca de hiperparâmetros T5.4")
     parser.add_argument("--raiz-imagens", type=Path, required=True, help="Pasta com dataset/, Milho/ e Soja/")
     parser.add_argument("--backbones", nargs="+", default=list(BACKBONES_PADRAO))
     parser.add_argument("--trials-por-backbone", type=int, default=8)
@@ -259,7 +323,12 @@ def main() -> None:
     parser.add_argument("--saida", type=Path, default=SAIDA_BUSCA_PADRAO)
     parser.add_argument("--indice", type=Path, default=INDICE_PADRAO)
     parser.add_argument("--pesos", type=Path, default=PESOS_PADRAO)
+    parser.add_argument("--verificar-entradas", action="store_true",
+                        help="Confere índice, pesos e imagens sem iniciar o treinamento")
     args = parser.parse_args()
+    if args.verificar_entradas:
+        print(f"Entradas válidas: {verificar_entradas(args.raiz_imagens, args.indice, args.pesos)}")
+        return
     saida = executar_busca(
         tuple(args.backbones), args.trials_por_backbone, Path(args.saida), args.raiz_imagens,
         args.epocas_max_cabeca, args.paciencia, args.semente_busca,
