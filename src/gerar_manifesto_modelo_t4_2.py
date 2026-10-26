@@ -90,15 +90,15 @@ def gerar(raiz: Path, pasta_saida: Path | None = None) -> Path:
         "grupo_particao", "particao", "status_classe", "decisao_final", "sha256", "revisor",
     ]
     manifesto[colunas].sort_values("image_id").to_csv(
-        pasta / "manifesto_modelo.csv", index=False, encoding="utf-8-sig"
+        pasta / "manifesto_modelo.csv", index=False, encoding="utf-8-sig", lineterminator="\n"
     )
-    resumo.to_csv(pasta / "resumo_modelo.csv", index=False, encoding="utf-8-sig")
+    resumo.to_csv(pasta / "resumo_modelo.csv", index=False, encoding="utf-8-sig", lineterminator="\n")
     fora = excluidas.groupby("classe_candidata").size().rename("imagens_mantidas_fora_modelo").reset_index()
     fora["motivo"] = fora["classe_candidata"].map(
         lambda chave: "agente indeterminado no acervo" if chave in ACERVO_SEM_IDENTIFICACAO_CONFIRMADA
         else "classe fora do escopo T3.5"
     )
-    fora.to_csv(pasta / "fora_modelo.csv", index=False, encoding="utf-8-sig")
+    fora.to_csv(pasta / "fora_modelo.csv", index=False, encoding="utf-8-sig", lineterminator="\n")
 
     contagens_csv = classes["imagens_aproveitaveis"].astype(int)
     contagens_manifesto = resumo.set_index("indice_modelo")["imagens"]

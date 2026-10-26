@@ -60,6 +60,7 @@
 <summary><strong>6. Avaliação do modelo</strong></summary>
 
 - [6.1 Métricas por classe (T6.1)](#61-métricas-por-classe-t61)
+- [6.2 Matriz de confusão (T6.2)](#62-matriz-de-confusão-t62)
 
 </details>
 
@@ -2190,11 +2191,12 @@ explicitamente. No índice atual, as 13 classes têm suporte no teste, de modo q
 a macro F1 considera todas elas com o mesmo peso, independentemente da frequência.
 
 Escolher a arquitetura, os hiperparâmetros e o checkpoint usando somente treino e
-validação antes desta etapa. Executar a avaliação final no modelo escolhido, sem
-usar o resultado para escolher candidatos, ajustar limiares ou retreinar. O bloqueio
-da partição de teste em `dados_treino.py` continua ativo. Esta separação é um
-protocolo de avaliação: o comando não impede que alguém o execute novamente em
-outro diretório, mas recusa sobrescrever relatórios existentes.
+validação antes desta etapa. As 474 imagens de teste do índice atual já foram
+consultadas na T5.3; qualquer métrica calculada nelas é exploratória e não deve
+ser usada para escolher candidatos, ajustar limiares ou retreinar. O bloqueio
+da partição de teste em `dados_treino.py` continua ativo. O comando recusa
+sobrescrever relatórios existentes, mas não impede uma nova execução em outro
+diretório.
 
 ### Execução
 
@@ -2207,7 +2209,9 @@ python -m src.avaliacao_t6_1 --rodada runs/<rodada_selecionada> --raiz-imagens /
 
 A raiz das fontes contém `dataset/`, `Milho/` e `Soja/`. `--indice` permite indicar
 o índice da T4.5 (padrão: `assets/data/pipeline_T4_5/indice_pipeline.csv`);
-`--batch` controla apenas o tamanho do lote de inferência (padrão: 32).
+`--batch` controla apenas o tamanho do lote de inferência (padrão: 32). O índice
+informado deve ter o mesmo hash registrado em `ambiente.json` da rodada; o avaliador
+ainda não aceita um conjunto de teste independente posterior.
 
 O avaliador confere o hash do índice contra `ambiente.json` da rodada, os nomes e
 índices das classes contra `metricas_validacao.json`, IDs únicos e ausência de
@@ -2245,9 +2249,104 @@ relatórios não são sobrescritos, e índices, hashes, grupos cruzados e saída
 inválidas são rejeitados. Esses testes não substituem a inferência com um modelo
 Keras real e os arquivos originais.
 
-O fluxo de avaliação está implementado. **Ainda não há modelo treinado nem imagens
-originais disponíveis neste checkout para produzir métricas reais de teste**.
-O critério de aceite experimental será concluído ao executar o comando com a
-rodada selecionada e registrar os quatro artefatos, sem preencher valores fictícios.
+O fluxo de avaliação está implementado. **Ainda não há uma rodada T5.1 selecionada
+nem as imagens originais disponíveis neste checkout para executar o avaliador**.
+Quando executado com o índice atual, o relatório descreve somente o teste
+exploratório já consultado na T5.3. A avaliação final independente exigirá novas
+imagens separadas por planta ou origem e uma extensão do contrato do avaliador
+para aceitar esse novo índice sem confundi-lo com o índice de treinamento.
 
 
+## 6.2 Matriz de confusão (T6.2)
+
+### Objetivo e escopo
+
+Publicar as matrizes de confusão das quatro arquiteturas avaliadas na [T5.3](#53-varredura-de-arquiteturas-t53) e identificar nominalmente os erros que se repetem entre elas. Esta análise usa as **474 imagens da partição de teste já consultada** na varredura e, portanto, tem caráter **exploratório**. Não representa a avaliação final independente nem seleciona uma arquitetura vencedora.
+
+### Método e artefatos
+
+As matrizes originais vieram dos arquivos `matriz_confusao_fp32.csv` e `matriz_confusao_int8.csv` das quatro [rodadas no Drive](https://drive.google.com/drive/folders/1K9eLSY4Mam0ygQdQ-5bzFAPVrIL5OzoH). Cada matriz tem 13 linhas e 13 colunas, na ordem dos índices de [`classes-modelo.csv`](../assets/data/classes-modelo.csv). **Linhas são as classes reais e colunas são as classes previstas**; a célula `i, j` contém o número de imagens reais da classe `i` previstas como `j`. Os valores são contagens de imagens, sem pesos de balanceamento. As cópias abaixo acrescentam os nomes das classes às linhas e colunas, preservando as contagens originais. Cada linha deve somar o suporte daquela classe no [resumo da T4.2](../assets/data/particionamento_T4_2/resumo_modelo.csv), e cada matriz deve somar 474 imagens.
+
+| Backbone | Matriz FP32 publicada | Matriz INT8 publicada |
+| --- | --- | --- |
+| EfficientNet-Lite0 | [CSV com nomes](../assets/data/avaliacao_T6_2/efficientnet_lite0_fp32.csv) · [origem no Drive](https://drive.google.com/file/d/1hcdDWuqstdOLEVO9Kj_Wz5wXjJLdCEP2/view?usp=drivesdk) | [CSV com nomes](../assets/data/avaliacao_T6_2/efficientnet_lite0_int8.csv) · [origem no Drive](https://drive.google.com/file/d/15v4AlwHMbpoYxr0egEqgefUt5vfq8HFf/view?usp=drivesdk) |
+| MobileNetV3-Small 1.0 | [CSV com nomes](../assets/data/avaliacao_T6_2/mobilenetv3_small_100_fp32.csv) · [origem no Drive](https://drive.google.com/file/d/1lyMWn93UzExo2dcvdIHfSXjhUBOpMveg/view?usp=drivesdk) | [CSV com nomes](../assets/data/avaliacao_T6_2/mobilenetv3_small_100_int8.csv) · [origem no Drive](https://drive.google.com/file/d/1WfmwxR6VulAWZRmNgOfGSr5vmNLjP2xs/view?usp=drivesdk) |
+| MobileNetV3-Large 0.75 | [CSV com nomes](../assets/data/avaliacao_T6_2/mobilenetv3_large_075_fp32.csv) · [origem no Drive](https://drive.google.com/file/d/1RnoU_g2pGl2zBuAUWt-wHHq7QmXxWga5/view?usp=drivesdk) | [CSV com nomes](../assets/data/avaliacao_T6_2/mobilenetv3_large_075_int8.csv) · [origem no Drive](https://drive.google.com/file/d/1Z_vsbLjM2JhNHApUDky-yELM12F3d444/view?usp=drivesdk) |
+| MobileNetV3-Large 1.0 | [CSV com nomes](../assets/data/avaliacao_T6_2/mobilenetv3_large_100_fp32.csv) · [origem no Drive](https://drive.google.com/file/d/1mWxh5YvmBR04OTPnprtR2O08qU36UeNY/view?usp=drivesdk) | [CSV com nomes](../assets/data/avaliacao_T6_2/mobilenetv3_large_100_int8.csv) · [origem no Drive](https://drive.google.com/file/d/1lB7neGFyi5kT1AInQz_alHzdMrZWQto8/view?usp=drivesdk) |
+
+O script [`src/analise_confusao_t6_2.py`](../src/analise_confusao_t6_2.py) confere nomes, ordem, suportes e total das oito matrizes; a partir das quatro FP32, reproduz a tabela de quatro campos e os pares recorrentes. Para regenerar os dois CSVs derivados, execute `python -m src.analise_confusao_t6_2`. Para apenas conferir os artefatos publicados, execute `python -m src.analise_confusao_t6_2 --verificar`.
+
+### Resultado: matriz publicada
+
+A figura apresenta a matriz **EfficientNet-Lite0 FP32** como exemplo visual da varredura, sem indicar escolha final de arquitetura. Os números nas células são as contagens; a cor representa a parcela da linha, permitindo ler também os erros de classes com poucos exemplos. O contorno laranja destaca os pares recorrentes nos quatro modelos FP32; nessas células, a segunda linha mostra a porcentagem das imagens da classe real. A diagonal reúne os acertos. As matrizes das outras arquiteturas e da quantização INT8 estão nos CSVs da tabela acima. A figura pode ser regenerada com `python -m src.plotar_matriz_confusao_t6_2`.
+
+![Matriz de confusão EfficientNet-Lite0 FP32, com classe real nas linhas e classe prevista nas colunas](../assets/matriz_confusao_T6_2_lite0_fp32.png)
+
+Na matriz exibida, **381 das 474 imagens** estão na diagonal (acurácia de 80,4%). Esse total confere com o resultado FP32 da T5.3. Cada linha soma o suporte da respectiva classe; por exemplo, vaquinha soma 157 imagens, e lagarta-falsa-medideira soma 12.
+
+#### Leitura em quatro campos por classe
+
+Os **quatro campos — verdadeiro positivo (VP), falso positivo (FP), falso negativo (FN) e verdadeiro negativo (VN)** — descrevem uma classificação binária. Como o modelo prevê uma entre **13 classes**, a matriz geral acima tem 13 × 13 células. Para obter os quatro campos, considera-se **uma classe como positiva e as outras 12 como negativas**, repetindo o cálculo para cada classe. Assim, a visão binária complementa a matriz geral, que mostra *qual* classe foi confundida com *qual* outra.
+
+Para **vaquinha** no Lite0 FP32, a matriz de quatro campos é:
+
+| Classe real \ previsão | Vaquinha | Outra classe |
+| --- | ---: | ---: |
+| Vaquinha | **VP = 136** | **FN = 21** |
+| Outra classe | **FP = 5** | **VN = 312** |
+
+A mesma decomposição para todas as classes está publicada em [`quatro_campos_lite0_fp32.csv`](../assets/data/avaliacao_T6_2/quatro_campos_lite0_fp32.csv):
+
+| Classe considerada positiva | VP | FP | FN | VN |
+| --- | ---: | ---: | ---: | ---: |
+| Vaquinha | 136 | 5 | 21 | 312 |
+| Cigarrinha-do-milho | 30 | 3 | 0 | 441 |
+| Percevejo-barriga-verde | 26 | 5 | 16 | 427 |
+| Lagarta-do-cartucho | 54 | 12 | 7 | 401 |
+| Percevejo-marrom | 4 | 3 | 6 | 461 |
+| Percevejo-verde | 8 | 12 | 6 | 448 |
+| Percevejo-asa-preta | 5 | 7 | 6 | 456 |
+| Percevejo-do-milho | 11 | 10 | 1 | 452 |
+| Lagarta-falsa-medideira | 3 | 6 | 9 | 456 |
+| Lagarta-da-soja | 6 | 5 | 0 | 463 |
+| Lagarta-das-vagens | 13 | 10 | 11 | 440 |
+| Astylus variegatus | 64 | 12 | 7 | 391 |
+| Cigarrinha-das-pastagens | 21 | 3 | 3 | 447 |
+
+Em cada linha, `VP + FP + FN + VN = 474` e `VP + FN` é o suporte da classe. Por exemplo, lagarta-falsa-medideira teve **3 VP e 9 FN entre 12 imagens reais**: recall de 25,0%. O VN alto nessa linha conta as outras classes corretamente não previstas como lagarta-falsa-medideira; isoladamente, ele não demonstra que a classe rara foi bem reconhecida.
+
+### Pares de classes com confusão recorrente
+
+Para priorizar os erros, a [lista reproduzível de pares](../assets/data/avaliacao_T6_2/pares_recorrentes_fp32.csv) usa um **limiar descritivo**, definido para esta revisão: pares **direcionais** fora da diagonal com pelo menos **dois erros em cada um dos quatro modelos FP32** e pelo menos **três erros no Lite0 FP32**. O limiar filtra erros isolados, mas não é um teste estatístico nem define uma taxa aceitável de erro. As quatro contagens se referem às mesmas 474 imagens avaliadas por modelos diferentes; não devem ser somadas como se fossem imagens independentes. A porcentagem usa como denominador o suporte da classe real no teste.
+
+| Classe real → classe prevista | Lite0 FP32 | Small 1.0 | Large 0.75 | Large 1.0 | Parcela da classe real no Lite0 |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Vaquinha → Astylus variegatus | 10 | 11 | 9 | 7 | 10/157 (6,4%) |
+| Lagarta-falsa-medideira → Lagarta-do-cartucho | 5 | 4 | 4 | 5 | 5/12 (41,7%) |
+| Lagarta-das-vagens → Lagarta-do-cartucho | 6 | 4 | 4 | 4 | 6/24 (25,0%) |
+| Percevejo-barriga-verde → Percevejo-do-milho | 4 | 3 | 4 | 4 | 4/42 (9,5%) |
+| Vaquinha → Percevejo-verde | 5 | 5 | 2 | 2 | 5/157 (3,2%) |
+| Lagarta-falsa-medideira → Lagarta-das-vagens | 4 | 3 | 3 | 4 | 4/12 (33,3%) |
+| Lagarta-do-cartucho → Lagarta-falsa-medideira | 4 | 3 | 2 | 4 | 4/61 (6,6%) |
+| Percevejo-asa-preta → Percevejo-verde | 4 | 2 | 3 | 3 | 4/11 (36,4%) |
+
+Os erros de lagarta-falsa-medideira e percevejo-asa-preta representam parcelas altas de classes com apenas **12** e **11** imagens de teste, respectivamente. O erro vaquinha → Astylus variegatus tem a maior contagem absoluta no Lite0, mas corresponde a 6,4% das 157 imagens reais de vaquinha. Esses pares orientam a revisão de fotos e rótulos e a coleta dirigida de novos exemplos, especialmente entre lagartas e percevejos. A quantização INT8 do Lite0 preserva os principais pares observados, mas sua matriz deve ser interpretada separadamente da FP32.
+
+### Registro por imagem para revisão dos erros
+
+Três rodadas MobileNet em `outputs` já contêm `predicoes_teste_keras.csv`: [Small 1.0](https://drive.google.com/file/d/11J5itnXcyyKdqeU-fKlATWR2IjA-Ao9d/view), [Large 0.75](https://drive.google.com/file/d/1DfUbejrPc9jOCBGdXr1YNsx-GzHibaKg/view) e [Large 1.0](https://drive.google.com/file/d/1tSYeo0bGjksT6fpnqYJ0n4z0ER7Wtdir/view). O script [`src/consolidar_predicoes_t6_2.py`](../src/consolidar_predicoes_t6_2.py) associa cada caminho ao `image_id` e ao hash do manifesto T4.2, confere rótulos e previsões e exige que as contagens reproduzam as três matrizes FP32 publicadas. A execução gera [previsões por imagem](../assets/data/avaliacao_T6_2/predicoes_por_imagem_keras_3_modelos.csv) (1.422 linhas: 474 fotos × 3 modelos) e uma [fila de revisão](../assets/data/avaliacao_T6_2/erros_por_imagem_keras_3_modelos.csv) (177 fotos com pelo menos um erro), ordenada pela quantidade de modelos que erraram e pela maior confiança em uma previsão errada. Para conferir os arquivos derivados, execute `python -m src.consolidar_predicoes_t6_2 --verificar`.
+
+Os valores de confiança desses arquivos vêm da **inferência Keras FP32**, não do TFLite FP32. As matrizes agregadas coincidem, mas essa coincidência não demonstra que o TFLite previu a mesma classe para cada foto. A rodada **EfficientNet-Lite0 não possui arquivo de previsões por imagem em `outputs`**. Para obter as previsões TFLite FP32 dos quatro modelos, incluindo o Lite0, use [`src/revisar_erros_t6_2.py`](../src/revisar_erros_t6_2.py) com as imagens originais e as quatro rodadas em `outputs`; o script confere o hash de cada foto e só grava o CSV se as quatro matrizes forem reproduzidas exatamente:
+
+```bash
+python -m src.revisar_erros_t6_2 --raiz-imagens /caminho/Agro_App --outputs /caminho/Agro_App/outputs
+```
+
+As colunas `revisao_visual` e `observacao_revisao` estão vazias até a inspeção humana das fotos. Confiança alta orienta a ordem de revisão, mas não comprova erro de rótulo. Os registros atuais permitem localizar as fotos; a classificação de cada caso como erro do modelo, imagem ambígua ou rótulo suspeito depende de abrir a imagem original.
+
+### Limites e critério de conclusão
+
+Os quatro modelos viram a mesma partição de teste, já consultada na T5.3. A repetição de um par entre modelos indica **confusão recorrente nesta amostra**; pode envolver as mesmas fotos em todas as rodadas. Ela não prova uma taxa estável em fotos novas nem identidade incorreta dos rótulos. Classes com suporte baixo podem mudar muito com poucos erros adicionais. A revisão individual começou com os registros Keras das três MobileNets, mas as fotos ainda não foram inspecionadas e o Lite0 ainda requer inferência por imagem. A confirmação exigirá novas imagens independentes, revisão dos exemplos confundidos e uma matriz de confusão da configuração final no novo conjunto de teste.
+
+
+**Base de estudo:** [scikit-learn — Model evaluation: Confusion matrix](https://scikit-learn.org/stable/modules/model_evaluation.html#confusion-matrix) e [referência de `confusion_matrix`](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.confusion_matrix.html).

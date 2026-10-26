@@ -1,4 +1,4 @@
-"""Avaliação final de uma rodada T5.1 exclusivamente na partição de teste."""
+"""Avalia uma rodada T5.1 na partição de teste do índice usado no treino."""
 
 from __future__ import annotations
 
@@ -112,7 +112,7 @@ def avaliar(rodada: Path, raiz_imagens: Path, saida: Path, indice: Path = INDICE
         escritor.writerows((l["image_id"], int(l["indice_modelo"]), p) for l, p in zip(teste, previstos))
     def numero(valor):
         return "não avaliada" if valor is None else f"{valor:.6f}"
-    texto = ["# Avaliação final — T6.1", "", "**Métrica principal: macro F1 no teste = " + numero(metricas["f1_macro"]) + "**", "",
+    texto = ["# Avaliação exploratória — T6.1", "", "**Métrica principal: macro F1 no teste = " + numero(metricas["f1_macro"]) + "**", "",
              f"Imagens: {len(teste)}. Classes avaliadas: {metricas['classes_avaliadas']}/{len(nomes)}.",
              "Classes sem suporte permanecem na tabela e não entram na média macro.", "",
              "| Índice | Classe | Precisão | Recall | F1 | Suporte | Status |",
