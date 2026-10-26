@@ -52,7 +52,7 @@
 - [5.1 Pipeline de treinamento modular (T5.1)](#51-pipeline-de-treinamento-modular-t51)
 - [5.2 Baseline de referência (T5.2)](#52-baseline-de-referência-t52)
 - [5.3 Varredura de arquiteturas (T5.3)](#53-varredura-de-arquiteturas-t53)
-- [5.3 Busca de hiperparâmetros (T5.3)](#53-busca-de-hiperparâmetros-t53)
+- [5.4 Busca de hiperparâmetros (T5.4)](#54-busca-de-hiperparâmetros-t54)
 
 </details>
 
@@ -1721,7 +1721,7 @@ As diferenças relevantes são: Lite0 usa o preset `efficientnet_lite0_ra_imagen
 ganho dos modelos pré-treinados nas próximas comparações. Nenhuma métrica do
 conjunto de teste foi usada nesta etapa.
 
-## 5.3 Busca de hiperparâmetros (T5.3)
+## 5.4 Busca de hiperparâmetros (T5.4)
 
 ### Objetivo
 
