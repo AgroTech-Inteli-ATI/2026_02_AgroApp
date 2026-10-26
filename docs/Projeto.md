@@ -52,6 +52,7 @@
 - [5.1 Pipeline de treinamento modular (T5.1)](#51-pipeline-de-treinamento-modular-t51)
 - [5.2 Baseline de referência (T5.2)](#52-baseline-de-referência-t52)
 - [5.3 Varredura de arquiteturas (T5.3)](#53-varredura-de-arquiteturas-t53)
+- [5.4 Busca de hiperparâmetros (T5.4)](#54-busca-de-hiperparâmetros-t54)
 
 </details>
 
@@ -1725,6 +1726,442 @@ As diferenças relevantes são: Lite0 usa o preset `efficientnet_lite0_ra_imagen
 - [Keras Applications](https://keras.io/api/applications/) — modelos com pesos pré-treinados e uso para extração de características e fine-tuning.
 - [Keras MobileNetV3](https://keras.io/api/applications/mobilenet/mobilenet_models/) — contrato de entrada e pré-processamento.
 - [CS231n Transfer Learning](https://cs231n.github.io/transfer-learning/) — extrator congelado e ajuste das camadas finais.
+ganho dos modelos pré-treinados nas próximas comparações. Nenhuma métrica do
+conjunto de teste foi usada nesta etapa.
+
+## 5.4 Busca de hiperparâmetros (T5.4)
+
+### Objetivo
+
+Avaliar automaticamente, sobre os backbones candidatos mais promissores, como a
+taxa de aprendizado, o tamanho de lote, a política de fine-tuning e a
+estratégia de augmentation afetam o F1 macro de validação — reutilizando o
+mesmo protocolo de treino e avaliação da T5.1, variando só a configuração.
+
+### Backbones candidatos
+
+A seção 4 já recomendava preliminarmente o **EfficientNet-Lite0** como
+arquitetura principal, com **EfficientNet-Lite2** e **MobileNetV3-Large (1.0)**
+como candidatas de comparação. O Lite2 não tem preset nem conversor no Keras 3
+nem no KerasHub disponíveis (ver nota em
+[`src/backbones.py`](../src/backbones.py)), então o **MobileNetV2** entra como
+terceira candidata leve no lugar dele.
+
+### Espaço de busca e amostragem
+
+[`src/busca_hiperparametros_t5_3.py`](../src/busca_hiperparametros_t5_3.py)
+faz uma busca com cobertura obrigatória seguida de amostragem aleatória (não
+uma grade completa, para manter o custo viável). Para cada backbone, três
+combinações reservadas cobrem todos os valores de cada dimensão; os demais
+trials são sorteados sem repetição de:
+
+| Dimensão | Valores |
+| --- | ---: |
+| Taxa de aprendizado (cabeça) | 0,01 / 0,001 / 0,0001 |
+| Tamanho de lote | 16 / 32 / 64 |
+| Augmentation | ativo / inativo |
+| Política de fine-tuning | sem fine-tuning / raso / profundo |
+
+A execução exige dois ou três backbones distintos e de 3 a 54 trials por
+backbone. A mesma semente reproduz a amostragem. Ao final, o campo `cobertura`
+de `melhores_por_backbone.json` registra, por dimensão, os valores sem avaliação
+de validação concluída. Se um trial falhar e deixar algum valor descoberto, a
+busca grava os artefatos e termina com erro, para não declarar o critério
+atendido indevidamente.
+
+A política de fine-tuning é expressa como **fração dos blocos da base**, não
+contagem fixa, porque os candidatos têm quantidades de blocos muito diferentes
+(16 para o Lite0, 15 para o MobileNetV3-Large, 17 para o MobileNetV2): "raso"
+descongela os últimos ~15% dos blocos com taxa de aprendizado da cabeça
+dividida por 10, e "profundo" descongela ~50% com taxa dividida por 100. A
+taxa de aprendizado do fine-tuning deriva sempre da taxa sorteada no mesmo
+trial, preservando a regra da T5.1 de que ela deve ser menor que a da cabeça.
+
+A estratégia de augmentation só tem o alavanque que
+[`src/aumento.py`](../src/aumento.py) expõe hoje: ligado ou desligado. Variar a
+intensidade das transformações individuais exigiria estender esse módulo, o
+que fica fora do escopo desta busca.
+
+### Execução
+
+Antes da busca, instalar as dependências de `requirements-treino.txt` em um
+ambiente Python compatível e conferir o acervo. As imagens estão na pasta
+[Agro_App do Drive](https://drive.google.com/drive/folders/1INVwX0RAXV_X8Z_riEtdvcM9rzyN6SEE),
+que contém `dataset/`, `Milho/` e `Soja/`. A pasta deve ser montada ou
+transferida para o ambiente que executará o treino:
+
+```
+python -m src.busca_hiperparametros_t5_4 \
+    --raiz-imagens <pasta com dataset/, Milho/ e Soja/> \
+    --verificar-entradas
+```
+
+Essa verificação confere o índice, os pesos e a presença das imagens de treino
+e validação antes de carregar Keras. Não usa as imagens de teste. No workspace
+local atual, 2.689 imagens de treino/validação do índice estão ausentes; a
+existência da pasta no Drive não as torna acessíveis pelo Python local. Depois
+de disponibilizar o acervo e passar na verificação:
+
+```
+python -m src.busca_hiperparametros_t5_4 \
+    --raiz-imagens <pasta com dataset/, Milho/ e Soja/> \
+    --backbones efficientnet_lite0 mobilenet_v3_large mobilenet_v2 \
+    --trials-por-backbone 8
+```
+
+Cada trial reaproveita `treinar()` da T5.1 e grava sua rodada normalmente em
+`runs/busca_t5_4/<backbone>/`; a busca acrescenta `resultados.csv` (todas as
+rodadas, grava incrementalmente) e `melhores_por_backbone.json` (a melhor
+configuração de cada backbone, o ranking geral e a auditoria de cobertura) na
+pasta de saída.
+
+As execuções de referência abaixo precedem a garantia de cobertura. Seus
+resultados são históricos: na execução completa, o MobileNetV3-Large não
+recebeu trial sem fine-tuning, então ela não demonstra a avaliação de todas
+as políticas nesse backbone. Se os artefatos das 24 rodadas históricas estiverem
+disponíveis e forem comparáveis pelo mesmo índice e protocolo, basta executar
+um trial complementar sem fine-tuning para esse backbone, em vez de repetir
+toda a busca. Sem os artefatos individuais, a tabela histórica sozinha não
+permite auditar a cobertura e a comparabilidade da consolidação.
+
+### Pendência para a próxima execução (26/10/2026)
+
+**Estado:** a implementação e os testes da amostragem, da auditoria de cobertura
+e da verificação das entradas estão prontos. O ambiente de treino e o acervo
+estão disponíveis fora deste workspace; a limitação para repetir os 24 trials
+agora é o tempo de execução. O critério de aceite da T5.4 ainda não está
+comprovado integralmente: falta a política sem fine-tuning no MobileNetV3-Large
+e a auditoria consolidada dos resultados. Isso pode ficar para a próxima
+etapa, sem bloquear a revisão do código agora.
+
+1. Localizar os CSVs, configurações e métricas por trial das 24 rodadas
+   históricas. Conferir o índice da T4.5, o protocolo e os valores das quatro
+   dimensões em cada backbone. A tabela abaixo indica apenas uma lacuna:
+   `mobilenet_v3_large` sem fine-tuning.
+2. No ambiente de treino já disponível, rodar `--verificar-entradas` pelo
+   comando acima. Se os artefatos históricos forem comparáveis, executar só o
+   [trial complementar](../assets/data/treino_T5_4/config_complemento_mobilenet_v3_large_sem_ft.json)
+   com o mesmo orçamento de 12 épocas de cabeça e paciência 3:
+
+   ```
+   python -m src.treinamento_t5_1 \
+       --config assets/data/treino_T5_4/config_complemento_mobilenet_v3_large_sem_ft.json \
+       --raiz-imagens <pasta com dataset/, Milho/ e Soja/> \
+       --saida runs/busca_t5_4_complemento
+   ```
+
+3. Conferir o F1 macro de validação e a configuração em
+   `metricas_validacao.json` e `config_usada.json` da nova rodada. Consolidar
+   os resultados por backbone e por dimensão, contando apenas trials
+   concluídos, e registrar a origem de cada artefato. A cobertura deve incluir
+   as três políticas de fine-tuning em cada backbone.
+4. Acrescentar a esta seção a métrica complementar e a auditoria consolidada,
+   mantendo os resultados anteriores identificados como exploratórios. Se os
+   artefatos históricos não estiverem acessíveis ou não forem comparáveis,
+   então executar a busca padrão completa (24 trials, cerca de 8 a 24 horas em
+   CPU). A retomada automática ainda não está implementada.
+
+### Execução de referência (orçamento reduzido, CPU)
+
+Este ambiente de desenvolvimento não tem GPU (confirmado pelo próprio
+TensorFlow: *"GPU support is not available on native Windows for
+TensorFlow >= 2.11"*), então a rodada registrada aqui usa um orçamento bem
+menor que o padrão do módulo — 3 trials por backbone em vez de 8, no máximo 3
+épocas de cabeça (paciência 2) e no máximo 3 (raso) ou 4 (profundo) épocas de
+fine-tuning, em vez de 12/8/12. O objetivo não foi convergência, e sim validar
+o mecanismo de busca ponta a ponta com números reais e já obter um primeiro
+sinal de ranking entre backbones e hiperparâmetros.
+
+Os 9 trials rodaram sobre o índice completo da T4.5 (3.163 imagens; 2.214 no
+treino e 475 na validação desta partição — 5 e 1 imagens a mais,
+respectivamente, que o recorte `dataset/`-only da T5.2), então os valores de F1
+macro abaixo não são diretamente comparáveis byte a byte com o baseline da
+T5.2, embora a diferença seja de 0,2% das imagens.
+
+| Backbone | lr cabeça | lote | augment. | fine-tuning | blocos | F1 macro | balanced acc. | acurácia |
+| --- | ---: | ---: | :---: | --- | :---: | ---: | ---: | ---: |
+| efficientnet_lite0 | 0,01 | 64 | não | raso | 2/16 | 0,704 | 0,701 | 0,815 |
+| efficientnet_lite0 | 0,001 | 64 | sim | profundo | 8/16 | 0,708 | 0,710 | 0,804 |
+| **efficientnet_lite0** | **0,01** | **16** | **não** | **profundo** | **8/16** | **0,778** | **0,758** | **0,855** |
+| mobilenet_v3_large | 0,0001 | 64 | não | profundo | 8/15 | 0,195 | 0,258 | 0,259 |
+| **mobilenet_v3_large** | **0,001** | **16** | **não** | **raso** | **2/15** | **0,731** | **0,713** | **0,832** |
+| mobilenet_v3_large | 0,001 | 32 | sim | profundo | 8/15 | 0,677 | 0,697 | 0,773 |
+| mobilenet_v2 | 0,0001 | 32 | sim | profundo | 8/17 | 0,325 | 0,359 | 0,476 |
+| **mobilenet_v2** | **0,001** | **32** | **sim** | **sem FT** | **0/17** | **0,548** | **0,579** | **0,697** |
+| mobilenet_v2 | 0,01 | 32 | não | sem FT | 0/17 | 0,538 | 0,540 | 0,688 |
+
+(linhas em negrito: melhor trial de cada backbone, também em
+`runs/busca_t5_3/melhores_por_backbone.json`.)
+
+### Execução completa (orçamento padrão, CPU)
+
+Com o mecanismo já validado pela execução reduzida acima, a busca foi refeita
+com o orçamento padrão do módulo — 8 trials por backbone, até 12 épocas de
+cabeça (paciência 3) e até 8 (raso) ou 12 (profundo) épocas de fine-tuning —
+ainda em CPU, já que não houve acesso a uma máquina com GPU para isso. A
+rodada levou várias horas e foi dividida em lotes porque o processo foi
+interrompido 2 vezes por falta de memória da máquina de desenvolvimento; os
+24 trials (8 por backbone) ficaram espalhados em `runs/busca_t5_3_completa/`
+e subpastas (`continuacao_efficientnet_lite0/`, `continuacao_mobilenet/`,
+`trial_<backbone>_<semente>/`), cada lote com sua própria semente de
+amostragem para não repetir nem sobrescrever trials já concluídos — o módulo
+não tem checkpoint/resume nativo.
+
+| Backbone | lr cabeça | lote | augment. | fine-tuning | blocos | F1 macro |
+| --- | ---: | ---: | :---: | --- | :---: | ---: |
+| **efficientnet_lite0** | **0,01** | **64** | **não** | **raso** | **2/16** | **0,7624** |
+| efficientnet_lite0 | 0,001 | 64 | sim | profundo | 8/16 | 0,7314 |
+| efficientnet_lite0 | 0,01 | 16 | não | profundo | 8/16 | 0,7480 |
+| efficientnet_lite0 | 0,0001 | 64 | não | profundo | 8/16 | 0,6235 |
+| efficientnet_lite0 | 0,01 | 16 | não | sem FT | 0/16 | 0,7058 |
+| efficientnet_lite0 | 0,001 | 32 | não | profundo | 8/16 | 0,7435 |
+| efficientnet_lite0 | 0,01 | 64 | sim | profundo | 8/16 | 0,7563 |
+| efficientnet_lite0 | 0,01 | 16 | sim | sem FT | 0/16 | 0,6702 |
+| mobilenet_v3_large | 0,01 | 64 | não | raso | 2/15 | 0,7403 |
+| mobilenet_v3_large | 0,001 | 64 | sim | profundo | 8/15 | 0,7286 |
+| mobilenet_v3_large | 0,01 | 16 | não | profundo | 8/15 | 0,7138 |
+| mobilenet_v3_large | 0,0001 | 64 | não | profundo | 8/15 | 0,5477 |
+| **mobilenet_v3_large** | **0,01** | **64** | **sim** | **raso** | **2/15** | **0,7471** |
+| mobilenet_v3_large | 0,01 | 32 | sim | raso | 2/15 | 0,7124 |
+| mobilenet_v3_large | 0,01 | 64 | não | raso | 2/15 | 0,7214 |
+| mobilenet_v3_large | 0,0001 | 32 | não | profundo | 8/15 | 0,5826 |
+| mobilenet_v2 | 0,01 | 32 | sim | sem FT | 0/17 | 0,6157 |
+| mobilenet_v2 | 0,0001 | 64 | não | profundo | 8/17 | 0,5466 |
+| **mobilenet_v2** | **0,001** | **16** | **não** | **raso** | **3/17** | **0,7446** |
+| mobilenet_v2 | 0,0001 | 32 | não | profundo | 8/17 | 0,5468 |
+| mobilenet_v2 | 0,01 | 64 | não | profundo | 8/17 | 0,7274 |
+| mobilenet_v2 | 0,0001 | 16 | sim | sem FT | 0/17 | 0,5369 |
+| mobilenet_v2 | 0,0001 | 32 | sim | profundo | 8/17 | 0,5596 |
+| mobilenet_v2 | 0,001 | 64 | não | raso | 3/17 | 0,6964 |
+
+(linhas em negrito: melhor trial de cada backbone; dados completos em
+`.claude/busca_t5_3_resultados.md`, não versionado. **Correção:** uma versão
+anterior desta tabela marcava como "melhor" do `efficientnet_lite0` a
+configuração com augmentation e fine-tuning profundo (F1 0,7563), mas o
+próprio CSV bruto mostra que o trial com F1 0,7624 — sem augmentation,
+fine-tuning raso — é maior; a marcação em negrito foi corrigida.)
+
+**Resumo — melhor configuração por backbone (orçamento completo):**
+
+| Backbone | Melhor F1 macro | Configuração |
+| --- | ---: | --- |
+| efficientnet_lite0 | 0,7624 | lr=0,01, lote=64, sem augmentation, fine-tuning raso (2/16) |
+| mobilenet_v3_large | 0,7471 | lr=0,01, lote=64, com augmentation, fine-tuning raso (2/15) |
+| mobilenet_v2 | 0,7446 | lr=0,001, lote=16, sem augmentation, fine-tuning raso (3/17) |
+
+Os três backbones ficaram muito próximos (diferença de ~0,018 entre o melhor
+e o pior) — diferente do sinal da execução reduzida, em que o MobileNetV2
+parecia bem atrás (0,548 vs. 0,778 do Lite0). Com orçamento completo de
+épocas, ele fecha quase todo o gap, confirmando a suspeita já registrada na
+seção anterior de que o orçamento reduzido estava subestimando
+backbones/configurações que precisam de mais épocas para convergir —
+sobretudo com fine-tuning profundo e/ou taxa de aprendizado baixa.
+
+### Interpretação e limites (execução reduzida)
+
+- **Ranking entre backbones:** o EfficientNet-Lite0 venceu, confirmando a
+  recomendação preliminar da seção 4, com F1 macro de 0,778 mesmo sob um
+  orçamento de épocas drasticamente reduzido — bem acima do piso de 0,12 da
+  CNN baseline (T5.2, orçamento completo). O MobileNetV3-Large chegou perto
+  (0,731) e é um segundo candidato sólido. O MobileNetV2 ficou atrás dos dois
+  (0,548), mas ainda muito acima do baseline.
+- **Taxa de aprendizado:** 0,0001 foi consistentemente ruim para
+  MobileNetV3-Large e MobileNetV2 dentro de só 3 épocas de cabeça — é
+  provavelmente um artefato do orçamento reduzido (poucas épocas para uma taxa
+  baixa convergir), não uma conclusão válida para o treino completo. Isso
+  precisa ser conferido na retomada com o orçamento cheio.
+- **Política de fine-tuning:** o fine-tuning profundo (~50% dos blocos) venceu
+  para o Lite0, o raso (~15%) para o MobileNetV3-Large, e nenhum fine-tuning
+  venceu para o MobileNetV2 — mas com só 3 trials por backbone (amostragem
+  aleatória, não grade completa), a cobertura das três políticas não foi
+  uniforme por backbone; não dá para generalizar essa diferença ainda.
+- **Augmentation:** os dois melhores resultados (Lite0 e MobileNetV3-Large)
+  vieram sem augmentation, enquanto o melhor do MobileNetV2 veio com
+  augmentation ativo. Com um orçamento de só 3 épocas de cabeça, é esperado que
+  o augmentation (que adiciona variabilidade) atrase a convergência inicial;
+  seu benefício de generalização só aparece em treinos mais longos, então esta
+  busca reduzida não é a melhor evidência contra usá-lo.
+- **Amostra pequena:** 3 trials por backbone cobre uma fração pequena do
+  espaço de 3×3×2×3 = 54 combinações por backbone. O objetivo desta rodada foi
+  validar o mecanismo e levantar um primeiro sinal, não esgotar a busca.
+
+### Interpretação e limites (execução completa)
+
+- **Ranking entre backbones:** com 8/8 trials por backbone, os três ficaram
+  tecnicamente empatados (0,7624 / 0,7471 / 0,7446 — diferença de ~1,8 pontos
+  percentuais entre o melhor e o pior), dentro do ruído esperado de uma busca
+  aleatória com amostra ainda limitada. `efficientnet_lite0` segue como
+  primeira escolha por ter o melhor número, mas sem vantagem decisiva sobre
+  `mobilenet_v3_large` ou `mobilenet_v2` — a decisão final de arquitetura deve
+  considerar também tamanho do `.tflite` e latência (seção 4), não só F1 macro.
+- **Taxa de aprendizado:** 0,0001 continuou sendo a pior opção nos três
+  backbones mesmo com orçamento completo de épocas (F1 macro entre 0,55 e
+  0,62), confirmando que não era só artefato do orçamento reduzido — para
+  estes backbones e esta quantidade de dados, 1e-4 converge mal mesmo com mais
+  épocas disponíveis.
+- **Política de fine-tuning:** as melhores configs de `efficientnet_lite0` e
+  `mobilenet_v3_large` usaram fine-tuning (profundo e raso, respectivamente);
+  a melhor de `mobilenet_v2` usou fine-tuning raso também. Fine-tuning
+  profundo com lr=0,0001 foi consistentemente ruim (a combinação mais comum
+  entre os piores resultados dos três backbones) — sugere que descongelar
+  muitos blocos com taxa de aprendizado baixa não dá tempo suficiente de
+  convergência dentro do orçamento de épocas usado.
+- **Amostra ainda não exaustiva:** 8 trials por backbone cobre ~15% do espaço
+  de 54 combinações — suficiente para um sinal mais confiável que a execução
+  reduzida, mas ainda não uma grade completa.
+- **Ambiente:** toda a busca completa também rodou em CPU (sem acesso a GPU
+  neste ambiente de desenvolvimento), com o processo de busca precisando ser
+  dividido em lotes por limitação de memória da máquina — não afeta os
+  resultados de F1 macro, só o tempo e a forma de execução.
+
+### Retreino com orçamento completo da T5.1
+
+Seguindo o primeiro próximo passo acima, a melhor configuração de cada
+backbone (tabela da seção anterior) foi retreinada com
+[`src/treinamento_t5_1.py`](../src/treinamento_t5_1.py) usando o orçamento
+completo de [`config_base.json`](../assets/data/treino_T5_1/config_base.json)
+— até 30 épocas de cabeça (paciência 5) e até 20 de fine-tuning — em vez do
+orçamento reduzido da busca (12/3 e 8-12). As configs usadas estão em
+`assets/data/retreino_t5_3/config_<backbone>.json`:
+
+| Backbone | lr cabeça | lote | augment. | fine-tuning | blocos | lr fine-tuning |
+| --- | ---: | ---: | :---: | --- | :---: | ---: |
+| efficientnet_lite0 | 0,01 | 64 | não | raso | 2/16 | 0,001 |
+| mobilenet_v3_large | 0,01 | 64 | sim | raso | 2/15 | 0,001 |
+| mobilenet_v2 | 0,001 | 16 | não | raso | 3/17 | 0,0001 |
+
+Resultado (mesmo recorte de dados da busca — índice completo da T4.5, 2.214
+imagens de treino / 475 de validação — ainda não o recorte `dataset`-only da
+T5.2; ver observação na seção "Próximos passos"):
+
+| Backbone | F1 macro | Balanced acc. | Acurácia | Melhor época (cabeça+FT) |
+| --- | ---: | ---: | ---: | ---: |
+| **mobilenet_v3_large** | **0,7564** | 0,7324 | 0,8274 | 22 (11 cabeça + 11 FT) |
+| efficientnet_lite0 | 0,7457 | 0,7641 | 0,8295 | 23 (21 cabeça + 2 FT) |
+| mobilenet_v2 | 0,7284 | 0,6992 | 0,8337 | 28 (22 cabeça + 6 FT) |
+
+Comparando com o melhor trial de cada backbone na busca (orçamento reduzido
+de épocas):
+
+| Backbone | Busca (melhor trial) | Retreino (orçamento cheio) | Variação |
+| --- | ---: | ---: | ---: |
+| efficientnet_lite0 | 0,7624 | 0,7457 | -0,0167 |
+| mobilenet_v3_large | 0,7471 | 0,7564 | +0,0093 |
+| mobilenet_v2 | 0,7446 | 0,7284 | -0,0162 |
+
+O orçamento cheio **não** melhorou os três igualmente: só o
+`mobilenet_v3_large` ganhou F1 macro; `efficientnet_lite0` e `mobilenet_v2`
+pioraram em relação ao melhor trial da busca. Nos históricos de treino dos
+dois, a acurácia de treino sobe perto de 1,0 (loss perto de zero) bem antes
+do fim da fase de fine-tuning, enquanto o `val_f1_macro` oscila e cai em
+algumas épocas — sinal de overfitting com o orçamento de épocas maior, não
+de um problema no mecanismo de treino.
+
+Isso muda o ranking da seção anterior: com o treino completo,
+**`mobilenet_v3_large` passa a ter o melhor F1 macro dos três** (0,7564),
+não o `efficientnet_lite0` como a busca sugeria. A diferença entre os três
+continua pequena (~2,8 pontos percentuais entre melhor e pior), então a
+decisão final de arquitetura ainda deve considerar tamanho do `.tflite` e
+latência (seção 4), não só F1 macro. Artefatos completos (modelo `.keras`,
+métricas por classe, matriz de confusão) em
+`runs/retreino_t5_3_completo/<pasta_da_rodada>/` (não versionado).
+
+### Retreino no recorte `dataset`-only da T5.2 e decisão final
+
+Para fechar a comparação apples-to-apples pendente, as mesmas três configs
+do retreino acima foram treinadas de novo, agora sobre o recorte
+`dataset`-only da T5.2 (`assets/data/treino_T5_2/indice_dataset.csv` +
+`pesos_dataset.json`: 2.209 imagens de treino, 474 de validação — o mesmo
+recorte do baseline), em vez do índice completo da T4.5.
+
+| Backbone | F1 macro | Balanced acc. | Acurácia |
+| --- | ---: | ---: | ---: |
+| efficientnet_lite0 | 0,7457 | 0,7623 | 0,8354 |
+| mobilenet_v3_large | 0,7461 | 0,7302 | 0,8291 |
+| mobilenet_v2 | 0,6990 | 0,6675 | 0,8143 |
+
+Nesse recorte, `efficientnet_lite0` e `mobilenet_v3_large` ficam
+tecnicamente empatados em F1 macro (diferença de 0,0004, dentro do ruído),
+mas `efficientnet_lite0` tem balanced accuracy consistentemente maior
+(0,7623 vs. 0,7302) — a mesma vantagem já tinha aparecido no retreino sobre
+o índice completo da T4.5 (0,7641 vs. 0,7324), então não é ruído de uma
+única rodada. `mobilenet_v2` ficou atrás dos dois nos dois recortes.
+
+Comparando com o baseline CNN da T5.2 no mesmo recorte exato (F1 macro
+0,1203, balanced accuracy 0,1596, acurácia 0,1709), os três candidatos
+representam um salto de **5,8× a 6,2× no F1 macro** — a transferência de
+aprendizado com qualquer um dos três backbones é decisivamente melhor que
+uma CNN pequena treinada do zero.
+
+**Decisão final de arquitetura: `efficientnet_lite0`**, com a config do
+retreino (lr cabeça 0,01, lote 64, sem augmentation, fine-tuning raso 2/16
+blocos, lr fine-tuning 0,001). Critério: o F1 macro por si só não desempata
+`efficientnet_lite0` de `mobilenet_v3_large` (diferença de 0,0004), mas (a)
+a balanced accuracy favorece o Lite0 de forma consistente nos dois recortes
+testados, e (b) o levantamento da seção 4 já estimava o Lite0 como a opção
+de menor tamanho entre os dois em `.tflite` (≈4,7 MB vs. ≈5,4 MB,
+estimativa INT8 da literatura — **ainda não medido no modelo real desta
+rodada**, isso continua pendente, ver RNF-01/03/04 na seção 2). `mobilenet_v2`
+foi descartado por ter o F1 macro mais baixo nos dois recortes, sem
+compensação de tamanho que justifique a perda de desempenho.
+
+**Adição ao pipeline de treinamento:**
+[`assets/data/treino_T5_1/config_base.json`](../assets/data/treino_T5_1/config_base.json)
+— a configuração padrão usada pelo comando documentado na seção 5.1
+(`python -m src.treinamento_t5_1 --config assets/data/treino_T5_1/config_base.json ...`)
+— foi atualizada para refletir essa decisão: `otimizador.taxa_aprendizado`
+0,001→0,01, `batch` 32→64, `augmentation.ativo` true→false,
+`fine_tuning.blocos_descongelados` 3→2, `fine_tuning.taxa_aprendizado`
+0,00001→0,001. O backbone (`efficientnet_lite0`), as épocas máximas (30
+cabeça / 20 fine-tuning) e a paciência (5) já estavam corretos e não
+mudaram. `tests/validar_treinamento_t5_1.py` continua passando com a
+config atualizada, incluindo o teste que exige
+`fine_tuning.taxa_aprendizado < otimizador.taxa_aprendizado` (0,001 < 0,01).
+A partir de agora, rodar o comando padrão da seção 5.1 já treina com os
+hiperparâmetros validados pela T5.3, não com os valores de exemplo
+originais.
+
+### Próximos passos
+
+1. ~~Retreinar a melhor configuração de cada backbone com o orçamento
+   completo da T5.1, no índice completo da T4.5 e no recorte `dataset`-only
+   da T5.2~~ — feito, ver as duas seções acima.
+2. ~~Decidir a arquitetura final e aplicá-la como padrão do pipeline de
+   treinamento~~ — feito: `efficientnet_lite0`, com `config_base.json`
+   atualizado (ver acima).
+3. Medir o tamanho real do `.tflite` (após conversão/quantização) e a
+   latência no aparelho-alvo para o modelo final — os RNF-01/03/04 da seção
+   2 ainda exigem essa medição real, que não foi feita nesta etapa (a
+   comparação de tamanho usada na decisão acima é só a estimativa da
+   literatura, feita na seção 4).
+
+### Artefatos
+
+| Arquivo | Conteúdo |
+| --- | --- |
+| `src/busca_hiperparametros_t5_3.py` | Módulo da busca: amostragem, montagem de config e execução. |
+| `src/busca_hiperparametros_t5_4.py` | Entrada de execução da T5.4; mantém o nome histórico do módulo compatível. |
+| `tests/validar_busca_hiperparametros_t5_3.py` | Testes da amostragem, montagem de config e um smoke test com dados sintéticos. |
+| `runs/busca_t5_3/resultados.csv` | Execução reduzida (3 trials/backbone): uma linha por trial, grau incremental (não versionado). |
+| `runs/busca_t5_3/melhores_por_backbone.json` | Melhor configuração de cada backbone na execução reduzida (não versionado). |
+| `runs/busca_t5_3/<backbone>/<rodada>/` | Rodada completa de cada trial da execução reduzida, no mesmo formato da T5.1 (não versionado). |
+| `runs/busca_t5_3_completa/` e subpastas | Execução completa (8 trials/backbone, orçamento padrão): `resultados.csv` por lote + rodadas de cada trial (não versionado). |
+| `.claude/busca_t5_3_resultados.md` | Tabela consolidada dos 24 trials da execução completa (não versionado). |
+| `assets/data/retreino_t5_3/config_<backbone>.json` | Configs da melhor combinação de cada backbone, com o orçamento completo da T5.1. |
+| `runs/retreino_t5_3_completo/` | Rodadas do retreino com orçamento completo, índice completo da T4.5 (modelo `.keras`, métricas e logs; não versionado). |
+| `runs/retreino_t5_3_dataset_only/` | Rodadas do retreino com orçamento completo, recorte `dataset`-only da T5.2 — comparação final com o baseline (não versionado). |
+
+### Verificação automatizada
+
+`python tests/validar_busca_hiperparametros_t5_3.py` cobre a amostragem
+determinística e sem repetição, a montagem de config (válida em
+`validar_config`, frações de blocos corretas, taxa de fine-tuning sempre menor
+que a da cabeça), a seleção dos melhores por backbone ignorando trials com
+erro, e um smoke test de ponta a ponta com imagens sintéticas. As partes que
+dependem de TensorFlow/Keras são puladas se eles não estiverem instalados.
+- A validação é usada tanto na parada antecipada quanto na seleção; o teste
+  permanece reservado para a avaliação final.
+
 # 6. Avaliação do modelo
 
 ## 6.1 Métricas por classe (T6.1)

@@ -4,9 +4,9 @@
   "deterministico": true,
   "otimizador": {
     "nome": "adam",
-    "taxa_aprendizado": 0.001
+    "taxa_aprendizado": 0.01
   },
-  "batch": 32,
+  "batch": 64,
   "epocas_max": 30,
   "parada": {
     "monitor": "val_f1_macro",
@@ -14,7 +14,7 @@
     "restaurar_melhores_pesos": true
   },
   "augmentation": {
-    "ativo": true
+    "ativo": false
   },
   "balanceamento": {
     "class_weight": true
@@ -24,8 +24,8 @@
   },
   "fine_tuning": {
     "ativo": true,
-    "blocos_descongelados": 3,
-    "taxa_aprendizado": 0.00001,
+    "blocos_descongelados": 2,
+    "taxa_aprendizado": 0.001,
     "epocas_max": 20
   }
 }
