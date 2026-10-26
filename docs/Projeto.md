@@ -58,6 +58,7 @@
 <details>
 <summary><strong>6. Avaliação do modelo</strong></summary>
 
+- [6.1 Métricas por classe (T6.1)](#61-métricas-por-classe-t61)
 - [6.2 Matriz de confusão (T6.2)](#62-matriz-de-confusão-t62)
 
 </details>
@@ -1076,7 +1077,7 @@ Essas exclusões se referem ao treinamento do modelo de reconhecimento por fotos
 
 ### Observação
 
-**Nenhuma imagem permanece em revisar** na planilha de decisões desta etapa. A inspeção visual registrada nela cobriu as **126 imagens** dos acervos anteriores e **381 imagens distintas de `dataset`**, incluindo as pendências e amostras adicionais. A marcação **excluir** retira a imagem da seleção de treinamento; os arquivos originais foram preservados. Não foram feitos testes de desempenho do modelo para quantificar o efeito das exclusões.
+**Nenhuma imagem permanece em revisar** na planilha de decisões desta etapa. A inspeção visual registrada nela cobriu as **126 imagens** dos acervos anteriores e **381 imagens distintas de `dataset`**, incluindo as pendências e amostras adicionais. As outras **2.953 imagens de `dataset` não receberam inspeção visual individual**; a ausência de pendências na planilha não equivale a uma revisão visual completa do acervo. A marcação **excluir** retira a imagem da seleção de treinamento; os arquivos originais foram preservados. Não foram feitos testes de desempenho do modelo para quantificar o efeito das exclusões.
 ## Dicionário de classes (T3.4)
 
 O dicionário relaciona as **55 ocorrências e 126 imagens** do inventário às culturas, aos agentes causais de referência e ao vínculo de conteúdo técnico. Cobre 4 ocorrências de milho/pragas (16 imagens), 10 de soja/pragas (13 imagens) e 41 de soja/doenças (97 imagens). Não inclui classes de plantas daninhas, deficiências ou plantas sadias, pois não há registros dessas categorias no inventário recebido.
@@ -1331,7 +1332,7 @@ Os resultados estão no [manifesto do modelo](../assets/data/particionamento_T4_
 
 O CSV T3.5 informa **3.233 imagens aproveitáveis**, enquanto o manifesto contém **3.163**. A [auditoria](../assets/data/particionamento_T4_2/auditoria_modelo.json) detalha a diferença por classe; a decomposição numérica da diferença está descrita abaixo. Quatro modelos foram treinados com esta versão do manifesto na [T5.3](#53-varredura-de-arquiteturas-t53). Seus resultados são exploratórios porque as imagens da partição de teste foram consultadas durante a comparação.
 
-O agrupamento registrado impede que vínculos conhecidos e duplicatas confirmadas atravessem as partições. As 474 imagens da partição de teste atual já foram avaliadas na varredura T5.3; portanto, essa partição não pode voltar a ser tratada como teste inédito para a escolha final. A avaliação final independente exigirá novas imagens de plantas ainda não consultadas na seleção do modelo.
+O agrupamento registrado impede que vínculos conhecidos e duplicatas confirmadas atravessem as partições. **A independência entre plantas nas imagens de catálogo ainda não foi confirmada**: fotos da mesma planta sem vínculo identificado podem estar em partições diferentes. A [auditoria](../assets/data/particionamento_T4_2/auditoria_modelo.json) registra tanto essa confirmação quanto a inspeção visual completa como pendentes. As 474 imagens da partição de teste atual já foram avaliadas na varredura T5.3; portanto, essa partição não pode voltar a ser tratada como teste inédito para a escolha final. A avaliação final independente exigirá novas imagens de plantas ainda não consultadas na seleção do modelo.
 
 ### Conferência complementar das contagens (21/10/2026)
 
@@ -1674,6 +1675,8 @@ A [T4.3](#43-estratégia-de-balanceamento) previa fornecer esses pesos por `clas
 
 Valores transcritos dos `resultados_fp32.json` e `resultados_int8.json` de cada pasta. MB significa 1.000.000 bytes. O p95 cobre a chamada de inferência e o manuseio do tensor dentro de `prever`; não cobre leitura da foto e pré-processamento.
 
+**Conferência dos artefatos em 26/10/2026.** Nas quatro rodadas vinculadas, os valores desta tabela e os F1 por classe abaixo conferem com os arquivos de resultados, respeitando os arredondamentos apresentados. F1 macro e acurácia também foram recalculados a partir das matrizes de confusão dos oito resultados FP32/INT8; os tamanhos em bytes conferem com os metadados dos arquivos `.tflite` no Drive. O código dos quatro notebooks foi conferido quanto ao protocolo de treino, à ponderação somente no treino, à calibração e à medição de latência. Esta conferência não incluiu uma nova execução dos treinamentos ou das inferências.
+
 | Backbone | FP32 F1 macro | FP32 acurácia | FP32 MB | FP32 p95 ms | INT8 F1 macro | INT8 acurácia | INT8 MB | INT8 p95 ms | Δ F1 INT8, p.p. |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
 | EfficientNet-Lite0 | 0,674 | 0,804 | 13,52 | 14,77 | 0,689 | 0,806 | 4,00 | 23,98 | +1,47 |
@@ -1715,13 +1718,107 @@ Para avaliar melhor as classes raras, é preciso reunir novas fotos independente
 
 As diferenças relevantes são: Lite0 usa o preset `efficientnet_lite0_ra_imagenet` do KerasHub, enquanto as MobileNets usam pesos ImageNet de Keras Applications; as versões Keras registradas são 3.13.2 no Lite0 e 3.15.1 nas MobileNets; e o hardware de treino foi diferente. Assim, o protocolo de treino está alinhado, mas a comparação não isola perfeitamente apenas a arquitetura. A latência foi medida no ambiente de cada rodada, embora a família de CPU apareça como x86_64 e o número de threads seja 4. Não há identificação física suficiente para provar que foi o mesmo host, nem medições em dispositivo móvel.
 
+**Diferenças na conversão e na execução do Large 1.0.** Na célula final de conversão desse notebook, `supported_ops` usa `TFLITE_BUILTINS`, enquanto os outros três usam `TFLITE_BUILTINS_INT8`. Essa configuração permite operadores em ponto flutuante; portanto, o nome “INT8” do artefato Large 1.0 não comprova quantização inteira de todos os operadores. A avaliação dessa versão também usa `BUILTIN_WITHOUT_DEFAULT_DELEGATES`, desativando os delegates padrão, enquanto os outros notebooks usam o interpretador padrão. Essas diferenças limitam a comparação direta de latência, inclusive a interpretação dos 335,68 ms. Antes de atribuir a diferença à arquitetura ou à quantização, é necessário inspecionar os operadores exportados e repetir as medições com configurações equivalentes.
+
 ### Base de estudo
 
 - [Keras Applications](https://keras.io/api/applications/) — modelos com pesos pré-treinados e uso para extração de características e fine-tuning.
 - [Keras MobileNetV3](https://keras.io/api/applications/mobilenet/mobilenet_models/) — contrato de entrada e pré-processamento.
 - [CS231n Transfer Learning](https://cs231n.github.io/transfer-learning/) — extrator congelado e ajuste das camadas finais.
-
 # 6. Avaliação do modelo
+
+## 6.1 Métricas por classe (T6.1)
+
+### Objetivo e protocolo
+
+Calcular precisão, recall e F1 individualmente para cada classe na **partição de
+teste**, usando **macro F1 como métrica principal**. A acurácia global é apenas
+complementar. A base de estudo é o [Scikit-learn Model Evaluation — métricas de
+classificação](https://scikit-learn.org/stable/modules/model_evaluation.html#classification-metrics).
+
+O fluxo está em [`src/avaliacao_t6_1.py`](../src/avaliacao_t6_1.py) e reutiliza
+[`src/avaliacao.py`](../src/avaliacao.py). Para cada classe `c`:
+
+```text
+precisão_c = TP_c / (TP_c + FP_c)
+recall_c = TP_c / (TP_c + FN_c)
+F1_c = 2 × precisão_c × recall_c / (precisão_c + recall_c)
+macro F1 = média aritmética dos F1 das classes com suporte no teste
+```
+
+Uma classe com suporte, mas sem previsões positivas, recebe precisão e F1 iguais
+a zero, seguindo `zero_division=0`. Classes sem exemplos no teste permanecem na
+tabela com suporte zero, status `não avaliada` e métricas nulas; são excluídas da
+média macro, conforme a convenção já usada pela T5.1. A cobertura é reportada
+explicitamente. No índice atual, as 13 classes têm suporte no teste, de modo que
+a macro F1 considera todas elas com o mesmo peso, independentemente da frequência.
+
+Escolher a arquitetura, os hiperparâmetros e o checkpoint usando somente treino e
+validação antes desta etapa. As 474 imagens de teste do índice atual já foram
+consultadas na T5.3; qualquer métrica calculada nelas é exploratória e não deve
+ser usada para escolher candidatos, ajustar limiares ou retreinar. O bloqueio
+da partição de teste em `dados_treino.py` continua ativo. O comando recusa
+sobrescrever relatórios existentes, mas não impede uma nova execução em outro
+diretório.
+
+### Execução
+
+Usar o ambiente de treinamento com as dependências de `requirements-treino.txt`,
+uma rodada real concluída da T5.1 e os arquivos originais das imagens:
+
+```bash
+python -m src.avaliacao_t6_1 --rodada runs/<rodada_selecionada> --raiz-imagens /caminho/para/fontes --saida runs/<rodada_selecionada>/avaliacao_teste
+```
+
+A raiz das fontes contém `dataset/`, `Milho/` e `Soja/`. `--indice` permite indicar
+o índice da T4.5 (padrão: `assets/data/pipeline_T4_5/indice_pipeline.csv`);
+`--batch` controla apenas o tamanho do lote de inferência (padrão: 32). O índice
+informado deve ter o mesmo hash registrado em `ambiente.json` da rodada; o avaliador
+ainda não aceita um conjunto de teste independente posterior.
+
+O avaliador confere o hash do índice contra `ambiente.json` da rodada, os nomes e
+índices das classes contra `metricas_validacao.json`, IDs únicos e ausência de
+grupos ou hashes originais compartilhados entre partições. Carrega
+`melhor_modelo.keras` sem recompilar nem treinar e verifica suas dimensões de
+entrada e saída. Somente registros com `particao == "teste"` são abertos; os hashes
+das imagens são verificados antes da padronização T4.1. A inferência usa ordem fixa,
+sem augmentation, reamostragem ou pesos de balanceamento. O rótulo previsto é o
+argmax da saída softmax; valores inválidos interrompem a avaliação.
+
+### Saídas e rastreabilidade
+
+| Arquivo | Conteúdo |
+| --- | --- |
+| `metricas_teste.json` | Macro F1, precisão/recall/F1/suporte por classe, cobertura, matriz de confusão (real nas linhas, previsto nas colunas), balanced accuracy e acurácia complementar; hashes do modelo e do índice, ambiente de treinamento e configuração da avaliação. |
+| `metricas_por_classe.csv` | Uma linha para cada classe, incluindo as não avaliadas. |
+| `predicoes_teste.csv` | ID de cada imagem de teste, índice real e índice previsto, para auditoria dos cálculos. |
+| `relatorio_teste.md` | Macro F1 em destaque e tabela de precisão, recall, F1 e suporte por classe. |
+
+O tamanho atual da partição de teste é **474 imagens em 13 classes**. Esse número
+vem do manifesto e não constitui resultado de desempenho. O comando aceita o
+índice efetivamente usado pela rodada, em vez de fixar essa contagem no código.
+
+### Verificação e situação da entrega
+
+```bash
+python tests/validar_avaliacao_t6_1.py
+```
+
+Os testes usam imagens e um preditor sintéticos em diretórios temporários. Conferem
+os resultados com um caso calculado à mão e com `precision_recall_fscore_support`
+e `f1_score` do scikit-learn (necessário para executar esse teste). Também verificam
+que somente imagens de teste são abertas, classes sem suporte são explicitadas,
+relatórios não são sobrescritos, e índices, hashes, grupos cruzados e saídas
+inválidas são rejeitados. Esses testes não substituem a inferência com um modelo
+Keras real e os arquivos originais.
+
+O fluxo de avaliação está implementado. **Ainda não há uma rodada T5.1 selecionada
+nem as imagens originais disponíveis neste checkout para executar o avaliador**.
+Quando executado com o índice atual, o relatório descreve somente o teste
+exploratório já consultado na T5.3. A avaliação final independente exigirá novas
+imagens separadas por planta ou origem e uma extensão do contrato do avaliador
+para aceitar esse novo índice sem confundi-lo com o índice de treinamento.
+
 
 ## 6.2 Matriz de confusão (T6.2)
 
