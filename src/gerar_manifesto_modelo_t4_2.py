@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import csv
 import json
-from hashlib import sha256
 from pathlib import Path
 
 import pandas as pd
@@ -12,6 +11,7 @@ import pandas as pd
 from src.particionamento_t4_2 import (
     carregar_dados,
     construir_grupos,
+    hash_texto_versionado,
     separar_grupos,
 )
 
@@ -113,7 +113,7 @@ def gerar(raiz: Path, pasta_saida: Path | None = None) -> Path:
     proveniencia.pop("classes_candidatas")
     auditoria_modelo = {
         **proveniencia, **grupos, **auditoria,
-        "classes_modelo_sha256": sha256(caminho_classes.read_bytes()).hexdigest(),
+        "classes_modelo_sha256": hash_texto_versionado(caminho_classes),
         "status_revisao": "aprovado_por_glauco_no_pr_21",
         "rotulos_finais_aprovados": False,
         "criterio_rotulos": "lista T3.5 aplicada como escopo interno; AGRO-003 retido até identificação da espécie",
@@ -125,7 +125,9 @@ def gerar(raiz: Path, pasta_saida: Path | None = None) -> Path:
         "diferenca_total_t3_5": int(contagens_csv.sum()) - len(manifesto),
     }
     (pasta / "auditoria_modelo.json").write_text(
-        json.dumps(auditoria_modelo, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+        json.dumps(auditoria_modelo, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+        newline="\n",
     )
     return pasta
 
