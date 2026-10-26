@@ -1,0 +1,9 @@
+indice_real;classe_real;indice_previsto;classe_prevista;suporte_real;lite0_fp32;small_100_fp32;large_075_fp32;large_100_fp32;percentual_lite0
+0;Vaquinha (Diabrotica speciosa);11;Astylus variegatus;157;10;11;9;7;6.4
+8;Lagarta-falsa-medideira (Chrysodeixis includens);3;Lagarta-do-cartucho (Spodoptera frugiperda);12;5;4;4;5;41.7
+10;Lagarta-das-vagens (Spodoptera eridania e S. cosmioides);3;Lagarta-do-cartucho (Spodoptera frugiperda);24;6;4;4;4;25.0
+2;Percevejo-barriga-verde (Dichelops/Diceraeus);7;Percevejo-do-milho (Leptoglossus zonatus);42;4;3;4;4;9.5
+0;Vaquinha (Diabrotica speciosa);5;Percevejo-verde (Nezara viridula);157;5;5;2;2;3.2
+8;Lagarta-falsa-medideira (Chrysodeixis includens);10;Lagarta-das-vagens (Spodoptera eridania e S. cosmioides);12;4;3;3;4;33.3
+3;Lagarta-do-cartucho (Spodoptera frugiperda);8;Lagarta-falsa-medideira (Chrysodeixis includens);61;4;3;2;4;6.6
+6;Percevejo-asa-preta (Edessa meditabunda);5;Percevejo-verde (Nezara viridula);11;4;2;3;3;36.4
