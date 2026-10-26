@@ -62,9 +62,9 @@ def configurar_sementes(semente: int, deterministico: bool) -> None:
 def construir_modelo(
     backbone: backbones.Backbone, quantidade_classes: int, dropout: float, pesos_pre_treinados: bool = True
 ) -> tuple[keras.Model, keras.Model]:
-    """Input [0, 1] → conversão → base congelada (training=False) → GAP → Dropout → Dense."""
+    """Input [0, 1] → conversão → base → GAP → Dropout → Dense."""
     base = backbone.construir_base(pesos_pre_treinados)
-    base.trainable = False
+    base.trainable = not backbone.congelar_inicialmente
     tamanho = backbone.tamanho_entrada
     entrada = keras.Input((tamanho, tamanho, 3), name="imagem")
     x = backbone.camada_conversao()(entrada)
@@ -346,9 +346,18 @@ def main() -> None:
     parser.add_argument("--config", type=Path, required=True, help="JSON no formato de assets/data/treino_T5_1/config_base.json")
     parser.add_argument("--raiz-imagens", type=Path, required=True, help="Pasta que contém dataset/, Milho/ e Soja/")
     parser.add_argument("--saida", type=Path, default=SAIDA_PADRAO, help="Pasta das rodadas (padrão: runs/)")
+    parser.add_argument("--indice", type=Path, default=INDICE_PADRAO, help="Índice das amostras")
+    parser.add_argument("--pesos", type=Path, default=PESOS_PADRAO, help="Pesos das classes")
     args = parser.parse_args()
     config = carregar_config(args.config, tuple(backbones.REGISTRO))
-    pasta = treinar(config, args.raiz_imagens, args.saida, caminho_config=args.config)
+    pasta = treinar(
+        config,
+        args.raiz_imagens,
+        args.saida,
+        caminho_indice=args.indice,
+        caminho_pesos=args.pesos,
+        caminho_config=args.config,
+    )
     metricas = json.loads((pasta / "metricas_validacao.json").read_text(encoding="utf-8"))
     print(f"Rodada gravada em: {pasta}")
     print(f"F1 macro na validação: {metricas['validacao']['f1_macro']}")

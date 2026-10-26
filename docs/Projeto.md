@@ -40,22 +40,18 @@
 
 - [4.1 Padronização das imagens (T4.1)](#41-padronização-das-imagens)
 - [4.2 Particionamento por grupo (T4.2)](#42-particionamento-por-grupo-t42)
+- [4.3 Estratégia de balanceamento](#43-estratégia-de-balanceamento)
 - [4.4 Rotinas de aumento de dados (T4.4)](#44-rotinas-de-aumento-de-dados)
 - [4.5 Pipeline reprodutível (T4.5)](#45-pipeline-reprodutível-t45)
 
 </details>
 
 <details>
-<summary><strong>4. Preparação dos dados</strong></summary>
-
-- [4.3 Estratégia de balanceamento (T4.3)](#43-estratégia-de-balanceamento-t43)
-
-</details>
-
-<details>
-<summary><strong>5. Treinamento do modelo</strong></summary>
+<summary><strong>5. Modelagem</strong></summary>
 
 - [5.1 Pipeline de treinamento modular (T5.1)](#51-pipeline-de-treinamento-modular-t51)
+- [5.2 Baseline de referência (T5.2)](#52-baseline-de-referência-t52)
+- [5.3 Varredura de arquiteturas (T5.3)](#53-varredura-de-arquiteturas-t53)
 
 </details>
 
@@ -515,7 +511,7 @@ As principais limitações do levantamento são:
 
 - A acurácia de referência vem do ImageNet-1k, com objetos genéricos, e não representa diretamente o desempenho em folhas, pragas e deficiências fotografadas em campo.
 - As latências vêm de aparelhos diferentes (Pixel 4 para EfficientNet-Lite e Pixel 1 para MobileNetV3) e de precisões diferentes (INT8 e float), servindo apenas como ordem de grandeza.
-- Não foi encontrada nas fontes consultadas a acurácia INT8 do MobileNetV3, então ela precisa ser medida no projeto.
+- O levantamento bibliográfico não encontrou acurácia INT8 do MobileNetV3. A [T5.3](#53-varredura-de-arquiteturas-t53) mediu F1 macro e acurácia no acervo do projeto; esses resultados exploratórios não são diretamente comparáveis com o top-1 de referência do ImageNet.
 - Os benchmarks foram feitos em celulares Google, enquanto o aparelho-alvo dos produtores rurais pode ser mais modesto.
 - O tamanho em MB foi estimado considerando a cabeça de 1000 classes; o modelo final, com menos classes, pode ser menor.
 - Os candidatos foram limitados às famílias previstas no TAP; outras arquiteturas recentes não foram levantadas nesta etapa.
@@ -541,33 +537,13 @@ A escolha final deve sair de um experimento de fine-tuning no dataset do Agro Ap
 
 ## 2.4 Diagrama da arquitetura da solução
 
-Construir e finalizar o diagrama com captura da imagem, preprocessing, inferência local, política de confiança e associação ao conteúdo técnico.
-
-**Documentação — a preencher**
-
-**Diagrama:** inserir a imagem, o link ou um bloco Mermaid aqui.
-
-| Componente | Responsabilidade | Entrada | Saída |
-| --- | --- | --- | --- |
-| Captura da imagem | A preencher | A preencher | A preencher |
-| Pré-processamento | A preencher | A preencher | A preencher |
-| Inferência local | A preencher | A preencher | A preencher |
-| Política de confiança | A preencher | A preencher | A preencher |
-| Associação ao conteúdo técnico | A preencher | A preencher | A preencher |
-
-**Decisões de arquitetura e justificativas:** a preencher.
+O fluxo previsto parte da captura da foto, passa pelo pré-processamento e pela inferência local e termina na apresentação das classes prováveis e do conteúdo técnico associado. Os requisitos funcionais da [seção 2.1](#21-requisitos-e-restrições-técnicas) descrevem o comportamento esperado. O diagrama da solução e as interfaces entre esses componentes ainda não foram aprovados; por isso, esta seção não apresenta uma arquitetura como definitiva.
 
 ---
 
 ## 2.5 Consolidação técnica
 
-Finalizar os requisitos e restrições técnicas com os valores acordados com o parceiro e revisar o glossário técnico do projeto.
-
-**Documentação — a preencher**
-
-| Item validado | Valor ou decisão acordada | Data | Participantes da validação | Evidência |
-| --- | --- | --- | --- | --- |
-| A preencher | A validar | A preencher | A preencher | A preencher |
+Os requisitos e limites conhecidos estão registrados na [seção 2.1](#21-requisitos-e-restrições-técnicas). Ainda falta registrar a validação com o parceiro para decisões de dispositivo-alvo, integração com o conteúdo técnico e critérios de aceitação do modelo. A [seção 5.3](#53-varredura-de-arquiteturas-t53) distingue as medições exploratórias em Colab das verificações que dependem do aparelho-alvo.
 
 
 # 3. Entendimento dos dados
@@ -834,43 +810,46 @@ partir do dicionário de classes desenvolvido na T3.4.
 
 # 4. Preparação dos dados
 
-## 4.3 Estratégia de balanceamento (T4.3)
+## 4.3 Estratégia de balanceamento
 
 ### Objetivo e decisão
 
 Adotar **ponderação de classes na função de perda**, com amostragem natural das imagens de treino, como estratégia inicial para reduzir a preferência do modelo pelas classes mais frequentes. A reamostragem será avaliada em um experimento separado caso a ponderação não ofereça recuperação adequada das classes minoritárias. Não aplicar as duas correções simultaneamente na configuração inicial.
 
-Esta é uma decisão de preparação para o treinamento, ainda sem resultados experimentais. O repositório já contém um [particionamento das 13 classes do modelo](../assets/data/particionamento_T4_2/manifesto_modelo.csv), que aguarda revisão; não há modelo treinado. Os pesos para os experimentos deverão ser calculados a partir das contagens de treino dessa versão após a revisão. A estratégia atende à mitigação do risco R02 e deve ser reavaliada quando o acervo for ampliado.
+Esta é a decisão inicial de balanceamento. O [pipeline T4.5](../assets/data/pipeline_T4_5/pesos_classes.json) calcula os pesos a partir do [particionamento das 13 classes](../assets/data/particionamento_T4_2/manifesto_modelo.csv). A [T5.3](#53-varredura-de-arquiteturas-t53) já treinou quatro modelos **exploratoriamente** com ponderação calculada somente a partir das 2.214 imagens de treino. A T5.3 não comparou os experimentos E0 e E1 previstos abaixo, portanto ainda não demonstra o ganho causado pela ponderação. Se o acervo, as classes ou a partição de treino mudarem, os pesos e os treinos terão de ser refeitos. A estratégia atende à mitigação do risco R02.
 
 ### Diagnóstico do acervo
 
-As tabelas abaixo registram o **inventário inicial** do acervo, obtido do [inventário versionado](../assets/data/inventario-acervo.xlsx). Suas 55 ocorrências foram tratadas como rótulos candidatos, não como classes do modelo atual. O particionamento provisório posterior reuniu **64 rótulos candidatos** dos acervos antigo e novo; a [T3.5](#35-classes-do-mvp) selecionou **13 classes de saída**. O [resumo do particionamento do modelo](../assets/data/particionamento_T4_2/resumo_modelo.csv) registra 2.214 imagens de treino nessas 13 classes, de 30 a 735 por classe. É essa distribuição de treino que deve orientar os pesos dos experimentos, após a revisão do manifesto.
+O [inventário atualizado da T3.1](#31-inventário-do-acervo) reúne **3.334 imagens em 14 classes de origem**: 1.510 do AgroInsect e 1.824 do iNaturalist / field. A T3.5 define **13 classes de saída**, reunindo *Spodoptera eridania* e *S. cosmioides* em lagarta-das-vagens. Após as decisões de qualidade e escopo da T4.2, incluindo os complementos do acervo anterior, o manifesto atual contém **3.163 imagens**: **2.214 de treino, 475 de validação e 474 de teste**. As contagens de seleção da T3.5 e as do inventário bruto representam etapas anteriores; para balanceamento, prevalece o manifesto por imagem da T4.2.
 
-| Cultura e categoria | Ocorrências | Imagens | Menor / maior contagem por ocorrência |
-| --- | ---: | ---: | ---: |
-| Milho — Pragas | 4 | 16 | 2 / 5 |
-| Soja — Pragas | 10 | 13 | 1 / 2 |
-| Soja — Doenças | 41 | 97 | 1 / 5 |
-| **Total** | **55** | **126** | **1 / 5** |
+A tabela usa o [resumo atual por classe](../assets/data/particionamento_T4_2/resumo_modelo.csv), com os mesmos índices da [lista definitiva](../assets/data/classes-modelo.csv). Os pesos foram calculados exclusivamente com os originais de treino e conferidos contra o [artefato da T4.5](../assets/data/pipeline_T4_5/pesos_classes.json); são exibidos com seis casas decimais, mantendo a precisão completa no JSON.
 
-| Imagens por ocorrência | Quantidade de ocorrências | Total de imagens |
-| ---: | ---: | ---: |
-| 1 | 15 | 15 |
-| 2 | 21 | 42 |
-| 3 | 10 | 30 |
-| 4 | 6 | 24 |
-| 5 | 3 | 15 |
-| **Total** | **55** | **126** |
+| Índice | Classe | Total no modelo | Treino | Validação | Teste | Peso de treino |
+| ---: | --- | ---: | ---: | ---: | ---: | ---: |
+| 0 | Vaquinha (Diabrotica speciosa) | 1.049 | 735 | 157 | 157 | 0,231711 |
+| 1 | Cigarrinha-do-milho (Dalbulus maidis) | 198 | 138 | 30 | 30 | 1,234114 |
+| 2 | Percevejo-barriga-verde (Dichelops/Diceraeus) | 282 | 198 | 42 | 42 | 0,860140 |
+| 3 | Lagarta-do-cartucho (Spodoptera frugiperda) | 407 | 285 | 61 | 61 | 0,597571 |
+| 4 | Percevejo-marrom (Euschistus heros) | 65 | 45 | 10 | 10 | 3,784615 |
+| 5 | Percevejo-verde (Nezara viridula) | 92 | 64 | 14 | 14 | 2,661058 |
+| 6 | Percevejo-asa-preta (Edessa meditabunda) | 75 | 53 | 11 | 11 | 3,213353 |
+| 7 | Percevejo-do-milho (Leptoglossus zonatus) | 79 | 55 | 12 | 12 | 3,096503 |
+| 8 | Lagarta-falsa-medideira (Chrysodeixis includens) | 79 | 55 | 12 | 12 | 3,096503 |
+| 9 | Lagarta-da-soja (Anticarsia gemmatalis) | 43 | 30 | 7 | 6 | 5,676923 |
+| 10 | Lagarta-das-vagens (Spodoptera eridania e S. cosmioides) | 158 | 110 | 24 | 24 | 1,548252 |
+| 11 | Astylus variegatus | 474 | 332 | 71 | 71 | 0,512975 |
+| 12 | Cigarrinha-das-pastagens (Deois flavopicta) | 162 | 114 | 24 | 24 | 1,493927 |
+| **Total** | **13 classes** | **3.163** | **2.214** | **475** | **474** | — |
 
-A razão entre a maior e a menor ocorrência **nesse inventário inicial** é **5:1**, e **36 de 55 ocorrências (65,5%)** possuem no máximo duas imagens. Soja/doenças reúne 97 de 126 imagens (77,0%), distribuídas entre 41 ocorrências. Esses dados justificaram a análise inicial de balanceamento, mas não descrevem a distribuição das 13 classes selecionadas. Se houver modelos separados por cultura, as frequências e os pesos serão calculados separadamente para cada modelo.
+No treino, a razão entre a maior e a menor classe é **735/30 = 24,5:1**. A vaquinha concentra **33,2%** das imagens de treino, enquanto a lagarta-da-soja representa **1,4%**. Todas as classes têm grupos nas três partições, conforme a auditoria da T4.2. Essa distribuição fundamenta a ponderação inicial. Se houver modelos separados por cultura, as frequências e os pesos deverão ser recalculados separadamente para cada modelo.
 
-A limitação principal combina desbalanceamento e escassez de exemplos independentes. Nenhuma técnica de balanceamento substitui a coleta de imagens novas, a revisão de rótulos ambíguos ou a definição de classes visualmente distinguíveis.
+A limitação principal combina desbalanceamento e escassez de exemplos independentes. Nenhuma técnica de balanceamento substitui a coleta de imagens novas ou a definição de classes visualmente distinguíveis.
 
 ### Comparação das abordagens
 
 | Abordagem | Benefício | Limitação no acervo atual | Decisão |
 | --- | --- | --- | --- |
-| Ponderação de classes | Aumenta a contribuição das classes raras na perda e conserva todas as imagens disponíveis. | Também aumenta a influência de erros de rótulo e pode favorecer memorização de classes com poucos exemplos. | Estratégia inicial, após revisão dos rótulos. |
+| Ponderação de classes | Aumenta a contribuição das classes raras na perda e conserva todas as imagens disponíveis. | Também aumenta a influência de eventuais erros de rótulo e pode favorecer memorização de classes com poucos exemplos. | Aplicada exploratoriamente na T5.3; reavaliar quando o acervo for ampliado. |
 | Sobreamostragem | Faz as classes raras aparecerem mais vezes nos lotes de treino. | Repete os mesmos exemplares; não acrescenta diversidade independente e pode causar sobreajuste. | Alternativa a comparar, sem pesos inversos simultâneos. |
 | Subamostragem | Reduz a participação das classes mais frequentes. | Descartaria imagens úteis das classes majoritárias sem acrescentar diversidade às minoritárias. | Não adotar inicialmente. |
 | Ponderação + sobreamostragem | Permite ajustar frequência e contribuição na perda separadamente. | Aplicar ambas integralmente sobrecorrige as classes raras e dificulta atribuir a origem de um ganho. | Não adotar inicialmente; exige novo experimento com pesos ajustados à distribuição efetivamente amostrada. |
@@ -892,19 +871,21 @@ Essa é a regra de ponderação balanceada descrita pelo [scikit-learn em `compu
 
 No treinamento multiclasse, multiplicar a entropia cruzada de cada exemplo pelo peso de sua classe antes de calcular a média do lote. No fluxo Keras previsto para os experimentos, fornecer o mapa de índices de saída para pesos por meio de `class_weight`; não aplicar simultaneamente o mesmo peso via `sample_weight`. O mapa de índices deve corresponder exatamente ao manifesto de classes do modelo.
 
-Como exemplo **ilustrativo**, usando todo o inventário como se fosse treino (`N = 126`, `K = 55`), uma ocorrência com uma imagem receberia peso `2,291`, enquanto uma com cinco receberia `0,458`. Esses valores demonstram a regra, mas **não são os pesos finais**: o inventário completo inclui imagens que poderão pertencer à validação ou ao teste e rótulos ainda em revisão.
+Na partição atual, **`N = 2.214` e `K = 13`**. Assim, vaquinha (`n_c = 735`) recebe `2214 / (13 × 735) ≈ 0,231711`, e lagarta-da-soja (`n_c = 30`) recebe `2214 / (13 × 30) ≈ 5,676923`. Validação, teste e versões aumentadas não entram em `N` nem em `n_c`.
+
+O cálculo está implementado em `_pesos_balanceados` no [pipeline T4.5](../src/pipeline_preparacao_t4_5.py), que filtra `particao == "treino"` antes de contar os registros originais. Para reproduzir os pesos, executar `python -m src.pipeline_preparacao_t4_5` na raiz do repositório. O treinamento T5.1 consome esse contrato por meio de [dados_treino.py](../src/dados_treino.py). A sobreamostragem permanece apenas como alternativa E2 para comparação; não integra a configuração inicial.
 
 Recalcular os pesos em cada partição de treinamento, inclusive em cada rodada de validação cruzada. Não utilizar as frequências de validação ou teste, nem contar versões aumentadas como novas imagens originais. Uma classe com `n_c = 0` torna a configuração inválida: revisar a partição ou o escopo antes de treinar, sem substituir a divisão por zero por um peso arbitrário.
 
 ### Partições, classes escassas e aumento de dados
 
-1. Revisar rótulos e duplicatas antes de definir as classes e contar os exemplos. Registrar as decisões de fusão ou exclusão com rastreabilidade até o inventário.
+1. Usar as classes e decisões de duplicidade registradas no inventário, com rastreabilidade das fusões e exclusões até os IDs de origem.
 2. Separar treino, validação e teste por grupos de origem: imagens idênticas, versões derivadas e fotos correlacionadas da mesma planta ou captura devem permanecer na mesma partição. Preservar as proporções de classes quando houver grupos suficientes; a separação por grupos tem prioridade sobre a estratificação. A [documentação do scikit-learn sobre validação cruzada](https://scikit-learn.org/stable/modules/cross_validation.html) descreve a combinação de grupos e estratificação.
 3. Conferir a presença de exemplos independentes de cada classe nas partições. Uma única imagem não permite avaliar a mesma classe em treino e em uma partição independente. Duas imagens ou grupos não permitem representá-la simultaneamente em treino, validação e teste. Não forçar uma divisão percentual fixa quando a integridade dos grupos exigir outra distribuição.
 4. Priorizar a complementação das classes insuficientes. Até que haja grupos independentes para treinamento, seleção e avaliação, tratá-las como exploratórias e não declarar desempenho validado para elas. Se for necessário restringir o MVP, registrar o escopo efetivamente avaliado; agrupamentos só podem decorrer de decisão agronômica, não da necessidade de aumentar contagens.
 5. Aplicar aumento de dados somente depois da divisão, durante o treino, preservando o ID e a partição do original. Usar transformações moderadas e agronomicamente plausíveis, que não removam lesões nem alterem cores diagnósticas. As transformações deverão ser inspecionadas por amostra; não fixar parâmetros sem observar as imagens.
 
-Validação e teste manterão suas imagens originais, com apenas o pré-processamento determinístico exigido pelo modelo, sem sobreamostragem, subamostragem ou pesos de balanceamento nas métricas. O conjunto de teste será reservado para avaliação final. Quando se usar validação cruzada para selecionar a estratégia, verificar previamente se cada classe possui grupos suficientes para as rodadas escolhidas e manter o teste separado.
+Validação e teste mantêm suas imagens originais, com apenas o pré-processamento determinístico exigido pelo modelo, sem sobreamostragem, subamostragem ou pesos de balanceamento nas métricas. O teste T4.2 foi consultado na T5.3 e passou a ter caráter exploratório; a avaliação final dependerá do novo conjunto descrito na seção 5.3. Quando se usar validação cruzada para selecionar a estratégia, verificar previamente se cada classe possui grupos suficientes para as rodadas escolhidas.
 
 ### Plano de comparação e seleção
 
@@ -928,7 +909,7 @@ Depois da seleção, ajustar a política de confiança usando somente dados de v
 
 O experimento deverá guardar versão do dataset, classes aprovadas e respectivos índices, IDs e grupos de cada partição, contagens originais de treino por classe, pesos aplicados, configuração de amostragem, transformações, sementes, orçamento de treinamento e métricas por classe. Esses registros permitem reproduzir o cálculo e identificar alterações após a ampliação do acervo.
 
-A **definição da T4.3** fica consolidada nesta seção: ponderação como escolha inicial, justificativa baseada no inventário, comparação das alternativas e protocolo de avaliação. A **validação experimental** ficará concluída após a revisão do particionamento das 13 classes, execução de E0/E1 (e E2 se necessário), registro das métricas e justificativa da configuração selecionada. Até lá, não há evidência para afirmar melhora de desempenho ou generalização nas classes do modelo.
+A **definição da T4.3** fica consolidada nesta seção: ponderação como escolha inicial, justificativa baseada no dataset atualizado e nas 13 classes finais, pesos calculados somente sobre os originais de treino e integração com o contrato da T4.5. A verificação reproduzível está em `python tests/validar_pipeline_t4_5.py`, que confere as partições, o cálculo dos pesos e sua média ponderada igual a 1. A **validação experimental** ficará concluída após a execução de E0/E1 (e E2 se necessário), registro das métricas e justificativa da configuração selecionada. Até lá, não há evidência para afirmar melhora de desempenho ou generalização nas classes do modelo.
 
 validadas (Seção 1.4, item 7). O [dicionário de classes da T3.4](#dicionário-de-classes-t34)
 registra as relações entre os rótulos candidatos a duplicidade. A decisão de unificar
@@ -948,7 +929,7 @@ A análise reúne **3.460 imagens** de três fontes: **3.334** da pasta `dataset
 
 1. **Resolução e leitura:** conferir se o arquivo era legível, registrar largura e altura e sinalizar imagens cuja menor dimensão fosse inferior à referência de 224 pixels.
 2. **Duplicatas:** comparar hashes SHA-256 para localizar arquivos idênticos e examinar os pares sugeridos pelo hash perceptual para identificar versões da mesma fotografia, inclusive quando aparecem em classes diferentes.
-3. **Revisão por imagem:** conferir o enquadramento, a visibilidade do problema, o formato da imagem, a duplicidade e a coerência do rótulo; registrar a decisão (**manter**, **revisar** ou **excluir**) e sua justificativa. As 379 pendências foram examinadas visualmente. Outras 2.953 imagens de `dataset` conservam decisões de triagem automática, ainda sem inspeção visual individual.
+3. **Revisão por imagem:** conferir o enquadramento, a visibilidade do problema, o formato da imagem, a duplicidade e a coerência do rótulo; registrar a decisão (**manter**, **revisar** ou **excluir**) e sua justificativa. As 379 pendências registradas nesta etapa foram examinadas visualmente.
 4. **Consolidação:** agrupar os registros por fonte e classe, contar os alertas de qualidade e as decisões, e calcular as proporções de imagens de campo e de catálogo. Os alertas de resolução, desfoque e exposição podem se sobrepor e não determinam, isoladamente, a exclusão.
 
 A unidade de contagem é o **registro de imagem**. Se uma mesma fotografia aparece em duas classes, ela contribui com um registro para cada classe. As abas de revisão e os resumos da planilha de decisões permitem rastrear os totais até cada imagem.
@@ -1095,12 +1076,12 @@ Essas exclusões se referem ao treinamento do modelo de reconhecimento por fotos
 
 ### Observação
 
-**Nenhuma imagem permanece em revisar** na planilha de decisões. A inspeção visual cobriu as **126 imagens** dos acervos anteriores e **381 imagens distintas de `dataset`**, incluindo as pendências e amostras adicionais. Outras **2.953 imagens de `dataset`** conservam decisões de triagem automática e ainda precisam de inspeção individual antes da definição do conjunto final de treinamento. A marcação **excluir** retira a imagem da seleção de treinamento; os arquivos originais foram preservados. Não foram feitos testes de desempenho do modelo para quantificar o efeito das exclusões.
+**Nenhuma imagem permanece em revisar** na planilha de decisões desta etapa. A inspeção visual registrada nela cobriu as **126 imagens** dos acervos anteriores e **381 imagens distintas de `dataset`**, incluindo as pendências e amostras adicionais. As outras **2.953 imagens de `dataset` não receberam inspeção visual individual**; a ausência de pendências na planilha não equivale a uma revisão visual completa do acervo. A marcação **excluir** retira a imagem da seleção de treinamento; os arquivos originais foram preservados. Não foram feitos testes de desempenho do modelo para quantificar o efeito das exclusões.
 ## Dicionário de classes (T3.4)
 
 O dicionário relaciona as **55 ocorrências e 126 imagens** do inventário às culturas, aos agentes causais de referência e ao vínculo de conteúdo técnico. Cobre 4 ocorrências de milho/pragas (16 imagens), 10 de soja/pragas (13 imagens) e 41 de soja/doenças (97 imagens). Não inclui classes de plantas daninhas, deficiências ou plantas sadias, pois não há registros dessas categorias no inventário recebido.
 
-O arquivo [dicionario-classes.json](../assets/data/dicionario-classes.json) é a fonte estruturada desta entrega. A origem dos rótulos e das contagens é o [inventário versionado](../assets/data/inventario-acervo.xlsx). Os agentes são referências bibliográficas para revisão agronômica, não diagnósticos confirmados das imagens. A confirmação da identidade de cada ocorrência depende do parceiro.
+O arquivo [dicionario-classes.json](../assets/data/dicionario-classes.json) é a fonte estruturada desta entrega. A origem dos rótulos e das contagens é o [inventário versionado](../assets/data/inventario-acervo.xlsx). Os agentes indicados são referências bibliográficas para a descrição das classes; o dicionário não substitui o registro de origem de cada imagem.
 
 ### Campos e convenções
 
@@ -1188,13 +1169,13 @@ Todas as chaves abaixo são **propostas locais**, ainda sem correspondência ofi
 
 - **AGRO-015 / AGRO-041:** fusariose e podridão vermelha da raiz; revisar a identidade e o complexo de espécies antes de unificar.
 - **AGRO-016 / AGRO-037 / AGRO-039:** Macrophomina e os nomes invertidos de podridão cinzenta/preta; verificar se representam o mesmo conteúdo e a mesma classe.
-- **AGRO-029 / AGRO-045:** nematoide de cisto, com agente de referência comum; preservar os registros até confirmação.
+- **AGRO-029 / AGRO-045:** nematoide de cisto, com agente de referência comum; manter os registros separados no mapeamento.
 - **AGRO-052 / AGRO-055:** gorgulho/tamanduá; possível duplicidade de nomenclatura.
 - **AGRO-049 / AGRO-050 / AGRO-051:** os nomes de corós não justificam atribuir a mesma espécie a todos. A referência de AGRO-050 é específica ao coró-do-cerrado; os demais permanecem indeterminados.
 - **AGRO-046 / AGRO-047:** broca das vagens e broca das axilas requerem revisão de espécie e do local de ataque. Semelhança visual não confirma igualdade de agente.
 - **AGRO-012 / AGRO-013 / AGRO-014 / AGRO-044:** fungos pós-colheita, armazenamento e tombamento são rótulos abrangentes. Não atribuir Aspergillus, Penicillium ou outro agente apenas pela aparência das sementes.
 - **AGRO-002 / AGRO-003 / AGRO-054:** coró e percevejos podem representar diferentes espécies; o rótulo disponível não resolve essa escolha.
-- **AGRO-007 / AGRO-018:** manter “Clodosporiose” e “Mancha-aureolada” como recebidos, aguardando correção ou confirmação agronômica.
+- **AGRO-007 / AGRO-018:** manter “Clodosporiose” e “Mancha-aureolada” como recebidos, sem correção automática da nomenclatura.
 - **AGRO-009 / AGRO-010 / AGRO-038 / AGRO-040:** tombamentos e podridões genéricos admitem causas distintas; não completar o agente por inferência do nome.
 
 As relações registradas não modificam as 55 ocorrências do inventário. A seleção das classes do MVP e qualquer fusão devem registrar os IDs de origem, a justificativa e a evidência da decisão. O modelo deverá ter um manifesto próprio que associe cada índice de saída ao ID aprovado, sem depender da posição no JSON.
@@ -1202,7 +1183,7 @@ As relações registradas não modificam as 55 ocorrências do inventário. A se
 ### Vinculação ao conteúdo técnico
 
 1. Receber do Agro App o catálogo com chaves oficiais, cultura, título e mecanismo de acesso ao conteúdo.
-2. Conferir, para cada ocorrência, cultura, agente e nome comum; obter confirmação agronômica nos casos ambíguos.
+2. Conferir, para cada ocorrência, a correspondência de cultura, agente e nome comum com o catálogo recebido.
 3. Preencher `chave_conteudo` com a chave real, mantendo a chave proposta apenas como referência local. Mais de uma ocorrência pode apontar ao mesmo conteúdo após aprovação.
 4. Registrar a evidência e o responsável pela validação em novo campo `validacao_conteudo` (responsável, data e evidência) e mudar `status_conteudo` para `validado`.
 5. Verificar a abertura do conteúdo correto, inclusive offline, para todas as classes selecionadas para o MVP, conforme RF-07, RF-08 e RNF-08.
@@ -1309,7 +1290,7 @@ As decisões e o motivo de cada uma estão registradas no notebook. O tamanho de
 
 ### Resultado e atualização da entrada
 
-O notebook agora lê o manifesto das 13 classes. O arquivo [`referencia_entrada.csv`](../assets/data/padronizacao_T4_1/referencia_entrada.csv) foi reduzido às **3.163 imagens** desse manifesto e recebeu as partições atuais. Os hashes de entrada foram preservados da execução anterior para as mesmas imagens, pois o pré-processamento não depende da partição. A inspeção visual e o recálculo dos hashes com os arquivos originais ainda precisam ser repetidos. O arquivo de [parâmetros](../assets/data/padronizacao_T4_1/parametros.json) registra tamanho, cor de preenchimento, normalização, EXIF e versão do Pillow da execução anterior.
+O notebook agora lê o manifesto das 13 classes. O arquivo [`referencia_entrada.csv`](../assets/data/padronizacao_T4_1/referencia_entrada.csv) foi reduzido às **3.163 imagens** desse manifesto e recebeu as partições atuais. Os hashes de entrada foram preservados da execução anterior para as mesmas imagens, pois o pré-processamento não depende da partição. O recálculo desses hashes com os arquivos originais ainda não foi registrado. O arquivo de [parâmetros](../assets/data/padronizacao_T4_1/parametros.json) registra tamanho, cor de preenchimento, normalização, EXIF e versão do Pillow da execução anterior.
 
 ### Limites e próximos passos
 
@@ -1348,9 +1329,15 @@ Os resultados estão no [manifesto do modelo](../assets/data/particionamento_T4_
 
 ### Limites e próximos passos
 
-O CSV T3.5 informa **3.233 imagens aproveitáveis**, enquanto o manifesto contém **3.163**. A [auditoria](../assets/data/particionamento_T4_2/auditoria_modelo.json) detalha a diferença por classe; as contagens ainda precisam ser conciliadas. A revisão de Glauco e a aprovação interna dos rótulos também estão pendentes.
+O CSV T3.5 informa **3.233 imagens aproveitáveis**, enquanto o manifesto contém **3.163**. A [auditoria](../assets/data/particionamento_T4_2/auditoria_modelo.json) detalha a diferença por classe; a decomposição numérica da diferença está descrita abaixo. Quatro modelos foram treinados com esta versão do manifesto na [T5.3](#53-varredura-de-arquiteturas-t53). Seus resultados são exploratórios porque as imagens da partição de teste foram consultadas durante a comparação.
 
-Parte das imagens de `dataset` manteve decisões de triagem automática sem inspeção visual individual. Não foram fornecidos vínculos manuais adicionais da mesma planta; em parte do catálogo, `grupo_origem` identifica apenas o arquivo. A auditoria confirma ausência de vazamento **identificável pelos metadados e pares revisados**, sem comprovar independência completa das plantas. Se a revisão visual, os rótulos ou os vínculos mudarem, a divisão deve ser refeita e o teste mantido reservado para avaliação final.
+O agrupamento registrado impede que vínculos conhecidos e duplicatas confirmadas atravessem as partições. **A independência entre plantas nas imagens de catálogo ainda não foi confirmada**: fotos da mesma planta sem vínculo identificado podem estar em partições diferentes. A [auditoria](../assets/data/particionamento_T4_2/auditoria_modelo.json) registra tanto essa confirmação quanto a inspeção visual completa como pendentes. As 474 imagens da partição de teste atual já foram avaliadas na varredura T5.3; portanto, essa partição não pode voltar a ser tratada como teste inédito para a escolha final. A avaliação final independente exigirá novas imagens de plantas ainda não consultadas na seleção do modelo.
+
+### Conferência complementar das contagens (21/10/2026)
+
+A conferência do [manifesto](../assets/data/particionamento_T4_2/manifesto_modelo.csv) com a planilha [T3.3 revisada](../assets/data/diagnostico_qualidade_T3_3_revisado.xlsx) encontrou **3.163 imagens mantidas no modelo** e **178 imagens excluídas das mesmas classes candidatas**. A T3.5 registrava 3.233 imagens aproveitáveis, mas não fornece uma lista nominal que permita identificar, uma a uma, quais imagens compunham essa contagem. A diferença de 70 se divide em **4 imagens AGRO-003**, mantidas no acervo e fora do escopo das 13 classes do modelo, e **66 imagens de diferença líquida** entre as contagens T3.5 e as decisões da T3.3 revisada. A origem individual dessas 66 não pode ser determinada apenas com a contagem agregada da T3.5; não foram adicionadas nem excluídas imagens do manifesto nesta conferência.
+
+No manifesto, nenhum `grupo_particao`, `grupo_origem`, grupo de duplicatas exatas ou visuais confirmado, nem hash SHA-256 presente atravessa duas partições. Essa verificação usa os vínculos disponíveis nos arquivos versionados.
 
 ## 4.4 Rotinas de aumento de dados
 
@@ -1465,7 +1452,7 @@ pipeline, mas não reabre as fotografias. A validação dos hashes de preprocess
 e das variações aumentadas exige acesso às três fontes externas, que não são
 versionadas neste repositório.
 
-# 5. Treinamento do modelo
+# 5. Modelagem
 
 ## 5.1 Pipeline de treinamento modular (T5.1)
 
@@ -1485,15 +1472,16 @@ augmentation da T4.4, e segue o guia de transfer learning do TensorFlow/Keras.
   dos melhores pesos), augmentation, `class_weight`, dropout da cabeça e fine-tuning.
   O tamanho de entrada não é configurável: ele vem do backbone.
 - **Backbones:** [`src/backbones.py`](../src/backbones.py) registra
-  `mobilenet_v3_small`, `mobilenet_v3_large`, `mobilenet_v3_large_075`,
+  `cnn_baseline`, `mobilenet_v3_small`, `mobilenet_v3_large`, `mobilenet_v3_large_075`,
   `mobilenet_v2`, `efficientnet_b0` e `efficientnet_lite0`, com tamanho de entrada,
   faixa esperada e origem dos pesos. A conversão a partir de [0, 1] é a primeira
   camada do modelo; assim, a entrada do modelo continua sendo a saída de
   `preparar_imagem`, como no aparelho. A EfficientNet-Lite0 vem do KerasHub
   (preset `efficientnet_lite0_ra_imagenet`). Um backbone novo exige só uma entrada
   no registro.
-- **Modelo:** entrada em [0, 1] → conversão → base congelada chamada com
-  `training=False` → `GlobalAveragePooling2D` → `Dropout` → `Dense` com softmax.
+- **Modelo:** entrada em [0, 1] → conversão → base chamada com `training=False` →
+  `GlobalAveragePooling2D` → `Dropout` → `Dense` com softmax. As bases pré-treinadas
+  começam congeladas; a CNN de referência, sem pesos prévios, treina desde o início.
 - **Fine-tuning:** opcional. Tem o mesmo significado para todos os backbones:
   descongelar os N últimos blocos da base (o stem permanece congelado, o topo
   convolucional acompanha o último bloco e as camadas de BatchNormalization
@@ -1550,13 +1538,192 @@ python tests/validar_treinamento_t5_1.py
 
 ### Limites
 
-- O pipeline foi verificado com imagens sintéticas. O primeiro treino com o acervo
-  real e a comparação entre backbones ficam para as próximas tasks.
+- O pipeline T5.1 foi verificado com imagens sintéticas e com o baseline no acervo real.
+  A varredura T5.3 comparou quatro backbones em notebooks independentes; ela ainda
+  não demonstra uma comparação executada pelo pipeline modular T5.1.
 - A EfficientNet-Lite2 ficou fora do registro: o Keras 3/KerasHub não oferece preset
   nem conversor para essa variante. Os pesos da Lite0 são do timm
   (`efficientnet_lite0.ra_in1k`, ImageNet-1k), e não o checkpoint original do Google.
 - O TensorFlow 2.11 em diante não usa GPU no Windows nativo; treinos longos devem
   rodar no Colab ou em Linux/WSL2.
+- A validação é usada tanto na parada antecipada quanto na seleção no T5.1; o
+  carregador desse pipeline recusa a partição de teste durante o treino. As 474
+  imagens dessa partição foram consultadas separadamente na T5.3, e a avaliação
+  final independente exigirá um novo conjunto.
+
+## 5.2 Baseline de referência (T5.2)
+
+### Objetivo
+
+Estabelecer um piso reproduzível de desempenho para os experimentos seguintes. O
+baseline usa uma CNN pequena treinada do zero pelo pipeline modular da seção 5.1,
+sem transferência de aprendizado, para que os backbones candidatos possam ser
+comparados contra uma referência simples.
+
+### Dados e arquitetura
+
+O recorte inclui somente as imagens da fonte `dataset/`. As sete imagens dos
+acervos antigos não entram nesta execução, sem alteração do manifesto original da
+T4.5. O índice específico e a auditoria registram **3.156 imagens** de **13 classes**:
+**2.209** no treino, **474** na validação e **473** no teste. Os pesos foram
+recalculados exclusivamente sobre o treino desse recorte.
+
+A arquitetura possui três blocos convolucionais, com 16, 32 e 64 filtros, cada um
+seguido de max pooling. A saída passa por global average pooling, dropout de 0,2 e
+uma camada softmax de 13 classes. O modelo completo tem **24.429 parâmetros**.
+
+### Protocolo
+
+- entrada de 224 × 224 px, normalizada em [0, 1];
+- Adam com taxa de aprendizado 0,001 e lotes de 32 imagens;
+- ponderação de classes e augmentation somente no treino;
+- semente 42 e operações determinísticas;
+- máximo de 20 épocas;
+- parada antecipada por F1 macro de validação, com paciência de 4 épocas;
+- restauração dos pesos da melhor época;
+- conjunto de teste preservado, sem carregamento durante o treinamento.
+
+### Resultado
+
+O treinamento terminou após **14 épocas** e restaurou os pesos da época **10**.
+
+| Métrica de validação | Resultado |
+| --- | ---: |
+| F1 macro | 0,1203 |
+| Balanced accuracy | 0,1596 |
+| Acurácia | 0,1709 |
+
+Duas execuções independentes com a mesma configuração produziram históricos e
+métricas idênticos. Os oito arrays de pesos carregados dos modelos também foram
+idênticos, confirmando a reprodução da rodada.
+
+### Artefatos
+
+Os arquivos de entrada ficam em `assets/data/treino_T5_2/`, e o modelo e seus
+resultados ficam em `assets/modelos/baseline_T5_2/`:
+
+| Arquivo | Conteúdo |
+| --- | --- |
+| `config_baseline.json` | Configuração completa do treinamento. |
+| `indice_dataset.csv` | Recorte versionado com somente a fonte `dataset/`. |
+| `pesos_dataset.json` | Pesos recalculados sobre as 2.209 imagens de treino. |
+| `auditoria_dataset.json` | Regra de inclusão, contagens, hashes e IDs excluídos. |
+| `melhor_modelo.keras` | Modelo restaurado na melhor época. |
+| `historico.csv` | Métricas das 14 épocas executadas. |
+| `metricas_validacao.json` | Métricas globais, por classe e matriz de confusão. |
+| `ambiente.json` | Versões, commit e hashes das entradas. |
+| `reprodutibilidade.json` | Comparação das duas execuções independentes. |
+
+### Interpretação e limites
+
+O resultado representa deliberadamente um piso: quatro classes tiveram F1 igual a
+zero na validação, e a F1 macro baixa mostra que uma CNN pequena treinada do zero
+não é suficiente para o objetivo final. O valor serve como referência para medir o
+ganho dos modelos pré-treinados em futuras rodadas com o mesmo recorte e protocolo.
+As métricas desta validação não são diretamente comparáveis às métricas de teste da
+T5.3. Nenhuma métrica do conjunto de teste foi usada nesta etapa.
+
+## 5.3 Varredura de arquiteturas (T5.3)
+
+### Objetivo e entradas
+
+**Auditoria em 20/10/2026.** Objetivo: comparar arquiteturas candidatas para o primeiro modelo do Agro App. Critério de aceite: no mínimo quatro backbones da lista da [seção 2.3](#23-levantamento-de-arquiteturas-viáveis), treinados sob o mesmo protocolo, com desempenho por classe, tamanho do modelo e tempo de inferência para cada um.
+
+As entradas são o manifesto de 3.163 imagens das 13 classes, com 2.214 para treino, 475 para validação e 474 para teste, e os artefatos das quatro rodadas vinculados abaixo.
+
+### Método
+
+#### Rodadas usadas nesta auditoria
+
+[Pasta principal `Agro_App` no Drive](https://drive.google.com/drive/folders/1INVwX0RAXV_X8Z_riEtdvcM9rzyN6SEE) · [pasta de resultados `Agro_App/outputs`](https://drive.google.com/drive/folders/1K9eLSY4Mam0ygQdQ-5bzFAPVrIL5OzoH).
+
+Cada pasta de rodada na tabela contém o `config.json` do experimento, o histórico, os resultados por classe (`por_classe_fp32.csv` e `por_classe_int8.csv`), as matrizes de confusão, os resumos `resultados_fp32.json` e `resultados_int8.json` e os modelos exportados. Os notebooks vinculados mostram o código de treinamento e avaliação. Assim, os valores transcritos abaixo podem ser conferidos diretamente nos artefatos de cada rodada.
+
+| Backbone | Notebook de treinamento no Drive | Pasta da rodada completa em `outputs` | Treino |
+| --- | --- | --- | --- |
+| EfficientNet-Lite0 | [Notebook Lite0](https://drive.google.com/file/d/12nzuwgklbpOISnH6NLToVY1u0GUBdFy2/view?usp=drivesdk) | [lite0_20261019_130322](https://drive.google.com/drive/folders/1ZCMnQ4cFQT5F1O2T8QO4MwpEDsomBHRN) | GPU visível |
+| MobileNetV3-Small 1.0 | [Notebook Small 1.0](https://drive.google.com/file/d/11law0KDdxjGTfKZA6anUa3AUVNGl-m2q/view?usp=drivesdk) | [mobilenetv3_small_100_20261019_143421](https://drive.google.com/drive/folders/1PDZBrt2DOE8wtESszOu5o982b4qFa4UA) | GPU visível |
+| MobileNetV3-Large 0.75 | [Notebook Large 0.75](https://drive.google.com/file/d/1l2Rj3K9lytqMXIk-2VQYZIt3p2B7VABS/view?usp=drivesdk) | [mobilenetv3_large_075_20261020_113954](https://drive.google.com/drive/folders/1xSFvPN25-bM_H-6hDPuHcYmQ1ehPbGyM) | CPU |
+| MobileNetV3-Large 1.0 | [Notebook Large 1.0](https://drive.google.com/file/d/109goABvXTXXZ3qNpk9bApq4cpJtYx-Vg/view?usp=drivesdk) | [mobilenetv3_large_100_20261019_215020](https://drive.google.com/drive/folders/1WvInzx9Izm0cV6CfAOHrUTJfNdtz4DKM) | GPU não visível no registro |
+
+As outras pastas Large 0.75 são tentativas incompletas. Há uma segunda rodada Large 1.0 com resultados FP32; a tabela abaixo usa a rodada mais recente que contém o conjunto completo de artefatos FP32 e INT8, critério de registro independente da pontuação de teste. As 474 imagens de teste foram consultadas nos quatro candidatos e em mais de uma rodada Large 1.0. Por isso, todos os números dessa partição são exploratórios e não fundamentam a escolha de arquitetura, rodada, calibração ou hiperparâmetros. Essa escolha depende dos dados de treino e validação; a avaliação final requer um novo conjunto independente.
+
+#### Protocolo de treino e balanceamento
+
+Os quatro `config.json` registram semente 42, batch 32, até 10 épocas de cabeça com Adam `1e-3`, até 20 épocas de ajuste dos três blocos finais com `1e-5`, paciência 4, dropout 0,2, pesos de classe calculados no treino e seleção por F1 macro de validação. Os notebooks verificam os hashes do manifesto, da lista de classes e dos arquivos de imagem antes do treino. O pré-processamento é 224 × 224 e entrada `[0,1]`; as MobileNets usam adaptador `x * 255` antes do pré-processamento interno. A quantização usa 200 imagens de treino como amostra representativa.
+
+**Balanceamento efetivamente aplicado nos quatro treinamentos.** Cada imagem de treino recebeu um peso conforme sua classe, e esse peso foi usado pelo Keras na função de perda como `sample_weight`. Para a classe `c`, o peso foi `N / (K × n_c)`, calculado apenas com as contagens originais das 2.214 imagens de treino (`N` = total de imagens de treino, `K` = 13 classes, `n_c` = imagens de treino da classe). Assim, imagens de classes menos frequentes contribuíram mais para a perda; imagens da mesma classe receberam o mesmo peso.
+
+A [T4.3](#43-estratégia-de-balanceamento) previa fornecer esses pesos por `class_weight`. Nos quatro notebooks, o carregador `Lotes` devolve `(imagens, rótulos, pesos)`, e o Keras recebe o terceiro elemento como `sample_weight`. Essa implementação realiza a ponderação por classe prevista na T4.3. Os notebooks não registram uma justificativa textual para a escolha dessa interface. Não houve aplicação simultânea de `class_weight`, nem ponderação dos lotes de validação e teste. As quantidades de imagens por classe nessas partições permaneceram as originais.
+
+### Resultados
+
+#### Situação do critério de aceite
+
+**Critério mínimo atendido, com resultados exploratórios.** O Drive contém quatro rodadas completas, uma por backbone, com histórico, checkpoint, métricas de 13 classes, matriz de confusão, modelos TFLite FP32 e INT8 e medições de latência. Os notebooks de treinamento e os artefatos de execução ficam no Drive; esta seção reúne o protocolo, as evidências, os resultados e seus limites de interpretação.
+
+| Requisito | Evidência | Situação |
+| --- | --- | --- |
+| Quatro backbones da seção 2.3 | EfficientNet-Lite0, MobileNetV3-Small 1.0, MobileNetV3-Large 0.75 e MobileNetV3-Large 1.0 | Atendido |
+| Protocolo comum | Mesmo manifesto SHA-256 `e3728187…bf591c4`, 2.214/475/474 imagens, 13 classes, 224 × 224, semente 42, batch 32, duas fases de treino, seleção por F1 macro de validação | Atendido com ressalvas de ambiente e pré-treino |
+| Desempenho por classe | Arquivos `por_classe_fp32.csv` e `por_classe_int8.csv`, com suporte, precisão, recall e F1, mais matrizes de confusão | Atendido |
+| Tamanho real | Arquivos `.tflite` e bytes registrados em `resultados_*.json` | Atendido |
+| Inferência | Batch 1, 4 threads, 20 aquecimentos, 100 repetições, p50/p95 no CPU x86_64 do Colab | Atendido como medição de laboratório; falta benchmark controlado no celular |
+
+#### Resultado comparativo no teste de 474 imagens
+
+Valores transcritos dos `resultados_fp32.json` e `resultados_int8.json` de cada pasta. MB significa 1.000.000 bytes. O p95 cobre a chamada de inferência e o manuseio do tensor dentro de `prever`; não cobre leitura da foto e pré-processamento.
+
+**Conferência dos artefatos em 26/10/2026.** Nas quatro rodadas vinculadas, os valores desta tabela e os F1 por classe abaixo conferem com os arquivos de resultados, respeitando os arredondamentos apresentados. F1 macro e acurácia também foram recalculados a partir das matrizes de confusão dos oito resultados FP32/INT8; os tamanhos em bytes conferem com os metadados dos arquivos `.tflite` no Drive. O código dos quatro notebooks foi conferido quanto ao protocolo de treino, à ponderação somente no treino, à calibração e à medição de latência. Esta conferência não incluiu uma nova execução dos treinamentos ou das inferências.
+
+| Backbone | FP32 F1 macro | FP32 acurácia | FP32 MB | FP32 p95 ms | INT8 F1 macro | INT8 acurácia | INT8 MB | INT8 p95 ms | Δ F1 INT8, p.p. |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| EfficientNet-Lite0 | 0,674 | 0,804 | 13,52 | 14,77 | 0,689 | 0,806 | 4,00 | 23,98 | +1,47 |
+| MobileNetV3-Small 1.0 | 0,565 | 0,696 | 3,78 | 3,66 | 0,386 | 0,570 | 1,24 | 10,67 | -17,85 |
+| MobileNetV3-Large 0.75 | 0,671 | 0,776 | 7,24 | 10,22 | 0,543 | 0,677 | 2,24 | 19,03 | -12,82 |
+| MobileNetV3-Large 1.0 | 0,652 | 0,789 | 11,97 | 15,04 | 0,353 | 0,572 | 3,53 | 335,68 | -29,95 |
+
+Nas medições FP32, Lite0 teve o maior F1 macro (0,674), próximo do Large 0.75 (0,671). Após a conversão INT8, Lite0 também apresentou o maior F1 macro (0,689), com arquivo de 4,00 MB; as três MobileNets perderam F1 macro nessa amostra. Esses resultados descrevem as rodadas auditadas e não definem, por si, a arquitetura final.
+
+O ganho INT8 de Lite0 é uma observação desta amostra, não evidência de ganho geral. A piora INT8 nas três MobileNets ainda não foi explicada pela análise da conversão, da calibração e do contrato de entrada. O p95 de 335,68 ms do Large 1.0 INT8 também depende de nova medição controlada. As latências desta tabela foram obtidas no Colab, não no aparelho-alvo.
+
+#### F1 por classe, TFLite FP32
+
+O suporte é comum às quatro avaliações. Precisão, recall e matrizes completas constam dos arquivos `por_classe_fp32.csv` e `matriz_confusao_fp32.csv` em cada pasta de rodada.
+
+| Classe | Suporte | Lite0 | Small 1.0 | Large 0.75 | Large 1.0 |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Vaquinha | 157 | 0,913 | 0,828 | 0,862 | 0,887 |
+| Cigarrinha-do-milho | 30 | 0,952 | 0,885 | 0,912 | 0,949 |
+| Percevejo-barriga-verde | 42 | 0,712 | 0,537 | 0,627 | 0,652 |
+| Lagarta-do-cartucho | 61 | 0,850 | 0,829 | 0,882 | 0,880 |
+| Percevejo-marrom | 10 | 0,471 | 0,452 | 0,636 | 0,476 |
+| Percevejo-verde | 14 | 0,471 | 0,364 | 0,345 | 0,483 |
+| Percevejo-asa-preta | 11 | 0,435 | 0,222 | 0,556 | 0,471 |
+| Percevejo-do-milho | 12 | 0,667 | 0,529 | 0,632 | 0,621 |
+| Lagarta-falsa-medideira | 12 | 0,286 | 0,381 | 0,364 | 0,190 |
+| Lagarta-da-soja | 6 | 0,706 | 0,462 | 0,667 | 0,615 |
+| Lagarta-das-vagens | 24 | 0,553 | 0,500 | 0,612 | 0,553 |
+| Astylus variegatus | 71 | 0,871 | 0,711 | 0,843 | 0,865 |
+| Cigarrinha-das-pastagens | 24 | 0,875 | 0,644 | 0,784 | 0,840 |
+
+### Limites e próximos passos
+
+As classes com 6 a 14 imagens de teste têm estimativas instáveis; os F1 baixos de percevejos e lagarta-falsa-medideira merecem revisão de exemplos e erros na matriz de confusão. Vaquinha representa 157 das 474 imagens de teste (33,1%), proporção próxima à do acervo usado no modelo (1.049 de 3.163; 33,2%). Manter essa distribuição no teste não é um erro: ela mostra o desempenho na composição atual do acervo, embora a frequência real de fotos em campo ainda não tenha sido medida. A acurácia global favorece as classes mais frequentes e, por isso, deve ser lida junto da F1 macro, das métricas por classe e de seus suportes. A ponderação aplicada à perda durante o treino não altera a quantidade de imagens por classe na validação ou no teste.
+
+Para avaliar melhor as classes raras, é preciso reunir novas fotos independentes delas e formar um conjunto final de teste separado por planta ou origem, com suporte suficiente por classe. Os resultados devem informar tanto as métricas por classe quanto o desempenho na distribuição de uso esperada. Rebalancear agora as 474 imagens de teste já consultadas não transformaria essa partição em uma avaliação final independente.
+
+**Relação com os RNFs da seção 2.1.** A variação apresentada aqui é de **F1 macro**, enquanto o RNF-06 está escrito como “acurácia macro”; as duas métricas não são intercambiáveis. O critério de aceite da perda por INT8 ainda precisa ser definido, com a outra métrica mantida como complementar. Até essa definição, a tabela não comprova o RNF-06. O RNF-04 depende de p95 medido com o **TFLite Benchmark Tool no mesmo celular de referência**, com threads e delegate definidos para o produto; os tempos do Colab são apenas referência de laboratório. O RNF-03 também depende de medição separada do fluxo completo no aparelho.
+
+As diferenças relevantes são: Lite0 usa o preset `efficientnet_lite0_ra_imagenet` do KerasHub, enquanto as MobileNets usam pesos ImageNet de Keras Applications; as versões Keras registradas são 3.13.2 no Lite0 e 3.15.1 nas MobileNets; e o hardware de treino foi diferente. Assim, o protocolo de treino está alinhado, mas a comparação não isola perfeitamente apenas a arquitetura. A latência foi medida no ambiente de cada rodada, embora a família de CPU apareça como x86_64 e o número de threads seja 4. Não há identificação física suficiente para provar que foi o mesmo host, nem medições em dispositivo móvel.
+
+**Diferenças na conversão e na execução do Large 1.0.** Na célula final de conversão desse notebook, `supported_ops` usa `TFLITE_BUILTINS`, enquanto os outros três usam `TFLITE_BUILTINS_INT8`. Essa configuração permite operadores em ponto flutuante; portanto, o nome “INT8” do artefato Large 1.0 não comprova quantização inteira de todos os operadores. A avaliação dessa versão também usa `BUILTIN_WITHOUT_DEFAULT_DELEGATES`, desativando os delegates padrão, enquanto os outros notebooks usam o interpretador padrão. Essas diferenças limitam a comparação direta de latência, inclusive a interpretação dos 335,68 ms. Antes de atribuir a diferença à arquitetura ou à quantização, é necessário inspecionar os operadores exportados e repetir as medições com configurações equivalentes.
+
+### Base de estudo
+
+- [Keras Applications](https://keras.io/api/applications/) — modelos com pesos pré-treinados e uso para extração de características e fine-tuning.
+- [Keras MobileNetV3](https://keras.io/api/applications/mobilenet/mobilenet_models/) — contrato de entrada e pré-processamento.
+- [CS231n Transfer Learning](https://cs231n.github.io/transfer-learning/) — extrator congelado e ajuste das camadas finais.
 - A validação é usada tanto na parada antecipada quanto na seleção; o teste
   permanece reservado para a avaliação final.
 

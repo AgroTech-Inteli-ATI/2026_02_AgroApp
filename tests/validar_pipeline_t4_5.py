@@ -19,6 +19,21 @@ def hash_arquivo(caminho: Path) -> str:
 
 
 def validar():
+    auditoria_aprovada = json.loads(
+        (ROOT / "assets/data/particionamento_T4_2/auditoria_modelo.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    for campo, relativo in (
+        ("diagnostico_sha256", "assets/data/diagnostico_qualidade_T3_3_revisado.xlsx"),
+        ("dicionario_sha256", "assets/data/dicionario-classes.json"),
+        ("classes_modelo_sha256", "assets/data/classes-modelo.csv"),
+    ):
+        dados = (ROOT / relativo).read_bytes()
+        if not relativo.endswith(".xlsx"):
+            dados = dados.replace(b"\r\n", b"\n")
+        assert auditoria_aprovada[campo] == hashlib.sha256(dados).hexdigest(), campo
+
     with tempfile.TemporaryDirectory(prefix="teste-t4-5-a-") as a, tempfile.TemporaryDirectory(
         prefix="teste-t4-5-b-"
     ) as b:

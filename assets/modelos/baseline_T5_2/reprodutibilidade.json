@@ -1,0 +1,12 @@
+{
+  "execucoes": 2,
+  "semente": 42,
+  "historicos_identicos": true,
+  "metricas_identicas": true,
+  "pesos_identicos": true,
+  "sha256_pesos": "f2e555682aaa5560161a6e5e2d7497d1316b30fdb2930c42f2c2de35ec9d648f",
+  "observacao_modelo_keras": "O contêiner .keras inclui metadados do arquivo; a comparação foi feita sobre os oito arrays de pesos carregados.",
+  "melhor_epoca": 10,
+  "epocas_executadas": 14,
+  "f1_macro_validacao": 0.12027512666905406
+}
