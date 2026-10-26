@@ -1,0 +1,9 @@
+classe_real,classe_prevista,suporte_real,imagens_na_fila_de_erro,imagens_na_fila_origem_field,imagens_na_fila_origem_agroinsect,observacoes_inat_distintas_na_fila,real_adult,real_larva,real_nymph,real_pupa,real_sem_estagio,prevista_adult,prevista_larva,prevista_nymph,prevista_pupa,prevista_sem_estagio
+Vaquinha (Diabrotica speciosa),Astylus variegatus,157,13,6,7,5,206,0,0,0,280,118,0,0,0,363
+Lagarta-falsa-medideira (Chrysodeixis includens),Lagarta-do-cartucho (Spodoptera frugiperda),12,6,6,0,3,68,1,0,0,13,63,4,0,0,12
+Lagarta-das-vagens (Spodoptera eridania e S. cosmioides),Lagarta-do-cartucho (Spodoptera frugiperda),24,6,6,0,5,44,66,0,8,41,63,4,0,0,12
+Percevejo-barriga-verde (Dichelops/Diceraeus),Percevejo-do-milho (Leptoglossus zonatus),42,5,1,4,1,2,0,0,0,12,40,0,0,0,39
+Vaquinha (Diabrotica speciosa),Percevejo-verde (Nezara viridula),157,5,3,2,1,206,0,0,0,280,21,0,8,0,66
+Lagarta-falsa-medideira (Chrysodeixis includens),Lagarta-das-vagens (Spodoptera eridania e S. cosmioides),12,4,4,0,2,68,1,0,0,13,44,66,0,8,41
+Lagarta-do-cartucho (Spodoptera frugiperda),Lagarta-falsa-medideira (Chrysodeixis includens),61,5,0,5,0,63,4,0,0,12,68,1,0,0,13
+Percevejo-asa-preta (Edessa meditabunda),Percevejo-verde (Nezara viridula),11,5,5,0,2,32,0,8,0,35,21,0,8,0,66

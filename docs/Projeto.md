@@ -61,6 +61,7 @@
 
 - [6.1 Métricas por classe (T6.1)](#61-métricas-por-classe-t61)
 - [6.2 Matriz de confusão (T6.2)](#62-matriz-de-confusão-t62)
+- [6.3 Análise de erros (T6.3)](#63-análise-de-erros-t63)
 
 </details>
 
@@ -2350,3 +2351,56 @@ Os quatro modelos viram a mesma partição de teste, já consultada na T5.3. A r
 
 
 **Base de estudo:** [scikit-learn — Model evaluation: Confusion matrix](https://scikit-learn.org/stable/modules/model_evaluation.html#confusion-matrix) e [referência de `confusion_matrix`](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.confusion_matrix.html).
+
+## 6.3 Análise de erros (T6.3)
+
+### Objetivo e escopo
+
+Para cada um dos **oito pares de classes com confusão recorrente** identificados na [T6.2](#62-matriz-de-confusão-t62), investigar se a causa está ligada a **rótulos inconsistentes**, **escassez de amostras** ou **semelhança visual real** entre os agentes causais — abrindo as fotos da [fila de revisão](../assets/data/avaliacao_T6_2/erros_por_imagem_keras_3_modelos.csv) deixada em aberto pela T6.2, não só as contagens agregadas. Como na T6.2, esta análise usa as mesmas 474 imagens da partição de teste e tem caráter **exploratório**: aponta hipóteses de causa plausíveis e auditáveis, não uma prova estatística.
+
+### Método e artefatos
+
+O script [`src/analise_erros_t6_3.py`](../src/analise_erros_t6_3.py) cruza três fontes já publicadas para cada par recorrente:
+
+1. **Correlação entre erros** — quantas fotos da fila de erro citam aquele par e, para as de origem `field/` (iNaturalist), quantas **observações distintas** (`inat_obs_id`) estão por trás delas. Uma observação do iNaturalist tem em média duas fotos do mesmo inseto (ver `dataset/instruções.md` da pasta de imagens brutas); se várias fotos de erro vierem da mesma observação, a "recorrência" é mais um único espécime difícil do que evidência independente repetida.
+2. **Estágio de vida** — a distribuição de `life_stage` (`Adult`, `Larva`, `Nymph`, `Pupa` ou vazio) das fotos de campo de cada classe do par, lida de `field/field_labels.csv`. Esse campo não é usado em nenhum lugar do pipeline de treino ou avaliação; ele só entra aqui, como metadado para auditoria.
+
+A saída é [`assets/data/avaliacao_T6_3/estatisticas_por_par.csv`](../assets/data/avaliacao_T6_3/estatisticas_por_par.csv). Para regenerá-la (ou só conferi-la com `--verificar`), é necessário apontar `--raiz-imagens` para a pasta local com `dataset/field/field_labels.csv`, que **não é versionada neste repositório**:
+
+```bash
+python -m src.analise_erros_t6_3 --raiz-imagens /caminho/Agro_App [--verificar]
+```
+
+Esses dois indicadores situam o problema, mas não substituem olhar a foto: nenhum dos dois decide sozinho se uma confusão é rótulo, escassez ou semelhança real. O mesmo script grava, a partir de um dicionário de revisão mantido no próprio código-fonte (não inferido das contagens), [`assets/data/avaliacao_T6_3/revisao_visual_pares.csv`](../assets/data/avaliacao_T6_3/revisao_visual_pares.csv): **10 fotos da fila de erro** (abrangendo os oito pares) foram abertas manualmente nesta revisão, cada uma com a(s) causa(s) identificada(s) e uma observação. Isso é bem menor que as 177 fotos da fila completa — é uma amostra dirigida aos pares recorrentes, não uma inspeção exaustiva; a coluna `revisao_visual` do arquivo de erros da T6.2 continua vazia para as fotos não cobertas aqui.
+
+### Resultado: o estágio de vida nas classes "lagarta" é o achado mais consistente
+
+Quatro dos oito pares recorrentes envolvem só as classes "lagarta" entre si (falsa-medideira ↔ cartucho, das-vagens → cartucho, falsa-medideira → das-vagens). A pasta `dataset/instruções.md` já registra que a classe `spodoptera_frugiperda` do AgroInsect "contém só mariposas adultas"; a tabela abaixo mostra que esse desequilíbrio domina também as fotos de campo de lagarta-falsa-medideira e lagarta-do-cartucho (mais de 79% de adultos em ambas), apesar do nome da classe descrever a larva (lagarta). Lagarta-das-vagens é mais equilibrada — larva é o estágio mais comum (66 de 159) —, mas ainda assim quase 28% de suas fotos de campo são de mariposa adulta:
+
+| Classe | Fotos de campo | Adult | Larva | Pupa | Sem `life_stage` |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Lagarta-falsa-medideira (*Chrysodeixis includens*) | 82 | 68 (82,9%) | 1 | 0 | 13 |
+| Lagarta-do-cartucho (*Spodoptera frugiperda*, campo) | 79 | 63 (79,7%) | 4 | 0 | 12 |
+| Lagarta-das-vagens (*S. eridania* + *S. cosmioides*) | 159 | 44 (27,7%) | 66 | 8 | 41 |
+
+A classe `spodoptera_frugiperda` do AgroInsect (383 imagens, fora da tabela acima) soma-se a esse padrão: por documentação da fonte, é inteiramente formada por mariposas adultas. Abrindo as fotos da fila de erro, essa inconsistência se confirma imagem a imagem: `IMG_02978` e `IMG_03037` (lagarta-falsa-medideira), `IMG_03384` (lagarta-das-vagens) e `IMG_02715` (lagarta-do-cartucho, origem AgroInsect) mostram todas **mariposas adultas**, não lagartas — quase indistinguíveis entre si a olho nu (corpo pardo/acinzentado, pouso triangular, sem a cor e os padrões que diferenciam as larvas dessas mesmas espécies). O modelo aprendeu a separar bem essas classes quando a foto é de fato uma larva (ver 6.1), mas herda a ambiguidade das mariposas adultas sempre que elas aparecem sob o rótulo da larva — a causa dominante aqui é **rótulo inconsistente com o nome da classe**, não falta de dados por si só.
+
+A escassez de amostras aparece como fator agravante, não como causa isolada: `lagarta-falsa-medideira` tem só 12 imagens de teste, e as 6 fotos da fila de erro desse par vêm de apenas **3 observações distintas do iNaturalist** — ou seja, a "recorrência" nos quatro modelos é, em parte, o mesmo espécime fotografado duas vezes, não quatro erros independentes. O mesmo padrão se repete no par falsa-medideira → das-vagens (4 fotos, 2 observações). `lagarta-das-vagens` tem mais fotos de larva (66 de 159) que as outras duas lagartas, o que é consistente com seu par ter a menor parcela relativa de erro entre os quatro (25,0% contra 41,7% e 33,3%).
+
+### Resultado: ninfas de percevejo e besouros de coloração parecida
+
+Os quatro pares restantes não compartilham uma causa única:
+
+**Percevejo-asa-preta (*Edessa meditabunda*) → Percevejo-verde (*Nezara viridula*)**, 4/11 (36,4%) — a classe real tem um dos **suportes de teste mais baixos entre as 13 classes** (11 imagens; só lagarta-da-soja, com 6, e percevejo-marrom, com 10, têm menos), e a inspeção mostra que as fotos de erro (`IMG_03088` e as demais da fila) são **ninfas**, não os adultos que dão nome às classes. Ninfas de percevejos pentatomídeos de instares iniciais convergem para um padrão preto/branco/vermelho semelhante entre espécies, bem diferente da cor do respectivo adulto (Edessa adulta é escura; Nezara adulta é verde lisa). Só 8 das 75 fotos de campo de Edessa e 8 das 95 de Nezara têm esse estágio, e 4 das 5 fotos de erro desse par vêm de uma única observação do iNaturalist (`inat147542055`) — o mesmo espécime fotografado várias vezes. Causa: **escassez de amostras de ninfa combinada com semelhança visual real entre ninfas de espécies diferentes**.
+
+**Percevejo-barriga-verde (*Dichelops*/*Diceraeus*) → Percevejo-do-milho (*Leptoglossus zonatus*)**, 4/42 (9,5%) — `dichelops_sp` é a classe que `dataset/instruções.md` já sinalizava como fraca em fotos de campo: só **14 fotos** (2 com `life_stage` preenchido), contra 283 imagens aproveitáveis no total da classe (a maioria do AgroInsect). A foto de erro de origem `field/` (`IMG_02091`) mostra um adulto corretamente identificável como pentatomídeo; já as de origem AgroInsect (`IMG_02271`, entre outras) mostram um percevejo castanho sobre folha de milho cujo porte e coloração, à distância da foto, são compatíveis com as duas espécies. Causa: **mistura de escassez de fotos de campo e semelhança visual real** entre dois percevejos castanhos de porte parecido.
+
+**Vaquinha (*Diabrotica speciosa*) → Astylus variegatus**, 10/157 (6,4%) — as duas classes têm fartura de dados (157 imagens de teste e 481 fotos de campo, respectivamente), então escassez não é a explicação. `IMG_01175` mostra um adulto de vaquinha ao lado de um Astylus de verdade na mesma foto: besouros pequenos, de coloração mosqueada amarelo-preta, fotografados sobre flor — **semelhança visual real** entre duas espécies de famílias diferentes (Chrysomelidae e Melyridae) que convergem numa coloração de alerta parecida. Outras fotos do par, como `IMG_01741`, mostram o inseto minúsculo e distante no quadro, o que soma dificuldade adicional de imagem de baixa qualidade diagnóstica a essa semelhança.
+
+**Vaquinha → Percevejo-verde (*Nezara viridula*)**, 5/157 (3,2%) — a menor parcela entre os oito pares. As três fotos de campo do erro (`IMG_01069–IMG_01071`) vêm de uma **única observação do iNaturalist**, isto é, um único espécime fotografado três vezes, pequeno e distante, sem as manchas alaranjadas nítidas que normalmente diferenciam a vaquinha do percevejo-verde. Com suporte alto nas duas classes, a leitura mais provável é um caso isolado de imagem de baixa qualidade diagnóstica, não um padrão sistemático de confusão entre as espécies.
+
+### Limites e critério de conclusão
+
+Os indicadores quantitativos (observações distintas, distribuição de `life_stage`) vêm de metadados declarados pelos fotógrafos do iNaturalist, não de uma verificação independente — `life_stage` fica vazio em boa parte das fotos (ex.: 13 de 82 em lagarta-falsa-medideira), então os percentuais de adulto/larva acima são um piso, não o valor exato. A revisão visual cobriu 10 das 177 fotos da fila de erro (uma amostra dirigida aos oito pares recorrentes, escolhida pela maior confiança de erro em cada par), não a fila inteira; as demais 167 fotos continuam com `revisao_visual` vazio e podem revelar outros padrões. Como na T6.2, os quatro modelos viram a mesma partição de teste: a recorrência de um par entre eles não prova uma taxa estável em fotos novas, e esta análise não conclui qual das três causas é majoritária no sistema como um todo — só que, caso a caso, ao menos uma delas é observável por trás de cada par. A causa mais acionável é a inconsistência de estágio de vida nas classes "lagarta", porque é a única passível de correção direta: separar ou balancear os estágios de vida dentro de cada classe de inseto antes do próximo retreino.
+
+**Base de estudo:** [EMBRAPA — Manual de identificação de insetos e outros invertebrados da cultura da soja](https://www.embrapa.br/en/busca-de-publicacoes/-/publicacao/991685/manual-de-identificacao-de-insetos-e-outros-invertebrados-da-cultura-da-soja) e a [documentação de metadados do iNaturalist](https://www.inaturalist.org) usada em `field_labels.csv` (coluna `life_stage`).
