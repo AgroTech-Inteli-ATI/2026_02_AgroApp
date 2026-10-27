@@ -1,0 +1,54 @@
+[
+  {
+    "indice": 0,
+    "nome": "Vaquinha (Diabrotica speciosa)"
+  },
+  {
+    "indice": 1,
+    "nome": "Cigarrinha-do-milho (Dalbulus maidis)"
+  },
+  {
+    "indice": 2,
+    "nome": "Percevejo-barriga-verde (Dichelops/Diceraeus)"
+  },
+  {
+    "indice": 3,
+    "nome": "Lagarta-do-cartucho (Spodoptera frugiperda)"
+  },
+  {
+    "indice": 4,
+    "nome": "Percevejo-marrom (Euschistus heros)"
+  },
+  {
+    "indice": 5,
+    "nome": "Percevejo-verde (Nezara viridula)"
+  },
+  {
+    "indice": 6,
+    "nome": "Percevejo-asa-preta (Edessa meditabunda)"
+  },
+  {
+    "indice": 7,
+    "nome": "Percevejo-do-milho (Leptoglossus zonatus)"
+  },
+  {
+    "indice": 8,
+    "nome": "Lagarta-falsa-medideira (Chrysodeixis includens)"
+  },
+  {
+    "indice": 9,
+    "nome": "Lagarta-da-soja (Anticarsia gemmatalis)"
+  },
+  {
+    "indice": 10,
+    "nome": "Lagarta-das-vagens (Spodoptera eridania e S. cosmioides)"
+  },
+  {
+    "indice": 11,
+    "nome": "Astylus variegatus"
+  },
+  {
+    "indice": 12,
+    "nome": "Cigarrinha-das-pastagens (Deois flavopicta)"
+  }
+]

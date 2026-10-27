@@ -1,0 +1,19 @@
+{
+  "python": "3.12.15",
+  "sistema": "macOS-26.6.2-arm64-arm-64bit",
+  "tensorflow": "2.21.0",
+  "keras": "3.15.1",
+  "keras_hub": "0.32.0",
+  "numpy": "2.4.4",
+  "pillow": "12.2.0",
+  "dispositivos": [
+    "/physical_device:CPU:0"
+  ],
+  "git_commit": "a9fcc0f79a1a92436e7f38538bde13f208629dd1",
+  "git_alteracoes_locais": true,
+  "sha256": {
+    "indice_pipeline": "28ee662885202f0bda3dec9660e44b28f99b8bd183210bcbdd795b103269b2eb",
+    "pesos_classes": "b342f9a821778840d6a86024ddaef8ccbe6ff18b250b540f0025fadf222046b9",
+    "config": "d5c7e24e9dfeeeb8d5fdfaf911153437096984a048230c785910b630c8fb396c"
+  }
+}
