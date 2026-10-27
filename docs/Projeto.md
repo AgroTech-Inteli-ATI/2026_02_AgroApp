@@ -2580,6 +2580,41 @@ avaliador para aceitar esse novo índice sem confundi-lo com o índice de treino
 
 ## 6.2 Matriz de confusão (T6.2)
 
+### Candidato selecionado na T5.6 — Keras FP32
+
+A matriz abaixo corresponde ao **EfficientNet-Lite0 do pacote `candidato_T5_6_20261026`**, o mesmo checkpoint avaliado na [T6.1](#61-metricas-por-classe-t61). Foi reconstruída a partir das previsões salvas naquela avaliação: **473 imagens de teste, 13 classes, 401 acertos e 72 erros**. Não houve nova inferência ou treinamento. As matrizes históricas de 474 imagens, apresentadas adiante, pertencem às rodadas anteriores.
+
+![Matriz de confusão do candidato Keras FP32, com contagens e normalização por classe real](../assets/matriz_confusao_T6_2_candidato_keras.png)
+
+As linhas representam a classe real; as colunas, a prevista. Os números são contagens e a cor representa a fração da classe real, permitindo comparar classes com suportes diferentes. O contorno laranja destaca pares direcionais com **pelo menos dois erros nesta amostra**; a segunda linha mostra a porcentagem relativa ao suporte da classe real. Esse critério é descritivo: não comprova confusão sistemática em dados novos nem determina a causa dos erros.
+
+| Classe real → prevista | Erros | Suporte real | Parcela da classe |
+| --- | ---: | ---: | ---: |
+| Lagarta-falsa-medideira → Lagarta-do-cartucho | 6 | 12 | 50,0% |
+| Percevejo-asa-preta → Percevejo-verde | 5 | 11 | 45,5% |
+| Lagarta-das-vagens → Lagarta-do-cartucho | 5 | 24 | 20,8% |
+| Vaquinha → Astylus variegatus | 5 | 157 | 3,2% |
+| Percevejo-verde → Vaquinha | 4 | 14 | 28,6% |
+| Percevejo-verde → Percevejo-barriga-verde | 4 | 14 | 28,6% |
+
+O [relatório completo](../assets/data/avaliacao_T6_2/candidato_T5_6_20261026_keras/relatorio_matriz.md) identifica nominalmente os 16 pares com pelo menos dois erros. A tabela de [todos os pares confundidos](../assets/data/avaliacao_T6_2/candidato_T5_6_20261026_keras/pares_confundidos.csv) também preserva os casos de um único erro. Os artefatos publicados incluem:
+
+- [Matriz de contagens](../assets/data/avaliacao_T6_2/candidato_T5_6_20261026_keras/matriz_contagens.csv) e [matriz normalizada por classe real](../assets/data/avaliacao_T6_2/candidato_T5_6_20261026_keras/matriz_normalizada.csv), com nomes completos e a mesma ordem das 13 classes do pacote selecionado.
+- [Fila dos 72 erros por imagem](../assets/data/avaliacao_T6_2/candidato_T5_6_20261026_keras/erros_por_imagem.csv), com ID, caminho, classes real e prevista e hash da imagem original, para orientar a análise da T6.3. A fila não atribui causas aos erros.
+- [Proveniência e hashes](../assets/data/avaliacao_T6_2/candidato_T5_6_20261026_keras/proveniencia.json), vinculando os resultados às previsões da T6.1, ao índice, ao manifesto do candidato, à rodada registrada na T5.5 e ao código gerador.
+
+O script [matriz_candidato_t6_2.py](../src/matriz_candidato_t6_2.py) verifica a integridade dos artefatos de origem, a identidade do modelo, a ordem das classes e a cobertura exata dos IDs de teste. Recalcula a matriz pelas previsões e exige concordância com as métricas salvas na T6.1 antes de publicar. Para gerar e conferir os arquivos:
+
+```bash
+python -m src.matriz_candidato_t6_2
+python -m src.matriz_candidato_t6_2 --verificar
+python tests/validar_matriz_candidato_t6_2.py
+```
+
+Este resultado corresponde ao **checkpoint Keras FP32**; a conversão TFLite INT8 exige avaliação própria. A partição já foi consultada em etapas anteriores, portanto esta análise é exploratória e não constitui avaliação final independente. Não foram ajustados pesos, limiares ou critérios de seleção com esses resultados.
+
+### Matrizes históricas da varredura
+
 ### Objetivo e escopo
 
 Publicar as matrizes de confusão das quatro arquiteturas avaliadas na [T5.3](#53-varredura-de-arquiteturas-t53) e identificar nominalmente os erros que se repetem entre elas. Esta análise usa as **474 imagens da partição de teste já consultada** na varredura e, portanto, tem caráter **exploratório**. Não representa a avaliação final independente nem seleciona uma arquitetura vencedora.
