@@ -63,6 +63,7 @@
 
 - [6.1 Métricas por classe (T6.1)](#61-métricas-por-classe-t61)
 - [6.2 Matriz de confusão (T6.2)](#62-matriz-de-confusão-t62)
+- [6.3 Análise de erros (T6.3)](#63-análise-de-erros-t63)
 
 </details>
 
@@ -2620,3 +2621,132 @@ Os quatro modelos viram a mesma partição de teste, já consultada na T5.3. A r
 
 
 **Base de estudo:** [scikit-learn — Model evaluation: Confusion matrix](https://scikit-learn.org/stable/modules/model_evaluation.html#confusion-matrix) e [referência de `confusion_matrix`](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.confusion_matrix.html).
+
+## 6.3 Análise de erros (T6.3)
+
+### Objetivo e escopo
+
+Investigar os oito pares de classes com confusão recorrente identificados na
+[seção 6.2](#62-matriz-de-confusão-t62), distinguindo observações das fotos,
+metadados e hipóteses de causa. A análise usa os registros de erro das três
+MobileNets sobre a mesma partição de teste consultada na varredura. Seus
+resultados são exploratórios e não demonstram causalidade nem desempenho
+independente em novas imagens.
+
+### Método, cobertura e artefatos
+
+O script [`analise_erros_t6_3.py`](../src/analise_erros_t6_3.py) reúne:
+
+1. Quantidade de fotos de erro por par e observações distintas do iNaturalist.
+   Fotos da mesma observação são correlacionadas e não equivalem a novos
+   exemplares independentes.
+2. Distribuição do estágio de vida nas fotos de campo de cada classe, conforme
+   `field/field_labels.csv`. Esses totais descrevem o acervo bruto de campo,
+   não a distribuição por estágio no treino, nem uma validação taxonômica.
+3. Anotações da revisão visual original de 48 fotos e suas correções. O CSV
+   explicita se a causa é uma hipótese ou permanece indeterminada; não representa
+   confirmação por especialista.
+
+Os [indicadores por par](../assets/data/avaliacao_T6_3/estatisticas_por_par.csv)
+e o [registro visual](../assets/data/avaliacao_T6_3/revisao_visual_pares.csv)
+têm geração determinística. São **48 fotos únicas e 49 relações foto/par**:
+`IMG_03008` pertence tanto a falsa-medideira → cartucho quanto a
+falsa-medideira → das-vagens, e aparece nos dois pares. As outras 129 fotos da
+fila de 177 registros não correspondem aos oito pares selecionados e não têm
+causa determinada por esta análise. A cobertura é conferida contra a fila;
+uma foto ausente ou extra interrompe a geração.
+
+O registro contém ID, caminho, classe real, classe prevista, `inat_obs_id`,
+`life_stage_metadado`, categorias, status da causa e observação. O estágio e o
+ID da observação são copiados dos metadados externos, sem inferi-los pelo nome
+da classe. A revisão pode registrar um adulto mesmo quando o estágio não foi
+preenchido pelo fotógrafo; os dois campos não são tratados como equivalentes.
+
+```bash
+python -m src.analise_erros_t6_3 --raiz-imagens /caminho/Agro_App
+python -m src.analise_erros_t6_3 --raiz-imagens /caminho/Agro_App --verificar
+python tests/validar_analise_erros_t6_3.py
+```
+
+A raiz deve conter `dataset/field/field_labels.csv`. O modo `--verificar`
+não reescreve os artefatos. Os testes conferem a cobertura dos pares, a
+preservação de fotos com múltiplos destinos e a reprodução com diferentes
+valores de `PYTHONHASHSEED`.
+
+### Estágio de vida não equivale a erro de espécie
+
+As classes são definidas por espécie ou agrupamento taxonômico no
+[dicionário do modelo](../assets/data/classes-modelo.csv). Não há, nesse contrato,
+uma restrição a imagens exclusivamente larvais. Uma mariposa adulta pode ter
+o rótulo correto de *Spodoptera frugiperda* ou *Chrysodeixis includens*, apesar
+de o nome comum começar por “lagarta”. A
+[Embrapa descreve larva, pupa e adulto no ciclo de Spodoptera](https://www.infoteca.cnptia.embrapa.br/infoteca/bitstream/doc/1124694/1/DOC-178-internet.pdf).
+Por isso, adultos sob esses nomes comuns **não comprovam rótulo taxonômico errado**.
+
+| Classe | Fotos de campo | Adult | Larva | Pupa | Sem estágio informado |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Lagarta-falsa-medideira (*Chrysodeixis includens*) | 82 | 68 | 1 | 0 | 13 |
+| Lagarta-do-cartucho (*Spodoptera frugiperda*) | 79 | 63 | 4 | 0 | 12 |
+| Lagarta-das-vagens (*S. eridania* + *S. cosmioides*) | 159 | 44 | 66 | 8 | 41 |
+
+A documentação do AgroInsect informa que suas 383 fotos de *S. frugiperda* são
+de adultos. A revisão visual original também registra adultos em 19 das 20
+fotos únicas dos quatro pares entre classes “lagarta”; isso descreve o estágio
+observado, **não 19 erros de rótulo confirmados**. A exceção, `IMG_03424`,
+mostra duas larvas escuras sobre banana. A imagem, por si só, não confirma que
+elas pertencem a espécies diferentes, nem que a semelhança foi a causa do erro.
+
+Os dados justificam investigar cobertura e distribuição dos estágios, inclusive
+por partição. Não permitem afirmar que o modelo reconhece melhor larvas que
+adultos: isso exige métricas separadas por estágio e rótulos conferidos. Não foi
+demonstrado erro taxonômico nesta revisão; tampouco foi comprovado que todos os
+rótulos estejam corretos. Uma mudança de escopo para reconhecer apenas larvas
+exige decisão explícita e validação agronômica antes de relabelar ou excluir fotos.
+
+### Hipóteses e limites por par
+
+| Classe real → prevista | Fotos na fila | Leitura sustentada e limite |
+| --- | ---: | --- |
+| Falsa-medideira → Cartucho | 6 | Fotos de três observações iNaturalist; adultos frequentes. Investigar cobertura dos estágios; causa do erro ainda indeterminada. |
+| Das-vagens → Cartucho | 6 | Cinco observações de campo; revisão registra cinco adultos e uma foto com larvas. Semelhança e cobertura de estágios são hipóteses, sem confirmação de erro de espécie. |
+| Falsa-medideira → Das-vagens | 4 | Duas observações de campo; compartilha `IMG_03008` com outro par. Variação de estágio não prova rótulo errado. |
+| Cartucho → Falsa-medideira | 5 | Fotos do AgroInsect registradas como adultos; avaliar representação dos estágios, sem concluir erro taxonômico pelo nome comum. |
+| Percevejo-asa-preta → Percevejo-verde | 5 | Ninfas provenientes de duas observações; escassez de exemplos e semelhança visual são hipóteses. Oito fotos têm metadado Nymph em cada classe; os estágios ausentes não podem ser classificados automaticamente como adultos. |
+| Percevejo-barriga-verde → Percevejo-do-milho | 5 | Uma foto de campo e quatro do AgroInsect; baixa cobertura de campo, oclusão/enquadramento e semelhança de porte/cor são hipóteses concorrentes. |
+| Vaquinha → Astylus | 13 | Há fotos com pouco detalhe e fotos com múltiplos insetos; semelhança visual permanece hipótese para os demais casos. A contagem global de imagens não exclui escassez de exemplos de uma condição específica. |
+| Vaquinha → Percevejo-verde | 5 | As anotações registram distância, sombra ou pouco detalhe diagnóstico. A categoria é `qualidade_imagem`, não uma confirmação de semelhança real entre as espécies. |
+
+As quantidades são da união dos erros das três MobileNets, não a contagem de
+uma única matriz. Por exemplo, as cinco fotos de Edessa → Nezara da fila não
+substituem os quatro erros do Lite0 apresentados na seção 6.2. Uma mesma foto
+em dois pares conta uma vez em cada relação e uma vez no total de fotos únicas.
+
+### Correções das observações e rastreabilidade
+
+As fotos `IMG_01175` e `IMG_01176` foram reabertas e mostram mais de um inseto:
+um besouro na parte inferior e um inseto alado listrado em destaque. A identidade
+deste último não foi confirmada; foi retirada a afirmação de que seria um
+“Astylus de verdade”. A revisão o classifica como conteúdo com múltiplos insetos,
+com causa indeterminada, e não o usa para comprovar semelhança entre as duas
+espécies. As fotografias e seus rótulos originais foram preservados.
+
+Os metadados identificam `IMG_02978` como observação **10704962**, enquanto
+`IMG_03035`, `IMG_03036` e `IMG_03037` são da observação **396445719**.
+Foi retirada a alegação de que `IMG_02978` e `IMG_03037` seriam do mesmo
+indivíduo; os identificadores passam a constar diretamente no CSV.
+
+### Conclusão e dependências da interpretação
+
+A revisão cobre todos os vínculos dos oito pares e mantém as evidências e
+hipóteses auditáveis. O estágio ausente em parte do acervo, a correlação entre
+fotos e o uso histórico do mesmo teste limitam as conclusões. `rotulo_inconsistente`
+fica reservado a evidência de identificação incompatível com a classe, não ao
+nome comum do estágio. Variação de estágio, qualidade da imagem e múltiplos
+sujeitos são registradas separadamente, evitando encaixá-las à força em uma
+causa taxonômica.
+
+A determinação agronômica das espécies e das causas ainda depende de validação.
+As propostas de separar estágios, agrupar classes ou retornar hipóteses
+concorrentes devem ser avaliadas na seção de tratamento das classes; este
+relatório não autoriza uma correção automática dos rótulos nem comprova a causa
+dominante em cada par.
