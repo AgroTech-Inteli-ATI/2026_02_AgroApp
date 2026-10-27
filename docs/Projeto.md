@@ -54,6 +54,7 @@
 - [5.3 Varredura de arquiteturas (T5.3)](#53-varredura-de-arquiteturas-t53)
 - [5.4 Busca de hiperparâmetros (T5.4)](#54-busca-de-hiperparâmetros-t54)
 - [5.5 Registro comparativo de experimentos (T5.5)](#55-registro-comparativo-de-experimentos-t55)
+- [5.6 Seleção e versionamento do modelo (T5.6)](#56-seleção-e-versionamento-do-modelo-t56)
 
 </details>
 
@@ -2176,12 +2177,13 @@ somente a biblioteca padrão do Python. Não carrega modelos nem acessa o teste.
 A [tabela comparativa](../assets/data/experimentos_T5_5/experimentos.md) e sua
 [versão CSV](../assets/data/experimentos_T5_5/experimentos.csv) são duas representações
 do mesmo registro, com uma linha por execução disponibilizada. A tabela versionada
-contém o **baseline CNN treinado da seção 5.2**, com macro F1 de validação
-**0,120275**, desempenho das 13 classes, tamanho real do arquivo `.keras` e
-proveniência. Os artefatos estão em
-[`assets/modelos/baseline_T5_2/`](../assets/modelos/baseline_T5_2/), incluindo o
-modelo treinado. Sua latência ainda não foi medida e permanece explicitamente
-pendente, sem substituir esse valor por zero ou por um benchmark bibliográfico.
+contém **quatro execuções reais**: o baseline CNN da seção 5.2 e as três novas
+rodadas da seção 5.6, com métricas das 13 classes, tamanho real do checkpoint
+`.keras` e proveniência. As duas novas rodadas não selecionadas preservam seus
+resultados e o motivo de descarte. As medições das conversões TFLite ficam
+separadas na seção 5.6, para não atribuir sua latência ou precisão ao arquivo
+Keras. A latência dos checkpoints Keras permanece explicitamente pendente,
+sem substituir esse valor por zero ou por benchmark bibliográfico.
 
 As seções 5.3 e 5.4 já documentam outros treinamentos. Os notebooks e resultados
 da varredura estão no Drive referenciado na seção 5.3; os arquivos brutos da busca
@@ -2202,11 +2204,13 @@ O comando busca recursivamente pastas com `config_usada.json`,
 `metricas_validacao.json`, `ambiente.json` ou `registro_t5_5.json`, ordena-as pelo
 caminho e regenera a tabela de forma determinística. Apontar `--entrada` para a
 pasta que reúna todas as rodadas; manter também as pastas das execuções descartadas.
-Sem `--entrada`, o comando usa `assets/modelos`, onde o baseline está versionado.
+Sem `--entrada`, o comando usa `assets/modelos`, onde o baseline e as novas rodadas
+da seção 5.6 estão versionados.
 Para analisar rodadas locais, usar `--entrada runs --saida runs/registro_T5_5`,
 preservando a tabela oficial até reunir todas as fontes numa única entrada.
-As pastas `runs/` e as imagens originais ficam fora do Git; o modelo do baseline
-é uma exceção já versionada em `assets/modelos/`. Versionar a tabela consolidada
+As pastas `runs/` e as imagens originais ficam fora do Git; o baseline, as novas
+rodadas e o pacote selecionado da seção 5.6 são preservados em `assets/modelos/`.
+Versionar a tabela consolidada
 após cada atualização. JSON inválido ou incompatível interrompe a consolidação,
 para que a rodada não seja omitida silenciosamente.
 
@@ -2285,12 +2289,148 @@ latência sem contexto, métricas fora da faixa e artefatos fora da rodada.
 Também conferem a inclusão do baseline real pela entrada padrão, preservando suas
 métricas, o tamanho do modelo e a ausência de medição de latência.
 
-O mecanismo de registro e a primeira execução real estão versionados. A cobertura
-integral do registro depende de incorporar as execuções das seções 5.3 e 5.4,
+O mecanismo de registro e as quatro execuções disponíveis estão versionados.
+A cobertura integral do histórico depende de incorporar as execuções antigas
+das seções 5.3 e 5.4,
 incluindo rodadas incompletas e descartadas, com justificativas de descarte e
 evidências de tamanho e latência. A seleção do modelo deve apontar para uma linha
 rastreável dessa tabela e conferir as restrições de tamanho e latência; uma
 configuração de retreino, sozinha, não substitui o artefato treinado.
+
+## 5.6 Seleção e versionamento do modelo (T5.6)
+
+### Protocolo e origem das rodadas
+
+Foram executados **novos treinamentos em 26/10/2026**, com as três configurações
+de retreino da seção 5.4 e o pipeline modular da seção 5.1. Os checkpoints
+históricos da busca não estavam disponíveis; estas execuções têm identidades,
+históricos e métricas próprios e não substituem os números históricos da seção 5.4.
+
+A comparação usa exclusivamente o recorte `dataset` da seção 5.2: **2.209 imagens
+de treino e 474 de validação**, com 13 classes e semente 42. Os hashes de todas
+as fotografias abertas são conferidos. Não foram abertas as 473 imagens de teste
+durante o treino, a calibração ou a seleção. O uso histórico da partição de teste
+na seção 5.3 permanece uma limitação; esta campanha não a transforma em avaliação
+final independente.
+
+Os candidatos usam os pesos ImageNet e os hiperparâmetros fixados anteriormente,
+com até 30 épocas de cabeça, até 20 de fine-tuning e parada antecipada por
+F1 macro de validação, com paciência 5. O melhor checkpoint é restaurado entre
+as fases e ao final. O baseline continua sendo um piso de comparação; seu orçamento
+de 20 épocas não é o mesmo dos candidatos retreinados.
+
+### Comparação e decisão
+
+| Arquitetura | F1 macro de validação Keras | Balanced accuracy | Acurácia | Melhor época | Épocas executadas |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| EfficientNet-Lite0 | **0,7811** | **0,7550** | **0,8565** | 14 | 19 |
+| MobileNetV3-Large | 0,7780 | 0,7436 | 0,8439 | 31 | 36 |
+| MobileNetV2 | 0,7078 | 0,6733 | 0,8101 | 27 | 32 |
+| Baseline CNN da seção 5.2 | 0,1203 | 0,1596 | 0,1709 | 10 | 14 |
+
+O candidato escolhido é o **EfficientNet-Lite0**: obteve a maior F1 macro de
+validação entre as novas rodadas comparáveis que atendem ao limite proposto
+de tamanho. O desempate, caso os valores completos fossem exatamente iguais,
+seria por balanced accuracy e depois pelo nome da arquitetura. A diferença de
+aproximadamente **0,0031** para a MobileNetV3-Large é descritiva de uma única
+semente, sem demonstração de significância estatística. A balanced accuracy
+também favoreceu o Lite0 nesta campanha.
+
+As métricas por classe e as matrizes completas dos três candidatos estão em
+[`comparacao.json`](../assets/data/selecao_T5_6/comparacao.json) e nos arquivos
+originais das rodadas. Na Lite0 Keras, lagarta-falsa-medideira teve **F1 0,3333**
+com suporte 12, e lagarta-das-vagens teve **F1 0,5854** com suporte 24. A média
+global não elimina essas limitações das classes menos representadas.
+
+### Conversão e restrição de tamanho
+
+Cada checkpoint foi reaberto e suas métricas completas de validação foram
+reproduzidas antes da exportação. As versões TFLite FP32 e INT8 derivam do mesmo
+checkpoint da respectiva rodada. A calibração INT8 usa **200 imagens somente
+do treino**, com semente 42 e pelo menos uma imagem de cada classe. Não há
+augmentation nessa etapa. O grafo exportado é inspecionado para rejeitar tensores
+FLOAT32 na versão inteira; entrada e saída também são INT8.
+
+O Lite0 selecionado tem **4.003.624 bytes** em INT8, abaixo do limite proposto
+de **8.000.000 bytes** do RNF-01. Sua F1 macro de validação passou de **0,7811**
+em TFLite FP32 para **0,7856** em INT8, diferença de **+0,45 ponto percentual**.
+É uma observação desta amostra, não uma garantia de melhoria pela quantização.
+
+Na MobileNetV3-Large, a versão INT8 teve **3.534.344 bytes**, mas a F1 macro
+caiu de **0,7780** para **0,5335**, aproximadamente **24,45 pontos percentuais**.
+A perda está registrada separadamente e não é escondida pela métrica do checkpoint
+Keras. A MobileNetV2 INT8 teve **2.750.824 bytes** e F1 macro de validação de
+**0,6873**, queda de aproximadamente **2,04 pontos percentuais** em relação à
+sua versão FP32. Os três modelos atendem ao limite proposto de tamanho.
+A F1 de validação não comprova o RNF-06, cujo critério de acurácia macro
+e avaliação final ainda depende de definição e de novas imagens independentes.
+
+### Pacote, registro e rastreabilidade
+
+O pacote está em
+[`assets/modelos/candidato_T5_6_20261026/`](../assets/modelos/candidato_T5_6_20261026/).
+O arquivo destinado ao embarque é **`modelo_int8.tflite`**; o checkpoint Keras
+e o TFLite FP32 são referências de auditoria, não componentes do pacote móvel.
+
+| Arquivo | Conteúdo |
+| --- | --- |
+| `modelo.keras`, `modelo_fp32.tflite`, `modelo_int8.tflite` | Checkpoint selecionado e suas conversões. |
+| `classes.json` | Ordem exata dos 13 índices e nomes de saída. |
+| `configuracao_treino.json`, `historico.csv`, `ambiente_treino.json` | Configuração, execução por época e ambiente da rodada. |
+| `avaliacao_validacao.json`, `conversao.json` | Métricas originais, calibração, hashes e desempenho de cada formato. |
+| `registro_t5_5.csv` | Cópia da tabela comparativa usada na decisão. |
+| `manifesto.json` | Identificação por data, rodada e linha da T5.5, regra de seleção, hashes dos artefatos e do código e pendências de validação técnica. |
+
+As três rodadas completas são preservadas em
+[`assets/modelos/rodadas_T5_6_20261026/`](../assets/modelos/rodadas_T5_6_20261026/).
+A tabela da seção 5.5 inclui o baseline e as três novas execuções. As duas rodadas
+não selecionadas mantêm modelos, métricas e motivo de descarte no registro.
+
+### Execução e verificação
+
+O fluxo reutiliza o ambiente de `requirements-treino.txt`. Para uma nova campanha,
+usar outra pasta de saída e outra data, preservando as versões existentes:
+
+```bash
+python -m src.rodadas_t5_6 --raiz-imagens /caminho/das/fontes --saida runs/rodadas_T5_6_NOVA_DATA --threads 4
+python -m src.finalizar_t5_6 --treinos runs/rodadas_T5_6_NOVA_DATA --raiz-imagens /caminho/das/fontes --data AAAA-MM-DD
+python -m src.selecao_t5_6 --verificar assets/modelos/candidato_T5_6_20261026
+python tests/validar_selecao_t5_6.py
+```
+
+A publicação recusa rodadas incompletas, classes ou partições incompatíveis,
+orçamentos diferentes, conversões de outro checkpoint e modelos acima do limite.
+O pacote existente não é sobrescrito. O verificador confere os hashes e o vínculo
+da linha da T5.5 com sua cópia congelada. Os testes também cobrem essas rejeições,
+a amostragem de calibração sem imagens de teste e a detecção de artefato alterado.
+
+### Latência e condição de aprovação
+
+O pacote é um **candidato versionado, com tamanho verificado**. A aprovação para
+embarque continua condicionada ao benchmark no celular de referência:
+**p95 de inferência de até 300 ms**, conforme a proposta do RNF-04. Dispositivo
+e limites ainda dependem de validação com o parceiro.
+
+O comando abaixo prepara uma medição local repetível, com batch 1, aquecimento,
+p50/p95, runtime, threads, delegate e hash do modelo:
+
+```bash
+python -m src.benchmark_t5_6 --modelo assets/modelos/candidato_T5_6_20261026/modelo_int8.tflite --saida runs/benchmark_T5_6_local.json --dispositivo "identificacao do aparelho ou computador" --threads 4 --delegate desativado --aquecimento 20 --repeticoes 100
+```
+
+O benchmark usa um tensor sintético de zeros e inclui alimentação do tensor,
+inferência e leitura da saída; não inclui preparação de fotografias. O relatório
+identifica a medição como local e não aprova automaticamente o RNF-04. A confirmação
+no aparelho-alvo exige o TFLite Benchmark Tool, com threads e delegate controlados.
+O tempo fim a fim do aplicativo, a política de confiança e a avaliação final
+independente permanecem entregas distintas.
+
+Na medição local após o término dos treinos, o Lite0 INT8 apresentou **p50 de
+6,76 ms e p95 de 8,13 ms** em CPU arm64 do Mac, com quatro threads, delegates
+desativados, 20 aquecimentos e 100 repetições. O
+[relatório original](../assets/data/selecao_T5_6/benchmark_local_lite0_int8.json)
+preserva as durações individuais e o hash do modelo. Esses tempos não são
+atribuídos ao celular de referência.
 
 # 6. Avaliação do modelo
 
