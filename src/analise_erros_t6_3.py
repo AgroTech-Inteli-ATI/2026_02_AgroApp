@@ -1,6 +1,6 @@
 """Calcula, para cada par de classes com confusão recorrente da T6.2, indicadores
-objetivos sobre as três causas candidatas da T6.3: rótulos inconsistentes (estágio de
-vida fora do esperado pelo nome da classe), escassez de amostras (poucas observações
+objetivos sobre as causas candidatas da T6.3: rótulos taxonômicos inconsistentes,
+escassez de amostras (poucas observações
 independentes por trás das imagens de erro) e semelhança visual real entre os agentes
 causais. Não decide sozinho a causa — isso exige abrir as fotos e está registrado em
 `revisao_visual_pares.csv` — mas reduz o palpite ao fornecer contagens reprodutíveis.
@@ -28,168 +28,114 @@ PARES = PASTA_T6_2 / "pares_recorrentes_fp32.csv"
 ERROS = PASTA_T6_2 / "erros_por_imagem_keras_3_modelos.csv"
 SAIDA = PASTA / "estatisticas_por_par.csv"
 SAIDA_REVISAO = PASTA / "revisao_visual_pares.csv"
-ESTAGIOS = ["Adult", "Larva", "Nymph", "Pupa", "sem_estagio"]
+ESTAGIOS = ["Adult", "Larva", "Nymph", "Pupa", "Egg", "sem_estagio"]
+CAUSAS = {"rotulo_inconsistente", "escassez_de_amostras", "semelhanca_visual_real",
+          "variacao_estagio_de_vida", "qualidade_imagem", "conteudo_multiplos_insetos",
+          "causa_indeterminada"}
 
 # Revisão humana: cada foto abaixo foi aberta manualmente (não inferida das contagens
-# agregadas) para a T6.3. "causas" usa o vocabulário fixo do critério de aceite:
-# rotulo_inconsistente | escassez_de_amostras | semelhanca_visual_real (uma foto pode
-# ter mais de uma, nessa ordem). Cobre as 48 fotos (de 177 na fila da T6.2) que
-# correspondem a algum dos 8 pares recorrentes — não uma amostra, a fila inteira
-# desses pares. Ver a seção 6.3 de docs/Projeto.md para a leitura completa por par.
+# agregadas) na revisão original da T6.3. As anotações são hipóteses, não validação
+# agronômica. Um adulto pode ter o rótulo de espécie correto mesmo que o nome comum
+# mencione a larva. Categorias adicionais evitam forçar qualidade de imagem ou
+# variação de estágio a uma suposta inconsistência taxonômica. As 48 fotos geram
+# 49 relações foto/par; uma foto pode aparecer em mais de um par.
 REVISAO_VISUAL = {
-    "IMG_01175": ("semelhanca_visual_real",
-                  "Vaquinha adulta e Astylus variegatus de referência são besouros pequenos, de coloração "
-                  "mosqueada amarelo/preto, fotografados sobre flor; silhueta e paleta muito próximas."),
-    "IMG_01741": ("semelhanca_visual_real",
-                  "Inseto minúsculo e distante no quadro (foto de flor, não de close-up); poucos pixels "
-                  "cobrem o inseto, restando pouco detalhe diagnóstico para separar das duas classes."),
-    "IMG_02978": ("rotulo_inconsistente",
-                  "Classe 'Lagarta-falsa-medideira' (lagarta = larva), mas a foto mostra uma mariposa "
-                  "adulta. life_stage vazio em field_labels.csv, confirmado visualmente como Adult."),
-    "IMG_03037": ("rotulo_inconsistente",
-                  "Mesma observação iNaturalist (inat396445719) do par IMG_02978; mariposa adulta sob o "
-                  "rótulo de classe nomeada pela larva."),
-    "IMG_02715": ("rotulo_inconsistente",
-                  "Imagem do AgroInsect (classe 'spodoptera_frugiperda'), cuja documentação do dataset "
-                  "(instruções.md) registra que essa classe contém só mariposas adultas, nunca lagartas."),
-    "IMG_03384": ("rotulo_inconsistente;semelhanca_visual_real",
-                  "Mariposa adulta de Spodoptera eridania segurada na mão; visualmente quase idêntica à "
-                  "mariposa de Chrysodeixis includens (IMG_03037): corpo pardo/acinzentado, pouso triangular."),
-    "IMG_02091": ("escassez_de_amostras",
-                  "Dichelops/Diceraeus tem só 14 fotos de campo (2 com life_stage preenchido); "
-                  "instruções.md já sinaliza a classe como fraca por poucas fotos de campo."),
-    "IMG_02271": ("semelhanca_visual_real",
-                  "Percevejo castanho sobre folha de milho; porte e coloração compatíveis tanto com "
-                  "Dichelops/Diceraeus quanto com Leptoglossus zonatus à distância da foto."),
-    "IMG_01071": ("semelhanca_visual_real",
-                  "Vaquinha adulta pequena e distante sobre folha, pouca saturação de cor visível; "
-                  "sem as manchas alaranjadas nítidas que diferenciam o inseto do percevejo-verde."),
-    "IMG_03088": ("escassez_de_amostras;semelhanca_visual_real",
-                  "Ninfa de Edessa meditabunda (life_stage=Nymph); ninfas de percevejos pentatomídeos "
-                  "convergem num padrão preto/branco/vermelho bem diferente da cor do respectivo adulto, "
-                  "e só 8 das 75 fotos de campo da classe são ninfas."),
-    # --- Vaquinha (Diabrotica speciosa) -> Astylus variegatus: restante da fila (11 fotos) ---
-    "IMG_01012": ("semelhanca_visual_real",
-                  "Vaquinha adulta em foco nítido sobre flor amarela; pose e paleta (verde/oliva com "
-                  "manchas amarelas) próximas às de Astylus mesmo sem problema de nitidez."),
-    "IMG_01217": ("semelhanca_visual_real",
-                  "Vaquinha com coloração alaranjada/listrada (variação de cor da espécie) fotografada de "
-                  "perto; padrão mosqueado se aproxima do de Astylus mesmo em foto nítida."),
     "IMG_00994": ("semelhanca_visual_real",
-                  "Vaquinha adulta nítida sobre pétala rosa; mesma leitura das demais fotos do par — boa "
-                  "qualidade de imagem não evita a confusão com Astylus."),
-    "IMG_01176": ("semelhanca_visual_real",
-                  "Mesma observação iNaturalist do já revisado IMG_01175 (inat254992883): segunda foto da "
-                  "dupla vaquinha/Astylus na mesma flor, reforça a leitura de semelhança visual real."),
+                  "Vaquinha adulta nítida sobre pétala rosa; mesma leitura das demais fotos do par — a boa qualidade não permite isolar a causa do erro; semelhança visual é hipótese."),
+    "IMG_01012": ("semelhanca_visual_real",
+                  "Vaquinha adulta em foco nítido sobre flor amarela; pose e paleta (verde/oliva com manchas amarelas) próximas às de Astylus mesmo sem problema de nitidez."),
+    "IMG_01069": ("qualidade_imagem",
+                  "Terceira foto da mesma observação (inat185718390): mesmo padrão de inseto minúsculo e distante no quadro."),
+    "IMG_01070": ("qualidade_imagem",
+                  "Mesma observação iNaturalist do já revisado IMG_01071 (inat185718390): vaquinha pequena e distante sobre folha, sem detalhe suficiente para diferenciar do percevejo-verde."),
+    "IMG_01071": ("qualidade_imagem",
+                  "Vaquinha adulta pequena e distante sobre folha, pouca saturação de cor visível; sem as manchas alaranjadas nítidas que diferenciam o inseto do percevejo-verde."),
+    "IMG_01175": ("conteudo_multiplos_insetos;causa_indeterminada",
+                  "Foto da observação iNaturalist 254992883 com mais de um inseto: um besouro na parte inferior e um inseto alado listrado em destaque. A identidade deste último não foi confirmada; não usar a imagem como evidência de um Astylus junto da vaquinha. A presença de mais de um sujeito pode interferir na classificação da foto inteira."),
+    "IMG_01176": ("conteudo_multiplos_insetos;causa_indeterminada",
+                  "Foto da observação iNaturalist 254992883 com mais de um inseto: um besouro na parte inferior e um inseto alado listrado em destaque. A identidade deste último não foi confirmada; não usar a imagem como evidência de um Astylus junto da vaquinha. A presença de mais de um sujeito pode interferir na classificação da foto inteira."),
+    "IMG_01217": ("semelhanca_visual_real",
+                  "Vaquinha com coloração alaranjada/listrada (variação de cor da espécie) fotografada de perto; padrão mosqueado se aproxima do de Astylus mesmo em foto nítida."),
     "IMG_01420": ("semelhanca_visual_real",
-                  "Vaquinha adulta em foco sobre flor laranja; padrão de manchas e porte semelhantes aos "
-                  "de Astylus mesmo com boa resolução da foto."),
-    "IMG_01851": ("semelhanca_visual_real",
-                  "Foto nítida e bem enquadrada de vaquinha adulta sobre flor azul (origem AgroInsect); a "
-                  "confusão com Astylus persiste mesmo em boa qualidade de imagem."),
-    "IMG_01669": ("semelhanca_visual_real",
-                  "Macro muito nítida de vaquinha sobre flor azul, mesma coloração mosqueada que aproxima "
-                  "a classe de Astylus."),
-    "IMG_01466": ("semelhanca_visual_real",
-                  "Vaquinha pequena e relativamente distante no quadro (foto de planta inteira, não "
-                  "close-up), somando dificuldade de imagem à semelhança com Astylus."),
-    "IMG_01516": ("semelhanca_visual_real",
-                  "Vaquinha em foco sobre flor laranja, bem enquadrada; confusão não é de qualidade de "
-                  "imagem, e sim de semelhança de porte/padrão com Astylus."),
-    "IMG_01717": ("semelhanca_visual_real",
-                  "Vaquinha nítida sobre folha verde (origem AgroInsect), close-up de boa qualidade; mesma "
-                  "leitura de semelhança visual real com Astylus."),
+                  "Vaquinha adulta em foco sobre flor laranja; padrão de manchas e porte semelhantes aos de Astylus mesmo com boa resolução da foto."),
+    "IMG_01466": ("qualidade_imagem",
+                  "Inseto pequeno e distante no quadro, com pouco detalhe diagnóstico; a dificuldade de enquadramento não comprova semelhança real entre as espécies."),
     "IMG_01485": ("semelhanca_visual_real",
-                  "Vaquinha nítida sobre flor roxa, boa iluminação e foco; reforça que a confusão com "
-                  "Astylus não depende de fotos de baixa qualidade."),
-    # --- Lagarta-falsa-medideira -> Lagarta-do-cartucho: restante da fila (5 fotos) ---
-    "IMG_03008": ("rotulo_inconsistente",
-                  "Mariposa adulta de Chrysodeixis includens pousada em suporte metálico; mesmo padrão de "
-                  "rótulo inconsistente do par (classe nomeada pela larva, foto de adulto)."),
-    "IMG_02972": ("rotulo_inconsistente",
-                  "Mariposa adulta pousada em tecido claro; life_stage não preenchido em "
-                  "field_labels.csv, confirmado visualmente como adulto, não lagarta."),
-    "IMG_03007": ("rotulo_inconsistente",
-                  "Mesma observação iNaturalist do IMG_03008 (inat22860722): segunda foto do mesmo "
-                  "espécime adulto."),
-    "IMG_02973": ("rotulo_inconsistente",
-                  "Mesma observação do IMG_02972 (inat10204316): segunda foto do mesmo indivíduo adulto, "
-                  "asas estendidas."),
-    "IMG_02974": ("rotulo_inconsistente",
-                  "Mesma observação do IMG_02972/IMG_02973 (inat10204316): terceira foto do mesmo "
-                  "indivíduo adulto, mostrando as asas por cima."),
-    # --- Lagarta-das-vagens -> Lagarta-do-cartucho: restante da fila (5 fotos) ---
-    "IMG_03446": ("rotulo_inconsistente",
-                  "Mariposa adulta de Spodoptera eridania pousada em madeira; rótulo 'lagarta-das-vagens' "
-                  "não corresponde ao estágio mostrado."),
-    "IMG_03414": ("rotulo_inconsistente",
-                  "Mariposa adulta pousada em superfície metálica; mesmo padrão de inconsistência de "
-                  "estágio de vida do par."),
-    "IMG_03447": ("rotulo_inconsistente",
-                  "Mesma observação do IMG_03446 (inat97603271): segunda foto do mesmo indivíduo adulto."),
-    "IMG_03304": ("rotulo_inconsistente",
-                  "Mariposa adulta de Spodoptera cosmioides com asas abertas sobre tecido estampado; "
-                  "mesmo padrão de rótulo inconsistente."),
-    "IMG_03424": ("semelhanca_visual_real",
-                  "Única foto do par que mostra de fato larvas (duas lagartas escuras sobre banana, isca "
-                  "de armadilha); aqui a causa não é rótulo, e sim semelhança visual real entre larvas "
-                  "escuras de espécies diferentes de Spodoptera."),
-    # --- Percevejo-barriga-verde -> Percevejo-do-milho: restante da fila (3 fotos) ---
-    "IMG_02217": ("semelhanca_visual_real",
-                  "Percevejo castanho parcialmente encoberto por folhas de milho; silhueta pouco visível "
-                  "soma-se à semelhança de porte/cor com Leptoglossus."),
+                  "Vaquinha nítida sobre flor roxa, boa iluminação e foco; reforça que a confusão com Astylus não depende de fotos de baixa qualidade."),
+    "IMG_01516": ("semelhanca_visual_real",
+                  "Vaquinha em foco sobre flor laranja, bem enquadrada; semelhança de porte/padrão com Astylus é hipótese; qualidade não isola outras causas."),
+    "IMG_01669": ("semelhanca_visual_real",
+                  "Macro muito nítida de vaquinha sobre flor azul, mesma coloração mosqueada que aproxima a classe de Astylus."),
+    "IMG_01717": ("semelhanca_visual_real",
+                  "Vaquinha nítida sobre folha verde (origem AgroInsect), close-up de boa qualidade; mesma leitura de semelhança visual real com Astylus."),
+    "IMG_01741": ("qualidade_imagem",
+                  "Inseto minúsculo e distante no quadro (foto de flor, não de close-up); poucos pixels cobrem o inseto, restando pouco detalhe diagnóstico para separar das duas classes."),
+    "IMG_01851": ("semelhanca_visual_real",
+                  "Foto nítida e bem enquadrada de vaquinha adulta sobre flor azul (origem AgroInsect); o erro com Astylus foi observado apesar da boa qualidade; a causa permanece hipótese."),
+    "IMG_01894": ("qualidade_imagem",
+                  "Vaquinha pequena fotografada de longe sobre folha grande; mesmo padrão de imagem de baixa qualidade diagnóstica dos demais erros deste par."),
+    "IMG_02030": ("qualidade_imagem",
+                  "Inseto escuro e pequeno, parcialmente nas sombras entre folhas; pouco detalhe de cor/forma disponível para diferenciar as classes."),
+    "IMG_02091": ("escassez_de_amostras",
+                  "Dichelops/Diceraeus tem só 14 fotos de campo (2 com life_stage preenchido); instruções.md já sinaliza a classe como fraca por poucas fotos de campo."),
     "IMG_02123": ("semelhanca_visual_real",
-                  "Percevejo castanho bem enquadrado e nítido sobre colmo de milho; confirma que a "
-                  "confusão é de semelhança visual real, não de qualidade de imagem."),
-    "IMG_02312": ("semelhanca_visual_real",
-                  "Foto em close extremo que corta o contorno do inseto, ocultando a silhueta "
-                  "característica que normalmente diferencia os dois percevejos castanhos."),
-    # --- Vaquinha -> Percevejo-verde: restante da fila (4 fotos) ---
-    "IMG_01070": ("semelhanca_visual_real",
-                  "Mesma observação iNaturalist do já revisado IMG_01071 (inat185718390): vaquinha pequena "
-                  "e distante sobre folha, sem detalhe suficiente para diferenciar do percevejo-verde."),
-    "IMG_01069": ("semelhanca_visual_real",
-                  "Terceira foto da mesma observação (inat185718390): mesmo padrão de inseto minúsculo e "
-                  "distante no quadro."),
-    "IMG_02030": ("semelhanca_visual_real",
-                  "Inseto escuro e pequeno, parcialmente nas sombras entre folhas; pouco detalhe de "
-                  "cor/forma disponível para diferenciar as classes."),
-    "IMG_01894": ("semelhanca_visual_real",
-                  "Vaquinha pequena fotografada de longe sobre folha grande; mesmo padrão de imagem de "
-                  "baixa qualidade diagnóstica dos demais erros deste par."),
-    # --- Lagarta-falsa-medideira -> Lagarta-das-vagens: restante da fila (2 fotos; IMG_03008 já revisada acima) ---
-    "IMG_03035": ("rotulo_inconsistente",
-                  "Mariposa adulta de Chrysodeixis includens segurada na mão; mesma observação iNaturalist "
-                  "do já revisado IMG_03037 (inat396445719)."),
-    "IMG_03036": ("rotulo_inconsistente",
-                  "Terceira foto da mesma observação (inat396445719): mesmo indivíduo adulto, ângulo "
-                  "mostrando as asas por cima."),
-    # --- Lagarta-do-cartucho -> Lagarta-falsa-medideira: restante da fila (4 fotos) ---
-    "IMG_02814": ("rotulo_inconsistente",
-                  "Mariposa adulta de Spodoptera frugiperda (origem AgroInsect) pousada em madeira; classe "
-                  "'lagarta-do-cartucho' sem corresponder ao estágio larval."),
-    "IMG_02673": ("rotulo_inconsistente",
-                  "Mariposa adulta pousada em superfície escura; mesmo padrão de inconsistência de estágio "
-                  "de vida já documentado para esta classe do AgroInsect."),
-    "IMG_02741": ("rotulo_inconsistente",
-                  "Mariposa adulta sobre fundo claro; confirma que toda a fila de erro do AgroInsect para "
-                  "esta classe é de adultos, não larvas."),
-    "IMG_02546": ("rotulo_inconsistente",
-                  "Mariposa adulta com padrão de asas dourado/castanho sobre fundo claro; mesma "
-                  "inconsistência de rótulo do restante do par."),
-    # --- Percevejo-asa-preta -> Percevejo-verde: restante da fila (4 fotos) ---
+                  "Foto registrada como nítida e bem enquadrada de percevejo castanho sobre colmo de milho. Semelhança de porte/cor é hipótese, não identificação taxonômica confirmada nem prova isolada da causa do erro."),
+    "IMG_02217": ("qualidade_imagem",
+                  "Percevejo castanho parcialmente encoberto por folhas de milho; silhueta pouco visível soma-se à semelhança de porte/cor com Leptoglossus."),
+    "IMG_02271": ("semelhanca_visual_real",
+                  "Percevejo castanho sobre folha de milho; porte e coloração compatíveis tanto com Dichelops/Diceraeus quanto com Leptoglossus zonatus à distância da foto."),
+    "IMG_02312": ("qualidade_imagem",
+                  "Foto em close extremo que corta o contorno do inseto, ocultando a silhueta característica que normalmente diferencia os dois percevejos castanhos."),
+    "IMG_02546": ("variacao_estagio_de_vida;causa_indeterminada",
+                  "A revisão visual registra uma mariposa adulta nesta foto. A classe identifica a espécie, não apenas a larva; a fase adulta não comprova rótulo taxonômico incorreto. Avaliar cobertura dos estágios e o escopo do MVP com o parceiro."),
+    "IMG_02673": ("variacao_estagio_de_vida;causa_indeterminada",
+                  "A revisão visual registra uma mariposa adulta nesta foto. A classe identifica a espécie, não apenas a larva; a fase adulta não comprova rótulo taxonômico incorreto. Avaliar cobertura dos estágios e o escopo do MVP com o parceiro."),
+    "IMG_02715": ("variacao_estagio_de_vida;causa_indeterminada",
+                  "Adulto da classe Spodoptera frugiperda, fonte AgroInsect. A documentação da fonte declara que suas fotos dessa classe são de adultos; o nome comum 'lagarta-do-cartucho' não define uma classe exclusivamente larval."),
+    "IMG_02741": ("variacao_estagio_de_vida;causa_indeterminada",
+                  "A revisão visual registra uma mariposa adulta nesta foto. A classe identifica a espécie, não apenas a larva; a fase adulta não comprova rótulo taxonômico incorreto. Avaliar cobertura dos estágios e o escopo do MVP com o parceiro."),
+    "IMG_02814": ("variacao_estagio_de_vida;causa_indeterminada",
+                  "A revisão visual registra uma mariposa adulta nesta foto. A classe identifica a espécie, não apenas a larva; a fase adulta não comprova rótulo taxonômico incorreto. Avaliar cobertura dos estágios e o escopo do MVP com o parceiro."),
+    "IMG_02972": ("variacao_estagio_de_vida;causa_indeterminada",
+                  "A revisão visual registra uma mariposa adulta nesta foto. A classe identifica a espécie, não apenas a larva; a fase adulta não comprova rótulo taxonômico incorreto. Avaliar cobertura dos estágios e o escopo do MVP com o parceiro."),
+    "IMG_02973": ("variacao_estagio_de_vida;causa_indeterminada",
+                  "A revisão visual registra uma mariposa adulta nesta foto. A classe identifica a espécie, não apenas a larva; a fase adulta não comprova rótulo taxonômico incorreto. Avaliar cobertura dos estágios e o escopo do MVP com o parceiro."),
+    "IMG_02974": ("variacao_estagio_de_vida;causa_indeterminada",
+                  "A revisão visual registra uma mariposa adulta nesta foto. A classe identifica a espécie, não apenas a larva; a fase adulta não comprova rótulo taxonômico incorreto. Avaliar cobertura dos estágios e o escopo do MVP com o parceiro."),
+    "IMG_02978": ("variacao_estagio_de_vida;causa_indeterminada",
+                  "Mariposa adulta; life_stage ausente no metadado. Observação iNaturalist 10704962, diferente de IMG_03035–IMG_03037 (396445719). Fase adulta não comprova erro no rótulo de espécie."),
+    "IMG_03007": ("variacao_estagio_de_vida;causa_indeterminada",
+                  "A revisão visual registra uma mariposa adulta nesta foto. A classe identifica a espécie, não apenas a larva; a fase adulta não comprova rótulo taxonômico incorreto. Avaliar cobertura dos estágios e o escopo do MVP com o parceiro."),
+    "IMG_03008": ("variacao_estagio_de_vida;causa_indeterminada",
+                  "A revisão visual registra uma mariposa adulta nesta foto. A classe identifica a espécie, não apenas a larva; a fase adulta não comprova rótulo taxonômico incorreto. Avaliar cobertura dos estágios e o escopo do MVP com o parceiro."),
+    "IMG_03035": ("variacao_estagio_de_vida;causa_indeterminada",
+                  "A revisão visual registra uma mariposa adulta nesta foto. A classe identifica a espécie, não apenas a larva; a fase adulta não comprova rótulo taxonômico incorreto. Avaliar cobertura dos estágios e o escopo do MVP com o parceiro."),
+    "IMG_03036": ("variacao_estagio_de_vida;causa_indeterminada",
+                  "A revisão visual registra uma mariposa adulta nesta foto. A classe identifica a espécie, não apenas a larva; a fase adulta não comprova rótulo taxonômico incorreto. Avaliar cobertura dos estágios e o escopo do MVP com o parceiro."),
+    "IMG_03037": ("variacao_estagio_de_vida;causa_indeterminada",
+                  "Mariposa adulta da observação iNaturalist 396445719, compartilhada com IMG_03035 e IMG_03036. IMG_02978 pertence a 10704962, não ao mesmo indivíduo. Fase adulta não comprova erro taxonômico."),
     "IMG_03086": ("escassez_de_amostras;semelhanca_visual_real",
-                  "Mesma observação iNaturalist do já revisado IMG_03088 (inat147542055): ninfa de Edessa "
-                  "meditabunda, padrão preto/branco/vermelho típico de ninfas de pentatomídeos."),
+                  "Mesma observação iNaturalist do já revisado IMG_03088 (inat147542055): ninfa de Edessa meditabunda, padrão preto/branco/vermelho típico de ninfas de pentatomídeos."),
+    "IMG_03088": ("escassez_de_amostras;semelhanca_visual_real",
+                  "Ninfa de Edessa meditabunda (life_stage=Nymph); ninfas de percevejos pentatomídeos convergem num padrão preto/branco/vermelho bem diferente da cor do respectivo adulto, e só 8 das 75 fotos de campo da classe são ninfas."),
+    "IMG_03090": ("escassez_de_amostras;semelhanca_visual_real",
+                  "Quarta foto da mesma observação (inat147542055): mesma ninfa, reforça que a 'recorrência' é um único espécime fotografado várias vezes."),
     "IMG_03091": ("escassez_de_amostras;semelhanca_visual_real",
                   "Terceira foto da mesma observação (inat147542055): mesma ninfa em outro ângulo."),
-    "IMG_03090": ("escassez_de_amostras;semelhanca_visual_real",
-                  "Quarta foto da mesma observação (inat147542055): mesma ninfa, reforça que a "
-                  "'recorrência' é um único espécime fotografado várias vezes."),
     "IMG_03106": ("escassez_de_amostras;semelhanca_visual_real",
-                  "Observação iNaturalist diferente (inat198202850): ninfa em estágio mais avançado "
-                  "(pré-asas visíveis), ainda sem a coloração definitiva do adulto que diferenciaria a "
-                  "espécie."),
+                  "Observação iNaturalist diferente (inat198202850): ninfa em estágio mais avançado (pré-asas visíveis), ainda sem a coloração definitiva do adulto que diferenciaria a espécie."),
+    "IMG_03304": ("variacao_estagio_de_vida;causa_indeterminada",
+                  "A revisão visual registra uma mariposa adulta nesta foto. A classe identifica a espécie, não apenas a larva; a fase adulta não comprova rótulo taxonômico incorreto. Avaliar cobertura dos estágios e o escopo do MVP com o parceiro."),
+    "IMG_03384": ("variacao_estagio_de_vida;causa_indeterminada",
+                  "A revisão visual registra uma mariposa adulta nesta foto. A classe identifica a espécie, não apenas a larva; a fase adulta não comprova rótulo taxonômico incorreto. Avaliar cobertura dos estágios e o escopo do MVP com o parceiro."),
+    "IMG_03414": ("variacao_estagio_de_vida;causa_indeterminada",
+                  "A revisão visual registra uma mariposa adulta nesta foto. A classe identifica a espécie, não apenas a larva; a fase adulta não comprova rótulo taxonômico incorreto. Avaliar cobertura dos estágios e o escopo do MVP com o parceiro."),
+    "IMG_03424": ("semelhanca_visual_real",
+                  "Duas larvas escuras sobre banana. A semelhança visual entre larvas é uma hipótese para o erro; a foto não permite confirmar por si só espécies diferentes nem rótulo incorreto."),
+    "IMG_03446": ("variacao_estagio_de_vida;causa_indeterminada",
+                  "A revisão visual registra uma mariposa adulta nesta foto. A classe identifica a espécie, não apenas a larva; a fase adulta não comprova rótulo taxonômico incorreto. Avaliar cobertura dos estágios e o escopo do MVP com o parceiro."),
+    "IMG_03447": ("variacao_estagio_de_vida;causa_indeterminada",
+                  "A revisão visual registra uma mariposa adulta nesta foto. A classe identifica a espécie, não apenas a larva; a fase adulta não comprova rótulo taxonômico incorreto. Avaliar cobertura dos estágios e o escopo do MVP com o parceiro."),
 }
 
 
@@ -271,27 +217,35 @@ def calcular_par(
     return linha
 
 
-def gerar_revisao_visual(pares: list[dict[str, str]], erros: list[dict[str, str]]) -> str:
+def gerar_revisao_visual(
+    pares: list[dict[str, str]], erros: list[dict[str, str]],
+    field_labels: dict[str, dict[str, str]],
+) -> str:
     por_id = {linha["image_id"]: linha for linha in erros}
-    pares_validos = {(par["classe_real"], par["classe_prevista"]) for par in pares}
+    if len(por_id) != len(erros):
+        raise ValueError("ID repetido na fila de erros")
+    pares_validos = sorted({(par["classe_real"], par["classe_prevista"]) for par in pares})
+    esperadas = {(erro["image_id"], real, prevista) for erro in erros
+                 for real, prevista in pares_validos
+                 if erro["classe_real"] == real and prevista in erro["previsoes_erradas"]}
+    if {i for i, _, _ in esperadas} != set(REVISAO_VISUAL):
+        raise ValueError("revisão não cobre exatamente as fotos dos pares recorrentes")
     linhas = []
-    for image_id, (causas, observacao) in REVISAO_VISUAL.items():
-        if image_id not in por_id:
-            raise ValueError(f"{image_id} não está na fila de erros da T6.2")
+    for image_id, real, prevista in sorted(esperadas):
+        causas, observacao = REVISAO_VISUAL[image_id]
+        if not causas or not set(causas.split(";")) <= CAUSAS or not observacao.strip():
+            raise ValueError(f"{image_id}: causas ou observação inválidas")
         erro = por_id[image_id]
-        par_imagem = next(
-            ((real, prevista) for real, prevista in pares_validos
-             if erro["classe_real"] == real and prevista in erro["previsoes_erradas"]),
-            None,
-        )
-        if par_imagem is None:
-            raise ValueError(f"{image_id} não corresponde a nenhum par recorrente da T6.2")
+        metadado = field_labels.get(erro["caminho_relativo"], {})
         linhas.append({
             "image_id": image_id,
             "caminho_relativo": erro["caminho_relativo"],
-            "classe_real": par_imagem[0],
-            "classe_prevista": par_imagem[1],
+            "classe_real": real,
+            "classe_prevista": prevista,
+            "inat_obs_id": metadado.get("inat_obs_id", ""),
+            "life_stage_metadado": metadado.get("life_stage", ""),
             "causas_identificadas": causas,
+            "status_causa": "indeterminada" if "causa_indeterminada" in causas else "hipotese",
             "observacao_revisao": observacao,
         })
     linhas.sort(key=lambda linha: (linha["classe_real"], linha["classe_prevista"], linha["image_id"]))
@@ -299,7 +253,8 @@ def gerar_revisao_visual(pares: list[dict[str, str]], erros: list[dict[str, str]
     escritor = csv.DictWriter(
         saida,
         fieldnames=["image_id", "caminho_relativo", "classe_real", "classe_prevista",
-                    "causas_identificadas", "observacao_revisao"],
+                    "inat_obs_id", "life_stage_metadado", "causas_identificadas",
+                    "status_causa", "observacao_revisao"],
         lineterminator="\n",
     )
     escritor.writeheader()
@@ -332,8 +287,9 @@ def executar(raiz_imagens: Path, verificar: bool = False) -> None:
     field_labels = ler_field_labels(raiz_imagens)
     linhas = [calcular_par(par, erros, field_labels, classes_modelo, pastas_por_classe) for par in pares]
     conteudo = gerar_csv(linhas)
-    conteudo_revisao = gerar_revisao_visual(pares, erros)
-    PASTA.mkdir(parents=True, exist_ok=True)
+    conteudo_revisao = gerar_revisao_visual(pares, erros, field_labels)
+    if not verificar:
+        PASTA.mkdir(parents=True, exist_ok=True)
     saidas = {SAIDA: conteudo, SAIDA_REVISAO: conteudo_revisao}
     for caminho, texto in saidas.items():
         if verificar:
@@ -342,7 +298,9 @@ def executar(raiz_imagens: Path, verificar: bool = False) -> None:
         else:
             caminho.write_text(texto, encoding="utf-8", newline="\n")
     modo = "verificados" if verificar else "gerados"
-    print(f"T6.3: {len(linhas)} pares recorrentes, {len(REVISAO_VISUAL)} fotos revisadas; artefatos {modo}.")
+    relacoes = len(list(csv.DictReader(io.StringIO(conteudo_revisao))))
+    print(f"T6.3: {len(linhas)} pares recorrentes, {len(REVISAO_VISUAL)} fotos anotadas, "
+          f"{relacoes} relações foto/par; artefatos {modo}.")
 
 
 if __name__ == "__main__":
