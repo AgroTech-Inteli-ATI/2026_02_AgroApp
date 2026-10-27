@@ -53,6 +53,7 @@
 - [5.2 Baseline de referência (T5.2)](#52-baseline-de-referência-t52)
 - [5.3 Varredura de arquiteturas (T5.3)](#53-varredura-de-arquiteturas-t53)
 - [5.4 Busca de hiperparâmetros (T5.4)](#54-busca-de-hiperparâmetros-t54)
+- [5.5 Registro comparativo de experimentos (T5.5)](#55-registro-comparativo-de-experimentos-t55)
 
 </details>
 
@@ -2161,6 +2162,135 @@ erro, e um smoke test de ponta a ponta com imagens sintéticas. As partes que
 dependem de TensorFlow/Keras são puladas se eles não estiverem instalados.
 - A validação é usada tanto na parada antecipada quanto na seleção; o teste
   permanece reservado para a avaliação final.
+
+## 5.5 Registro comparativo de experimentos (T5.5)
+
+### Objetivo e tabela única
+
+Consolidar todas as execuções disponíveis em uma tabela, incluindo as descartadas
+e incompletas, para comparar arquitetura, hiperparâmetros, macro F1, desempenho
+por classe, tamanho do modelo e latência estimada. O consolidador está em
+[`src/registro_experimentos_t5_5.py`](../src/registro_experimentos_t5_5.py) e usa
+somente a biblioteca padrão do Python. Não carrega modelos nem acessa o teste.
+
+A [tabela comparativa](../assets/data/experimentos_T5_5/experimentos.md) e sua
+[versão CSV](../assets/data/experimentos_T5_5/experimentos.csv) são duas representações
+do mesmo registro, com uma linha por execução disponibilizada. A tabela versionada
+contém o **baseline CNN treinado da seção 5.2**, com macro F1 de validação
+**0,120275**, desempenho das 13 classes, tamanho real do arquivo `.keras` e
+proveniência. Os artefatos estão em
+[`assets/modelos/baseline_T5_2/`](../assets/modelos/baseline_T5_2/), incluindo o
+modelo treinado. Sua latência ainda não foi medida e permanece explicitamente
+pendente, sem substituir esse valor por zero ou por um benchmark bibliográfico.
+
+As seções 5.3 e 5.4 já documentam outros treinamentos. Os notebooks e resultados
+da varredura estão no Drive referenciado na seção 5.3; os arquivos brutos da busca
+e dos retreinos da seção 5.4 ainda não estão versionados neste checkout. Essas
+rodadas precisam ser disponibilizadas no formato de entrada do consolidador antes
+de integrar a tabela única. A tabela atual não representa todas as execuções do
+projeto nem estabelece uma classificação final dos candidatos.
+
+### Geração e atualização
+
+Na raiz do repositório, executar para reproduzir a tabela versionada:
+
+```bash
+python -m src.registro_experimentos_t5_5 --entrada assets/modelos --saida assets/data/experimentos_T5_5
+```
+
+O comando busca recursivamente pastas com `config_usada.json`,
+`metricas_validacao.json`, `ambiente.json` ou `registro_t5_5.json`, ordena-as pelo
+caminho e regenera a tabela de forma determinística. Apontar `--entrada` para a
+pasta que reúna todas as rodadas; manter também as pastas das execuções descartadas.
+Sem `--entrada`, o comando usa `assets/modelos`, onde o baseline está versionado.
+Para analisar rodadas locais, usar `--entrada runs --saida runs/registro_T5_5`,
+preservando a tabela oficial até reunir todas as fontes numa única entrada.
+As pastas `runs/` e as imagens originais ficam fora do Git; o modelo do baseline
+é uma exceção já versionada em `assets/modelos/`. Versionar a tabela consolidada
+após cada atualização. JSON inválido ou incompatível interrompe a consolidação,
+para que a rodada não seja omitida silenciosamente.
+
+| Coluna | Origem e interpretação |
+| --- | --- |
+| `execucao` | Caminho relativo da rodada, incluindo subpastas para evitar colisão de nomes. |
+| `status` e `motivo_descarte` | `concluida`, `incompleta` ou `descartada`; descarte exige justificativa textual. |
+| `arquitetura` | Backbone da configuração, conferido com as métricas quando ambos existem. |
+| `hiperparametros` | Configuração completa em JSON: semente, batch, otimizador, taxas, épocas, parada, dropout, fine-tuning, augmentation e ponderação. |
+| `f1_macro_validacao` | Valor salvo pela T5.1, na escala de 0 a 1. |
+| `desempenho_por_classe` | Lista JSON com índice, nome, precisão, recall, F1, suporte e status de avaliação, preservada das métricas. |
+| `tamanho_modelo_bytes` e `formato_modelo` | Tamanho real do artefato serializado e sua extensão; por padrão, `melhor_modelo.keras`. Não é estimativa pelo número de parâmetros. |
+| `latencia_estimada_ms` e `contexto_latencia` | Estimativa em milissegundos e registro de dispositivo, runtime, precisão, batch, método e fonte. Ausência permanece pendente. |
+| `proveniencia` | Conteúdo de `ambiente.json`, incluindo commit, versões e hashes do índice e dos pesos. |
+| `pendencias` | Campos ainda sem evidência; ausências não são convertidas em zero. |
+
+### Descarte, falhas e latência
+
+Para acrescentar decisões e latência a uma rodada, copiar o
+[modelo de metadados](../assets/data/experimentos_T5_5/registro_exemplo.json) para
+`runs/<execucao>/registro_t5_5.json`. Ajustar `status` para `concluida` somente
+quando a execução tiver terminado, ou para `descartada`, preenchendo
+`motivo_descarte` com a razão concreta (por exemplo, falha por memória insuficiente,
+violação do protocolo ou resultado de validação inferior identificado na análise).
+Sem metadados, a presença das métricas indica conclusão; sua ausência indica
+execução incompleta. A coluna de pendências permanece independente desse status.
+
+A T5.1 cria a pasta ao final do treino. Para registrar uma falha anterior a essa
+gravação, criar uma pasta com ID único sob `runs/`, salvar a configuração tentada
+como `config_usada.json` e registrar o descarte e o motivo em `registro_t5_5.json`.
+Métricas disponíveis de uma execução descartada são mantidas na tabela; métricas
+que não chegaram a ser calculadas ficam ausentes. Não registrar uma arquitetura
+apenas estudada como se tivesse sido executada.
+
+`artefato_modelo` pode apontar para um arquivo relativo dentro da pasta da rodada,
+como um `.tflite` exportado. A latência informada deve corresponder a esse mesmo
+artefato; registrar o caminho ou hash e a evidência em `fonte`. Para estimá-la,
+usar inferência com batch 1 no dispositivo-alvo, fazer aquecimento e registrar a
+mediana de pelo menos 30 inferências, sincronizando o dispositivo antes de encerrar
+cada medição quando necessário. Identificar em `metodo` o número de repetições,
+aquecimento, threads/delegate e se o tempo inclui pré-processamento. Registrar
+dispositivo, runtime/versão e precisão; uma medição no computador de desenvolvimento
+deve ser identificada como tal. Não extrapolar latências bibliográficas como
+medições do modelo treinado. O consolidador exige esses campos quando há estimativa,
+mas não executa o benchmark nem verifica a evidência externa.
+
+### Protocolo de comparação e referência
+
+A base de estudo é o [Scikit-learn Model Evaluation](https://scikit-learn.org/stable/modules/model_evaluation.html),
+especialmente as métricas de classificação e as médias macro. A macro F1 atribui
+o mesmo peso ao F1 de cada classe incluída. O registro preserva a convenção da
+T5.1: classes sem suporte são marcadas como não avaliadas e excluídas dessa média;
+isso deve ser considerado antes de comparar rodadas com cobertura diferente.
+Precisão sem previsões positivas é zero, conforme a convenção `zero_division=0`.
+
+Comparar candidatos apenas com o mesmo dataset, partições, classes, orçamento e
+protocolo de validação; verificar os hashes e as configurações na tabela. Manter
+uma linha por semente, sem substituir execuções individuais por uma média. Usar
+macro F1 de validação como critério principal, inspecionando precisão, recall e F1
+das minoritárias. Comparar tamanho e latência somente entre formatos, precisões e
+ambientes equivalentes. A tabela não escolhe automaticamente o melhor modelo.
+As métricas de teste da seção 5.3 são exploratórias e não devem ser misturadas
+com a F1 de validação desta tabela; uma avaliação final independente requer
+novas imagens, conforme os limites descritos naquela seção.
+
+### Verificação e conclusão
+
+```bash
+python tests/validar_registro_t5_5.py
+```
+
+Os testes usam arquivos sintéticos temporários e verificam consolidação, preservação
+das métricas por classe e hiperparâmetros, tamanho do artefato, rodadas incompletas
+e descartadas, reprodutibilidade, tabela vazia e rejeição de descarte sem motivo,
+latência sem contexto, métricas fora da faixa e artefatos fora da rodada.
+Também conferem a inclusão do baseline real pela entrada padrão, preservando suas
+métricas, o tamanho do modelo e a ausência de medição de latência.
+
+O mecanismo de registro e a primeira execução real estão versionados. A cobertura
+integral do registro depende de incorporar as execuções das seções 5.3 e 5.4,
+incluindo rodadas incompletas e descartadas, com justificativas de descarte e
+evidências de tamanho e latência. A seleção do modelo deve apontar para uma linha
+rastreável dessa tabela e conferir as restrições de tamanho e latência; uma
+configuração de retreino, sozinha, não substitui o artefato treinado.
 
 # 6. Avaliação do modelo
 
