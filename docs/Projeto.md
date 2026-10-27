@@ -2709,6 +2709,60 @@ Os quatro modelos viram a mesma partição de teste, já consultada na T5.3. A r
 
 ## 6.3 Análise de erros (T6.3)
 
+### Candidato selecionado na T5.6 — cobertura da revisão
+
+Esta complementação analisa o **EfficientNet-Lite0 Keras FP32 do pacote `candidato_T5_6_20261026`**, usando as mesmas previsões e os mesmos rótulos da T6.1 e da matriz do candidato na T6.2. Foram inspecionadas visualmente, com assistência de IA, **todas as 72 imagens classificadas incorretamente**, após conferir seus hashes contra o índice. São 35 pares direcionais; os 16 pares com pelo menos dois erros reúnem 53 imagens. As outras 19 imagens, de pares com um erro, também têm registro individual. A revisão não substitui validação taxonômica por especialista.
+
+Os resultados anteriores, mantidos adiante, não são usados como contagem dos erros deste candidato. Apenas 23 das 72 imagens aparecem no registro visual histórico; as anotações desta complementação foram feitas após reabrir as imagens, sem transportar automaticamente hipóteses de outro modelo ou destino previsto.
+
+### Principais erros do candidato
+
+Na tabela, o sentido é **classe real do índice → classe prevista**. Observações de enquadramento e estágio descrevem as fotos; semelhança e escassez continuam sendo hipóteses de causa, não conclusões demonstradas.
+
+| Classe real → prevista | Erros / suporte | Evidência e interpretação |
+| --- | ---: | --- |
+| Falsa-medideira → Cartucho | 6 / 12 | Seis mariposas adultas aparentes de cinco observações iNaturalist. Forma, cor e desenho das asas motivam investigar semelhança visual; fase adulta não comprova rótulo errado. |
+| Asa-preta → Verde | 5 / 11 | As cinco fotos são da observação **147542055**, com metadado `Nymph`. O erro se concentra em uma observação, sem demonstrar cinco ocorrências independentes. Investigar cobertura de ninfas e semelhança visual. |
+| Das-vagens → Cartucho | 5 / 24 | Cinco observações: quatro fotos com adultos aparentes e uma com larva (`IMG_03427`). Há foto distante e foto com duas mariposas. Semelhança é hipótese; não foi isolada uma causa única. |
+| Vaquinha → Astylus | 5 / 157 | `IMG_01175` e `IMG_01176` mostram múltiplos insetos; `IMG_01516` mostra sujeito pequeno, e não um close-up nítido como dizia a anotação antiga. As outras duas fotos permitem investigar padrão visual; nenhuma espécie foi reidentificada. |
+| Verde → Vaquinha | 4 / 14 | Três observações, com uma delas representada por duas fotos. Há oclusão em `IMG_03216` e pouco detalhe em `IMG_03246`; as outras duas mostram o corpo. A causa do par permanece indeterminada. |
+| Verde → Barriga-verde | 4 / 14 | Quatro fotos da observação **368128786**, com corpo verde em escudo e diferentes distâncias. Semelhança de forma é hipótese; não demonstra recorrência em quatro exemplares. |
+| Percevejo-do-milho → Cigarrinha-das-pastagens | 3 / 12 | Duas observações; o corpo alongado aparece nas três fotos. Não há evidência suficiente para atribuir o erro a rótulo, escassez ou semelhança real. |
+| Cigarrinha-do-milho → Vaquinha | 3 / 29 | Três fotos AgroInsect com inseto pequeno sobre folha. Pouco detalhe diagnóstico é um fator observado; fotos visualmente próximas não comprovam identidade do exemplar. |
+| Barriga-verde → Vaquinha | 3 / 42 | Três fotos AgroInsect; duas têm sujeito pequeno e uma permite ver o corpo. Não há confirmação de causa comum às três. |
+| Cartucho → Das-vagens | 3 / 61 | Três fotos AgroInsect de mariposas adultas aparentes. Semelhança de forma e desenho das asas é hipótese; nome comum larval não indica erro de espécie. |
+| Marrom → Barriga-verde | 2 / 10 | Duas observações com insetos castanhos em escudo e corpo visível. Investigar semelhança visual e cobertura, sem reidentificação de espécie nesta revisão. |
+| Marrom → Percevejo-do-milho | 2 / 10 | Duas fotos da observação **19890644**, ambas com múltiplos insetos de aspectos distintos. Ambiguidade de sujeito é hipótese relevante para classificação da foto inteira. |
+| Asa-preta → Vaquinha | 2 / 11 | Duas observações com metadado `Nymph`. A lacuna de estágio documentado no treino também se aplica; o destino vaquinha não tem causa visual isolada. |
+| Falsa-medideira → Das-vagens | 2 / 12 | Duas fotos da observação **396445719**, ambas com mariposa pequena sobre a mão. A mesma observação também tem uma foto prevista como cartucho; não são três exemplares independentes. |
+| Barriga-verde → Das-vagens | 2 / 42 | Duas fotos AgroInsect, uma com inseto pequeno e outra com oclusão por folhas. Qualidade e enquadramento são hipóteses, sem comprovar semelhança real entre espécies. |
+| Vaquinha → Barriga-verde | 2 / 157 | Duas fotos da observação **185718390**, com inseto muito pequeno no quadro. Detalhe diagnóstico limitado, sem evidência de erro taxonômico. |
+
+### Cobertura por estágio e suspeita de rótulo
+
+O índice do treino contém **53 imagens de asa-preta em 18 grupos**, todas de campo: 27 têm metadado `Adult`, 26 não têm estágio preenchido e nenhuma está explicitamente marcada como `Nymph`. No teste, sete das 11 imagens da classe têm metadado `Nymph`, e as sete foram classificadas incorretamente: cinco como verde e duas como vaquinha. Isso sustenta investigar a cobertura de estágios, **sem afirmar que não existam ninfas nas 26 imagens de treino sem estágio informado**, nem que escassez tenha sido comprovada como causa.
+
+Uma suspeita de rótulo apareceu fora dos pares principais: **`IMG_02602`, Cartucho → Barriga-verde**. A imagem mostra dois insetos com aspecto de percevejos e contorno em escudo, em contraste com o rótulo *Spodoptera frugiperda*. A conferência do `dataset/labels.csv` mostra o mesmo rótulo na fonte, portanto a divergência visual já está presente antes desta análise. O caso foi marcado como **suspeita de rótulo inconsistente, com validação especializada pendente**. Não se confirmou a espécie dos insetos nem se alterou o rótulo ou o resultado da avaliação. Esta suspeita decorre do conteúdo da foto, não da presença de uma mariposa adulta sob um nome comum iniciado por “lagarta”.
+
+### Artefatos e reprodução da análise do candidato
+
+- [Revisão das 72 imagens](../assets/data/avaliacao_T6_3/candidato_T5_6_20261026_keras/revisao_por_imagem.csv): ID, caminho, hash, classes, grupo, observação iNaturalist, estágio do metadado, estágio visual aparente, fatores observados, hipóteses e status da causa.
+- [Análise dos 35 pares](../assets/data/avaliacao_T6_3/candidato_T5_6_20261026_keras/analise_por_par.csv): contagens, cobertura do treino e avaliação explícita de rótulo inconsistente, escassez e semelhança. Não demonstrado não equivale a descartado.
+- [Cobertura das classes por partição](../assets/data/avaliacao_T6_3/candidato_T5_6_20261026_keras/cobertura_classes.csv): 13 classes em treino, validação e teste, com fotos, grupos e estágios informados nas imagens de campo. Os grupos do índice não garantem indivíduos independentes; AgroInsect não tem identificador iNaturalist e seus estágios não foram preenchidos automaticamente.
+- [Anotações visuais de origem](../assets/data/avaliacao_T6_3/candidato_T5_6_20261026_keras/anotacoes_visuais.json), [relatório](../assets/data/avaliacao_T6_3/candidato_T5_6_20261026_keras/relatorio_erros.md) e [proveniência com hashes](../assets/data/avaliacao_T6_3/candidato_T5_6_20261026_keras/proveniencia.json).
+
+O script [analise_candidato_t6_3.py](../src/analise_candidato_t6_3.py) exige a cobertura exata dos erros, confere as imagens originais e as previsões da T6.1/T6.2, cruza os metadados com as partições do índice e produz os artefatos de forma determinística. O modo de verificação não reescreve arquivos:
+
+```bash
+python -m src.analise_candidato_t6_3 --raiz-imagens /caminho/das/fontes
+python -m src.analise_candidato_t6_3 --raiz-imagens /caminho/das/fontes --verificar
+python tests/validar_analise_candidato_t6_3.py
+```
+
+A raiz deve conter `dataset/field/field_labels.csv`, `dataset/labels.csv` e as imagens originais. A complementação preserva o modelo, os rótulos e as métricas: não há treinamento, nova inferência ou ajuste de limiar. O teste já consultado mantém caráter exploratório; o resultado do Keras FP32 não substitui a análise do TFLite INT8. Nenhuma causa está confirmada por especialista. A suspeita de rótulo, a cobertura de estágios e as hipóteses dos pares precisam de validação antes de orientar correções no acervo ou decisões de agrupamento.
+
+### Análise histórica dos modelos anteriores
+
 ### Objetivo e escopo
 
 Investigar os oito pares de classes com confusão recorrente identificados na
