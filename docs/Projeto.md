@@ -2597,6 +2597,12 @@ As linhas representam a classe real; as colunas, a prevista. Os números são co
 | Percevejo-verde → Vaquinha | 4 | 14 | 28,6% |
 | Percevejo-verde → Percevejo-barriga-verde | 4 | 14 | 28,6% |
 
+A acurácia global de **84,8% (401/473)** deve ser lida junto com o recall por classe, isto é, a parcela das imagens reais daquela classe que foi reconhecida corretamente. Os menores recalls nesta amostra são os de **lagarta-falsa-medideira: 33,3% (4/12)**, **percevejo-verde: 35,7% (5/14)** e **percevejo-asa-preta: 36,4% (4/11)**. Assim, o total de acertos não representa um desempenho uniforme entre as classes. Esses resultados têm suportes pequenos e podem variar bastante com poucos exemplos adicionais.
+
+O par com maior número de erros é **lagarta-falsa-medideira → lagarta-do-cartucho**, com seis casos, equivalentes a 50,0% das 12 imagens reais de falsa-medideira. A linha completa da matriz mostra, porém, **oito erros nessa classe**: além dos seis classificados como lagarta-do-cartucho, dois foram classificados como lagarta-das-vagens. Portanto, o maior par não resume todas as dificuldades de reconhecimento da classe.
+
+Contagem e proporção também levam a leituras diferentes: **vaquinha → Astylus variegatus** e **percevejo-asa-preta → percevejo-verde** têm cinco erros cada, mas representam, respectivamente, **3,2% de 157 imagens** e **45,5% de 11 imagens** da classe real. Para orientar a T6.3, a revisão deve considerar a contagem, a proporção de erros e o suporte de cada classe. O destaque de pelo menos dois erros serve à leitura da figura e não deve ser o único critério de prioridade; os casos de um único erro também permanecem disponíveis para revisão individual, sem causa atribuída automaticamente.
+
 O [relatório completo](../assets/data/avaliacao_T6_2/candidato_T5_6_20261026_keras/relatorio_matriz.md) identifica nominalmente os 16 pares com pelo menos dois erros. A tabela de [todos os pares confundidos](../assets/data/avaliacao_T6_2/candidato_T5_6_20261026_keras/pares_confundidos.csv) também preserva os casos de um único erro. Os artefatos publicados incluem:
 
 - [Matriz de contagens](../assets/data/avaliacao_T6_2/candidato_T5_6_20261026_keras/matriz_contagens.csv) e [matriz normalizada por classe real](../assets/data/avaliacao_T6_2/candidato_T5_6_20261026_keras/matriz_normalizada.csv), com nomes completos e a mesma ordem das 13 classes do pacote selecionado.
@@ -2612,6 +2618,8 @@ python tests/validar_matriz_candidato_t6_2.py
 ```
 
 Este resultado corresponde ao **checkpoint Keras FP32**; a conversão TFLite INT8 exige avaliação própria. A partição já foi consultada em etapas anteriores, portanto esta análise é exploratória e não constitui avaliação final independente. Não foram ajustados pesos, limiares ou critérios de seleção com esses resultados.
+
+As matrizes históricas abaixo correspondem a outros checkpoints e a um recorte de 474 imagens, enquanto o candidato foi avaliado em 473. A diferença entre suas métricas, isoladamente, não demonstra melhoria do modelo; uma comparação direta exigiria avaliar os checkpoints sobre o mesmo conjunto de casos e sob o mesmo protocolo.
 
 ### Matrizes históricas da varredura
 
