@@ -2502,9 +2502,52 @@ argmax da saída softmax; valores inválidos interrompem a avaliação.
 | `predicoes_teste.csv` | ID de cada imagem de teste, índice real e índice previsto, para auditoria dos cálculos. |
 | `relatorio_teste.md` | Macro F1 em destaque e tabela de precisão, recall, F1 e suporte por classe. |
 
-O tamanho atual da partição de teste é **474 imagens em 13 classes**. Esse número
-vem do manifesto e não constitui resultado de desempenho. O comando aceita o
-índice efetivamente usado pela rodada, em vez de fixar essa contagem no código.
+O índice completo da T4.5 tem **474 imagens de teste em 13 classes**. O recorte
+`dataset` da T5.2, utilizado pelo candidato selecionado, tem **473 imagens de teste**.
+O comando aceita o índice efetivamente usado pela rodada, em vez de fixar essa
+contagem no código.
+
+### Resultado do candidato selecionado
+
+Em **27/10/2026**, o avaliador existente foi executado sobre o checkpoint
+**EfficientNet-Lite0 Keras FP32 selecionado na T5.6**, sem retreino ou alteração
+dos pesos. O modelo da rodada
+`20261026-213017_efficientnet_lite0_s42` tem o mesmo hash do `modelo.keras` do
+pacote `candidato_T5_6_20261026`. O índice utilizado é o recorte `dataset` da T5.2,
+com o hash registrado no treinamento e no manifesto de seleção.
+
+| Métrica no teste exploratório | Resultado |
+| --- | ---: |
+| **Macro F1 — principal** | **0,732928** |
+| Balanced accuracy | 0,712632 |
+| Acurácia — complementar | 0,847780 |
+| Imagens avaliadas | 473 |
+| Classes avaliadas | 13/13 |
+
+Os resultados são preservados em
+[`avaliacao_T6_1/candidato_T5_6_20261026_keras`](../assets/data/avaliacao_T6_1/candidato_T5_6_20261026_keras/):
+o [relatório](../assets/data/avaliacao_T6_1/candidato_T5_6_20261026_keras/relatorio_teste.md)
+e o [CSV por classe](../assets/data/avaliacao_T6_1/candidato_T5_6_20261026_keras/metricas_por_classe.csv)
+apresentam precisão, recall, F1 e suporte. Também estão versionados o JSON de
+métricas, a matriz de confusão nele contida e as 473 previsões por imagem.
+O arquivo `proveniencia_avaliacao.json` registra ambiente, hashes, identidade
+da rodada e vínculo ao pacote selecionado e à linha da T5.5.
+
+Os menores F1 foram **percevejo-verde: 0,416667** (suporte 14),
+**lagarta-falsa-medideira: 0,470588** (suporte 12) e
+**percevejo-asa-preta: 0,533333** (suporte 11). A média global não elimina essas
+limitações por classe, e os pequenos suportes tornam as estimativas instáveis.
+
+Para reproduzir em uma saída nova, mantendo os relatórios preservados:
+
+```bash
+python -m src.avaliacao_t6_1 --rodada assets/modelos/rodadas_T5_6_20261026/20261026-213017_efficientnet_lite0_s42 --raiz-imagens /caminho/das/fontes --indice assets/data/treino_T5_2/indice_dataset.csv --saida runs/reproducao_T6_1_candidato_keras --batch 32
+```
+
+A execução abriu somente as imagens de teste, com hashes conferidos, sem
+augmentation, reamostragem ou pesos nas métricas. Precisão, recall, F1 e suporte
+das 13 classes, macro F1, balanced accuracy e acurácia foram recalculados com
+scikit-learn a partir das previsões salvas e coincidem com o relatório.
 
 ### Verificação e situação da entrega
 
@@ -2520,12 +2563,19 @@ relatórios não são sobrescritos, e índices, hashes, grupos cruzados e saída
 inválidas são rejeitados. Esses testes não substituem a inferência com um modelo
 Keras real e os arquivos originais.
 
-O fluxo de avaliação está implementado. **Ainda não há uma rodada T5.1 selecionada
-nem as imagens originais disponíveis neste checkout para executar o avaliador**.
-Quando executado com o índice atual, o relatório descreve somente o teste
-exploratório já consultado na T5.3. A avaliação final independente exigirá novas
-imagens separadas por planta ou origem e uma extensão do contrato do avaliador
-para aceitar esse novo índice sem confundi-lo com o índice de treinamento.
+O avaliador integrado pelo PR #28 foi reutilizado sem alterações para produzir
+os resultados reais acima; seus **sete testes passaram**. A execução complementa
+a implementação com os artefatos do checkpoint selecionado. A F1 0,7209 mencionada
+na revisão daquele PR não identifica essa mesma rodada e não é reaproveitada
+como resultado do candidato atual.
+
+**O artefato avaliado é o checkpoint Keras, não o TFLite INT8 destinado ao embarque.**
+As métricas de validação da conversão na seção 5.6 não são métricas de teste e não
+devem ser confundidas com estes resultados. A partição já foi consultada
+historicamente na T5.3: esta avaliação é exploratória e não deve orientar nova
+seleção, retreino ou ajuste de limiar. Uma avaliação final independente exigirá
+novas imagens separadas por planta ou origem e uma extensão do contrato do
+avaliador para aceitar esse novo índice sem confundi-lo com o índice de treino.
 
 
 ## 6.2 Matriz de confusão (T6.2)
