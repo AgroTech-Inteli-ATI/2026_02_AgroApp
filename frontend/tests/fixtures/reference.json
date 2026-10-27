@@ -1,0 +1,79 @@
+{
+  "modelSha256": "07e787453ab3775473f15e5081b0e0f0b67b67e4394c13ecbbea01b69c1c90cd",
+  "webModelSha256": "4831bd2420e79a83bf4e23aaf25ac6f2156e0f959f59ff347ce27b15aa773185",
+  "webSpecializationVerified": true,
+  "preprocessing": [
+    {
+      "width": 17,
+      "height": 9,
+      "sha256": "d44a44003ae9e50ff2056797c8afd21d33d02af99d1a060cebfb129d483f1941"
+    },
+    {
+      "width": 391,
+      "height": 173,
+      "sha256": "94d9d7d946e0ba80b508d397d6202e9fc4999aa92383bd9617a36e90021ba3aa"
+    },
+    {
+      "width": 45,
+      "height": 301,
+      "sha256": "0b146892df9d41ab144ac61a717d6ade4d3dc00e989adb4cfe4bf6a69cb0ca74"
+    },
+    {
+      "width": 7,
+      "height": 7,
+      "sha256": "0041e986ba4cc1bb0cc3cf24c7128d5e5610b4d37a292ac78a2a87ac153ecf00"
+    },
+    {
+      "width": 448,
+      "height": 223,
+      "sha256": "a5b19f06d7131bbf2b2eb995613c4aac3f1c34b86fc498576a130ba506e57054"
+    },
+    {
+      "width": 1,
+      "height": 13,
+      "sha256": "5dd1d8b3a3a8d02b112721c0778a400a2a44c36fd9eb9de685da6e68fa7df3ad"
+    }
+  ],
+  "predictions": {
+    "pattern.png": [
+      0.51953125,
+      0.25,
+      0.05859375,
+      0.0703125,
+      0.0,
+      0.0078125,
+      0.00390625,
+      0.0078125,
+      0.0,
+      0.00390625,
+      0.01953125,
+      0.046875,
+      0.015625
+    ],
+    "orientation.jpg": [
+      0.3515625,
+      0.140625,
+      0.09765625,
+      0.09765625,
+      0.0,
+      0.0390625,
+      0.0078125,
+      0.01953125,
+      0.0078125,
+      0.00390625,
+      0.06640625,
+      0.140625,
+      0.02734375
+    ]
+  },
+  "quantization": {
+    "input": [
+      0.003921568859368563,
+      -128
+    ],
+    "output": [
+      0.00390625,
+      -128
+    ]
+  }
+}
