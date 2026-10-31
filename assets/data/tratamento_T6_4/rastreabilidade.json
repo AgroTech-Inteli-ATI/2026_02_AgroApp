@@ -1,0 +1,38 @@
+{
+  "esquema": "rastreabilidade_T6_4_v1",
+  "data": "2026-10-31",
+  "base_git": "3e81f92",
+  "modelo_sha256": "089a8d903a78898badf385f0d57006a4fb556d76e3e8fae719babdaf564aa51a",
+  "fontes_sha256": {
+    "assets/modelos/candidato_T5_6_20261026/classes.json": "1058619e188ffd7fa42bfc6821e2e122356b35d8503af71b987f37ae1e4572f4",
+    "assets/modelos/candidato_T5_6_20261026/manifesto.json": "72bd8194246cf5673cb6194491bbe1c0410d526a4c14027a087c414b9fa14f62",
+    "assets/data/avaliacao_T6_1/candidato_T5_6_20261026_keras/metricas_teste.json": "6fedddbdb53ef7fd8003716bd92da35a7b807614594d6e89ed14951257658000",
+    "assets/data/avaliacao_T6_2/candidato_T5_6_20261026_keras/proveniencia.json": "447974fee13f1aa7265f2c499de7c1a4467a1a18abc8dfe825f9b53bec8698fe",
+    "assets/data/avaliacao_T6_2/candidato_T5_6_20261026_keras/pares_confundidos.csv": "92ee7f2c56941407c6723d38a5b6f020a2fed71a6c5bcccb04815f90b04de363",
+    "assets/data/avaliacao_T6_3/candidato_T5_6_20261026_keras/analise_por_par.csv": "eced3625a79a8b32fc8f104695a5b9f83d093bff8450f2034fbe870d6bbdebdd",
+    "assets/data/avaliacao_T6_3/candidato_T5_6_20261026_keras/revisao_por_imagem.csv": "d24e0b9a11c555c1ac1ad3fda9d1ae1eea930db76ae46c5bef46d2f78c6d0df3",
+    "assets/data/avaliacao_T6_3/candidato_T5_6_20261026_keras/cobertura_classes.csv": "d8d55a090ade7f8eb68977d1c3d9a3c03e7ae34756009916eee7e96f98fe1a4a",
+    "assets/data/avaliacao_T6_3/candidato_T5_6_20261026_keras/proveniencia.json": "32f1b9ab193338ff7fde216ce47a614210804d35371e31f9c2604ecb69d64040",
+    "assets/data/avaliacao_T6_2/pares_recorrentes_fp32.csv": "d04f13351662efbfc7fb1771f0dafd7197b270ab9ced0eb8e98e7ae7676c0d41",
+    "assets/data/avaliacao_T6_3/revisao_visual_pares.csv": "f5cc2f5babd87750d867db660dd50cc94f25cbdf8d452bdcb3545b525e79e589"
+  },
+  "tap_sha256": "a8a7d4fddec967258b77d3eb9965a955dc51ba1e19b62dbd313da3eb85cb2ac4",
+  "artefatos_sha256": {
+    "proposta_tratamento.json": "ffcc1e153ec84124b7200fe6a457812b50af6aa72dabe3bf52bed425112a3827",
+    "proposta_tratamento.md": "138446ad256ffc1dded415257780fd51b6ec87c851876279fe5c3a8def2ce429"
+  },
+  "contagens": {
+    "pares_candidato_sem_direcao": 26,
+    "direcoes_candidato": 35,
+    "erros_candidato": 72,
+    "pares_somente_historicos": 1,
+    "total_decisoes": 27,
+    "criterio_cobertura": "Todos os pares com ao menos um erro do candidato e os oito pares recorrentes históricos; cada par não direcional recebe uma decisão, preservando a evidência por direção.",
+    "teste_exploratorio": true,
+    "probabilidades_top_k_avaliadas_nesta_entrega": false
+  },
+  "novos_agrupamentos": 0,
+  "pares_validados_pelo_parceiro": 0,
+  "revisao_ana_celia": "pendente",
+  "sem_alteracao_modelo_dados_metricas": true
+}

@@ -64,6 +64,7 @@
 - [6.1 Métricas por classe (T6.1)](#61-métricas-por-classe-t61)
 - [6.2 Matriz de confusão (T6.2)](#62-matriz-de-confusão-t62)
 - [6.3 Análise de erros (T6.3)](#63-análise-de-erros-t63)
+- [6.4 Proposta de tratamento de classes (T6.4)](#64-proposta-de-tratamento-de-classes-t64)
 
 </details>
 
@@ -2897,3 +2898,77 @@ As propostas de separar estágios, agrupar classes ou retornar hipóteses
 concorrentes devem ser avaliadas na seção de tratamento das classes; este
 relatório não autoriza uma correção automática dos rótulos nem comprova a causa
 dominante em cada par.
+
+## 6.4 Proposta de tratamento de classes (T6.4)
+
+**Autor:** Rui. **Revisora:** Ana Célia. **Data da proposta:** 31/10/2026. **Estado:** proposta técnica; revisão e validação agronômica do parceiro pendentes.
+
+### Decisão e fundamento
+
+A proposta é **preservar as 13 classes do candidato e apresentar identidades separadas como hipóteses concorrentes**, sujeitas ao ranking e à política de confiança. Nenhum novo agrupamento em classe única é recomendado nesta rodada. A análise da T6.3 registra hipóteses de semelhança, cobertura de estágios, qualidade e múltiplos sujeitos, mas não demonstra que os pares sejam indistinguíveis ou que uma identificação conjunta preserve o conteúdo necessário ao parceiro.
+
+O TAP, seção 12, pp. 5–6, prevê hipóteses com confiança como mitigação para confusões e condiciona o agrupamento de classes indistinguíveis à validação técnica do parceiro. A equivalência de manejo ou de conteúdo **não é presumida** a partir de uma confusão do modelo, de nomes comuns parecidos ou da presença na mesma cultura.
+
+O agrupamento já existente de *Spodoptera eridania* e *S. cosmioides* na classe das-vagens, assim como os demais rótulos do pacote selecionado, é preservado. A proposta não altera as saídas do modelo, o dicionário, os dados ou as métricas, nem transforma adultos em erros de rótulo por causa do nome comum larval.
+
+### Cobertura das decisões
+
+Os 35 pares direcionais com pelo menos um erro no candidato correspondem a **26 relações entre duas classes**. Cada relação recebe uma decisão que vale para ambos os sentidos, preservando suas contagens separadas. Acrescenta-se barriga-verde × percevejo-do-milho, analisado nas rodadas anteriores, mas sem erros na matriz do candidato: são **27 decisões documentadas**, cobrindo também os oito pares recorrentes históricos. Os 72 erros atuais não são somados aos erros históricos.
+
+Na tabela, **A** é a primeira classe e **B** a segunda. As contagens são erros reais A previstos como B e reais B previstos como A, respectivamente, na avaliação **Keras FP32 de 473 imagens**. Os IDs identificam as justificativas e os campos de validação do [registro completo por par](../assets/data/tratamento_T6_4/proposta_tratamento.md) e da [proposta estruturada](../assets/data/tratamento_T6_4/proposta_tratamento.json). Não houve avaliação de probabilidades top-k nesta proposta.
+
+| ID | A × B | A → B / B → A | Alternativa recomendada |
+| --- | --- | ---: | --- |
+| PAR-03-10 | Cartucho × Das-vagens | 3 / 5 | Hipóteses concorrentes |
+| PAR-00-11 | Vaquinha × Astylus | 5 / 1 | Hipóteses concorrentes |
+| PAR-03-08 | Cartucho × Falsa-medideira | 0 / 6 | Hipóteses concorrentes |
+| PAR-00-02 | Vaquinha × Barriga-verde | 2 / 3 | Hipóteses concorrentes |
+| PAR-05-06 | Verde × Asa-preta | 0 / 5 | Hipóteses concorrentes |
+| PAR-02-03 | Barriga-verde × Cartucho | 1 / 1 | Hipóteses concorrentes |
+| PAR-00-01 | Vaquinha × Cigarrinha-do-milho | 1 / 3 | Hipóteses concorrentes |
+| PAR-00-05 | Vaquinha × Verde | 0 / 4 | Hipóteses concorrentes |
+| PAR-02-05 | Barriga-verde × Verde | 0 / 4 | Hipóteses concorrentes |
+| PAR-02-10 | Barriga-verde × Das-vagens | 2 / 1 | Hipóteses concorrentes |
+| PAR-07-12 | Percevejo-do-milho × Cigarrinha-das-pastagens | 3 / 0 | Hipóteses concorrentes |
+| PAR-08-10 | Falsa-medideira × Das-vagens | 2 / 1 | Hipóteses concorrentes |
+| PAR-00-06 | Vaquinha × Asa-preta | 0 / 2 | Hipóteses concorrentes |
+| PAR-02-04 | Barriga-verde × Marrom | 0 / 2 | Hipóteses concorrentes |
+| PAR-02-09 | Barriga-verde × Lagarta-da-soja | 1 / 1 | Hipóteses concorrentes |
+| PAR-04-07 | Marrom × Percevejo-do-milho | 2 / 0 | Hipóteses concorrentes |
+| PAR-10-11 | Das-vagens × Astylus | 1 / 1 | Hipóteses concorrentes |
+| PAR-02-07 | Barriga-verde × Percevejo-do-milho — evidência histórica | 0 / 0 | Hipóteses concorrentes |
+| PAR-00-10 | Vaquinha × Das-vagens | 1 / 0 | Hipóteses concorrentes |
+| PAR-00-12 | Vaquinha × Cigarrinha-das-pastagens | 1 / 0 | Hipóteses concorrentes |
+| PAR-02-11 | Barriga-verde × Astylus | 1 / 0 | Hipóteses concorrentes |
+| PAR-03-07 | Cartucho × Percevejo-do-milho | 1 / 0 | Hipóteses concorrentes |
+| PAR-03-09 | Cartucho × Lagarta-da-soja | 1 / 0 | Hipóteses concorrentes |
+| PAR-04-11 | Marrom × Astylus | 1 / 0 | Hipóteses concorrentes |
+| PAR-05-10 | Verde × Das-vagens | 1 / 0 | Hipóteses concorrentes |
+| PAR-07-11 | Percevejo-do-milho × Astylus | 0 / 1 | Hipóteses concorrentes |
+| PAR-10-12 | Das-vagens × Cigarrinha-das-pastagens | 0 / 1 | Hipóteses concorrentes |
+
+Para cada par, o registro completo apresenta separadamente a evidência, a razão para não recomendar agrupamento nesta rodada, a justificativa das hipóteses concorrentes, o impacto agronômico a validar e o encaminhamento. Contagens de uma única observação não são tratadas como exemplares independentes. Os casos isolados também recebem decisão; a ausência de erros em um sentido não comprova ausência de confusão em novas imagens.
+
+### Pontos prioritários para a validação agronômica
+
+- **Cartucho, falsa-medideira e das-vagens:** confirmar se o conteúdo precisa distinguir essas identidades por cultura e estágio, incluindo a presença de adultos no escopo. A dificuldade com mariposas não autoriza fundir todas as imagens ou estender o grupo das-vagens às outras classes.
+- **Asa-preta × verde e asa-preta × vaquinha:** confirmar o conteúdo e os critérios de diferenciação para ninfas. Cinco erros asa-preta → verde vêm de uma observação; a ausência de ninfas explicitamente marcadas no treino não comprova que não existam nas fotos sem estágio informado.
+- **Barriga-verde × cartucho:** validar a identificação de `IMG_02602`, marcada na T6.3 como suspeita de rótulo inconsistente. Um possível problema de anotação deve ser conferido na fonte, sem ser ocultado por agrupamento de classes.
+- **Vaquinha × Astylus e pares com múltiplos insetos:** validar o sujeito-alvo e o conteúdo associado a cada identidade. Hipóteses concorrentes não significam que as duas espécies estejam presentes na foto.
+- **Demais pares:** confirmar, pelas perguntas individuais do registro, se manter as identidades separadas atende ao conteúdo e ao encaminhamento esperado. Não se afirma que os pares tenham manejo igual ou diferente sem essa validação.
+
+### Relação com a política de confiança e o aplicativo
+
+Esta é uma decisão proposta de apresentação e identidade das classes; o registro não é uma regra de inferência. O aplicativo deve ordenar as hipóteses por confiança decrescente, preservando os scores do modelo e os critérios aprovados de confiança. A relação entre duas classes **não obriga a incluir a outra no resultado**, não soma scores, não altera o ranking e não cria agrupamentos por transitividade.
+
+Quando nenhuma hipótese satisfizer a política adotada, o resultado deve ser inconclusivo e orientar nova captura, sem completar a lista com classes deste registro. Se duas classes do par estiverem entre as hipóteses elegíveis, seus nomes, confianças e conteúdos devem permanecer separados, sem apresentação de manejo como conclusão confirmada.
+
+Em 31/10/2026, o PR da T6.5 propõe três hipóteses e limiar top-1 de 0,65 em Keras FP32. Esses parâmetros continuam sob responsabilidade da política de confiança e não são aprovados ou recalibrados nesta seção. As contagens top-1 da T6.2/T6.3 não comprovam que a classe correta estará entre as hipóteses exibidas. A eficácia da apresentação e o comportamento após a conversão embarcada exigem verificação própria.
+
+### Registro da validação e rastreabilidade
+
+Ana Célia deve revisar as justificativas e a cobertura dos pares. Para cada decisão, o parceiro deve confirmar se a apresentação proposta e o conteúdo associado preservam as distinções agronômicas necessárias ao escopo do MVP. O registro deve conter **decisão validada, impacto ou observação, responsável, data e evidência**. Uma concordância em bloco pode identificar explicitamente todos os IDs e a versão aprovada; os campos da proposta estão inicialmente pendentes, sem aprovação presumida.
+
+Se o parceiro preferir um agrupamento, devem ser definidos o conjunto completo de classes, o nome e significado do grupo, culturas e estágios abrangidos, exceções e conteúdo associado. A aprovação de um par não autoriza fundir outras classes ligadas a ele. A mudança exigirá nova versão do contrato e dos dados ou do pós-processamento, conforme a abordagem escolhida, com avaliação e reconferência da política de confiança. O pacote atual não será alterado retroativamente.
+
+Os [hashes de rastreabilidade](../assets/data/tratamento_T6_4/rastreabilidade.json) vinculam a proposta ao modelo, à ordem de classes, às métricas e matrizes do candidato, à análise por imagem e aos pares históricos. O hash do TAP original consultado também está registrado. A revisão da T6.3 é assistida por IA e exploratória; esta proposta não a transforma em confirmação taxonômica. A validação agronômica permanece necessária para fechar a decisão de produto.
