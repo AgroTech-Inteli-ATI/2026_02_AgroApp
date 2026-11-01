@@ -105,6 +105,7 @@ export default function App() {
           setBusy(false);
         }
       }
+      // Guarda as previsões recebidas do worker para exibi-las na interface.
       if (message.type === "result" && message.id === request.current) {
         if (urls.current.preview) URL.revokeObjectURL(urls.current.preview);
         urls.current.preview = URL.createObjectURL(message.result.preview);
@@ -522,6 +523,7 @@ export default function App() {
                     <p className={styles.resultIntro}>
                       Possíveis identificações
                     </p>
+                    {/* Mostra as três classes com maiores scores retornados pelo modelo. */}
                     <div className={styles.predictions}>
                       {result.predictions
                         .slice(0, 3)
