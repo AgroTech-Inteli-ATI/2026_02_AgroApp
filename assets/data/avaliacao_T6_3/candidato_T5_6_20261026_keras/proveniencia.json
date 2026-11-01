@@ -1,0 +1,31 @@
+{
+  "esquema": "analise_candidato_T6_3_v1",
+  "formato_avaliado": "Keras FP32",
+  "modelo_sha256": "089a8d903a78898badf385f0d57006a4fb556d76e3e8fae719babdaf564aa51a",
+  "execucao_t5_5": "rodadas_T5_6_20261026/20261026-213017_efficientnet_lite0_s42",
+  "total_erros_revisados": 72,
+  "metodo": "revisao_visual_assistida_por_IA",
+  "validacao_especialista": false,
+  "causas_confirmadas": false,
+  "inferencia_repetida": false,
+  "tipo_avaliacao": "exploratoria",
+  "fontes_sha256": {
+    "metricas_teste.json": "6fedddbdb53ef7fd8003716bd92da35a7b807614594d6e89ed14951257658000",
+    "predicoes_teste.csv": "1401acb6a6a8d48e6d1f12ca99a9d3db87a549c4c0a4c8ba0a50360d9f8c7f76",
+    "proveniencia_avaliacao.json": "7ee4b76a5f301e47388b1cea9a5c10a13d9c5719c0069ca7bfec9c53b56901ac",
+    "indice": "28ee662885202f0bda3dec9660e44b28f99b8bd183210bcbdd795b103269b2eb",
+    "manifesto_candidato": "72bd8194246cf5673cb6194491bbe1c0410d526a4c14027a087c414b9fa14f62",
+    "proveniencia_T6_2": "447974fee13f1aa7265f2c499de7c1a4467a1a18abc8dfe825f9b53bec8698fe",
+    "field_labels.csv": "ec4f6fa9e316107a3f97d1014a6abc7b22de8b7aac999bc6110db3d64fb4100b",
+    "labels.csv": "09a43377e7b18d52fa4db9604445509a9360be46b4e069ce51695a1d5096250d",
+    "anotacoes_visuais.json": "32aa5274c724b161a245f38643b05c8151a2b95b80ec1843ada1ce9ec9a137ce"
+  },
+  "codigo_sha256": "40332226a8514b43d80c3f83399e53c90b30d7eee73d400bbb32cfadc2ab02af",
+  "minimo_erros_pares_principais": 2,
+  "artefatos_sha256": {
+    "revisao_por_imagem.csv": "d24e0b9a11c555c1ac1ad3fda9d1ae1eea930db76ae46c5bef46d2f78c6d0df3",
+    "analise_por_par.csv": "eced3625a79a8b32fc8f104695a5b9f83d093bff8450f2034fbe870d6bbdebdd",
+    "cobertura_classes.csv": "d8d55a090ade7f8eb68977d1c3d9a3c03e7ae34756009916eee7e96f98fe1a4a",
+    "relatorio_erros.md": "232d8c016e3724746e3f2e305f998e115daaa8c427e44a9d56d5008d28086e7c"
+  }
+}
