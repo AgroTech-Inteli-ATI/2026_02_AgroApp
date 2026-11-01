@@ -40,6 +40,7 @@ async function checkedBytes(url: string, hash: string) {
 }
 
 async function init(base: string) {
+  // O worker baixa o manifesto e o modelo; a inferência acontece no navegador.
   send({ type: "status", message: "Carregando o modelo…" });
   const response = await fetch(`${base}models/manifest.json`);
   if (!response.ok)
@@ -59,7 +60,7 @@ async function init(base: string) {
       `${base}models/${candidate.filename}`,
       candidate.sha256,
     );
-    // Quantized graph targets dependable CPU kernels; GPU is attempted for FP32.
+    // O modelo INT8 roda na CPU; para FP32, tentamos WebGPU e depois CPU.
     const accelerators: ("wasm" | "webgpu")[] =
       candidate.format === "FP32" && "gpu" in navigator
         ? ["webgpu", "wasm"]
@@ -74,7 +75,7 @@ async function init(base: string) {
         try {
           const input = model.getInputDetails()[0],
             output = model.getOutputDetails()[0];
-          // The generated web artifact specializes signatures to concrete batch 1.
+          // Confere se as dimensões e os tipos do arquivo correspondem ao manifesto.
           const shapeMatches = (actual: Int32Array, expected: number[]) =>
             actual.length === expected.length &&
             expected.every((size, i) => actual[i] === size);
@@ -85,7 +86,7 @@ async function init(base: string) {
             output.dtype !== candidate.output.dtype
           )
             throw new Error("Entrada ou saída incompatível.");
-          // A real warm-up catches graphs which compile but cannot execute.
+          // Uma execução de aquecimento confirma que o modelo também consegue inferir.
           const warmup = new Tensor(
             candidate.input.dtype === "int8"
               ? quantize(
@@ -149,6 +150,7 @@ async function analyze(id: number, file: File) {
     if (!compiled)
       throw new Error("O modelo ainda não está pronto. Recarregue a página.");
     const start = performance.now();
+    // A imagem é preparada e redimensionada antes de ser enviada ao modelo.
     const { pixels, width, height, preview } = await prepareImage(file);
     const data =
       spec.input.dtype === "int8"
@@ -174,9 +176,11 @@ async function analyze(id: number, file: File) {
         throw new Error(
           "O modelo retornou scores inválidos. Tente outra foto.",
         );
+      // Cada score é associado à classe pelo índice definido no manifesto.
       const predictions = manifest.classes
         .map((label, i) => ({ ...label, score: scores[i] }))
         .sort((a, b) => b.score - a.score || a.indice - b.indice);
+      // Envia previsões e tempos à interface React, sem enviar a foto a um servidor.
       send({
         type: "result",
         id,
