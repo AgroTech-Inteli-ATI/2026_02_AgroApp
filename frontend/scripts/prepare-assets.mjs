@@ -12,8 +12,8 @@ const manifest = JSON.parse(
   await readFile(path.join(source, "manifesto.json"), "utf8"),
 );
 
-// Read the small part of the official TFLite FlatBuffer schema that describes
-// the graph's boundary tensors. Never duplicate quantization constants by hand.
+// Lê do esquema oficial do TFLite os tensores de entrada e saída do modelo.
+// Assim, o contrato e os parâmetros de quantização vêm do próprio arquivo.
 function tensorContract(buffer, specialize = false) {
   if (buffer.toString("ascii", 4, 8) !== "TFL3")
     throw new Error("Arquivo TFLite inválido.");
@@ -38,9 +38,9 @@ function tensorContract(buffer, specialize = false) {
   const graph = tables(buffer.readUInt32LE(0), 2)[0];
   const tensors = tables(graph, 0);
   if (specialize) {
-    // LiteRT.js 2.6 requires matching concrete types. The Python exporter keeps
-    // shape_signature[0] = -1 despite shape[0] = 1. Specialize metadata only:
-    // no operator, tensor data, weight, quantization or original file is changed.
+    // O LiteRT.js 2.6 exige dimensões concretas. O exportador Python mantém
+    // shape_signature[0] = -1 mesmo com shape[0] = 1. Ajustamos só os metadados:
+    // operadores, dados, pesos, quantização e arquivos originais não são alterados.
     for (const table of tensors) {
       const shape = ints(table, 0);
       vector(table, 7, 4, (position) => position).forEach((position, i) => {
@@ -99,7 +99,7 @@ for (const [format, filename] of [
   }
   const webFilename = filename.replace(".tflite", "_web.tflite");
   await writeFile(path.join(destination, webFilename), bytes);
-  // Remove only this script's obsolete generated copies from earlier builds.
+  // Remove cópias geradas antigas deste script, se existirem.
   await rm(path.join(destination, filename), { force: true });
   models.push({
     format,
@@ -138,8 +138,8 @@ await cp(
   path.join(app, "public/runtime"),
   { recursive: true },
 );
-// LiteRT's Emscripten loader uses importScripts(), which needs a classic worker.
-// Bundle separately so both Vite dev and production serve the same classic IIFE.
+// O carregador Emscripten do LiteRT usa importScripts(), que exige um worker clássico.
+// Geramos o pacote separado para servir o mesmo arquivo no Vite e na produção.
 await build({
   entryPoints: [path.join(app, "src/lib/inference.worker.ts")],
   outfile: path.join(app, "public/runtime/inference.js"),
