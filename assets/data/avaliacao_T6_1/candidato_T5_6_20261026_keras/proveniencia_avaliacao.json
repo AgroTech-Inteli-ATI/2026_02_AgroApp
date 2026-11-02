@@ -1,0 +1,45 @@
+{
+  "data": "2026-10-27",
+  "tipo_avaliacao": "exploratoria",
+  "modelo_avaliado": "checkpoint Keras FP32 do candidato T5.6; não é o TFLite INT8",
+  "pacote": "assets/modelos/candidato_T5_6_20261026",
+  "manifesto_pacote_sha256": "72bd8194246cf5673cb6194491bbe1c0410d526a4c14027a087c414b9fa14f62",
+  "execucao_t5_5": "rodadas_T5_6_20261026/20261026-213017_efficientnet_lite0_s42",
+  "modelo_sha256": "089a8d903a78898badf385f0d57006a4fb556d76e3e8fae719babdaf564aa51a",
+  "indice_sha256": "28ee662885202f0bda3dec9660e44b28f99b8bd183210bcbdd795b103269b2eb",
+  "implementacao_reutilizada": "src/avaliacao_t6_1.py, integrada pelo PR #28",
+  "git_commit_avaliador": "b58e9027f2778066289a30745b4c04314865e644",
+  "codigo_sha256": {
+    "src/avaliacao_t6_1.py": "21afabce168f3b3d2d44f31d1f31c0ca81f078fb9fe618f00fe8c10f6cef88b8",
+    "src/avaliacao.py": "4b60b2efd74a88e900e745b638af21c341e8f6866c8c27cce99f754ce0a3c7af",
+    "src/preprocessamento.py": "6a2eacb95cbbb0ceb21db5f70d9e178b2c0b844b070e2d4fac4c4a39d0131820"
+  },
+  "ambiente_avaliacao": {
+    "python": "3.12.15",
+    "sistema": "macOS-26.6.2-arm64-arm-64bit",
+    "tensorflow": "2.21.0",
+    "keras": "3.15.1",
+    "keras-hub": "0.32.0",
+    "numpy": "2.4.4",
+    "pillow": "12.2.0",
+    "scikit-learn": "1.9.1"
+  },
+  "threads": {
+    "intraop": 4,
+    "interop": 1
+  },
+  "batch": 32,
+  "imagens_teste": 473,
+  "classes_avaliadas": 13,
+  "conferencia_sklearn": "precisão, recall, F1 e suporte das 13 classes, macro F1, balanced accuracy e acurácia conferidos contra as 473 previsões salvas",
+  "treinamento_realizado": false,
+  "alteracao_de_pesos": false,
+  "teste_independente": false,
+  "limitacao": "partição consultada historicamente na T5.3; não usar para selecionar modelo ou ajustar limiar",
+  "artefatos_sha256": {
+    "metricas_por_classe.csv": "bc991d56a64f34a48df78cbeadf2782721fa1ac9fdeb8cfab67932bf2f633530",
+    "metricas_teste.json": "6fedddbdb53ef7fd8003716bd92da35a7b807614594d6e89ed14951257658000",
+    "predicoes_teste.csv": "1401acb6a6a8d48e6d1f12ca99a9d3db87a549c4c0a4c8ba0a50360d9f8c7f76",
+    "relatorio_teste.md": "7d55bdb1b6e26a75732bcfa31df98076f34ad167feed84a58fdca23df23d1fa0"
+  }
+}

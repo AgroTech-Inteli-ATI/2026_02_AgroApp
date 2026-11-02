@@ -1,0 +1,28 @@
+{
+  "esquema": "matriz_candidato_T6_2_v1",
+  "formato_avaliado": "Keras FP32",
+  "modelo_sha256": "089a8d903a78898badf385f0d57006a4fb556d76e3e8fae719babdaf564aa51a",
+  "execucao_t5_5": "rodadas_T5_6_20261026/20261026-213017_efficientnet_lite0_s42",
+  "fontes_sha256": {
+    "metricas_teste.json": "6fedddbdb53ef7fd8003716bd92da35a7b807614594d6e89ed14951257658000",
+    "predicoes_teste.csv": "1401acb6a6a8d48e6d1f12ca99a9d3db87a549c4c0a4c8ba0a50360d9f8c7f76",
+    "proveniencia_avaliacao.json": "7ee4b76a5f301e47388b1cea9a5c10a13d9c5719c0069ca7bfec9c53b56901ac",
+    "indice": "28ee662885202f0bda3dec9660e44b28f99b8bd183210bcbdd795b103269b2eb",
+    "manifesto_candidato": "72bd8194246cf5673cb6194491bbe1c0410d526a4c14027a087c414b9fa14f62"
+  },
+  "minimo_erros_destaque": 2,
+  "total_imagens": 473,
+  "acertos": 401,
+  "erros": 72,
+  "inferencia_repetida": false,
+  "tipo_avaliacao": "exploratoria",
+  "codigo_sha256": "30e022e4298edca9c3a8a1886f29ed4c820d11daaa83ce7234cf22b175ec6d73",
+  "artefatos_sha256": {
+    "matriz_contagens.csv": "48f11c80f242ee0984f4f8070f64066c4143e927602b15e11ec58f302e4cce1e",
+    "matriz_normalizada.csv": "d0d869e09f9b82b6742bba974aeb24ff193d73f08727eb942fd1ec335592af8a",
+    "pares_confundidos.csv": "92ee7f2c56941407c6723d38a5b6f020a2fed71a6c5bcccb04815f90b04de363",
+    "erros_por_imagem.csv": "d8c1312f27f136255972f7dacc207bc7416e2764e2b3556094e650350e2c8036",
+    "relatorio_matriz.md": "a8386a09f856cab72d0ad9092c2fbe778b856aa50f8a1fc3ba3656e3fc85912f"
+  },
+  "figura_sha256": "0544847d09a984d22db9c517239c9fa2e2431b96eb1af526115e5ab360a5e6c7"
+}

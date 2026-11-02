@@ -64,6 +64,7 @@
 - [6.1 Métricas por classe (T6.1)](#61-métricas-por-classe-t61)
 - [6.2 Matriz de confusão (T6.2)](#62-matriz-de-confusão-t62)
 - [6.3 Análise de erros (T6.3)](#63-análise-de-erros-t63)
+- [6.4 Proposta de tratamento de classes (T6.4)](#64-proposta-de-tratamento-de-classes-t64)
 - [6.5 Política de confiança (T6.5)](#65-política-de-confiança-t65)
 
 </details>
@@ -2503,9 +2504,52 @@ argmax da saída softmax; valores inválidos interrompem a avaliação.
 | `predicoes_teste.csv` | ID de cada imagem de teste, índice real e índice previsto, para auditoria dos cálculos. |
 | `relatorio_teste.md` | Macro F1 em destaque e tabela de precisão, recall, F1 e suporte por classe. |
 
-O tamanho atual da partição de teste é **474 imagens em 13 classes**. Esse número
-vem do manifesto e não constitui resultado de desempenho. O comando aceita o
-índice efetivamente usado pela rodada, em vez de fixar essa contagem no código.
+O índice completo da T4.5 tem **474 imagens de teste em 13 classes**. O recorte
+`dataset` da T5.2, utilizado pelo candidato selecionado, tem **473 imagens de teste**.
+O comando aceita o índice efetivamente usado pela rodada, em vez de fixar essa
+contagem no código.
+
+### Resultado do candidato selecionado
+
+Em **27/10/2026**, o avaliador existente foi executado sobre o checkpoint
+**EfficientNet-Lite0 Keras FP32 selecionado na T5.6**, sem retreino ou alteração
+dos pesos. O modelo da rodada
+`20261026-213017_efficientnet_lite0_s42` tem o mesmo hash do `modelo.keras` do
+pacote `candidato_T5_6_20261026`. O índice utilizado é o recorte `dataset` da T5.2,
+com o hash registrado no treinamento e no manifesto de seleção.
+
+| Métrica no teste exploratório | Resultado |
+| --- | ---: |
+| **Macro F1 — principal** | **0,732928** |
+| Balanced accuracy | 0,712632 |
+| Acurácia — complementar | 0,847780 |
+| Imagens avaliadas | 473 |
+| Classes avaliadas | 13/13 |
+
+Os resultados são preservados em
+[`avaliacao_T6_1/candidato_T5_6_20261026_keras`](../assets/data/avaliacao_T6_1/candidato_T5_6_20261026_keras/):
+o [relatório](../assets/data/avaliacao_T6_1/candidato_T5_6_20261026_keras/relatorio_teste.md)
+e o [CSV por classe](../assets/data/avaliacao_T6_1/candidato_T5_6_20261026_keras/metricas_por_classe.csv)
+apresentam precisão, recall, F1 e suporte. Também estão versionados o JSON de
+métricas, a matriz de confusão nele contida e as 473 previsões por imagem.
+O arquivo `proveniencia_avaliacao.json` registra ambiente, hashes, identidade
+da rodada e vínculo ao pacote selecionado e à linha da T5.5.
+
+Os menores F1 foram **percevejo-verde: 0,416667** (suporte 14),
+**lagarta-falsa-medideira: 0,470588** (suporte 12) e
+**percevejo-asa-preta: 0,533333** (suporte 11). A média global não elimina essas
+limitações por classe, e os pequenos suportes tornam as estimativas instáveis.
+
+Para reproduzir em uma saída nova, mantendo os relatórios preservados:
+
+```bash
+python -m src.avaliacao_t6_1 --rodada assets/modelos/rodadas_T5_6_20261026/20261026-213017_efficientnet_lite0_s42 --raiz-imagens /caminho/das/fontes --indice assets/data/treino_T5_2/indice_dataset.csv --saida runs/reproducao_T6_1_candidato_keras --batch 32
+```
+
+A execução abriu somente as imagens de teste, com hashes conferidos, sem
+augmentation, reamostragem ou pesos nas métricas. Precisão, recall, F1 e suporte
+das 13 classes, macro F1, balanced accuracy e acurácia foram recalculados com
+scikit-learn a partir das previsões salvas e coincidem com o relatório.
 
 ### Verificação e situação da entrega
 
@@ -2521,15 +2565,65 @@ relatórios não são sobrescritos, e índices, hashes, grupos cruzados e saída
 inválidas são rejeitados. Esses testes não substituem a inferência com um modelo
 Keras real e os arquivos originais.
 
-O fluxo de avaliação está implementado. **Ainda não há uma rodada T5.1 selecionada
-nem as imagens originais disponíveis neste checkout para executar o avaliador**.
-Quando executado com o índice atual, o relatório descreve somente o teste
-exploratório já consultado na T5.3. A avaliação final independente exigirá novas
-imagens separadas por planta ou origem e uma extensão do contrato do avaliador
-para aceitar esse novo índice sem confundi-lo com o índice de treinamento.
+O avaliador integrado pelo PR #28 foi reutilizado sem alterações para produzir
+os resultados reais acima; seus **sete testes passaram**. A execução complementa
+a implementação com os artefatos do checkpoint selecionado. A F1 0,7209 mencionada
+na revisão daquele PR não identifica essa mesma rodada e não é reaproveitada
+como resultado do candidato atual.
+
+**O artefato avaliado é o checkpoint Keras, não o TFLite INT8 destinado ao embarque.**
+As métricas de validação da conversão na seção 5.6 não são métricas de teste e não
+devem ser confundidas com estes resultados. A partição já foi consultada
+historicamente na T5.3: esta avaliação é exploratória e não deve orientar nova
+seleção, retreino ou ajuste de limiar. Uma avaliação final independente exigirá
+novas imagens separadas por planta ou origem e uma extensão do contrato do
+avaliador para aceitar esse novo índice sem confundi-lo com o índice de treino.
 
 
 ## 6.2 Matriz de confusão (T6.2)
+
+### Candidato selecionado na T5.6 — Keras FP32
+
+A matriz abaixo corresponde ao **EfficientNet-Lite0 do pacote `candidato_T5_6_20261026`**, o mesmo checkpoint avaliado na [T6.1](#61-metricas-por-classe-t61). Foi reconstruída a partir das previsões salvas naquela avaliação: **473 imagens de teste, 13 classes, 401 acertos e 72 erros**. Não houve nova inferência ou treinamento. As matrizes históricas de 474 imagens, apresentadas adiante, pertencem às rodadas anteriores.
+
+![Matriz de confusão do candidato Keras FP32, com contagens e normalização por classe real](../assets/matriz_confusao_T6_2_candidato_keras.png)
+
+As linhas representam a classe real; as colunas, a prevista. Os números são contagens e a cor representa a fração da classe real, permitindo comparar classes com suportes diferentes. O contorno laranja destaca pares direcionais com **pelo menos dois erros nesta amostra**; a segunda linha mostra a porcentagem relativa ao suporte da classe real. Esse critério é descritivo: não comprova confusão sistemática em dados novos nem determina a causa dos erros.
+
+| Classe real → prevista | Erros | Suporte real | Parcela da classe |
+| --- | ---: | ---: | ---: |
+| Lagarta-falsa-medideira → Lagarta-do-cartucho | 6 | 12 | 50,0% |
+| Percevejo-asa-preta → Percevejo-verde | 5 | 11 | 45,5% |
+| Lagarta-das-vagens → Lagarta-do-cartucho | 5 | 24 | 20,8% |
+| Vaquinha → Astylus variegatus | 5 | 157 | 3,2% |
+| Percevejo-verde → Vaquinha | 4 | 14 | 28,6% |
+| Percevejo-verde → Percevejo-barriga-verde | 4 | 14 | 28,6% |
+
+A acurácia global de **84,8% (401/473)** deve ser lida junto com o recall por classe, isto é, a parcela das imagens reais daquela classe que foi reconhecida corretamente. Os menores recalls nesta amostra são os de **lagarta-falsa-medideira: 33,3% (4/12)**, **percevejo-verde: 35,7% (5/14)** e **percevejo-asa-preta: 36,4% (4/11)**. Assim, o total de acertos não representa um desempenho uniforme entre as classes. Esses resultados têm suportes pequenos e podem variar bastante com poucos exemplos adicionais.
+
+O par com maior número de erros é **lagarta-falsa-medideira → lagarta-do-cartucho**, com seis casos, equivalentes a 50,0% das 12 imagens reais de falsa-medideira. A linha completa da matriz mostra, porém, **oito erros nessa classe**: além dos seis classificados como lagarta-do-cartucho, dois foram classificados como lagarta-das-vagens. Portanto, o maior par não resume todas as dificuldades de reconhecimento da classe.
+
+Contagem e proporção também levam a leituras diferentes: **vaquinha → Astylus variegatus** e **percevejo-asa-preta → percevejo-verde** têm cinco erros cada, mas representam, respectivamente, **3,2% de 157 imagens** e **45,5% de 11 imagens** da classe real. Para orientar a T6.3, a revisão deve considerar a contagem, a proporção de erros e o suporte de cada classe. O destaque de pelo menos dois erros serve à leitura da figura e não deve ser o único critério de prioridade; os casos de um único erro também permanecem disponíveis para revisão individual, sem causa atribuída automaticamente.
+
+O [relatório completo](../assets/data/avaliacao_T6_2/candidato_T5_6_20261026_keras/relatorio_matriz.md) identifica nominalmente os 16 pares com pelo menos dois erros. A tabela de [todos os pares confundidos](../assets/data/avaliacao_T6_2/candidato_T5_6_20261026_keras/pares_confundidos.csv) também preserva os casos de um único erro. Os artefatos publicados incluem:
+
+- [Matriz de contagens](../assets/data/avaliacao_T6_2/candidato_T5_6_20261026_keras/matriz_contagens.csv) e [matriz normalizada por classe real](../assets/data/avaliacao_T6_2/candidato_T5_6_20261026_keras/matriz_normalizada.csv), com nomes completos e a mesma ordem das 13 classes do pacote selecionado.
+- [Fila dos 72 erros por imagem](../assets/data/avaliacao_T6_2/candidato_T5_6_20261026_keras/erros_por_imagem.csv), com ID, caminho, classes real e prevista e hash da imagem original, para orientar a análise da T6.3. A fila não atribui causas aos erros.
+- [Proveniência e hashes](../assets/data/avaliacao_T6_2/candidato_T5_6_20261026_keras/proveniencia.json), vinculando os resultados às previsões da T6.1, ao índice, ao manifesto do candidato, à rodada registrada na T5.5 e ao código gerador.
+
+O script [matriz_candidato_t6_2.py](../src/matriz_candidato_t6_2.py) verifica a integridade dos artefatos de origem, a identidade do modelo, a ordem das classes e a cobertura exata dos IDs de teste. Recalcula a matriz pelas previsões e exige concordância com as métricas salvas na T6.1 antes de publicar. Para gerar e conferir os arquivos:
+
+```bash
+python -m src.matriz_candidato_t6_2
+python -m src.matriz_candidato_t6_2 --verificar
+python tests/validar_matriz_candidato_t6_2.py
+```
+
+Este resultado corresponde ao **checkpoint Keras FP32**; a conversão TFLite INT8 exige avaliação própria. A partição já foi consultada em etapas anteriores, portanto esta análise é exploratória e não constitui avaliação final independente. Não foram ajustados pesos, limiares ou critérios de seleção com esses resultados.
+
+As matrizes históricas abaixo correspondem a outros checkpoints e a um recorte de 474 imagens, enquanto o candidato foi avaliado em 473. A diferença entre suas métricas, isoladamente, não demonstra melhoria do modelo; uma comparação direta exigiria avaliar os checkpoints sobre o mesmo conjunto de casos e sob o mesmo protocolo.
+
+### Matrizes históricas da varredura
 
 ### Objetivo e escopo
 
@@ -2624,6 +2718,60 @@ Os quatro modelos viram a mesma partição de teste, já consultada na T5.3. A r
 **Base de estudo:** [scikit-learn — Model evaluation: Confusion matrix](https://scikit-learn.org/stable/modules/model_evaluation.html#confusion-matrix) e [referência de `confusion_matrix`](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.confusion_matrix.html).
 
 ## 6.3 Análise de erros (T6.3)
+
+### Candidato selecionado na T5.6 — cobertura da revisão
+
+Esta complementação analisa o **EfficientNet-Lite0 Keras FP32 do pacote `candidato_T5_6_20261026`**, usando as mesmas previsões e os mesmos rótulos da T6.1 e da matriz do candidato na T6.2. Foram inspecionadas visualmente, com assistência de IA, **todas as 72 imagens classificadas incorretamente**, após conferir seus hashes contra o índice. São 35 pares direcionais; os 16 pares com pelo menos dois erros reúnem 53 imagens. As outras 19 imagens, de pares com um erro, também têm registro individual. A revisão não substitui validação taxonômica por especialista.
+
+Os resultados anteriores, mantidos adiante, não são usados como contagem dos erros deste candidato. Apenas 23 das 72 imagens aparecem no registro visual histórico; as anotações desta complementação foram feitas após reabrir as imagens, sem transportar automaticamente hipóteses de outro modelo ou destino previsto.
+
+### Principais erros do candidato
+
+Na tabela, o sentido é **classe real do índice → classe prevista**. Observações de enquadramento e estágio descrevem as fotos; semelhança e escassez continuam sendo hipóteses de causa, não conclusões demonstradas.
+
+| Classe real → prevista | Erros / suporte | Evidência e interpretação |
+| --- | ---: | --- |
+| Falsa-medideira → Cartucho | 6 / 12 | Seis mariposas adultas aparentes de cinco observações iNaturalist. Forma, cor e desenho das asas motivam investigar semelhança visual; fase adulta não comprova rótulo errado. |
+| Asa-preta → Verde | 5 / 11 | As cinco fotos são da observação **147542055**, com metadado `Nymph`. O erro se concentra em uma observação, sem demonstrar cinco ocorrências independentes. Investigar cobertura de ninfas e semelhança visual. |
+| Das-vagens → Cartucho | 5 / 24 | Cinco observações: quatro fotos com adultos aparentes e uma com larva (`IMG_03427`). Há foto distante e foto com duas mariposas. Semelhança é hipótese; não foi isolada uma causa única. |
+| Vaquinha → Astylus | 5 / 157 | `IMG_01175` e `IMG_01176` mostram múltiplos insetos; `IMG_01516` mostra sujeito pequeno, e não um close-up nítido como dizia a anotação antiga. As outras duas fotos permitem investigar padrão visual; nenhuma espécie foi reidentificada. |
+| Verde → Vaquinha | 4 / 14 | Três observações, com uma delas representada por duas fotos. Há oclusão em `IMG_03216` e pouco detalhe em `IMG_03246`; as outras duas mostram o corpo. A causa do par permanece indeterminada. |
+| Verde → Barriga-verde | 4 / 14 | Quatro fotos da observação **368128786**, com corpo verde em escudo e diferentes distâncias. Semelhança de forma é hipótese; não demonstra recorrência em quatro exemplares. |
+| Percevejo-do-milho → Cigarrinha-das-pastagens | 3 / 12 | Duas observações; o corpo alongado aparece nas três fotos. Não há evidência suficiente para atribuir o erro a rótulo, escassez ou semelhança real. |
+| Cigarrinha-do-milho → Vaquinha | 3 / 29 | Três fotos AgroInsect com inseto pequeno sobre folha. Pouco detalhe diagnóstico é um fator observado; fotos visualmente próximas não comprovam identidade do exemplar. |
+| Barriga-verde → Vaquinha | 3 / 42 | Três fotos AgroInsect; duas têm sujeito pequeno e uma permite ver o corpo. Não há confirmação de causa comum às três. |
+| Cartucho → Das-vagens | 3 / 61 | Três fotos AgroInsect de mariposas adultas aparentes. Semelhança de forma e desenho das asas é hipótese; nome comum larval não indica erro de espécie. |
+| Marrom → Barriga-verde | 2 / 10 | Duas observações com insetos castanhos em escudo e corpo visível. Investigar semelhança visual e cobertura, sem reidentificação de espécie nesta revisão. |
+| Marrom → Percevejo-do-milho | 2 / 10 | Duas fotos da observação **19890644**, ambas com múltiplos insetos de aspectos distintos. Ambiguidade de sujeito é hipótese relevante para classificação da foto inteira. |
+| Asa-preta → Vaquinha | 2 / 11 | Duas observações com metadado `Nymph`. A lacuna de estágio documentado no treino também se aplica; o destino vaquinha não tem causa visual isolada. |
+| Falsa-medideira → Das-vagens | 2 / 12 | Duas fotos da observação **396445719**, ambas com mariposa pequena sobre a mão. A mesma observação também tem uma foto prevista como cartucho; não são três exemplares independentes. |
+| Barriga-verde → Das-vagens | 2 / 42 | Duas fotos AgroInsect, uma com inseto pequeno e outra com oclusão por folhas. Qualidade e enquadramento são hipóteses, sem comprovar semelhança real entre espécies. |
+| Vaquinha → Barriga-verde | 2 / 157 | Duas fotos da observação **185718390**, com inseto muito pequeno no quadro. Detalhe diagnóstico limitado, sem evidência de erro taxonômico. |
+
+### Cobertura por estágio e suspeita de rótulo
+
+O índice do treino contém **53 imagens de asa-preta em 18 grupos**, todas de campo: 27 têm metadado `Adult`, 26 não têm estágio preenchido e nenhuma está explicitamente marcada como `Nymph`. No teste, sete das 11 imagens da classe têm metadado `Nymph`, e as sete foram classificadas incorretamente: cinco como verde e duas como vaquinha. Isso sustenta investigar a cobertura de estágios, **sem afirmar que não existam ninfas nas 26 imagens de treino sem estágio informado**, nem que escassez tenha sido comprovada como causa.
+
+Uma suspeita de rótulo apareceu fora dos pares principais: **`IMG_02602`, Cartucho → Barriga-verde**. A imagem mostra dois insetos com aspecto de percevejos e contorno em escudo, em contraste com o rótulo *Spodoptera frugiperda*. A conferência do `dataset/labels.csv` mostra o mesmo rótulo na fonte, portanto a divergência visual já está presente antes desta análise. O caso foi marcado como **suspeita de rótulo inconsistente, com validação especializada pendente**. Não se confirmou a espécie dos insetos nem se alterou o rótulo ou o resultado da avaliação. Esta suspeita decorre do conteúdo da foto, não da presença de uma mariposa adulta sob um nome comum iniciado por “lagarta”.
+
+### Artefatos e reprodução da análise do candidato
+
+- [Revisão das 72 imagens](../assets/data/avaliacao_T6_3/candidato_T5_6_20261026_keras/revisao_por_imagem.csv): ID, caminho, hash, classes, grupo, observação iNaturalist, estágio do metadado, estágio visual aparente, fatores observados, hipóteses e status da causa.
+- [Análise dos 35 pares](../assets/data/avaliacao_T6_3/candidato_T5_6_20261026_keras/analise_por_par.csv): contagens, cobertura do treino e avaliação explícita de rótulo inconsistente, escassez e semelhança. Não demonstrado não equivale a descartado.
+- [Cobertura das classes por partição](../assets/data/avaliacao_T6_3/candidato_T5_6_20261026_keras/cobertura_classes.csv): 13 classes em treino, validação e teste, com fotos, grupos e estágios informados nas imagens de campo. Os grupos do índice não garantem indivíduos independentes; AgroInsect não tem identificador iNaturalist e seus estágios não foram preenchidos automaticamente.
+- [Anotações visuais de origem](../assets/data/avaliacao_T6_3/candidato_T5_6_20261026_keras/anotacoes_visuais.json), [relatório](../assets/data/avaliacao_T6_3/candidato_T5_6_20261026_keras/relatorio_erros.md) e [proveniência com hashes](../assets/data/avaliacao_T6_3/candidato_T5_6_20261026_keras/proveniencia.json).
+
+O script [analise_candidato_t6_3.py](../src/analise_candidato_t6_3.py) exige a cobertura exata dos erros, confere as imagens originais e as previsões da T6.1/T6.2, cruza os metadados com as partições do índice e produz os artefatos de forma determinística. O modo de verificação não reescreve arquivos:
+
+```bash
+python -m src.analise_candidato_t6_3 --raiz-imagens /caminho/das/fontes
+python -m src.analise_candidato_t6_3 --raiz-imagens /caminho/das/fontes --verificar
+python tests/validar_analise_candidato_t6_3.py
+```
+
+A raiz deve conter `dataset/field/field_labels.csv`, `dataset/labels.csv` e as imagens originais. A complementação preserva o modelo, os rótulos e as métricas: não há treinamento, nova inferência ou ajuste de limiar. O teste já consultado mantém caráter exploratório; o resultado do Keras FP32 não substitui a análise do TFLite INT8. Nenhuma causa está confirmada por especialista. A suspeita de rótulo, a cobertura de estágios e as hipóteses dos pares precisam de validação antes de orientar correções no acervo ou decisões de agrupamento.
+
+### Análise histórica dos modelos anteriores
 
 ### Objetivo e escopo
 
@@ -2751,6 +2899,80 @@ As propostas de separar estágios, agrupar classes ou retornar hipóteses
 concorrentes devem ser avaliadas na seção de tratamento das classes; este
 relatório não autoriza uma correção automática dos rótulos nem comprova a causa
 dominante em cada par.
+
+## 6.4 Proposta de tratamento de classes (T6.4)
+
+**Autor:** Rui. **Revisora:** Ana Célia. **Data da proposta:** 31/10/2026. **Estado:** proposta técnica; revisão e validação agronômica do parceiro pendentes.
+
+### Decisão e fundamento
+
+A proposta é **preservar as 13 classes do candidato e apresentar identidades separadas como hipóteses concorrentes**, sujeitas ao ranking e à política de confiança. Nenhum novo agrupamento em classe única é recomendado nesta rodada. A análise da T6.3 registra hipóteses de semelhança, cobertura de estágios, qualidade e múltiplos sujeitos, mas não demonstra que os pares sejam indistinguíveis ou que uma identificação conjunta preserve o conteúdo necessário ao parceiro.
+
+O TAP, seção 12, pp. 5–6, prevê hipóteses com confiança como mitigação para confusões e condiciona o agrupamento de classes indistinguíveis à validação técnica do parceiro. A equivalência de manejo ou de conteúdo **não é presumida** a partir de uma confusão do modelo, de nomes comuns parecidos ou da presença na mesma cultura.
+
+O agrupamento já existente de *Spodoptera eridania* e *S. cosmioides* na classe das-vagens, assim como os demais rótulos do pacote selecionado, é preservado. A proposta não altera as saídas do modelo, o dicionário, os dados ou as métricas, nem transforma adultos em erros de rótulo por causa do nome comum larval.
+
+### Cobertura das decisões
+
+Os 35 pares direcionais com pelo menos um erro no candidato correspondem a **26 relações entre duas classes**. Cada relação recebe uma decisão que vale para ambos os sentidos, preservando suas contagens separadas. Acrescenta-se barriga-verde × percevejo-do-milho, analisado nas rodadas anteriores, mas sem erros na matriz do candidato: são **27 decisões documentadas**, cobrindo também os oito pares recorrentes históricos. Os 72 erros atuais não são somados aos erros históricos.
+
+Na tabela, **A** é a primeira classe e **B** a segunda. As contagens são erros reais A previstos como B e reais B previstos como A, respectivamente, na avaliação **Keras FP32 de 473 imagens**. Os IDs identificam as justificativas e os campos de validação do [registro completo por par](../assets/data/tratamento_T6_4/proposta_tratamento.md) e da [proposta estruturada](../assets/data/tratamento_T6_4/proposta_tratamento.json). Não houve avaliação de probabilidades top-k nesta proposta.
+
+| ID | A × B | A → B / B → A | Alternativa recomendada |
+| --- | --- | ---: | --- |
+| PAR-03-10 | Cartucho × Das-vagens | 3 / 5 | Hipóteses concorrentes |
+| PAR-00-11 | Vaquinha × Astylus | 5 / 1 | Hipóteses concorrentes |
+| PAR-03-08 | Cartucho × Falsa-medideira | 0 / 6 | Hipóteses concorrentes |
+| PAR-00-02 | Vaquinha × Barriga-verde | 2 / 3 | Hipóteses concorrentes |
+| PAR-05-06 | Verde × Asa-preta | 0 / 5 | Hipóteses concorrentes |
+| PAR-02-03 | Barriga-verde × Cartucho | 1 / 1 | Hipóteses concorrentes |
+| PAR-00-01 | Vaquinha × Cigarrinha-do-milho | 1 / 3 | Hipóteses concorrentes |
+| PAR-00-05 | Vaquinha × Verde | 0 / 4 | Hipóteses concorrentes |
+| PAR-02-05 | Barriga-verde × Verde | 0 / 4 | Hipóteses concorrentes |
+| PAR-02-10 | Barriga-verde × Das-vagens | 2 / 1 | Hipóteses concorrentes |
+| PAR-07-12 | Percevejo-do-milho × Cigarrinha-das-pastagens | 3 / 0 | Hipóteses concorrentes |
+| PAR-08-10 | Falsa-medideira × Das-vagens | 2 / 1 | Hipóteses concorrentes |
+| PAR-00-06 | Vaquinha × Asa-preta | 0 / 2 | Hipóteses concorrentes |
+| PAR-02-04 | Barriga-verde × Marrom | 0 / 2 | Hipóteses concorrentes |
+| PAR-02-09 | Barriga-verde × Lagarta-da-soja | 1 / 1 | Hipóteses concorrentes |
+| PAR-04-07 | Marrom × Percevejo-do-milho | 2 / 0 | Hipóteses concorrentes |
+| PAR-10-11 | Das-vagens × Astylus | 1 / 1 | Hipóteses concorrentes |
+| PAR-02-07 | Barriga-verde × Percevejo-do-milho — evidência histórica | 0 / 0 | Hipóteses concorrentes |
+| PAR-00-10 | Vaquinha × Das-vagens | 1 / 0 | Hipóteses concorrentes |
+| PAR-00-12 | Vaquinha × Cigarrinha-das-pastagens | 1 / 0 | Hipóteses concorrentes |
+| PAR-02-11 | Barriga-verde × Astylus | 1 / 0 | Hipóteses concorrentes |
+| PAR-03-07 | Cartucho × Percevejo-do-milho | 1 / 0 | Hipóteses concorrentes |
+| PAR-03-09 | Cartucho × Lagarta-da-soja | 1 / 0 | Hipóteses concorrentes |
+| PAR-04-11 | Marrom × Astylus | 1 / 0 | Hipóteses concorrentes |
+| PAR-05-10 | Verde × Das-vagens | 1 / 0 | Hipóteses concorrentes |
+| PAR-07-11 | Percevejo-do-milho × Astylus | 0 / 1 | Hipóteses concorrentes |
+| PAR-10-12 | Das-vagens × Cigarrinha-das-pastagens | 0 / 1 | Hipóteses concorrentes |
+
+Para cada par, o registro completo apresenta separadamente a evidência, a razão para não recomendar agrupamento nesta rodada, a justificativa das hipóteses concorrentes, o impacto agronômico a validar e o encaminhamento. Contagens de uma única observação não são tratadas como exemplares independentes. Os casos isolados também recebem decisão; a ausência de erros em um sentido não comprova ausência de confusão em novas imagens.
+
+### Pontos prioritários para a validação agronômica
+
+- **Cartucho, falsa-medideira e das-vagens:** confirmar se o conteúdo precisa distinguir essas identidades por cultura e estágio, incluindo a presença de adultos no escopo. A dificuldade com mariposas não autoriza fundir todas as imagens ou estender o grupo das-vagens às outras classes.
+- **Asa-preta × verde e asa-preta × vaquinha:** confirmar o conteúdo e os critérios de diferenciação para ninfas. Cinco erros asa-preta → verde vêm de uma observação; a ausência de ninfas explicitamente marcadas no treino não comprova que não existam nas fotos sem estágio informado.
+- **Barriga-verde × cartucho:** validar a identificação de `IMG_02602`, marcada na T6.3 como suspeita de rótulo inconsistente. Um possível problema de anotação deve ser conferido na fonte, sem ser ocultado por agrupamento de classes.
+- **Vaquinha × Astylus e pares com múltiplos insetos:** validar o sujeito-alvo e o conteúdo associado a cada identidade. Hipóteses concorrentes não significam que as duas espécies estejam presentes na foto.
+- **Demais pares:** confirmar, pelas perguntas individuais do registro, se manter as identidades separadas atende ao conteúdo e ao encaminhamento esperado. Não se afirma que os pares tenham manejo igual ou diferente sem essa validação.
+
+### Relação com a política de confiança e o aplicativo
+
+Esta é uma decisão proposta de apresentação e identidade das classes; o registro não é uma regra de inferência. O aplicativo deve ordenar as hipóteses por confiança decrescente, preservando os scores do modelo e os critérios aprovados de confiança. A relação entre duas classes **não obriga a incluir a outra no resultado**, não soma scores, não altera o ranking e não cria agrupamentos por transitividade.
+
+Quando nenhuma hipótese satisfizer a política adotada, o resultado deve ser inconclusivo e orientar nova captura, sem completar a lista com classes deste registro. Se duas classes do par estiverem entre as hipóteses elegíveis, seus nomes, confianças e conteúdos devem permanecer separados, sem apresentação de manejo como conclusão confirmada.
+
+Em 31/10/2026, o PR da T6.5 propõe três hipóteses e limiar top-1 de 0,65 em Keras FP32. Esses parâmetros continuam sob responsabilidade da política de confiança e não são aprovados ou recalibrados nesta seção. As contagens top-1 da T6.2/T6.3 não comprovam que a classe correta estará entre as hipóteses exibidas. A eficácia da apresentação e o comportamento após a conversão embarcada exigem verificação própria.
+
+### Registro da validação e rastreabilidade
+
+Ana Célia deve revisar as justificativas e a cobertura dos pares. Para cada decisão, o parceiro deve confirmar se a apresentação proposta e o conteúdo associado preservam as distinções agronômicas necessárias ao escopo do MVP. O registro deve conter **decisão validada, impacto ou observação, responsável, data e evidência**. Uma concordância em bloco pode identificar explicitamente todos os IDs e a versão aprovada; os campos da proposta estão inicialmente pendentes, sem aprovação presumida.
+
+Se o parceiro preferir um agrupamento, devem ser definidos o conjunto completo de classes, o nome e significado do grupo, culturas e estágios abrangidos, exceções e conteúdo associado. A aprovação de um par não autoriza fundir outras classes ligadas a ele. A mudança exigirá nova versão do contrato e dos dados ou do pós-processamento, conforme a abordagem escolhida, com avaliação e reconferência da política de confiança. O pacote atual não será alterado retroativamente.
+
+Os [hashes de rastreabilidade](../assets/data/tratamento_T6_4/rastreabilidade.json) vinculam a proposta ao modelo, à ordem de classes, às métricas e matrizes do candidato, à análise por imagem e aos pares históricos. O hash do TAP original consultado também está registrado. A revisão da T6.3 é assistida por IA e exploratória; esta proposta não a transforma em confirmação taxonômica. A validação agronômica permanece necessária para fechar a decisão de produto.
 
 
 ## 6.5 Política de confiança (T6.5)
