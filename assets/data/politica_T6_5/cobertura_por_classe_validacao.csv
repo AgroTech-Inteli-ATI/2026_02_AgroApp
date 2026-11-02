@@ -1,0 +1,14 @@
+indice,classe,suporte,aceitas,cobertura,acertos_aceitas,recall_no_limiar,recall_sem_limiar
+0,Vaquinha (Diabrotica speciosa),157,152,0.968153,146,0.929936,0.949045
+1,Cigarrinha-do-milho (Dalbulus maidis),29,27,0.931034,26,0.896552,0.931034
+2,Percevejo-barriga-verde (Dichelops/Diceraeus),42,36,0.857143,34,0.809524,0.904762
+3,Lagarta-do-cartucho (Spodoptera frugiperda),61,56,0.918033,50,0.819672,0.836066
+4,Percevejo-marrom (Euschistus heros),10,8,0.800000,6,0.600000,0.700000
+5,Percevejo-verde (Nezara viridula),14,7,0.500000,5,0.357143,0.571429
+6,Percevejo-asa-preta (Edessa meditabunda),11,8,0.727273,6,0.545455,0.636364
+7,Percevejo-do-milho (Leptoglossus zonatus),12,12,1.000000,10,0.833333,0.833333
+8,Lagarta-falsa-medideira (Chrysodeixis includens),12,10,0.833333,3,0.250000,0.250000
+9,Lagarta-da-soja (Anticarsia gemmatalis),7,7,1.000000,6,0.857143,0.857143
+10,Lagarta-das-vagens (Spodoptera eridania e S. cosmioides),24,16,0.666667,11,0.458333,0.500000
+11,Astylus variegatus,71,69,0.971831,65,0.915493,0.929577
+12,Cigarrinha-das-pastagens (Deois flavopicta),24,22,0.916667,22,0.916667,0.916667

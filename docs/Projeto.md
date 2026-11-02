@@ -65,6 +65,7 @@
 - [6.2 Matriz de confusão (T6.2)](#62-matriz-de-confusão-t62)
 - [6.3 Análise de erros (T6.3)](#63-análise-de-erros-t63)
 - [6.4 Proposta de tratamento de classes (T6.4)](#64-proposta-de-tratamento-de-classes-t64)
+- [6.5 Política de confiança (T6.5)](#65-política-de-confiança-t65)
 
 </details>
 
@@ -2972,3 +2973,106 @@ Ana Célia deve revisar as justificativas e a cobertura dos pares. Para cada dec
 Se o parceiro preferir um agrupamento, devem ser definidos o conjunto completo de classes, o nome e significado do grupo, culturas e estágios abrangidos, exceções e conteúdo associado. A aprovação de um par não autoriza fundir outras classes ligadas a ele. A mudança exigirá nova versão do contrato e dos dados ou do pós-processamento, conforme a abordagem escolhida, com avaliação e reconferência da política de confiança. O pacote atual não será alterado retroativamente.
 
 Os [hashes de rastreabilidade](../assets/data/tratamento_T6_4/rastreabilidade.json) vinculam a proposta ao modelo, à ordem de classes, às métricas e matrizes do candidato, à análise por imagem e aos pares históricos. O hash do TAP original consultado também está registrado. A revisão da T6.3 é assistida por IA e exploratória; esta proposta não a transforma em confirmação taxonômica. A validação agronômica permanece necessária para fechar a decisão de produto.
+
+
+## 6.5 Política de confiança (T6.5)
+
+### Objetivo e decisão
+
+Definir quantas hipóteses o aplicativo apresenta, a partir de que confiança as apresenta e o que faz quando nenhuma classe atinge o mínimo (RF-04, RF-05 e RF-06 da [seção 2.1](#21-requisitos-e-restrições-técnicas)). O símbolo ⧗ marca a proposta da equipe a validar com o parceiro, como na seção 2.1.
+
+| Decisão | Valor |
+| --- | --- |
+| Número de hipóteses | **3** ⧗ |
+| Limiar mínimo de confiança | **0,65** ⧗, aplicado à hipótese mais provável (top-1); confiança igual ao limiar é aceita |
+| Abaixo do limiar | Nenhuma classe é indicada como identificação obtida; o aplicativo mostra a mensagem de resultado inconclusivo ⧗, orienta uma nova foto e, quando existir o catálogo de conteúdo (RF-07), oferece conteúdos relacionados |
+
+**Regra.** Se a confiança do top-1 for **maior ou igual a 0,65**, o aplicativo mostra as três hipóteses mais prováveis em ordem decrescente, cada uma com a sua confiança (RF-04 e RF-05) e abrindo o seu conteúdo (RF-08). O limiar vale só para a primeira hipótese; a segunda e a terceira são mostradas mesmo com confiança menor. No empate, vale a maior probabilidade e, depois, o menor índice de classe. Se o top-1 for **menor que 0,65**, aplica-se o RF-06.
+
+**Mensagem ⧗:** "Resultado inconclusivo: não foi possível identificar o problema com segurança nesta foto." **Orientação ⧗:** "Fotografe de novo, mais perto, com o inseto ou a parte da planta afetada em foco e bem iluminada." O texto não afirma diagnóstico e não diz que a foto não mostra uma praga. Os valores estão em [`parametros.json`](../assets/data/politica_T6_5/parametros.json).
+
+### Critérios de aceite verificáveis
+
+- **Quantidade e ordem:** quando aceita, a saída contém exatamente as três classes de maior score, em ordem decrescente, cada uma com seu score. Empates são resolvidos pelo menor índice de classe. A escolha de k=3 é sustentada pelo ganho top-3 sobre top-2: 2,09 p.p. entre as aceitas em 0,65 (96,7% contra 94,7%).
+- **Limiar:** a decisão considera somente o score top-1; `top-1 >= 0,65` aceita e `top-1 < 0,65` recusa. A calibração seleciona o menor limiar da grade de 0,30 a 0,95, em passos de 0,05, cujo acerto top-1 entre aceitas seja pelo menos 90%. Na validação, 0,60 resulta em 89,3% e 0,65 em 90,7%, com 430/474 imagens aceitas.
+- **Resultado inconclusivo:** abaixo do limiar, nenhuma classe é apresentada como identificação. São exibidas a mensagem e a orientação de nova foto definidas acima; conteúdos relacionados são oferecidos somente se houver catálogo.
+- **Verificação de fronteira:** a igualdade com 0,65 é aceita e um valor abaixo é inconclusivo. Os testes automatizados devem cobrir essa fronteira, o desempate, a ordenação e o indicador `indica_classe=false` no resultado inconclusivo.
+- **Rastreabilidade e base:** os parâmetros registram caminho e SHA-256 do modelo e do índice, além da origem das probabilidades. A análise usa todas e somente as imagens da validação, confere os rótulos e registra o SHA-256 do CSV de probabilidades. Nenhuma imagem de teste é usada.
+- **Interpretação do score:** os valores exibidos são scores softmax não calibrados e não devem ser apresentados como probabilidade de acerto.
+
+Antes de aplicar o limiar no aparelho, a T6.6 deve reconferi-lo no modelo INT8. A validação usada aqui também participou da escolha do candidato, portanto os resultados desta calibração são exploratórios.
+
+### Método e artefatos
+
+A política foi calibrada somente na partição de validação (474 imagens), com o modelo oficial da [seção 5.6](#56-seleção-e-versionamento-do-modelo-t56), em inferência Keras FP32: [`modelo.keras`](../assets/modelos/candidato_T5_6_20261026/modelo.keras), sha256 `089a8d903a78898badf385f0d57006a4fb556d76e3e8fae719babdaf564aa51a`, F1 macro de validação **0,7811** (TFLite INT8: 0,7856, conforme a seção 5.6). O índice é [`indice_dataset.csv`](../assets/data/treino_T5_2/indice_dataset.csv), sha256 `28ee662885202f0bda3dec9660e44b28f99b8bd183210bcbdd795b103269b2eb`, o mesmo do manifesto do candidato. Nenhuma imagem de teste foi aberta. O argmax das probabilidades gravadas reproduz o F1 macro (0,7811), a acurácia (0,8565) e a matriz de confusão do `avaliacao_validacao.json` do candidato.
+
+O limiar é o **menor da grade de 0,30 a 0,95 (passo 0,05) em que o acerto do top-1 entre as aceitas é de pelo menos 0,90**. Para selecionar k, usa-se k=2 como referência e passa-se a k=3 se o acerto top-3 superar o top-2 em pelo menos 2 p.p.; k nunca é maior que 3. Nesta validação, o ganho foi 2,09 p.p., então foram selecionadas três hipóteses.
+
+```bash
+python -m src.probabilidades_validacao_t6_5 --modelo assets/modelos/candidato_T5_6_20261026/modelo.keras --indice assets/data/treino_T5_2/indice_dataset.csv --raiz-imagens /caminho/das/fontes --saida assets/data/politica_T6_5/probabilidades_validacao.csv
+python -m src.politica_confianca_t6_5 --probabilidades assets/data/politica_T6_5/probabilidades_validacao.csv --indice assets/data/treino_T5_2/indice_dataset.csv --meta-acerto 0.90 --limiar 0.65
+python tests/validar_politica_confianca_t6_5.py
+```
+### Rastreabilidade
+
+| Arquivo | Conteúdo |
+| --- | --- |
+| `assets/data/politica_T6_5/parametros.json` | Número de hipóteses, limiar, comportamento abaixo do limiar e base da calibração. |
+| `assets/data/politica_T6_5/probabilidades_validacao.csv` | `image_id`, `indice_real` e as 13 probabilidades por imagem; sha256 `6f42fa5920e5405fd8811d57dc3ab1137fd243627c01fcef8f2f0d25c402e277`. |
+| `assets/data/politica_T6_5/curva_limiar_validacao.csv` | Cobertura e acerto top-k entre as aceitas, por limiar. |
+| `assets/data/politica_T6_5/cobertura_por_classe_validacao.csv` | Cobertura e recall por classe em 0,65. |
+| `src/probabilidades_validacao_t6_5.py`, `src/politica_confianca_t6_5.py` | Geração das probabilidades (TensorFlow) e análise (NumPy), com recusa de qualquer imagem fora da validação. |
+| `tests/validar_politica_confianca_t6_5.py` | Ordem e desempate do top-k, fronteira do limiar, contagens, recusas e esquema do `parametros.json`. |
+
+### Resultado
+
+Acerto sem limiar, nas 474 imagens:
+
+| k | Acertos | Acerto | Ganho sobre o k anterior |
+| ---: | ---: | ---: | ---: |
+| 1 | 406/474 | 85,7% | — |
+| 2 | 436/474 | 92,0% | +6,3 p.p. |
+| 3 | 448/474 | 94,5% | +2,5 p.p. |
+| 5 | 463/474 | 97,7% | +3,2 p.p. |
+
+Curva por limiar, com o acerto calculado entre as imagens aceitas (top-1 maior ou igual ao limiar):
+
+| Limiar | Cobertura | Inconclusivos | top-1 | top-2 | top-3 | top-5 |
+| ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| 0,50 | 96,2% | 3,8% | 87,5% | 93,4% | 95,6% | 97,8% |
+| 0,55 | 94,7% | 5,3% | 88,2% | 93,3% | 95,5% | 97,8% |
+| 0,60 | 93,0% | 7,0% | 89,3% | 93,9% | 95,9% | 98,0% |
+| **0,65** | **90,7%** | **9,3%** | **90,7%** | **94,7%** | **96,7%** | **98,6%** |
+| 0,70 | 88,8% | 11,2% | 91,2% | 95,2% | 97,4% | 99,0% |
+| 0,75 | 87,3% | 12,7% | 92,3% | 96,1% | 98,1% | 99,0% |
+| 0,80 | 85,4% | 14,6% | 93,3% | 96,3% | 98,3% | 99,0% |
+
+A grade completa (0,30 a 0,95) está em [`curva_limiar_validacao.csv`](../assets/data/politica_T6_5/curva_limiar_validacao.csv). Em 0,65, **430 das 474 imagens** são aceitas e **390** delas têm o top-1 correto; as outras 44 ficam inconclusivas, e 16 dessas teriam o top-1 correto. Entre as aceitas, o top-3 supera o top-2 em **2,09 p.p.** (9 imagens); sem limiar, em 2,53 p.p. (12 imagens). Pela regra, **k = 3**.
+
+Cobertura e recall por classe em 0,65. O recall no limiar conta a imagem inconclusiva como não reconhecida:
+
+| Índice | Classe | Suporte | Aceitas | Cobertura | Acertos nas aceitas | Recall no limiar |
+| ---: | --- | ---: | ---: | ---: | ---: | ---: |
+| 0 | Vaquinha | 157 | 152 | 96,8% | 146 | 93,0% |
+| 1 | Cigarrinha-do-milho | 29 | 27 | 93,1% | 26 | 89,7% |
+| 2 | Percevejo-barriga-verde | 42 | 36 | 85,7% | 34 | 81,0% |
+| 3 | Lagarta-do-cartucho | 61 | 56 | 91,8% | 50 | 82,0% |
+| 4 | Percevejo-marrom | 10 | 8 | 80,0% | 6 | 60,0% |
+| 5 | Percevejo-verde | 14 | 7 | 50,0% | 5 | 35,7% |
+| 6 | Percevejo-asa-preta | 11 | 8 | 72,7% | 6 | 54,5% |
+| 7 | Percevejo-do-milho | 12 | 12 | 100,0% | 10 | 83,3% |
+| 8 | Lagarta-falsa-medideira | 12 | 10 | 83,3% | 3 | 25,0% |
+| 9 | Lagarta-da-soja | 7 | 7 | 100,0% | 6 | 85,7% |
+| 10 | Lagarta-das-vagens | 24 | 16 | 66,7% | 11 | 45,8% |
+| 11 | *Astylus variegatus* | 71 | 69 | 97,2% | 65 | 91,5% |
+| 12 | Cigarrinha-das-pastagens | 24 | 22 | 91,7% | 22 | 91,7% |
+
+### Limites
+
+- **Validação usada na seleção.** A validação serviu também à parada antecipada e à escolha do candidato (seções 5.1 e 5.6), então o limiar tende a ser otimista; a confirmação exigirá o novo conjunto de teste final.
+- **Calibração só em Keras FP32.** O valor de 0,65 precisa ser reconferido no `modelo_int8.tflite` (T6.6) antes de valer no aparelho.
+- **Confiança do softmax não é probabilidade calibrada.** O valor mostrado não deve ser lido como chance de acerto (risco R11): em 0,65, **40 das 430 imagens aceitas continuam erradas**, e a Lagarta-falsa-medideira tem **3 acertos em 10 aceitas**.
+- **k = 3 por margem estreita.** O ganho do top-3 sobre o top-2 entre as aceitas (2,09 p.p.) passa da regra de 2 p.p. por menos de uma imagem (em 0,75 cairia para 1,93 p.p.). O k = 3 também cobre o trio de lagartas com pares recorrentes na [T6.2](#62-matriz-de-confusão-t62) e na [T6.3](#63-análise-de-erros-t63).
+- **Fora do escopo e conteúdo.** Fotos de doenças, outras culturas ou plantas sadias não foram medidas, e o limiar é um filtro fraco para elas. O catálogo de conteúdo não existe (`chave_conteudo` é `null`), então "conteúdos relacionados" é uma regra sem implementação.
+
+**Base de estudo:** [scikit-learn — `top_k_accuracy_score`](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.top_k_accuracy_score.html), [scikit-learn — Probability calibration](https://scikit-learn.org/stable/modules/calibration.html) e GUO, C.; PLEISS, G.; SUN, Y.; WEINBERGER, K. Q. [On Calibration of Modern Neural Networks](https://arxiv.org/abs/1706.04599). ICML, 2017.
