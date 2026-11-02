@@ -2991,11 +2991,22 @@ Definir quantas hipóteses o aplicativo apresenta, a partir de que confiança as
 
 **Mensagem ⧗:** "Resultado inconclusivo: não foi possível identificar o problema com segurança nesta foto." **Orientação ⧗:** "Fotografe de novo, mais perto, com o inseto ou a parte da planta afetada em foco e bem iluminada." O texto não afirma diagnóstico e não diz que a foto não mostra uma praga. Os valores estão em [`parametros.json`](../assets/data/politica_T6_5/parametros.json).
 
+### Critérios de aceite verificáveis
+
+- **Quantidade e ordem:** quando aceita, a saída contém exatamente as três classes de maior score, em ordem decrescente, cada uma com seu score. Empates são resolvidos pelo menor índice de classe. A escolha de k=3 é sustentada pelo ganho top-3 sobre top-2: 2,09 p.p. entre as aceitas em 0,65 (96,7% contra 94,7%).
+- **Limiar:** a decisão considera somente o score top-1; `top-1 >= 0,65` aceita e `top-1 < 0,65` recusa. A calibração seleciona o menor limiar da grade de 0,30 a 0,95, em passos de 0,05, cujo acerto top-1 entre aceitas seja pelo menos 90%. Na validação, 0,60 resulta em 89,3% e 0,65 em 90,7%, com 430/474 imagens aceitas.
+- **Resultado inconclusivo:** abaixo do limiar, nenhuma classe é apresentada como identificação. São exibidas a mensagem e a orientação de nova foto definidas acima; conteúdos relacionados são oferecidos somente se houver catálogo.
+- **Verificação de fronteira:** a igualdade com 0,65 é aceita e um valor abaixo é inconclusivo. Os testes automatizados devem cobrir essa fronteira, o desempate, a ordenação e o indicador `indica_classe=false` no resultado inconclusivo.
+- **Rastreabilidade e base:** os parâmetros registram caminho e SHA-256 do modelo e do índice, além da origem das probabilidades. A análise usa todas e somente as imagens da validação, confere os rótulos e registra o SHA-256 do CSV de probabilidades. Nenhuma imagem de teste é usada.
+- **Interpretação do score:** os valores exibidos são scores softmax não calibrados e não devem ser apresentados como probabilidade de acerto.
+
+Antes de aplicar o limiar no aparelho, a T6.6 deve reconferi-lo no modelo INT8. A validação usada aqui também participou da escolha do candidato, portanto os resultados desta calibração são exploratórios.
+
 ### Método e artefatos
 
 A política foi calibrada somente na partição de validação (474 imagens), com o modelo oficial da [seção 5.6](#56-seleção-e-versionamento-do-modelo-t56), em inferência Keras FP32: [`modelo.keras`](../assets/modelos/candidato_T5_6_20261026/modelo.keras), sha256 `089a8d903a78898badf385f0d57006a4fb556d76e3e8fae719babdaf564aa51a`, F1 macro de validação **0,7811** (TFLite INT8: 0,7856, conforme a seção 5.6). O índice é [`indice_dataset.csv`](../assets/data/treino_T5_2/indice_dataset.csv), sha256 `28ee662885202f0bda3dec9660e44b28f99b8bd183210bcbdd795b103269b2eb`, o mesmo do manifesto do candidato. Nenhuma imagem de teste foi aberta. O argmax das probabilidades gravadas reproduz o F1 macro (0,7811), a acurácia (0,8565) e a matriz de confusão do `avaliacao_validacao.json` do candidato.
 
-O limiar é o **menor da grade de 0,30 a 0,95 (passo 0,05) em que o acerto do top-1 entre as aceitas é de pelo menos 0,90**. O k é 2 por padrão e passa a 3 somente se o acerto top-3 superar o top-2 em pelo menos 2 p.p.; nunca é maior que 3.
+O limiar é o **menor da grade de 0,30 a 0,95 (passo 0,05) em que o acerto do top-1 entre as aceitas é de pelo menos 0,90**. Para selecionar k, usa-se k=2 como referência e passa-se a k=3 se o acerto top-3 superar o top-2 em pelo menos 2 p.p.; k nunca é maior que 3. Nesta validação, o ganho foi 2,09 p.p., então foram selecionadas três hipóteses.
 
 ```bash
 python -m src.probabilidades_validacao_t6_5 --modelo assets/modelos/candidato_T5_6_20261026/modelo.keras --indice assets/data/treino_T5_2/indice_dataset.csv --raiz-imagens /caminho/das/fontes --saida assets/data/politica_T6_5/probabilidades_validacao.csv

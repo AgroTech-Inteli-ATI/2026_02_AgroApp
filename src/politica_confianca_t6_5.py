@@ -10,7 +10,7 @@ Uso:
         [--limiar 0.60] [--meta-acerto 0.90]
 
 Entrada: CSV gerado por src.probabilidades_validacao_t6_5 (image_id, indice_real,
-p_0..p_N). Cada image_id é conferido no índice da T4.5: todos devem ser da validação,
+p_0..p_N). Cada image_id é conferido no índice T5.2 do candidato: todos devem ser da validação,
 com o mesmo rótulo, e a validação inteira deve estar presente.
 """
 
@@ -24,7 +24,7 @@ import numpy as np
 
 RAIZ = Path(__file__).resolve().parents[1]
 PASTA = RAIZ / "assets/data/politica_T6_5"
-INDICE_PADRAO = RAIZ / "assets/data/pipeline_T4_5/indice_pipeline.csv"
+INDICE_PADRAO = RAIZ / "assets/data/treino_T5_2/indice_dataset.csv"
 CLASSES_PADRAO = RAIZ / "assets/data/classes-modelo.csv"
 PARTICAO = "validacao"
 TOLERANCIA_SOMA = 1e-4

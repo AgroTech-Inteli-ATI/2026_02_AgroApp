@@ -2,7 +2,7 @@ r"""Gera as probabilidades por classe da partição de VALIDAÇÃO (insumo da T6
 
 Uso (requer TensorFlow/Keras: Colab ou .venv-treino):
     python -m src.probabilidades_validacao_t6_5 --modelo runs/<rodada>/melhor_modelo.keras \
-        --indice assets/data/pipeline_T4_5/indice_pipeline.csv \
+        --indice assets/data/treino_T5_2/indice_dataset.csv \
         --raiz-imagens /caminho/para/as/fontes \
         --saida assets/data/politica_T6_5/probabilidades_validacao.csv
 
@@ -20,9 +20,9 @@ from pathlib import Path
 import numpy as np
 
 from src.avaliacao_t6_1 import _carregar_modelo
-from src.dados_treino import INDICE_PADRAO, carregar_indice, nomes_classes, preparar_particao
+from src.dados_treino import carregar_indice, nomes_classes, preparar_particao
 from src.politica_confianca_t6_5 import (
-    CLASSES_PADRAO, PARTICAO, PASTA, ler_nomes_classes, validar_matriz,
+    CLASSES_PADRAO, INDICE_PADRAO, PARTICAO, PASTA, ler_nomes_classes, validar_matriz,
 )
 
 def _hash(caminho: Path) -> str:
