@@ -1650,3 +1650,92 @@ O critério de aceite experimental será concluído ao executar o comando com a
 rodada selecionada e registrar os quatro artefatos, sem preencher valores fictícios.
 
 
+
+# 7. Conversão e otimização do modelo
+
+## 7.1 Conversão para TFLite/LiteRT (T7.1)
+
+O fluxo está em [`src/conversao_t7_1.py`](../src/conversao_t7_1.py).
+Recebe a rodada final escolhida por treino/validação e converte
+`melhor_modelo.keras` pela API oficial
+[`tf.lite.TFLiteConverter.from_keras_model`](https://www.tensorflow.org/api_docs/python/tf/lite/TFLiteConverter).
+A conversão desta etapa é float32, sem quantização, restrita aos operadores
+TFLite nativos. Operações incompatíveis interrompem a conversão.
+
+### Execução
+
+No ambiente com as dependências de `requirements-treino.txt` (treino documentado
+em Python 3.12; conversão também verificada em Python 3.13.5 no Windows):
+
+```bash
+python -m pip install -r requirements-treino.txt
+python -m src.conversao_t7_1 --rodada runs/<rodada_selecionada> --saida runs/<rodada_selecionada>/tflite
+```
+
+A rodada deve conter `melhor_modelo.keras` e `metricas_validacao.json` da T5.1.
+A seleção da rodada é explícita; o comando não escolhe o modelo por métricas de teste.
+Para acrescentar fotos reais à comparação, repetir `--imagem caminho/foto.jpg`.
+A imagem recebe o mesmo preprocessamento T4.1 usado no treinamento.
+
+### Contrato de entrada e saída
+
+| Tensor | Formato alocado | Tipo | Significado |
+| --- | --- | --- | --- |
+| Entrada | `[1, H, H, 3]` | `float32` | Uma imagem RGB, layout NHWC, valores em [0, 1]. |
+| Saída | `[1, C]` | `float32` | Probabilidades softmax na ordem das classes da rodada. |
+
+`H` vem de `tamanho_entrada` da rodada; `C` vem de `validacao.por_classe`
+(atualmente o projeto prevê 13 classes). Esses valores não são presumidos:
+o comando confere as dimensões Keras e as dimensões reais do interpretador.
+A entrada preserva proporção, aplica orientação EXIF e completa o quadro com
+cinza RGB 128 antes de dividir por 255. A conversão de faixa específica do
+backbone já faz parte do modelo e não deve ser reaplicada pelo consumidor.
+O índice da previsão é o argmax da saída.
+
+### Validação e artefatos
+
+O arquivo convertido é gravado temporariamente e reaberto por
+[`tf.lite.Interpreter`](https://www.tensorflow.org/api_docs/python/tf/lite/Interpreter).
+Após `allocate_tensors()`, o fluxo executa `set_tensor()`, `invoke()` e
+`get_tensor()` para entradas de zeros, uns e ruído com semente 42, além das
+imagens opcionais. Verifica formato, tipo, valores finitos, probabilidades e
+soma unitária. As saídas Keras e TFLite devem satisfazer `allclose` com
+`atol=1e-5` e `rtol=1e-4`; divergências interrompem a entrega.
+Os argmax de ambos são registrados, inclusive para identificar empates próximos.
+
+Somente após essa validação são escritos:
+
+- `modelo.tflite`: modelo convertido.
+- `contrato_tensores.json`: nomes, índices, shapes alocados, assinaturas e tipos
+  obtidos do interpretador; classes em ordem, preprocessamento, hashes SHA-256,
+  versão TensorFlow, tamanho em bytes e erros por amostra.
+- `relatorio_conversao.md`: contrato dos tensores e resumo da validação.
+
+Arquivos de conversão existentes não são sobrescritos. As saídas podem permanecer
+em `runs/`, que já é ignorada pelo Git. As entradas sintéticas verificam execução
+e equivalência numérica; não medem qualidade diagnóstica ou desempenho no celular.
+
+### Testes e situação do aceite
+
+```bash
+python tests/validar_conversao_t7_1.py
+```
+
+Em 03/11/2026, os **sete testes passaram, sem testes pulados**, no Windows com
+Python 3.13.5, TensorFlow 2.21.0, Keras 3.15.1 e KerasHub 0.32.0, instalados em
+`.venv-treino`. Foram verificadas a conversão e a inferência reais de um modelo
+sintético com foto adicional e da MobileNetV3Small construída pelo pipeline T5.1,
+sem download de pesos pré-treinados. Também foram verificadas a recusa de saída
+sem softmax, de classes desordenadas, de tamanho inválido, de checkpoint ausente
+e a preservação de conversões existentes. Os artefatos de teste são temporários.
+
+Os sete testes da avaliação T6.1 e a verificação do preprocessamento T4.1 também
+passaram. `pip check` não encontrou conflitos de dependências. A interface de
+linha de comando, a mensagem de checkpoint ausente e `git diff --check` foram
+verificados. O ambiente virtual permanece ignorado pelo Git.
+
+**Aceite experimental pendente:** este checkout não contém o checkpoint treinado
+selecionado. Portanto, ainda não foi
+gerado nem validado um `.tflite` final. Para concluir T7.1, executar o comando com
+a rodada selecionada e conservar os três artefatos gerados. O relatório conterá
+os formatos efetivos dos tensores, sem substituir o modelo final por pesos sintéticos.
