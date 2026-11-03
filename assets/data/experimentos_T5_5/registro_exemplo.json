@@ -1,0 +1,14 @@
+{
+  "status": "incompleta",
+  "motivo_descarte": "",
+  "artefato_modelo": "melhor_modelo.keras",
+  "latencia": {
+    "estimativa_ms": null,
+    "dispositivo": "",
+    "runtime": "",
+    "precisao": "",
+    "batch": 1,
+    "metodo": "",
+    "fonte": ""
+  }
+}

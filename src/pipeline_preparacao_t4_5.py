@@ -133,7 +133,13 @@ def _comparar_particionamento(raiz: Path, reproduzido: Path) -> dict[str, str]:
         esperado = aprovado / nome
         obtido = reproduzido / nome
         hashes[nome] = _hash_arquivo(obtido)
-        if esperado.read_bytes() != obtido.read_bytes():
+        esperado_bytes = esperado.read_bytes()
+        obtido_bytes = obtido.read_bytes()
+        # Checkouts antigos do Windows podem conservar CRLF apesar de eol=lf.
+        if nome.endswith(".csv"):
+            esperado_bytes = esperado_bytes.replace(b"\r\n", b"\n")
+            obtido_bytes = obtido_bytes.replace(b"\r\n", b"\n")
+        if esperado_bytes != obtido_bytes:
             divergentes.append(nome)
     if divergentes:
         raise ValueError(

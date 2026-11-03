@@ -1,0 +1,475 @@
+foto,caminho_relativo,indice_gabarito,gabarito,indice_previsto,previsao,confianca,acertou
+1,dataset/field/astylus_variegatus/inat106628829_179161046.jpg,11,Astylus variegatus,11,Astylus variegatus,0.838992,True
+2,dataset/field/astylus_variegatus/inat106628829_179161065.jpg,11,Astylus variegatus,11,Astylus variegatus,0.9999899,True
+3,dataset/field/astylus_variegatus/inat107532599_180875532.jpg,11,Astylus variegatus,7,Percevejo-do-milho (Leptoglossus zonatus),0.8837538,False
+4,dataset/field/astylus_variegatus/inat107587773_180978458.jpg,11,Astylus variegatus,11,Astylus variegatus,0.99989706,True
+5,dataset/field/astylus_variegatus/inat111572548_188361179.jpg,11,Astylus variegatus,11,Astylus variegatus,0.87779295,True
+6,dataset/field/astylus_variegatus/inat111572548_188361234.jpg,11,Astylus variegatus,11,Astylus variegatus,0.98481876,True
+7,dataset/field/astylus_variegatus/inat124092956_210299053.jpg,11,Astylus variegatus,11,Astylus variegatus,0.9884714,True
+8,dataset/field/astylus_variegatus/inat150651193_259813897.jpg,11,Astylus variegatus,11,Astylus variegatus,0.92844486,True
+9,dataset/field/astylus_variegatus/inat152666329_263573779.jpg,11,Astylus variegatus,11,Astylus variegatus,0.99892217,True
+10,dataset/field/astylus_variegatus/inat152666329_263573804.jpg,11,Astylus variegatus,11,Astylus variegatus,0.9967361,True
+11,dataset/field/astylus_variegatus/inat152666329_263573825.jpg,11,Astylus variegatus,11,Astylus variegatus,0.9994138,True
+12,dataset/field/astylus_variegatus/inat152666329_263573855.jpg,11,Astylus variegatus,11,Astylus variegatus,0.9986695,True
+13,dataset/field/astylus_variegatus/inat154207147_266425153.jpg,11,Astylus variegatus,11,Astylus variegatus,0.99999946,True
+14,dataset/field/astylus_variegatus/inat154207147_266425183.jpg,11,Astylus variegatus,11,Astylus variegatus,0.99981505,True
+15,dataset/field/astylus_variegatus/inat157218691_271862701.jpg,11,Astylus variegatus,11,Astylus variegatus,0.99606407,True
+16,dataset/field/astylus_variegatus/inat158102112_273261655.jpg,11,Astylus variegatus,11,Astylus variegatus,0.95920974,True
+17,dataset/field/astylus_variegatus/inat158102112_273261704.jpg,11,Astylus variegatus,11,Astylus variegatus,0.9136305,True
+18,dataset/field/astylus_variegatus/inat161988820_280047682.jpg,11,Astylus variegatus,11,Astylus variegatus,0.9595442,True
+19,dataset/field/astylus_variegatus/inat163184414_282210171.jpg,11,Astylus variegatus,11,Astylus variegatus,0.9999518,True
+20,dataset/field/astylus_variegatus/inat177210105_308173543.jpg,11,Astylus variegatus,11,Astylus variegatus,0.868783,True
+21,dataset/field/astylus_variegatus/inat177210105_308173701.jpg,11,Astylus variegatus,11,Astylus variegatus,0.97523504,True
+22,dataset/field/astylus_variegatus/inat177210105_308173867.jpg,11,Astylus variegatus,11,Astylus variegatus,0.90083015,True
+23,dataset/field/astylus_variegatus/inat198313433_349503429.jpg,11,Astylus variegatus,11,Astylus variegatus,0.3139973,True
+24,dataset/field/astylus_variegatus/inat198348680_349575907.jpg,11,Astylus variegatus,11,Astylus variegatus,0.8314265,True
+25,dataset/field/astylus_variegatus/inat200329275_353417240.jpg,11,Astylus variegatus,11,Astylus variegatus,0.9532339,True
+26,dataset/field/astylus_variegatus/inat201376011_355469347.jpg,11,Astylus variegatus,11,Astylus variegatus,0.9999979,True
+27,dataset/field/astylus_variegatus/inat202285962_357235924.jpg,11,Astylus variegatus,11,Astylus variegatus,0.9999934,True
+28,dataset/field/astylus_variegatus/inat205578660_363517986.jpg,11,Astylus variegatus,11,Astylus variegatus,0.96386987,True
+29,dataset/field/astylus_variegatus/inat205578660_363518013.jpg,11,Astylus variegatus,11,Astylus variegatus,0.75592774,True
+30,dataset/field/astylus_variegatus/inat205578660_363518059.jpg,11,Astylus variegatus,11,Astylus variegatus,0.7908271,True
+31,dataset/field/astylus_variegatus/inat207247476_366561835.jpg,11,Astylus variegatus,11,Astylus variegatus,0.9998124,True
+32,dataset/field/astylus_variegatus/inat207932373_367850913.jpg,11,Astylus variegatus,11,Astylus variegatus,0.9950382,True
+33,dataset/field/astylus_variegatus/inat211139956_373303729.jpg,11,Astylus variegatus,11,Astylus variegatus,0.52685237,True
+34,dataset/field/astylus_variegatus/inat254899675_456675655.jpg,11,Astylus variegatus,12,Cigarrinha-das-pastagens (Deois flavopicta),0.9667769,False
+35,dataset/field/astylus_variegatus/inat254899675_456675659.jpg,11,Astylus variegatus,12,Cigarrinha-das-pastagens (Deois flavopicta),0.85173565,False
+36,dataset/field/astylus_variegatus/inat256301622_459500459.jpg,11,Astylus variegatus,11,Astylus variegatus,0.998755,True
+37,dataset/field/astylus_variegatus/inat258974281_464773956.jpg,11,Astylus variegatus,11,Astylus variegatus,0.9175365,True
+38,dataset/field/astylus_variegatus/inat258974281_464773986.jpg,11,Astylus variegatus,11,Astylus variegatus,0.99993235,True
+39,dataset/field/astylus_variegatus/inat259789635_466422905.jpg,11,Astylus variegatus,11,Astylus variegatus,0.8503058,True
+40,dataset/field/astylus_variegatus/inat262476317_471510505.jpg,11,Astylus variegatus,0,Vaquinha (Diabrotica speciosa),0.45585722,False
+41,dataset/field/astylus_variegatus/inat269970949_485469279.jpg,11,Astylus variegatus,11,Astylus variegatus,0.9735128,True
+42,dataset/field/astylus_variegatus/inat269970949_485469331.jpg,11,Astylus variegatus,5,Percevejo-verde (Nezara viridula),0.3335431,False
+43,dataset/field/astylus_variegatus/inat269970949_485469375.jpg,11,Astylus variegatus,11,Astylus variegatus,0.75761503,True
+44,dataset/field/astylus_variegatus/inat269970949_485485099.jpg,11,Astylus variegatus,5,Percevejo-verde (Nezara viridula),0.32129544,False
+45,dataset/field/astylus_variegatus/inat293005983_527338905.jpg,11,Astylus variegatus,11,Astylus variegatus,0.9334106,True
+46,dataset/field/astylus_variegatus/inat294157795_529444954.jpg,11,Astylus variegatus,11,Astylus variegatus,0.38815445,True
+47,dataset/field/astylus_variegatus/inat338936629_616465791.jpg,11,Astylus variegatus,11,Astylus variegatus,0.9206466,True
+48,dataset/field/astylus_variegatus/inat356902102_650890131.jpg,11,Astylus variegatus,11,Astylus variegatus,0.93270475,True
+49,dataset/field/astylus_variegatus/inat363107525_662786257.jpg,11,Astylus variegatus,11,Astylus variegatus,0.99927837,True
+50,dataset/field/astylus_variegatus/inat39246005_62239676.jpg,11,Astylus variegatus,11,Astylus variegatus,0.9182293,True
+51,dataset/field/astylus_variegatus/inat57418460_91584372.jpg,11,Astylus variegatus,11,Astylus variegatus,0.990033,True
+52,dataset/field/astylus_variegatus/inat57418460_91584381.jpg,11,Astylus variegatus,11,Astylus variegatus,0.9850043,True
+53,dataset/field/astylus_variegatus/inat57418460_91584409.jpg,11,Astylus variegatus,11,Astylus variegatus,0.9950073,True
+54,dataset/field/astylus_variegatus/inat68175814_110325011.jpg,11,Astylus variegatus,11,Astylus variegatus,0.99999636,True
+55,dataset/field/astylus_variegatus/inat68175814_110325027.jpg,11,Astylus variegatus,11,Astylus variegatus,0.99998707,True
+56,dataset/field/astylus_variegatus/inat68175814_110325038.jpg,11,Astylus variegatus,11,Astylus variegatus,0.6970345,True
+57,dataset/field/astylus_variegatus/inat68175814_110325049.jpg,11,Astylus variegatus,11,Astylus variegatus,0.92811877,True
+58,dataset/field/astylus_variegatus/inat68175814_110325057.jpg,11,Astylus variegatus,11,Astylus variegatus,0.63577384,True
+59,dataset/field/astylus_variegatus/inat68175814_110325066.jpg,11,Astylus variegatus,0,Vaquinha (Diabrotica speciosa),0.56490415,False
+60,dataset/field/astylus_variegatus/inat72281194_117819693.jpg,11,Astylus variegatus,11,Astylus variegatus,0.9728144,True
+61,dataset/field/astylus_variegatus/inat72281194_117819721.jpg,11,Astylus variegatus,11,Astylus variegatus,0.9802903,True
+62,dataset/field/astylus_variegatus/inat72281194_117819772.jpg,11,Astylus variegatus,11,Astylus variegatus,0.9394608,True
+63,dataset/field/astylus_variegatus/inat72281194_117819801.jpg,11,Astylus variegatus,11,Astylus variegatus,0.97042954,True
+64,dataset/field/astylus_variegatus/inat72281194_117819835.jpg,11,Astylus variegatus,11,Astylus variegatus,0.9821035,True
+65,dataset/field/astylus_variegatus/inat72281194_117819868.jpg,11,Astylus variegatus,11,Astylus variegatus,0.9007837,True
+66,dataset/field/astylus_variegatus/inat72281194_117819896.jpg,11,Astylus variegatus,11,Astylus variegatus,0.816549,True
+67,dataset/field/astylus_variegatus/inat72281194_117819932.jpg,11,Astylus variegatus,11,Astylus variegatus,0.9848393,True
+68,dataset/field/astylus_variegatus/inat72746064_118655582.jpg,11,Astylus variegatus,11,Astylus variegatus,0.98993564,True
+69,dataset/field/astylus_variegatus/inat72746064_118655593.jpg,11,Astylus variegatus,11,Astylus variegatus,0.9770829,True
+70,dataset/field/astylus_variegatus/inat74757143_122222335.jpg,11,Astylus variegatus,11,Astylus variegatus,0.9981068,True
+71,dataset/field/astylus_variegatus/inat80219299_131463768.jpg,11,Astylus variegatus,11,Astylus variegatus,0.99962634,True
+72,dataset/image/1fcae5c9-test53.jpg,1,Cigarrinha-do-milho (Dalbulus maidis),1,Cigarrinha-do-milho (Dalbulus maidis),0.99898034,True
+73,dataset/image/2cf8021c-imag8.jpg,1,Cigarrinha-do-milho (Dalbulus maidis),1,Cigarrinha-do-milho (Dalbulus maidis),0.9998757,True
+74,dataset/image/34ed1bc7-imag82.jpg,1,Cigarrinha-do-milho (Dalbulus maidis),1,Cigarrinha-do-milho (Dalbulus maidis),0.9962489,True
+75,dataset/image/3ac0beef-imag24.jpg,1,Cigarrinha-do-milho (Dalbulus maidis),1,Cigarrinha-do-milho (Dalbulus maidis),0.9829491,True
+76,dataset/image/3d162e87-imag74.jpg,1,Cigarrinha-do-milho (Dalbulus maidis),1,Cigarrinha-do-milho (Dalbulus maidis),0.9998959,True
+77,dataset/image/4c359cf2-imag87.jpg,1,Cigarrinha-do-milho (Dalbulus maidis),1,Cigarrinha-do-milho (Dalbulus maidis),0.9709664,True
+78,dataset/image/5a863cb6-imag85.jpg,1,Cigarrinha-do-milho (Dalbulus maidis),1,Cigarrinha-do-milho (Dalbulus maidis),0.9996691,True
+79,dataset/image/5d0eaa9f-imag98.jpg,1,Cigarrinha-do-milho (Dalbulus maidis),1,Cigarrinha-do-milho (Dalbulus maidis),0.9936476,True
+80,dataset/image/6ae35f90-imag116.jpg,1,Cigarrinha-do-milho (Dalbulus maidis),1,Cigarrinha-do-milho (Dalbulus maidis),0.99644625,True
+81,dataset/image/7ed0d8ed-imag81.jpg,1,Cigarrinha-do-milho (Dalbulus maidis),1,Cigarrinha-do-milho (Dalbulus maidis),0.9997899,True
+82,dataset/image/9460602a-imag79.jpg,1,Cigarrinha-do-milho (Dalbulus maidis),1,Cigarrinha-do-milho (Dalbulus maidis),0.9984403,True
+83,dataset/image/a0eeb8c6-imag60.jpg,1,Cigarrinha-do-milho (Dalbulus maidis),0,Vaquinha (Diabrotica speciosa),0.84948725,False
+84,dataset/image/b11ff2ea-test133.jpg,1,Cigarrinha-do-milho (Dalbulus maidis),1,Cigarrinha-do-milho (Dalbulus maidis),0.99929875,True
+85,dataset/image/b689c0c6-imag108.jpg,1,Cigarrinha-do-milho (Dalbulus maidis),1,Cigarrinha-do-milho (Dalbulus maidis),0.9980738,True
+86,dataset/image/b6b2e2af-imag106.jpg,1,Cigarrinha-do-milho (Dalbulus maidis),1,Cigarrinha-do-milho (Dalbulus maidis),0.8640443,True
+87,dataset/image/bfc86596-imag105.jpg,1,Cigarrinha-do-milho (Dalbulus maidis),1,Cigarrinha-do-milho (Dalbulus maidis),0.9997401,True
+88,dataset/image/c1810253-imag32.jpg,1,Cigarrinha-do-milho (Dalbulus maidis),1,Cigarrinha-do-milho (Dalbulus maidis),0.999922,True
+89,dataset/image/e1876a86-imag15.jpg,1,Cigarrinha-do-milho (Dalbulus maidis),1,Cigarrinha-do-milho (Dalbulus maidis),0.9932596,True
+90,dataset/image/e57a08e5-imag94.jpg,1,Cigarrinha-do-milho (Dalbulus maidis),1,Cigarrinha-do-milho (Dalbulus maidis),0.9996612,True
+91,dataset/image/ea31425a-imag129.jpg,1,Cigarrinha-do-milho (Dalbulus maidis),1,Cigarrinha-do-milho (Dalbulus maidis),0.9999618,True
+92,dataset/image/eb8ba7cb-imag119.jpg,1,Cigarrinha-do-milho (Dalbulus maidis),1,Cigarrinha-do-milho (Dalbulus maidis),0.99994296,True
+93,dataset/image/test101.jpg,1,Cigarrinha-do-milho (Dalbulus maidis),1,Cigarrinha-do-milho (Dalbulus maidis),0.99995154,True
+94,dataset/image/test165.jpg,1,Cigarrinha-do-milho (Dalbulus maidis),1,Cigarrinha-do-milho (Dalbulus maidis),0.99971163,True
+95,dataset/image/test177.jpg,1,Cigarrinha-do-milho (Dalbulus maidis),1,Cigarrinha-do-milho (Dalbulus maidis),0.9997413,True
+96,dataset/image/test29.jpg,1,Cigarrinha-do-milho (Dalbulus maidis),1,Cigarrinha-do-milho (Dalbulus maidis),0.99987787,True
+97,dataset/image/test297.jpg,1,Cigarrinha-do-milho (Dalbulus maidis),1,Cigarrinha-do-milho (Dalbulus maidis),0.8632604,True
+98,dataset/image/test37.jpg,1,Cigarrinha-do-milho (Dalbulus maidis),1,Cigarrinha-do-milho (Dalbulus maidis),0.99892443,True
+99,dataset/image/test49.jpg,1,Cigarrinha-do-milho (Dalbulus maidis),2,Percevejo-barriga-verde (Dichelops/Diceraeus),0.8986972,False
+100,dataset/image/test77.jpg,1,Cigarrinha-do-milho (Dalbulus maidis),1,Cigarrinha-do-milho (Dalbulus maidis),0.9300028,True
+101,dataset/field/deois_flavopicta/inat101094102_168793955.jpg,12,Cigarrinha-das-pastagens (Deois flavopicta),12,Cigarrinha-das-pastagens (Deois flavopicta),0.98648685,True
+102,dataset/field/deois_flavopicta/inat101212877_168997347.jpg,12,Cigarrinha-das-pastagens (Deois flavopicta),12,Cigarrinha-das-pastagens (Deois flavopicta),0.5608067,True
+103,dataset/field/deois_flavopicta/inat101212877_168997369.jpg,12,Cigarrinha-das-pastagens (Deois flavopicta),12,Cigarrinha-das-pastagens (Deois flavopicta),0.64005893,True
+104,dataset/field/deois_flavopicta/inat142495330_244305847.jpg,12,Cigarrinha-das-pastagens (Deois flavopicta),0,Vaquinha (Diabrotica speciosa),0.723943,False
+105,dataset/field/deois_flavopicta/inat142495330_244305861.jpg,12,Cigarrinha-das-pastagens (Deois flavopicta),12,Cigarrinha-das-pastagens (Deois flavopicta),0.9996656,True
+106,dataset/field/deois_flavopicta/inat142495330_244305883.jpg,12,Cigarrinha-das-pastagens (Deois flavopicta),12,Cigarrinha-das-pastagens (Deois flavopicta),0.9384999,True
+107,dataset/field/deois_flavopicta/inat142495330_244305898.jpg,12,Cigarrinha-das-pastagens (Deois flavopicta),12,Cigarrinha-das-pastagens (Deois flavopicta),0.9928941,True
+108,dataset/field/deois_flavopicta/inat142495330_244305906.jpg,12,Cigarrinha-das-pastagens (Deois flavopicta),12,Cigarrinha-das-pastagens (Deois flavopicta),0.9980855,True
+109,dataset/field/deois_flavopicta/inat142495330_244305924.jpg,12,Cigarrinha-das-pastagens (Deois flavopicta),12,Cigarrinha-das-pastagens (Deois flavopicta),0.99772996,True
+110,dataset/field/deois_flavopicta/inat152715612_263664289.jpg,12,Cigarrinha-das-pastagens (Deois flavopicta),12,Cigarrinha-das-pastagens (Deois flavopicta),0.925592,True
+111,dataset/field/deois_flavopicta/inat152715612_263664301.jpg,12,Cigarrinha-das-pastagens (Deois flavopicta),12,Cigarrinha-das-pastagens (Deois flavopicta),0.9166272,True
+112,dataset/field/deois_flavopicta/inat152715619_263664415.jpg,12,Cigarrinha-das-pastagens (Deois flavopicta),7,Percevejo-do-milho (Leptoglossus zonatus),0.81021523,False
+113,dataset/field/deois_flavopicta/inat152715619_263664425.jpg,12,Cigarrinha-das-pastagens (Deois flavopicta),12,Cigarrinha-das-pastagens (Deois flavopicta),0.420791,True
+114,dataset/field/deois_flavopicta/inat252928498_452815844.jpg,12,Cigarrinha-das-pastagens (Deois flavopicta),12,Cigarrinha-das-pastagens (Deois flavopicta),0.9709931,True
+115,dataset/field/deois_flavopicta/inat252928498_452815893.jpg,12,Cigarrinha-das-pastagens (Deois flavopicta),12,Cigarrinha-das-pastagens (Deois flavopicta),0.91434026,True
+116,dataset/field/deois_flavopicta/inat254557955_455983187.jpg,12,Cigarrinha-das-pastagens (Deois flavopicta),12,Cigarrinha-das-pastagens (Deois flavopicta),0.99418265,True
+117,dataset/field/deois_flavopicta/inat261741138_470290852.jpg,12,Cigarrinha-das-pastagens (Deois flavopicta),12,Cigarrinha-das-pastagens (Deois flavopicta),0.9864464,True
+118,dataset/field/deois_flavopicta/inat261741138_470290888.jpg,12,Cigarrinha-das-pastagens (Deois flavopicta),12,Cigarrinha-das-pastagens (Deois flavopicta),0.9598456,True
+119,dataset/field/deois_flavopicta/inat261741138_470290928.jpg,12,Cigarrinha-das-pastagens (Deois flavopicta),12,Cigarrinha-das-pastagens (Deois flavopicta),0.9876073,True
+120,dataset/field/deois_flavopicta/inat327896185_594090871.jpg,12,Cigarrinha-das-pastagens (Deois flavopicta),12,Cigarrinha-das-pastagens (Deois flavopicta),0.64918363,True
+121,dataset/field/deois_flavopicta/inat327896185_594090878.jpg,12,Cigarrinha-das-pastagens (Deois flavopicta),12,Cigarrinha-das-pastagens (Deois flavopicta),0.8842219,True
+122,dataset/field/deois_flavopicta/inat327896185_594090890.jpg,12,Cigarrinha-das-pastagens (Deois flavopicta),12,Cigarrinha-das-pastagens (Deois flavopicta),0.9629569,True
+123,dataset/field/deois_flavopicta/inat36500167_57705806.jpg,12,Cigarrinha-das-pastagens (Deois flavopicta),8,Lagarta-falsa-medideira (Chrysodeixis includens),0.4875156,False
+124,dataset/field/deois_flavopicta/inat72728892_118626296.jpg,12,Cigarrinha-das-pastagens (Deois flavopicta),12,Cigarrinha-das-pastagens (Deois flavopicta),0.9904263,True
+125,dataset/field/leptoglossus_zonatus/inat109656018_184853434.jpg,7,Percevejo-do-milho (Leptoglossus zonatus),7,Percevejo-do-milho (Leptoglossus zonatus),0.96562284,True
+126,dataset/field/leptoglossus_zonatus/inat12622303_18254406.jpg,7,Percevejo-do-milho (Leptoglossus zonatus),7,Percevejo-do-milho (Leptoglossus zonatus),0.9527195,True
+127,dataset/field/leptoglossus_zonatus/inat12622303_18254446.jpg,7,Percevejo-do-milho (Leptoglossus zonatus),7,Percevejo-do-milho (Leptoglossus zonatus),0.99768305,True
+128,dataset/field/leptoglossus_zonatus/inat12622303_18254480.jpg,7,Percevejo-do-milho (Leptoglossus zonatus),7,Percevejo-do-milho (Leptoglossus zonatus),0.8610689,True
+129,dataset/field/leptoglossus_zonatus/inat12622303_18254514.jpg,7,Percevejo-do-milho (Leptoglossus zonatus),7,Percevejo-do-milho (Leptoglossus zonatus),0.9923688,True
+130,dataset/field/leptoglossus_zonatus/inat188397319_329727903.jpg,7,Percevejo-do-milho (Leptoglossus zonatus),7,Percevejo-do-milho (Leptoglossus zonatus),0.9650823,True
+131,dataset/field/leptoglossus_zonatus/inat196031807_345023824.jpg,7,Percevejo-do-milho (Leptoglossus zonatus),7,Percevejo-do-milho (Leptoglossus zonatus),0.85196465,True
+132,dataset/field/leptoglossus_zonatus/inat226834059_402344511.jpg,7,Percevejo-do-milho (Leptoglossus zonatus),7,Percevejo-do-milho (Leptoglossus zonatus),0.9872205,True
+133,dataset/field/leptoglossus_zonatus/inat226834059_402344526.jpg,7,Percevejo-do-milho (Leptoglossus zonatus),7,Percevejo-do-milho (Leptoglossus zonatus),0.9764705,True
+134,dataset/field/leptoglossus_zonatus/inat66858028_107875749.jpg,7,Percevejo-do-milho (Leptoglossus zonatus),4,Percevejo-marrom (Euschistus heros),0.5145244,False
+135,dataset/field/leptoglossus_zonatus/inat66858028_107875766.jpg,7,Percevejo-do-milho (Leptoglossus zonatus),4,Percevejo-marrom (Euschistus heros),0.38054958,False
+136,dataset/field/leptoglossus_zonatus/inat66858028_107875775.jpg,7,Percevejo-do-milho (Leptoglossus zonatus),4,Percevejo-marrom (Euschistus heros),0.6868638,False
+137,Milho/Pragas/04 - Cigarrinha do milho/XoeTznDUPGnm2H2CGMF1KKUgIXfBRa.jpg,1,Cigarrinha-do-milho (Dalbulus maidis),1,Cigarrinha-do-milho (Dalbulus maidis),0.93499494,True
+138,dataset/field/diabrotica_speciosa/inat101480256_169484331.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.99683017,True
+139,dataset/field/diabrotica_speciosa/inat101480256_169484341.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.8632416,True
+140,dataset/field/diabrotica_speciosa/inat101480256_169484345.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.9878652,True
+141,dataset/field/diabrotica_speciosa/inat101480256_169484354.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.7941468,True
+142,dataset/field/diabrotica_speciosa/inat101480256_169484359.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.955537,True
+143,dataset/field/diabrotica_speciosa/inat101480256_169484367.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.8218155,True
+144,dataset/field/diabrotica_speciosa/inat101584905_169669136.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.83698803,True
+145,dataset/field/diabrotica_speciosa/inat115632867_195156200.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.7464302,True
+146,dataset/field/diabrotica_speciosa/inat129990916_220994161.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.99999505,True
+147,dataset/field/diabrotica_speciosa/inat129990916_220994199.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.99995106,True
+148,dataset/field/diabrotica_speciosa/inat129990916_220994231.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.999989,True
+149,dataset/field/diabrotica_speciosa/inat139162530_237969993.jpg,0,Vaquinha (Diabrotica speciosa),11,Astylus variegatus,0.6689604,False
+150,dataset/field/diabrotica_speciosa/inat139241992_238120867.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.9998502,True
+151,dataset/field/diabrotica_speciosa/inat144070121_247196901.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.99286,True
+152,dataset/field/diabrotica_speciosa/inat150663142_259835837.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.9155273,True
+153,dataset/field/diabrotica_speciosa/inat159844245_276195488.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.99408543,True
+154,dataset/field/diabrotica_speciosa/inat166674450_288644390.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.99928886,True
+155,dataset/field/diabrotica_speciosa/inat166674450_288644412.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.9990259,True
+156,dataset/field/diabrotica_speciosa/inat185718390_324401271.jpg,0,Vaquinha (Diabrotica speciosa),2,Percevejo-barriga-verde (Dichelops/Diceraeus),0.6674821,False
+157,dataset/field/diabrotica_speciosa/inat185718390_324401284.jpg,0,Vaquinha (Diabrotica speciosa),2,Percevejo-barriga-verde (Dichelops/Diceraeus),0.5522541,False
+158,dataset/field/diabrotica_speciosa/inat185718390_324401294.jpg,0,Vaquinha (Diabrotica speciosa),2,Percevejo-barriga-verde (Dichelops/Diceraeus),0.8571552,False
+159,dataset/field/diabrotica_speciosa/inat185718390_324401309.jpg,0,Vaquinha (Diabrotica speciosa),2,Percevejo-barriga-verde (Dichelops/Diceraeus),0.9109119,False
+160,dataset/field/diabrotica_speciosa/inat185756837_324474967.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.402421,True
+161,dataset/field/diabrotica_speciosa/inat187625216_328162497.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.9945786,True
+162,dataset/field/diabrotica_speciosa/inat187625216_328162534.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.9957225,True
+163,dataset/field/diabrotica_speciosa/inat19420992_29874385.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.9999611,True
+164,dataset/field/diabrotica_speciosa/inat200381712_353526671.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.9999791,True
+165,dataset/field/diabrotica_speciosa/inat200381712_353526688.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.9999352,True
+166,dataset/field/diabrotica_speciosa/inat206181366_364640941.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.9613148,True
+167,dataset/field/diabrotica_speciosa/inat250821235_448669553.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.99999183,True
+168,dataset/field/diabrotica_speciosa/inat254992883_456868847.jpg,0,Vaquinha (Diabrotica speciosa),11,Astylus variegatus,0.9946775,False
+169,dataset/field/diabrotica_speciosa/inat254992883_456868859.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.49960545,True
+170,dataset/field/diabrotica_speciosa/inat269627111_484813003.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.99825233,True
+171,dataset/field/diabrotica_speciosa/inat295744384_532438479.jpg,0,Vaquinha (Diabrotica speciosa),11,Astylus variegatus,0.8713466,False
+172,dataset/field/diabrotica_speciosa/inat296591919_534049428.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.9993513,True
+173,dataset/field/diabrotica_speciosa/inat296591919_534049453.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.99861103,True
+174,dataset/field/diabrotica_speciosa/inat300106955_540706858.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.9961882,True
+175,dataset/field/diabrotica_speciosa/inat311262953_561873947.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.59969234,True
+176,dataset/field/diabrotica_speciosa/inat322334397_583087841.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.9938883,True
+177,dataset/field/diabrotica_speciosa/inat322334397_583087848.jpg,0,Vaquinha (Diabrotica speciosa),4,Percevejo-marrom (Euschistus heros),0.68292874,False
+178,dataset/field/diabrotica_speciosa/inat322334397_583087865.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.9999264,True
+179,dataset/field/diabrotica_speciosa/inat323911035_586169316.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.9999346,True
+180,dataset/field/diabrotica_speciosa/inat334673838_607815268.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.9995826,True
+181,dataset/field/diabrotica_speciosa/inat334673838_607815278.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.9930338,True
+182,dataset/field/diabrotica_speciosa/inat334673838_607815279.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.99918336,True
+183,dataset/field/diabrotica_speciosa/inat339069197_616728917.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.999854,True
+184,dataset/field/diabrotica_speciosa/inat340828349_620313835.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.9628169,True
+185,dataset/field/diabrotica_speciosa/inat341580397_621859813.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.9990627,True
+186,dataset/field/diabrotica_speciosa/inat349636353_637834066.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.89530915,True
+187,dataset/field/diabrotica_speciosa/inat36699119_58050626.jpg,0,Vaquinha (Diabrotica speciosa),10,Lagarta-das-vagens (Spodoptera eridania e S. cosmioides),0.4918507,False
+188,dataset/field/diabrotica_speciosa/inat36699119_58050629.jpg,0,Vaquinha (Diabrotica speciosa),8,Lagarta-falsa-medideira (Chrysodeixis includens),0.3618267,False
+189,dataset/field/diabrotica_speciosa/inat371288695_678359653.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.9998217,True
+190,dataset/field/diabrotica_speciosa/inat377012860_689387520.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.9999425,True
+191,dataset/field/diabrotica_speciosa/inat379362664_693937043.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.91020155,True
+192,dataset/field/diabrotica_speciosa/inat405121479_744077589.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.91420954,True
+193,dataset/field/diabrotica_speciosa/inat41951615_66573009.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.9985764,True
+194,dataset/field/diabrotica_speciosa/inat64695128_104049443.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.99778146,True
+195,dataset/field/diabrotica_speciosa/inat65594132_105599594.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.9947491,True
+196,dataset/field/diabrotica_speciosa/inat65594132_105599600.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.9998129,True
+197,dataset/field/diabrotica_speciosa/inat65594132_105599616.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.9964459,True
+198,dataset/field/diabrotica_speciosa/inat65594132_105599641.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.999236,True
+199,dataset/field/diabrotica_speciosa/inat66392330_107019153.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.9999129,True
+200,dataset/field/diabrotica_speciosa/inat70035451_113778550.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.9528109,True
+201,dataset/field/diabrotica_speciosa/inat70035451_113778553.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.931149,True
+202,dataset/field/diabrotica_speciosa/inat70035451_113778558.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.9840522,True
+203,dataset/field/diabrotica_speciosa/inat70035451_113778564.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.99596906,True
+204,dataset/field/diabrotica_speciosa/inat70035451_113778571.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.9567373,True
+205,dataset/field/diabrotica_speciosa/inat75884723_124166402.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.94766116,True
+206,dataset/field/diabrotica_speciosa/inat75884723_124166453.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.9536178,True
+207,dataset/field/diabrotica_speciosa/inat78750420_128914754.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.96671927,True
+208,dataset/field/diabrotica_speciosa/inat78750420_128914811.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.99957997,True
+209,dataset/field/diabrotica_speciosa/inat78750420_128914824.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.9999954,True
+210,dataset/field/diabrotica_speciosa/inat99072873_165083558.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.9999706,True
+211,dataset/image/02407f58-test446.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.9991953,True
+212,dataset/image/027e820c-test878.jpg,0,Vaquinha (Diabrotica speciosa),10,Lagarta-das-vagens (Spodoptera eridania e S. cosmioides),0.6102542,False
+213,dataset/image/0ced3808-imag77.jpg,0,Vaquinha (Diabrotica speciosa),4,Percevejo-marrom (Euschistus heros),0.4909157,False
+214,dataset/image/18f021ae-1a49-4813-949f-640933659a09.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.98205835,True
+215,dataset/image/1c720b05-imag120.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.6670352,True
+216,dataset/image/1d6befca-imag40.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.85906607,True
+217,dataset/image/2549b63f-test836.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.8502684,True
+218,dataset/image/2cd83953-test564.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.9992891,True
+219,dataset/image/2f54a92d-test936.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.99881405,True
+220,dataset/image/31447568-imag100.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.5127703,True
+221,dataset/image/3661f451-test940.jpg,0,Vaquinha (Diabrotica speciosa),11,Astylus variegatus,0.92546564,False
+222,dataset/image/45e34f34-imag103.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.9939751,True
+223,dataset/image/475da735-test622.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.994303,True
+224,dataset/image/47e4ca32-imag102.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.997413,True
+225,dataset/image/4bb174ff-imag24.jpg,0,Vaquinha (Diabrotica speciosa),12,Cigarrinha-das-pastagens (Deois flavopicta),0.84878874,False
+226,dataset/image/4c46faa0-imag14.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.999671,True
+227,dataset/image/571b96e8-test919.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.9999878,True
+228,dataset/image/60c260c6-imag31.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.99832684,True
+229,dataset/image/69360bbd-test518.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.9786929,True
+230,dataset/image/708dd590-test496.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.821901,True
+231,dataset/image/71a4b3ce-test526.jpg,0,Vaquinha (Diabrotica speciosa),7,Percevejo-do-milho (Leptoglossus zonatus),0.44979984,False
+232,dataset/image/7c4bad31-imag72.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.99077094,True
+233,dataset/image/84713818-test719.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.87908876,True
+234,dataset/image/870b7543-test812.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.9800321,True
+235,dataset/image/8909cfae-test918.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.99584675,True
+236,dataset/image/8d370ed8-imag25.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.8894618,True
+237,dataset/image/996d7711-test431.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.9858731,True
+238,dataset/image/9ba1c97c-imag94.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.9822906,True
+239,dataset/image/b62cb99b-test820.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.7591643,True
+240,dataset/image/b683aebd-imag2.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.99994045,True
+241,dataset/image/bbf0b397-test872.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.9997171,True
+242,dataset/image/c6281d29-imag6.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.96845794,True
+243,dataset/image/d50d7f64-test548.jpg,0,Vaquinha (Diabrotica speciosa),11,Astylus variegatus,0.72053015,False
+244,dataset/image/d8939a7f-test733.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.85091615,True
+245,dataset/image/d9aa3674-imag19.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.95914745,True
+246,dataset/image/d9aa5efd-test302.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.48489752,True
+247,dataset/image/e04b717f-test882.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.97702724,True
+248,dataset/image/test118.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.9191275,True
+249,dataset/image/test158.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.9999885,True
+250,dataset/image/test182.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.99705917,True
+251,dataset/image/test206.jpg,0,Vaquinha (Diabrotica speciosa),11,Astylus variegatus,0.57839864,False
+252,dataset/image/test218.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.9990697,True
+253,dataset/image/test222.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.9995795,True
+254,dataset/image/test23.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.9996086,True
+255,dataset/image/test258.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.950251,True
+256,dataset/image/test266.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.99998933,True
+257,dataset/image/test338.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.9973672,True
+258,dataset/image/test34.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.9935329,True
+259,dataset/image/test365.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.97721416,True
+260,dataset/image/test377.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.95965284,True
+261,dataset/image/test42.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.9998812,True
+262,dataset/image/test428.jpg,0,Vaquinha (Diabrotica speciosa),2,Percevejo-barriga-verde (Dichelops/Diceraeus),0.47996056,False
+263,dataset/image/test469.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.99991256,True
+264,dataset/image/test504.jpg,0,Vaquinha (Diabrotica speciosa),2,Percevejo-barriga-verde (Dichelops/Diceraeus),0.34905803,False
+265,dataset/image/test506.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.99964166,True
+266,dataset/image/test536.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.99998814,True
+267,dataset/image/test546.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.9992985,True
+268,dataset/image/test570.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.999942,True
+269,dataset/image/test58.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.96206254,True
+270,dataset/image/test606.jpg,0,Vaquinha (Diabrotica speciosa),11,Astylus variegatus,0.95046896,False
+271,dataset/image/test608.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.99591464,True
+272,dataset/image/test614.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.5500577,True
+273,dataset/image/test656.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.9998049,True
+274,dataset/image/test658.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.9994679,True
+275,dataset/image/test660.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.9910977,True
+276,dataset/image/test672.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.9707624,True
+277,dataset/image/test684.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.9377102,True
+278,dataset/image/test688.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.7182626,True
+279,dataset/image/test695.jpg,0,Vaquinha (Diabrotica speciosa),5,Percevejo-verde (Nezara viridula),0.6046588,False
+280,dataset/image/test698.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.9968183,True
+281,dataset/image/test704.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.9835991,True
+282,dataset/image/test708.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.9959388,True
+283,dataset/image/test715.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.9996132,True
+284,dataset/image/test735.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.9999338,True
+285,dataset/image/test760.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.96248144,True
+286,dataset/image/test805.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.99882656,True
+287,dataset/image/test811.jpg,0,Vaquinha (Diabrotica speciosa),10,Lagarta-das-vagens (Spodoptera eridania e S. cosmioides),0.48273972,False
+288,dataset/image/test822.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.9994293,True
+289,dataset/image/test842.jpg,0,Vaquinha (Diabrotica speciosa),12,Cigarrinha-das-pastagens (Deois flavopicta),0.7171826,False
+290,dataset/image/test858.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.9998743,True
+291,dataset/image/test871.jpg,0,Vaquinha (Diabrotica speciosa),5,Percevejo-verde (Nezara viridula),0.55394506,False
+292,dataset/image/test90.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.9934888,True
+293,dataset/image/test910.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.9996538,True
+294,dataset/image/test912.jpg,0,Vaquinha (Diabrotica speciosa),0,Vaquinha (Diabrotica speciosa),0.9875118,True
+295,dataset/field/dichelops_sp/inat33389646_52437835.jpg,2,Percevejo-barriga-verde (Dichelops/Diceraeus),7,Percevejo-do-milho (Leptoglossus zonatus),0.42530254,False
+296,dataset/field/dichelops_sp/inat33389646_52438045.jpg,2,Percevejo-barriga-verde (Dichelops/Diceraeus),2,Percevejo-barriga-verde (Dichelops/Diceraeus),0.94622946,True
+297,dataset/image/0167c9cb-test946.jpg,2,Percevejo-barriga-verde (Dichelops/Diceraeus),2,Percevejo-barriga-verde (Dichelops/Diceraeus),0.5266026,True
+298,dataset/image/0a445d54-imag31.jpg,2,Percevejo-barriga-verde (Dichelops/Diceraeus),2,Percevejo-barriga-verde (Dichelops/Diceraeus),0.9769083,True
+299,dataset/image/1a27a6b4-imag80.jpg,2,Percevejo-barriga-verde (Dichelops/Diceraeus),2,Percevejo-barriga-verde (Dichelops/Diceraeus),0.99044555,True
+300,dataset/image/1a9728d7-imag16.jpg,2,Percevejo-barriga-verde (Dichelops/Diceraeus),2,Percevejo-barriga-verde (Dichelops/Diceraeus),0.39497325,True
+301,dataset/image/1bbf8ec3-imag72.jpg,2,Percevejo-barriga-verde (Dichelops/Diceraeus),2,Percevejo-barriga-verde (Dichelops/Diceraeus),0.997966,True
+302,dataset/image/22248035-b569-4c6d-8d77-381524cf6a1d.jpg,2,Percevejo-barriga-verde (Dichelops/Diceraeus),7,Percevejo-do-milho (Leptoglossus zonatus),0.7331859,False
+303,dataset/image/224da126-imag69.jpg,2,Percevejo-barriga-verde (Dichelops/Diceraeus),10,Lagarta-das-vagens (Spodoptera eridania e S. cosmioides),0.9001068,False
+304,dataset/image/23ef9ebf-imag101.jpg,2,Percevejo-barriga-verde (Dichelops/Diceraeus),2,Percevejo-barriga-verde (Dichelops/Diceraeus),0.8855596,True
+305,dataset/image/2cb8fe6e-imag99.jpg,2,Percevejo-barriga-verde (Dichelops/Diceraeus),2,Percevejo-barriga-verde (Dichelops/Diceraeus),0.93695515,True
+306,dataset/image/4f41d838-imag28.jpg,2,Percevejo-barriga-verde (Dichelops/Diceraeus),1,Cigarrinha-do-milho (Dalbulus maidis),0.39440152,False
+307,dataset/image/55c1ea89-imag121.jpg,2,Percevejo-barriga-verde (Dichelops/Diceraeus),2,Percevejo-barriga-verde (Dichelops/Diceraeus),0.54278725,True
+308,dataset/image/5792c8ac-imag79.jpg,2,Percevejo-barriga-verde (Dichelops/Diceraeus),2,Percevejo-barriga-verde (Dichelops/Diceraeus),0.4644998,True
+309,dataset/image/5ff134bc-imag10.jpg,2,Percevejo-barriga-verde (Dichelops/Diceraeus),9,Lagarta-da-soja (Anticarsia gemmatalis),0.5150023,False
+310,dataset/image/60ac05b4-imag24.jpg,2,Percevejo-barriga-verde (Dichelops/Diceraeus),2,Percevejo-barriga-verde (Dichelops/Diceraeus),0.9832493,True
+311,dataset/image/683d615e-imag54.jpg,2,Percevejo-barriga-verde (Dichelops/Diceraeus),2,Percevejo-barriga-verde (Dichelops/Diceraeus),0.96925026,True
+312,dataset/image/6aacf44b-imag58.jpg,2,Percevejo-barriga-verde (Dichelops/Diceraeus),2,Percevejo-barriga-verde (Dichelops/Diceraeus),0.99253166,True
+313,dataset/image/6c97076b-test950.jpg,2,Percevejo-barriga-verde (Dichelops/Diceraeus),11,Astylus variegatus,0.57649326,False
+314,dataset/image/75f123d0-imag59.jpg,2,Percevejo-barriga-verde (Dichelops/Diceraeus),2,Percevejo-barriga-verde (Dichelops/Diceraeus),0.95508474,True
+315,dataset/image/7d150123-imag37.jpg,2,Percevejo-barriga-verde (Dichelops/Diceraeus),4,Percevejo-marrom (Euschistus heros),0.66808444,False
+316,dataset/image/8bd17fdc-imag119.jpg,2,Percevejo-barriga-verde (Dichelops/Diceraeus),2,Percevejo-barriga-verde (Dichelops/Diceraeus),0.9890832,True
+317,dataset/image/92a97849-imag77.jpg,2,Percevejo-barriga-verde (Dichelops/Diceraeus),2,Percevejo-barriga-verde (Dichelops/Diceraeus),0.94131297,True
+318,dataset/image/98d5d199-imag113.jpg,2,Percevejo-barriga-verde (Dichelops/Diceraeus),2,Percevejo-barriga-verde (Dichelops/Diceraeus),0.65015787,True
+319,dataset/image/a04e70ed-test370.jpg,2,Percevejo-barriga-verde (Dichelops/Diceraeus),2,Percevejo-barriga-verde (Dichelops/Diceraeus),0.9913641,True
+320,dataset/image/bafd704e-imag98.jpg,2,Percevejo-barriga-verde (Dichelops/Diceraeus),0,Vaquinha (Diabrotica speciosa),0.35688236,False
+321,dataset/image/c44be5a1-imag45.jpg,2,Percevejo-barriga-verde (Dichelops/Diceraeus),7,Percevejo-do-milho (Leptoglossus zonatus),0.80019057,False
+322,dataset/image/c4c633a5-test388.jpg,2,Percevejo-barriga-verde (Dichelops/Diceraeus),2,Percevejo-barriga-verde (Dichelops/Diceraeus),0.9846875,True
+323,dataset/image/d92a0fae-test320.jpg,2,Percevejo-barriga-verde (Dichelops/Diceraeus),2,Percevejo-barriga-verde (Dichelops/Diceraeus),0.9529228,True
+324,dataset/image/ed897301-imag19.jpg,2,Percevejo-barriga-verde (Dichelops/Diceraeus),2,Percevejo-barriga-verde (Dichelops/Diceraeus),0.6861414,True
+325,dataset/image/f96d617f-imag39.jpg,2,Percevejo-barriga-verde (Dichelops/Diceraeus),6,Percevejo-asa-preta (Edessa meditabunda),0.83786166,False
+326,dataset/image/test120.jpg,2,Percevejo-barriga-verde (Dichelops/Diceraeus),7,Percevejo-do-milho (Leptoglossus zonatus),0.56128186,False
+327,dataset/image/test136.jpg,2,Percevejo-barriga-verde (Dichelops/Diceraeus),2,Percevejo-barriga-verde (Dichelops/Diceraeus),0.99965453,True
+328,dataset/image/test160.jpg,2,Percevejo-barriga-verde (Dichelops/Diceraeus),2,Percevejo-barriga-verde (Dichelops/Diceraeus),0.9972033,True
+329,dataset/image/test248.jpg,2,Percevejo-barriga-verde (Dichelops/Diceraeus),2,Percevejo-barriga-verde (Dichelops/Diceraeus),0.7117628,True
+330,dataset/image/test256.jpg,2,Percevejo-barriga-verde (Dichelops/Diceraeus),5,Percevejo-verde (Nezara viridula),0.8000387,False
+331,dataset/image/test276.jpg,2,Percevejo-barriga-verde (Dichelops/Diceraeus),2,Percevejo-barriga-verde (Dichelops/Diceraeus),0.9454958,True
+332,dataset/image/test284.jpg,2,Percevejo-barriga-verde (Dichelops/Diceraeus),2,Percevejo-barriga-verde (Dichelops/Diceraeus),0.6405328,True
+333,dataset/image/test324.jpg,2,Percevejo-barriga-verde (Dichelops/Diceraeus),10,Lagarta-das-vagens (Spodoptera eridania e S. cosmioides),0.513146,False
+334,dataset/image/test382.jpg,2,Percevejo-barriga-verde (Dichelops/Diceraeus),2,Percevejo-barriga-verde (Dichelops/Diceraeus),0.72923934,True
+335,dataset/image/test454.jpg,2,Percevejo-barriga-verde (Dichelops/Diceraeus),2,Percevejo-barriga-verde (Dichelops/Diceraeus),0.99995047,True
+336,dataset/image/test88.jpg,2,Percevejo-barriga-verde (Dichelops/Diceraeus),2,Percevejo-barriga-verde (Dichelops/Diceraeus),0.9914269,True
+337,dataset/field/spodoptera_frugiperda/inat109252044_184100018.jpg,3,Lagarta-do-cartucho (Spodoptera frugiperda),3,Lagarta-do-cartucho (Spodoptera frugiperda),0.9518384,True
+338,dataset/field/spodoptera_frugiperda/inat109252044_184100748.jpg,3,Lagarta-do-cartucho (Spodoptera frugiperda),3,Lagarta-do-cartucho (Spodoptera frugiperda),0.62629616,True
+339,dataset/field/spodoptera_frugiperda/inat109895917_185304433.jpg,3,Lagarta-do-cartucho (Spodoptera frugiperda),3,Lagarta-do-cartucho (Spodoptera frugiperda),0.94770455,True
+340,dataset/field/spodoptera_frugiperda/inat109895917_185304459.jpg,3,Lagarta-do-cartucho (Spodoptera frugiperda),3,Lagarta-do-cartucho (Spodoptera frugiperda),0.91263807,True
+341,dataset/field/spodoptera_frugiperda/inat109895917_185304480.jpg,3,Lagarta-do-cartucho (Spodoptera frugiperda),3,Lagarta-do-cartucho (Spodoptera frugiperda),0.98285437,True
+342,dataset/field/spodoptera_frugiperda/inat109895917_185304526.jpg,3,Lagarta-do-cartucho (Spodoptera frugiperda),3,Lagarta-do-cartucho (Spodoptera frugiperda),0.69164747,True
+343,dataset/field/spodoptera_frugiperda/inat109895917_185304547.jpg,3,Lagarta-do-cartucho (Spodoptera frugiperda),3,Lagarta-do-cartucho (Spodoptera frugiperda),0.97970515,True
+344,dataset/field/spodoptera_frugiperda/inat59123918_94446840.jpg,3,Lagarta-do-cartucho (Spodoptera frugiperda),3,Lagarta-do-cartucho (Spodoptera frugiperda),0.9244884,True
+345,dataset/field/spodoptera_frugiperda/inat59123918_94446873.jpg,3,Lagarta-do-cartucho (Spodoptera frugiperda),3,Lagarta-do-cartucho (Spodoptera frugiperda),0.9991662,True
+346,dataset/field/spodoptera_frugiperda/inat59123918_94446906.jpg,3,Lagarta-do-cartucho (Spodoptera frugiperda),3,Lagarta-do-cartucho (Spodoptera frugiperda),0.99961036,True
+347,dataset/image/0424b558-imag365.jpg,3,Lagarta-do-cartucho (Spodoptera frugiperda),3,Lagarta-do-cartucho (Spodoptera frugiperda),0.97792125,True
+348,dataset/image/05de4d56-imag83.jpg,3,Lagarta-do-cartucho (Spodoptera frugiperda),3,Lagarta-do-cartucho (Spodoptera frugiperda),0.9974684,True
+349,dataset/image/24d45799-imag125.jpg,3,Lagarta-do-cartucho (Spodoptera frugiperda),3,Lagarta-do-cartucho (Spodoptera frugiperda),0.9941248,True
+350,dataset/image/25cc9938-imag59.jpg,3,Lagarta-do-cartucho (Spodoptera frugiperda),3,Lagarta-do-cartucho (Spodoptera frugiperda),0.99476135,True
+351,dataset/image/32bb3a60-imag31.jpg,3,Lagarta-do-cartucho (Spodoptera frugiperda),3,Lagarta-do-cartucho (Spodoptera frugiperda),0.6487215,True
+352,dataset/image/38eae4b1-imag68.jpg,3,Lagarta-do-cartucho (Spodoptera frugiperda),3,Lagarta-do-cartucho (Spodoptera frugiperda),0.9950449,True
+353,dataset/image/46d2a222-imag113.jpg,3,Lagarta-do-cartucho (Spodoptera frugiperda),3,Lagarta-do-cartucho (Spodoptera frugiperda),0.92810535,True
+354,dataset/image/4ac54980-6cbb-4655-a9b3-e16f7f898072.jpg,3,Lagarta-do-cartucho (Spodoptera frugiperda),3,Lagarta-do-cartucho (Spodoptera frugiperda),0.9866166,True
+355,dataset/image/58c10b07-imag4.jpg,3,Lagarta-do-cartucho (Spodoptera frugiperda),3,Lagarta-do-cartucho (Spodoptera frugiperda),0.80716264,True
+356,dataset/image/65a12aeb-imag87.jpg,3,Lagarta-do-cartucho (Spodoptera frugiperda),3,Lagarta-do-cartucho (Spodoptera frugiperda),0.84115374,True
+357,dataset/image/82e3605c-test381.jpg,3,Lagarta-do-cartucho (Spodoptera frugiperda),3,Lagarta-do-cartucho (Spodoptera frugiperda),0.9890751,True
+358,dataset/image/86054bb9-test426.jpg,3,Lagarta-do-cartucho (Spodoptera frugiperda),3,Lagarta-do-cartucho (Spodoptera frugiperda),0.8512478,True
+359,dataset/image/976b0534-test633.jpg,3,Lagarta-do-cartucho (Spodoptera frugiperda),3,Lagarta-do-cartucho (Spodoptera frugiperda),0.9526834,True
+360,dataset/image/ba96acfd-imag38.jpg,3,Lagarta-do-cartucho (Spodoptera frugiperda),3,Lagarta-do-cartucho (Spodoptera frugiperda),0.99035144,True
+361,dataset/image/c0483d29-imag42.jpg,3,Lagarta-do-cartucho (Spodoptera frugiperda),3,Lagarta-do-cartucho (Spodoptera frugiperda),0.9959111,True
+362,dataset/image/ce56a75c-imag82.jpg,3,Lagarta-do-cartucho (Spodoptera frugiperda),3,Lagarta-do-cartucho (Spodoptera frugiperda),0.99575216,True
+363,dataset/image/d910f009-77fe-4985-9e9f-7ab374662126.jpg,3,Lagarta-do-cartucho (Spodoptera frugiperda),12,Cigarrinha-das-pastagens (Deois flavopicta),0.89140916,False
+364,dataset/image/dc4bbc48-test587.jpg,3,Lagarta-do-cartucho (Spodoptera frugiperda),3,Lagarta-do-cartucho (Spodoptera frugiperda),0.9925357,True
+365,dataset/image/e3f0dacd-imag58.jpg,3,Lagarta-do-cartucho (Spodoptera frugiperda),3,Lagarta-do-cartucho (Spodoptera frugiperda),0.89013815,True
+366,dataset/image/e54240c2-test390.jpg,3,Lagarta-do-cartucho (Spodoptera frugiperda),3,Lagarta-do-cartucho (Spodoptera frugiperda),0.9790188,True
+367,dataset/image/e823142e-test651.jpg,3,Lagarta-do-cartucho (Spodoptera frugiperda),3,Lagarta-do-cartucho (Spodoptera frugiperda),0.9944956,True
+368,dataset/image/f5a9a450-frugiperda4.jpg,3,Lagarta-do-cartucho (Spodoptera frugiperda),3,Lagarta-do-cartucho (Spodoptera frugiperda),0.9985027,True
+369,dataset/image/fb38f27d-imag114.jpg,3,Lagarta-do-cartucho (Spodoptera frugiperda),3,Lagarta-do-cartucho (Spodoptera frugiperda),0.75985557,True
+370,dataset/image/test15.jpg,3,Lagarta-do-cartucho (Spodoptera frugiperda),3,Lagarta-do-cartucho (Spodoptera frugiperda),0.95805734,True
+371,dataset/image/test171.jpg,3,Lagarta-do-cartucho (Spodoptera frugiperda),3,Lagarta-do-cartucho (Spodoptera frugiperda),0.9928217,True
+372,dataset/image/test195.jpg,3,Lagarta-do-cartucho (Spodoptera frugiperda),8,Lagarta-falsa-medideira (Chrysodeixis includens),0.5535043,False
+373,dataset/image/test259.jpg,3,Lagarta-do-cartucho (Spodoptera frugiperda),3,Lagarta-do-cartucho (Spodoptera frugiperda),0.942407,True
+374,dataset/image/test279.jpg,3,Lagarta-do-cartucho (Spodoptera frugiperda),3,Lagarta-do-cartucho (Spodoptera frugiperda),0.9400491,True
+375,dataset/image/test303.jpg,3,Lagarta-do-cartucho (Spodoptera frugiperda),3,Lagarta-do-cartucho (Spodoptera frugiperda),0.9997219,True
+376,dataset/image/test363.jpg,3,Lagarta-do-cartucho (Spodoptera frugiperda),8,Lagarta-falsa-medideira (Chrysodeixis includens),0.9388298,False
+377,dataset/image/test366.jpg,3,Lagarta-do-cartucho (Spodoptera frugiperda),3,Lagarta-do-cartucho (Spodoptera frugiperda),0.97061735,True
+378,dataset/image/test372.jpg,3,Lagarta-do-cartucho (Spodoptera frugiperda),3,Lagarta-do-cartucho (Spodoptera frugiperda),0.9888633,True
+379,dataset/image/test39.jpg,3,Lagarta-do-cartucho (Spodoptera frugiperda),3,Lagarta-do-cartucho (Spodoptera frugiperda),0.9996543,True
+380,dataset/image/test399.jpg,3,Lagarta-do-cartucho (Spodoptera frugiperda),3,Lagarta-do-cartucho (Spodoptera frugiperda),0.96067315,True
+381,dataset/image/test435.jpg,3,Lagarta-do-cartucho (Spodoptera frugiperda),3,Lagarta-do-cartucho (Spodoptera frugiperda),0.68944937,True
+382,dataset/image/test461.jpg,3,Lagarta-do-cartucho (Spodoptera frugiperda),8,Lagarta-falsa-medideira (Chrysodeixis includens),0.49957284,False
+383,dataset/image/test467.jpg,3,Lagarta-do-cartucho (Spodoptera frugiperda),9,Lagarta-da-soja (Anticarsia gemmatalis),0.94585747,False
+384,dataset/image/test487.jpg,3,Lagarta-do-cartucho (Spodoptera frugiperda),3,Lagarta-do-cartucho (Spodoptera frugiperda),0.5845196,True
+385,dataset/image/test499.jpg,3,Lagarta-do-cartucho (Spodoptera frugiperda),3,Lagarta-do-cartucho (Spodoptera frugiperda),0.9962558,True
+386,dataset/image/test567.jpg,3,Lagarta-do-cartucho (Spodoptera frugiperda),3,Lagarta-do-cartucho (Spodoptera frugiperda),0.9875063,True
+387,dataset/image/test571.jpg,3,Lagarta-do-cartucho (Spodoptera frugiperda),3,Lagarta-do-cartucho (Spodoptera frugiperda),0.9812376,True
+388,dataset/image/test605.jpg,3,Lagarta-do-cartucho (Spodoptera frugiperda),3,Lagarta-do-cartucho (Spodoptera frugiperda),0.9821848,True
+389,dataset/image/test621.jpg,3,Lagarta-do-cartucho (Spodoptera frugiperda),3,Lagarta-do-cartucho (Spodoptera frugiperda),0.98568517,True
+390,dataset/image/test647.jpg,3,Lagarta-do-cartucho (Spodoptera frugiperda),3,Lagarta-do-cartucho (Spodoptera frugiperda),0.9601014,True
+391,dataset/image/test655.jpg,3,Lagarta-do-cartucho (Spodoptera frugiperda),3,Lagarta-do-cartucho (Spodoptera frugiperda),0.9921259,True
+392,dataset/image/test659.jpg,3,Lagarta-do-cartucho (Spodoptera frugiperda),8,Lagarta-falsa-medideira (Chrysodeixis includens),0.42648748,False
+393,dataset/image/test667.jpg,3,Lagarta-do-cartucho (Spodoptera frugiperda),3,Lagarta-do-cartucho (Spodoptera frugiperda),0.9598194,True
+394,dataset/image/test673.jpg,3,Lagarta-do-cartucho (Spodoptera frugiperda),3,Lagarta-do-cartucho (Spodoptera frugiperda),0.9199358,True
+395,dataset/image/test683.jpg,3,Lagarta-do-cartucho (Spodoptera frugiperda),3,Lagarta-do-cartucho (Spodoptera frugiperda),0.9885923,True
+396,dataset/image/test9.jpg,3,Lagarta-do-cartucho (Spodoptera frugiperda),3,Lagarta-do-cartucho (Spodoptera frugiperda),0.70704067,True
+397,dataset/image/test95.jpg,3,Lagarta-do-cartucho (Spodoptera frugiperda),3,Lagarta-do-cartucho (Spodoptera frugiperda),0.998872,True
+398,dataset/field/anticarsia_gemmatalis/inat107652721_181094649.jpg,9,Lagarta-da-soja (Anticarsia gemmatalis),9,Lagarta-da-soja (Anticarsia gemmatalis),0.69966155,True
+399,dataset/field/anticarsia_gemmatalis/inat198698641_350266453.jpg,9,Lagarta-da-soja (Anticarsia gemmatalis),9,Lagarta-da-soja (Anticarsia gemmatalis),0.9981576,True
+400,dataset/field/anticarsia_gemmatalis/inat204381126_361251352.jpg,9,Lagarta-da-soja (Anticarsia gemmatalis),2,Percevejo-barriga-verde (Dichelops/Diceraeus),0.6521635,False
+401,dataset/field/anticarsia_gemmatalis/inat204381126_361251374.jpg,9,Lagarta-da-soja (Anticarsia gemmatalis),2,Percevejo-barriga-verde (Dichelops/Diceraeus),0.85907,False
+402,dataset/field/anticarsia_gemmatalis/inat388193628_710940596.jpg,9,Lagarta-da-soja (Anticarsia gemmatalis),9,Lagarta-da-soja (Anticarsia gemmatalis),0.534687,True
+403,dataset/field/anticarsia_gemmatalis/inat73030678_119176908.jpg,9,Lagarta-da-soja (Anticarsia gemmatalis),9,Lagarta-da-soja (Anticarsia gemmatalis),0.99739814,True
+404,dataset/field/chrysodeixis_includens/inat10204316_14097819.jpg,8,Lagarta-falsa-medideira (Chrysodeixis includens),3,Lagarta-do-cartucho (Spodoptera frugiperda),0.6932748,False
+405,dataset/field/chrysodeixis_includens/inat10204316_14097834.jpg,8,Lagarta-falsa-medideira (Chrysodeixis includens),3,Lagarta-do-cartucho (Spodoptera frugiperda),0.68549293,False
+406,dataset/field/chrysodeixis_includens/inat10204316_14097837.jpg,8,Lagarta-falsa-medideira (Chrysodeixis includens),3,Lagarta-do-cartucho (Spodoptera frugiperda),0.579173,False
+407,dataset/field/chrysodeixis_includens/inat10704962_14951653.jpg,8,Lagarta-falsa-medideira (Chrysodeixis includens),3,Lagarta-do-cartucho (Spodoptera frugiperda),0.9966487,False
+408,dataset/field/chrysodeixis_includens/inat22860722_35434626.jpg,8,Lagarta-falsa-medideira (Chrysodeixis includens),3,Lagarta-do-cartucho (Spodoptera frugiperda),0.6070034,False
+409,dataset/field/chrysodeixis_includens/inat22860722_35434646.jpg,8,Lagarta-falsa-medideira (Chrysodeixis includens),10,Lagarta-das-vagens (Spodoptera eridania e S. cosmioides),0.816401,False
+410,dataset/field/chrysodeixis_includens/inat39221327_62196949.jpg,8,Lagarta-falsa-medideira (Chrysodeixis includens),8,Lagarta-falsa-medideira (Chrysodeixis includens),0.9434303,True
+411,dataset/field/chrysodeixis_includens/inat396445719_727037782.jpg,8,Lagarta-falsa-medideira (Chrysodeixis includens),10,Lagarta-das-vagens (Spodoptera eridania e S. cosmioides),0.8650592,False
+412,dataset/field/chrysodeixis_includens/inat396445719_727037836.jpg,8,Lagarta-falsa-medideira (Chrysodeixis includens),10,Lagarta-das-vagens (Spodoptera eridania e S. cosmioides),0.91780955,False
+413,dataset/field/chrysodeixis_includens/inat396445719_727037873.jpg,8,Lagarta-falsa-medideira (Chrysodeixis includens),10,Lagarta-das-vagens (Spodoptera eridania e S. cosmioides),0.97693276,False
+414,dataset/field/chrysodeixis_includens/inat40109463_63701635.jpg,8,Lagarta-falsa-medideira (Chrysodeixis includens),8,Lagarta-falsa-medideira (Chrysodeixis includens),0.9929186,True
+415,dataset/field/chrysodeixis_includens/inat65503249_105443379.jpg,8,Lagarta-falsa-medideira (Chrysodeixis includens),0,Vaquinha (Diabrotica speciosa),0.43636754,False
+416,dataset/field/edessa_meditabunda/inat107195484_180242880.jpg,6,Percevejo-asa-preta (Edessa meditabunda),6,Percevejo-asa-preta (Edessa meditabunda),0.9432727,True
+417,dataset/field/edessa_meditabunda/inat107877005_181521633.jpg,6,Percevejo-asa-preta (Edessa meditabunda),6,Percevejo-asa-preta (Edessa meditabunda),0.9447822,True
+418,dataset/field/edessa_meditabunda/inat107877005_181521637.jpg,6,Percevejo-asa-preta (Edessa meditabunda),6,Percevejo-asa-preta (Edessa meditabunda),0.99533796,True
+419,dataset/field/edessa_meditabunda/inat147542055_253900433.jpg,6,Percevejo-asa-preta (Edessa meditabunda),5,Percevejo-verde (Nezara viridula),0.66215634,False
+420,dataset/field/edessa_meditabunda/inat147542055_253900449.jpg,6,Percevejo-asa-preta (Edessa meditabunda),6,Percevejo-asa-preta (Edessa meditabunda),0.46390957,True
+421,dataset/field/edessa_meditabunda/inat147542055_253900530.jpg,6,Percevejo-asa-preta (Edessa meditabunda),5,Percevejo-verde (Nezara viridula),0.67815983,False
+422,dataset/field/edessa_meditabunda/inat147542055_253900543.jpg,6,Percevejo-asa-preta (Edessa meditabunda),0,Vaquinha (Diabrotica speciosa),0.6523631,False
+423,dataset/field/edessa_meditabunda/inat147542055_253900554.jpg,6,Percevejo-asa-preta (Edessa meditabunda),2,Percevejo-barriga-verde (Dichelops/Diceraeus),0.41063705,False
+424,dataset/field/edessa_meditabunda/inat147542055_253900563.jpg,6,Percevejo-asa-preta (Edessa meditabunda),0,Vaquinha (Diabrotica speciosa),0.6678343,False
+425,dataset/field/edessa_meditabunda/inat190994895_334951714.jpg,6,Percevejo-asa-preta (Edessa meditabunda),0,Vaquinha (Diabrotica speciosa),0.96960276,False
+426,dataset/field/edessa_meditabunda/inat198202850_349284558.jpg,6,Percevejo-asa-preta (Edessa meditabunda),5,Percevejo-verde (Nezara viridula),0.6108376,False
+427,dataset/field/euschistus_heros/inat146239990_251378674.jpg,4,Percevejo-marrom (Euschistus heros),4,Percevejo-marrom (Euschistus heros),0.88202536,True
+428,dataset/field/euschistus_heros/inat164876975_285330718.jpg,4,Percevejo-marrom (Euschistus heros),2,Percevejo-barriga-verde (Dichelops/Diceraeus),0.5355385,False
+429,dataset/field/euschistus_heros/inat189874769_332725338.jpg,4,Percevejo-marrom (Euschistus heros),4,Percevejo-marrom (Euschistus heros),0.99507666,True
+430,dataset/field/euschistus_heros/inat19890644_30674019.jpg,4,Percevejo-marrom (Euschistus heros),11,Astylus variegatus,0.6148302,False
+431,dataset/field/euschistus_heros/inat19890644_30674058.jpg,4,Percevejo-marrom (Euschistus heros),11,Astylus variegatus,0.77047485,False
+432,dataset/field/euschistus_heros/inat19890644_30674076.jpg,4,Percevejo-marrom (Euschistus heros),11,Astylus variegatus,0.8914839,False
+433,dataset/field/euschistus_heros/inat244141188_435457805.jpg,4,Percevejo-marrom (Euschistus heros),4,Percevejo-marrom (Euschistus heros),0.50218105,True
+434,dataset/field/euschistus_heros/inat32765666_51414197.jpg,4,Percevejo-marrom (Euschistus heros),4,Percevejo-marrom (Euschistus heros),0.9630203,True
+435,dataset/field/euschistus_heros/inat383982879_702840525.jpg,4,Percevejo-marrom (Euschistus heros),2,Percevejo-barriga-verde (Dichelops/Diceraeus),0.78685445,False
+436,dataset/field/euschistus_heros/inat403386464_740634522.jpg,4,Percevejo-marrom (Euschistus heros),4,Percevejo-marrom (Euschistus heros),0.96759164,True
+437,dataset/field/nezara_viridula/inat100683872_168074590.jpg,5,Percevejo-verde (Nezara viridula),5,Percevejo-verde (Nezara viridula),0.9833254,True
+438,dataset/field/nezara_viridula/inat103771663_173758208.jpg,5,Percevejo-verde (Nezara viridula),0,Vaquinha (Diabrotica speciosa),0.9058768,False
+439,dataset/field/nezara_viridula/inat103771663_173758220.jpg,5,Percevejo-verde (Nezara viridula),10,Lagarta-das-vagens (Spodoptera eridania e S. cosmioides),0.6701603,False
+440,dataset/field/nezara_viridula/inat119528595_202065269.jpg,5,Percevejo-verde (Nezara viridula),5,Percevejo-verde (Nezara viridula),0.818572,True
+441,dataset/field/nezara_viridula/inat17510523_26643827.jpg,5,Percevejo-verde (Nezara viridula),5,Percevejo-verde (Nezara viridula),0.79779357,True
+442,dataset/field/nezara_viridula/inat17510523_26643974.jpg,5,Percevejo-verde (Nezara viridula),5,Percevejo-verde (Nezara viridula),0.3760994,True
+443,dataset/field/nezara_viridula/inat271581371_488524701.jpg,5,Percevejo-verde (Nezara viridula),5,Percevejo-verde (Nezara viridula),0.9618839,True
+444,dataset/field/nezara_viridula/inat343777931_626294389.jpg,5,Percevejo-verde (Nezara viridula),5,Percevejo-verde (Nezara viridula),0.6594478,True
+445,dataset/field/nezara_viridula/inat368128786_672338969.jpg,5,Percevejo-verde (Nezara viridula),6,Percevejo-asa-preta (Edessa meditabunda),0.8173251,False
+446,dataset/field/nezara_viridula/inat368128786_672339015.jpg,5,Percevejo-verde (Nezara viridula),2,Percevejo-barriga-verde (Dichelops/Diceraeus),0.76391166,False
+447,dataset/field/nezara_viridula/inat368128786_672339082.jpg,5,Percevejo-verde (Nezara viridula),2,Percevejo-barriga-verde (Dichelops/Diceraeus),0.70150226,False
+448,dataset/field/nezara_viridula/inat368128786_672339135.jpg,5,Percevejo-verde (Nezara viridula),2,Percevejo-barriga-verde (Dichelops/Diceraeus),0.72939706,False
+449,dataset/field/nezara_viridula/inat368128786_672339201.jpg,5,Percevejo-verde (Nezara viridula),2,Percevejo-barriga-verde (Dichelops/Diceraeus),0.93905,False
+450,dataset/field/nezara_viridula/inat67912257_109846089.jpg,5,Percevejo-verde (Nezara viridula),5,Percevejo-verde (Nezara viridula),0.9427813,True
+451,dataset/field/spodoptera_cosmioides/inat106874039_179634197.jpg,10,Lagarta-das-vagens (Spodoptera eridania e S. cosmioides),8,Lagarta-falsa-medideira (Chrysodeixis includens),0.7465914,False
+452,dataset/field/spodoptera_cosmioides/inat106874039_179634849.jpg,10,Lagarta-das-vagens (Spodoptera eridania e S. cosmioides),2,Percevejo-barriga-verde (Dichelops/Diceraeus),0.5356774,False
+453,dataset/field/spodoptera_cosmioides/inat204381729_361252382.jpg,10,Lagarta-das-vagens (Spodoptera eridania e S. cosmioides),10,Lagarta-das-vagens (Spodoptera eridania e S. cosmioides),0.85957927,True
+454,dataset/field/spodoptera_cosmioides/inat204381729_361252415.jpg,10,Lagarta-das-vagens (Spodoptera eridania e S. cosmioides),11,Astylus variegatus,0.28109422,False
+455,dataset/field/spodoptera_cosmioides/inat204381729_361252442.jpg,10,Lagarta-das-vagens (Spodoptera eridania e S. cosmioides),10,Lagarta-das-vagens (Spodoptera eridania e S. cosmioides),0.82303286,True
+456,dataset/field/spodoptera_cosmioides/inat74622390_121984022.jpg,10,Lagarta-das-vagens (Spodoptera eridania e S. cosmioides),10,Lagarta-das-vagens (Spodoptera eridania e S. cosmioides),0.8392626,True
+457,dataset/field/spodoptera_cosmioides/inat78393030_128274664.jpg,10,Lagarta-das-vagens (Spodoptera eridania e S. cosmioides),10,Lagarta-das-vagens (Spodoptera eridania e S. cosmioides),0.54970944,True
+458,dataset/field/spodoptera_cosmioides/inat78393030_128274703.jpg,10,Lagarta-das-vagens (Spodoptera eridania e S. cosmioides),2,Percevejo-barriga-verde (Dichelops/Diceraeus),0.94195396,False
+459,dataset/field/spodoptera_cosmioides/inat78393030_128274737.jpg,10,Lagarta-das-vagens (Spodoptera eridania e S. cosmioides),11,Astylus variegatus,0.8127951,False
+460,dataset/field/spodoptera_eridania/inat103021842_172333823.jpg,10,Lagarta-das-vagens (Spodoptera eridania e S. cosmioides),10,Lagarta-das-vagens (Spodoptera eridania e S. cosmioides),0.9973647,True
+461,dataset/field/spodoptera_eridania/inat103021842_172333835.jpg,10,Lagarta-das-vagens (Spodoptera eridania e S. cosmioides),10,Lagarta-das-vagens (Spodoptera eridania e S. cosmioides),0.99883384,True
+462,dataset/field/spodoptera_eridania/inat103021842_172333849.jpg,10,Lagarta-das-vagens (Spodoptera eridania e S. cosmioides),10,Lagarta-das-vagens (Spodoptera eridania e S. cosmioides),0.998264,True
+463,dataset/field/spodoptera_eridania/inat103021842_172333865.jpg,10,Lagarta-das-vagens (Spodoptera eridania e S. cosmioides),10,Lagarta-das-vagens (Spodoptera eridania e S. cosmioides),0.9999142,True
+464,dataset/field/spodoptera_eridania/inat103021842_172333886.jpg,10,Lagarta-das-vagens (Spodoptera eridania e S. cosmioides),10,Lagarta-das-vagens (Spodoptera eridania e S. cosmioides),0.9981636,True
+465,dataset/field/spodoptera_eridania/inat103021842_172333899.jpg,10,Lagarta-das-vagens (Spodoptera eridania e S. cosmioides),10,Lagarta-das-vagens (Spodoptera eridania e S. cosmioides),0.99934536,True
+466,dataset/field/spodoptera_eridania/inat103021842_172333915.jpg,10,Lagarta-das-vagens (Spodoptera eridania e S. cosmioides),10,Lagarta-das-vagens (Spodoptera eridania e S. cosmioides),0.992918,True
+467,dataset/field/spodoptera_eridania/inat146639981_252154277.jpg,10,Lagarta-das-vagens (Spodoptera eridania e S. cosmioides),3,Lagarta-do-cartucho (Spodoptera frugiperda),0.968818,False
+468,dataset/field/spodoptera_eridania/inat225024796_398909495.jpg,10,Lagarta-das-vagens (Spodoptera eridania e S. cosmioides),3,Lagarta-do-cartucho (Spodoptera frugiperda),0.5963909,False
+469,dataset/field/spodoptera_eridania/inat225024796_398909697.jpg,10,Lagarta-das-vagens (Spodoptera eridania e S. cosmioides),9,Lagarta-da-soja (Anticarsia gemmatalis),0.53830004,False
+470,dataset/field/spodoptera_eridania/inat388898045_712320139.jpg,10,Lagarta-das-vagens (Spodoptera eridania e S. cosmioides),7,Percevejo-do-milho (Leptoglossus zonatus),0.4335573,False
+471,dataset/field/spodoptera_eridania/inat389013773_712521256.jpg,10,Lagarta-das-vagens (Spodoptera eridania e S. cosmioides),10,Lagarta-das-vagens (Spodoptera eridania e S. cosmioides),0.54903764,True
+472,dataset/field/spodoptera_eridania/inat78266008_128061991.jpg,10,Lagarta-das-vagens (Spodoptera eridania e S. cosmioides),10,Lagarta-das-vagens (Spodoptera eridania e S. cosmioides),0.89674306,True
+473,dataset/field/spodoptera_eridania/inat97603271_162346541.jpg,10,Lagarta-das-vagens (Spodoptera eridania e S. cosmioides),3,Lagarta-do-cartucho (Spodoptera frugiperda),0.7771216,False
+474,dataset/field/spodoptera_eridania/inat97603271_162346556.jpg,10,Lagarta-das-vagens (Spodoptera eridania e S. cosmioides),3,Lagarta-do-cartucho (Spodoptera frugiperda),0.4718379,False

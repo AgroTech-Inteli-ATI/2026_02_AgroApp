@@ -1,0 +1,31 @@
+{
+  "backbone": "efficientnet_lite0",
+  "semente": 42,
+  "deterministico": true,
+  "otimizador": {
+    "nome": "adam",
+    "taxa_aprendizado": 0.01
+  },
+  "batch": 64,
+  "epocas_max": 30,
+  "parada": {
+    "monitor": "val_f1_macro",
+    "paciencia": 5,
+    "restaurar_melhores_pesos": true
+  },
+  "augmentation": {
+    "ativo": false
+  },
+  "balanceamento": {
+    "class_weight": true
+  },
+  "cabeca": {
+    "dropout": 0.2
+  },
+  "fine_tuning": {
+    "ativo": true,
+    "blocos_descongelados": 2,
+    "taxa_aprendizado": 0.001,
+    "epocas_max": 20
+  }
+}

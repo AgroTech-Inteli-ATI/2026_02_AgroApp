@@ -1,4 +1,5 @@
 /.work/
+.claude/
 node_modules/
 .venv/
 venv/
@@ -15,3 +16,6 @@ __pycache__/
 # Treinamento (T5.1)
 .venv-treino/
 runs/
+
+# Plano local da comparacao de backbones
+/CONTEXTO_TASK_BACKBONES.md
