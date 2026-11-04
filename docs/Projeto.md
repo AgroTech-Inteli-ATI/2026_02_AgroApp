@@ -69,6 +69,14 @@
 
 </details>
 
+<details>
+<summary><strong>7. Conversão e otimização do modelo</strong></summary>
+
+- [7.1 Conversão para TFLite/LiteRT (T7.1)](#71-conversão-para-tflitelitert-t71)
+- [7.3 Quantização INT8 com conjunto representativo (T7.3)](#73-quantização-int8-com-conjunto-representativo-t73)
+
+</details>
+
 ---
 
 # 1. Entendimento de Negócio
@@ -3193,3 +3201,80 @@ desordenadas ou com nomes trocados, tamanho inválido, checkpoint ausente ou
 substituído, métricas de outra rodada, pacote alterado e preservação de saídas.
 Os modelos de teste continuam temporários; a entrega acima usa os pesos agrícolas
 selecionados e versionados. `git diff --check` também passou.
+
+## 7.3 Quantização INT8 com conjunto representativo (T7.3)
+
+### Conjunto de calibração e origem
+
+O EfficientNet-Lite0 selecionado na T5.6 foi quantizado em INT8 usando **200 imagens reais da partição de treino**, retiradas do acervo já indexado na preparação de Dados. A seleção foi constituída nesta entrega a partir de [`indice_dataset.csv`](../assets/data/treino_T5_2/indice_dataset.csv), o mesmo recorte vinculado ao candidato. Não havia manifesto específico de calibração fornecido separadamente pela frente de Dados; a origem e a seleção agora estão documentadas, sem atribuir uma revisão formal a essa frente.
+
+Usar uma amostra do treino é compatível com a [orientação oficial do Google para quantização pós-treinamento](https://developers.google.com/edge/litert/conversion/tensorflow/quantization/post_training_quantization), que descreve conjuntos representativos de aproximadamente 100–500 exemplos. Os rótulos servem à conferência de cobertura das classes; a calibração fornece apenas as imagens ao conversor. Não há atualização dos pesos por treinamento, uso de validação ou teste, nem augmentation.
+
+O [manifesto de calibração](../assets/data/calibracao_T7_3/manifesto_calibracao.csv) registra ID, caminho relativo, hash original, classe, grupo, origem, brilho e hash do tensor float32 de cada imagem. São **149 fotos de campo e 51 do AgroInsect**, sem repetição de arquivo, hash ou grupo do índice. Isso evita fotos de um mesmo grupo na amostra; os grupos não garantem indivíduos biologicamente independentes. As imagens originais permanecem no acervo de Dados, sem duplicação dos arquivos no repositório.
+
+### Seleção e cobertura de iluminação
+
+A seleção usa semente **42**, quotas de 15 ou 16 imagens por classe e alternância entre as faixas de brilho disponíveis, respeitando a restrição de um arquivo por grupo. O brilho é a média de `0,2126 R + 0,7152 G + 0,0722 B`, com canais em [0, 1], calculada no conteúdo redimensionado e **excluindo o padding cinza**. Os limites descritivos são: baixo, abaixo de 0,30; intermediário, de 0,30 a menos de 0,60; alto, a partir de 0,60.
+
+Essas faixas são uma medida de brilho da imagem, afetada pelo fundo e pela cor do sujeito. Não representam exposição da câmera ou iluminação física medida. Por isso, a seleção foi complementada por **inspeção visual assistida por IA de 49 fotos**, cobrindo as 13 classes: 37 exemplos de extremos/pontos intermediários por classe/faixa disponível e 12 exemplos adicionais de campo com baixo brilho. A [revisão de iluminação](../assets/data/calibracao_T7_3/revisao_iluminacao.json) registra observações por ID, incluindo sombra/baixa luz aparente, luz suave, realces e iluminação mista. Quatro exemplos têm iluminação não inferível; não foram classificados à força a partir do fundo claro ou escuro. As categorias visuais podem coexistir na mesma foto e não constituem medição fotométrica.
+
+| Índice | Classe | Baixo brilho | Intermediário | Alto brilho | Total |
+| ---: | --- | ---: | ---: | ---: | ---: |
+| 0 | Vaquinha | 6 | 5 | 5 | 16 |
+| 1 | Cigarrinha-do-milho | 6 | 5 | 5 | 16 |
+| 2 | Percevejo-barriga-verde | 6 | 5 | 5 | 16 |
+| 3 | Lagarta-do-cartucho | 6 | 5 | 5 | 16 |
+| 4 | Percevejo-marrom | 3 | 7 | 6 | 16 |
+| 5 | Percevejo-verde | 3 | 6 | 6 | 15 |
+| 6 | Percevejo-asa-preta | 0 | 9 | 6 | 15 |
+| 7 | Percevejo-do-milho | 0 | 10 | 5 | 15 |
+| 8 | Lagarta-falsa-medideira | 3 | 6 | 6 | 15 |
+| 9 | Lagarta-da-soja | 4 | 6 | 5 | 15 |
+| 10 | Lagarta-das-vagens | 2 | 7 | 6 | 15 |
+| 11 | Astylus variegatus | 4 | 6 | 5 | 15 |
+| 12 | Cigarrinha-das-pastagens | 3 | 6 | 6 | 15 |
+| **Total** | **13 classes** | **46** | **83** | **71** | **200** |
+
+O [registro do conjunto](../assets/data/calibracao_T7_3/conjunto.json) também informa a disponibilidade das faixas no treino. Asa-preta e percevejo-do-milho não têm imagens abaixo de 0,30 nessa estatística, portanto não se declara cobertura de todas as faixas em todas as classes. Isso não prova ausência de sombra: fotos com fundo claro podem conter regiões sombreadas. Novas condições de campo poderão exigir complementar a calibração e avaliar novamente o resultado.
+
+### Conversão e contrato INT8
+
+O fluxo [`quantizacao_t7_3.py`](../src/quantizacao_t7_3.py) confere o pacote selecionado com a validação de origem da T7.1 e recusa imagens fora do treino, arquivos alterados, classes ausentes, grupos repetidos e divergências no manifesto ou na cobertura documentada. Os exemplos recebem o mesmo preprocessamento T4.1: orientação EXIF, RGB, proporção preservada, padding cinza e float32 em [0, 1]. A normalização específica do backbone já pertence ao modelo.
+
+Em **04/11/2026**, a conversão foi executada com `tf.lite.TFLiteConverter.from_keras_model`, `Optimize.DEFAULT`, o gerador das 200 fotos em `representative_dataset`, operadores `TFLITE_BUILTINS_INT8` e entrada/saída `tf.int8`. O fluxo registrou que o conversor consumiu exatamente os 200 IDs do manifesto. A inspeção do FlatBuffer não encontrou tensores FLOAT16, FLOAT32 ou FLOAT64.
+
+| Tensor | Shape alocado | Tipo | Escala | Zero point |
+| --- | --- | --- | ---: | ---: |
+| Entrada | `[1, 224, 224, 3]` | INT8 | 0,003921568859368563 | -128 |
+| Saída | `[1, 13]` | INT8 | 0,00390625 | -128 |
+
+Para a entrada, aplicar `q = clip(round(x / escala) + zero_point, -128, 127)` ao tensor T4.1 em [0, 1]. Para interpretar a saída, usar `y = (q - zero_point) * escala`, preservando a ordem das 13 classes. O contrato inclui as assinaturas de batch dinâmico, nomes e índices dos tensores. Scores desquantizados não equivalem a probabilidades calibradas de acerto.
+
+O novo arquivo tem **4.003.624 bytes**. Foi reaberto, alocado e executado nas 49 fotos reais da revisão visual, cobrindo as 13 classes. Nessas fotos, os argmax Keras/INT8 coincidiram; a maior diferença absoluta entre os scores foi **0,010212183**. Essa concordância na própria calibração verifica execução, **não é avaliação de generalização nem medição da perda de F1**. A comparação de qualidade e a reconferência da política de confiança exigem avaliação própria.
+
+Os artefatos estão versionados em uma pasta específica desta conversão:
+
+- [Modelo INT8](../assets/modelos/quantizacao_T7_3_candidato_T5_6_20261026/modelo_int8.tflite).
+- [Contrato, origem, hashes e registros de execução](../assets/modelos/quantizacao_T7_3_candidato_T5_6_20261026/contrato_int8.json).
+- [Relatório de quantização](../assets/modelos/quantizacao_T7_3_candidato_T5_6_20261026/relatorio_quantizacao.md).
+
+O checkpoint Keras, a conversão FP32 da T7.1 e a conversão INT8 anterior da T5.6 foram preservados. O tamanho informado acima é do novo arquivo, cujo hash vincula esta execução ao novo conjunto documentado; não é uma atribuição de evidência da conversão antiga.
+
+### Reprodução e verificação
+
+A reprodução requer o acervo original com `dataset/` na raiz informada. Para consumir diretamente o conjunto versionado e criar uma nova saída:
+
+```bash
+python -m src.quantizacao_t7_3 converter --raiz-imagens /caminho/das/fontes --conjunto assets/data/calibracao_T7_3 --saida runs/reproducao_T7_3
+python tests/validar_quantizacao_t7_3.py
+```
+
+Para gerar uma nova proposta de conjunto, preservando a atual:
+
+```bash
+python -m src.quantizacao_t7_3 preparar --raiz-imagens /caminho/das/fontes --saida runs/calibracao_T7_3 --total 200 --semente 42
+```
+
+A revisão visual deve corresponder aos IDs e hashes efetivamente selecionados e cobrir as classes e condições documentadas antes da conversão. Não se deve transportar anotações de uma seleção diferente. O comando recusa sobrescrever conjuntos ou conversões existentes.
+
+Os **10 testes passaram**, incluindo seleção determinística, cobertura e diversidade de grupos, brilho sem padding, saturação/arredondamento, recusa de validação/teste mesmo com hash de manifesto atualizado, imagem alterada, classe ausente, grupo repetido, cobertura falsa e revisão visual incompleta. Ambiente da conversão: Python 3.12.15, TensorFlow 2.21.0, Keras 3.15.1, KerasHub 0.32.0 e NumPy 2.4.4, em macOS arm64. A entrega comprova conjunto documentado e conversão INT8 executada, com as limitações de cobertura descritas acima.
