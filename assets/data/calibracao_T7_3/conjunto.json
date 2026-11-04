@@ -1,0 +1,305 @@
+{
+  "esquema": "conjunto_calibracao_T7_3_v1",
+  "total": 200,
+  "particao": "treino",
+  "semente": 42,
+  "augmentation": false,
+  "origem": "imagens reais do acervo indexado pela preparação de Dados T4.2/T4.5; seleção documentada na T7.3",
+  "indice_sha256": "28ee662885202f0bda3dec9660e44b28f99b8bd183210bcbdd795b103269b2eb",
+  "classes_sha256": "1058619e188ffd7fa42bfc6821e2e122356b35d8503af71b987f37ae1e4572f4",
+  "modelo_keras_sha256": "089a8d903a78898badf385f0d57006a4fb556d76e3e8fae719babdaf564aa51a",
+  "manifesto_csv_sha256": "b517be0fd50bdb4431c94102b6b207824e7178a45f6d3b59cc2105f875493f8c",
+  "preprocessamento_sha256": "6a2eacb95cbbb0ceb21db5f70d9e178b2c0b844b070e2d4fac4c4a39d0131820",
+  "entrada": {
+    "shape": [
+      1,
+      224,
+      224,
+      3
+    ],
+    "dtype": "float32",
+    "faixa": [
+      0,
+      1
+    ]
+  },
+  "amostragem": "quotas por classe (15 ou 16 em 200), alternância entre faixas de brilho disponíveis, um arquivo por grupo e hash, sem reposição",
+  "brilho": {
+    "estatistica": "média de 0.2126 R + 0.7152 G + 0.0722 B no conteúdo RGB redimensionado, sem padding; canais em [0,1]",
+    "limites": {
+      "baixo_brilho": "Y < 0.30",
+      "brilho_intermediario": "0.30 <= Y < 0.60",
+      "alto_brilho": "Y >= 0.60"
+    },
+    "limite_interpretacao": "proxy de brilho da imagem, afetado pelo fundo e cor do sujeito; não determina iluminação física; exige revisão visual documentada"
+  },
+  "cobertura_classes": [
+    {
+      "indice": 0,
+      "nome": "Vaquinha (Diabrotica speciosa)",
+      "treino_disponivel": 735,
+      "selecionadas": 16,
+      "grupos_distintos": 16,
+      "faixas_disponiveis": {
+        "brilho_intermediario": 538,
+        "alto_brilho": 160,
+        "baixo_brilho": 37
+      },
+      "faixas_selecionadas": {
+        "brilho_intermediario": 5,
+        "baixo_brilho": 6,
+        "alto_brilho": 5
+      },
+      "origens": {
+        "field": 10,
+        "agroinsect": 6
+      }
+    },
+    {
+      "indice": 1,
+      "nome": "Cigarrinha-do-milho (Dalbulus maidis)",
+      "treino_disponivel": 135,
+      "selecionadas": 16,
+      "grupos_distintos": 16,
+      "faixas_disponiveis": {
+        "brilho_intermediario": 95,
+        "alto_brilho": 30,
+        "baixo_brilho": 10
+      },
+      "faixas_selecionadas": {
+        "alto_brilho": 5,
+        "brilho_intermediario": 5,
+        "baixo_brilho": 6
+      },
+      "origens": {
+        "agroinsect": 16
+      }
+    },
+    {
+      "indice": 2,
+      "nome": "Percevejo-barriga-verde (Dichelops/Diceraeus)",
+      "treino_disponivel": 198,
+      "selecionadas": 16,
+      "grupos_distintos": 16,
+      "faixas_disponiveis": {
+        "brilho_intermediario": 148,
+        "baixo_brilho": 21,
+        "alto_brilho": 29
+      },
+      "faixas_selecionadas": {
+        "brilho_intermediario": 5,
+        "baixo_brilho": 6,
+        "alto_brilho": 5
+      },
+      "origens": {
+        "field": 1,
+        "agroinsect": 15
+      }
+    },
+    {
+      "indice": 3,
+      "nome": "Lagarta-do-cartucho (Spodoptera frugiperda)",
+      "treino_disponivel": 285,
+      "selecionadas": 16,
+      "grupos_distintos": 16,
+      "faixas_disponiveis": {
+        "brilho_intermediario": 157,
+        "alto_brilho": 108,
+        "baixo_brilho": 20
+      },
+      "faixas_selecionadas": {
+        "brilho_intermediario": 5,
+        "alto_brilho": 5,
+        "baixo_brilho": 6
+      },
+      "origens": {
+        "field": 2,
+        "agroinsect": 14
+      }
+    },
+    {
+      "indice": 4,
+      "nome": "Percevejo-marrom (Euschistus heros)",
+      "treino_disponivel": 45,
+      "selecionadas": 16,
+      "grupos_distintos": 16,
+      "faixas_disponiveis": {
+        "brilho_intermediario": 31,
+        "alto_brilho": 10,
+        "baixo_brilho": 4
+      },
+      "faixas_selecionadas": {
+        "alto_brilho": 6,
+        "brilho_intermediario": 7,
+        "baixo_brilho": 3
+      },
+      "origens": {
+        "field": 16
+      }
+    },
+    {
+      "indice": 5,
+      "nome": "Percevejo-verde (Nezara viridula)",
+      "treino_disponivel": 64,
+      "selecionadas": 15,
+      "grupos_distintos": 15,
+      "faixas_disponiveis": {
+        "brilho_intermediario": 42,
+        "alto_brilho": 14,
+        "baixo_brilho": 8
+      },
+      "faixas_selecionadas": {
+        "brilho_intermediario": 6,
+        "alto_brilho": 6,
+        "baixo_brilho": 3
+      },
+      "origens": {
+        "field": 15
+      }
+    },
+    {
+      "indice": 6,
+      "nome": "Percevejo-asa-preta (Edessa meditabunda)",
+      "treino_disponivel": 53,
+      "selecionadas": 15,
+      "grupos_distintos": 15,
+      "faixas_disponiveis": {
+        "brilho_intermediario": 38,
+        "alto_brilho": 15
+      },
+      "faixas_selecionadas": {
+        "brilho_intermediario": 9,
+        "alto_brilho": 6
+      },
+      "origens": {
+        "field": 15
+      }
+    },
+    {
+      "indice": 7,
+      "nome": "Percevejo-do-milho (Leptoglossus zonatus)",
+      "treino_disponivel": 55,
+      "selecionadas": 15,
+      "grupos_distintos": 15,
+      "faixas_disponiveis": {
+        "brilho_intermediario": 46,
+        "alto_brilho": 9
+      },
+      "faixas_selecionadas": {
+        "brilho_intermediario": 10,
+        "alto_brilho": 5
+      },
+      "origens": {
+        "field": 15
+      }
+    },
+    {
+      "indice": 8,
+      "nome": "Lagarta-falsa-medideira (Chrysodeixis includens)",
+      "treino_disponivel": 55,
+      "selecionadas": 15,
+      "grupos_distintos": 15,
+      "faixas_disponiveis": {
+        "alto_brilho": 11,
+        "brilho_intermediario": 41,
+        "baixo_brilho": 3
+      },
+      "faixas_selecionadas": {
+        "alto_brilho": 6,
+        "brilho_intermediario": 6,
+        "baixo_brilho": 3
+      },
+      "origens": {
+        "field": 15
+      }
+    },
+    {
+      "indice": 9,
+      "nome": "Lagarta-da-soja (Anticarsia gemmatalis)",
+      "treino_disponivel": 28,
+      "selecionadas": 15,
+      "grupos_distintos": 15,
+      "faixas_disponiveis": {
+        "alto_brilho": 10,
+        "brilho_intermediario": 14,
+        "baixo_brilho": 4
+      },
+      "faixas_selecionadas": {
+        "alto_brilho": 5,
+        "baixo_brilho": 4,
+        "brilho_intermediario": 6
+      },
+      "origens": {
+        "field": 15
+      }
+    },
+    {
+      "indice": 10,
+      "nome": "Lagarta-das-vagens (Spodoptera eridania e S. cosmioides)",
+      "treino_disponivel": 110,
+      "selecionadas": 15,
+      "grupos_distintos": 15,
+      "faixas_disponiveis": {
+        "alto_brilho": 24,
+        "brilho_intermediario": 83,
+        "baixo_brilho": 3
+      },
+      "faixas_selecionadas": {
+        "alto_brilho": 6,
+        "brilho_intermediario": 7,
+        "baixo_brilho": 2
+      },
+      "origens": {
+        "field": 15
+      }
+    },
+    {
+      "indice": 11,
+      "nome": "Astylus variegatus",
+      "treino_disponivel": 332,
+      "selecionadas": 15,
+      "grupos_distintos": 15,
+      "faixas_disponiveis": {
+        "brilho_intermediario": 288,
+        "alto_brilho": 40,
+        "baixo_brilho": 4
+      },
+      "faixas_selecionadas": {
+        "baixo_brilho": 4,
+        "brilho_intermediario": 6,
+        "alto_brilho": 5
+      },
+      "origens": {
+        "field": 15
+      }
+    },
+    {
+      "indice": 12,
+      "nome": "Cigarrinha-das-pastagens (Deois flavopicta)",
+      "treino_disponivel": 114,
+      "selecionadas": 15,
+      "grupos_distintos": 15,
+      "faixas_disponiveis": {
+        "alto_brilho": 48,
+        "brilho_intermediario": 61,
+        "baixo_brilho": 5
+      },
+      "faixas_selecionadas": {
+        "brilho_intermediario": 6,
+        "alto_brilho": 6,
+        "baixo_brilho": 3
+      },
+      "origens": {
+        "field": 15
+      }
+    }
+  ],
+  "faixas_selecionadas": {
+    "brilho_intermediario": 83,
+    "baixo_brilho": 46,
+    "alto_brilho": 71
+  },
+  "revisao_frente_dados": "não registrada para esta seleção específica; as fontes são as mesmas do índice versionado",
+  "teste_acessado": false,
+  "validacao_acessada": false
+}
