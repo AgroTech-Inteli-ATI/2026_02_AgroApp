@@ -12,6 +12,42 @@ import numpy as np
 
 from src.preprocessamento import preparar_imagem
 
+RAIZ = Path(__file__).resolve().parents[1]
+PACOTE = RAIZ / "assets/modelos/candidato_T5_6_20261026"
+
+
+def _hash(caminho: Path) -> str:
+    return sha256(caminho.read_bytes()).hexdigest()
+
+
+def _validar_selecao(checkpoint: Path, arquivo_metricas: Path, classes: list, pacote: Path) -> dict:
+    """Vincula pesos e metadados à mesma seleção antes de importar TensorFlow."""
+    manifesto_path = pacote / "manifesto.json"
+    classes_path = pacote / "classes.json"
+    manifesto = json.loads(manifesto_path.read_text(encoding="utf-8-sig"))
+    if manifesto.get("esquema") != "selecao_T5_6_v1":
+        raise ValueError("manifesto de seleção incompatível")
+    hashes = manifesto.get("sha256", {})
+    for nome in ("modelo.keras", "classes.json", "avaliacao_validacao.json"):
+        caminho = pacote / nome
+        if not caminho.is_file() or hashes.get(nome) != _hash(caminho):
+            raise ValueError(f"artefato do pacote selecionado divergente: {nome}")
+    if _hash(checkpoint) != hashes["modelo.keras"]:
+        raise ValueError("checkpoint não corresponde ao modelo selecionado na T5.6")
+    classes_metricas = [{"indice": c["indice"], "nome": c["nome"]} for c in classes]
+    classes_selecionadas = json.loads(classes_path.read_text(encoding="utf-8-sig"))
+    if classes_metricas != classes_selecionadas:
+        raise ValueError("nomes ou ordem das classes divergem do pacote selecionado")
+    if _hash(arquivo_metricas) != hashes["avaliacao_validacao.json"]:
+        raise ValueError("métricas não correspondem à rodada selecionada")
+    try:
+        referencia = pacote.resolve().relative_to(RAIZ).as_posix()
+    except ValueError:
+        referencia = str(pacote.resolve())
+    return {"pacote": referencia, "execucao_t5_5": manifesto["execucao_t5_5"],
+            "manifesto_sha256": _hash(manifesto_path), "classes_sha256": hashes["classes.json"],
+            "metricas_validacao_sha256": hashes["avaliacao_validacao.json"]}
+
 
 def _tensor(detalhe):
     return {
@@ -22,7 +58,7 @@ def _tensor(detalhe):
     }
 
 
-def converter(rodada: Path, saida: Path, imagens=()) -> dict:
+def converter(rodada: Path, saida: Path, imagens=(), pacote: Path = PACOTE) -> dict:
     """Publica os artefatos apenas depois de carregar e executar o FlatBuffer."""
     rodada, saida = Path(rodada), Path(saida)
     checkpoint = rodada / "melhor_modelo.keras"
@@ -42,6 +78,7 @@ def converter(rodada: Path, saida: Path, imagens=()) -> dict:
     arquivos = ("modelo.tflite", "contrato_tensores.json", "relatorio_conversao.md")
     if any((saida / nome).exists() for nome in arquivos):
         raise ValueError("saída já contém conversão; escolha outra pasta")
+    origem_selecao = _validar_selecao(checkpoint, rodada / "metricas_validacao.json", classes, Path(pacote))
 
     import tensorflow as tf
     from src.avaliacao_t6_1 import _carregar_modelo
@@ -92,6 +129,7 @@ def converter(rodada: Path, saida: Path, imagens=()) -> dict:
     resultado = {
         "esquema": "conversao_T7_1_v1", "backbone": metricas["backbone"],
         "tensorflow": tf.__version__, "quantizacao": None, "operadores": "TFLITE_BUILTINS",
+        "origem_selecao": origem_selecao,
         "sha256": {"keras": sha256(conteudo).hexdigest(), "tflite": sha256(convertido).hexdigest()},
         "tamanho_bytes": len(convertido), "entrada": _tensor(entrada), "saida": _tensor(saida_tensor),
         "preprocessamento": "T4.1: EXIF, RGB, proporção preservada, padding cinza 128, float32 / 255",
@@ -99,6 +137,10 @@ def converter(rodada: Path, saida: Path, imagens=()) -> dict:
         "validacao": {"atol": 1e-5, "rtol": 1e-4, "amostras": verificacoes},
     }
     texto = ["# Conversão T7.1", "", f"Backbone: {metricas['backbone']}. Modelo float32, sem quantização.",
+             "", f"Pacote selecionado: `{origem_selecao['pacote']}`.",
+             f"Rodada T5.5: `{origem_selecao['execucao_t5_5']}`.",
+             f"SHA-256 Keras: `{resultado['sha256']['keras']}`.",
+             f"SHA-256 TFLite: `{resultado['sha256']['tflite']}`.",
              "", "| Tensor | Nome | Shape alocado | Assinatura | Tipo |",
              "| --- | --- | --- | --- | --- |"]
     for papel in ("entrada", "saida"):
@@ -106,6 +148,9 @@ def converter(rodada: Path, saida: Path, imagens=()) -> dict:
         texto.append(f"| {papel} | {t['nome']} | {t['shape']} | {t['shape_signature']} | {t['dtype']} |")
     texto += ["", resultado["preprocessamento"] + ". Layout NHWC, batch 1; entrada em [0, 1].",
               "Saída: probabilidades softmax; argmax identifica o índice da classe em contrato_tensores.json.",
+              "", "| Índice de saída | Classe |", "| ---: | --- |"]
+    texto += [f"| {c['indice']} | {c['nome']} |" for c in resultado["classes"]]
+    texto += [
               "", f"FlatBuffer carregado do disco e executado em {len(verificacoes)} amostras.",
               "Comparação Keras/TFLite: atol=1e-5, rtol=1e-4. Detalhes no JSON.",
               "As amostras sintéticas verificam execução e equivalência numérica, sem medir acurácia."]
@@ -120,10 +165,11 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--rodada", type=Path, required=True)
     parser.add_argument("--saida", type=Path, required=True)
+    parser.add_argument("--pacote", type=Path, default=PACOTE, help="pacote da seleção T5.6; confere pesos, métricas e classes")
     parser.add_argument("--imagem", type=Path, action="append", default=[], help="imagem opcional; repetível")
     args = parser.parse_args()
     try:
-        resultado = converter(args.rodada, args.saida, args.imagem)
+        resultado = converter(args.rodada, args.saida, args.imagem, args.pacote)
     except (ValueError, OSError) as erro:
         parser.exit(1, f"Conversão não concluída: {erro}\n")
     print(f"Modelo convertido e validado: {args.saida / 'modelo.tflite'} ({resultado['tamanho_bytes']} bytes)")

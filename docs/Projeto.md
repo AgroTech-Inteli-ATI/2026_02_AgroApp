@@ -3100,8 +3100,22 @@ python -m src.conversao_t7_1 --rodada runs/<rodada_selecionada> --saida runs/<ro
 
 A rodada deve conter `melhor_modelo.keras` e `metricas_validacao.json` da T5.1.
 A seleção da rodada é explícita; o comando não escolhe o modelo por métricas de teste.
+Antes de converter, confere os hashes do checkpoint, das métricas e das classes
+contra `manifesto.json` e `classes.json` do pacote selecionado na T5.6. O pacote
+também é conferido contra seus próprios hashes. Nomes trocados com índices ainda
+sequenciais, checkpoint substituído ou métricas de outra rodada são recusados
+antes de importar TensorFlow ou publicar saídas.
 Para acrescentar fotos reais à comparação, repetir `--imagem caminho/foto.jpg`.
 A imagem recebe o mesmo preprocessamento T4.1 usado no treinamento.
+
+Para reproduzir a conversão do candidato oficial, em uma pasta nova:
+
+```bash
+python -m src.conversao_t7_1 --rodada assets/modelos/rodadas_T5_6_20261026/20261026-213017_efficientnet_lite0_s42 --pacote assets/modelos/candidato_T5_6_20261026 --saida runs/reproducao_T7_1
+```
+
+`--pacote` tem como padrão o pacote acima. Uma futura seleção pode ser indicada
+explicitamente, desde que seu manifesto vincule pesos, métricas e ordem de classes.
 
 ### Contrato de entrada e saída
 
@@ -3134,34 +3148,48 @@ Somente após essa validação são escritos:
 - `modelo.tflite`: modelo convertido.
 - `contrato_tensores.json`: nomes, índices, shapes alocados, assinaturas e tipos
   obtidos do interpretador; classes em ordem, preprocessamento, hashes SHA-256,
-  versão TensorFlow, tamanho em bytes e erros por amostra.
+  versão TensorFlow, tamanho em bytes, erros por amostra e vínculo com o manifesto
+  de seleção, as classes e as métricas da rodada.
 - `relatorio_conversao.md`: contrato dos tensores e resumo da validação.
 
 Arquivos de conversão existentes não são sobrescritos. As saídas podem permanecer
 em `runs/`, que já é ignorada pelo Git. As entradas sintéticas verificam execução
 e equivalência numérica; não medem qualidade diagnóstica ou desempenho no celular.
 
-### Testes e situação do aceite
+### Conversão do candidato selecionado
+
+Em **04/11/2026**, o fluxo foi executado com o checkpoint real
+`20261026-213017_efficientnet_lite0_s42`, selecionado na T5.6. O SHA-256 Keras
+`089a8d903a78898badf385f0d57006a4fb556d76e3e8fae719babdaf564aa51a` confere com
+o manifesto do candidato. Foram publicados:
+
+- [Modelo TFLite FP32](../assets/modelos/conversao_T7_1_candidato_T5_6_20261026/modelo.tflite).
+- [Contrato dos tensores e evidência de execução](../assets/modelos/conversao_T7_1_candidato_T5_6_20261026/contrato_tensores.json).
+- [Relatório com hashes, classes e preprocessamento](../assets/modelos/conversao_T7_1_candidato_T5_6_20261026/relatorio_conversao.md).
+
+O arquivo foi reaberto do disco com `tf.lite.Interpreter`, alocado e executado.
+A entrada é **`[1, 224, 224, 3]`, float32**, RGB/NHWC em [0, 1]; a saída é
+**`[1, 13]`, float32**, com probabilidades na ordem conferida das 13 classes.
+Ambos preservam assinatura de batch dinâmico (`-1`). A comparação nas três
+entradas sintéticas passou nas tolerâncias documentadas acima. O tamanho do
+FlatBuffer é **13.531.184 bytes**.
+
+Esta entrega comprova conversão, carregamento, execução e contrato do candidato.
+As entradas sintéticas não medem qualidade diagnóstica ou latência no celular.
+O artefato FP32 desta etapa não substitui o INT8 já preservado no pacote T5.6;
+quantização e otimização permanecem nas etapas próprias.
+
+### Testes
 
 ```bash
 python tests/validar_conversao_t7_1.py
 ```
 
-Em 03/11/2026, os **sete testes passaram, sem testes pulados**, no Windows com
-Python 3.13.5, TensorFlow 2.21.0, Keras 3.15.1 e KerasHub 0.32.0, instalados em
-`.venv-treino`. Foram verificadas a conversão e a inferência reais de um modelo
-sintético com foto adicional e da MobileNetV3Small construída pelo pipeline T5.1,
-sem download de pesos pré-treinados. Também foram verificadas a recusa de saída
-sem softmax, de classes desordenadas, de tamanho inválido, de checkpoint ausente
-e a preservação de conversões existentes. Os artefatos de teste são temporários.
-
-Os sete testes da avaliação T6.1 e a verificação do preprocessamento T4.1 também
-passaram. `pip check` não encontrou conflitos de dependências. A interface de
-linha de comando, a mensagem de checkpoint ausente e `git diff --check` foram
-verificados. O ambiente virtual permanece ignorado pelo Git.
-
-**Aceite experimental pendente:** este checkout não contém o checkpoint treinado
-selecionado. Portanto, ainda não foi
-gerado nem validado um `.tflite` final. Para concluir T7.1, executar o comando com
-a rodada selecionada e conservar os três artefatos gerados. O relatório conterá
-os formatos efetivos dos tensores, sem substituir o modelo final por pesos sintéticos.
+Em 04/11/2026, os **11 testes passaram, sem testes pulados**, em macOS arm64,
+Python 3.12.15, TensorFlow 2.21.0, Keras 3.15.1, KerasHub 0.32.0 e NumPy 2.4.4.
+Cobrem conversão e inferência de um modelo sintético com foto adicional e de uma
+MobileNetV3Small do pipeline, além das recusas de saída inválida, classes
+desordenadas ou com nomes trocados, tamanho inválido, checkpoint ausente ou
+substituído, métricas de outra rodada, pacote alterado e preservação de saídas.
+Os modelos de teste continuam temporários; a entrega acima usa os pesos agrícolas
+selecionados e versionados. `git diff --check` também passou.
