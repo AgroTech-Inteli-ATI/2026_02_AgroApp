@@ -73,6 +73,7 @@
 <summary><strong>7. Conversão e otimização do modelo</strong></summary>
 
 - [7.1 Conversão para TFLite/LiteRT (T7.1)](#71-conversão-para-tflitelitert-t71)
+- [7.2 Comparação das estratégias de quantização (T7.2)](#72-comparação-das-estratégias-de-quantização-t72)
 - [7.3 Quantização INT8 com conjunto representativo (T7.3)](#73-quantização-int8-com-conjunto-representativo-t73)
 
 </details>
@@ -3201,6 +3202,173 @@ desordenadas ou com nomes trocados, tamanho inválido, checkpoint ausente ou
 substituído, métricas de outra rodada, pacote alterado e preservação de saídas.
 Os modelos de teste continuam temporários; a entrega acima usa os pesos agrícolas
 selecionados e versionados. `git diff --check` também passou.
+
+## 7.2 Comparação das estratégias de quantização (T7.2)
+
+O fluxo [`comparacao_quantizacao_t7_2.py`](../src/comparacao_quantizacao_t7_2.py) gera e compara as três estratégias de [quantização pós-treinamento](https://ai.google.dev/edge/litert/conversion/tensorflow/quantization/post_training_quantization) do LiteRT. Todas partem do mesmo checkpoint do EfficientNet-Lite0 selecionado na T5.6. A referência é o FlatBuffer FP32 da T7.1.
+
+| Estratégia | Como foi obtida nesta etapa | Pesos | Ativações | Entrada/saída |
+| --- | --- | --- | --- | --- |
+| FP32 (referência) | Reaproveitada da [T7.1](#71-conversão-para-tflitelitert-t71), sem otimização | float32 | float32 | float32 |
+| Faixa dinâmica | `Optimize.DEFAULT`, sem conjunto representativo | int8 | float32 (quantizadas em tempo de execução nos operadores híbridos) | float32 |
+| Float16 | `Optimize.DEFAULT` + `target_spec.supported_types = [tf.float16]` | float16 | float32 | float32 |
+| INT8 inteira | **Regenerada nesta etapa** pelo fluxo da [T7.3](#73-quantização-int8-com-conjunto-representativo-t73), com o mesmo conjunto de calibração versionado (200 imagens de treino) | int8 | int8 | int8 |
+
+Antes de converter, o fluxo:
+
+- reaplica a verificação de origem da T7.1;
+- confere os hashes dos FlatBuffers FP32 e INT8 publicados contra os contratos das respectivas etapas;
+- exige que a INT8 regenerada consuma exatamente os mesmos IDs e o mesmo manifesto de calibração da T7.3.
+
+A execução também é interrompida se o checkpoint Keras não reproduzir exatamente o F1 macro de validação registrado no pacote (0,7811). A inspeção do grafo confirma pesos INT8 na faixa dinâmica, tensores FLOAT16 no float16 e ausência de tensores em ponto flutuante no INT8.
+
+### Reprodutibilidade da INT8
+
+A INT8 regenerada no Windows **não é idêntica byte a byte** ao artefato publicado na T7.3, gerado em macOS arm64. Os dois artefatos foram avaliados lado a lado:
+
+| | Artefato T7.3 | Regenerada na T7.2 |
+| --- | --- | --- |
+| SHA-256 | `456caec5…1340` | `a0fa1ec2…f8e2` |
+| Tamanho | 4.003.624 bytes | 4.003.624 bytes |
+| IDs de calibração | 200 IDs | Os mesmos 200, na mesma ordem |
+| Entrada | escala 0,0039215689; zero point −128 | Idênticos |
+| Saída | escala 0,00390625; zero point −128 | Idênticos |
+| Tipos de tensores do grafo | 121 INT8 + 53 INT32 | Idênticos |
+| Fotos da revisão visual da T7.3 | 49/49 com mesmo argmax do Keras | 49/49 com mesmo argmax do Keras |
+
+A diferença está nas escalas internas, que dependem dos valores em ponto flutuante observados durante a calibração. Esses valores variam ligeiramente entre CPUs e bibliotecas numéricas (oneDNN no x86, outra implementação no arm64). Na validação, as duas versões não diferem com significância estatística (ver abaixo). **O artefato oficial continua sendo o da T7.3**, que é o versionado e contratado. A versão regenerada demonstra que a estratégia é reproduzível pelo fluxo documentado. Ela não deve substituir o artefato oficial por ter tido números ligeiramente melhores, porque a diferença está dentro do ruído.
+
+### Protocolo de medição
+
+- **Tamanho:** bytes do FlatBuffer `.tflite`, comparados ao limite de 8.000.000 bytes do RNF-01.
+- **Desempenho:**
+  - **Métricas:** F1 macro (métrica principal), acurácia macro (balanced accuracy, a métrica do RNF-06) e acurácia, calculadas com [`src/avaliacao.py`](../src/avaliacao.py), além de concordância do top-1 com o FP32.
+  - **Partições:** a **validação (474 imagens)** é a partição principal. O **teste (473 imagens)** já foi consultado em etapas anteriores e aparece apenas como leitura exploratória; nenhuma estratégia foi escolhida por ele.
+- **Estatística:** cada versão quantizada é comparada ao FP32 nas mesmas imagens.
+  - **Intervalo de confiança:** IC 95% por bootstrap pareado (2.000 reamostras de imagens, semente 42) para a diferença de F1 macro e de acurácia macro.
+  - **Teste de McNemar exato:** compara as imagens que só o FP32 acertou com as que só a versão quantizada acertou.
+- **Latência:**
+  - **O que é medido:** tempo de `set_tensor` + `invoke` + `get_tensor`, incluindo a (des)quantização da entrada e da saída no INT8, para uma imagem real de validação `1×224×224×3`.
+  - **Configurações:** cinco, todas com `tf.lite.Interpreter`: XNNPACK com 1, 2 e 4 threads e **sem delegate** com 1 e 4 threads (o modo do RNF-09).
+  - **Repetições:** 20 execuções de aquecimento e 5 rodadas intercaladas de 40 execuções, ou seja, 200 medições por modelo e por configuração.
+  - **Energia:** o comando registra a fonte de energia e se recusa a medir com o notebook na bateria.
+- **Execução sem delegates (RNF-09):** as 5 versões são executadas com `BUILTIN_WITHOUT_DEFAULT_DELEGATES` em uma imagem de validação por classe (13 imagens) e comparadas com a execução XNNPACK.
+- **Ambiente:** Windows 11, Intel Core Ultra 5 235U (x86, sem GPU), **conectado à tomada**, Python 3.12.10, TensorFlow 2.21.0, Keras 3.15.1, KerasHub 0.32.0 e NumPy 2.4.4, em 05/11/2026.
+
+### Tabela comparativa
+
+| Estratégia | Tamanho (bytes) | Redução vs FP32 | RNF-01 (≤ 8 MB) | Latência XNNPACK 1 thread: mediana / p95 (ms) | Latência XNNPACK 4 threads: mediana / p95 (ms) | F1 macro val. | Δ F1 val. [IC 95%] | Acurácia macro val. | Δ acurácia macro val. em p.p. [IC 95%] | Acurácia val. | Divergências top-1 vs FP32 (val.) | McNemar p (val.) | F1 macro teste (expl.) |
+| --- | ---: | ---: | --- | ---: | ---: | ---: | --- | ---: | --- | ---: | ---: | ---: | ---: |
+| FP32 (T7.1) | 13.531.184 | — | **não** | 8,12 / 9,86 | 6,31 / 7,24 | 0,7811 | — | 0,7550 | — | 0,8565 | — | — | 0,7329 |
+| Faixa dinâmica | 3.753.152 | 72,3% | sim | 38,74 / 43,05 | 107,10 / 157,24 | 0,7755 | −0,0056 [−0,0296; +0,0169] | 0,7517 | −0,33 [−2,48; +1,98] | 0,8565 | 9 | 1,000 | 0,7371 |
+| Float16 | 6.833.548 | 49,5% | sim | 8,34 / 10,46 | 5,68 / 6,83 | 0,7830 | +0,0019 [0,0000; +0,0062] | 0,7563 | +0,13 [0,00; +0,40] | 0,8587 | 1 | 1,000 | 0,7329 |
+| INT8 (artefato T7.3) | 4.003.624 | 70,4% | sim | 5,67 / 7,34 | 4,05 / 4,77 | 0,7767 | −0,0044 [−0,0373; +0,0293] | 0,7528 | −0,22 [−3,26; +2,93] | 0,8587 | 15 | 1,000 | 0,7400 |
+| INT8 (regenerada na T7.2) | 4.003.624 | 70,4% | sim | 5,90 / 7,38 | 3,98 / 4,67 | 0,7832 | +0,0021 [−0,0259; +0,0317] | 0,7578 | +0,28 [−2,48; +3,20] | 0,8587 | 14 | 1,000 | 0,7471 |
+
+Latência sem delegate (RNF-09), mediana / p95 em ms:
+
+| Estratégia | 1 thread | 4 threads |
+| --- | ---: | ---: |
+| FP32 (T7.1) | 58,99 / 140,81 | 51,88 / 126,64 |
+| Faixa dinâmica | 477,41 / 1.020,15 | 264,56 / 356,24 |
+| Float16 | 102,82 / 148,64 | 70,48 / 124,68 |
+| INT8 (artefato T7.3) | 542,62 / 1.180,87 | 293,01 / 348,73 |
+| INT8 (regenerada na T7.2) | 905,69 / 1.197,11 | 308,82 / 410,21 |
+
+As 5 versões executaram sem delegates, com saídas finitas e válidas nas 13 imagens. O top-1 coincidiu com a execução XNNPACK em todas as imagens para FP32, float16 e INT8 da T7.3. Na faixa dinâmica e na INT8 regenerada, houve divergência em 1 das 13 imagens (92,3%), por diferenças numéricas entre os kernels. A latência com 2 threads, os percentis p90/p99, a média, o desvio, os extremos e as matrizes de confusão estão no [JSON da comparação](../assets/modelos/comparacao_T7_2_candidato_T5_6_20261026/comparacao.json).
+
+### Leitura dos resultados
+
+- **Tamanho (RNF-01):** todas as versões quantizadas atendem ao limite de 8 MB; o FP32 não atende. A faixa dinâmica (−72,3%) e o INT8 (−70,4%) ficam em cerca de 4 MB; o float16 reduz o arquivo à metade.
+- **Latência com XNNPACK:** o INT8 foi a única estratégia consistentemente mais rápida que o FP32, com 27% a 37% a menos na mediana, com 1 e 4 threads. No CPU, o float16 se comporta como o FP32, porque os pesos são convertidos para float32 ao carregar; o ganho dessa estratégia aparece com o delegate de GPU. A faixa dinâmica foi a mais lenta (cerca de 4,8 vezes o FP32 com 1 thread). Ela piorou ao aumentar as threads, com grande variação: o desvio passou de 5 ms com 1 thread para 31 ms com 4 threads. O processador combina núcleos de desempenho e de eficiência, o que é compatível com essa piora, mas a causa não foi isolada.
+- **Latência sem delegate (RNF-09):** todas as versões funcionam, mas os kernels de referência do x86 sem XNNPACK são lentos para inteiros. INT8 e faixa dinâmica passam de 260 ms de mediana e de 340 ms de p95. Isso **não** indica o desempenho no celular: em ARM, os kernels inteiros nativos do LiteRT são otimizados para NEON. É, no entanto, o primeiro ponto a medir no aparelho. Se o p95 sem aceleração ultrapassar 300 ms lá, o modo degradado do RNF-09 não atenderá ao RNF-04.
+- **Desempenho:**
+  - **Diferença em relação ao FP32:** nenhuma estratégia difere do FP32 com significância estatística (McNemar p = 1,000 em todas na validação). Os erros novos e os acertos novos se equilibram: 3/3 na faixa dinâmica, 5/6 no INT8 da T7.3 e 4/5 no INT8 regenerado.
+  - **Float16:** é praticamente idêntico ao FP32, com uma única divergência de top-1.
+  - **Percevejo-verde:** concentra a maior queda por classe nas versões inteiras. Com 14 imagens de validação, o recall passa de 8/14 para 6/14. Isso é compatível com a fragilidade do cluster de percevejos registrada na [T6.3](#63-análise-de-erros-t63), mas o suporte é pequeno demais para ser conclusivo.
+- **RNF-06 (perda ≤ 2 p.p. de acurácia macro):**
+  - **Estimativa pontual:** todas as estratégias atendem, na validação e no teste exploratório.
+  - **Intervalo de confiança:** com 474 imagens, o IC 95% da faixa dinâmica e das duas INT8 desce abaixo de −2 p.p. na validação. Ou seja, a amostra atual **não tem tamanho suficiente para garantir, com 95% de confiança, que a perda fica dentro de 2 p.p.**; ela também não indica perda.
+  - **Conjunto final:** o RNF-06 prevê avaliação no conjunto de teste, e o teste atual já foi consultado. O requisito depende do conjunto independente previsto na seção 5.3, idealmente dimensionado para estreitar esse intervalo.
+
+### Conclusão
+
+**O INT8 inteiro (artefato da T7.3) continua sendo a estratégia recomendada para o aplicativo.** Ele:
+
+- é o único entre as versões de cerca de 4 MB que também reduz a latência;
+- não apresenta perda estatisticamente detectável em relação ao FP32;
+- já tem contrato de entrada e saída e conjunto de calibração documentados.
+
+O **float16** é a alternativa quando a fidelidade ao FP32 for prioritária ou o aplicativo usar o delegate de GPU. Ele custa cerca de 2,8 MB a mais que o INT8 e não traz ganho de latência no CPU. A **faixa dinâmica** não é recomendada: tem tamanho semelhante ao INT8, desempenho equivalente e foi a mais lenta e instável no CPU medido.
+
+### Pendências e limites
+
+- **Medição no celular de referência:** a aprovação do RNF-04 (p95 ≤ 300 ms) e do modo degradado do RNF-09 exige medir no aparelho com a ferramenta oficial de benchmark ([TFLite/LiteRT benchmark tool](https://www.tensorflow.org/lite/performance/measurement)), o que não foi possível sem um aparelho conectado. O protocolo está pronto. Copiar os modelos para `/data/local/tmp/` e, para cada um, executar:
+
+  ```bash
+  adb push assets/modelos/quantizacao_T7_3_candidato_T5_6_20261026/modelo_int8.tflite /data/local/tmp/
+  # Com XNNPACK (RNF-04) e sem delegate (RNF-09), 4 threads, mesmos aquecimentos e repetições desta etapa
+  adb shell /data/local/tmp/benchmark_model --graph=/data/local/tmp/modelo_int8.tflite --num_threads=4 --use_xnnpack=true --warmup_runs=20 --num_runs=200
+  adb shell /data/local/tmp/benchmark_model --graph=/data/local/tmp/modelo_int8.tflite --num_threads=4 --use_xnnpack=false --warmup_runs=20 --num_runs=200
+  # Float16 com delegate de GPU, se o aplicativo for usá-lo
+  adb shell /data/local/tmp/benchmark_model --graph=/data/local/tmp/modelo_float16.tflite --use_gpu=true --warmup_runs=20 --num_runs=200
+  ```
+
+  Registrar o modelo do aparelho, a versão do Android e do runtime, o hash de cada `.tflite` e o p95, com o celular em modo avião e carregado.
+- **Política de confiança:** os scores do INT8 diferem até 0,42 dos scores FP32 na validação. Os limiares da [política de confiança (T6.5)](#65-política-de-confiança-t65), ajustados sobre as saídas FP32, precisam ser reconferidos com a versão embarcada.
+- **Unidade do bootstrap:** os intervalos reamostram imagens, não grupos de fotos da mesma planta; por isso podem ser otimistas.
+- **Latência local:** as medições no notebook valem para comparar as estratégias entre si, não como valores absolutos do aplicativo.
+
+### Correções de ambiente feitas nesta etapa
+
+Reproduzir a T7.3 no Windows expôs dois problemas de quebra de linha:
+
+1. **`preparar` da T7.3:** a função gravava o `manifesto_calibracao.csv` com `\r\n` no Windows, mas registrava o hash do texto com `\n`. Por isso 3 dos 10 testes da T7.3 falhavam no Windows. A gravação passou a usar `newline=""`, e os 10 testes passam. O conteúdo gerado em macOS/Linux não muda, mas o hash do código que consta no `contrato_int8.json` da T7.3 já não corresponde ao arquivo atual. O contrato da INT8 regenerada registra o hash atualizado.
+2. **Cópia de trabalho de `src/preprocessamento.py`:** o arquivo estava com CRLF, embora o repositório o guarde em LF (`.gitattributes` com `eol=lf`). Com isso, a verificação de proveniência da T7.3 recusava o conjunto de calibração. A cópia foi normalizada para LF; o conteúdo versionado não mudou (blob `3896cf7`).
+
+### Artefatos
+
+Em [`assets/modelos/comparacao_T7_2_candidato_T5_6_20261026/`](../assets/modelos/comparacao_T7_2_candidato_T5_6_20261026/):
+
+- `modelo_faixa_dinamica.tflite`, `modelo_float16.tflite` e `modelo_int8.tflite` (regenerada) com `contrato_int8_regenerado.json`. O FP32 e o INT8 oficial permanecem nas pastas da T7.1 e da T7.3.
+- `tabela_comparativa.csv`: todas as configurações de latência (mediana e p95), métricas, intervalos de confiança, McNemar e RNFs, por estratégia e partição.
+- `relatorio_comparacao.md`: o relatório gerado pela execução.
+- `comparacao.json`:
+  - hashes de origem, do código e de cada modelo;
+  - tipos de tensores do grafo e contratos de entrada e saída;
+  - métricas completas, estatística e concordância com FP32 e Keras;
+  - execução sem delegates, latência detalhada, avaliação de RNFs e ambiente.
+- `metricas_por_classe.csv` e `predicoes.csv`: métricas por classe e previsão de cada imagem em cada versão.
+
+### Reprodução e testes
+
+Com o acervo original contendo `dataset/` na raiz informada, com o computador na tomada e uma pasta de saída nova (o comando recusa sobrescrever):
+
+```bash
+python -m src.comparacao_quantizacao_t7_2 --raiz-imagens /caminho/das/fontes --saida runs/reproducao_T7_2
+python tests/validar_comparacao_t7_2.py
+python tests/validar_quantizacao_t7_3.py
+```
+
+Opções disponíveis:
+
+- `--sem-teste`: restringe a avaliação à validação.
+- `--rodadas` e `--por-rodada`: ajustam a quantidade de medições de latência.
+- `--reamostras`: ajusta o bootstrap.
+- `--permitir-bateria`: aceita medir fora da tomada; o relatório registra a fonte de energia.
+
+A execução completa leva cerca de 20 minutos neste notebook.
+
+Os **12 testes da T7.2 passaram** em Windows 11 com Python 3.12.10 e TensorFlow 2.21.0. Eles cobrem:
+
+- estatísticas de latência com p95, concordância, McNemar exato, determinismo do bootstrap e pior classe;
+- avaliação dos RNF-01, RNF-04, RNF-06 e RNF-09;
+- montagem da tabela e do relatório, publicação em LF e recusa de sobrescrita;
+- obrigatoriedade da validação e recusa de medir na bateria;
+- recusa de artefatos FP32/INT8 com hash ou origem divergente e de INT8 regenerada com calibração diferente;
+- conversão de um modelo sintético nas duas novas estratégias, com execução com e sem delegate. Esse teste é pulado se o TensorFlow não estiver instalado.
+
+Os **10 testes da T7.3** também passam no mesmo ambiente após a correção.
 
 ## 7.3 Quantização INT8 com conjunto representativo (T7.3)
 
