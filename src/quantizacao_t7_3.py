@@ -162,7 +162,8 @@ def preparar(raiz: Path, saida: Path = CONJUNTO, indice: Path = INDICE,
         "revisao_frente_dados": "não registrada para esta seleção específica; as fontes são as mesmas do índice versionado",
         "teste_acessado": False, "validacao_acessada": False}
     saida.mkdir(parents=True)
-    (saida / "manifesto_calibracao.csv").write_text(manifesto_csv, encoding="utf-8")
+    # newline="" grava exatamente o texto cujo hash foi registrado (sem \r\n no Windows).
+    (saida / "manifesto_calibracao.csv").write_text(manifesto_csv, encoding="utf-8", newline="")
     gravar(saida / "conjunto.json", conjunto)
     return conjunto
 

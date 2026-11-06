@@ -1,0 +1,719 @@
+{
+  "esquema": "quantizacao_T7_3_v1",
+  "origem_selecao": {
+    "pacote": "assets/modelos/candidato_T5_6_20261026",
+    "execucao_t5_5": "rodadas_T5_6_20261026/20261026-213017_efficientnet_lite0_s42",
+    "manifesto_sha256": "72bd8194246cf5673cb6194491bbe1c0410d526a4c14027a087c414b9fa14f62",
+    "classes_sha256": "1058619e188ffd7fa42bfc6821e2e122356b35d8503af71b987f37ae1e4572f4",
+    "metricas_validacao_sha256": "93300711a2622edfccfffc28a0fd8376791eb4b02644c0abaa688ce8aeef10f9"
+  },
+  "modelo_keras_sha256": "089a8d903a78898badf385f0d57006a4fb556d76e3e8fae719babdaf564aa51a",
+  "modelo_int8_sha256": "a0fa1ec2c7b4014819556259fceb11b49280e4c19adde843f8ec59cc356ff8e2",
+  "tamanho_bytes": 4003624,
+  "tensorflow": "2.21.0",
+  "classes": [
+    {
+      "indice": 0,
+      "nome": "Vaquinha (Diabrotica speciosa)"
+    },
+    {
+      "indice": 1,
+      "nome": "Cigarrinha-do-milho (Dalbulus maidis)"
+    },
+    {
+      "indice": 2,
+      "nome": "Percevejo-barriga-verde (Dichelops/Diceraeus)"
+    },
+    {
+      "indice": 3,
+      "nome": "Lagarta-do-cartucho (Spodoptera frugiperda)"
+    },
+    {
+      "indice": 4,
+      "nome": "Percevejo-marrom (Euschistus heros)"
+    },
+    {
+      "indice": 5,
+      "nome": "Percevejo-verde (Nezara viridula)"
+    },
+    {
+      "indice": 6,
+      "nome": "Percevejo-asa-preta (Edessa meditabunda)"
+    },
+    {
+      "indice": 7,
+      "nome": "Percevejo-do-milho (Leptoglossus zonatus)"
+    },
+    {
+      "indice": 8,
+      "nome": "Lagarta-falsa-medideira (Chrysodeixis includens)"
+    },
+    {
+      "indice": 9,
+      "nome": "Lagarta-da-soja (Anticarsia gemmatalis)"
+    },
+    {
+      "indice": 10,
+      "nome": "Lagarta-das-vagens (Spodoptera eridania e S. cosmioides)"
+    },
+    {
+      "indice": 11,
+      "nome": "Astylus variegatus"
+    },
+    {
+      "indice": 12,
+      "nome": "Cigarrinha-das-pastagens (Deois flavopicta)"
+    }
+  ],
+  "quantizacao": "inteira; TFLITE_BUILTINS_INT8; entrada e saída INT8; grafo sem tensores FLOAT16/FLOAT32/FLOAT64",
+  "tipos_tensores_grafo": {
+    "INT32": 53,
+    "INT8": 121
+  },
+  "codigo_sha256": "d6488752c66a37d0ff9945955c0a7a2ba0b0a1df214f245c67b602aa4510d418",
+  "entrada": {
+    "nome": "serving_default_imagem:0",
+    "indice": 0,
+    "shape": [
+      1,
+      224,
+      224,
+      3
+    ],
+    "shape_signature": [
+      -1,
+      224,
+      224,
+      3
+    ],
+    "dtype": "int8",
+    "escala": 0.003921568859368563,
+    "zero_point": -128
+  },
+  "saida": {
+    "nome": "StatefulPartitionedCall_1:0",
+    "indice": 173,
+    "shape": [
+      1,
+      13
+    ],
+    "shape_signature": [
+      -1,
+      13
+    ],
+    "dtype": "int8",
+    "escala": 0.00390625,
+    "zero_point": -128
+  },
+  "preprocessamento": "T4.1: EXIF, RGB, proporção e padding cinza; float32 [0,1] sem augmentation; a normalização do backbone já está no modelo",
+  "quantizacao_entrada": "clip(round(x/escala)+zero_point,-128,127); usar escala e zero_point do tensor de entrada",
+  "desquantizacao_saida": "(q-zero_point)*escala; valores não são probabilidades calibradas de acerto",
+  "calibracao": {
+    "particao": "treino",
+    "imagens_consumidas": 200,
+    "image_ids": [
+      "IMG_01022",
+      "IMG_01030",
+      "IMG_01137",
+      "IMG_01229",
+      "IMG_01291",
+      "IMG_01294",
+      "IMG_01344",
+      "IMG_01347",
+      "IMG_01441",
+      "IMG_01443",
+      "IMG_01701",
+      "IMG_01740",
+      "IMG_01832",
+      "IMG_01846",
+      "IMG_01850",
+      "IMG_01962",
+      "IMG_00484",
+      "IMG_00521",
+      "IMG_00523",
+      "IMG_00525",
+      "IMG_00532",
+      "IMG_00571",
+      "IMG_00589",
+      "IMG_00598",
+      "IMG_00606",
+      "IMG_00608",
+      "IMG_00619",
+      "IMG_00632",
+      "IMG_00672",
+      "IMG_00685",
+      "IMG_00693",
+      "IMG_00695",
+      "IMG_02085",
+      "IMG_02094",
+      "IMG_02096",
+      "IMG_02102",
+      "IMG_02114",
+      "IMG_02132",
+      "IMG_02147",
+      "IMG_02148",
+      "IMG_02229",
+      "IMG_02230",
+      "IMG_02272",
+      "IMG_02334",
+      "IMG_02337",
+      "IMG_02349",
+      "IMG_02359",
+      "IMG_02364",
+      "IMG_02405",
+      "IMG_02417",
+      "IMG_02537",
+      "IMG_02553",
+      "IMG_02594",
+      "IMG_02601",
+      "IMG_02617",
+      "IMG_02627",
+      "IMG_02659",
+      "IMG_02662",
+      "IMG_02730",
+      "IMG_02733",
+      "IMG_02757",
+      "IMG_02762",
+      "IMG_02780",
+      "IMG_02793",
+      "IMG_03134",
+      "IMG_03142",
+      "IMG_03144",
+      "IMG_03146",
+      "IMG_03148",
+      "IMG_03157",
+      "IMG_03161",
+      "IMG_03162",
+      "IMG_03168",
+      "IMG_03171",
+      "IMG_03176",
+      "IMG_03177",
+      "IMG_03181",
+      "IMG_03182",
+      "IMG_03186",
+      "IMG_03191",
+      "IMG_03201",
+      "IMG_03204",
+      "IMG_03210",
+      "IMG_03211",
+      "IMG_03220",
+      "IMG_03225",
+      "IMG_03226",
+      "IMG_03232",
+      "IMG_03235",
+      "IMG_03245",
+      "IMG_03252",
+      "IMG_03269",
+      "IMG_03274",
+      "IMG_03280",
+      "IMG_03287",
+      "IMG_03054",
+      "IMG_03058",
+      "IMG_03059",
+      "IMG_03069",
+      "IMG_03073",
+      "IMG_03080",
+      "IMG_03092",
+      "IMG_03101",
+      "IMG_03103",
+      "IMG_03105",
+      "IMG_03107",
+      "IMG_03111",
+      "IMG_03113",
+      "IMG_03120",
+      "IMG_03125",
+      "IMG_00872",
+      "IMG_00892",
+      "IMG_00893",
+      "IMG_00900",
+      "IMG_00905",
+      "IMG_00906",
+      "IMG_00915",
+      "IMG_00916",
+      "IMG_00923",
+      "IMG_00926",
+      "IMG_00929",
+      "IMG_00933",
+      "IMG_00935",
+      "IMG_00939",
+      "IMG_00944",
+      "IMG_02975",
+      "IMG_02980",
+      "IMG_02981",
+      "IMG_02985",
+      "IMG_02995",
+      "IMG_02997",
+      "IMG_03000",
+      "IMG_03002",
+      "IMG_03014",
+      "IMG_03020",
+      "IMG_03028",
+      "IMG_03038",
+      "IMG_03041",
+      "IMG_03051",
+      "IMG_03053",
+      "IMG_02932",
+      "IMG_02934",
+      "IMG_02936",
+      "IMG_02937",
+      "IMG_02938",
+      "IMG_02941",
+      "IMG_02942",
+      "IMG_02947",
+      "IMG_02952",
+      "IMG_02954",
+      "IMG_02957",
+      "IMG_02960",
+      "IMG_02962",
+      "IMG_02964",
+      "IMG_02969",
+      "IMG_03289",
+      "IMG_03301",
+      "IMG_03311",
+      "IMG_03332",
+      "IMG_03335",
+      "IMG_03367",
+      "IMG_03382",
+      "IMG_03386",
+      "IMG_03393",
+      "IMG_03402",
+      "IMG_03409",
+      "IMG_03412",
+      "IMG_03433",
+      "IMG_03435",
+      "IMG_03445",
+      "IMG_00034",
+      "IMG_00046",
+      "IMG_00096",
+      "IMG_00122",
+      "IMG_00154",
+      "IMG_00158",
+      "IMG_00288",
+      "IMG_00317",
+      "IMG_00360",
+      "IMG_00384",
+      "IMG_00391",
+      "IMG_00440",
+      "IMG_00470",
+      "IMG_00480",
+      "IMG_00481",
+      "IMG_00700",
+      "IMG_00711",
+      "IMG_00737",
+      "IMG_00745",
+      "IMG_00747",
+      "IMG_00764",
+      "IMG_00766",
+      "IMG_00777",
+      "IMG_00788",
+      "IMG_00794",
+      "IMG_00811",
+      "IMG_00813",
+      "IMG_00831",
+      "IMG_00851",
+      "IMG_00864"
+    ],
+    "conjunto_sha256": "d00003eca14bf4f333e86da5f7f58341e115e276e409c2df0a06063e02640375",
+    "manifesto_sha256": "b517be0fd50bdb4431c94102b6b207824e7178a45f6d3b59cc2105f875493f8c",
+    "revisao_iluminacao_sha256": "5e9e0e674649a68ad0f34c248b8ec797cdddf6ac86857e63de5312325dd32b4f",
+    "indice_sha256": "28ee662885202f0bda3dec9660e44b28f99b8bd183210bcbdd795b103269b2eb",
+    "augmentation": false
+  },
+  "verificacoes_execucao": [
+    {
+      "image_id": "IMG_01137",
+      "indice_real": 0,
+      "argmax_keras": 0,
+      "argmax_int8": 0,
+      "erro_absoluto_maximo": 0.003902435302734375,
+      "soma_desquantizada": 0.99609375
+    },
+    {
+      "image_id": "IMG_01229",
+      "indice_real": 0,
+      "argmax_keras": 0,
+      "argmax_int8": 0,
+      "erro_absoluto_maximo": 0.003878355026245117,
+      "soma_desquantizada": 0.99609375
+    },
+    {
+      "image_id": "IMG_01291",
+      "indice_real": 0,
+      "argmax_keras": 0,
+      "argmax_int8": 0,
+      "erro_absoluto_maximo": 0.003711879253387451,
+      "soma_desquantizada": 0.99609375
+    },
+    {
+      "image_id": "IMG_01347",
+      "indice_real": 0,
+      "argmax_keras": 0,
+      "argmax_int8": 0,
+      "erro_absoluto_maximo": 0.0038961172103881836,
+      "soma_desquantizada": 0.99609375
+    },
+    {
+      "image_id": "IMG_01441",
+      "indice_real": 0,
+      "argmax_keras": 0,
+      "argmax_int8": 0,
+      "erro_absoluto_maximo": 0.003896951675415039,
+      "soma_desquantizada": 0.99609375
+    },
+    {
+      "image_id": "IMG_01443",
+      "indice_real": 0,
+      "argmax_keras": 0,
+      "argmax_int8": 0,
+      "erro_absoluto_maximo": 0.003905773162841797,
+      "soma_desquantizada": 0.99609375
+    },
+    {
+      "image_id": "IMG_01846",
+      "indice_real": 0,
+      "argmax_keras": 0,
+      "argmax_int8": 0,
+      "erro_absoluto_maximo": 0.0039060115814208984,
+      "soma_desquantizada": 0.99609375
+    },
+    {
+      "image_id": "IMG_01850",
+      "indice_real": 0,
+      "argmax_keras": 0,
+      "argmax_int8": 0,
+      "erro_absoluto_maximo": 0.0038793087005615234,
+      "soma_desquantizada": 0.99609375
+    },
+    {
+      "image_id": "IMG_00619",
+      "indice_real": 1,
+      "argmax_keras": 1,
+      "argmax_int8": 1,
+      "erro_absoluto_maximo": 0.003864765167236328,
+      "soma_desquantizada": 0.99609375
+    },
+    {
+      "image_id": "IMG_00632",
+      "indice_real": 1,
+      "argmax_keras": 1,
+      "argmax_int8": 1,
+      "erro_absoluto_maximo": 0.003523886203765869,
+      "soma_desquantizada": 1.00390625
+    },
+    {
+      "image_id": "IMG_00685",
+      "indice_real": 1,
+      "argmax_keras": 1,
+      "argmax_int8": 1,
+      "erro_absoluto_maximo": 0.0035713911056518555,
+      "soma_desquantizada": 0.99609375
+    },
+    {
+      "image_id": "IMG_02102",
+      "indice_real": 2,
+      "argmax_keras": 2,
+      "argmax_int8": 2,
+      "erro_absoluto_maximo": 0.0026632132939994335,
+      "soma_desquantizada": 1.0
+    },
+    {
+      "image_id": "IMG_02230",
+      "indice_real": 2,
+      "argmax_keras": 2,
+      "argmax_int8": 2,
+      "erro_absoluto_maximo": 0.005043983459472656,
+      "soma_desquantizada": 1.00390625
+    },
+    {
+      "image_id": "IMG_02364",
+      "indice_real": 2,
+      "argmax_keras": 2,
+      "argmax_int8": 2,
+      "erro_absoluto_maximo": 0.003850698471069336,
+      "soma_desquantizada": 0.99609375
+    },
+    {
+      "image_id": "IMG_02537",
+      "indice_real": 3,
+      "argmax_keras": 3,
+      "argmax_int8": 3,
+      "erro_absoluto_maximo": 0.003819704055786133,
+      "soma_desquantizada": 0.99609375
+    },
+    {
+      "image_id": "IMG_02659",
+      "indice_real": 3,
+      "argmax_keras": 3,
+      "argmax_int8": 3,
+      "erro_absoluto_maximo": 0.0031195878982543945,
+      "soma_desquantizada": 0.99609375
+    },
+    {
+      "image_id": "IMG_02793",
+      "indice_real": 3,
+      "argmax_keras": 3,
+      "argmax_int8": 3,
+      "erro_absoluto_maximo": 0.0022841691970825195,
+      "soma_desquantizada": 0.99609375
+    },
+    {
+      "image_id": "IMG_03168",
+      "indice_real": 4,
+      "argmax_keras": 4,
+      "argmax_int8": 4,
+      "erro_absoluto_maximo": 0.0031175613403320312,
+      "soma_desquantizada": 0.99609375
+    },
+    {
+      "image_id": "IMG_03171",
+      "indice_real": 4,
+      "argmax_keras": 4,
+      "argmax_int8": 4,
+      "erro_absoluto_maximo": 0.0030718434136360884,
+      "soma_desquantizada": 0.99609375
+    },
+    {
+      "image_id": "IMG_03176",
+      "indice_real": 4,
+      "argmax_keras": 4,
+      "argmax_int8": 4,
+      "erro_absoluto_maximo": 0.0010935240425169468,
+      "soma_desquantizada": 1.0
+    },
+    {
+      "image_id": "IMG_03181",
+      "indice_real": 4,
+      "argmax_keras": 4,
+      "argmax_int8": 4,
+      "erro_absoluto_maximo": 0.0009981305338442326,
+      "soma_desquantizada": 1.0
+    },
+    {
+      "image_id": "IMG_03182",
+      "indice_real": 4,
+      "argmax_keras": 4,
+      "argmax_int8": 4,
+      "erro_absoluto_maximo": 0.003457963466644287,
+      "soma_desquantizada": 0.99609375
+    },
+    {
+      "image_id": "IMG_03232",
+      "indice_real": 5,
+      "argmax_keras": 5,
+      "argmax_int8": 5,
+      "erro_absoluto_maximo": 0.0030556321144104004,
+      "soma_desquantizada": 0.99609375
+    },
+    {
+      "image_id": "IMG_03252",
+      "indice_real": 5,
+      "argmax_keras": 5,
+      "argmax_int8": 5,
+      "erro_absoluto_maximo": 0.001813054084777832,
+      "soma_desquantizada": 0.99609375
+    },
+    {
+      "image_id": "IMG_03269",
+      "indice_real": 5,
+      "argmax_keras": 5,
+      "argmax_int8": 5,
+      "erro_absoluto_maximo": 0.006305813789367676,
+      "soma_desquantizada": 1.0
+    },
+    {
+      "image_id": "IMG_03274",
+      "indice_real": 5,
+      "argmax_keras": 5,
+      "argmax_int8": 5,
+      "erro_absoluto_maximo": 0.001523830695077777,
+      "soma_desquantizada": 1.0
+    },
+    {
+      "image_id": "IMG_03280",
+      "indice_real": 5,
+      "argmax_keras": 5,
+      "argmax_int8": 5,
+      "erro_absoluto_maximo": 0.0036670565605163574,
+      "soma_desquantizada": 0.99609375
+    },
+    {
+      "image_id": "IMG_03073",
+      "indice_real": 6,
+      "argmax_keras": 6,
+      "argmax_int8": 6,
+      "erro_absoluto_maximo": 0.0038895606994628906,
+      "soma_desquantizada": 0.99609375
+    },
+    {
+      "image_id": "IMG_03101",
+      "indice_real": 6,
+      "argmax_keras": 6,
+      "argmax_int8": 6,
+      "erro_absoluto_maximo": 0.0038834810256958008,
+      "soma_desquantizada": 0.99609375
+    },
+    {
+      "image_id": "IMG_00915",
+      "indice_real": 7,
+      "argmax_keras": 7,
+      "argmax_int8": 7,
+      "erro_absoluto_maximo": 0.0034028291702270508,
+      "soma_desquantizada": 0.99609375
+    },
+    {
+      "image_id": "IMG_00916",
+      "indice_real": 7,
+      "argmax_keras": 7,
+      "argmax_int8": 7,
+      "erro_absoluto_maximo": 0.0032349824905395508,
+      "soma_desquantizada": 0.99609375
+    },
+    {
+      "image_id": "IMG_02980",
+      "indice_real": 8,
+      "argmax_keras": 8,
+      "argmax_int8": 8,
+      "erro_absoluto_maximo": 0.0036040544509887695,
+      "soma_desquantizada": 0.99609375
+    },
+    {
+      "image_id": "IMG_03000",
+      "indice_real": 8,
+      "argmax_keras": 8,
+      "argmax_int8": 8,
+      "erro_absoluto_maximo": 0.0037555694580078125,
+      "soma_desquantizada": 0.99609375
+    },
+    {
+      "image_id": "IMG_03002",
+      "indice_real": 8,
+      "argmax_keras": 8,
+      "argmax_int8": 8,
+      "erro_absoluto_maximo": 0.0014542937278747559,
+      "soma_desquantizada": 1.0
+    },
+    {
+      "image_id": "IMG_03028",
+      "indice_real": 8,
+      "argmax_keras": 8,
+      "argmax_int8": 8,
+      "erro_absoluto_maximo": 0.0035982131958007812,
+      "soma_desquantizada": 0.99609375
+    },
+    {
+      "image_id": "IMG_03041",
+      "indice_real": 8,
+      "argmax_keras": 8,
+      "argmax_int8": 8,
+      "erro_absoluto_maximo": 0.003744959831237793,
+      "soma_desquantizada": 0.99609375
+    },
+    {
+      "image_id": "IMG_02934",
+      "indice_real": 9,
+      "argmax_keras": 9,
+      "argmax_int8": 9,
+      "erro_absoluto_maximo": 0.003841400146484375,
+      "soma_desquantizada": 0.99609375
+    },
+    {
+      "image_id": "IMG_02936",
+      "indice_real": 9,
+      "argmax_keras": 9,
+      "argmax_int8": 9,
+      "erro_absoluto_maximo": 0.0030350089073181152,
+      "soma_desquantizada": 0.99609375
+    },
+    {
+      "image_id": "IMG_02937",
+      "indice_real": 9,
+      "argmax_keras": 9,
+      "argmax_int8": 9,
+      "erro_absoluto_maximo": 0.0038453340530395508,
+      "soma_desquantizada": 0.99609375
+    },
+    {
+      "image_id": "IMG_02942",
+      "indice_real": 9,
+      "argmax_keras": 9,
+      "argmax_int8": 9,
+      "erro_absoluto_maximo": 0.0039061307907104492,
+      "soma_desquantizada": 0.99609375
+    },
+    {
+      "image_id": "IMG_03382",
+      "indice_real": 10,
+      "argmax_keras": 10,
+      "argmax_int8": 10,
+      "erro_absoluto_maximo": 0.003865480422973633,
+      "soma_desquantizada": 0.99609375
+    },
+    {
+      "image_id": "IMG_03409",
+      "indice_real": 10,
+      "argmax_keras": 10,
+      "argmax_int8": 10,
+      "erro_absoluto_maximo": 0.0035439729690551758,
+      "soma_desquantizada": 0.99609375
+    },
+    {
+      "image_id": "IMG_03433",
+      "indice_real": 10,
+      "argmax_keras": 10,
+      "argmax_int8": 10,
+      "erro_absoluto_maximo": 0.0039058923721313477,
+      "soma_desquantizada": 0.99609375
+    },
+    {
+      "image_id": "IMG_00046",
+      "indice_real": 11,
+      "argmax_keras": 11,
+      "argmax_int8": 11,
+      "erro_absoluto_maximo": 0.00390625,
+      "soma_desquantizada": 0.99609375
+    },
+    {
+      "image_id": "IMG_00122",
+      "indice_real": 11,
+      "argmax_keras": 11,
+      "argmax_int8": 11,
+      "erro_absoluto_maximo": 0.0011083337012678385,
+      "soma_desquantizada": 1.0
+    },
+    {
+      "image_id": "IMG_00481",
+      "indice_real": 11,
+      "argmax_keras": 11,
+      "argmax_int8": 11,
+      "erro_absoluto_maximo": 0.0039060115814208984,
+      "soma_desquantizada": 0.99609375
+    },
+    {
+      "image_id": "IMG_00745",
+      "indice_real": 12,
+      "argmax_keras": 12,
+      "argmax_int8": 12,
+      "erro_absoluto_maximo": 0.00390625,
+      "soma_desquantizada": 0.99609375
+    },
+    {
+      "image_id": "IMG_00766",
+      "indice_real": 12,
+      "argmax_keras": 12,
+      "argmax_int8": 12,
+      "erro_absoluto_maximo": 0.0039049386978149414,
+      "soma_desquantizada": 0.99609375
+    },
+    {
+      "image_id": "IMG_00851",
+      "indice_real": 12,
+      "argmax_keras": 12,
+      "argmax_int8": 12,
+      "erro_absoluto_maximo": 0.00390625,
+      "soma_desquantizada": 0.99609375
+    }
+  ],
+  "teste_acessado": false,
+  "validacao_acessada": false,
+  "limite_interpretacao": "execução em imagens da própria calibração; não mede generalização, perda de F1, política de confiança ou latência no aparelho"
+}
