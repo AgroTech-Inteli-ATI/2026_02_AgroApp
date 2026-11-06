@@ -1,0 +1,5157 @@
+{
+  "esquema": "comparacao_quantizacao_T7_2_v2",
+  "origem_selecao": {
+    "pacote": "assets/modelos/candidato_T5_6_20261026",
+    "execucao_t5_5": "rodadas_T5_6_20261026/20261026-213017_efficientnet_lite0_s42",
+    "manifesto_sha256": "72bd8194246cf5673cb6194491bbe1c0410d526a4c14027a087c414b9fa14f62",
+    "classes_sha256": "1058619e188ffd7fa42bfc6821e2e122356b35d8503af71b987f37ae1e4572f4",
+    "metricas_validacao_sha256": "93300711a2622edfccfffc28a0fd8376791eb4b02644c0abaa688ce8aeef10f9"
+  },
+  "modelo_keras_sha256": "089a8d903a78898badf385f0d57006a4fb556d76e3e8fae719babdaf564aa51a",
+  "indice_sha256": "28ee662885202f0bda3dec9660e44b28f99b8bd183210bcbdd795b103269b2eb",
+  "codigo_sha256": {
+    "src/comparacao_quantizacao_t7_2.py": "7333c1cbed3b2411b022c722f2fbff03e038a46649c3103eb931c5ec8840fad7",
+    "src/quantizacao_t7_3.py": "d6488752c66a37d0ff9945955c0a7a2ba0b0a1df214f245c67b602aa4510d418",
+    "src/preprocessamento.py": "6a2eacb95cbbb0ceb21db5f70d9e178b2c0b844b070e2d4fac4c4a39d0131820",
+    "src/avaliacao.py": "4b60b2efd74a88e900e745b638af21c341e8f6866c8c27cce99f754ce0a3c7af"
+  },
+  "estrategias": {
+    "fp32": {
+      "rotulo": "FP32 (referência, T7.1)",
+      "tamanho_bytes": 13531184,
+      "tamanho_relativo_fp32": 1.0,
+      "sha256": "50f7e7a6072c193fadd58d662e1c240acd48806cd5dab2197aaf7677da29da56",
+      "tipos_tensores_grafo": {
+        "FLOAT32": 171,
+        "INT32": 3
+      },
+      "tensores": {
+        "entrada": {
+          "dtype": "float32",
+          "shape": [
+            1,
+            224,
+            224,
+            3
+          ],
+          "escala": 0.0,
+          "zero_point": 0
+        },
+        "saida": {
+          "dtype": "float32",
+          "shape": [
+            1,
+            13
+          ],
+          "escala": 0.0,
+          "zero_point": 0
+        }
+      }
+    },
+    "faixa_dinamica": {
+      "rotulo": "Faixa dinâmica",
+      "tamanho_bytes": 3753152,
+      "tamanho_relativo_fp32": 0.27737055382588843,
+      "sha256": "f2066ef9166405e04ca07d9aff41195ca349b26fa5948455db53150e4fe00607",
+      "tipos_tensores_grafo": {
+        "FLOAT32": 125,
+        "INT32": 3,
+        "INT8": 46
+      },
+      "tensores": {
+        "entrada": {
+          "dtype": "float32",
+          "shape": [
+            1,
+            224,
+            224,
+            3
+          ],
+          "escala": 0.0,
+          "zero_point": 0
+        },
+        "saida": {
+          "dtype": "float32",
+          "shape": [
+            1,
+            13
+          ],
+          "escala": 0.0,
+          "zero_point": 0
+        }
+      }
+    },
+    "float16": {
+      "rotulo": "Float16",
+      "tamanho_bytes": 6833548,
+      "tamanho_relativo_fp32": 0.5050221769211032,
+      "sha256": "c9a26ce13806a2fa26bffbd8cfbdac83ff4c05ffff1009ca9483bb587a5a8fa2",
+      "tipos_tensores_grafo": {
+        "FLOAT32": 171,
+        "FLOAT16": 102,
+        "INT32": 3
+      },
+      "tensores": {
+        "entrada": {
+          "dtype": "float32",
+          "shape": [
+            1,
+            224,
+            224,
+            3
+          ],
+          "escala": 0.0,
+          "zero_point": 0
+        },
+        "saida": {
+          "dtype": "float32",
+          "shape": [
+            1,
+            13
+          ],
+          "escala": 0.0,
+          "zero_point": 0
+        }
+      }
+    },
+    "int8": {
+      "rotulo": "INT8 inteira (regenerada na T7.2)",
+      "tamanho_bytes": 4003624,
+      "tamanho_relativo_fp32": 0.29588127690821436,
+      "sha256": "a0fa1ec2c7b4014819556259fceb11b49280e4c19adde843f8ec59cc356ff8e2",
+      "tipos_tensores_grafo": {
+        "INT32": 53,
+        "INT8": 121
+      },
+      "tensores": {
+        "entrada": {
+          "dtype": "int8",
+          "shape": [
+            1,
+            224,
+            224,
+            3
+          ],
+          "escala": 0.003921568859368563,
+          "zero_point": -128
+        },
+        "saida": {
+          "dtype": "int8",
+          "shape": [
+            1,
+            13
+          ],
+          "escala": 0.00390625,
+          "zero_point": -128
+        }
+      }
+    },
+    "int8_t7_3": {
+      "rotulo": "INT8 inteira (artefato T7.3)",
+      "tamanho_bytes": 4003624,
+      "tamanho_relativo_fp32": 0.29588127690821436,
+      "sha256": "456caec54fae3c57684f9afd6842cae611a1f6cb6587b40b0c5bd8256aea1340",
+      "tipos_tensores_grafo": {
+        "INT32": 53,
+        "INT8": 121
+      },
+      "tensores": {
+        "entrada": {
+          "dtype": "int8",
+          "shape": [
+            1,
+            224,
+            224,
+            3
+          ],
+          "escala": 0.003921568859368563,
+          "zero_point": -128
+        },
+        "saida": {
+          "dtype": "int8",
+          "shape": [
+            1,
+            13
+          ],
+          "escala": 0.00390625,
+          "zero_point": -128
+        }
+      }
+    }
+  },
+  "conversao": {
+    "fp32": "reaproveitado de T7.1 (sem otimização)",
+    "faixa_dinamica": "TFLiteConverter.from_keras_model; optimizations=[Optimize.DEFAULT]; sem representative_dataset",
+    "float16": "TFLiteConverter.from_keras_model; optimizations=[Optimize.DEFAULT]; target_spec.supported_types=[tf.float16]",
+    "int8": "regenerada nesta etapa por src.quantizacao_t7_3.converter com o conjunto versionado (200 imagens de treino); TFLITE_BUILTINS_INT8, entrada/saída int8"
+  },
+  "int8_reprodutibilidade": {
+    "sha256_regenerado": "a0fa1ec2c7b4014819556259fceb11b49280e4c19adde843f8ec59cc356ff8e2",
+    "sha256_t7_3": "456caec54fae3c57684f9afd6842cae611a1f6cb6587b40b0c5bd8256aea1340",
+    "identico_byte_a_byte": false,
+    "mesmos_ids_calibracao": true,
+    "ambiente_t7_3": "macOS arm64, Python 3.12.15, TensorFlow 2.21.0"
+  },
+  "metricas": {
+    "validacao": {
+      "keras": {
+        "metricas": {
+          "f1_macro": 0.7811062377780755,
+          "balanced_accuracy": 0.7550322366924672,
+          "acuracia": 0.8565400843881856,
+          "total_amostras": 474,
+          "classes_avaliadas": 13,
+          "classes_nao_avaliadas": [],
+          "por_classe": [
+            {
+              "indice": 0,
+              "nome": "Vaquinha (Diabrotica speciosa)",
+              "status": "avaliada",
+              "suporte": 157,
+              "precisao": 0.9141104294478528,
+              "recall": 0.9490445859872612,
+              "f1": 0.9312500000000001
+            },
+            {
+              "indice": 1,
+              "nome": "Cigarrinha-do-milho (Dalbulus maidis)",
+              "status": "avaliada",
+              "suporte": 29,
+              "precisao": 0.9642857142857143,
+              "recall": 0.9310344827586207,
+              "f1": 0.9473684210526316
+            },
+            {
+              "indice": 2,
+              "nome": "Percevejo-barriga-verde (Dichelops/Diceraeus)",
+              "status": "avaliada",
+              "suporte": 42,
+              "precisao": 0.7169811320754716,
+              "recall": 0.9047619047619048,
+              "f1": 0.8
+            },
+            {
+              "indice": 3,
+              "nome": "Lagarta-do-cartucho (Spodoptera frugiperda)",
+              "status": "avaliada",
+              "suporte": 61,
+              "precisao": 0.85,
+              "recall": 0.8360655737704918,
+              "f1": 0.8429752066115703
+            },
+            {
+              "indice": 4,
+              "nome": "Percevejo-marrom (Euschistus heros)",
+              "status": "avaliada",
+              "suporte": 10,
+              "precisao": 1.0,
+              "recall": 0.7,
+              "f1": 0.8235294117647058
+            },
+            {
+              "indice": 5,
+              "nome": "Percevejo-verde (Nezara viridula)",
+              "status": "avaliada",
+              "suporte": 14,
+              "precisao": 0.8,
+              "recall": 0.5714285714285714,
+              "f1": 0.6666666666666666
+            },
+            {
+              "indice": 6,
+              "nome": "Percevejo-asa-preta (Edessa meditabunda)",
+              "status": "avaliada",
+              "suporte": 11,
+              "precisao": 0.875,
+              "recall": 0.6363636363636364,
+              "f1": 0.7368421052631579
+            },
+            {
+              "indice": 7,
+              "nome": "Percevejo-do-milho (Leptoglossus zonatus)",
+              "status": "avaliada",
+              "suporte": 12,
+              "precisao": 1.0,
+              "recall": 0.8333333333333334,
+              "f1": 0.9090909090909091
+            },
+            {
+              "indice": 8,
+              "nome": "Lagarta-falsa-medideira (Chrysodeixis includens)",
+              "status": "avaliada",
+              "suporte": 12,
+              "precisao": 0.5,
+              "recall": 0.25,
+              "f1": 0.3333333333333333
+            },
+            {
+              "indice": 9,
+              "nome": "Lagarta-da-soja (Anticarsia gemmatalis)",
+              "status": "avaliada",
+              "suporte": 7,
+              "precisao": 0.75,
+              "recall": 0.8571428571428571,
+              "f1": 0.7999999999999999
+            },
+            {
+              "indice": 10,
+              "nome": "Lagarta-das-vagens (Spodoptera eridania e S. cosmioides)",
+              "status": "avaliada",
+              "suporte": 24,
+              "precisao": 0.7058823529411765,
+              "recall": 0.5,
+              "f1": 0.5853658536585366
+            },
+            {
+              "indice": 11,
+              "nome": "Astylus variegatus",
+              "status": "avaliada",
+              "suporte": 71,
+              "precisao": 0.8354430379746836,
+              "recall": 0.9295774647887324,
+              "f1": 0.88
+            },
+            {
+              "indice": 12,
+              "nome": "Cigarrinha-das-pastagens (Deois flavopicta)",
+              "status": "avaliada",
+              "suporte": 24,
+              "precisao": 0.88,
+              "recall": 0.9166666666666666,
+              "f1": 0.8979591836734694
+            }
+          ],
+          "matriz_confusao": [
+            [
+              149,
+              0,
+              3,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              5,
+              0
+            ],
+            [
+              1,
+              27,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            [
+              1,
+              0,
+              38,
+              0,
+              0,
+              0,
+              0,
+              0,
+              2,
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              2,
+              1,
+              1,
+              51,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              4,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              2,
+              0,
+              7,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0
+            ],
+            [
+              3,
+              0,
+              1,
+              0,
+              0,
+              8,
+              0,
+              0,
+              0,
+              0,
+              0,
+              2,
+              0
+            ],
+            [
+              0,
+              0,
+              3,
+              0,
+              0,
+              1,
+              7,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              10,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1,
+              4,
+              0,
+              1,
+              0,
+              0,
+              3,
+              1,
+              0,
+              0,
+              2
+            ],
+            [
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              6,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              3,
+              4,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              12,
+              4,
+              0
+            ],
+            [
+              5,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              66,
+              0
+            ],
+            [
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              22
+            ]
+          ]
+        },
+        "vs_fp32": {
+          "top1_igual_fp32": 1.0,
+          "divergencias_top1": 0,
+          "erro_absoluto_maximo": 6.67572021484375e-06,
+          "erro_absoluto_medio": 5.298797844943692e-08
+        },
+        "vs_keras": {
+          "top1_igual_fp32": 1.0,
+          "divergencias_top1": 0,
+          "erro_absoluto_maximo": 0.0,
+          "erro_absoluto_medio": 0.0
+        }
+      },
+      "fp32": {
+        "metricas": {
+          "f1_macro": 0.7811062377780755,
+          "balanced_accuracy": 0.7550322366924672,
+          "acuracia": 0.8565400843881856,
+          "total_amostras": 474,
+          "classes_avaliadas": 13,
+          "classes_nao_avaliadas": [],
+          "por_classe": [
+            {
+              "indice": 0,
+              "nome": "Vaquinha (Diabrotica speciosa)",
+              "status": "avaliada",
+              "suporte": 157,
+              "precisao": 0.9141104294478528,
+              "recall": 0.9490445859872612,
+              "f1": 0.9312500000000001
+            },
+            {
+              "indice": 1,
+              "nome": "Cigarrinha-do-milho (Dalbulus maidis)",
+              "status": "avaliada",
+              "suporte": 29,
+              "precisao": 0.9642857142857143,
+              "recall": 0.9310344827586207,
+              "f1": 0.9473684210526316
+            },
+            {
+              "indice": 2,
+              "nome": "Percevejo-barriga-verde (Dichelops/Diceraeus)",
+              "status": "avaliada",
+              "suporte": 42,
+              "precisao": 0.7169811320754716,
+              "recall": 0.9047619047619048,
+              "f1": 0.8
+            },
+            {
+              "indice": 3,
+              "nome": "Lagarta-do-cartucho (Spodoptera frugiperda)",
+              "status": "avaliada",
+              "suporte": 61,
+              "precisao": 0.85,
+              "recall": 0.8360655737704918,
+              "f1": 0.8429752066115703
+            },
+            {
+              "indice": 4,
+              "nome": "Percevejo-marrom (Euschistus heros)",
+              "status": "avaliada",
+              "suporte": 10,
+              "precisao": 1.0,
+              "recall": 0.7,
+              "f1": 0.8235294117647058
+            },
+            {
+              "indice": 5,
+              "nome": "Percevejo-verde (Nezara viridula)",
+              "status": "avaliada",
+              "suporte": 14,
+              "precisao": 0.8,
+              "recall": 0.5714285714285714,
+              "f1": 0.6666666666666666
+            },
+            {
+              "indice": 6,
+              "nome": "Percevejo-asa-preta (Edessa meditabunda)",
+              "status": "avaliada",
+              "suporte": 11,
+              "precisao": 0.875,
+              "recall": 0.6363636363636364,
+              "f1": 0.7368421052631579
+            },
+            {
+              "indice": 7,
+              "nome": "Percevejo-do-milho (Leptoglossus zonatus)",
+              "status": "avaliada",
+              "suporte": 12,
+              "precisao": 1.0,
+              "recall": 0.8333333333333334,
+              "f1": 0.9090909090909091
+            },
+            {
+              "indice": 8,
+              "nome": "Lagarta-falsa-medideira (Chrysodeixis includens)",
+              "status": "avaliada",
+              "suporte": 12,
+              "precisao": 0.5,
+              "recall": 0.25,
+              "f1": 0.3333333333333333
+            },
+            {
+              "indice": 9,
+              "nome": "Lagarta-da-soja (Anticarsia gemmatalis)",
+              "status": "avaliada",
+              "suporte": 7,
+              "precisao": 0.75,
+              "recall": 0.8571428571428571,
+              "f1": 0.7999999999999999
+            },
+            {
+              "indice": 10,
+              "nome": "Lagarta-das-vagens (Spodoptera eridania e S. cosmioides)",
+              "status": "avaliada",
+              "suporte": 24,
+              "precisao": 0.7058823529411765,
+              "recall": 0.5,
+              "f1": 0.5853658536585366
+            },
+            {
+              "indice": 11,
+              "nome": "Astylus variegatus",
+              "status": "avaliada",
+              "suporte": 71,
+              "precisao": 0.8354430379746836,
+              "recall": 0.9295774647887324,
+              "f1": 0.88
+            },
+            {
+              "indice": 12,
+              "nome": "Cigarrinha-das-pastagens (Deois flavopicta)",
+              "status": "avaliada",
+              "suporte": 24,
+              "precisao": 0.88,
+              "recall": 0.9166666666666666,
+              "f1": 0.8979591836734694
+            }
+          ],
+          "matriz_confusao": [
+            [
+              149,
+              0,
+              3,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              5,
+              0
+            ],
+            [
+              1,
+              27,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            [
+              1,
+              0,
+              38,
+              0,
+              0,
+              0,
+              0,
+              0,
+              2,
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              2,
+              1,
+              1,
+              51,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              4,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              2,
+              0,
+              7,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0
+            ],
+            [
+              3,
+              0,
+              1,
+              0,
+              0,
+              8,
+              0,
+              0,
+              0,
+              0,
+              0,
+              2,
+              0
+            ],
+            [
+              0,
+              0,
+              3,
+              0,
+              0,
+              1,
+              7,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              10,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1,
+              4,
+              0,
+              1,
+              0,
+              0,
+              3,
+              1,
+              0,
+              0,
+              2
+            ],
+            [
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              6,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              3,
+              4,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              12,
+              4,
+              0
+            ],
+            [
+              5,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              66,
+              0
+            ],
+            [
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              22
+            ]
+          ]
+        },
+        "vs_fp32": {
+          "top1_igual_fp32": 1.0,
+          "divergencias_top1": 0,
+          "erro_absoluto_maximo": 0.0,
+          "erro_absoluto_medio": 0.0
+        },
+        "vs_keras": {
+          "top1_igual_fp32": 1.0,
+          "divergencias_top1": 0,
+          "erro_absoluto_maximo": 6.67572021484375e-06,
+          "erro_absoluto_medio": 5.298797844943692e-08
+        }
+      },
+      "faixa_dinamica": {
+        "metricas": {
+          "f1_macro": 0.7755270962965368,
+          "balanced_accuracy": 0.7517267989608001,
+          "acuracia": 0.8565400843881856,
+          "total_amostras": 474,
+          "classes_avaliadas": 13,
+          "classes_nao_avaliadas": [],
+          "por_classe": [
+            {
+              "indice": 0,
+              "nome": "Vaquinha (Diabrotica speciosa)",
+              "status": "avaliada",
+              "suporte": 157,
+              "precisao": 0.9030303030303031,
+              "recall": 0.9490445859872612,
+              "f1": 0.9254658385093169
+            },
+            {
+              "indice": 1,
+              "nome": "Cigarrinha-do-milho (Dalbulus maidis)",
+              "status": "avaliada",
+              "suporte": 29,
+              "precisao": 0.9310344827586207,
+              "recall": 0.9310344827586207,
+              "f1": 0.9310344827586207
+            },
+            {
+              "indice": 2,
+              "nome": "Percevejo-barriga-verde (Dichelops/Diceraeus)",
+              "status": "avaliada",
+              "suporte": 42,
+              "precisao": 0.6981132075471698,
+              "recall": 0.8809523809523809,
+              "f1": 0.7789473684210525
+            },
+            {
+              "indice": 3,
+              "nome": "Lagarta-do-cartucho (Spodoptera frugiperda)",
+              "status": "avaliada",
+              "suporte": 61,
+              "precisao": 0.8548387096774194,
+              "recall": 0.8688524590163934,
+              "f1": 0.8617886178861789
+            },
+            {
+              "indice": 4,
+              "nome": "Percevejo-marrom (Euschistus heros)",
+              "status": "avaliada",
+              "suporte": 10,
+              "precisao": 1.0,
+              "recall": 0.7,
+              "f1": 0.8235294117647058
+            },
+            {
+              "indice": 5,
+              "nome": "Percevejo-verde (Nezara viridula)",
+              "status": "avaliada",
+              "suporte": 14,
+              "precisao": 0.75,
+              "recall": 0.42857142857142855,
+              "f1": 0.5454545454545454
+            },
+            {
+              "indice": 6,
+              "nome": "Percevejo-asa-preta (Edessa meditabunda)",
+              "status": "avaliada",
+              "suporte": 11,
+              "precisao": 0.8,
+              "recall": 0.7272727272727273,
+              "f1": 0.761904761904762
+            },
+            {
+              "indice": 7,
+              "nome": "Percevejo-do-milho (Leptoglossus zonatus)",
+              "status": "avaliada",
+              "suporte": 12,
+              "precisao": 1.0,
+              "recall": 0.8333333333333334,
+              "f1": 0.9090909090909091
+            },
+            {
+              "indice": 8,
+              "nome": "Lagarta-falsa-medideira (Chrysodeixis includens)",
+              "status": "avaliada",
+              "suporte": 12,
+              "precisao": 0.5,
+              "recall": 0.25,
+              "f1": 0.3333333333333333
+            },
+            {
+              "indice": 9,
+              "nome": "Lagarta-da-soja (Anticarsia gemmatalis)",
+              "status": "avaliada",
+              "suporte": 7,
+              "precisao": 0.75,
+              "recall": 0.8571428571428571,
+              "f1": 0.7999999999999999
+            },
+            {
+              "indice": 10,
+              "nome": "Lagarta-das-vagens (Spodoptera eridania e S. cosmioides)",
+              "status": "avaliada",
+              "suporte": 24,
+              "precisao": 0.8,
+              "recall": 0.5,
+              "f1": 0.6153846153846154
+            },
+            {
+              "indice": 11,
+              "nome": "Astylus variegatus",
+              "status": "avaliada",
+              "suporte": 71,
+              "precisao": 0.868421052631579,
+              "recall": 0.9295774647887324,
+              "f1": 0.8979591836734694
+            },
+            {
+              "indice": 12,
+              "nome": "Cigarrinha-das-pastagens (Deois flavopicta)",
+              "status": "avaliada",
+              "suporte": 24,
+              "precisao": 0.88,
+              "recall": 0.9166666666666666,
+              "f1": 0.8979591836734694
+            }
+          ],
+          "matriz_confusao": [
+            [
+              149,
+              0,
+              3,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              5,
+              0
+            ],
+            [
+              1,
+              27,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            [
+              1,
+              1,
+              37,
+              0,
+              0,
+              0,
+              0,
+              0,
+              2,
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              2,
+              1,
+              1,
+              53,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              2,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              2,
+              0,
+              7,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0
+            ],
+            [
+              5,
+              0,
+              1,
+              0,
+              0,
+              6,
+              1,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              2,
+              0,
+              0,
+              1,
+              8,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              10,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1,
+              4,
+              0,
+              1,
+              0,
+              0,
+              3,
+              1,
+              0,
+              0,
+              2
+            ],
+            [
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              6,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              5,
+              4,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              12,
+              2,
+              0
+            ],
+            [
+              5,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              66,
+              0
+            ],
+            [
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              22
+            ]
+          ]
+        },
+        "vs_fp32": {
+          "top1_igual_fp32": 0.9810126582278481,
+          "divergencias_top1": 9,
+          "erro_absoluto_maximo": 0.1639898419380188,
+          "erro_absoluto_medio": 0.0016322530573233962
+        },
+        "vs_keras": {
+          "top1_igual_fp32": 0.9810126582278481,
+          "divergencias_top1": 9,
+          "erro_absoluto_maximo": 0.1639905571937561,
+          "erro_absoluto_medio": 0.0016322564333677292
+        },
+        "estatistica": {
+          "mcnemar": {
+            "so_referencia_acertou": 3,
+            "so_quantizado_acertou": 3,
+            "p_valor": 1.0
+          },
+          "bootstrap": {
+            "f1_macro": {
+              "ic95_inferior": -0.029623454399069177,
+              "ic95_superior": 0.016862565400618288
+            },
+            "balanced_accuracy": {
+              "ic95_inferior": -0.0248020055924469,
+              "ic95_superior": 0.01975965746902679
+            },
+            "reamostras": 2000,
+            "semente": 42,
+            "unidade": "imagem (não grupo)"
+          }
+        }
+      },
+      "float16": {
+        "metricas": {
+          "f1_macro": 0.7829614651721782,
+          "balanced_accuracy": 0.7562932707403865,
+          "acuracia": 0.8586497890295358,
+          "total_amostras": 474,
+          "classes_avaliadas": 13,
+          "classes_nao_avaliadas": [],
+          "por_classe": [
+            {
+              "indice": 0,
+              "nome": "Vaquinha (Diabrotica speciosa)",
+              "status": "avaliada",
+              "suporte": 157,
+              "precisao": 0.9141104294478528,
+              "recall": 0.9490445859872612,
+              "f1": 0.9312500000000001
+            },
+            {
+              "indice": 1,
+              "nome": "Cigarrinha-do-milho (Dalbulus maidis)",
+              "status": "avaliada",
+              "suporte": 29,
+              "precisao": 0.9642857142857143,
+              "recall": 0.9310344827586207,
+              "f1": 0.9473684210526316
+            },
+            {
+              "indice": 2,
+              "nome": "Percevejo-barriga-verde (Dichelops/Diceraeus)",
+              "status": "avaliada",
+              "suporte": 42,
+              "precisao": 0.7169811320754716,
+              "recall": 0.9047619047619048,
+              "f1": 0.8
+            },
+            {
+              "indice": 3,
+              "nome": "Lagarta-do-cartucho (Spodoptera frugiperda)",
+              "status": "avaliada",
+              "suporte": 61,
+              "precisao": 0.8524590163934426,
+              "recall": 0.8524590163934426,
+              "f1": 0.8524590163934426
+            },
+            {
+              "indice": 4,
+              "nome": "Percevejo-marrom (Euschistus heros)",
+              "status": "avaliada",
+              "suporte": 10,
+              "precisao": 1.0,
+              "recall": 0.7,
+              "f1": 0.8235294117647058
+            },
+            {
+              "indice": 5,
+              "nome": "Percevejo-verde (Nezara viridula)",
+              "status": "avaliada",
+              "suporte": 14,
+              "precisao": 0.8,
+              "recall": 0.5714285714285714,
+              "f1": 0.6666666666666666
+            },
+            {
+              "indice": 6,
+              "nome": "Percevejo-asa-preta (Edessa meditabunda)",
+              "status": "avaliada",
+              "suporte": 11,
+              "precisao": 0.875,
+              "recall": 0.6363636363636364,
+              "f1": 0.7368421052631579
+            },
+            {
+              "indice": 7,
+              "nome": "Percevejo-do-milho (Leptoglossus zonatus)",
+              "status": "avaliada",
+              "suporte": 12,
+              "precisao": 1.0,
+              "recall": 0.8333333333333334,
+              "f1": 0.9090909090909091
+            },
+            {
+              "indice": 8,
+              "nome": "Lagarta-falsa-medideira (Chrysodeixis includens)",
+              "status": "avaliada",
+              "suporte": 12,
+              "precisao": 0.5,
+              "recall": 0.25,
+              "f1": 0.3333333333333333
+            },
+            {
+              "indice": 9,
+              "nome": "Lagarta-da-soja (Anticarsia gemmatalis)",
+              "status": "avaliada",
+              "suporte": 7,
+              "precisao": 0.75,
+              "recall": 0.8571428571428571,
+              "f1": 0.7999999999999999
+            },
+            {
+              "indice": 10,
+              "nome": "Lagarta-das-vagens (Spodoptera eridania e S. cosmioides)",
+              "status": "avaliada",
+              "suporte": 24,
+              "precisao": 0.75,
+              "recall": 0.5,
+              "f1": 0.6
+            },
+            {
+              "indice": 11,
+              "nome": "Astylus variegatus",
+              "status": "avaliada",
+              "suporte": 71,
+              "precisao": 0.8354430379746836,
+              "recall": 0.9295774647887324,
+              "f1": 0.88
+            },
+            {
+              "indice": 12,
+              "nome": "Cigarrinha-das-pastagens (Deois flavopicta)",
+              "status": "avaliada",
+              "suporte": 24,
+              "precisao": 0.88,
+              "recall": 0.9166666666666666,
+              "f1": 0.8979591836734694
+            }
+          ],
+          "matriz_confusao": [
+            [
+              149,
+              0,
+              3,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              5,
+              0
+            ],
+            [
+              1,
+              27,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            [
+              1,
+              0,
+              38,
+              0,
+              0,
+              0,
+              0,
+              0,
+              2,
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              2,
+              1,
+              1,
+              52,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              3,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              2,
+              0,
+              7,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0
+            ],
+            [
+              3,
+              0,
+              1,
+              0,
+              0,
+              8,
+              0,
+              0,
+              0,
+              0,
+              0,
+              2,
+              0
+            ],
+            [
+              0,
+              0,
+              3,
+              0,
+              0,
+              1,
+              7,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              10,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1,
+              4,
+              0,
+              1,
+              0,
+              0,
+              3,
+              1,
+              0,
+              0,
+              2
+            ],
+            [
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              6,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              3,
+              4,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              12,
+              4,
+              0
+            ],
+            [
+              5,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              66,
+              0
+            ],
+            [
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              22
+            ]
+          ]
+        },
+        "vs_fp32": {
+          "top1_igual_fp32": 0.9978902953586498,
+          "divergencias_top1": 1,
+          "erro_absoluto_maximo": 0.014762699604034424,
+          "erro_absoluto_medio": 0.00011769732373068109
+        },
+        "vs_keras": {
+          "top1_igual_fp32": 0.9978902953586498,
+          "divergencias_top1": 1,
+          "erro_absoluto_maximo": 0.014769375324249268,
+          "erro_absoluto_medio": 0.00011769433331210166
+        },
+        "estatistica": {
+          "mcnemar": {
+            "so_referencia_acertou": 0,
+            "so_quantizado_acertou": 1,
+            "p_valor": 1.0
+          },
+          "bootstrap": {
+            "f1_macro": {
+              "ic95_inferior": 0.0,
+              "ic95_superior": 0.006166998720939556
+            },
+            "balanced_accuracy": {
+              "ic95_inferior": 0.0,
+              "ic95_superior": 0.004048582995951455
+            },
+            "reamostras": 2000,
+            "semente": 42,
+            "unidade": "imagem (não grupo)"
+          }
+        }
+      },
+      "int8": {
+        "metricas": {
+          "f1_macro": 0.7832235543483687,
+          "balanced_accuracy": 0.7578345698168969,
+          "acuracia": 0.8586497890295358,
+          "total_amostras": 474,
+          "classes_avaliadas": 13,
+          "classes_nao_avaliadas": [],
+          "por_classe": [
+            {
+              "indice": 0,
+              "nome": "Vaquinha (Diabrotica speciosa)",
+              "status": "avaliada",
+              "suporte": 157,
+              "precisao": 0.9141104294478528,
+              "recall": 0.9490445859872612,
+              "f1": 0.9312500000000001
+            },
+            {
+              "indice": 1,
+              "nome": "Cigarrinha-do-milho (Dalbulus maidis)",
+              "status": "avaliada",
+              "suporte": 29,
+              "precisao": 0.9310344827586207,
+              "recall": 0.9310344827586207,
+              "f1": 0.9310344827586207
+            },
+            {
+              "indice": 2,
+              "nome": "Percevejo-barriga-verde (Dichelops/Diceraeus)",
+              "status": "avaliada",
+              "suporte": 42,
+              "precisao": 0.7346938775510204,
+              "recall": 0.8571428571428571,
+              "f1": 0.7912087912087913
+            },
+            {
+              "indice": 3,
+              "nome": "Lagarta-do-cartucho (Spodoptera frugiperda)",
+              "status": "avaliada",
+              "suporte": 61,
+              "precisao": 0.8524590163934426,
+              "recall": 0.8524590163934426,
+              "f1": 0.8524590163934426
+            },
+            {
+              "indice": 4,
+              "nome": "Percevejo-marrom (Euschistus heros)",
+              "status": "avaliada",
+              "suporte": 10,
+              "precisao": 1.0,
+              "recall": 0.7,
+              "f1": 0.8235294117647058
+            },
+            {
+              "indice": 5,
+              "nome": "Percevejo-verde (Nezara viridula)",
+              "status": "avaliada",
+              "suporte": 14,
+              "precisao": 0.6363636363636364,
+              "recall": 0.5,
+              "f1": 0.56
+            },
+            {
+              "indice": 6,
+              "nome": "Percevejo-asa-preta (Edessa meditabunda)",
+              "status": "avaliada",
+              "suporte": 11,
+              "precisao": 0.875,
+              "recall": 0.6363636363636364,
+              "f1": 0.7368421052631579
+            },
+            {
+              "indice": 7,
+              "nome": "Percevejo-do-milho (Leptoglossus zonatus)",
+              "status": "avaliada",
+              "suporte": 12,
+              "precisao": 1.0,
+              "recall": 0.8333333333333334,
+              "f1": 0.9090909090909091
+            },
+            {
+              "indice": 8,
+              "nome": "Lagarta-falsa-medideira (Chrysodeixis includens)",
+              "status": "avaliada",
+              "suporte": 12,
+              "precisao": 0.5714285714285714,
+              "recall": 0.3333333333333333,
+              "f1": 0.4210526315789474
+            },
+            {
+              "indice": 9,
+              "nome": "Lagarta-da-soja (Anticarsia gemmatalis)",
+              "status": "avaliada",
+              "suporte": 7,
+              "precisao": 0.75,
+              "recall": 0.8571428571428571,
+              "f1": 0.7999999999999999
+            },
+            {
+              "indice": 10,
+              "nome": "Lagarta-das-vagens (Spodoptera eridania e S. cosmioides)",
+              "status": "avaliada",
+              "suporte": 24,
+              "precisao": 0.7647058823529411,
+              "recall": 0.5416666666666666,
+              "f1": 0.6341463414634146
+            },
+            {
+              "indice": 11,
+              "nome": "Astylus variegatus",
+              "status": "avaliada",
+              "suporte": 71,
+              "precisao": 0.8481012658227848,
+              "recall": 0.9436619718309859,
+              "f1": 0.8933333333333333
+            },
+            {
+              "indice": 12,
+              "nome": "Cigarrinha-das-pastagens (Deois flavopicta)",
+              "status": "avaliada",
+              "suporte": 24,
+              "precisao": 0.88,
+              "recall": 0.9166666666666666,
+              "f1": 0.8979591836734694
+            }
+          ],
+          "matriz_confusao": [
+            [
+              149,
+              0,
+              3,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              4,
+              0
+            ],
+            [
+              1,
+              27,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            [
+              1,
+              1,
+              36,
+              0,
+              0,
+              0,
+              0,
+              0,
+              2,
+              0,
+              0,
+              0,
+              2
+            ],
+            [
+              2,
+              1,
+              1,
+              52,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              3,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              2,
+              0,
+              7,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0
+            ],
+            [
+              4,
+              0,
+              1,
+              0,
+              0,
+              7,
+              0,
+              0,
+              0,
+              0,
+              0,
+              2,
+              0
+            ],
+            [
+              0,
+              0,
+              2,
+              0,
+              0,
+              2,
+              7,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              10,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1,
+              4,
+              0,
+              1,
+              0,
+              0,
+              4,
+              1,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              6,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              2,
+              4,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              13,
+              4,
+              0
+            ],
+            [
+              4,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              67,
+              0
+            ],
+            [
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              22
+            ]
+          ]
+        },
+        "vs_fp32": {
+          "top1_igual_fp32": 0.9704641350210971,
+          "divergencias_top1": 14,
+          "erro_absoluto_maximo": 0.3894590437412262,
+          "erro_absoluto_medio": 0.0035052585881203413
+        },
+        "vs_keras": {
+          "top1_igual_fp32": 0.9704641350210971,
+          "divergencias_top1": 14,
+          "erro_absoluto_maximo": 0.3894587457180023,
+          "erro_absoluto_medio": 0.003505270229652524
+        },
+        "estatistica": {
+          "mcnemar": {
+            "so_referencia_acertou": 4,
+            "so_quantizado_acertou": 5,
+            "p_valor": 1.0
+          },
+          "bootstrap": {
+            "f1_macro": {
+              "ic95_inferior": -0.025930347894103974,
+              "ic95_superior": 0.031662890298680316
+            },
+            "balanced_accuracy": {
+              "ic95_inferior": -0.024845501814566268,
+              "ic95_superior": 0.03201124200693248
+            },
+            "reamostras": 2000,
+            "semente": 42,
+            "unidade": "imagem (não grupo)"
+          }
+        }
+      },
+      "int8_t7_3": {
+        "metricas": {
+          "f1_macro": 0.7767065191776291,
+          "balanced_accuracy": 0.75283002022636,
+          "acuracia": 0.8586497890295358,
+          "total_amostras": 474,
+          "classes_avaliadas": 13,
+          "classes_nao_avaliadas": [],
+          "por_classe": [
+            {
+              "indice": 0,
+              "nome": "Vaquinha (Diabrotica speciosa)",
+              "status": "avaliada",
+              "suporte": 157,
+              "precisao": 0.9146341463414634,
+              "recall": 0.9554140127388535,
+              "f1": 0.9345794392523364
+            },
+            {
+              "indice": 1,
+              "nome": "Cigarrinha-do-milho (Dalbulus maidis)",
+              "status": "avaliada",
+              "suporte": 29,
+              "precisao": 0.9310344827586207,
+              "recall": 0.9310344827586207,
+              "f1": 0.9310344827586207
+            },
+            {
+              "indice": 2,
+              "nome": "Percevejo-barriga-verde (Dichelops/Diceraeus)",
+              "status": "avaliada",
+              "suporte": 42,
+              "precisao": 0.75,
+              "recall": 0.8571428571428571,
+              "f1": 0.7999999999999999
+            },
+            {
+              "indice": 3,
+              "nome": "Lagarta-do-cartucho (Spodoptera frugiperda)",
+              "status": "avaliada",
+              "suporte": 61,
+              "precisao": 0.8524590163934426,
+              "recall": 0.8524590163934426,
+              "f1": 0.8524590163934426
+            },
+            {
+              "indice": 4,
+              "nome": "Percevejo-marrom (Euschistus heros)",
+              "status": "avaliada",
+              "suporte": 10,
+              "precisao": 1.0,
+              "recall": 0.7,
+              "f1": 0.8235294117647058
+            },
+            {
+              "indice": 5,
+              "nome": "Percevejo-verde (Nezara viridula)",
+              "status": "avaliada",
+              "suporte": 14,
+              "precisao": 0.6,
+              "recall": 0.42857142857142855,
+              "f1": 0.5
+            },
+            {
+              "indice": 6,
+              "nome": "Percevejo-asa-preta (Edessa meditabunda)",
+              "status": "avaliada",
+              "suporte": 11,
+              "precisao": 0.7777777777777778,
+              "recall": 0.6363636363636364,
+              "f1": 0.7000000000000001
+            },
+            {
+              "indice": 7,
+              "nome": "Percevejo-do-milho (Leptoglossus zonatus)",
+              "status": "avaliada",
+              "suporte": 12,
+              "precisao": 1.0,
+              "recall": 0.8333333333333334,
+              "f1": 0.9090909090909091
+            },
+            {
+              "indice": 8,
+              "nome": "Lagarta-falsa-medideira (Chrysodeixis includens)",
+              "status": "avaliada",
+              "suporte": 12,
+              "precisao": 0.5714285714285714,
+              "recall": 0.3333333333333333,
+              "f1": 0.4210526315789474
+            },
+            {
+              "indice": 9,
+              "nome": "Lagarta-da-soja (Anticarsia gemmatalis)",
+              "status": "avaliada",
+              "suporte": 7,
+              "precisao": 0.75,
+              "recall": 0.8571428571428571,
+              "f1": 0.7999999999999999
+            },
+            {
+              "indice": 10,
+              "nome": "Lagarta-das-vagens (Spodoptera eridania e S. cosmioides)",
+              "status": "avaliada",
+              "suporte": 24,
+              "precisao": 0.7647058823529411,
+              "recall": 0.5416666666666666,
+              "f1": 0.6341463414634146
+            },
+            {
+              "indice": 11,
+              "nome": "Astylus variegatus",
+              "status": "avaliada",
+              "suporte": 71,
+              "precisao": 0.8481012658227848,
+              "recall": 0.9436619718309859,
+              "f1": 0.8933333333333333
+            },
+            {
+              "indice": 12,
+              "nome": "Cigarrinha-das-pastagens (Deois flavopicta)",
+              "status": "avaliada",
+              "suporte": 24,
+              "precisao": 0.88,
+              "recall": 0.9166666666666666,
+              "f1": 0.8979591836734694
+            }
+          ],
+          "matriz_confusao": [
+            [
+              150,
+              0,
+              3,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              3,
+              0
+            ],
+            [
+              1,
+              27,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            [
+              1,
+              1,
+              36,
+              0,
+              0,
+              0,
+              0,
+              0,
+              2,
+              0,
+              0,
+              0,
+              2
+            ],
+            [
+              2,
+              1,
+              1,
+              52,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              3,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              2,
+              0,
+              7,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0
+            ],
+            [
+              4,
+              0,
+              1,
+              0,
+              0,
+              6,
+              1,
+              0,
+              0,
+              0,
+              0,
+              2,
+              0
+            ],
+            [
+              0,
+              0,
+              2,
+              0,
+              0,
+              2,
+              7,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              10,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1,
+              4,
+              0,
+              1,
+              0,
+              0,
+              4,
+              1,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              6,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1,
+              4,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              13,
+              5,
+              0
+            ],
+            [
+              4,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              67,
+              0
+            ],
+            [
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              22
+            ]
+          ]
+        },
+        "vs_fp32": {
+          "top1_igual_fp32": 0.9683544303797469,
+          "divergencias_top1": 15,
+          "erro_absoluto_maximo": 0.4246152937412262,
+          "erro_absoluto_medio": 0.003605918725952506
+        },
+        "vs_keras": {
+          "top1_igual_fp32": 0.9683544303797469,
+          "divergencias_top1": 15,
+          "erro_absoluto_maximo": 0.4246149957180023,
+          "erro_absoluto_medio": 0.003605925478041172
+        },
+        "estatistica": {
+          "mcnemar": {
+            "so_referencia_acertou": 5,
+            "so_quantizado_acertou": 6,
+            "p_valor": 1.0
+          },
+          "bootstrap": {
+            "f1_macro": {
+              "ic95_inferior": -0.037251237715805366,
+              "ic95_superior": 0.02926776784486061
+            },
+            "balanced_accuracy": {
+              "ic95_inferior": -0.03260499725959938,
+              "ic95_superior": 0.02932876680312719
+            },
+            "reamostras": 2000,
+            "semente": 42,
+            "unidade": "imagem (não grupo)"
+          }
+        }
+      }
+    },
+    "teste": {
+      "keras": {
+        "metricas": {
+          "f1_macro": 0.7329283017577736,
+          "balanced_accuracy": 0.7126317674405569,
+          "acuracia": 0.8477801268498943,
+          "total_amostras": 473,
+          "classes_avaliadas": 13,
+          "classes_nao_avaliadas": [],
+          "por_classe": [
+            {
+              "indice": 0,
+              "nome": "Vaquinha (Diabrotica speciosa)",
+              "status": "avaliada",
+              "suporte": 157,
+              "precisao": 0.91875,
+              "recall": 0.9363057324840764,
+              "f1": 0.9274447949526814
+            },
+            {
+              "indice": 1,
+              "nome": "Cigarrinha-do-milho (Dalbulus maidis)",
+              "status": "avaliada",
+              "suporte": 29,
+              "precisao": 0.9629629629629629,
+              "recall": 0.896551724137931,
+              "f1": 0.9285714285714286
+            },
+            {
+              "indice": 2,
+              "nome": "Percevejo-barriga-verde (Dichelops/Diceraeus)",
+              "status": "avaliada",
+              "suporte": 42,
+              "precisao": 0.7555555555555555,
+              "recall": 0.8095238095238095,
+              "f1": 0.7816091954022989
+            },
+            {
+              "indice": 3,
+              "nome": "Lagarta-do-cartucho (Spodoptera frugiperda)",
+              "status": "avaliada",
+              "suporte": 61,
+              "precisao": 0.8208955223880597,
+              "recall": 0.9016393442622951,
+              "f1": 0.8593750000000001
+            },
+            {
+              "indice": 4,
+              "nome": "Percevejo-marrom (Euschistus heros)",
+              "status": "avaliada",
+              "suporte": 10,
+              "precisao": 1.0,
+              "recall": 0.5,
+              "f1": 0.6666666666666666
+            },
+            {
+              "indice": 5,
+              "nome": "Percevejo-verde (Nezara viridula)",
+              "status": "avaliada",
+              "suporte": 14,
+              "precisao": 0.5,
+              "recall": 0.35714285714285715,
+              "f1": 0.41666666666666663
+            },
+            {
+              "indice": 6,
+              "nome": "Percevejo-asa-preta (Edessa meditabunda)",
+              "status": "avaliada",
+              "suporte": 11,
+              "precisao": 1.0,
+              "recall": 0.36363636363636365,
+              "f1": 0.5333333333333333
+            },
+            {
+              "indice": 7,
+              "nome": "Percevejo-do-milho (Leptoglossus zonatus)",
+              "status": "avaliada",
+              "suporte": 12,
+              "precisao": 0.6923076923076923,
+              "recall": 0.75,
+              "f1": 0.7199999999999999
+            },
+            {
+              "indice": 8,
+              "nome": "Lagarta-falsa-medideira (Chrysodeixis includens)",
+              "status": "avaliada",
+              "suporte": 12,
+              "precisao": 0.8,
+              "recall": 0.3333333333333333,
+              "f1": 0.47058823529411764
+            },
+            {
+              "indice": 9,
+              "nome": "Lagarta-da-soja (Anticarsia gemmatalis)",
+              "status": "avaliada",
+              "suporte": 6,
+              "precisao": 0.7142857142857143,
+              "recall": 0.8333333333333334,
+              "f1": 0.7692307692307692
+            },
+            {
+              "indice": 10,
+              "nome": "Lagarta-das-vagens (Spodoptera eridania e S. cosmioides)",
+              "status": "avaliada",
+              "suporte": 24,
+              "precisao": 0.5925925925925926,
+              "recall": 0.6666666666666666,
+              "f1": 0.627450980392157
+            },
+            {
+              "indice": 11,
+              "nome": "Astylus variegatus",
+              "status": "avaliada",
+              "suporte": 71,
+              "precisao": 0.8947368421052632,
+              "recall": 0.9577464788732394,
+              "f1": 0.9251700680272109
+            },
+            {
+              "indice": 12,
+              "nome": "Cigarrinha-das-pastagens (Deois flavopicta)",
+              "status": "avaliada",
+              "suporte": 24,
+              "precisao": 0.8518518518518519,
+              "recall": 0.9583333333333334,
+              "f1": 0.9019607843137256
+            }
+          ],
+          "matriz_confusao": [
+            [
+              147,
+              1,
+              2,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              5,
+              1
+            ],
+            [
+              3,
+              26,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              3,
+              0,
+              34,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              2,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              1,
+              55,
+              0,
+              0,
+              0,
+              1,
+              0,
+              1,
+              3,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              2,
+              0,
+              5,
+              0,
+              0,
+              2,
+              0,
+              0,
+              0,
+              1,
+              0
+            ],
+            [
+              4,
+              0,
+              4,
+              0,
+              0,
+              5,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            [
+              2,
+              0,
+              0,
+              0,
+              0,
+              5,
+              4,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              9,
+              0,
+              0,
+              0,
+              0,
+              3
+            ],
+            [
+              0,
+              0,
+              0,
+              6,
+              0,
+              0,
+              0,
+              0,
+              4,
+              0,
+              2,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              5,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1,
+              5,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              16,
+              1,
+              0
+            ],
+            [
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              68,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              23
+            ]
+          ]
+        },
+        "vs_fp32": {
+          "top1_igual_fp32": 1.0,
+          "divergencias_top1": 0,
+          "erro_absoluto_maximo": 4.887580871582031e-06,
+          "erro_absoluto_medio": 5.3221217655163855e-08
+        },
+        "vs_keras": {
+          "top1_igual_fp32": 1.0,
+          "divergencias_top1": 0,
+          "erro_absoluto_maximo": 0.0,
+          "erro_absoluto_medio": 0.0
+        }
+      },
+      "fp32": {
+        "metricas": {
+          "f1_macro": 0.7329283017577736,
+          "balanced_accuracy": 0.7126317674405569,
+          "acuracia": 0.8477801268498943,
+          "total_amostras": 473,
+          "classes_avaliadas": 13,
+          "classes_nao_avaliadas": [],
+          "por_classe": [
+            {
+              "indice": 0,
+              "nome": "Vaquinha (Diabrotica speciosa)",
+              "status": "avaliada",
+              "suporte": 157,
+              "precisao": 0.91875,
+              "recall": 0.9363057324840764,
+              "f1": 0.9274447949526814
+            },
+            {
+              "indice": 1,
+              "nome": "Cigarrinha-do-milho (Dalbulus maidis)",
+              "status": "avaliada",
+              "suporte": 29,
+              "precisao": 0.9629629629629629,
+              "recall": 0.896551724137931,
+              "f1": 0.9285714285714286
+            },
+            {
+              "indice": 2,
+              "nome": "Percevejo-barriga-verde (Dichelops/Diceraeus)",
+              "status": "avaliada",
+              "suporte": 42,
+              "precisao": 0.7555555555555555,
+              "recall": 0.8095238095238095,
+              "f1": 0.7816091954022989
+            },
+            {
+              "indice": 3,
+              "nome": "Lagarta-do-cartucho (Spodoptera frugiperda)",
+              "status": "avaliada",
+              "suporte": 61,
+              "precisao": 0.8208955223880597,
+              "recall": 0.9016393442622951,
+              "f1": 0.8593750000000001
+            },
+            {
+              "indice": 4,
+              "nome": "Percevejo-marrom (Euschistus heros)",
+              "status": "avaliada",
+              "suporte": 10,
+              "precisao": 1.0,
+              "recall": 0.5,
+              "f1": 0.6666666666666666
+            },
+            {
+              "indice": 5,
+              "nome": "Percevejo-verde (Nezara viridula)",
+              "status": "avaliada",
+              "suporte": 14,
+              "precisao": 0.5,
+              "recall": 0.35714285714285715,
+              "f1": 0.41666666666666663
+            },
+            {
+              "indice": 6,
+              "nome": "Percevejo-asa-preta (Edessa meditabunda)",
+              "status": "avaliada",
+              "suporte": 11,
+              "precisao": 1.0,
+              "recall": 0.36363636363636365,
+              "f1": 0.5333333333333333
+            },
+            {
+              "indice": 7,
+              "nome": "Percevejo-do-milho (Leptoglossus zonatus)",
+              "status": "avaliada",
+              "suporte": 12,
+              "precisao": 0.6923076923076923,
+              "recall": 0.75,
+              "f1": 0.7199999999999999
+            },
+            {
+              "indice": 8,
+              "nome": "Lagarta-falsa-medideira (Chrysodeixis includens)",
+              "status": "avaliada",
+              "suporte": 12,
+              "precisao": 0.8,
+              "recall": 0.3333333333333333,
+              "f1": 0.47058823529411764
+            },
+            {
+              "indice": 9,
+              "nome": "Lagarta-da-soja (Anticarsia gemmatalis)",
+              "status": "avaliada",
+              "suporte": 6,
+              "precisao": 0.7142857142857143,
+              "recall": 0.8333333333333334,
+              "f1": 0.7692307692307692
+            },
+            {
+              "indice": 10,
+              "nome": "Lagarta-das-vagens (Spodoptera eridania e S. cosmioides)",
+              "status": "avaliada",
+              "suporte": 24,
+              "precisao": 0.5925925925925926,
+              "recall": 0.6666666666666666,
+              "f1": 0.627450980392157
+            },
+            {
+              "indice": 11,
+              "nome": "Astylus variegatus",
+              "status": "avaliada",
+              "suporte": 71,
+              "precisao": 0.8947368421052632,
+              "recall": 0.9577464788732394,
+              "f1": 0.9251700680272109
+            },
+            {
+              "indice": 12,
+              "nome": "Cigarrinha-das-pastagens (Deois flavopicta)",
+              "status": "avaliada",
+              "suporte": 24,
+              "precisao": 0.8518518518518519,
+              "recall": 0.9583333333333334,
+              "f1": 0.9019607843137256
+            }
+          ],
+          "matriz_confusao": [
+            [
+              147,
+              1,
+              2,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              5,
+              1
+            ],
+            [
+              3,
+              26,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              3,
+              0,
+              34,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              2,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              1,
+              55,
+              0,
+              0,
+              0,
+              1,
+              0,
+              1,
+              3,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              2,
+              0,
+              5,
+              0,
+              0,
+              2,
+              0,
+              0,
+              0,
+              1,
+              0
+            ],
+            [
+              4,
+              0,
+              4,
+              0,
+              0,
+              5,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            [
+              2,
+              0,
+              0,
+              0,
+              0,
+              5,
+              4,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              9,
+              0,
+              0,
+              0,
+              0,
+              3
+            ],
+            [
+              0,
+              0,
+              0,
+              6,
+              0,
+              0,
+              0,
+              0,
+              4,
+              0,
+              2,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              5,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1,
+              5,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              16,
+              1,
+              0
+            ],
+            [
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              68,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              23
+            ]
+          ]
+        },
+        "vs_fp32": {
+          "top1_igual_fp32": 1.0,
+          "divergencias_top1": 0,
+          "erro_absoluto_maximo": 0.0,
+          "erro_absoluto_medio": 0.0
+        },
+        "vs_keras": {
+          "top1_igual_fp32": 1.0,
+          "divergencias_top1": 0,
+          "erro_absoluto_maximo": 4.887580871582031e-06,
+          "erro_absoluto_medio": 5.3221217655163855e-08
+        }
+      },
+      "faixa_dinamica": {
+        "metricas": {
+          "f1_macro": 0.7370565415740656,
+          "balanced_accuracy": 0.7126817073590035,
+          "acuracia": 0.8477801268498943,
+          "total_amostras": 473,
+          "classes_avaliadas": 13,
+          "classes_nao_avaliadas": [],
+          "por_classe": [
+            {
+              "indice": 0,
+              "nome": "Vaquinha (Diabrotica speciosa)",
+              "status": "avaliada",
+              "suporte": 157,
+              "precisao": 0.9192546583850931,
+              "recall": 0.9426751592356688,
+              "f1": 0.9308176100628931
+            },
+            {
+              "indice": 1,
+              "nome": "Cigarrinha-do-milho (Dalbulus maidis)",
+              "status": "avaliada",
+              "suporte": 29,
+              "precisao": 0.9642857142857143,
+              "recall": 0.9310344827586207,
+              "f1": 0.9473684210526316
+            },
+            {
+              "indice": 2,
+              "nome": "Percevejo-barriga-verde (Dichelops/Diceraeus)",
+              "status": "avaliada",
+              "suporte": 42,
+              "precisao": 0.7857142857142857,
+              "recall": 0.7857142857142857,
+              "f1": 0.7857142857142857
+            },
+            {
+              "indice": 3,
+              "nome": "Lagarta-do-cartucho (Spodoptera frugiperda)",
+              "status": "avaliada",
+              "suporte": 61,
+              "precisao": 0.782608695652174,
+              "recall": 0.8852459016393442,
+              "f1": 0.8307692307692308
+            },
+            {
+              "indice": 4,
+              "nome": "Percevejo-marrom (Euschistus heros)",
+              "status": "avaliada",
+              "suporte": 10,
+              "precisao": 1.0,
+              "recall": 0.5,
+              "f1": 0.6666666666666666
+            },
+            {
+              "indice": 5,
+              "nome": "Percevejo-verde (Nezara viridula)",
+              "status": "avaliada",
+              "suporte": 14,
+              "precisao": 0.5,
+              "recall": 0.35714285714285715,
+              "f1": 0.41666666666666663
+            },
+            {
+              "indice": 6,
+              "nome": "Percevejo-asa-preta (Edessa meditabunda)",
+              "status": "avaliada",
+              "suporte": 11,
+              "precisao": 1.0,
+              "recall": 0.36363636363636365,
+              "f1": 0.5333333333333333
+            },
+            {
+              "indice": 7,
+              "nome": "Percevejo-do-milho (Leptoglossus zonatus)",
+              "status": "avaliada",
+              "suporte": 12,
+              "precisao": 0.6923076923076923,
+              "recall": 0.75,
+              "f1": 0.7199999999999999
+            },
+            {
+              "indice": 8,
+              "nome": "Lagarta-falsa-medideira (Chrysodeixis includens)",
+              "status": "avaliada",
+              "suporte": 12,
+              "precisao": 0.6666666666666666,
+              "recall": 0.3333333333333333,
+              "f1": 0.4444444444444444
+            },
+            {
+              "indice": 9,
+              "nome": "Lagarta-da-soja (Anticarsia gemmatalis)",
+              "status": "avaliada",
+              "suporte": 6,
+              "precisao": 0.8333333333333334,
+              "recall": 0.8333333333333334,
+              "f1": 0.8333333333333334
+            },
+            {
+              "indice": 10,
+              "nome": "Lagarta-das-vagens (Spodoptera eridania e S. cosmioides)",
+              "status": "avaliada",
+              "suporte": 24,
+              "precisao": 0.5925925925925926,
+              "recall": 0.6666666666666666,
+              "f1": 0.627450980392157
+            },
+            {
+              "indice": 11,
+              "nome": "Astylus variegatus",
+              "status": "avaliada",
+              "suporte": 71,
+              "precisao": 0.8947368421052632,
+              "recall": 0.9577464788732394,
+              "f1": 0.9251700680272109
+            },
+            {
+              "indice": 12,
+              "nome": "Cigarrinha-das-pastagens (Deois flavopicta)",
+              "status": "avaliada",
+              "suporte": 24,
+              "precisao": 0.8846153846153846,
+              "recall": 0.9583333333333334,
+              "f1": 0.9199999999999999
+            }
+          ],
+          "matriz_confusao": [
+            [
+              148,
+              1,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              5,
+              1
+            ],
+            [
+              2,
+              27,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              3,
+              0,
+              33,
+              3,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              2,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              1,
+              54,
+              0,
+              0,
+              0,
+              1,
+              1,
+              1,
+              3,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              2,
+              0,
+              5,
+              0,
+              0,
+              2,
+              0,
+              0,
+              0,
+              1,
+              0
+            ],
+            [
+              5,
+              0,
+              3,
+              0,
+              0,
+              5,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            [
+              2,
+              0,
+              0,
+              0,
+              0,
+              5,
+              4,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              9,
+              0,
+              0,
+              0,
+              0,
+              2
+            ],
+            [
+              0,
+              0,
+              0,
+              6,
+              0,
+              0,
+              0,
+              0,
+              4,
+              0,
+              2,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              5,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1,
+              5,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              16,
+              1,
+              0
+            ],
+            [
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              68,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              23
+            ]
+          ]
+        },
+        "vs_fp32": {
+          "top1_igual_fp32": 0.985200845665962,
+          "divergencias_top1": 7,
+          "erro_absoluto_maximo": 0.19423091411590576,
+          "erro_absoluto_medio": 0.0018672753358259797
+        },
+        "vs_keras": {
+          "top1_igual_fp32": 0.985200845665962,
+          "divergencias_top1": 7,
+          "erro_absoluto_maximo": 0.19423061609268188,
+          "erro_absoluto_medio": 0.0018672803416848183
+        },
+        "estatistica": {
+          "mcnemar": {
+            "so_referencia_acertou": 2,
+            "so_quantizado_acertou": 2,
+            "p_valor": 1.0
+          },
+          "bootstrap": {
+            "f1_macro": {
+              "ic95_inferior": -0.006321591414632938,
+              "ic95_superior": 0.01880781330704021
+            },
+            "balanced_accuracy": {
+              "ic95_inferior": -0.006494095000286898,
+              "ic95_superior": 0.007585906932854774
+            },
+            "reamostras": 2000,
+            "semente": 42,
+            "unidade": "imagem (não grupo)"
+          }
+        }
+      },
+      "float16": {
+        "metricas": {
+          "f1_macro": 0.7329283017577736,
+          "balanced_accuracy": 0.7126317674405569,
+          "acuracia": 0.8477801268498943,
+          "total_amostras": 473,
+          "classes_avaliadas": 13,
+          "classes_nao_avaliadas": [],
+          "por_classe": [
+            {
+              "indice": 0,
+              "nome": "Vaquinha (Diabrotica speciosa)",
+              "status": "avaliada",
+              "suporte": 157,
+              "precisao": 0.91875,
+              "recall": 0.9363057324840764,
+              "f1": 0.9274447949526814
+            },
+            {
+              "indice": 1,
+              "nome": "Cigarrinha-do-milho (Dalbulus maidis)",
+              "status": "avaliada",
+              "suporte": 29,
+              "precisao": 0.9629629629629629,
+              "recall": 0.896551724137931,
+              "f1": 0.9285714285714286
+            },
+            {
+              "indice": 2,
+              "nome": "Percevejo-barriga-verde (Dichelops/Diceraeus)",
+              "status": "avaliada",
+              "suporte": 42,
+              "precisao": 0.7555555555555555,
+              "recall": 0.8095238095238095,
+              "f1": 0.7816091954022989
+            },
+            {
+              "indice": 3,
+              "nome": "Lagarta-do-cartucho (Spodoptera frugiperda)",
+              "status": "avaliada",
+              "suporte": 61,
+              "precisao": 0.8208955223880597,
+              "recall": 0.9016393442622951,
+              "f1": 0.8593750000000001
+            },
+            {
+              "indice": 4,
+              "nome": "Percevejo-marrom (Euschistus heros)",
+              "status": "avaliada",
+              "suporte": 10,
+              "precisao": 1.0,
+              "recall": 0.5,
+              "f1": 0.6666666666666666
+            },
+            {
+              "indice": 5,
+              "nome": "Percevejo-verde (Nezara viridula)",
+              "status": "avaliada",
+              "suporte": 14,
+              "precisao": 0.5,
+              "recall": 0.35714285714285715,
+              "f1": 0.41666666666666663
+            },
+            {
+              "indice": 6,
+              "nome": "Percevejo-asa-preta (Edessa meditabunda)",
+              "status": "avaliada",
+              "suporte": 11,
+              "precisao": 1.0,
+              "recall": 0.36363636363636365,
+              "f1": 0.5333333333333333
+            },
+            {
+              "indice": 7,
+              "nome": "Percevejo-do-milho (Leptoglossus zonatus)",
+              "status": "avaliada",
+              "suporte": 12,
+              "precisao": 0.6923076923076923,
+              "recall": 0.75,
+              "f1": 0.7199999999999999
+            },
+            {
+              "indice": 8,
+              "nome": "Lagarta-falsa-medideira (Chrysodeixis includens)",
+              "status": "avaliada",
+              "suporte": 12,
+              "precisao": 0.8,
+              "recall": 0.3333333333333333,
+              "f1": 0.47058823529411764
+            },
+            {
+              "indice": 9,
+              "nome": "Lagarta-da-soja (Anticarsia gemmatalis)",
+              "status": "avaliada",
+              "suporte": 6,
+              "precisao": 0.7142857142857143,
+              "recall": 0.8333333333333334,
+              "f1": 0.7692307692307692
+            },
+            {
+              "indice": 10,
+              "nome": "Lagarta-das-vagens (Spodoptera eridania e S. cosmioides)",
+              "status": "avaliada",
+              "suporte": 24,
+              "precisao": 0.5925925925925926,
+              "recall": 0.6666666666666666,
+              "f1": 0.627450980392157
+            },
+            {
+              "indice": 11,
+              "nome": "Astylus variegatus",
+              "status": "avaliada",
+              "suporte": 71,
+              "precisao": 0.8947368421052632,
+              "recall": 0.9577464788732394,
+              "f1": 0.9251700680272109
+            },
+            {
+              "indice": 12,
+              "nome": "Cigarrinha-das-pastagens (Deois flavopicta)",
+              "status": "avaliada",
+              "suporte": 24,
+              "precisao": 0.8518518518518519,
+              "recall": 0.9583333333333334,
+              "f1": 0.9019607843137256
+            }
+          ],
+          "matriz_confusao": [
+            [
+              147,
+              1,
+              2,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              5,
+              1
+            ],
+            [
+              3,
+              26,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              3,
+              0,
+              34,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              2,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              1,
+              55,
+              0,
+              0,
+              0,
+              1,
+              0,
+              1,
+              3,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              2,
+              0,
+              5,
+              0,
+              0,
+              2,
+              0,
+              0,
+              0,
+              1,
+              0
+            ],
+            [
+              4,
+              0,
+              4,
+              0,
+              0,
+              5,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            [
+              2,
+              0,
+              0,
+              0,
+              0,
+              5,
+              4,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              9,
+              0,
+              0,
+              0,
+              0,
+              3
+            ],
+            [
+              0,
+              0,
+              0,
+              6,
+              0,
+              0,
+              0,
+              0,
+              4,
+              0,
+              2,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              5,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1,
+              5,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              16,
+              1,
+              0
+            ],
+            [
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              68,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              23
+            ]
+          ]
+        },
+        "vs_fp32": {
+          "top1_igual_fp32": 1.0,
+          "divergencias_top1": 0,
+          "erro_absoluto_maximo": 0.01193094253540039,
+          "erro_absoluto_medio": 0.00010119158832821995
+        },
+        "vs_keras": {
+          "top1_igual_fp32": 1.0,
+          "divergencias_top1": 0,
+          "erro_absoluto_maximo": 0.011934399604797363,
+          "erro_absoluto_medio": 0.0001011907443171367
+        },
+        "estatistica": {
+          "mcnemar": {
+            "so_referencia_acertou": 0,
+            "so_quantizado_acertou": 0,
+            "p_valor": 1.0
+          },
+          "bootstrap": {
+            "f1_macro": {
+              "ic95_inferior": 0.0,
+              "ic95_superior": 0.0
+            },
+            "balanced_accuracy": {
+              "ic95_inferior": 0.0,
+              "ic95_superior": 0.0
+            },
+            "reamostras": 2000,
+            "semente": 42,
+            "unidade": "imagem (não grupo)"
+          }
+        }
+      },
+      "int8": {
+        "metricas": {
+          "f1_macro": 0.7471406170936965,
+          "balanced_accuracy": 0.7270237216091017,
+          "acuracia": 0.854122621564482,
+          "total_amostras": 473,
+          "classes_avaliadas": 13,
+          "classes_nao_avaliadas": [],
+          "por_classe": [
+            {
+              "indice": 0,
+              "nome": "Vaquinha (Diabrotica speciosa)",
+              "status": "avaliada",
+              "suporte": 157,
+              "precisao": 0.9245283018867925,
+              "recall": 0.9363057324840764,
+              "f1": 0.930379746835443
+            },
+            {
+              "indice": 1,
+              "nome": "Cigarrinha-do-milho (Dalbulus maidis)",
+              "status": "avaliada",
+              "suporte": 29,
+              "precisao": 1.0,
+              "recall": 0.9310344827586207,
+              "f1": 0.9642857142857143
+            },
+            {
+              "indice": 2,
+              "nome": "Percevejo-barriga-verde (Dichelops/Diceraeus)",
+              "status": "avaliada",
+              "suporte": 42,
+              "precisao": 0.7857142857142857,
+              "recall": 0.7857142857142857,
+              "f1": 0.7857142857142857
+            },
+            {
+              "indice": 3,
+              "nome": "Lagarta-do-cartucho (Spodoptera frugiperda)",
+              "status": "avaliada",
+              "suporte": 61,
+              "precisao": 0.8088235294117647,
+              "recall": 0.9016393442622951,
+              "f1": 0.8527131782945736
+            },
+            {
+              "indice": 4,
+              "nome": "Percevejo-marrom (Euschistus heros)",
+              "status": "avaliada",
+              "suporte": 10,
+              "precisao": 1.0,
+              "recall": 0.5,
+              "f1": 0.6666666666666666
+            },
+            {
+              "indice": 5,
+              "nome": "Percevejo-verde (Nezara viridula)",
+              "status": "avaliada",
+              "suporte": 14,
+              "precisao": 0.5454545454545454,
+              "recall": 0.42857142857142855,
+              "f1": 0.4799999999999999
+            },
+            {
+              "indice": 6,
+              "nome": "Percevejo-asa-preta (Edessa meditabunda)",
+              "status": "avaliada",
+              "suporte": 11,
+              "precisao": 1.0,
+              "recall": 0.45454545454545453,
+              "f1": 0.625
+            },
+            {
+              "indice": 7,
+              "nome": "Percevejo-do-milho (Leptoglossus zonatus)",
+              "status": "avaliada",
+              "suporte": 12,
+              "precisao": 0.6923076923076923,
+              "recall": 0.75,
+              "f1": 0.7199999999999999
+            },
+            {
+              "indice": 8,
+              "nome": "Lagarta-falsa-medideira (Chrysodeixis includens)",
+              "status": "avaliada",
+              "suporte": 12,
+              "precisao": 0.6666666666666666,
+              "recall": 0.3333333333333333,
+              "f1": 0.4444444444444444
+            },
+            {
+              "indice": 9,
+              "nome": "Lagarta-da-soja (Anticarsia gemmatalis)",
+              "status": "avaliada",
+              "suporte": 6,
+              "precisao": 0.7142857142857143,
+              "recall": 0.8333333333333334,
+              "f1": 0.7692307692307692
+            },
+            {
+              "indice": 10,
+              "nome": "Lagarta-das-vagens (Spodoptera eridania e S. cosmioides)",
+              "status": "avaliada",
+              "suporte": 24,
+              "precisao": 0.6153846153846154,
+              "recall": 0.6666666666666666,
+              "f1": 0.64
+            },
+            {
+              "indice": 11,
+              "nome": "Astylus variegatus",
+              "status": "avaliada",
+              "suporte": 71,
+              "precisao": 0.8961038961038961,
+              "recall": 0.971830985915493,
+              "f1": 0.9324324324324325
+            },
+            {
+              "indice": 12,
+              "nome": "Cigarrinha-das-pastagens (Deois flavopicta)",
+              "status": "avaliada",
+              "suporte": 24,
+              "precisao": 0.8518518518518519,
+              "recall": 0.9583333333333334,
+              "f1": 0.9019607843137256
+            }
+          ],
+          "matriz_confusao": [
+            [
+              147,
+              0,
+              1,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              1,
+              5,
+              2
+            ],
+            [
+              2,
+              27,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              3,
+              0,
+              33,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              3,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              1,
+              55,
+              0,
+              0,
+              0,
+              1,
+              1,
+              1,
+              2,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              2,
+              0,
+              5,
+              0,
+              0,
+              2,
+              0,
+              0,
+              0,
+              1,
+              0
+            ],
+            [
+              4,
+              0,
+              3,
+              0,
+              0,
+              6,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            [
+              2,
+              0,
+              0,
+              0,
+              0,
+              4,
+              5,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              9,
+              0,
+              0,
+              0,
+              0,
+              2
+            ],
+            [
+              0,
+              0,
+              0,
+              6,
+              0,
+              0,
+              0,
+              0,
+              4,
+              0,
+              2,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              5,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1,
+              5,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              16,
+              1,
+              0
+            ],
+            [
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              69,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              23
+            ]
+          ]
+        },
+        "vs_fp32": {
+          "top1_igual_fp32": 0.9704016913319239,
+          "divergencias_top1": 14,
+          "erro_absoluto_maximo": 0.5079255700111389,
+          "erro_absoluto_medio": 0.003924533259123564
+        },
+        "vs_keras": {
+          "top1_igual_fp32": 0.9704016913319239,
+          "divergencias_top1": 14,
+          "erro_absoluto_maximo": 0.5079240202903748,
+          "erro_absoluto_medio": 0.003924533259123564
+        },
+        "estatistica": {
+          "mcnemar": {
+            "so_referencia_acertou": 4,
+            "so_quantizado_acertou": 7,
+            "p_valor": 0.548828125
+          },
+          "bootstrap": {
+            "f1_macro": {
+              "ic95_inferior": -0.005155323591933825,
+              "ic95_superior": 0.03870098169031137
+            },
+            "balanced_accuracy": {
+              "ic95_inferior": -0.0024174718176898868,
+              "ic95_superior": 0.03519127139986646
+            },
+            "reamostras": 2000,
+            "semente": 42,
+            "unidade": "imagem (não grupo)"
+          }
+        }
+      },
+      "int8_t7_3": {
+        "metricas": {
+          "f1_macro": 0.7400191008467156,
+          "balanced_accuracy": 0.723387006659926,
+          "acuracia": 0.8435517970401691,
+          "total_amostras": 473,
+          "classes_avaliadas": 13,
+          "classes_nao_avaliadas": [],
+          "por_classe": [
+            {
+              "indice": 0,
+              "nome": "Vaquinha (Diabrotica speciosa)",
+              "status": "avaliada",
+              "suporte": 157,
+              "precisao": 0.9230769230769231,
+              "recall": 0.9171974522292994,
+              "f1": 0.9201277955271566
+            },
+            {
+              "indice": 1,
+              "nome": "Cigarrinha-do-milho (Dalbulus maidis)",
+              "status": "avaliada",
+              "suporte": 29,
+              "precisao": 0.9642857142857143,
+              "recall": 0.9310344827586207,
+              "f1": 0.9473684210526316
+            },
+            {
+              "indice": 2,
+              "nome": "Percevejo-barriga-verde (Dichelops/Diceraeus)",
+              "status": "avaliada",
+              "suporte": 42,
+              "precisao": 0.7674418604651163,
+              "recall": 0.7857142857142857,
+              "f1": 0.7764705882352941
+            },
+            {
+              "indice": 3,
+              "nome": "Lagarta-do-cartucho (Spodoptera frugiperda)",
+              "status": "avaliada",
+              "suporte": 61,
+              "precisao": 0.8208955223880597,
+              "recall": 0.9016393442622951,
+              "f1": 0.8593750000000001
+            },
+            {
+              "indice": 4,
+              "nome": "Percevejo-marrom (Euschistus heros)",
+              "status": "avaliada",
+              "suporte": 10,
+              "precisao": 1.0,
+              "recall": 0.5,
+              "f1": 0.6666666666666666
+            },
+            {
+              "indice": 5,
+              "nome": "Percevejo-verde (Nezara viridula)",
+              "status": "avaliada",
+              "suporte": 14,
+              "precisao": 0.5454545454545454,
+              "recall": 0.42857142857142855,
+              "f1": 0.4799999999999999
+            },
+            {
+              "indice": 6,
+              "nome": "Percevejo-asa-preta (Edessa meditabunda)",
+              "status": "avaliada",
+              "suporte": 11,
+              "precisao": 1.0,
+              "recall": 0.45454545454545453,
+              "f1": 0.625
+            },
+            {
+              "indice": 7,
+              "nome": "Percevejo-do-milho (Leptoglossus zonatus)",
+              "status": "avaliada",
+              "suporte": 12,
+              "precisao": 0.6923076923076923,
+              "recall": 0.75,
+              "f1": 0.7199999999999999
+            },
+            {
+              "indice": 8,
+              "nome": "Lagarta-falsa-medideira (Chrysodeixis includens)",
+              "status": "avaliada",
+              "suporte": 12,
+              "precisao": 0.6666666666666666,
+              "recall": 0.3333333333333333,
+              "f1": 0.4444444444444444
+            },
+            {
+              "indice": 9,
+              "nome": "Lagarta-da-soja (Anticarsia gemmatalis)",
+              "status": "avaliada",
+              "suporte": 6,
+              "precisao": 0.7142857142857143,
+              "recall": 0.8333333333333334,
+              "f1": 0.7692307692307692
+            },
+            {
+              "indice": 10,
+              "nome": "Lagarta-das-vagens (Spodoptera eridania e S. cosmioides)",
+              "status": "avaliada",
+              "suporte": 24,
+              "precisao": 0.5714285714285714,
+              "recall": 0.6666666666666666,
+              "f1": 0.6153846153846153
+            },
+            {
+              "indice": 11,
+              "nome": "Astylus variegatus",
+              "status": "avaliada",
+              "suporte": 71,
+              "precisao": 0.881578947368421,
+              "recall": 0.9436619718309859,
+              "f1": 0.9115646258503401
+            },
+            {
+              "indice": 12,
+              "nome": "Cigarrinha-das-pastagens (Deois flavopicta)",
+              "status": "avaliada",
+              "suporte": 24,
+              "precisao": 0.8214285714285714,
+              "recall": 0.9583333333333334,
+              "f1": 0.8846153846153847
+            }
+          ],
+          "matriz_confusao": [
+            [
+              144,
+              1,
+              1,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              1,
+              6,
+              3
+            ],
+            [
+              2,
+              27,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              3,
+              0,
+              33,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              3,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              1,
+              55,
+              0,
+              0,
+              0,
+              1,
+              1,
+              1,
+              2,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              2,
+              0,
+              5,
+              0,
+              0,
+              2,
+              0,
+              0,
+              0,
+              1,
+              0
+            ],
+            [
+              4,
+              0,
+              3,
+              0,
+              0,
+              6,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            [
+              2,
+              0,
+              0,
+              0,
+              0,
+              4,
+              5,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              9,
+              0,
+              0,
+              1,
+              0,
+              2
+            ],
+            [
+              0,
+              0,
+              0,
+              6,
+              0,
+              0,
+              0,
+              0,
+              4,
+              0,
+              2,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              5,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1,
+              5,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              16,
+              1,
+              0
+            ],
+            [
+              1,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              67,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              23
+            ]
+          ]
+        },
+        "vs_fp32": {
+          "top1_igual_fp32": 0.9682875264270613,
+          "divergencias_top1": 15,
+          "erro_absoluto_maximo": 0.5013558864593506,
+          "erro_absoluto_medio": 0.003951725084334612
+        },
+        "vs_keras": {
+          "top1_igual_fp32": 0.9682875264270613,
+          "divergencias_top1": 15,
+          "erro_absoluto_maximo": 0.5013555288314819,
+          "erro_absoluto_medio": 0.003951721824705601
+        },
+        "estatistica": {
+          "mcnemar": {
+            "so_referencia_acertou": 7,
+            "so_quantizado_acertou": 5,
+            "p_valor": 0.7744140625
+          },
+          "bootstrap": {
+            "f1_macro": {
+              "ic95_inferior": -0.012126656075482392,
+              "ic95_superior": 0.03152500336821733
+            },
+            "balanced_accuracy": {
+              "ic95_inferior": -0.005723716593422396,
+              "ic95_superior": 0.03178873475309548
+            },
+            "reamostras": 2000,
+            "semente": 42,
+            "unidade": "imagem (não grupo)"
+          }
+        }
+      }
+    }
+  },
+  "sem_delegate": {
+    "fp32": {
+      "imagens": [
+        "IMG_00964",
+        "IMG_00490",
+        "IMG_02097",
+        "IMG_02407",
+        "IMG_03135",
+        "IMG_03199",
+        "IMG_03074",
+        "IMG_00868",
+        "IMG_02979",
+        "IMG_02939",
+        "IMG_03296",
+        "IMG_00001",
+        "IMG_00708"
+      ],
+      "executou": true,
+      "saidas_validas": true,
+      "top1_igual_xnnpack": 1.0,
+      "erro_absoluto_maximo_vs_xnnpack": 4.410743713378906e-06,
+      "atende": true
+    },
+    "faixa_dinamica": {
+      "imagens": [
+        "IMG_00964",
+        "IMG_00490",
+        "IMG_02097",
+        "IMG_02407",
+        "IMG_03135",
+        "IMG_03199",
+        "IMG_03074",
+        "IMG_00868",
+        "IMG_02979",
+        "IMG_02939",
+        "IMG_03296",
+        "IMG_00001",
+        "IMG_00708"
+      ],
+      "executou": true,
+      "saidas_validas": true,
+      "top1_igual_xnnpack": 0.9230769230769231,
+      "erro_absoluto_maximo_vs_xnnpack": 0.12147125601768494,
+      "atende": true
+    },
+    "float16": {
+      "imagens": [
+        "IMG_00964",
+        "IMG_00490",
+        "IMG_02097",
+        "IMG_02407",
+        "IMG_03135",
+        "IMG_03199",
+        "IMG_03074",
+        "IMG_00868",
+        "IMG_02979",
+        "IMG_02939",
+        "IMG_03296",
+        "IMG_00001",
+        "IMG_00708"
+      ],
+      "executou": true,
+      "saidas_validas": true,
+      "top1_igual_xnnpack": 1.0,
+      "erro_absoluto_maximo_vs_xnnpack": 3.993511199951172e-06,
+      "atende": true
+    },
+    "int8": {
+      "imagens": [
+        "IMG_00964",
+        "IMG_00490",
+        "IMG_02097",
+        "IMG_02407",
+        "IMG_03135",
+        "IMG_03199",
+        "IMG_03074",
+        "IMG_00868",
+        "IMG_02979",
+        "IMG_02939",
+        "IMG_03296",
+        "IMG_00001",
+        "IMG_00708"
+      ],
+      "executou": true,
+      "saidas_validas": true,
+      "top1_igual_xnnpack": 0.9230769230769231,
+      "erro_absoluto_maximo_vs_xnnpack": 0.08984375,
+      "atende": true
+    },
+    "int8_t7_3": {
+      "imagens": [
+        "IMG_00964",
+        "IMG_00490",
+        "IMG_02097",
+        "IMG_02407",
+        "IMG_03135",
+        "IMG_03199",
+        "IMG_03074",
+        "IMG_00868",
+        "IMG_02979",
+        "IMG_02939",
+        "IMG_03296",
+        "IMG_00001",
+        "IMG_00708"
+      ],
+      "executou": true,
+      "saidas_validas": true,
+      "top1_igual_xnnpack": 1.0,
+      "erro_absoluto_maximo_vs_xnnpack": 0.12109375,
+      "atende": true
+    }
+  },
+  "latencia": {
+    "descricao": "tempo de set_tensor + invoke + get_tensor (inclui (des)quantização INT8) em uma imagem real 1x224x224x3, tf.lite.Interpreter",
+    "imagem_id": "IMG_00964",
+    "aquecimento": 20,
+    "rodadas_intercaladas": 5,
+    "execucoes_por_rodada": 40,
+    "por_config": {
+      "xnnpack_1t": {
+        "fp32": {
+          "execucoes": 200,
+          "mediana_ms": 8.12275,
+          "p90_ms": 9.50469,
+          "p95_ms": 9.858914999999998,
+          "p99_ms": 11.053459999999996,
+          "media_ms": 8.348808,
+          "desvio_ms": 0.856978142204972,
+          "min_ms": 7.3067,
+          "max_ms": 13.1511
+        },
+        "faixa_dinamica": {
+          "execucoes": 200,
+          "mediana_ms": 38.73675,
+          "p90_ms": 41.837720000000004,
+          "p95_ms": 43.04818499999999,
+          "p99_ms": 51.90535899999997,
+          "media_ms": 39.5529355,
+          "desvio_ms": 4.947536949637658,
+          "min_ms": 35.6083,
+          "max_ms": 98.8899
+        },
+        "float16": {
+          "execucoes": 200,
+          "mediana_ms": 8.338750000000001,
+          "p90_ms": 9.56444,
+          "p95_ms": 10.460449999999996,
+          "p99_ms": 15.861290999999976,
+          "media_ms": 8.610764,
+          "desvio_ms": 1.4356513951324426,
+          "min_ms": 7.2328,
+          "max_ms": 18.8799
+        },
+        "int8": {
+          "execucoes": 200,
+          "mediana_ms": 5.90245,
+          "p90_ms": 7.0139499999999995,
+          "p95_ms": 7.376634999999998,
+          "p99_ms": 9.746744999999994,
+          "media_ms": 6.107429,
+          "desvio_ms": 0.876141594622776,
+          "min_ms": 5.0664,
+          "max_ms": 11.9072
+        },
+        "int8_t7_3": {
+          "execucoes": 200,
+          "mediana_ms": 5.66755,
+          "p90_ms": 6.97537,
+          "p95_ms": 7.344904999999991,
+          "p99_ms": 13.187440999999913,
+          "media_ms": 6.227296,
+          "desvio_ms": 2.2289504464766017,
+          "min_ms": 5.0737,
+          "max_ms": 27.294
+        }
+      },
+      "xnnpack_2t": {
+        "fp32": {
+          "execucoes": 200,
+          "mediana_ms": 7.0006,
+          "p90_ms": 11.97119,
+          "p95_ms": 12.541714999999993,
+          "p99_ms": 14.332464,
+          "media_ms": 8.112074999999999,
+          "desvio_ms": 2.5116417157741835,
+          "min_ms": 4.3909,
+          "max_ms": 14.4293
+        },
+        "faixa_dinamica": {
+          "execucoes": 200,
+          "mediana_ms": 57.9012,
+          "p90_ms": 95.81897000000001,
+          "p95_ms": 110.58707499999997,
+          "p99_ms": 131.53210599999994,
+          "media_ms": 62.524412000000005,
+          "desvio_ms": 24.233937140101855,
+          "min_ms": 23.1656,
+          "max_ms": 154.3932
+        },
+        "float16": {
+          "execucoes": 200,
+          "mediana_ms": 9.861699999999999,
+          "p90_ms": 12.183649999999998,
+          "p95_ms": 13.29049,
+          "p99_ms": 18.20762199999998,
+          "media_ms": 9.3177635,
+          "desvio_ms": 2.8607635552967885,
+          "min_ms": 4.5408,
+          "max_ms": 22.1419
+        },
+        "int8": {
+          "execucoes": 200,
+          "mediana_ms": 6.2555,
+          "p90_ms": 7.82939,
+          "p95_ms": 8.77496,
+          "p99_ms": 11.406519999999999,
+          "media_ms": 6.121008000000001,
+          "desvio_ms": 1.470201462705266,
+          "min_ms": 3.1279,
+          "max_ms": 12.1537
+        },
+        "int8_t7_3": {
+          "execucoes": 200,
+          "mediana_ms": 5.42895,
+          "p90_ms": 7.23535,
+          "p95_ms": 7.858554999999999,
+          "p99_ms": 8.842201999999968,
+          "media_ms": 5.6100165,
+          "desvio_ms": 1.667068405621936,
+          "min_ms": 3.0706,
+          "max_ms": 17.8282
+        }
+      },
+      "xnnpack_4t": {
+        "fp32": {
+          "execucoes": 200,
+          "mediana_ms": 6.3055,
+          "p90_ms": 7.08639,
+          "p95_ms": 7.238214999999999,
+          "p99_ms": 8.45921599999999,
+          "media_ms": 6.124017,
+          "desvio_ms": 0.9260596223417035,
+          "min_ms": 4.1377,
+          "max_ms": 10.9196
+        },
+        "faixa_dinamica": {
+          "execucoes": 200,
+          "mediana_ms": 107.09944999999999,
+          "p90_ms": 146.80383,
+          "p95_ms": 157.240185,
+          "p99_ms": 173.6954269999999,
+          "media_ms": 106.3550395,
+          "desvio_ms": 31.39031103099334,
+          "min_ms": 28.7767,
+          "max_ms": 200.7547
+        },
+        "float16": {
+          "execucoes": 200,
+          "mediana_ms": 5.675549999999999,
+          "p90_ms": 6.40648,
+          "p95_ms": 6.832839999999999,
+          "p99_ms": 9.269907999999997,
+          "media_ms": 5.669448999999999,
+          "desvio_ms": 0.8898892381526475,
+          "min_ms": 4.2301,
+          "max_ms": 10.7465
+        },
+        "int8": {
+          "execucoes": 200,
+          "mediana_ms": 3.9793000000000003,
+          "p90_ms": 4.40528,
+          "p95_ms": 4.665049999999999,
+          "p99_ms": 4.949140999999996,
+          "media_ms": 3.9599235,
+          "desvio_ms": 0.40535511671990154,
+          "min_ms": 3.2761,
+          "max_ms": 5.825
+        },
+        "int8_t7_3": {
+          "execucoes": 200,
+          "mediana_ms": 4.0482,
+          "p90_ms": 4.6348400000000005,
+          "p95_ms": 4.7663649999999995,
+          "p99_ms": 5.103174999999998,
+          "media_ms": 4.0089265,
+          "desvio_ms": 0.4740006732473539,
+          "min_ms": 2.9006,
+          "max_ms": 5.591
+        }
+      },
+      "sem_delegate_1t": {
+        "fp32": {
+          "execucoes": 200,
+          "mediana_ms": 58.99235,
+          "p90_ms": 125.00312,
+          "p95_ms": 140.813345,
+          "p99_ms": 152.97128899999993,
+          "media_ms": 81.7063445,
+          "desvio_ms": 32.24732759351053,
+          "min_ms": 52.2204,
+          "max_ms": 164.5415
+        },
+        "faixa_dinamica": {
+          "execucoes": 200,
+          "mediana_ms": 477.4133,
+          "p90_ms": 990.02297,
+          "p95_ms": 1020.1526899999999,
+          "p99_ms": 1087.4622279999992,
+          "media_ms": 671.177368,
+          "desvio_ms": 246.71543758301664,
+          "min_ms": 426.6173,
+          "max_ms": 1248.1282
+        },
+        "float16": {
+          "execucoes": 200,
+          "mediana_ms": 102.8185,
+          "p90_ms": 138.51758999999998,
+          "p95_ms": 148.6444,
+          "p99_ms": 166.99931099999995,
+          "media_ms": 96.362809,
+          "desvio_ms": 32.68579735047011,
+          "min_ms": 54.237,
+          "max_ms": 213.5247
+        },
+        "int8": {
+          "execucoes": 200,
+          "mediana_ms": 905.6943000000001,
+          "p90_ms": 1148.02997,
+          "p95_ms": 1197.1127999999994,
+          "p99_ms": 1293.29303,
+          "media_ms": 815.0132305000001,
+          "desvio_ms": 272.71399788284657,
+          "min_ms": 474.2542,
+          "max_ms": 1302.7953
+        },
+        "int8_t7_3": {
+          "execucoes": 200,
+          "mediana_ms": 542.62055,
+          "p90_ms": 1139.15856,
+          "p95_ms": 1180.8662649999999,
+          "p99_ms": 1250.0787519999997,
+          "media_ms": 751.1966825000001,
+          "desvio_ms": 283.6513757589412,
+          "min_ms": 478.7957,
+          "max_ms": 1293.3873
+        }
+      },
+      "sem_delegate_4t": {
+        "fp32": {
+          "execucoes": 200,
+          "mediana_ms": 51.875299999999996,
+          "p90_ms": 94.16735999999999,
+          "p95_ms": 126.64460499999974,
+          "p99_ms": 170.90863,
+          "media_ms": 61.1374625,
+          "desvio_ms": 30.845344244777653,
+          "min_ms": 31.0054,
+          "max_ms": 204.0303
+        },
+        "faixa_dinamica": {
+          "execucoes": 200,
+          "mediana_ms": 264.5633,
+          "p90_ms": 328.72303999999997,
+          "p95_ms": 356.240235,
+          "p99_ms": 381.7089179999999,
+          "media_ms": 273.962199,
+          "desvio_ms": 37.95136815597497,
+          "min_ms": 215.9325,
+          "max_ms": 406.1278
+        },
+        "float16": {
+          "execucoes": 200,
+          "mediana_ms": 70.47655,
+          "p90_ms": 110.30567,
+          "p95_ms": 124.679405,
+          "p99_ms": 143.72566799999993,
+          "media_ms": 72.1540895,
+          "desvio_ms": 29.722527367819744,
+          "min_ms": 30.9529,
+          "max_ms": 170.3538
+        },
+        "int8": {
+          "execucoes": 200,
+          "mediana_ms": 308.82090000000005,
+          "p90_ms": 391.27297999999996,
+          "p95_ms": 410.20780499999995,
+          "p99_ms": 432.25415699999996,
+          "media_ms": 320.125898,
+          "desvio_ms": 46.05159581838937,
+          "min_ms": 233.2121,
+          "max_ms": 450.8936
+        },
+        "int8_t7_3": {
+          "execucoes": 200,
+          "mediana_ms": 293.01215,
+          "p90_ms": 330.32264,
+          "p95_ms": 348.7322449999998,
+          "p99_ms": 417.9145379999997,
+          "media_ms": 295.9993025,
+          "desvio_ms": 34.06885105941772,
+          "min_ms": 228.7049,
+          "max_ms": 453.3713
+        }
+      }
+    }
+  },
+  "ambiente": {
+    "sistema": "Windows-11-10.0.26200-SP0",
+    "processador": "Intel(R) Core(TM) Ultra 5 235U",
+    "alimentacao": "tomada",
+    "python": "3.12.10",
+    "tensorflow": "2.21.0",
+    "keras": "3.15.1",
+    "keras_hub": "0.32.0",
+    "numpy": "2.4.4"
+  },
+  "particao_principal": "validacao",
+  "teste_exploratorio": true,
+  "limite_interpretacao": "latência medida no CPU x86 de desenvolvimento, não no celular de referência; serve para comparar estratégias entre si e não aprova o RNF-04. O teste já foi consultado em etapas anteriores e é apenas exploratório; nenhuma estratégia foi escolhida por ele. Intervalos por bootstrap de imagens não consideram a dependência entre fotos do mesmo grupo. Scores não são probabilidades calibradas.",
+  "rnf": {
+    "fp32": {
+      "RNF-01": {
+        "limite_bytes": 8000000,
+        "valor_bytes": 13531184,
+        "atende": false
+      },
+      "RNF-04_indicativo_local": {
+        "xnnpack_1t": {
+          "p95_ms": 9.858914999999998,
+          "abaixo_de_300ms": true
+        },
+        "xnnpack_2t": {
+          "p95_ms": 12.541714999999993,
+          "abaixo_de_300ms": true
+        },
+        "xnnpack_4t": {
+          "p95_ms": 7.238214999999999,
+          "abaixo_de_300ms": true
+        },
+        "sem_delegate_1t": {
+          "p95_ms": 140.813345,
+          "abaixo_de_300ms": true
+        },
+        "sem_delegate_4t": {
+          "p95_ms": 126.64460499999974,
+          "abaixo_de_300ms": true
+        }
+      },
+      "RNF-09": {
+        "imagens": [
+          "IMG_00964",
+          "IMG_00490",
+          "IMG_02097",
+          "IMG_02407",
+          "IMG_03135",
+          "IMG_03199",
+          "IMG_03074",
+          "IMG_00868",
+          "IMG_02979",
+          "IMG_02939",
+          "IMG_03296",
+          "IMG_00001",
+          "IMG_00708"
+        ],
+        "executou": true,
+        "saidas_validas": true,
+        "top1_igual_xnnpack": 1.0,
+        "erro_absoluto_maximo_vs_xnnpack": 4.410743713378906e-06,
+        "atende": true
+      }
+    },
+    "faixa_dinamica": {
+      "RNF-01": {
+        "limite_bytes": 8000000,
+        "valor_bytes": 3753152,
+        "atende": true
+      },
+      "RNF-06_validacao": {
+        "metrica": "acurácia macro (balanced accuracy)",
+        "limite_pp": -2.0,
+        "delta_pp": -0.3305437731667138,
+        "ic95_inferior_pp": -2.48020055924469,
+        "atende_ponto": true,
+        "atende_ic95": false
+      },
+      "RNF-06_teste": {
+        "metrica": "acurácia macro (balanced accuracy)",
+        "limite_pp": -2.0,
+        "delta_pp": 0.00499399184465954,
+        "ic95_inferior_pp": -0.6494095000286898,
+        "atende_ponto": true,
+        "atende_ic95": true
+      },
+      "RNF-04_indicativo_local": {
+        "xnnpack_1t": {
+          "p95_ms": 43.04818499999999,
+          "abaixo_de_300ms": true
+        },
+        "xnnpack_2t": {
+          "p95_ms": 110.58707499999997,
+          "abaixo_de_300ms": true
+        },
+        "xnnpack_4t": {
+          "p95_ms": 157.240185,
+          "abaixo_de_300ms": true
+        },
+        "sem_delegate_1t": {
+          "p95_ms": 1020.1526899999999,
+          "abaixo_de_300ms": false
+        },
+        "sem_delegate_4t": {
+          "p95_ms": 356.240235,
+          "abaixo_de_300ms": false
+        }
+      },
+      "RNF-09": {
+        "imagens": [
+          "IMG_00964",
+          "IMG_00490",
+          "IMG_02097",
+          "IMG_02407",
+          "IMG_03135",
+          "IMG_03199",
+          "IMG_03074",
+          "IMG_00868",
+          "IMG_02979",
+          "IMG_02939",
+          "IMG_03296",
+          "IMG_00001",
+          "IMG_00708"
+        ],
+        "executou": true,
+        "saidas_validas": true,
+        "top1_igual_xnnpack": 0.9230769230769231,
+        "erro_absoluto_maximo_vs_xnnpack": 0.12147125601768494,
+        "atende": true
+      }
+    },
+    "float16": {
+      "RNF-01": {
+        "limite_bytes": 8000000,
+        "valor_bytes": 6833548,
+        "atende": true
+      },
+      "RNF-06_validacao": {
+        "metrica": "acurácia macro (balanced accuracy)",
+        "limite_pp": -2.0,
+        "delta_pp": 0.12610340479193294,
+        "ic95_inferior_pp": 0.0,
+        "atende_ponto": true,
+        "atende_ic95": true
+      },
+      "RNF-06_teste": {
+        "metrica": "acurácia macro (balanced accuracy)",
+        "limite_pp": -2.0,
+        "delta_pp": 0.0,
+        "ic95_inferior_pp": 0.0,
+        "atende_ponto": true,
+        "atende_ic95": true
+      },
+      "RNF-04_indicativo_local": {
+        "xnnpack_1t": {
+          "p95_ms": 10.460449999999996,
+          "abaixo_de_300ms": true
+        },
+        "xnnpack_2t": {
+          "p95_ms": 13.29049,
+          "abaixo_de_300ms": true
+        },
+        "xnnpack_4t": {
+          "p95_ms": 6.832839999999999,
+          "abaixo_de_300ms": true
+        },
+        "sem_delegate_1t": {
+          "p95_ms": 148.6444,
+          "abaixo_de_300ms": true
+        },
+        "sem_delegate_4t": {
+          "p95_ms": 124.679405,
+          "abaixo_de_300ms": true
+        }
+      },
+      "RNF-09": {
+        "imagens": [
+          "IMG_00964",
+          "IMG_00490",
+          "IMG_02097",
+          "IMG_02407",
+          "IMG_03135",
+          "IMG_03199",
+          "IMG_03074",
+          "IMG_00868",
+          "IMG_02979",
+          "IMG_02939",
+          "IMG_03296",
+          "IMG_00001",
+          "IMG_00708"
+        ],
+        "executou": true,
+        "saidas_validas": true,
+        "top1_igual_xnnpack": 1.0,
+        "erro_absoluto_maximo_vs_xnnpack": 3.993511199951172e-06,
+        "atende": true
+      }
+    },
+    "int8": {
+      "RNF-01": {
+        "limite_bytes": 8000000,
+        "valor_bytes": 4003624,
+        "atende": true
+      },
+      "RNF-06_validacao": {
+        "metrica": "acurácia macro (balanced accuracy)",
+        "limite_pp": -2.0,
+        "delta_pp": 0.2802333124429679,
+        "ic95_inferior_pp": -2.4845501814566266,
+        "atende_ponto": true,
+        "atende_ic95": false
+      },
+      "RNF-06_teste": {
+        "metrica": "acurácia macro (balanced accuracy)",
+        "limite_pp": -2.0,
+        "delta_pp": 1.4391954168544774,
+        "ic95_inferior_pp": -0.24174718176898868,
+        "atende_ponto": true,
+        "atende_ic95": true
+      },
+      "RNF-04_indicativo_local": {
+        "xnnpack_1t": {
+          "p95_ms": 7.376634999999998,
+          "abaixo_de_300ms": true
+        },
+        "xnnpack_2t": {
+          "p95_ms": 8.77496,
+          "abaixo_de_300ms": true
+        },
+        "xnnpack_4t": {
+          "p95_ms": 4.665049999999999,
+          "abaixo_de_300ms": true
+        },
+        "sem_delegate_1t": {
+          "p95_ms": 1197.1127999999994,
+          "abaixo_de_300ms": false
+        },
+        "sem_delegate_4t": {
+          "p95_ms": 410.20780499999995,
+          "abaixo_de_300ms": false
+        }
+      },
+      "RNF-09": {
+        "imagens": [
+          "IMG_00964",
+          "IMG_00490",
+          "IMG_02097",
+          "IMG_02407",
+          "IMG_03135",
+          "IMG_03199",
+          "IMG_03074",
+          "IMG_00868",
+          "IMG_02979",
+          "IMG_02939",
+          "IMG_03296",
+          "IMG_00001",
+          "IMG_00708"
+        ],
+        "executou": true,
+        "saidas_validas": true,
+        "top1_igual_xnnpack": 0.9230769230769231,
+        "erro_absoluto_maximo_vs_xnnpack": 0.08984375,
+        "atende": true
+      }
+    },
+    "int8_t7_3": {
+      "RNF-01": {
+        "limite_bytes": 8000000,
+        "valor_bytes": 4003624,
+        "atende": true
+      },
+      "RNF-06_validacao": {
+        "metrica": "acurácia macro (balanced accuracy)",
+        "limite_pp": -2.0,
+        "delta_pp": -0.22022164661071875,
+        "ic95_inferior_pp": -3.260499725959938,
+        "atende_ponto": true,
+        "atende_ic95": false
+      },
+      "RNF-06_teste": {
+        "metrica": "acurácia macro (balanced accuracy)",
+        "limite_pp": -2.0,
+        "delta_pp": 1.075523921936905,
+        "ic95_inferior_pp": -0.5723716593422395,
+        "atende_ponto": true,
+        "atende_ic95": true
+      },
+      "RNF-04_indicativo_local": {
+        "xnnpack_1t": {
+          "p95_ms": 7.344904999999991,
+          "abaixo_de_300ms": true
+        },
+        "xnnpack_2t": {
+          "p95_ms": 7.858554999999999,
+          "abaixo_de_300ms": true
+        },
+        "xnnpack_4t": {
+          "p95_ms": 4.7663649999999995,
+          "abaixo_de_300ms": true
+        },
+        "sem_delegate_1t": {
+          "p95_ms": 1180.8662649999999,
+          "abaixo_de_300ms": false
+        },
+        "sem_delegate_4t": {
+          "p95_ms": 348.7322449999998,
+          "abaixo_de_300ms": false
+        }
+      },
+      "RNF-09": {
+        "imagens": [
+          "IMG_00964",
+          "IMG_00490",
+          "IMG_02097",
+          "IMG_02407",
+          "IMG_03135",
+          "IMG_03199",
+          "IMG_03074",
+          "IMG_00868",
+          "IMG_02979",
+          "IMG_02939",
+          "IMG_03296",
+          "IMG_00001",
+          "IMG_00708"
+        ],
+        "executou": true,
+        "saidas_validas": true,
+        "top1_igual_xnnpack": 1.0,
+        "erro_absoluto_maximo_vs_xnnpack": 0.12109375,
+        "atende": true
+      }
+    }
+  }
+}
