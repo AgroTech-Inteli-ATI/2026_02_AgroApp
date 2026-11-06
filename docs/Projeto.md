@@ -3165,3 +3165,15 @@ selecionado. Portanto, ainda não foi
 gerado nem validado um `.tflite` final. Para concluir T7.1, executar o comando com
 a rodada selecionada e conservar os três artefatos gerados. O relatório conterá
 os formatos efetivos dos tensores, sem substituir o modelo final por pesos sintéticos.
+
+# 8. Desempenho para dispositivos móveis
+
+## 8.2 Benchmark de inferência (T8.2)
+
+O benchmark das seis versões TFLite (FP32 e INT8 de EfficientNet-Lite0,
+MobileNetV3Large e MobileNetV2) está documentado em
+[Benchmark T8.2](Benchmark_T8_2.md), com protocolo reproduzível, tempos medidos,
+tamanhos exatos e limites da avaliação local. O script é
+[`src/benchmark_t8_2.py`](../src/benchmark_t8_2.py); as evidências estão em
+[`assets/data/benchmark_T8_2`](../assets/data/benchmark_T8_2).
+A comparação local não substitui o aceite RNF-04 no celular de referência.
