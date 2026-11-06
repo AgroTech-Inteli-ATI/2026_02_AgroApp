@@ -78,6 +78,13 @@
 
 </details>
 
+<details>
+<summary><strong>8. Avaliação do modelo convertido</strong></summary>
+
+- [8.1 Avaliação pós-conversão (T8.1)](#81-avaliação-pós-conversão-t81)
+
+</details>
+
 ---
 
 # 1. Entendimento de Negócio
@@ -3446,3 +3453,118 @@ python -m src.quantizacao_t7_3 preparar --raiz-imagens /caminho/das/fontes --sai
 A revisão visual deve corresponder aos IDs e hashes efetivamente selecionados e cobrir as classes e condições documentadas antes da conversão. Não se deve transportar anotações de uma seleção diferente. O comando recusa sobrescrever conjuntos ou conversões existentes.
 
 Os **10 testes passaram**, incluindo seleção determinística, cobertura e diversidade de grupos, brilho sem padding, saturação/arredondamento, recusa de validação/teste mesmo com hash de manifesto atualizado, imagem alterada, classe ausente, grupo repetido, cobertura falsa e revisão visual incompleta. Ambiente da conversão: Python 3.12.15, TensorFlow 2.21.0, Keras 3.15.1, KerasHub 0.32.0 e NumPy 2.4.4, em macOS arm64. A entrega comprova conjunto documentado e conversão INT8 executada, com as limitações de cobertura descritas acima.
+
+# 8. Avaliação do modelo convertido
+
+## 8.1 Avaliação pós-conversão (T8.1)
+
+### Objetivo e origem da avaliação
+
+A T8.1 compara cada modelo convertido ao **checkpoint Keras original** do EfficientNet-Lite0 selecionado na T5.6, usando o mesmo teste e as mesmas definições de métricas da [T6.1](#61-métricas-por-classe-t61). O TFLite FP32 da T7.1 é uma segunda referência, para distinguir a conversão sem quantização da quantização posterior.
+
+Esta entrega **consolida inferências já realizadas na T7.2**: não houve nova execução dos modelos, treinamento ou conversão. O comando [`src/avaliacao_pos_conversao_t8_1.py`](../src/avaliacao_pos_conversao_t8_1.py) recalcula as métricas a partir de [`predicoes.csv` da T7.2](../assets/modelos/comparacao_T7_2_candidato_T5_6_20261026/predicoes.csv) e exige que as previsões Keras coincidam, por `image_id`, com as [`previsões originais da T6.1`](../assets/data/avaliacao_T6_1/candidato_T5_6_20261026_keras/predicoes_teste.csv). As métricas completas recalculadas conferem com as publicadas na T7.2 e, para Keras, com a T6.1.
+
+### Conjunto, modelos e protocolo
+
+- **Conjunto:** exatamente os **473 IDs de teste e as 13 classes** de [`indice_dataset.csv`](../assets/data/treino_T5_2/indice_dataset.csv), SHA-256 `28ee662885202f0bda3dec9660e44b28f99b8bd183210bcbdd795b103269b2eb`. As 474 imagens de validação da T7.2 não entram nesta avaliação.
+- **Modelos:** Keras original, TFLite FP32 T7.1, faixa dinâmica, float16, INT8 oficial T7.3 e INT8 regenerado na T7.2. Os dois INT8 são identificados separadamente.
+- **Proveniência:** o fluxo confere os hashes dos modelos, a seleção, as classes, o índice e os contratos. Recusa IDs ausentes ou repetidos, partições trocadas, rótulos incompatíveis, previsões fora da faixa e métricas que não correspondam às previsões. Os caminhos e hashes completos estão em [`proveniencia.json`](../assets/data/avaliacao_T8_1/candidato_T5_6_20261026/proveniencia.json), juntamente com os ambientes de inferência herdado e de consolidação.
+- **Inferência herdada:** pré-processamento T4.1; argmax sem limiar de confiança, augmentation ou ponderação. A T7.2 executou Keras em lotes de 32 e TFLite com batch 1, CPU, 4 threads e delegates padrão. Esta consolidação não altera esse protocolo nem verifica novamente os pixels das fotos.
+- **Métricas:** F1 macro, balanced accuracy (média dos recalls), acurácia global e, por classe, precisão, recall, F1 e suporte, calculados com [`src/avaliacao.py`](../src/avaliacao.py). As matrizes usam linhas reais e colunas previstas, na ordem das classes do candidato.
+- **Deltas:** `100 × (métrica da versão − métrica da referência)`, em pontos percentuais; negativo indica queda. Os CSVs apresentam deltas contra Keras e contra TFLite FP32. Aqui, os vetores de argmax Keras e FP32 coincidem, portanto esses deltas são iguais.
+
+### Resultados gerais no teste
+
+| Versão | F1 macro | Balanced accuracy | Acurácia global | Δ F1 vs Keras (p.p.) | Δ balanced accuracy vs Keras (p.p.) | Δ acurácia vs Keras (p.p.) | Acertos perdidos / ganhos vs Keras |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Keras original | 0,7329 | 0,7126 | 0,8478 | — | — | — | — |
+| TFLite FP32 T7.1 | 0,7329 | 0,7126 | 0,8478 | 0,0000 | 0,0000 | 0,0000 | 0 / 0 |
+| Faixa dinâmica | 0,7371 | 0,7127 | 0,8478 | +0,4128 | +0,0050 | 0,0000 | 2 / 2 |
+| Float16 | 0,7329 | 0,7126 | 0,8478 | 0,0000 | 0,0000 | 0,0000 | 0 / 0 |
+| INT8 oficial T7.3 | 0,7400 | 0,7234 | 0,8436 | +0,7091 | +1,0755 | −0,4228 | 7 / 5 |
+| INT8 regenerado T7.2 | 0,7471 | 0,7270 | 0,8541 | +1,4212 | +1,4392 | +0,6342 | 4 / 7 |
+
+Valores arredondados a quatro casas; deltas calculados antes do arredondamento. A [tabela completa](../assets/data/avaliacao_T8_1/candidato_T5_6_20261026/metricas_gerais.csv) inclui também divergências de top-1 e deltas contra TFLite FP32.
+
+**FP32 e float16 preservaram os 473 argmax do Keras neste teste.** A faixa dinâmica mudou 7 previsões; o INT8 oficial, 15; o regenerado, 14. Nem toda troca de argmax altera o número de acertos: uma classe errada pode ser substituída por outra também errada. O arquivo [`mudancas_por_imagem.csv`](../assets/data/avaliacao_T8_1/candidato_T5_6_20261026/mudancas_por_imagem.csv) distingue acerto perdido, acerto ganho e erro alterado.
+
+O INT8 oficial ilustra por que as métricas precisam ser lidas separadamente: sua F1 macro aumentou, mas houve **7 acertos perdidos e 5 ganhos**, reduzindo a acurácia global de **401/473 para 399/473**. A melhora média entre classes não elimina as perdas em classes específicas.
+
+### Comparação por classe
+
+O arquivo [`comparacao_por_classe.csv`](../assets/data/avaliacao_T8_1/candidato_T5_6_20261026/comparacao_por_classe.csv) contém **78 linhas: 13 classes × 6 versões**, com precisão, recall, F1, suporte e deltas contra ambas as referências. O suporte é idêntico entre as versões; as seis [matrizes de confusão](../assets/data/avaliacao_T8_1/candidato_T5_6_20261026/matrizes/) somam 473 imagens cada.
+
+Para o INT8 oficial da T7.3, o F1 por classe é:
+
+| Índice | Classe | Suporte | F1 Keras | F1 INT8 oficial | Δ F1 (p.p.) |
+| ---: | --- | ---: | ---: | ---: | ---: |
+| 0 | Vaquinha | 157 | 0,9274 | 0,9201 | −0,7317 |
+| 1 | Cigarrinha-do-milho | 29 | 0,9286 | 0,9474 | +1,8797 |
+| 2 | Percevejo-barriga-verde | 42 | 0,7816 | 0,7765 | −0,5139 |
+| 3 | Lagarta-do-cartucho | 61 | 0,8594 | 0,8594 | 0,0000 |
+| 4 | Percevejo-marrom | 10 | 0,6667 | 0,6667 | 0,0000 |
+| 5 | Percevejo-verde | 14 | 0,4167 | 0,4800 | +6,3333 |
+| 6 | Percevejo-asa-preta | 11 | 0,5333 | 0,6250 | +9,1667 |
+| 7 | Percevejo-do-milho | 12 | 0,7200 | 0,7200 | 0,0000 |
+| 8 | Lagarta-falsa-medideira | 12 | 0,4706 | 0,4444 | −2,6144 |
+| 9 | Lagarta-da-soja | 6 | 0,7692 | 0,7692 | 0,0000 |
+| 10 | Lagarta-das-vagens | 24 | 0,6275 | 0,6154 | −1,2066 |
+| 11 | Astylus variegatus | 71 | 0,9252 | 0,9116 | −1,3605 |
+| 12 | Cigarrinha-das-pastagens | 24 | 0,9020 | 0,8846 | −1,7345 |
+
+O INT8 oficial apresenta queda de F1 em **6 das 13 classes**. Sua maior queda de F1 é na lagarta-falsa-medideira (**−2,6144 p.p.**, 12 imagens), embora o recall permaneça em 4/12: a precisão cai de 0,8000 para 0,6667, indicando mais falsos positivos. A maior queda de recall é no percevejo-barriga-verde (**−2,3810 p.p.**, de 34/42 para 33/42). Na vaquinha, classe de maior suporte, os acertos caem de 147/157 para 144/157.
+
+Na faixa dinâmica, a maior queda de F1 ocorre na lagarta-do-cartucho (**−2,8606 p.p.**, 61 imagens). No INT8 regenerado, ocorre na lagarta-falsa-medideira (**−2,6144 p.p.**). As três versões quantizadas que alteram argmax apresentam a mesma maior queda de recall no percevejo-barriga-verde. Suportes pequenos limitam a interpretação dos ganhos e perdas. Não houve revisão visual ou atribuição de causas aos erros.
+
+### Maiores perdas por versão — relatório da T8.1
+
+A tabela abaixo reproduz os destaques do [relatório gerado](../assets/data/avaliacao_T8_1/candidato_T5_6_20261026/relatorio_avaliacao.md), permitindo consultar nesta documentação a maior queda de F1 e de recall de cada conversão frente ao Keras. Empates são preservados; o CSV por classe inclui também as classes sem queda. “Sem queda observada” se refere apenas às métricas neste conjunto de teste.
+
+| Versão | Métrica | Classe | Suporte | Keras | Convertido | Δ (p.p.) |
+| --- | --- | --- | ---: | ---: | ---: | ---: |
+| TFLite FP32 (T7.1) | f1 | Sem queda observada | — | — | — | — |
+| TFLite FP32 (T7.1) | recall | Sem queda observada | — | — | — | — |
+| Faixa dinâmica (T7.2) | f1 | Lagarta-do-cartucho (Spodoptera frugiperda) | 61 | 0,8594 | 0,8308 | -2,8606 |
+| Faixa dinâmica (T7.2) | recall | Percevejo-barriga-verde (Dichelops/Diceraeus) | 42 | 0,8095 | 0,7857 | -2,3810 |
+| Float16 (T7.2) | f1 | Sem queda observada | — | — | — | — |
+| Float16 (T7.2) | recall | Sem queda observada | — | — | — | — |
+| INT8 oficial (T7.3) | f1 | Lagarta-falsa-medideira (Chrysodeixis includens) | 12 | 0,4706 | 0,4444 | -2,6144 |
+| INT8 oficial (T7.3) | recall | Percevejo-barriga-verde (Dichelops/Diceraeus) | 42 | 0,8095 | 0,7857 | -2,3810 |
+| INT8 regenerado (T7.2) | f1 | Lagarta-falsa-medideira (Chrysodeixis includens) | 12 | 0,4706 | 0,4444 | -2,6144 |
+| INT8 regenerado (T7.2) | recall | Percevejo-barriga-verde (Dichelops/Diceraeus) | 42 | 0,8095 | 0,7857 | -2,3810 |
+
+A conversão FP32 e a quantização float16 preservaram as classificações do original nesta amostra. A faixa dinâmica e as duas versões INT8 mudaram algumas classificações, com ganhos em certas classes e perdas em outras. Por isso, o aumento do F1 macro não deve ser interpretado como ausência de perda após a conversão. Esta avaliação verifica a qualidade das classificações; o tempo de execução no celular permanece para a T8.2.
+
+### Limites e relação com as próximas tarefas
+
+O conjunto de teste já foi consultado historicamente. Esta é uma **avaliação exploratória**, sem garantia de generalização a um teste novo e independente. Os resultados não devem orientar novos ajustes de pesos, limiares ou escolha de versão pelo maior F1 observado nesse teste.
+
+Não foram calculados novos testes de significância nesta consolidação. Os ICs e McNemar da T7.2 usam o TFLite FP32 como referência. McNemar compara acertos e erros pareados; não testa diretamente F1, não comprova equivalência e não garante perda inferior a 2 p.p. de acurácia macro. As estimativas pontuais desta amostra não aprovam definitivamente o RNF-06, que continua dependente de avaliação independente. Não há inferência estatística direta entre os dois INT8 nesta entrega.
+
+O artefato oficial continua sendo o INT8 da T7.3. A T8.1 identifica suas perdas e ganhos, sem substituí-lo pelo regenerado. Tamanho e latência estão na [T7.2](#72-comparação-das-estratégias-de-quantização-t72); benchmark no celular é assunto da T8.2 e a decisão final de versão, da T8.3. Como esta análise usa argmax, ela também não reconfirma a política de confiança da T6.5.
+
+### Arquivos do relatório
+
+| Arquivo | Conteúdo |
+| --- | --- |
+| [relatorio_avaliacao.md](../assets/data/avaliacao_T8_1/candidato_T5_6_20261026/relatorio_avaliacao.md) | Relatório gerado com métricas gerais, maiores perdas por classe, protocolo e limitações |
+| [metricas_gerais.csv](../assets/data/avaliacao_T8_1/candidato_T5_6_20261026/metricas_gerais.csv) | Comparação das seis versões e deltas contra Keras e TFLite FP32 |
+| [comparacao_por_classe.csv](../assets/data/avaliacao_T8_1/candidato_T5_6_20261026/comparacao_por_classe.csv) | Precisão, recall, F1, suporte e deltas de todas as classes em cada versão |
+| [predicoes_teste.csv](../assets/data/avaliacao_T8_1/candidato_T5_6_20261026/predicoes_teste.csv) | Rótulo real e classe prevista por versão para os mesmos 473 IDs |
+| [mudancas_por_imagem.csv](../assets/data/avaliacao_T8_1/candidato_T5_6_20261026/mudancas_por_imagem.csv) | Trocas de argmax frente ao Keras, classificadas como acerto perdido, acerto ganho ou erro alterado; não inclui mudanças de scores que preservam o argmax |
+| [matrizes/](../assets/data/avaliacao_T8_1/candidato_T5_6_20261026/matrizes/) | Seis matrizes de confusão, com linhas reais e colunas previstas |
+| [proveniencia.json](../assets/data/avaliacao_T8_1/candidato_T5_6_20261026/proveniencia.json) | Hashes das fontes, modelos, código e resultados, IDs avaliados e ambientes registrados |
+
+### Reprodução e validação
+
+A consolidação requer NumPy e a biblioteca padrão, sem TensorFlow ou fotos externas. As inferências anteriores permanecem preservadas. A saída precisa ser uma pasta nova:
+
+```bash
+python -m src.avaliacao_pos_conversao_t8_1 --saida runs/reproducao_T8_1
+python tests/validar_avaliacao_pos_conversao_t8_1.py
+git diff --check
+```
+
+O comando também aceita `--comparacao`, `--original`, `--pacote`, `--indice`, `--fp32` e `--int8` para informar as fontes explicitamente. A pasta publicada é [`assets/data/avaliacao_T8_1/candidato_T5_6_20261026/`](../assets/data/avaliacao_T8_1/candidato_T5_6_20261026/). A proveniência registra hashes das fontes, do código e de todos os demais arquivos gerados, além da data UTC da consolidação.
+
+Os **16 testes da T8.1 passaram, sem testes pulados**, incluindo publicação com hashes e quebras LF, deltas contra referências distintas, independência da ordem das linhas, recusa de IDs ausentes/duplicados, rótulos divergentes, classes fora da faixa, partição trocada, modelo ou índice alterado, origem de outro candidato, referência Keras trocada, troca do INT8 oficial pelo regenerado, métricas incompatíveis e tentativa de sobrescrita. A suíte também confere os artefatos reais versionados, a cobertura de 473 imagens e a coexistência de melhora de F1 macro com perda de acurácia global no INT8 oficial.
