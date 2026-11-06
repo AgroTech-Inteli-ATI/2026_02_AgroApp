@@ -3236,7 +3236,7 @@ A INT8 regenerada no Windows **não é idêntica byte a byte** ao artefato publi
 | Tipos de tensores do grafo | 121 INT8 + 53 INT32 | Idênticos |
 | Fotos da revisão visual da T7.3 | 49/49 com mesmo argmax do Keras | 49/49 com mesmo argmax do Keras |
 
-A diferença está nas escalas internas, que dependem dos valores em ponto flutuante observados durante a calibração. Esses valores variam ligeiramente entre CPUs e bibliotecas numéricas (oneDNN no x86, outra implementação no arm64). Na validação, as duas versões não diferem com significância estatística (ver abaixo). **O artefato oficial continua sendo o da T7.3**, que é o versionado e contratado. A versão regenerada demonstra que a estratégia é reproduzível pelo fluxo documentado. Ela não deve substituir o artefato oficial por ter tido números ligeiramente melhores, porque a diferença está dentro do ruído.
+A diferença está nas escalas internas, que dependem dos valores em ponto flutuante observados durante a calibração. Esses valores variam ligeiramente entre CPUs e bibliotecas numéricas (oneDNN no x86, outra implementação no arm64). Os testes estatísticos apresentados abaixo comparam cada versão INT8 ao FP32; não foi realizado um teste direto entre a INT8 da T7.3 e a regenerada na T7.2. Portanto, esses resultados não permitem concluir que as duas versões INT8 sejam estatisticamente equivalentes ou que a diferença entre elas seja significativa. **O artefato oficial continua sendo o da T7.3**, que é o versionado e contratado. A versão regenerada demonstra que o fluxo documentado produz um modelo com o mesmo contrato e conjunto de calibração, sem garantir identidade dos bytes ou das previsões. Seus números pontuais ligeiramente melhores não bastam para justificar a substituição do artefato oficial.
 
 ### Protocolo de medição
 
@@ -3283,7 +3283,7 @@ As 5 versões executaram sem delegates, com saídas finitas e válidas nas 13 im
 - **Latência com XNNPACK:** o INT8 foi a única estratégia consistentemente mais rápida que o FP32, com 27% a 37% a menos na mediana, com 1 e 4 threads. No CPU, o float16 se comporta como o FP32, porque os pesos são convertidos para float32 ao carregar; o ganho dessa estratégia aparece com o delegate de GPU. A faixa dinâmica foi a mais lenta (cerca de 4,8 vezes o FP32 com 1 thread). Ela piorou ao aumentar as threads, com grande variação: o desvio passou de 5 ms com 1 thread para 31 ms com 4 threads. O processador combina núcleos de desempenho e de eficiência, o que é compatível com essa piora, mas a causa não foi isolada.
 - **Latência sem delegate (RNF-09):** todas as versões funcionam, mas os kernels de referência do x86 sem XNNPACK são lentos para inteiros. INT8 e faixa dinâmica passam de 260 ms de mediana e de 340 ms de p95. Isso **não** indica o desempenho no celular: em ARM, os kernels inteiros nativos do LiteRT são otimizados para NEON. É, no entanto, o primeiro ponto a medir no aparelho. Se o p95 sem aceleração ultrapassar 300 ms lá, o modo degradado do RNF-09 não atenderá ao RNF-04.
 - **Desempenho:**
-  - **Diferença em relação ao FP32:** nenhuma estratégia difere do FP32 com significância estatística (McNemar p = 1,000 em todas na validação). Os erros novos e os acertos novos se equilibram: 3/3 na faixa dinâmica, 5/6 no INT8 da T7.3 e 4/5 no INT8 regenerado.
+  - **Diferença em relação ao FP32:** o teste exato de McNemar não detectou diferença significativa nas proporções de acertos e erros pareados entre cada estratégia e o FP32 na validação (p = 1,000 em todas). O teste não avalia diretamente o F1 macro, não comprova equivalência entre os modelos e não garante perda inferior a 2 p.p. de acurácia macro. As diferenças de F1 macro e acurácia macro são descritas pelos respectivos intervalos de confiança do bootstrap. Os erros novos e os acertos novos foram: 3/3 na faixa dinâmica, 5/6 no INT8 da T7.3 e 4/5 no INT8 regenerado.
   - **Float16:** é praticamente idêntico ao FP32, com uma única divergência de top-1.
   - **Percevejo-verde:** concentra a maior queda por classe nas versões inteiras. Com 14 imagens de validação, o recall passa de 8/14 para 6/14. Isso é compatível com a fragilidade do cluster de percevejos registrada na [T6.3](#63-análise-de-erros-t63), mas o suporte é pequeno demais para ser conclusivo.
 - **RNF-06 (perda ≤ 2 p.p. de acurácia macro):**
@@ -3296,10 +3296,10 @@ As 5 versões executaram sem delegates, com saídas finitas e válidas nas 13 im
 **O INT8 inteiro (artefato da T7.3) continua sendo a estratégia recomendada para o aplicativo.** Ele:
 
 - é o único entre as versões de cerca de 4 MB que também reduz a latência;
-- não apresenta perda estatisticamente detectável em relação ao FP32;
+- apresentou F1 macro de validação 0,0044 abaixo do FP32 e nenhuma diferença significativa de acertos e erros no teste de McNemar; isso não comprova equivalência nem o atendimento ao RNF-06;
 - já tem contrato de entrada e saída e conjunto de calibração documentados.
 
-O **float16** é a alternativa quando a fidelidade ao FP32 for prioritária ou o aplicativo usar o delegate de GPU. Ele custa cerca de 2,8 MB a mais que o INT8 e não traz ganho de latência no CPU. A **faixa dinâmica** não é recomendada: tem tamanho semelhante ao INT8, desempenho equivalente e foi a mais lenta e instável no CPU medido.
+O **float16** é a alternativa quando a fidelidade ao FP32 for prioritária ou o aplicativo usar o delegate de GPU. Ele custa cerca de 2,8 MB a mais que o INT8 e não traz ganho de latência no CPU. A **faixa dinâmica** não é recomendada: tem tamanho semelhante ao INT8, métricas próximas às do FP32 nesta amostra e foi a mais lenta e instável no CPU medido.
 
 ### Pendências e limites
 
