@@ -1,0 +1,4 @@
+# T8.2: ambiente mínimo para inferência, validado com Python 3.13.
+numpy==2.4.4
+tensorflow==2.21.0
+keras==3.15.1

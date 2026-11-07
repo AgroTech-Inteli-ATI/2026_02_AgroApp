@@ -1,0 +1,128 @@
+{
+  "esquema": "conversao_T7_1_v1",
+  "backbone": "efficientnet_lite0",
+  "tensorflow": "2.21.0",
+  "quantizacao": null,
+  "operadores": "TFLITE_BUILTINS",
+  "origem_selecao": {
+    "pacote": "assets/modelos/candidato_T5_6_20261026",
+    "execucao_t5_5": "rodadas_T5_6_20261026/20261026-213017_efficientnet_lite0_s42",
+    "manifesto_sha256": "72bd8194246cf5673cb6194491bbe1c0410d526a4c14027a087c414b9fa14f62",
+    "classes_sha256": "1058619e188ffd7fa42bfc6821e2e122356b35d8503af71b987f37ae1e4572f4",
+    "metricas_validacao_sha256": "93300711a2622edfccfffc28a0fd8376791eb4b02644c0abaa688ce8aeef10f9"
+  },
+  "sha256": {
+    "keras": "089a8d903a78898badf385f0d57006a4fb556d76e3e8fae719babdaf564aa51a",
+    "tflite": "50f7e7a6072c193fadd58d662e1c240acd48806cd5dab2197aaf7677da29da56"
+  },
+  "tamanho_bytes": 13531184,
+  "entrada": {
+    "nome": "serving_default_imagem:0",
+    "indice": 0,
+    "shape": [
+      1,
+      224,
+      224,
+      3
+    ],
+    "shape_signature": [
+      -1,
+      224,
+      224,
+      3
+    ],
+    "dtype": "float32"
+  },
+  "saida": {
+    "nome": "StatefulPartitionedCall_1:0",
+    "indice": 173,
+    "shape": [
+      1,
+      13
+    ],
+    "shape_signature": [
+      -1,
+      13
+    ],
+    "dtype": "float32"
+  },
+  "preprocessamento": "T4.1: EXIF, RGB, proporção preservada, padding cinza 128, float32 / 255",
+  "classes": [
+    {
+      "indice": 0,
+      "nome": "Vaquinha (Diabrotica speciosa)"
+    },
+    {
+      "indice": 1,
+      "nome": "Cigarrinha-do-milho (Dalbulus maidis)"
+    },
+    {
+      "indice": 2,
+      "nome": "Percevejo-barriga-verde (Dichelops/Diceraeus)"
+    },
+    {
+      "indice": 3,
+      "nome": "Lagarta-do-cartucho (Spodoptera frugiperda)"
+    },
+    {
+      "indice": 4,
+      "nome": "Percevejo-marrom (Euschistus heros)"
+    },
+    {
+      "indice": 5,
+      "nome": "Percevejo-verde (Nezara viridula)"
+    },
+    {
+      "indice": 6,
+      "nome": "Percevejo-asa-preta (Edessa meditabunda)"
+    },
+    {
+      "indice": 7,
+      "nome": "Percevejo-do-milho (Leptoglossus zonatus)"
+    },
+    {
+      "indice": 8,
+      "nome": "Lagarta-falsa-medideira (Chrysodeixis includens)"
+    },
+    {
+      "indice": 9,
+      "nome": "Lagarta-da-soja (Anticarsia gemmatalis)"
+    },
+    {
+      "indice": 10,
+      "nome": "Lagarta-das-vagens (Spodoptera eridania e S. cosmioides)"
+    },
+    {
+      "indice": 11,
+      "nome": "Astylus variegatus"
+    },
+    {
+      "indice": 12,
+      "nome": "Cigarrinha-das-pastagens (Deois flavopicta)"
+    }
+  ],
+  "validacao": {
+    "atol": 1e-05,
+    "rtol": 0.0001,
+    "amostras": [
+      {
+        "amostra": "sintetica_zeros",
+        "erro_absoluto_maximo": 1.4901161193847656e-07,
+        "argmax_keras": 0,
+        "argmax_tflite": 0
+      },
+      {
+        "amostra": "sintetica_uns",
+        "erro_absoluto_maximo": 1.043081283569336e-07,
+        "argmax_keras": 0,
+        "argmax_tflite": 0
+      },
+      {
+        "amostra": "sintetica_aleatoria",
+        "erro_absoluto_maximo": 1.4901161193847656e-07,
+        "argmax_keras": 0,
+        "argmax_tflite": 0
+      }
+    ]
+  }
+}

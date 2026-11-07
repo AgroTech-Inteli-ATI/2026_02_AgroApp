@@ -1,0 +1,25 @@
+{
+  "numero_hipoteses": 3,
+  "limiar_confianca": 0.65,
+  "regra_limiar": "top1_maior_ou_igual",
+  "abaixo_do_limiar": {
+    "indica_classe": false,
+    "mensagem": "Resultado inconclusivo: não foi possível identificar o problema com segurança nesta foto.",
+    "orientacao_nova_foto": "Fotografe de novo, mais perto, com o inseto ou a parte da planta afetada em foco e bem iluminada.",
+    "conteudos_relacionados_quando_catalogo": true
+  },
+  "base": {
+    "particao": "validacao",
+    "n_imagens": 474,
+    "modelo": "assets/modelos/candidato_T5_6_20261026/modelo.keras",
+    "modelo_sha256": "089a8d903a78898badf385f0d57006a4fb556d76e3e8fae719babdaf564aa51a",
+    "indice": "assets/data/treino_T5_2/indice_dataset.csv",
+    "indice_sha256": "28ee662885202f0bda3dec9660e44b28f99b8bd183210bcbdd795b103269b2eb",
+    "origem_inferencia": "Keras FP32",
+    "score_confianca": "softmax_nao_calibrado",
+    "curva": "assets/data/politica_T6_5/curva_limiar_validacao.csv",
+    "cobertura_por_classe": "assets/data/politica_T6_5/cobertura_por_classe_validacao.csv",
+    "meta_acerto": 0.90,
+    "f1_macro_validacao": 0.7811
+  }
+}

@@ -64,6 +64,24 @@
 - [6.1 Métricas por classe (T6.1)](#61-métricas-por-classe-t61)
 - [6.2 Matriz de confusão (T6.2)](#62-matriz-de-confusão-t62)
 - [6.3 Análise de erros (T6.3)](#63-análise-de-erros-t63)
+- [6.4 Proposta de tratamento de classes (T6.4)](#64-proposta-de-tratamento-de-classes-t64)
+- [6.5 Política de confiança (T6.5)](#65-política-de-confiança-t65)
+
+</details>
+
+<details>
+<summary><strong>7. Conversão e otimização do modelo</strong></summary>
+
+- [7.1 Conversão para TFLite/LiteRT (T7.1)](#71-conversão-para-tflitelitert-t71)
+- [7.2 Comparação das estratégias de quantização (T7.2)](#72-comparação-das-estratégias-de-quantização-t72)
+- [7.3 Quantização INT8 com conjunto representativo (T7.3)](#73-quantização-int8-com-conjunto-representativo-t73)
+
+</details>
+
+<details>
+<summary><strong>8. Desempenho para dispositivos móveis</strong></summary>
+
+- [8.2 Benchmark de inferência (T8.2)](#82-benchmark-de-inferência-t82)
 
 </details>
 
@@ -2897,3 +2915,641 @@ As propostas de separar estágios, agrupar classes ou retornar hipóteses
 concorrentes devem ser avaliadas na seção de tratamento das classes; este
 relatório não autoriza uma correção automática dos rótulos nem comprova a causa
 dominante em cada par.
+
+## 6.4 Proposta de tratamento de classes (T6.4)
+
+**Autor:** Rui. **Revisora:** Ana Célia. **Data da proposta:** 31/10/2026. **Estado:** proposta técnica; revisão e validação agronômica do parceiro pendentes.
+
+### Decisão e fundamento
+
+A proposta é **preservar as 13 classes do candidato e apresentar identidades separadas como hipóteses concorrentes**, sujeitas ao ranking e à política de confiança. Nenhum novo agrupamento em classe única é recomendado nesta rodada. A análise da T6.3 registra hipóteses de semelhança, cobertura de estágios, qualidade e múltiplos sujeitos, mas não demonstra que os pares sejam indistinguíveis ou que uma identificação conjunta preserve o conteúdo necessário ao parceiro.
+
+O TAP, seção 12, pp. 5–6, prevê hipóteses com confiança como mitigação para confusões e condiciona o agrupamento de classes indistinguíveis à validação técnica do parceiro. A equivalência de manejo ou de conteúdo **não é presumida** a partir de uma confusão do modelo, de nomes comuns parecidos ou da presença na mesma cultura.
+
+O agrupamento já existente de *Spodoptera eridania* e *S. cosmioides* na classe das-vagens, assim como os demais rótulos do pacote selecionado, é preservado. A proposta não altera as saídas do modelo, o dicionário, os dados ou as métricas, nem transforma adultos em erros de rótulo por causa do nome comum larval.
+
+### Cobertura das decisões
+
+Os 35 pares direcionais com pelo menos um erro no candidato correspondem a **26 relações entre duas classes**. Cada relação recebe uma decisão que vale para ambos os sentidos, preservando suas contagens separadas. Acrescenta-se barriga-verde × percevejo-do-milho, analisado nas rodadas anteriores, mas sem erros na matriz do candidato: são **27 decisões documentadas**, cobrindo também os oito pares recorrentes históricos. Os 72 erros atuais não são somados aos erros históricos.
+
+Na tabela, **A** é a primeira classe e **B** a segunda. As contagens são erros reais A previstos como B e reais B previstos como A, respectivamente, na avaliação **Keras FP32 de 473 imagens**. Os IDs identificam as justificativas e os campos de validação do [registro completo por par](../assets/data/tratamento_T6_4/proposta_tratamento.md) e da [proposta estruturada](../assets/data/tratamento_T6_4/proposta_tratamento.json). Não houve avaliação de probabilidades top-k nesta proposta.
+
+| ID | A × B | A → B / B → A | Alternativa recomendada |
+| --- | --- | ---: | --- |
+| PAR-03-10 | Cartucho × Das-vagens | 3 / 5 | Hipóteses concorrentes |
+| PAR-00-11 | Vaquinha × Astylus | 5 / 1 | Hipóteses concorrentes |
+| PAR-03-08 | Cartucho × Falsa-medideira | 0 / 6 | Hipóteses concorrentes |
+| PAR-00-02 | Vaquinha × Barriga-verde | 2 / 3 | Hipóteses concorrentes |
+| PAR-05-06 | Verde × Asa-preta | 0 / 5 | Hipóteses concorrentes |
+| PAR-02-03 | Barriga-verde × Cartucho | 1 / 1 | Hipóteses concorrentes |
+| PAR-00-01 | Vaquinha × Cigarrinha-do-milho | 1 / 3 | Hipóteses concorrentes |
+| PAR-00-05 | Vaquinha × Verde | 0 / 4 | Hipóteses concorrentes |
+| PAR-02-05 | Barriga-verde × Verde | 0 / 4 | Hipóteses concorrentes |
+| PAR-02-10 | Barriga-verde × Das-vagens | 2 / 1 | Hipóteses concorrentes |
+| PAR-07-12 | Percevejo-do-milho × Cigarrinha-das-pastagens | 3 / 0 | Hipóteses concorrentes |
+| PAR-08-10 | Falsa-medideira × Das-vagens | 2 / 1 | Hipóteses concorrentes |
+| PAR-00-06 | Vaquinha × Asa-preta | 0 / 2 | Hipóteses concorrentes |
+| PAR-02-04 | Barriga-verde × Marrom | 0 / 2 | Hipóteses concorrentes |
+| PAR-02-09 | Barriga-verde × Lagarta-da-soja | 1 / 1 | Hipóteses concorrentes |
+| PAR-04-07 | Marrom × Percevejo-do-milho | 2 / 0 | Hipóteses concorrentes |
+| PAR-10-11 | Das-vagens × Astylus | 1 / 1 | Hipóteses concorrentes |
+| PAR-02-07 | Barriga-verde × Percevejo-do-milho — evidência histórica | 0 / 0 | Hipóteses concorrentes |
+| PAR-00-10 | Vaquinha × Das-vagens | 1 / 0 | Hipóteses concorrentes |
+| PAR-00-12 | Vaquinha × Cigarrinha-das-pastagens | 1 / 0 | Hipóteses concorrentes |
+| PAR-02-11 | Barriga-verde × Astylus | 1 / 0 | Hipóteses concorrentes |
+| PAR-03-07 | Cartucho × Percevejo-do-milho | 1 / 0 | Hipóteses concorrentes |
+| PAR-03-09 | Cartucho × Lagarta-da-soja | 1 / 0 | Hipóteses concorrentes |
+| PAR-04-11 | Marrom × Astylus | 1 / 0 | Hipóteses concorrentes |
+| PAR-05-10 | Verde × Das-vagens | 1 / 0 | Hipóteses concorrentes |
+| PAR-07-11 | Percevejo-do-milho × Astylus | 0 / 1 | Hipóteses concorrentes |
+| PAR-10-12 | Das-vagens × Cigarrinha-das-pastagens | 0 / 1 | Hipóteses concorrentes |
+
+Para cada par, o registro completo apresenta separadamente a evidência, a razão para não recomendar agrupamento nesta rodada, a justificativa das hipóteses concorrentes, o impacto agronômico a validar e o encaminhamento. Contagens de uma única observação não são tratadas como exemplares independentes. Os casos isolados também recebem decisão; a ausência de erros em um sentido não comprova ausência de confusão em novas imagens.
+
+### Pontos prioritários para a validação agronômica
+
+- **Cartucho, falsa-medideira e das-vagens:** confirmar se o conteúdo precisa distinguir essas identidades por cultura e estágio, incluindo a presença de adultos no escopo. A dificuldade com mariposas não autoriza fundir todas as imagens ou estender o grupo das-vagens às outras classes.
+- **Asa-preta × verde e asa-preta × vaquinha:** confirmar o conteúdo e os critérios de diferenciação para ninfas. Cinco erros asa-preta → verde vêm de uma observação; a ausência de ninfas explicitamente marcadas no treino não comprova que não existam nas fotos sem estágio informado.
+- **Barriga-verde × cartucho:** validar a identificação de `IMG_02602`, marcada na T6.3 como suspeita de rótulo inconsistente. Um possível problema de anotação deve ser conferido na fonte, sem ser ocultado por agrupamento de classes.
+- **Vaquinha × Astylus e pares com múltiplos insetos:** validar o sujeito-alvo e o conteúdo associado a cada identidade. Hipóteses concorrentes não significam que as duas espécies estejam presentes na foto.
+- **Demais pares:** confirmar, pelas perguntas individuais do registro, se manter as identidades separadas atende ao conteúdo e ao encaminhamento esperado. Não se afirma que os pares tenham manejo igual ou diferente sem essa validação.
+
+### Relação com a política de confiança e o aplicativo
+
+Esta é uma decisão proposta de apresentação e identidade das classes; o registro não é uma regra de inferência. O aplicativo deve ordenar as hipóteses por confiança decrescente, preservando os scores do modelo e os critérios aprovados de confiança. A relação entre duas classes **não obriga a incluir a outra no resultado**, não soma scores, não altera o ranking e não cria agrupamentos por transitividade.
+
+Quando nenhuma hipótese satisfizer a política adotada, o resultado deve ser inconclusivo e orientar nova captura, sem completar a lista com classes deste registro. Se duas classes do par estiverem entre as hipóteses elegíveis, seus nomes, confianças e conteúdos devem permanecer separados, sem apresentação de manejo como conclusão confirmada.
+
+Em 31/10/2026, o PR da T6.5 propõe três hipóteses e limiar top-1 de 0,65 em Keras FP32. Esses parâmetros continuam sob responsabilidade da política de confiança e não são aprovados ou recalibrados nesta seção. As contagens top-1 da T6.2/T6.3 não comprovam que a classe correta estará entre as hipóteses exibidas. A eficácia da apresentação e o comportamento após a conversão embarcada exigem verificação própria.
+
+### Registro da validação e rastreabilidade
+
+Ana Célia deve revisar as justificativas e a cobertura dos pares. Para cada decisão, o parceiro deve confirmar se a apresentação proposta e o conteúdo associado preservam as distinções agronômicas necessárias ao escopo do MVP. O registro deve conter **decisão validada, impacto ou observação, responsável, data e evidência**. Uma concordância em bloco pode identificar explicitamente todos os IDs e a versão aprovada; os campos da proposta estão inicialmente pendentes, sem aprovação presumida.
+
+Se o parceiro preferir um agrupamento, devem ser definidos o conjunto completo de classes, o nome e significado do grupo, culturas e estágios abrangidos, exceções e conteúdo associado. A aprovação de um par não autoriza fundir outras classes ligadas a ele. A mudança exigirá nova versão do contrato e dos dados ou do pós-processamento, conforme a abordagem escolhida, com avaliação e reconferência da política de confiança. O pacote atual não será alterado retroativamente.
+
+Os [hashes de rastreabilidade](../assets/data/tratamento_T6_4/rastreabilidade.json) vinculam a proposta ao modelo, à ordem de classes, às métricas e matrizes do candidato, à análise por imagem e aos pares históricos. O hash do TAP original consultado também está registrado. A revisão da T6.3 é assistida por IA e exploratória; esta proposta não a transforma em confirmação taxonômica. A validação agronômica permanece necessária para fechar a decisão de produto.
+
+
+## 6.5 Política de confiança (T6.5)
+
+### Objetivo e decisão
+
+Definir quantas hipóteses o aplicativo apresenta, a partir de que confiança as apresenta e o que faz quando nenhuma classe atinge o mínimo (RF-04, RF-05 e RF-06 da [seção 2.1](#21-requisitos-e-restrições-técnicas)). O símbolo ⧗ marca a proposta da equipe a validar com o parceiro, como na seção 2.1.
+
+| Decisão | Valor |
+| --- | --- |
+| Número de hipóteses | **3** ⧗ |
+| Limiar mínimo de confiança | **0,65** ⧗, aplicado à hipótese mais provável (top-1); confiança igual ao limiar é aceita |
+| Abaixo do limiar | Nenhuma classe é indicada como identificação obtida; o aplicativo mostra a mensagem de resultado inconclusivo ⧗, orienta uma nova foto e, quando existir o catálogo de conteúdo (RF-07), oferece conteúdos relacionados |
+
+**Regra.** Se a confiança do top-1 for **maior ou igual a 0,65**, o aplicativo mostra as três hipóteses mais prováveis em ordem decrescente, cada uma com a sua confiança (RF-04 e RF-05) e abrindo o seu conteúdo (RF-08). O limiar vale só para a primeira hipótese; a segunda e a terceira são mostradas mesmo com confiança menor. No empate, vale a maior probabilidade e, depois, o menor índice de classe. Se o top-1 for **menor que 0,65**, aplica-se o RF-06.
+
+**Mensagem ⧗:** "Resultado inconclusivo: não foi possível identificar o problema com segurança nesta foto." **Orientação ⧗:** "Fotografe de novo, mais perto, com o inseto ou a parte da planta afetada em foco e bem iluminada." O texto não afirma diagnóstico e não diz que a foto não mostra uma praga. Os valores estão em [`parametros.json`](../assets/data/politica_T6_5/parametros.json).
+
+### Critérios de aceite verificáveis
+
+- **Quantidade e ordem:** quando aceita, a saída contém exatamente as três classes de maior score, em ordem decrescente, cada uma com seu score. Empates são resolvidos pelo menor índice de classe. A escolha de k=3 é sustentada pelo ganho top-3 sobre top-2: 2,09 p.p. entre as aceitas em 0,65 (96,7% contra 94,7%).
+- **Limiar:** a decisão considera somente o score top-1; `top-1 >= 0,65` aceita e `top-1 < 0,65` recusa. A calibração seleciona o menor limiar da grade de 0,30 a 0,95, em passos de 0,05, cujo acerto top-1 entre aceitas seja pelo menos 90%. Na validação, 0,60 resulta em 89,3% e 0,65 em 90,7%, com 430/474 imagens aceitas.
+- **Resultado inconclusivo:** abaixo do limiar, nenhuma classe é apresentada como identificação. São exibidas a mensagem e a orientação de nova foto definidas acima; conteúdos relacionados são oferecidos somente se houver catálogo.
+- **Verificação de fronteira:** a igualdade com 0,65 é aceita e um valor abaixo é inconclusivo. Os testes automatizados devem cobrir essa fronteira, o desempate, a ordenação e o indicador `indica_classe=false` no resultado inconclusivo.
+- **Rastreabilidade e base:** os parâmetros registram caminho e SHA-256 do modelo e do índice, além da origem das probabilidades. A análise usa todas e somente as imagens da validação, confere os rótulos e registra o SHA-256 do CSV de probabilidades. Nenhuma imagem de teste é usada.
+- **Interpretação do score:** os valores exibidos são scores softmax não calibrados e não devem ser apresentados como probabilidade de acerto.
+
+Antes de aplicar o limiar no aparelho, a T6.6 deve reconferi-lo no modelo INT8. A validação usada aqui também participou da escolha do candidato, portanto os resultados desta calibração são exploratórios.
+
+### Método e artefatos
+
+A política foi calibrada somente na partição de validação (474 imagens), com o modelo oficial da [seção 5.6](#56-seleção-e-versionamento-do-modelo-t56), em inferência Keras FP32: [`modelo.keras`](../assets/modelos/candidato_T5_6_20261026/modelo.keras), sha256 `089a8d903a78898badf385f0d57006a4fb556d76e3e8fae719babdaf564aa51a`, F1 macro de validação **0,7811** (TFLite INT8: 0,7856, conforme a seção 5.6). O índice é [`indice_dataset.csv`](../assets/data/treino_T5_2/indice_dataset.csv), sha256 `28ee662885202f0bda3dec9660e44b28f99b8bd183210bcbdd795b103269b2eb`, o mesmo do manifesto do candidato. Nenhuma imagem de teste foi aberta. O argmax das probabilidades gravadas reproduz o F1 macro (0,7811), a acurácia (0,8565) e a matriz de confusão do `avaliacao_validacao.json` do candidato.
+
+O limiar é o **menor da grade de 0,30 a 0,95 (passo 0,05) em que o acerto do top-1 entre as aceitas é de pelo menos 0,90**. Para selecionar k, usa-se k=2 como referência e passa-se a k=3 se o acerto top-3 superar o top-2 em pelo menos 2 p.p.; k nunca é maior que 3. Nesta validação, o ganho foi 2,09 p.p., então foram selecionadas três hipóteses.
+
+```bash
+python -m src.probabilidades_validacao_t6_5 --modelo assets/modelos/candidato_T5_6_20261026/modelo.keras --indice assets/data/treino_T5_2/indice_dataset.csv --raiz-imagens /caminho/das/fontes --saida assets/data/politica_T6_5/probabilidades_validacao.csv
+python -m src.politica_confianca_t6_5 --probabilidades assets/data/politica_T6_5/probabilidades_validacao.csv --indice assets/data/treino_T5_2/indice_dataset.csv --meta-acerto 0.90 --limiar 0.65
+python tests/validar_politica_confianca_t6_5.py
+```
+### Rastreabilidade
+
+| Arquivo | Conteúdo |
+| --- | --- |
+| `assets/data/politica_T6_5/parametros.json` | Número de hipóteses, limiar, comportamento abaixo do limiar e base da calibração. |
+| `assets/data/politica_T6_5/probabilidades_validacao.csv` | `image_id`, `indice_real` e as 13 probabilidades por imagem; sha256 `6f42fa5920e5405fd8811d57dc3ab1137fd243627c01fcef8f2f0d25c402e277`. |
+| `assets/data/politica_T6_5/curva_limiar_validacao.csv` | Cobertura e acerto top-k entre as aceitas, por limiar. |
+| `assets/data/politica_T6_5/cobertura_por_classe_validacao.csv` | Cobertura e recall por classe em 0,65. |
+| `src/probabilidades_validacao_t6_5.py`, `src/politica_confianca_t6_5.py` | Geração das probabilidades (TensorFlow) e análise (NumPy), com recusa de qualquer imagem fora da validação. |
+| `tests/validar_politica_confianca_t6_5.py` | Ordem e desempate do top-k, fronteira do limiar, contagens, recusas e esquema do `parametros.json`. |
+
+### Resultado
+
+Acerto sem limiar, nas 474 imagens:
+
+| k | Acertos | Acerto | Ganho sobre o k anterior |
+| ---: | ---: | ---: | ---: |
+| 1 | 406/474 | 85,7% | — |
+| 2 | 436/474 | 92,0% | +6,3 p.p. |
+| 3 | 448/474 | 94,5% | +2,5 p.p. |
+| 5 | 463/474 | 97,7% | +3,2 p.p. |
+
+Curva por limiar, com o acerto calculado entre as imagens aceitas (top-1 maior ou igual ao limiar):
+
+| Limiar | Cobertura | Inconclusivos | top-1 | top-2 | top-3 | top-5 |
+| ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| 0,50 | 96,2% | 3,8% | 87,5% | 93,4% | 95,6% | 97,8% |
+| 0,55 | 94,7% | 5,3% | 88,2% | 93,3% | 95,5% | 97,8% |
+| 0,60 | 93,0% | 7,0% | 89,3% | 93,9% | 95,9% | 98,0% |
+| **0,65** | **90,7%** | **9,3%** | **90,7%** | **94,7%** | **96,7%** | **98,6%** |
+| 0,70 | 88,8% | 11,2% | 91,2% | 95,2% | 97,4% | 99,0% |
+| 0,75 | 87,3% | 12,7% | 92,3% | 96,1% | 98,1% | 99,0% |
+| 0,80 | 85,4% | 14,6% | 93,3% | 96,3% | 98,3% | 99,0% |
+
+A grade completa (0,30 a 0,95) está em [`curva_limiar_validacao.csv`](../assets/data/politica_T6_5/curva_limiar_validacao.csv). Em 0,65, **430 das 474 imagens** são aceitas e **390** delas têm o top-1 correto; as outras 44 ficam inconclusivas, e 16 dessas teriam o top-1 correto. Entre as aceitas, o top-3 supera o top-2 em **2,09 p.p.** (9 imagens); sem limiar, em 2,53 p.p. (12 imagens). Pela regra, **k = 3**.
+
+Cobertura e recall por classe em 0,65. O recall no limiar conta a imagem inconclusiva como não reconhecida:
+
+| Índice | Classe | Suporte | Aceitas | Cobertura | Acertos nas aceitas | Recall no limiar |
+| ---: | --- | ---: | ---: | ---: | ---: | ---: |
+| 0 | Vaquinha | 157 | 152 | 96,8% | 146 | 93,0% |
+| 1 | Cigarrinha-do-milho | 29 | 27 | 93,1% | 26 | 89,7% |
+| 2 | Percevejo-barriga-verde | 42 | 36 | 85,7% | 34 | 81,0% |
+| 3 | Lagarta-do-cartucho | 61 | 56 | 91,8% | 50 | 82,0% |
+| 4 | Percevejo-marrom | 10 | 8 | 80,0% | 6 | 60,0% |
+| 5 | Percevejo-verde | 14 | 7 | 50,0% | 5 | 35,7% |
+| 6 | Percevejo-asa-preta | 11 | 8 | 72,7% | 6 | 54,5% |
+| 7 | Percevejo-do-milho | 12 | 12 | 100,0% | 10 | 83,3% |
+| 8 | Lagarta-falsa-medideira | 12 | 10 | 83,3% | 3 | 25,0% |
+| 9 | Lagarta-da-soja | 7 | 7 | 100,0% | 6 | 85,7% |
+| 10 | Lagarta-das-vagens | 24 | 16 | 66,7% | 11 | 45,8% |
+| 11 | *Astylus variegatus* | 71 | 69 | 97,2% | 65 | 91,5% |
+| 12 | Cigarrinha-das-pastagens | 24 | 22 | 91,7% | 22 | 91,7% |
+
+### Limites
+
+- **Validação usada na seleção.** A validação serviu também à parada antecipada e à escolha do candidato (seções 5.1 e 5.6), então o limiar tende a ser otimista; a confirmação exigirá o novo conjunto de teste final.
+- **Calibração só em Keras FP32.** O valor de 0,65 precisa ser reconferido no `modelo_int8.tflite` (T6.6) antes de valer no aparelho.
+- **Confiança do softmax não é probabilidade calibrada.** O valor mostrado não deve ser lido como chance de acerto (risco R11): em 0,65, **40 das 430 imagens aceitas continuam erradas**, e a Lagarta-falsa-medideira tem **3 acertos em 10 aceitas**.
+- **k = 3 por margem estreita.** O ganho do top-3 sobre o top-2 entre as aceitas (2,09 p.p.) passa da regra de 2 p.p. por menos de uma imagem (em 0,75 cairia para 1,93 p.p.). O k = 3 também cobre o trio de lagartas com pares recorrentes na [T6.2](#62-matriz-de-confusão-t62) e na [T6.3](#63-análise-de-erros-t63).
+- **Fora do escopo e conteúdo.** Fotos de doenças, outras culturas ou plantas sadias não foram medidas, e o limiar é um filtro fraco para elas. O catálogo de conteúdo não existe (`chave_conteudo` é `null`), então "conteúdos relacionados" é uma regra sem implementação.
+
+**Base de estudo:** [scikit-learn — `top_k_accuracy_score`](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.top_k_accuracy_score.html), [scikit-learn — Probability calibration](https://scikit-learn.org/stable/modules/calibration.html) e GUO, C.; PLEISS, G.; SUN, Y.; WEINBERGER, K. Q. [On Calibration of Modern Neural Networks](https://arxiv.org/abs/1706.04599). ICML, 2017.
+
+# 7. Conversão e otimização do modelo
+
+## 7.1 Conversão para TFLite/LiteRT (T7.1)
+
+O fluxo está em [`src/conversao_t7_1.py`](../src/conversao_t7_1.py).
+Recebe a rodada final escolhida por treino/validação e converte
+`melhor_modelo.keras` pela API oficial
+[`tf.lite.TFLiteConverter.from_keras_model`](https://www.tensorflow.org/api_docs/python/tf/lite/TFLiteConverter).
+A conversão desta etapa é float32, sem quantização, restrita aos operadores
+TFLite nativos. Operações incompatíveis interrompem a conversão.
+
+### Execução
+
+No ambiente com as dependências de `requirements-treino.txt` (treino documentado
+em Python 3.12; conversão também verificada em Python 3.13.5 no Windows):
+
+```bash
+python -m pip install -r requirements-treino.txt
+python -m src.conversao_t7_1 --rodada runs/<rodada_selecionada> --saida runs/<rodada_selecionada>/tflite
+```
+
+A rodada deve conter `melhor_modelo.keras` e `metricas_validacao.json` da T5.1.
+A seleção da rodada é explícita; o comando não escolhe o modelo por métricas de teste.
+Antes de converter, confere os hashes do checkpoint, das métricas e das classes
+contra `manifesto.json` e `classes.json` do pacote selecionado na T5.6. O pacote
+também é conferido contra seus próprios hashes. Nomes trocados com índices ainda
+sequenciais, checkpoint substituído ou métricas de outra rodada são recusados
+antes de importar TensorFlow ou publicar saídas.
+Para acrescentar fotos reais à comparação, repetir `--imagem caminho/foto.jpg`.
+A imagem recebe o mesmo preprocessamento T4.1 usado no treinamento.
+
+Para reproduzir a conversão do candidato oficial, em uma pasta nova:
+
+```bash
+python -m src.conversao_t7_1 --rodada assets/modelos/rodadas_T5_6_20261026/20261026-213017_efficientnet_lite0_s42 --pacote assets/modelos/candidato_T5_6_20261026 --saida runs/reproducao_T7_1
+```
+
+`--pacote` tem como padrão o pacote acima. Uma futura seleção pode ser indicada
+explicitamente, desde que seu manifesto vincule pesos, métricas e ordem de classes.
+
+### Contrato de entrada e saída
+
+| Tensor | Formato alocado | Tipo | Significado |
+| --- | --- | --- | --- |
+| Entrada | `[1, H, H, 3]` | `float32` | Uma imagem RGB, layout NHWC, valores em [0, 1]. |
+| Saída | `[1, C]` | `float32` | Probabilidades softmax na ordem das classes da rodada. |
+
+`H` vem de `tamanho_entrada` da rodada; `C` vem de `validacao.por_classe`
+(atualmente o projeto prevê 13 classes). Esses valores não são presumidos:
+o comando confere as dimensões Keras e as dimensões reais do interpretador.
+A entrada preserva proporção, aplica orientação EXIF e completa o quadro com
+cinza RGB 128 antes de dividir por 255. A conversão de faixa específica do
+backbone já faz parte do modelo e não deve ser reaplicada pelo consumidor.
+O índice da previsão é o argmax da saída.
+
+### Validação e artefatos
+
+O arquivo convertido é gravado temporariamente e reaberto por
+[`tf.lite.Interpreter`](https://www.tensorflow.org/api_docs/python/tf/lite/Interpreter).
+Após `allocate_tensors()`, o fluxo executa `set_tensor()`, `invoke()` e
+`get_tensor()` para entradas de zeros, uns e ruído com semente 42, além das
+imagens opcionais. Verifica formato, tipo, valores finitos, probabilidades e
+soma unitária. As saídas Keras e TFLite devem satisfazer `allclose` com
+`atol=1e-5` e `rtol=1e-4`; divergências interrompem a entrega.
+Os argmax de ambos são registrados, inclusive para identificar empates próximos.
+
+Somente após essa validação são escritos:
+
+- `modelo.tflite`: modelo convertido.
+- `contrato_tensores.json`: nomes, índices, shapes alocados, assinaturas e tipos
+  obtidos do interpretador; classes em ordem, preprocessamento, hashes SHA-256,
+  versão TensorFlow, tamanho em bytes, erros por amostra e vínculo com o manifesto
+  de seleção, as classes e as métricas da rodada.
+- `relatorio_conversao.md`: contrato dos tensores e resumo da validação.
+
+Arquivos de conversão existentes não são sobrescritos. As saídas podem permanecer
+em `runs/`, que já é ignorada pelo Git. As entradas sintéticas verificam execução
+e equivalência numérica; não medem qualidade diagnóstica ou desempenho no celular.
+
+### Conversão do candidato selecionado
+
+Em **04/11/2026**, o fluxo foi executado com o checkpoint real
+`20261026-213017_efficientnet_lite0_s42`, selecionado na T5.6. O SHA-256 Keras
+`089a8d903a78898badf385f0d57006a4fb556d76e3e8fae719babdaf564aa51a` confere com
+o manifesto do candidato. Foram publicados:
+
+- [Modelo TFLite FP32](../assets/modelos/conversao_T7_1_candidato_T5_6_20261026/modelo.tflite).
+- [Contrato dos tensores e evidência de execução](../assets/modelos/conversao_T7_1_candidato_T5_6_20261026/contrato_tensores.json).
+- [Relatório com hashes, classes e preprocessamento](../assets/modelos/conversao_T7_1_candidato_T5_6_20261026/relatorio_conversao.md).
+
+O arquivo foi reaberto do disco com `tf.lite.Interpreter`, alocado e executado.
+A entrada é **`[1, 224, 224, 3]`, float32**, RGB/NHWC em [0, 1]; a saída é
+**`[1, 13]`, float32**, com probabilidades na ordem conferida das 13 classes.
+Ambos preservam assinatura de batch dinâmico (`-1`). A comparação nas três
+entradas sintéticas passou nas tolerâncias documentadas acima. O tamanho do
+FlatBuffer é **13.531.184 bytes**.
+
+Esta entrega comprova conversão, carregamento, execução e contrato do candidato.
+As entradas sintéticas não medem qualidade diagnóstica ou latência no celular.
+O artefato FP32 desta etapa não substitui o INT8 já preservado no pacote T5.6;
+quantização e otimização permanecem nas etapas próprias.
+
+### Testes
+
+```bash
+python tests/validar_conversao_t7_1.py
+```
+
+Em 04/11/2026, os **11 testes passaram, sem testes pulados**, em macOS arm64,
+Python 3.12.15, TensorFlow 2.21.0, Keras 3.15.1, KerasHub 0.32.0 e NumPy 2.4.4.
+Cobrem conversão e inferência de um modelo sintético com foto adicional e de uma
+MobileNetV3Small do pipeline, além das recusas de saída inválida, classes
+desordenadas ou com nomes trocados, tamanho inválido, checkpoint ausente ou
+substituído, métricas de outra rodada, pacote alterado e preservação de saídas.
+Os modelos de teste continuam temporários; a entrega acima usa os pesos agrícolas
+selecionados e versionados. `git diff --check` também passou.
+
+## 7.2 Comparação das estratégias de quantização (T7.2)
+
+O fluxo [`comparacao_quantizacao_t7_2.py`](../src/comparacao_quantizacao_t7_2.py) gera e compara as três estratégias de [quantização pós-treinamento](https://ai.google.dev/edge/litert/conversion/tensorflow/quantization/post_training_quantization) do LiteRT. Todas partem do mesmo checkpoint do EfficientNet-Lite0 selecionado na T5.6. A referência é o FlatBuffer FP32 da T7.1.
+
+| Estratégia | Como foi obtida nesta etapa | Pesos | Ativações | Entrada/saída |
+| --- | --- | --- | --- | --- |
+| FP32 (referência) | Reaproveitada da [T7.1](#71-conversão-para-tflitelitert-t71), sem otimização | float32 | float32 | float32 |
+| Faixa dinâmica | `Optimize.DEFAULT`, sem conjunto representativo | int8 | float32 (quantizadas em tempo de execução nos operadores híbridos) | float32 |
+| Float16 | `Optimize.DEFAULT` + `target_spec.supported_types = [tf.float16]` | float16 | float32 | float32 |
+| INT8 inteira | **Regenerada nesta etapa** pelo fluxo da [T7.3](#73-quantização-int8-com-conjunto-representativo-t73), com o mesmo conjunto de calibração versionado (200 imagens de treino) | int8 | int8 | int8 |
+
+Antes de converter, o fluxo:
+
+- reaplica a verificação de origem da T7.1;
+- confere os hashes dos FlatBuffers FP32 e INT8 publicados contra os contratos das respectivas etapas;
+- exige que a INT8 regenerada consuma exatamente os mesmos IDs e o mesmo manifesto de calibração da T7.3.
+
+A execução também é interrompida se o checkpoint Keras não reproduzir exatamente o F1 macro de validação registrado no pacote (0,7811). A inspeção do grafo confirma pesos INT8 na faixa dinâmica, tensores FLOAT16 no float16 e ausência de tensores em ponto flutuante no INT8.
+
+### Reprodutibilidade da INT8
+
+A INT8 regenerada no Windows **não é idêntica byte a byte** ao artefato publicado na T7.3, gerado em macOS arm64. Os dois artefatos foram avaliados lado a lado:
+
+| | Artefato T7.3 | Regenerada na T7.2 |
+| --- | --- | --- |
+| SHA-256 | `456caec5…1340` | `a0fa1ec2…f8e2` |
+| Tamanho | 4.003.624 bytes | 4.003.624 bytes |
+| IDs de calibração | 200 IDs | Os mesmos 200, na mesma ordem |
+| Entrada | escala 0,0039215689; zero point −128 | Idênticos |
+| Saída | escala 0,00390625; zero point −128 | Idênticos |
+| Tipos de tensores do grafo | 121 INT8 + 53 INT32 | Idênticos |
+| Fotos da revisão visual da T7.3 | 49/49 com mesmo argmax do Keras | 49/49 com mesmo argmax do Keras |
+
+A diferença está nas escalas internas, que dependem dos valores em ponto flutuante observados durante a calibração. Esses valores variam ligeiramente entre CPUs e bibliotecas numéricas (oneDNN no x86, outra implementação no arm64). Os testes estatísticos apresentados abaixo comparam cada versão INT8 ao FP32; não foi realizado um teste direto entre a INT8 da T7.3 e a regenerada na T7.2. Portanto, esses resultados não permitem concluir que as duas versões INT8 sejam estatisticamente equivalentes ou que a diferença entre elas seja significativa. **O artefato oficial continua sendo o da T7.3**, que é o versionado e contratado. A versão regenerada demonstra que o fluxo documentado produz um modelo com o mesmo contrato e conjunto de calibração, sem garantir identidade dos bytes ou das previsões. Seus números pontuais ligeiramente melhores não bastam para justificar a substituição do artefato oficial.
+
+### Protocolo de medição
+
+- **Tamanho:** bytes do FlatBuffer `.tflite`, comparados ao limite de 8.000.000 bytes do RNF-01.
+- **Desempenho:**
+  - **Métricas:** F1 macro (métrica principal), acurácia macro (balanced accuracy, a métrica do RNF-06) e acurácia, calculadas com [`src/avaliacao.py`](../src/avaliacao.py), além de concordância do top-1 com o FP32.
+  - **Partições:** a **validação (474 imagens)** é a partição principal. O **teste (473 imagens)** já foi consultado em etapas anteriores e aparece apenas como leitura exploratória; nenhuma estratégia foi escolhida por ele.
+- **Estatística:** cada versão quantizada é comparada ao FP32 nas mesmas imagens.
+  - **Intervalo de confiança:** IC 95% por bootstrap pareado (2.000 reamostras de imagens, semente 42) para a diferença de F1 macro e de acurácia macro.
+  - **Teste de McNemar exato:** compara as imagens que só o FP32 acertou com as que só a versão quantizada acertou.
+- **Latência:**
+  - **O que é medido:** tempo de `set_tensor` + `invoke` + `get_tensor`, incluindo a (des)quantização da entrada e da saída no INT8, para uma imagem real de validação `1×224×224×3`.
+  - **Configurações:** cinco, todas com `tf.lite.Interpreter`: XNNPACK com 1, 2 e 4 threads e **sem delegate** com 1 e 4 threads (o modo do RNF-09).
+  - **Repetições:** 20 execuções de aquecimento e 5 rodadas intercaladas de 40 execuções, ou seja, 200 medições por modelo e por configuração.
+  - **Energia:** o comando registra a fonte de energia e se recusa a medir com o notebook na bateria.
+- **Execução sem delegates (RNF-09):** as 5 versões são executadas com `BUILTIN_WITHOUT_DEFAULT_DELEGATES` em uma imagem de validação por classe (13 imagens) e comparadas com a execução XNNPACK.
+- **Ambiente:** Windows 11, Intel Core Ultra 5 235U (x86, sem GPU), **conectado à tomada**, Python 3.12.10, TensorFlow 2.21.0, Keras 3.15.1, KerasHub 0.32.0 e NumPy 2.4.4, em 05/11/2026.
+
+### Tabela comparativa
+
+| Estratégia | Tamanho (bytes) | Redução vs FP32 | RNF-01 (≤ 8 MB) | Latência XNNPACK 1 thread: mediana / p95 (ms) | Latência XNNPACK 4 threads: mediana / p95 (ms) | F1 macro val. | Δ F1 val. [IC 95%] | Acurácia macro val. | Δ acurácia macro val. em p.p. [IC 95%] | Acurácia val. | Divergências top-1 vs FP32 (val.) | McNemar p (val.) | F1 macro teste (expl.) |
+| --- | ---: | ---: | --- | ---: | ---: | ---: | --- | ---: | --- | ---: | ---: | ---: | ---: |
+| FP32 (T7.1) | 13.531.184 | — | **não** | 8,12 / 9,86 | 6,31 / 7,24 | 0,7811 | — | 0,7550 | — | 0,8565 | — | — | 0,7329 |
+| Faixa dinâmica | 3.753.152 | 72,3% | sim | 38,74 / 43,05 | 107,10 / 157,24 | 0,7755 | −0,0056 [−0,0296; +0,0169] | 0,7517 | −0,33 [−2,48; +1,98] | 0,8565 | 9 | 1,000 | 0,7371 |
+| Float16 | 6.833.548 | 49,5% | sim | 8,34 / 10,46 | 5,68 / 6,83 | 0,7830 | +0,0019 [0,0000; +0,0062] | 0,7563 | +0,13 [0,00; +0,40] | 0,8587 | 1 | 1,000 | 0,7329 |
+| INT8 (artefato T7.3) | 4.003.624 | 70,4% | sim | 5,67 / 7,34 | 4,05 / 4,77 | 0,7767 | −0,0044 [−0,0373; +0,0293] | 0,7528 | −0,22 [−3,26; +2,93] | 0,8587 | 15 | 1,000 | 0,7400 |
+| INT8 (regenerada na T7.2) | 4.003.624 | 70,4% | sim | 5,90 / 7,38 | 3,98 / 4,67 | 0,7832 | +0,0021 [−0,0259; +0,0317] | 0,7578 | +0,28 [−2,48; +3,20] | 0,8587 | 14 | 1,000 | 0,7471 |
+
+Latência sem delegate (RNF-09), mediana / p95 em ms:
+
+| Estratégia | 1 thread | 4 threads |
+| --- | ---: | ---: |
+| FP32 (T7.1) | 58,99 / 140,81 | 51,88 / 126,64 |
+| Faixa dinâmica | 477,41 / 1.020,15 | 264,56 / 356,24 |
+| Float16 | 102,82 / 148,64 | 70,48 / 124,68 |
+| INT8 (artefato T7.3) | 542,62 / 1.180,87 | 293,01 / 348,73 |
+| INT8 (regenerada na T7.2) | 905,69 / 1.197,11 | 308,82 / 410,21 |
+
+As 5 versões executaram sem delegates, com saídas finitas e válidas nas 13 imagens. O top-1 coincidiu com a execução XNNPACK em todas as imagens para FP32, float16 e INT8 da T7.3. Na faixa dinâmica e na INT8 regenerada, houve divergência em 1 das 13 imagens (92,3%), por diferenças numéricas entre os kernels. A latência com 2 threads, os percentis p90/p99, a média, o desvio, os extremos e as matrizes de confusão estão no [JSON da comparação](../assets/modelos/comparacao_T7_2_candidato_T5_6_20261026/comparacao.json).
+
+### Leitura dos resultados
+
+- **Tamanho (RNF-01):** todas as versões quantizadas atendem ao limite de 8 MB; o FP32 não atende. A faixa dinâmica (−72,3%) e o INT8 (−70,4%) ficam em cerca de 4 MB; o float16 reduz o arquivo à metade.
+- **Latência com XNNPACK:** o INT8 foi a única estratégia consistentemente mais rápida que o FP32, com 27% a 37% a menos na mediana, com 1 e 4 threads. No CPU, o float16 se comporta como o FP32, porque os pesos são convertidos para float32 ao carregar; o ganho dessa estratégia aparece com o delegate de GPU. A faixa dinâmica foi a mais lenta (cerca de 4,8 vezes o FP32 com 1 thread). Ela piorou ao aumentar as threads, com grande variação: o desvio passou de 5 ms com 1 thread para 31 ms com 4 threads. O processador combina núcleos de desempenho e de eficiência, o que é compatível com essa piora, mas a causa não foi isolada.
+- **Latência sem delegate (RNF-09):** todas as versões funcionam, mas os kernels de referência do x86 sem XNNPACK são lentos para inteiros. INT8 e faixa dinâmica passam de 260 ms de mediana e de 340 ms de p95. Isso **não** indica o desempenho no celular: em ARM, os kernels inteiros nativos do LiteRT são otimizados para NEON. É, no entanto, o primeiro ponto a medir no aparelho. Se o p95 sem aceleração ultrapassar 300 ms lá, o modo degradado do RNF-09 não atenderá ao RNF-04.
+- **Desempenho:**
+  - **Diferença em relação ao FP32:** o teste exato de McNemar não detectou diferença significativa nas proporções de acertos e erros pareados entre cada estratégia e o FP32 na validação (p = 1,000 em todas). O teste não avalia diretamente o F1 macro, não comprova equivalência entre os modelos e não garante perda inferior a 2 p.p. de acurácia macro. As diferenças de F1 macro e acurácia macro são descritas pelos respectivos intervalos de confiança do bootstrap. Os erros novos e os acertos novos foram: 3/3 na faixa dinâmica, 5/6 no INT8 da T7.3 e 4/5 no INT8 regenerado.
+  - **Float16:** é praticamente idêntico ao FP32, com uma única divergência de top-1.
+  - **Percevejo-verde:** concentra a maior queda por classe nas versões inteiras. Com 14 imagens de validação, o recall passa de 8/14 para 6/14. Isso é compatível com a fragilidade do cluster de percevejos registrada na [T6.3](#63-análise-de-erros-t63), mas o suporte é pequeno demais para ser conclusivo.
+- **RNF-06 (perda ≤ 2 p.p. de acurácia macro):**
+  - **Estimativa pontual:** todas as estratégias atendem, na validação e no teste exploratório.
+  - **Intervalo de confiança:** com 474 imagens, o IC 95% da faixa dinâmica e das duas INT8 desce abaixo de −2 p.p. na validação. Ou seja, a amostra atual **não tem tamanho suficiente para garantir, com 95% de confiança, que a perda fica dentro de 2 p.p.**; ela também não indica perda.
+  - **Conjunto final:** o RNF-06 prevê avaliação no conjunto de teste, e o teste atual já foi consultado. O requisito depende do conjunto independente previsto na seção 5.3, idealmente dimensionado para estreitar esse intervalo.
+
+### Conclusão
+
+**O INT8 inteiro (artefato da T7.3) continua sendo a estratégia recomendada para o aplicativo.** Ele:
+
+- é o único entre as versões de cerca de 4 MB que também reduz a latência;
+- apresentou F1 macro de validação 0,0044 abaixo do FP32 e nenhuma diferença significativa de acertos e erros no teste de McNemar; isso não comprova equivalência nem o atendimento ao RNF-06;
+- já tem contrato de entrada e saída e conjunto de calibração documentados.
+
+O **float16** é a alternativa quando a fidelidade ao FP32 for prioritária ou o aplicativo usar o delegate de GPU. Ele custa cerca de 2,8 MB a mais que o INT8 e não traz ganho de latência no CPU. A **faixa dinâmica** não é recomendada: tem tamanho semelhante ao INT8, métricas próximas às do FP32 nesta amostra e foi a mais lenta e instável no CPU medido.
+
+### Pendências e limites
+
+- **Medição no celular de referência:** a aprovação do RNF-04 (p95 ≤ 300 ms) e do modo degradado do RNF-09 exige medir no aparelho com a ferramenta oficial de benchmark ([TFLite/LiteRT benchmark tool](https://www.tensorflow.org/lite/performance/measurement)), o que não foi possível sem um aparelho conectado. O protocolo está pronto. Copiar os modelos para `/data/local/tmp/` e, para cada um, executar:
+
+  ```bash
+  adb push assets/modelos/quantizacao_T7_3_candidato_T5_6_20261026/modelo_int8.tflite /data/local/tmp/
+  # Com XNNPACK (RNF-04) e sem delegate (RNF-09), 4 threads, mesmos aquecimentos e repetições desta etapa
+  adb shell /data/local/tmp/benchmark_model --graph=/data/local/tmp/modelo_int8.tflite --num_threads=4 --use_xnnpack=true --warmup_runs=20 --num_runs=200
+  adb shell /data/local/tmp/benchmark_model --graph=/data/local/tmp/modelo_int8.tflite --num_threads=4 --use_xnnpack=false --warmup_runs=20 --num_runs=200
+  # Float16 com delegate de GPU, se o aplicativo for usá-lo
+  adb shell /data/local/tmp/benchmark_model --graph=/data/local/tmp/modelo_float16.tflite --use_gpu=true --warmup_runs=20 --num_runs=200
+  ```
+
+  Registrar o modelo do aparelho, a versão do Android e do runtime, o hash de cada `.tflite` e o p95, com o celular em modo avião e carregado.
+- **Política de confiança:** os scores do INT8 diferem até 0,42 dos scores FP32 na validação. Os limiares da [política de confiança (T6.5)](#65-política-de-confiança-t65), ajustados sobre as saídas FP32, precisam ser reconferidos com a versão embarcada.
+- **Unidade do bootstrap:** os intervalos reamostram imagens, não grupos de fotos da mesma planta; por isso podem ser otimistas.
+- **Latência local:** as medições no notebook valem para comparar as estratégias entre si, não como valores absolutos do aplicativo.
+
+### Correções de ambiente feitas nesta etapa
+
+Reproduzir a T7.3 no Windows expôs dois problemas de quebra de linha:
+
+1. **`preparar` da T7.3:** a função gravava o `manifesto_calibracao.csv` com `\r\n` no Windows, mas registrava o hash do texto com `\n`. Por isso 3 dos 10 testes da T7.3 falhavam no Windows. A gravação passou a usar `newline=""`, e os 10 testes passam. O conteúdo gerado em macOS/Linux não muda, mas o hash do código que consta no `contrato_int8.json` da T7.3 já não corresponde ao arquivo atual. O contrato da INT8 regenerada registra o hash atualizado.
+2. **Cópia de trabalho de `src/preprocessamento.py`:** o arquivo estava com CRLF, embora o repositório o guarde em LF (`.gitattributes` com `eol=lf`). Com isso, a verificação de proveniência da T7.3 recusava o conjunto de calibração. A cópia foi normalizada para LF; o conteúdo versionado não mudou (blob `3896cf7`).
+
+### Artefatos
+
+Em [`assets/modelos/comparacao_T7_2_candidato_T5_6_20261026/`](../assets/modelos/comparacao_T7_2_candidato_T5_6_20261026/):
+
+- `modelo_faixa_dinamica.tflite`, `modelo_float16.tflite` e `modelo_int8.tflite` (regenerada) com `contrato_int8_regenerado.json`. O FP32 e o INT8 oficial permanecem nas pastas da T7.1 e da T7.3.
+- `tabela_comparativa.csv`: todas as configurações de latência (mediana e p95), métricas, intervalos de confiança, McNemar e RNFs, por estratégia e partição.
+- `relatorio_comparacao.md`: o relatório gerado pela execução.
+- `comparacao.json`:
+  - hashes de origem, do código e de cada modelo;
+  - tipos de tensores do grafo e contratos de entrada e saída;
+  - métricas completas, estatística e concordância com FP32 e Keras;
+  - execução sem delegates, latência detalhada, avaliação de RNFs e ambiente.
+- `metricas_por_classe.csv` e `predicoes.csv`: métricas por classe e previsão de cada imagem em cada versão.
+
+### Reprodução e testes
+
+Com o acervo original contendo `dataset/` na raiz informada, com o computador na tomada e uma pasta de saída nova (o comando recusa sobrescrever):
+
+```bash
+python -m src.comparacao_quantizacao_t7_2 --raiz-imagens /caminho/das/fontes --saida runs/reproducao_T7_2
+python tests/validar_comparacao_t7_2.py
+python tests/validar_quantizacao_t7_3.py
+```
+
+Opções disponíveis:
+
+- `--sem-teste`: restringe a avaliação à validação.
+- `--rodadas` e `--por-rodada`: ajustam a quantidade de medições de latência.
+- `--reamostras`: ajusta o bootstrap.
+- `--permitir-bateria`: aceita medir fora da tomada; o relatório registra a fonte de energia.
+
+A execução completa leva cerca de 20 minutos neste notebook.
+
+Os **12 testes da T7.2 passaram** em Windows 11 com Python 3.12.10 e TensorFlow 2.21.0. Eles cobrem:
+
+- estatísticas de latência com p95, concordância, McNemar exato, determinismo do bootstrap e pior classe;
+- avaliação dos RNF-01, RNF-04, RNF-06 e RNF-09;
+- montagem da tabela e do relatório, publicação em LF e recusa de sobrescrita;
+- obrigatoriedade da validação e recusa de medir na bateria;
+- recusa de artefatos FP32/INT8 com hash ou origem divergente e de INT8 regenerada com calibração diferente;
+- conversão de um modelo sintético nas duas novas estratégias, com execução com e sem delegate. Esse teste é pulado se o TensorFlow não estiver instalado.
+
+Os **10 testes da T7.3** também passam no mesmo ambiente após a correção.
+
+## 7.3 Quantização INT8 com conjunto representativo (T7.3)
+
+### Conjunto de calibração e origem
+
+O EfficientNet-Lite0 selecionado na T5.6 foi quantizado em INT8 usando **200 imagens reais da partição de treino**, retiradas do acervo já indexado na preparação de Dados. A seleção foi constituída nesta entrega a partir de [`indice_dataset.csv`](../assets/data/treino_T5_2/indice_dataset.csv), o mesmo recorte vinculado ao candidato. Não havia manifesto específico de calibração fornecido separadamente pela frente de Dados; a origem e a seleção agora estão documentadas, sem atribuir uma revisão formal a essa frente.
+
+Usar uma amostra do treino é compatível com a [orientação oficial do Google para quantização pós-treinamento](https://developers.google.com/edge/litert/conversion/tensorflow/quantization/post_training_quantization), que descreve conjuntos representativos de aproximadamente 100–500 exemplos. Os rótulos servem à conferência de cobertura das classes; a calibração fornece apenas as imagens ao conversor. Não há atualização dos pesos por treinamento, uso de validação ou teste, nem augmentation.
+
+O [manifesto de calibração](../assets/data/calibracao_T7_3/manifesto_calibracao.csv) registra ID, caminho relativo, hash original, classe, grupo, origem, brilho e hash do tensor float32 de cada imagem. São **149 fotos de campo e 51 do AgroInsect**, sem repetição de arquivo, hash ou grupo do índice. Isso evita fotos de um mesmo grupo na amostra; os grupos não garantem indivíduos biologicamente independentes. As imagens originais permanecem no acervo de Dados, sem duplicação dos arquivos no repositório.
+
+### Seleção e cobertura de iluminação
+
+A seleção usa semente **42**, quotas de 15 ou 16 imagens por classe e alternância entre as faixas de brilho disponíveis, respeitando a restrição de um arquivo por grupo. O brilho é a média de `0,2126 R + 0,7152 G + 0,0722 B`, com canais em [0, 1], calculada no conteúdo redimensionado e **excluindo o padding cinza**. Os limites descritivos são: baixo, abaixo de 0,30; intermediário, de 0,30 a menos de 0,60; alto, a partir de 0,60.
+
+Essas faixas são uma medida de brilho da imagem, afetada pelo fundo e pela cor do sujeito. Não representam exposição da câmera ou iluminação física medida. Por isso, a seleção foi complementada por **inspeção visual assistida por IA de 49 fotos**, cobrindo as 13 classes: 37 exemplos de extremos/pontos intermediários por classe/faixa disponível e 12 exemplos adicionais de campo com baixo brilho. A [revisão de iluminação](../assets/data/calibracao_T7_3/revisao_iluminacao.json) registra observações por ID, incluindo sombra/baixa luz aparente, luz suave, realces e iluminação mista. Quatro exemplos têm iluminação não inferível; não foram classificados à força a partir do fundo claro ou escuro. As categorias visuais podem coexistir na mesma foto e não constituem medição fotométrica.
+
+| Índice | Classe | Baixo brilho | Intermediário | Alto brilho | Total |
+| ---: | --- | ---: | ---: | ---: | ---: |
+| 0 | Vaquinha | 6 | 5 | 5 | 16 |
+| 1 | Cigarrinha-do-milho | 6 | 5 | 5 | 16 |
+| 2 | Percevejo-barriga-verde | 6 | 5 | 5 | 16 |
+| 3 | Lagarta-do-cartucho | 6 | 5 | 5 | 16 |
+| 4 | Percevejo-marrom | 3 | 7 | 6 | 16 |
+| 5 | Percevejo-verde | 3 | 6 | 6 | 15 |
+| 6 | Percevejo-asa-preta | 0 | 9 | 6 | 15 |
+| 7 | Percevejo-do-milho | 0 | 10 | 5 | 15 |
+| 8 | Lagarta-falsa-medideira | 3 | 6 | 6 | 15 |
+| 9 | Lagarta-da-soja | 4 | 6 | 5 | 15 |
+| 10 | Lagarta-das-vagens | 2 | 7 | 6 | 15 |
+| 11 | Astylus variegatus | 4 | 6 | 5 | 15 |
+| 12 | Cigarrinha-das-pastagens | 3 | 6 | 6 | 15 |
+| **Total** | **13 classes** | **46** | **83** | **71** | **200** |
+
+O [registro do conjunto](../assets/data/calibracao_T7_3/conjunto.json) também informa a disponibilidade das faixas no treino. Asa-preta e percevejo-do-milho não têm imagens abaixo de 0,30 nessa estatística, portanto não se declara cobertura de todas as faixas em todas as classes. Isso não prova ausência de sombra: fotos com fundo claro podem conter regiões sombreadas. Novas condições de campo poderão exigir complementar a calibração e avaliar novamente o resultado.
+
+### Conversão e contrato INT8
+
+O fluxo [`quantizacao_t7_3.py`](../src/quantizacao_t7_3.py) confere o pacote selecionado com a validação de origem da T7.1 e recusa imagens fora do treino, arquivos alterados, classes ausentes, grupos repetidos e divergências no manifesto ou na cobertura documentada. Os exemplos recebem o mesmo preprocessamento T4.1: orientação EXIF, RGB, proporção preservada, padding cinza e float32 em [0, 1]. A normalização específica do backbone já pertence ao modelo.
+
+Em **04/11/2026**, a conversão foi executada com `tf.lite.TFLiteConverter.from_keras_model`, `Optimize.DEFAULT`, o gerador das 200 fotos em `representative_dataset`, operadores `TFLITE_BUILTINS_INT8` e entrada/saída `tf.int8`. O fluxo registrou que o conversor consumiu exatamente os 200 IDs do manifesto. A inspeção do FlatBuffer não encontrou tensores FLOAT16, FLOAT32 ou FLOAT64.
+
+| Tensor | Shape alocado | Tipo | Escala | Zero point |
+| --- | --- | --- | ---: | ---: |
+| Entrada | `[1, 224, 224, 3]` | INT8 | 0,003921568859368563 | -128 |
+| Saída | `[1, 13]` | INT8 | 0,00390625 | -128 |
+
+Para a entrada, aplicar `q = clip(round(x / escala) + zero_point, -128, 127)` ao tensor T4.1 em [0, 1]. Para interpretar a saída, usar `y = (q - zero_point) * escala`, preservando a ordem das 13 classes. O contrato inclui as assinaturas de batch dinâmico, nomes e índices dos tensores. Scores desquantizados não equivalem a probabilidades calibradas de acerto.
+
+O novo arquivo tem **4.003.624 bytes**. Foi reaberto, alocado e executado nas 49 fotos reais da revisão visual, cobrindo as 13 classes. Nessas fotos, os argmax Keras/INT8 coincidiram; a maior diferença absoluta entre os scores foi **0,010212183**. Essa concordância na própria calibração verifica execução, **não é avaliação de generalização nem medição da perda de F1**. A comparação de qualidade e a reconferência da política de confiança exigem avaliação própria.
+
+Os artefatos estão versionados em uma pasta específica desta conversão:
+
+- [Modelo INT8](../assets/modelos/quantizacao_T7_3_candidato_T5_6_20261026/modelo_int8.tflite).
+- [Contrato, origem, hashes e registros de execução](../assets/modelos/quantizacao_T7_3_candidato_T5_6_20261026/contrato_int8.json).
+- [Relatório de quantização](../assets/modelos/quantizacao_T7_3_candidato_T5_6_20261026/relatorio_quantizacao.md).
+
+O checkpoint Keras, a conversão FP32 da T7.1 e a conversão INT8 anterior da T5.6 foram preservados. O tamanho informado acima é do novo arquivo, cujo hash vincula esta execução ao novo conjunto documentado; não é uma atribuição de evidência da conversão antiga.
+
+### Reprodução e verificação
+
+A reprodução requer o acervo original com `dataset/` na raiz informada. Para consumir diretamente o conjunto versionado e criar uma nova saída:
+
+```bash
+python -m src.quantizacao_t7_3 converter --raiz-imagens /caminho/das/fontes --conjunto assets/data/calibracao_T7_3 --saida runs/reproducao_T7_3
+python tests/validar_quantizacao_t7_3.py
+```
+
+Para gerar uma nova proposta de conjunto, preservando a atual:
+
+```bash
+python -m src.quantizacao_t7_3 preparar --raiz-imagens /caminho/das/fontes --saida runs/calibracao_T7_3 --total 200 --semente 42
+```
+
+A revisão visual deve corresponder aos IDs e hashes efetivamente selecionados e cobrir as classes e condições documentadas antes da conversão. Não se deve transportar anotações de uma seleção diferente. O comando recusa sobrescrever conjuntos ou conversões existentes.
+
+Os **10 testes passaram**, incluindo seleção determinística, cobertura e diversidade de grupos, brilho sem padding, saturação/arredondamento, recusa de validação/teste mesmo com hash de manifesto atualizado, imagem alterada, classe ausente, grupo repetido, cobertura falsa e revisão visual incompleta. Ambiente da conversão: Python 3.12.15, TensorFlow 2.21.0, Keras 3.15.1, KerasHub 0.32.0 e NumPy 2.4.4, em macOS arm64. A entrega comprova conjunto documentado e conversão INT8 executada, com as limitações de cobertura descritas acima.
+
+# 8. Desempenho para dispositivos móveis
+
+## 8.2 Benchmark de inferência (T8.2)
+
+**Autora da task:** Karol. **Revisão e medição:** 06/11/2026.
+
+**O critério de aceite da T8.2 está atendido no escopo de benchmark comparativo local:** versões oficiais medidas com protocolo comum, tamanhos, condições e amostras documentados. As medianas das sessões repetiram-se com variação máxima de 7,7%. Há picos dentro de uma sessão, descritos abaixo e mantidos no p95. Isso não aprova o desempenho no celular.
+
+### O que foi corrigido
+
+A coleta anterior usava somente arquivos T5.6. O benchmark agora mede os **cinco artefatos oficiais do candidato EfficientNet-Lite0**: FP32 da T7.1, faixa dinâmica e float16 da T7.2, INT8 oficial da T7.3 e INT8 regenerado na T7.2. Os INT8 têm o mesmo tamanho, mas hashes diferentes, e foram medidos separadamente. Antes de executar, o script confere bytes e SHA-256 contra os registros da T7.2. Nenhum modelo foi treinado ou convertido nesta revisão.
+
+A coleta anterior de seis arquivos T5.6 permanece no [histórico](Benchmark_T8_2_historico_T5_6.md), no [JSON original](../assets/data/benchmark_T8_2/resultados.json) e no [CSV original](../assets/data/benchmark_T8_2/resumo.csv). Seus tempos não foram agrupados com os novos. Arquivos `.keras` são checkpoints de treinamento e não entram no pacote de inferência comparado.
+
+### Condições e método
+
+- **3 sessões em processos independentes**, com PIDs registrados. Mesmo computador, runtime, entrada, configuração de CPU e fonte de energia em todas elas.
+- **Uma thread, XNNPACK e CPU lógica 0 fixa.** Prioridade acima do normal somente no processo do benchmark; afinidade e prioridade são restauradas ao terminar. O plano de energia e os demais processos não são alterados. A existência de partições delegadas é verificada em cada arquivo.
+- Batch 1, RGB 224 × 224, pixels sintéticos uniformes em [0,1], semente 42. A mesma imagem float é convertida ao dtype e à escala/zero-point de cada modelo fora da cronometragem. Hashes dos tensores ficam nos registros.
+- **100 aquecimentos globais por modelo**, depois **5 rodadas intercaladas** de **40 medições por modelo**. Antes de cada bloco: pausa de 100 ms e 20 aquecimentos descartados. A ordem gira entre rodadas e sessões, permitindo que cada modelo ocupe todas as posições.
+- Cada sessão contém 200 amostras por versão; o consolidado contém **600 amostras por versão**, **3.000 inferências medidas** no total. Nenhum valor extremo foi excluído.
+- `perf_counter_ns` mede **set_tensor + invoke + get_tensor**. Leitura do modelo, criação/alocação do interpretador, geração e quantização da entrada e pré-processamento ficam fora do intervalo. A saída INT8 é lida sem desquantização. A inicialização é registrada separadamente; não representa a partida a frio do aplicativo.
+- Fonte de energia consultada antes e depois de cada bloco. A coleta é interrompida se ela mudar. CPU total do sistema e tempo de CPU do processo são registrados por bloco. Temperatura e frequência efetiva não foram medidas; os núcleos permitidos são fixos, mas não são exclusivos do benchmark.
+
+**Ambiente:** Intel(R) Core(TM) Ultra 5 235U, 14 processadores lógicos; `Windows-11-10.0.26200-SP0`; Python 3.13.14, TensorFlow 2.21.0, NumPy 2.4.4. **Alimentação: tomada em todos os blocos.** CPU total observada: 10,8% a 38,5%, incluindo o benchmark e processos concorrentes. Horários UTC e hashes do código estão nos arquivos de cada sessão.
+
+### Tempos e tamanhos medidos
+
+| Versão | Bytes | MB | Redução vs FP32 | Média (ms) | Mediana (ms) | p95 (ms) |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| FP32 — T7.1 | 13.531.184 | 13,531 | 0,0% | 12,48 | 12,25 | 16,03 |
+| Faixa dinâmica — T7.2 | 3.753.152 | 3,753 | 72,3% | 60,58 | 60,36 | 71,97 |
+| Float16 — T7.2 | 6.833.548 | 6,834 | 49,5% | 12,33 | 12,25 | 13,93 |
+| INT8 oficial — T7.3 | 4.003.624 | 4,004 | 70,4% | 8,54 | 8,55 | 10,03 |
+| INT8 regenerado — T7.2 | 4.003.624 | 4,004 | 70,4% | 8,99 | 8,57 | 12,67 |
+
+**MB = 1.000.000 bytes.** Os percentis do consolidado foram recalculados sobre todas as amostras, não sobre a média dos percentis de cada sessão. Os arquivos de evidência preservam os valores sem arredondamento.
+
+### Verificação da oscilação
+
+| Versão | Sessão 1: mediana (ms) | Sessão 2: mediana (ms) | Sessão 3: mediana (ms) | Variação entre sessões |
+| --- | ---: | ---: | ---: | ---: |
+| FP32 — T7.1 | 12,41 | 12,43 | 12,03 | 3,4% |
+| Faixa dinâmica — T7.2 | 60,33 | 60,06 | 60,80 | 1,2% |
+| Float16 — T7.2 | 12,38 | 12,34 | 12,11 | 2,2% |
+| INT8 oficial — T7.3 | 8,55 | 8,55 | 8,54 | 0,05% |
+| INT8 regenerado — T7.2 | 8,52 | 9,13 | 8,48 | 7,7% |
+
+A variação é `100 × (maior mediana / menor mediana − 1)`. A maior variação entre sessões foi **7,7%**. Dentro de uma mesma sessão, a maior variação entre medianas dos blocos foi **50,9%**; as cinco medianas de cada versão e sessão estão nos JSON individuais. Esses indicadores tornam a oscilação visível e permitem comparar a nova coleta com o problema anterior, em que a mediana do Lite0 FP32 passou de 393,65 para 115,75 ms.
+
+| Versão | Variação entre blocos: sessão 1 | Sessão 2 | Sessão 3 |
+| --- | ---: | ---: | ---: |
+| FP32 — T7.1 | 5,8% | 39,9% | 5,0% |
+| Faixa dinâmica — T7.2 | 8,5% | 42,6% | 10,6% |
+| Float16 — T7.2 | 4,7% | 9,5% | 3,8% |
+| INT8 oficial — T7.3 | 6,5% | 4,8% | 9,0% |
+| INT8 regenerado — T7.2 | 5,5% | 50,9% | 5,8% |
+
+O maior pico entre medianas de blocos ocorreu na segunda sessão, no INT8 regenerado (50,9%). Também houve oscilação no FP32 e na faixa dinâmica nessa sessão. O protocolo comum, a ordem balanceada e a repetição em três processos permitem comparar as distribuições e verificar a repetição das medianas; não demonstram ausência de interferência em cada chamada. A tarefa não define um limite numérico de variação. Por isso, os indicadores são publicados junto dos tempos, sem excluir blocos nem tratar a variação como zero.
+
+Mesmo com o protocolo comum, não se atribui toda a diferença de tempo apenas à quantização: frequência da CPU, temperatura, sistema e processos concorrentes podem afetar as amostras. A ausência de sensores térmicos não deve ser interpretada como temperatura constante. Para analisar diferenças pequenas, como FP32 versus float16 nesta CPU, seriam necessárias mais sessões; estes dados não sustentam vantagem clara de velocidade entre os dois.
+
+### Custo para dispositivos móveis e aceite
+
+Todas as versões quantizadas ficam abaixo do limite proposto de **8 MB (RNF-01)**. O FP32 ocupa 13,531 MB e excede esse limite. A faixa dinâmica reduz mais o armazenamento (72,3%); float16 reduz 49,5%; os INT8 reduzem 70,4%. O tamanho do arquivo não representa RAM de execução nem tamanho total do APK.
+
+Os tempos informam o custo de inferência observado nesta CPU. Não são uma estimativa de energia ou bateria e não comprovam a latência em ARM, GPU ou NNAPI. A escolha para embarque também depende da qualidade de classificação avaliada na T8.1. Os números da T7.2 não são agrupados aqui: aquela medição usa imagem real e inclui (des)quantização no intervalo.
+
+| Critério da T8.2 | Evidência |
+| --- | --- |
+| Diferentes versões do modelo | Cinco arquivos oficiais T7.1–T7.3, conferidos por SHA-256 |
+| Tamanho de cada modelo | Bytes exatos, MB e redução na tabela, JSON e CSV |
+| Tempos sob condições comparáveis | Protocolo comum, fonte de energia fixa, mesma CPU lógica, uma thread, XNNPACK, aquecimento, ordem balanceada e três sessões; oscilação explicitada acima |
+| Resultados documentados | Ambiente, amostras individuais, código utilizado, comandos e testes de integridade publicados |
+
+**Validação no celular (RNF-04, p95 ≤ 300 ms): pendente e separada do aceite comparativo local.** Executar os mesmos arquivos no aparelho de referência, fixando runtime, threads e delegate e registrando energia e condições térmicas. RAM e consumo energético exigem medição no aparelho. Captura, decodificação e pré-processamento devem ser medidos separadamente para avaliar a espera total do usuário (RNF-03). Nenhum desses RNFs foi aprovado por extrapolação dos tempos locais.
+
+### Reprodução e evidências
+
+Na raiz do repositório, usar **Python 3.13 no Windows**. Ambiente utilizado: `.work/benchmark-python` (pasta ignorada pelo Git). Para preparar e executar uma nova coleta:
+
+```powershell
+& "$env:LOCALAPPDATA\Programs\Python\Python313\python.exe" -m venv .work/benchmark-python
+.\.work\benchmark-python\Scripts\python.exe -m pip install -r requirements-benchmark.txt
+.\.work\benchmark-python\Scripts\python.exe -m src.benchmark_t8_2 --saida runs/reproducao_T8_2 --sessoes 3 --rodadas 5 --repeticoes 40 --aquecimento 100 --cpu 0 --energia tomada
+.\.work\benchmark-python\Scripts\python.exe tests/validar_benchmark_t8_2.py
+```
+
+A saída deve ser uma pasta nova: o programa recusa sobrescrita. `--raiz` indica a raiz do repositório. `--cpu` escolhe um índice lógico disponível; `-1` permite escalonamento normal e registra essa diferença. `--energia bateria` existe para uma coleta explicitamente feita nessa condição; não se deve misturá-la à coleta na tomada. Para validar uma reprodução em vez da coleta publicada:
+
+```powershell
+.\.work\benchmark-python\Scripts\python.exe tests/validar_benchmark_t8_2.py --dados runs/reproducao_T8_2
+```
+
+Evidências: [JSON consolidado](../assets/data/benchmark_T8_2/oficiais_20261106/resultados.json), [CSV consolidado](../assets/data/benchmark_T8_2/oficiais_20261106/resumo.csv) e pastas de cada sessão no [diretório da coleta](../assets/data/benchmark_T8_2/oficiais_20261106). Cada sessão conserva seu JSON, CSV e uma cópia exata do script `protocolo.py`, identificada por hash. Código principal: [benchmark_t8_2.py](../src/benchmark_t8_2.py); dependências: [requirements-benchmark.txt](../requirements-benchmark.txt); validação: [validar_benchmark_t8_2.py](../tests/validar_benchmark_t8_2.py).
+
+Os testes conferem integridade dos arquivos históricos e atuais, cobertura das cinco versões, condições declaradas entre sessões, amostras e estatísticas por bloco/sessão/consolidado, CSV contra JSON, rotação balanceada, código preservado e recusas de artefato alterado, sobrescrita, energia divergente e parâmetros inválidos. Eles não certificam temperatura, energia consumida ou desempenho no celular.
+
+**Validação realizada: 8 testes passaram** na coleta publicada. O teste de integridade verifica as evidências, sem repetir as inferências.
