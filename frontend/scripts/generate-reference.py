@@ -20,10 +20,20 @@ from src.benchmark_t5_6 import prever
 
 OUT = ROOT / "frontend/tests/fixtures"
 OUT.mkdir(parents=True, exist_ok=True)
-MODEL = ROOT / "assets/modelos/candidato_T5_6_20261026/modelo_int8.tflite"
+manifest = json.loads((ROOT / "frontend/public/models/manifest.json").read_text(encoding="utf-8"))
+spec = next(model for model in manifest["models"] if model["format"] == "INT8")
+MODEL = ROOT / spec["sourcePath"]
+web_model = ROOT / "frontend/public/models" / spec["filename"]
+for model_path, expected_hash in ((MODEL, spec["sourceSha256"]), (web_model, spec["sha256"])):
+    if hashlib.sha256(model_path.read_bytes()).hexdigest() != expected_hash:
+        raise ValueError(f"Hash divergente do manifesto web: {model_path}")
+classes_path = ROOT / manifest["classesSource"]["sourcePath"]
+if hashlib.sha256(classes_path.read_bytes()).hexdigest() != manifest["classesSource"]["sha256"]:
+    raise ValueError("Hash das classes diverge do manifesto web")
+if json.loads(classes_path.read_text(encoding="utf-8")) != manifest["classes"]:
+    raise ValueError("Ordem das classes diverge do manifesto web")
 interpreter = tf.lite.Interpreter(model_path=str(MODEL), num_threads=1)
 interpreter.allocate_tensors()
-web_model = ROOT / "frontend/public/models/modelo_int8_web.tflite"
 web_interpreter = tf.lite.Interpreter(model_path=str(web_model), num_threads=1)
 web_interpreter.allocate_tensors()
 
@@ -54,6 +64,9 @@ data = {
     "modelSha256": hashlib.sha256(MODEL.read_bytes()).hexdigest(),
     "webModelSha256": hashlib.sha256(web_model.read_bytes()).hexdigest(),
     "webSpecializationVerified": True,
+    "modelSourcePath": spec["sourcePath"],
+    "modelVersion": spec["version"],
+    "classesSha256": manifest["classesSource"]["sha256"],
     "preprocessing": cases,
     "predictions": predictions,
     "quantization": {

@@ -1,0 +1,25 @@
+{
+  "id": "candidato_T5_6_20261026",
+  "selectionStatus": "T8.3_pendente",
+  "classes": {
+    "sourcePath": "assets/modelos/candidato_T5_6_20261026/classes.json",
+    "contractPath": "assets/modelos/candidato_T5_6_20261026/manifesto.json",
+    "sha256Key": ["sha256", "classes.json"]
+  },
+  "models": [
+    {
+      "format": "INT8",
+      "version": "T5.6",
+      "sourcePath": "assets/modelos/candidato_T5_6_20261026/modelo_int8.tflite",
+      "contractPath": "assets/modelos/candidato_T5_6_20261026/manifesto.json",
+      "sha256Key": ["sha256", "modelo_int8.tflite"]
+    },
+    {
+      "format": "FP32",
+      "version": "T5.6",
+      "sourcePath": "assets/modelos/candidato_T5_6_20261026/modelo_fp32.tflite",
+      "contractPath": "assets/modelos/candidato_T5_6_20261026/manifesto.json",
+      "sha256Key": ["sha256", "modelo_fp32.tflite"]
+    }
+  ]
+}

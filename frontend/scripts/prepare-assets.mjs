@@ -6,11 +6,27 @@ import { build } from "esbuild";
 
 const root = fileURLToPath(new URL("../../", import.meta.url));
 const app = path.join(root, "frontend");
-const source = path.join(root, "assets/modelos/candidato_T5_6_20261026");
 const destination = path.join(app, "public/models");
-const manifest = JSON.parse(
-  await readFile(path.join(source, "manifesto.json"), "utf8"),
+const sources = JSON.parse(
+  await readFile(path.join(app, "model-sources.json"), "utf8"),
 );
+const digest = (bytes) => createHash("sha256").update(bytes).digest("hex");
+
+async function checkedSource(source) {
+  const contract = JSON.parse(await readFile(path.join(root, source.contractPath), "utf8"));
+  const bytes = await readFile(path.join(root, source.sourcePath));
+  const sha256 = digest(bytes);
+  const expected = source.sha256Key.reduce((value, key) => value?.[key], contract);
+  if (sha256 !== expected) throw new Error(`Hash divergente: ${source.sourcePath}`);
+  return { bytes, sha256, contract };
+}
+
+const classSource = await checkedSource(sources.classes);
+const classes = JSON.parse(classSource.bytes.toString("utf8"));
+if (classes.length !== 13 || classes.some((item, i) => item.indice !== i))
+  throw new Error("Ordem de classes inválida.");
+if (sources.models.map((model) => model.format).join() !== "INT8,FP32")
+  throw new Error("Esperados INT8 e FP32, nessa ordem.");
 
 // Lê do esquema oficial do TFLite os tensores de entrada e saída do modelo.
 // Assim, o contrato e os parâmetros de quantização vêm do próprio arquivo.
@@ -81,22 +97,25 @@ function tensorContract(buffer, specialize = false) {
 
 await mkdir(destination, { recursive: true });
 const models = [];
-for (const [format, filename] of [
-  ["INT8", "modelo_int8.tflite"],
-  ["FP32", "modelo_fp32.tflite"],
-]) {
-  const bytes = await readFile(path.join(source, filename));
-  const sourceSha256 = createHash("sha256").update(bytes).digest("hex");
-  if (sourceSha256 !== manifest.sha256[filename])
-    throw new Error(`Hash divergente: ${filename}`);
+for (const source of sources.models) {
+  const { format, version, sourcePath, contractPath } = source;
+  const { bytes, sha256: sourceSha256, contract: provenance } = await checkedSource(source);
+  const classesSha256 = provenance.origem_selecao?.classes_sha256 ?? provenance.sha256?.["classes.json"];
+  if (classesSha256 !== classSource.sha256 ||
+      (provenance.classes && JSON.stringify(provenance.classes) !== JSON.stringify(classes)))
+    throw new Error(`Classes incompatíveis: ${contractPath}`);
   const contract = tensorContract(bytes, true);
-  const sha256 = createHash("sha256").update(bytes).digest("hex");
+  const sha256 = digest(bytes);
   if (
     contract.input.shape.join() !== "1,224,224,3" ||
     contract.output.shape.join() !== "1,13"
   ) {
     throw new Error("Dimensões diferentes do contrato do candidato.");
   }
+  const expectedDtype = format === "INT8" ? "int8" : "float32";
+  if (contract.input.dtype !== expectedDtype || contract.output.dtype !== expectedDtype)
+    throw new Error(`Tipo de tensor incompatível: ${sourcePath}`);
+  const filename = `modelo_${format.toLowerCase()}.tflite`;
   const webFilename = filename.replace(".tflite", "_web.tflite");
   await writeFile(path.join(destination, webFilename), bytes);
   // Remove cópias geradas antigas deste script, se existirem.
@@ -107,26 +126,25 @@ for (const [format, filename] of [
     bytes: bytes.length,
     sha256,
     sourceSha256,
+    sourcePath,
+    contractPath,
+    version,
     ...contract,
   });
 }
-const classesBytes = await readFile(path.join(source, "classes.json"));
-if (
-  createHash("sha256").update(classesBytes).digest("hex") !==
-  manifest.sha256["classes.json"]
-) {
-  throw new Error("Hash divergente: classes.json");
-}
-const classes = JSON.parse(classesBytes.toString("utf8"));
-if (classes.length !== 13 || classes.some((item, i) => item.indice !== i))
-  throw new Error("Ordem de classes inválida.");
 await writeFile(
   path.join(destination, "manifest.json"),
   JSON.stringify(
     {
-      id: "candidato_T5_6_20261026",
-      architecture: manifest.arquitetura,
+      id: sources.id,
+      architecture: classSource.contract.arquitetura,
+      selectionStatus: sources.selectionStatus,
       classes,
+      classesSource: {
+        sourcePath: sources.classes.sourcePath,
+        contractPath: sources.classes.contractPath,
+        sha256: classSource.sha256,
+      },
       models,
     },
     null,

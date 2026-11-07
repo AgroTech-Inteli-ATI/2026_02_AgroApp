@@ -1,7 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ChangeEvent } from "react";
 import {
   ArrowRight,
   BookOpen,
+  Camera,
   Check,
   CheckCircle2,
   ChevronDown,
@@ -63,6 +64,7 @@ export default function App() {
   const request = useRef(0);
   const urls = useRef({ original: "", preview: "" });
   const input = useRef<HTMLInputElement>(null);
+  const cameraInput = useRef<HTMLInputElement>(null);
   const help = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {
@@ -179,6 +181,14 @@ export default function App() {
     setResult(undefined);
     setError("");
     setShowPrepared(false);
+    setSelectedClass(undefined);
+  };
+
+  const selectPhoto = (event: ChangeEvent<HTMLInputElement>) => {
+    const nextFile = event.currentTarget.files?.[0];
+    if (nextFile) analyze(nextFile);
+    // Permite selecionar a mesma foto novamente. Cancelar mantém o resultado.
+    event.currentTarget.value = "";
   };
 
   const chosen = result?.predictions.find(
@@ -322,13 +332,21 @@ export default function App() {
                   type="file"
                   className={styles.fileInput}
                   accept="image/jpeg,image/png,image/webp"
-                  aria-label="Adicionar foto para análise"
+                  aria-label="Selecionar foto da galeria"
+                  tabIndex={-1}
                   disabled={!model || busy}
-                  onChange={(event) => {
-                    const nextFile = event.target.files?.[0];
-                    if (nextFile) analyze(nextFile);
-                    event.target.value = "";
-                  }}
+                  onChange={selectPhoto}
+                />
+                <input
+                  ref={cameraInput}
+                  type="file"
+                  className={styles.fileInput}
+                  accept="image/jpeg,image/png,image/webp"
+                  capture="environment"
+                  aria-label="Capturar foto com a câmera"
+                  tabIndex={-1}
+                  disabled={!model || busy}
+                  onChange={selectPhoto}
                 />
                 <div
                   className={`${styles.dropzone} ${dragging ? styles.dragging : ""} ${file ? styles.withPhoto : ""}`}
@@ -392,23 +410,32 @@ export default function App() {
                         começa com uma foto.
                       </h3>
                       <p>
-                        Arraste sua imagem até aqui
+                        Tire uma foto ou escolha da galeria.
                         <br />
-                        ou escolha um arquivo do dispositivo.
+                        Você também pode arrastar uma imagem até aqui.
                       </p>
-                      <button
-                        className={styles.primaryButton}
-                        disabled={!model || busy}
-                        onClick={() => input.current?.click()}
-                      >
-                        {!model && !loadError ? (
-                          <LoaderCircle className={styles.spin} size={18} />
-                        ) : (
-                          <Upload size={18} />
-                        )}
-                        Adicionar foto
-                        <ArrowRight size={17} />
-                      </button>
+                      <div className={styles.captureActions}>
+                        <button
+                          className={styles.primaryButton}
+                          disabled={!model || busy}
+                          onClick={() => cameraInput.current?.click()}
+                        >
+                          {!model && !loadError ? (
+                            <LoaderCircle className={styles.spin} size={18} />
+                          ) : (
+                            <Camera size={18} />
+                          )}
+                          Tirar foto
+                        </button>
+                        <button
+                          className={styles.secondaryButton}
+                          disabled={!model || busy}
+                          onClick={() => input.current?.click()}
+                        >
+                          <ImagePlus size={18} />
+                          Escolher da galeria
+                        </button>
+                      </div>
                       <span className={styles.fileHint}>
                         JPG, PNG ou WebP · até 10 MB
                       </span>
@@ -421,20 +448,29 @@ export default function App() {
                     <span>{error}</span>
                   </div>
                 )}
-                <div className={styles.photoFooter}>
+                <div className={`${styles.photoFooter} ${file ? styles.photoFooterWithPhoto : ""}`}>
                   {file ? (
                     <>
                       <div className={styles.fileName}>
                         <ImagePlus size={17} />
                         <span title={file.name}>{file.name}</span>
                       </div>
-                      <button
-                        className={styles.textButton}
-                        disabled={busy || !model}
-                        onClick={() => input.current?.click()}
-                      >
-                        Trocar foto <ArrowRight size={15} />
-                      </button>
+                      <div className={styles.photoActions}>
+                        <button
+                          className={styles.textButton}
+                          disabled={busy || !model}
+                          onClick={() => cameraInput.current?.click()}
+                        >
+                          <Camera size={16} /> Tirar outra foto
+                        </button>
+                        <button
+                          className={styles.textButton}
+                          disabled={busy || !model}
+                          onClick={() => input.current?.click()}
+                        >
+                          <ImagePlus size={16} /> Trocar foto
+                        </button>
+                      </div>
                     </>
                   ) : (
                     <>
@@ -467,9 +503,9 @@ export default function App() {
                 )}
               </div>
 
-              <div className={styles.resultPanel} aria-busy={busy}>
+              <div className={styles.resultPanel} aria-busy={busy} role="region" aria-labelledby="analysis-result-title">
                 <div className={styles.panelHeading}>
-                  <h2>Resultado da análise</h2>
+                  <h2 id="analysis-result-title">Resultado da análise</h2>
                   <span className={styles.smallBadge}>
                     {result ? "Top 3 hipóteses" : "Reconhecimento visual"}
                   </span>
@@ -766,8 +802,11 @@ export default function App() {
         </p>
         <ol>
           <li>
-            <strong>Escolha uma foto nítida</strong>
-            <span>JPG, PNG ou WebP, sem transparência, com até 10 MB.</span>
+            <strong>Tire uma foto ou escolha da galeria</strong>
+            <span>
+              Use uma foto nítida em JPG, PNG ou WebP, sem transparência, com até
+              10 MB. A abertura da câmera depende do navegador e do dispositivo.
+            </span>
           </li>
           <li>
             <strong>A imagem é preparada automaticamente</strong>

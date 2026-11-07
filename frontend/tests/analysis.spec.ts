@@ -2,12 +2,23 @@ import { expect, test } from "@playwright/test";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import reference from "./fixtures/reference.json" with { type: "json" };
+import type { ModelManifest } from "../src/types";
 
 const fixtures = fileURLToPath(new URL("./fixtures/", import.meta.url));
 
 test("executa INT8 real, compara com Python e reutiliza o modelo sem enviar a foto", async ({
   page,
 }) => {
+  const response = await page.request.get("/models/manifest.json");
+  expect(response.ok()).toBeTruthy();
+  const manifest = (await response.json()) as ModelManifest;
+  const int8 = manifest.models.find((model) => model.format === "INT8")!;
+  expect(int8.sourceSha256).toBe(reference.modelSha256);
+  expect(int8.sha256).toBe(reference.webModelSha256);
+  expect(int8.sourcePath).toBe(reference.modelSourcePath);
+  expect(int8.version).toBe(reference.modelVersion);
+  expect(manifest.classesSource.sha256).toBe(reference.classesSha256);
+  expect(reference.webSpecializationVerified).toBe(true);
   const modelDownloads: string[] = [];
   const uploadRequests: string[] = [];
   page.on("request", (request) => {
@@ -32,7 +43,7 @@ test("executa INT8 real, compara com Python e reutiliza o modelo sem enviar a fo
   });
   await page.goto("/");
   await expect(
-    page.getByRole("button", { name: "Adicionar foto", exact: true }),
+    page.getByRole("button", { name: "Escolher da galeria", exact: true }),
   ).toBeEnabled();
   await expect(page.getByText("Modelo pronto", { exact: true })).toBeVisible();
   const downloadsAfterLoad = modelDownloads.length;
@@ -41,9 +52,14 @@ test("executa INT8 real, compara com Python e reutiliza o modelo sem enviar a fo
     "orientation.jpg",
     "pattern.png",
   ].entries()) {
-    await page
-      .locator("input[type=file]")
-      .setInputFiles(path.join(fixtures, filename));
+    const choosing = page.waitForEvent("filechooser");
+    await page.getByRole("button", {
+      name: i === 0 ? "Escolher da galeria" : "Tirar outra foto",
+      exact: true,
+    }).click();
+    const chooser = await choosing;
+    expect(await chooser.element().getAttribute("capture")).toBe(i === 0 ? null : "environment");
+    await chooser.setFiles(path.join(fixtures, filename));
     await expect
       .poll(() =>
         page.evaluate(
@@ -90,7 +106,7 @@ test("executa INT8 real, compara com Python e reutiliza o modelo sem enviar a fo
   ).toBeVisible();
   await page.getByRole("button", { name: "Remover foto", exact: true }).click();
   await expect(
-    page.getByRole("button", { name: "Adicionar foto", exact: true }),
+    page.getByRole("button", { name: "Escolher da galeria", exact: true }),
   ).toBeEnabled();
   await expect(page.getByText("Top 3 hipóteses")).toHaveCount(0);
 });
@@ -100,10 +116,10 @@ test("trata arquivo inválido, consulta as classes e mantém ajuda acessível", 
 }) => {
   await page.goto("/");
   await expect(
-    page.getByRole("button", { name: "Adicionar foto", exact: true }),
+    page.getByRole("button", { name: "Escolher da galeria", exact: true }),
   ).toBeEnabled();
   await page
-    .locator("input[type=file]")
+    .getByLabel("Selecionar foto da galeria", { exact: true })
     .setInputFiles({
       name: "arquivo.txt",
       mimeType: "text/plain",
@@ -111,7 +127,7 @@ test("trata arquivo inválido, consulta as classes e mantém ajuda acessível", 
     });
   await expect(page.getByRole("alert")).toContainText("Formato não aceito");
   await page
-    .locator("input[type=file]")
+    .getByLabel("Selecionar foto da galeria", { exact: true })
     .setInputFiles({
       name: "quebrada.jpg",
       mimeType: "image/jpeg",
@@ -149,7 +165,7 @@ test("explica falha ao carregar o modelo e oferece recuperação", async ({
   await page.unroute("**/models/*.tflite");
   await page.getByRole("button", { name: /Recarregar modelo/ }).click();
   await expect(
-    page.getByRole("button", { name: "Adicionar foto", exact: true }),
+    page.getByRole("button", { name: "Escolher da galeria", exact: true }),
   ).toBeEnabled();
 });
 
@@ -161,8 +177,42 @@ test("executa a alternativa FP32 e identifica a troca de formato", async ({ page
     await route.fulfill({ response, json: manifest });
   });
   await page.goto("/");
-  await expect(page.getByRole("button", { name: "Adicionar foto", exact: true })).toBeEnabled();
+  await expect(page.getByRole("button", { name: "Escolher da galeria", exact: true })).toBeEnabled();
   await expect(page.getByText(/Este navegador está usando a versão FP32/)).toBeVisible();
-  await page.locator("input[type=file]").setInputFiles(path.join(fixtures, "pattern.png"));
+  await page.getByLabel("Selecionar foto da galeria", { exact: true }).setInputFiles(path.join(fixtures, "pattern.png"));
   await expect(page.getByText("Top 3 hipóteses")).toBeVisible();
+});
+
+test("mantém a foto ao cancelar e permite repetir a captura em tela móvel", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 900 });
+  await page.goto("/");
+  const takePhoto = page.getByRole("button", { name: "Tirar foto", exact: true });
+  await expect(takePhoto).toBeEnabled();
+  const openingCamera = page.waitForEvent("filechooser");
+  await takePhoto.click();
+  const camera = await openingCamera;
+  expect(await camera.element().getAttribute("capture")).toBe("environment");
+  await camera.setFiles(path.join(fixtures, "orientation.jpg"));
+  await expect(page.getByText("Top 3 hipóteses")).toBeVisible();
+  const photo = page.getByAltText("Foto selecionada para análise");
+  const originalUrl = await photo.getAttribute("src");
+  const resultRegion = page.getByRole("region", { name: "Resultado da análise" });
+  const previousResult = await resultRegion.textContent();
+
+  for (const name of ["Tirar outra foto", "Trocar foto"]) {
+    const choosing = page.waitForEvent("filechooser");
+    await page.getByRole("button", { name, exact: true }).click();
+    await (await choosing).setFiles([]);
+    await expect(photo).toHaveAttribute("src", originalUrl!);
+    await expect(resultRegion).toHaveText(previousResult!);
+    await expect(page.getByRole("alert")).toHaveCount(0);
+  }
+
+  const choosing = page.waitForEvent("filechooser");
+  await page.getByRole("button", { name: "Tirar outra foto", exact: true }).click();
+  await (await choosing).setFiles(path.join(fixtures, "orientation.jpg"));
+  await expect(photo).not.toHaveAttribute("src", originalUrl!);
+  await expect(page.getByRole("button", { name: "Tirar outra foto", exact: true })).toBeEnabled();
+  await expect(page.getByText("Top 3 hipóteses")).toBeVisible();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(false);
 });

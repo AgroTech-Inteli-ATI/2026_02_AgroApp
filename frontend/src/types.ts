@@ -13,12 +13,22 @@ export interface ModelSpec {
   filename: string;
   bytes: number;
   sha256: string;
+  sourceSha256: string;
+  sourcePath: string;
+  contractPath: string;
+  version: string;
   input: TensorSpec;
   output: TensorSpec;
 }
 export interface ModelManifest {
   id: string;
   architecture: string;
+  selectionStatus: string;
+  classesSource: {
+    sourcePath: string;
+    contractPath: string;
+    sha256: string;
+  };
   classes: ClassLabel[];
   models: ModelSpec[];
 }

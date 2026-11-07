@@ -85,6 +85,13 @@
 
 </details>
 
+<details>
+<summary><strong>9. Integração Mobile</strong></summary>
+
+- [9.1 Pipeline de captura e processamento de imagens (T9.1)](#91-pipeline-de-captura-e-processamento-de-imagens-t91)
+
+</details>
+
 ---
 
 # 1. Entendimento de Negócio
@@ -3553,3 +3560,48 @@ Evidências: [JSON consolidado](../assets/data/benchmark_T8_2/oficiais_20261106/
 Os testes conferem integridade dos arquivos históricos e atuais, cobertura das cinco versões, condições declaradas entre sessões, amostras e estatísticas por bloco/sessão/consolidado, CSV contra JSON, rotação balanceada, código preservado e recusas de artefato alterado, sobrescrita, energia divergente e parâmetros inválidos. Eles não certificam temperatura, energia consumida ou desempenho no celular.
 
 **Validação realizada: 8 testes passaram** na coleta publicada. O teste de integridade verifica as evidências, sem repetir as inferências.
+
+# 9. Integração Mobile
+
+## 9.1 Pipeline de captura e processamento de imagens (T9.1)
+
+**Atualização em 06/11/2026. Estado:** pipeline web implementado e verificado localmente; validação da câmera em aparelho físico e adoção do modelo final da T8.3 pendentes. Esta atualização preserva os modelos da T5.6 já utilizados pelo frontend; não declara a escolha final mobile.
+
+### Captura e processamento
+
+O frontend React/TypeScript executa o modelo no próprio navegador, com LiteRT.js e um Web Worker. A ação **Tirar foto** abre o seletor nativo com preferência pela câmera traseira; **Escolher da galeria** abre um seletor separado. A câmera depende do navegador/aparelho. No computador ou em ambiente sem suporte à captura, o sistema pode oferecer seleção de arquivo. Arrastar e soltar também é aceito.
+
+As duas entradas encaminham um `File` para a mesma função de análise em [`App.tsx`](../frontend/src/App.tsx). Cancelar o seletor preserva a foto e o resultado. Depois da classificação, **Tirar outra foto** e **Trocar foto** permitem uma nova análise, inclusive da mesma imagem. As ações ficam indisponíveis enquanto a análise está em andamento. A aplicação não presume que o seletor nativo informe a razão de uma captura cancelada ou indisponível.
+
+O fluxo usa o contrato T4.1, reproduzido em [`preprocess.ts`](../frontend/src/lib/preprocess.ts): orientação EXIF aplicada uma vez, RGB, redimensionamento bicúbico com proporção preservada, entrada de 224 × 224 pixels e preenchimento cinza `(128,128,128)`, sem recorte. A entrada float32 é normalizada para [0,1]; no INT8, escala e zero point são lidos do arquivo. A normalização interna do backbone não é repetida.
+
+São aceitos JPEG, PNG e WebP até 10 MiB e 40 megapixels, sem transparência. O [`worker`](../frontend/src/lib/inference.worker.ts) reutiliza o modelo carregado, executa a inferência, desquantiza a saída e associa cada score ao índice original das 13 classes. A foto original e a entrada preparada podem ser conferidas na interface. A fotografia não é enviada a um servidor.
+
+### Artefatos e vínculo com as entregas anteriores
+
+[`model-sources.json`](../frontend/model-sources.json) centraliza as origens das classes e de cada modelo, os contratos e as chaves de hash. A situação registrada é `T8.3_pendente`. O empacotamento verifica os hashes e o vínculo entre classes e modelo, confere as dimensões/tipos dos tensores e gera cópias web com assinaturas de dimensões concretas, preservando os originais.
+
+| Item em execução nesta atualização | Origem | SHA-256 original |
+| --- | --- | --- |
+| Classes | `assets/modelos/candidato_T5_6_20261026/classes.json` | `1058619e188ffd7fa42bfc6821e2e122356b35d8503af71b987f37ae1e4572f4` |
+| INT8 principal | `assets/modelos/candidato_T5_6_20261026/modelo_int8.tflite` | `07e787453ab3775473f15e5081b0e0f0b67b67e4394c13ecbbea01b69c1c90cd` |
+| FP32 de compatibilidade | `assets/modelos/candidato_T5_6_20261026/modelo_fp32.tflite` | `0b02b285e924f4577b1d4ad6084369f1f6fef14aea149ab818185d6fcf893569` |
+
+O manifesto servido em `models/manifest.json` registra os hashes original/web, versão da conversão, caminhos de origem/contrato e origem/hash das classes. O [`gerador de referências Python`](../frontend/scripts/generate-reference.py) lê esses mesmos caminhos e confere os hashes antes de inferir. Os testes de navegador conferem a identidade do modelo e das classes contra a referência antes de comparar os scores. Assim, referências do modelo antigo não validam silenciosamente um novo arquivo.
+
+T7.1, T7.2, T7.3, T8.1 e T8.2 fornecem contratos e evidências para a T8.3. O INT8 oficial T7.3 é distinto do INT8 T5.6 desta interface. Após documentar a seleção, atualizar a configuração, regenerar as referências e repetir as verificações; as métricas do artefato T7.3 não são atribuídas ao arquivo T5.6. O FP32 de compatibilidade tem 13.531.184 bytes e ultrapassa o limite proposto de 8 MB; sua permanência também deve ser considerada na decisão mobile.
+
+### Evidências locais e limites do aceite
+
+Em Windows, foram executados:
+
+- **9 testes unitários:** referências do processamento Python, quantização e arredondamento.
+- **5 testes E2E em Chromium:** INT8 real, identidade dos artefatos, 13 scores comparados com Python, EXIF, reutilização, ausência de uploads, entradas de galeria/captura, cancelamento, repetição da mesma foto, arquivos inválidos, recuperação de download e alternativa FP32.
+- **Build de produção:** preparação de artefatos, TypeScript e Vite concluídos.
+- **Revisão visual:** desktop de 1440 px e viewport móvel de 390 px, sem rolagem horizontal nas telas verificadas. O teste de captura móvel também verifica a largura após o resultado.
+
+Ambiente das referências: TensorFlow 2.21.0, Pillow 12.2.0 e NumPy 2.4.4. A execução Python exige saídas idênticas entre o original e a cópia web nas referências; entre Python e navegador, os testes usam tolerância de 2/256 por score. Essas amostras são sintéticas e verificam integração, não qualidade agronômica ou generalização.
+
+**Pendente no aparelho de referência:** registrar aparelho/SO/navegador e URL HTTPS; capturar pela câmera e selecionar da galeria; conferir EXIF, imagem preparada e classificação; cancelar e repetir; registrar indisponibilidade/permissões conforme o que o sistema expuser. Medir pré-processamento e inferência no aparelho, sem extrapolar a latência do notebook. A automação do input de captura não substitui essa evidência física.
+
+A T9.2 trata o limiar e o estado inconclusivo; a T9.3 trata associação e conteúdo técnico revisado; a T9.4 valida o fluxo offline. Esta atualização não acrescenta service worker, conteúdo técnico nem regra de confiança. Comandos de reprodução e limitações estão no [README do frontend](../frontend/README.md).

@@ -2,6 +2,9 @@
   "modelSha256": "07e787453ab3775473f15e5081b0e0f0b67b67e4394c13ecbbea01b69c1c90cd",
   "webModelSha256": "4831bd2420e79a83bf4e23aaf25ac6f2156e0f959f59ff347ce27b15aa773185",
   "webSpecializationVerified": true,
+  "modelSourcePath": "assets/modelos/candidato_T5_6_20261026/modelo_int8.tflite",
+  "modelVersion": "T5.6",
+  "classesSha256": "1058619e188ffd7fa42bfc6821e2e122356b35d8503af71b987f37ae1e4572f4",
   "preprocessing": [
     {
       "width": 17,

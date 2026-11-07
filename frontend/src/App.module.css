@@ -296,6 +296,53 @@
   background: #d4e8dc;
   color: #4e6258;
 }
+.captureActions {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.secondaryButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 45px;
+  padding: 12px 18px;
+  border: 1px solid var(--green-dark);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--green-dark);
+  font-size: 12px;
+  font-weight: 500;
+  transition: background 0.15s;
+}
+.secondaryButton:hover:not(:disabled) {
+  background: var(--green-light);
+}
+.secondaryButton:disabled {
+  border-color: var(--line);
+  color: var(--muted);
+}
+.photoFooterWithPhoto {
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  padding: 10px 0;
+}
+.photoFooterWithPhoto .fileName {
+  flex-basis: 100%;
+}
+.photoActions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+}
+.photoActions .textButton {
+  min-height: 44px;
+  padding: 8px 0;
+}
 .fileHint {
   font-size: 9px;
   color: var(--muted);
@@ -1125,6 +1172,10 @@
   }
   .dropzone {
     min-height: 335px;
+  }
+  .captureActions {
+    width: 100%;
+    flex-direction: column;
   }
   .withPhoto {
     height: 335px;

@@ -16,6 +16,12 @@ Abra http://127.0.0.1:5173. Se a porta estiver ocupada, o Vite informa outra por
 
 O comando prepara os recursos automaticamente: verifica os hashes dos modelos e das classes, gera os artefatos web e copia o runtime. O modelo carrega ao abrir a aplicação; o upload é habilitado quando a inicialização e o aquecimento terminam. Cada nova foto reutiliza o modelo carregado.
 
+## Capturar ou selecionar uma foto
+
+Use **Tirar foto** para abrir o seletor do dispositivo com preferência pela câmera traseira ou **Escolher da galeria** para selecionar um arquivo. A disponibilidade da câmera depende do aparelho e do navegador; no computador, o sistema pode abrir um seletor de arquivos. As duas entradas usam o mesmo processamento e inferência local. Arrastar e soltar continua disponível.
+
+Depois da análise, use **Tirar outra foto** ou **Trocar foto**. Cancelar o seletor preserva a foto e o resultado atuais; selecionar a mesma foto novamente executa uma nova análise. Durante o processamento, as duas ações ficam desabilitadas. Os formatos aceitos são JPEG, PNG e WebP, sem transparência, até 10 MiB e 40 megapixels.
+
 Para testar em outro dispositivo, prefira publicação estática por HTTPS. O projeto não configura certificados de desenvolvimento; HTTP em um IP de rede não fornece o contexto seguro necessário para Web Crypto e aceleração do navegador. `localhost` e `127.0.0.1` são adequados no próprio computador.
 
 ## Build e hospedagem
@@ -34,6 +40,7 @@ O servidor local adiciona COOP/COEP. Esses cabeçalhos permitem isolamento entre
 ## Modelo e contrato de imagem
 
 - Fonte: `assets/modelos/candidato_T5_6_20261026`, com 13 classes na ordem original.
+- A configuração `model-sources.json` separa as origens das classes e de cada modelo, com caminho do contrato e chave do hash esperado. O estado atual é `T8.3_pendente`: os modelos da T5.6 foram mantidos enquanto a seleção mobile não está documentada.
 - INT8 primeiro: 4.003.624 bytes. FP32: 13.531.184 bytes, baixado somente como alternativa quando a execução INT8 é incompatível; a troca é identificada na interface.
 - O runtime WASM também é baixado, aproximadamente 11 MB, além do modelo, dos scripts e das fontes. O tamanho do modelo sozinho não representa o download inicial nem o consumo de RAM.
 - Entrada RGB `[1,224,224,3]`, normalizada para `[0,1]`. EXIF aplicado uma vez, redimensionamento proporcional bicúbico com antialiasing e arredondamento compatível com Pillow 12.2, preenchimento `(128,128,128)`, sem recorte.
@@ -45,6 +52,10 @@ O servidor local adiciona COOP/COEP. Esses cabeçalhos permitem isolamento entre
 ### Especialização para o navegador
 
 Os arquivos originais têm formas alocadas de batch 1 e assinaturas com batch dinâmico `-1`. O LiteRT.js 2.6 exige tipos de entrada concretos para executar esse grafo. `scripts/prepare-assets.mjs` gera cópias `*_web.tflite`, substituindo somente dimensões dinâmicas nas assinaturas pelas formas já alocadas. Pesos, operadores, quantização e os arquivos originais são preservados. O manifesto web registra os hashes de origem e das cópias e o navegador verifica o hash antes de carregar.
+
+O manifesto também registra versão da conversão, caminhos relativos de origem/contrato, origem/hash das classes e situação da seleção. O empacotamento verifica o vínculo das classes ao contrato de cada modelo, as dimensões e os tipos dos tensores. O gerador Python lê as origens desse mesmo manifesto e confere os hashes antes de inferir, evitando uma configuração independente para os testes.
+
+Quando a T8.3 definir o artefato, atualize `model-sources.json` com os caminhos e chaves de hash do contrato escolhido, rode `npm.cmd run assets` e regenere as referências Python antes dos testes. Para o INT8 T7.3, o hash está em `contrato_int8.json` → `modelo_int8_sha256`; para o FP32 T7.1, em `contrato_tensores.json` → `sha256.tflite`. A decisão deve definir também se o FP32 permanece como alternativa de compatibilidade. Não substitua o modelo nem marque a seleção como concluída apenas por editar a configuração.
 
 ## Resultados e conteúdo técnico
 
@@ -63,7 +74,7 @@ npm.cmd run test:e2e
 npm.cmd run build
 ```
 
-Os testes unitários comparam os bytes do processamento com seis referências sintéticas geradas em Python. Os testes de navegador executam o INT8 real, comparam os 13 scores com Python, verificam EXIF, reutilização do modelo, ausência de uploads, navegação, arquivos inválidos e recuperação após falha no download. A tolerância de comparação entre runtimes é de 2/256 por score.
+Os 9 testes unitários comparam os bytes do processamento com seis referências sintéticas geradas em Python, incluindo quantização e arredondamento. Os 5 testes de navegador executam o INT8 real, conferem os hashes do manifesto contra as referências antes de comparar os 13 scores com Python e verificam EXIF, reutilização do modelo, ausência de uploads, navegação, arquivos inválidos, recuperação após falha no download e alternativa FP32. Também exercitam os dois seletores, cancelamento e repetição da mesma foto em viewport móvel. A tolerância de comparação entre runtimes é de 2/256 por score.
 
 Para regenerar as referências, em ambiente Python separado com TensorFlow 2.21.0, Pillow 12.2.0 e NumPy 2.4.4:
 
@@ -71,8 +82,10 @@ Para regenerar as referências, em ambiente Python separado com TensorFlow 2.21.
 python scripts/generate-reference.py
 ```
 
-Execute `npm.cmd run assets` antes. O gerador também exige resultados idênticos entre o modelo original e a cópia web na execução Python. As imagens de teste são padrões sintéticos, não fotos de usuários.
+Execute `npm.cmd run assets` antes. O gerador também exige resultados idênticos entre o modelo original e a cópia web na execução Python e registra os hashes dos dois, a versão, o caminho original e o hash das classes. As imagens de teste são padrões sintéticos, não fotos de usuários.
 
 Validação inicial: Chromium automatizado no Windows; layout desktop e viewport móvel de 390 px. Compatibilidade e desempenho em aparelho Android físico, Safari e Firefox ainda não foram certificados. As medições da tela são da sessão atual e não representam benchmark do celular-alvo.
+
+A seleção automatizada de um arquivo no input de captura não comprova a abertura da câmera física nem suas permissões. Para fechar a validação mobile da T9.1, registrar em aparelho real: modelo/hash, aparelho, SO, navegador, URL HTTPS, captura e galeria, cancelamento, repetição, orientação e classificação. A troca para o modelo selecionado na T8.3 exige repetir as verificações com os novos artefatos.
 
 Ao editar o worker ou o processamento, rode `npm.cmd run assets` novamente e recarregue a página; esses arquivos são compilados separadamente do HMR da interface.
