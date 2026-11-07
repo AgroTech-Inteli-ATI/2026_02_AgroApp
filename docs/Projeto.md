@@ -85,6 +85,13 @@
 
 </details>
 
+<details>
+<summary><strong>9. Integração mobile</strong></summary>
+
+- [9.3 Associação da predição ao conteúdo técnico (T9.3)](#93-associação-da-predição-ao-conteúdo-técnico-t93)
+
+</details>
+
 ---
 
 # 1. Entendimento de Negócio
@@ -3553,3 +3560,76 @@ Evidências: [JSON consolidado](../assets/data/benchmark_T8_2/oficiais_20261106/
 Os testes conferem integridade dos arquivos históricos e atuais, cobertura das cinco versões, condições declaradas entre sessões, amostras e estatísticas por bloco/sessão/consolidado, CSV contra JSON, rotação balanceada, código preservado e recusas de artefato alterado, sobrescrita, energia divergente e parâmetros inválidos. Eles não certificam temperatura, energia consumida ou desempenho no celular.
 
 **Validação realizada: 8 testes passaram** na coleta publicada. O teste de integridade verifica as evidências, sem repetir as inferências.
+
+# 9. Integração mobile
+
+## 9.3 Associação da predição ao conteúdo técnico (T9.3)
+
+**Autor:** Lucas. **Revisor:** Glauco. **Data:** 07/11/2026.
+
+**Situação: entrega parcial.** A associação entre cada classe do modelo, o dicionário de classes e a base local de conteúdo está implementada e testada, e funciona sem rede. O **conteúdo técnico em si ainda não existe**: o catálogo do Agro App não foi recebido, então nenhuma das 13 classes tem texto de sintomas ou manejo, e todas resolvem como *indisponível*. O critério de aceite ("cada classe reconhecida é associada ao conteúdo técnico correspondente, consultável sem internet") só será atendido por completo quando o catálogo for preenchido. Até lá, o aplicativo deve dizer que o conteúdo está indisponível, sem afirmar nenhuma orientação.
+
+### Fluxo
+
+1. O modelo devolve o índice da classe (0 a 12), na ordem de [`classes.json`](../assets/modelos/candidato_T5_6_20261026/classes.json).
+2. A [associação](../assets/data/conteudo_T9_3/associacao_classes.json) liga o índice ao nome do modelo, à identificação da praga, aos IDs do inventário e do acervo anterior e à `chave_conteudo` oficial.
+3. A [base local](../assets/data/conteudo_T9_3/base_conteudo.json) guarda o texto de cada `chave_conteudo`, com fonte, data de revisão e o indicador `validated`.
+4. A função `associar_predicoes` ([`associacao_conteudo_t9_3.py`](../src/associacao_conteudo_t9_3.py)) enriquece cada previsão com a identificação e o estado do conteúdo. Mantém a ordem e o score do modelo e recusa índices fora das 13 classes.
+
+A T9.3 **não depende do limiar de confiança**. A T9.2 decide quais previsões aparecem (a proposta da [T6.5](#65-política-de-confiança-t65) é 3 hipóteses e limiar 0,65 no top-1) e chama a T9.3 com a lista já filtrada. Mudar o limiar não altera esta entrega.
+
+### As 13 classes
+
+| Índice | Classe (nome do modelo) | Cultura | IDs no inventário | ID no acervo anterior | Chave proposta | Classes relacionadas (T6.4) | Conteúdo |
+| ---: | --- | --- | --- | --- | --- | --- | --- |
+| 0 | Vaquinha (Diabrotica speciosa) | Milho/Soja | 0 | — | `praga.diabrotica_speciosa` | 1, 2, 5, 6, 10, 11, 12 | indisponível |
+| 1 | Cigarrinha-do-milho (Dalbulus maidis) | Milho | 1 | AGRO-001 | `praga.dalbulus_maidis` | 0 | indisponível |
+| 2 | Percevejo-barriga-verde (Dichelops/Diceraeus) | Milho/Soja | 2 | — | `praga.dichelops_sp` | 0, 3, 4, 5, 7, 9, 10, 11 | indisponível |
+| 3 | Lagarta-do-cartucho (Spodoptera frugiperda) | Milho/Soja | 3 | — | `praga.spodoptera_frugiperda` | 2, 7, 8, 9, 10 | indisponível |
+| 4 | Percevejo-marrom (Euschistus heros) | Soja | 4 | — | `praga.euschistus_heros` | 2, 7, 11 | indisponível |
+| 5 | Percevejo-verde (Nezara viridula) | Soja | 5 | — | `praga.nezara_viridula` | 0, 2, 6, 10 | indisponível |
+| 6 | Percevejo-asa-preta (Edessa meditabunda) | Soja | 6 | — | `praga.edessa_meditabunda` | 0, 5 | indisponível |
+| 7 | Percevejo-do-milho (Leptoglossus zonatus) | Milho | 7 | AGRO-003 | `praga.leptoglossus_zonatus` | 2, 3, 4, 11, 12 | indisponível |
+| 8 | Lagarta-falsa-medideira (Chrysodeixis includens) | Soja | 8 | — | `praga.chrysodeixis_includens` | 3, 10 | indisponível |
+| 9 | Lagarta-da-soja (Anticarsia gemmatalis) | Soja | 9 | AGRO-053 | `praga.anticarsia_gemmatalis` | 2, 3 | indisponível |
+| 10 | Lagarta-das-vagens (Spodoptera eridania e S. cosmioides) | Soja | 10, 11 | — | `praga.spodoptera_eridania_cosmioides` | 0, 2, 3, 5, 8, 11, 12 | indisponível |
+| 11 | Astylus variegatus | Milho | 12 | — | `praga.astylus_variegatus` | 0, 2, 4, 7, 10 | indisponível |
+| 12 | Cigarrinha-das-pastagens (Deois flavopicta) | Milho | 13 | — | `praga.deois_flavopicta` | 0, 7, 10 | indisponível |
+
+O nome exibido é o do modelo. Na classe 11, o dataset do parceiro usa também "larva-angorá"; esse nome comum não foi adotado, para não divergir do modelo e do restante da documentação. A coluna "Classes relacionadas" vem dos 27 pares da [T6.4](#64-proposta-de-tratamento-de-classes-t64). Na classe 10, os IDs 10 e 11 do inventário (*Spodoptera eridania* e *S. cosmioides*) formam uma única classe, conforme a [seção 3.5](#35-classes-do-mvp).
+
+### Regras de associação
+
+- **Só a chave oficial abre conteúdo.** Enquanto `chave_conteudo` for `null`, ou o status não for `validado`, a classe resolve como indisponível. A `chave_conteudo_proposta` (`praga.<espécie>`) serve apenas à organização local e nunca é usada para abrir conteúdo; segue a regra da [seção do dicionário](#vinculação-ao-conteúdo-técnico).
+- **Classes relacionadas na T6.4 ficam separadas.** O contrato recusa duas classes de um mesmo par com o mesmo conteúdo. A relação não soma scores, não altera o ranking e não força uma classe a aparecer.
+- **Nada é inventado.** Um item só é *disponível* com texto, fonte e data de revisão, `validated` verdadeiro, e a classe com `validacao_conteudo` (responsável, data e evidência).
+- **Sem rede.** A associação e a base são arquivos locais; o código não importa nenhum módulo de rede, e um teste confere isso.
+
+### Origem da identificação
+
+Nome comum e científico vêm da tabela das classes no `instruções.md` do dataset do parceiro (pasta `Agro_App/dataset/dataset` do Drive da equipe). Os nomes científicos são **referência a validar por agrônomo**, como o próprio arquivo indica. As pastas `Milho`, `Soja` e `dataset` do Drive contêm só imagens e metadados de imagem; não há texto técnico nelas. A associação com o dicionário da [T3.4](#dicionário-de-classes-t34) existe só para as três classes que também constam do acervo anterior (índices 1, 7 e 9); as demais não têm ID `AGRO-xxx`.
+
+### Como completar quando o catálogo chegar
+
+1. Receber do parceiro o catálogo com chaves oficiais, título, texto, fonte e data de cada praga.
+2. Em `associacao_classes.json`, preencher `chave_conteudo` e `validacao_conteudo` (responsável, data, evidência) e mudar `status_conteudo` para `validado`. O comando `python -m src.associacao_conteudo_t9_3 gerar` preserva esses campos ao atualizar o restante e nunca sobrescreve a base.
+3. Em `base_conteudo.json`, incluir um item por `chave` com `titulo`, `texto`, `fonte`, `revisado_em` e `validated: true`. Os campos coincidem com o `TechnicalContent` do frontend (`title`, `text`, `source`, `reviewedAt`, `validated`); quando o frontend entrar na `develop`, o `content.ts` deve ser gerado a partir destes arquivos.
+4. Executar `python -m src.associacao_conteudo_t9_3 verificar --exigir-conteudo`. O comando só termina com sucesso quando as 13 classes têm conteúdo validado, o que corresponde ao RNF-08 (100% das classes resolvem para conteúdo válido). Hoje ele falha de propósito.
+5. Verificar a abertura do conteúdo no aparelho em modo avião (T9.4).
+
+### Pendências e limites
+
+- **Catálogo de conteúdo técnico do Agro App:** não recebido; sem ele, 0 das 13 classes tem conteúdo disponível e o critério de aceite não está completo.
+- **Validação do parceiro:** nomes científicos, cultura e associação de cada classe ao conteúdo precisam ser confirmados, e os pares da T6.4 dependem da decisão agronômica.
+- **Integração no aplicativo:** o frontend ainda não está na `develop`, e a tela da T9.2 (limiar) não foi implementada; esta entrega fornece os dados e a função de associação.
+- **RNF-08 completo** (100% de conteúdo válido) e a demonstração **sem rede no aparelho** (T9.4) continuam pendentes.
+
+### Reprodução e verificação
+
+```bash
+python -m src.associacao_conteudo_t9_3 gerar
+python -m src.associacao_conteudo_t9_3 verificar
+python tests/validar_associacao_conteudo_t9_3.py
+```
+
+Os comandos usam somente a biblioteca padrão do Python. Os **14 testes** passam. Eles cobrem a reprodução da associação a partir das fontes e seus hashes, as 13 classes na ordem do modelo, os IDs do inventário e do acervo, as chaves únicas e a recusa de URLs, as relações da T6.4, o estado indisponível sem catálogo, um catálogo sintético completo, os estados intermediários, o contrato de validação, a preservação do preenchimento manual ao regenerar, a recusa de índices inválidos e a ausência de acesso à rede.
