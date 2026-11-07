@@ -78,6 +78,13 @@
 
 </details>
 
+<details>
+<summary><strong>8. Desempenho para dispositivos móveis</strong></summary>
+
+- [8.2 Benchmark de inferência (T8.2)](#82-benchmark-de-inferência-t82)
+
+</details>
+
 ---
 
 # 1. Entendimento de Negócio
@@ -3446,3 +3453,103 @@ python -m src.quantizacao_t7_3 preparar --raiz-imagens /caminho/das/fontes --sai
 A revisão visual deve corresponder aos IDs e hashes efetivamente selecionados e cobrir as classes e condições documentadas antes da conversão. Não se deve transportar anotações de uma seleção diferente. O comando recusa sobrescrever conjuntos ou conversões existentes.
 
 Os **10 testes passaram**, incluindo seleção determinística, cobertura e diversidade de grupos, brilho sem padding, saturação/arredondamento, recusa de validação/teste mesmo com hash de manifesto atualizado, imagem alterada, classe ausente, grupo repetido, cobertura falsa e revisão visual incompleta. Ambiente da conversão: Python 3.12.15, TensorFlow 2.21.0, Keras 3.15.1, KerasHub 0.32.0 e NumPy 2.4.4, em macOS arm64. A entrega comprova conjunto documentado e conversão INT8 executada, com as limitações de cobertura descritas acima.
+
+# 8. Desempenho para dispositivos móveis
+
+## 8.2 Benchmark de inferência (T8.2)
+
+**Autora da task:** Karol. **Revisão e medição:** 06/11/2026.
+
+**O critério de aceite da T8.2 está atendido no escopo de benchmark comparativo local:** versões oficiais medidas com protocolo comum, tamanhos, condições e amostras documentados. As medianas das sessões repetiram-se com variação máxima de 7,7%. Há picos dentro de uma sessão, descritos abaixo e mantidos no p95. Isso não aprova o desempenho no celular.
+
+### O que foi corrigido
+
+A coleta anterior usava somente arquivos T5.6. O benchmark agora mede os **cinco artefatos oficiais do candidato EfficientNet-Lite0**: FP32 da T7.1, faixa dinâmica e float16 da T7.2, INT8 oficial da T7.3 e INT8 regenerado na T7.2. Os INT8 têm o mesmo tamanho, mas hashes diferentes, e foram medidos separadamente. Antes de executar, o script confere bytes e SHA-256 contra os registros da T7.2. Nenhum modelo foi treinado ou convertido nesta revisão.
+
+A coleta anterior de seis arquivos T5.6 permanece no [histórico](Benchmark_T8_2_historico_T5_6.md), no [JSON original](../assets/data/benchmark_T8_2/resultados.json) e no [CSV original](../assets/data/benchmark_T8_2/resumo.csv). Seus tempos não foram agrupados com os novos. Arquivos `.keras` são checkpoints de treinamento e não entram no pacote de inferência comparado.
+
+### Condições e método
+
+- **3 sessões em processos independentes**, com PIDs registrados. Mesmo computador, runtime, entrada, configuração de CPU e fonte de energia em todas elas.
+- **Uma thread, XNNPACK e CPU lógica 0 fixa.** Prioridade acima do normal somente no processo do benchmark; afinidade e prioridade são restauradas ao terminar. O plano de energia e os demais processos não são alterados. A existência de partições delegadas é verificada em cada arquivo.
+- Batch 1, RGB 224 × 224, pixels sintéticos uniformes em [0,1], semente 42. A mesma imagem float é convertida ao dtype e à escala/zero-point de cada modelo fora da cronometragem. Hashes dos tensores ficam nos registros.
+- **100 aquecimentos globais por modelo**, depois **5 rodadas intercaladas** de **40 medições por modelo**. Antes de cada bloco: pausa de 100 ms e 20 aquecimentos descartados. A ordem gira entre rodadas e sessões, permitindo que cada modelo ocupe todas as posições.
+- Cada sessão contém 200 amostras por versão; o consolidado contém **600 amostras por versão**, **3.000 inferências medidas** no total. Nenhum valor extremo foi excluído.
+- `perf_counter_ns` mede **set_tensor + invoke + get_tensor**. Leitura do modelo, criação/alocação do interpretador, geração e quantização da entrada e pré-processamento ficam fora do intervalo. A saída INT8 é lida sem desquantização. A inicialização é registrada separadamente; não representa a partida a frio do aplicativo.
+- Fonte de energia consultada antes e depois de cada bloco. A coleta é interrompida se ela mudar. CPU total do sistema e tempo de CPU do processo são registrados por bloco. Temperatura e frequência efetiva não foram medidas; os núcleos permitidos são fixos, mas não são exclusivos do benchmark.
+
+**Ambiente:** Intel(R) Core(TM) Ultra 5 235U, 14 processadores lógicos; `Windows-11-10.0.26200-SP0`; Python 3.13.14, TensorFlow 2.21.0, NumPy 2.4.4. **Alimentação: tomada em todos os blocos.** CPU total observada: 10,8% a 38,5%, incluindo o benchmark e processos concorrentes. Horários UTC e hashes do código estão nos arquivos de cada sessão.
+
+### Tempos e tamanhos medidos
+
+| Versão | Bytes | MB | Redução vs FP32 | Média (ms) | Mediana (ms) | p95 (ms) |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| FP32 — T7.1 | 13.531.184 | 13,531 | 0,0% | 12,48 | 12,25 | 16,03 |
+| Faixa dinâmica — T7.2 | 3.753.152 | 3,753 | 72,3% | 60,58 | 60,36 | 71,97 |
+| Float16 — T7.2 | 6.833.548 | 6,834 | 49,5% | 12,33 | 12,25 | 13,93 |
+| INT8 oficial — T7.3 | 4.003.624 | 4,004 | 70,4% | 8,54 | 8,55 | 10,03 |
+| INT8 regenerado — T7.2 | 4.003.624 | 4,004 | 70,4% | 8,99 | 8,57 | 12,67 |
+
+**MB = 1.000.000 bytes.** Os percentis do consolidado foram recalculados sobre todas as amostras, não sobre a média dos percentis de cada sessão. Os arquivos de evidência preservam os valores sem arredondamento.
+
+### Verificação da oscilação
+
+| Versão | Sessão 1: mediana (ms) | Sessão 2: mediana (ms) | Sessão 3: mediana (ms) | Variação entre sessões |
+| --- | ---: | ---: | ---: | ---: |
+| FP32 — T7.1 | 12,41 | 12,43 | 12,03 | 3,4% |
+| Faixa dinâmica — T7.2 | 60,33 | 60,06 | 60,80 | 1,2% |
+| Float16 — T7.2 | 12,38 | 12,34 | 12,11 | 2,2% |
+| INT8 oficial — T7.3 | 8,55 | 8,55 | 8,54 | 0,05% |
+| INT8 regenerado — T7.2 | 8,52 | 9,13 | 8,48 | 7,7% |
+
+A variação é `100 × (maior mediana / menor mediana − 1)`. A maior variação entre sessões foi **7,7%**. Dentro de uma mesma sessão, a maior variação entre medianas dos blocos foi **50,9%**; as cinco medianas de cada versão e sessão estão nos JSON individuais. Esses indicadores tornam a oscilação visível e permitem comparar a nova coleta com o problema anterior, em que a mediana do Lite0 FP32 passou de 393,65 para 115,75 ms.
+
+| Versão | Variação entre blocos: sessão 1 | Sessão 2 | Sessão 3 |
+| --- | ---: | ---: | ---: |
+| FP32 — T7.1 | 5,8% | 39,9% | 5,0% |
+| Faixa dinâmica — T7.2 | 8,5% | 42,6% | 10,6% |
+| Float16 — T7.2 | 4,7% | 9,5% | 3,8% |
+| INT8 oficial — T7.3 | 6,5% | 4,8% | 9,0% |
+| INT8 regenerado — T7.2 | 5,5% | 50,9% | 5,8% |
+
+O maior pico entre medianas de blocos ocorreu na segunda sessão, no INT8 regenerado (50,9%). Também houve oscilação no FP32 e na faixa dinâmica nessa sessão. O protocolo comum, a ordem balanceada e a repetição em três processos permitem comparar as distribuições e verificar a repetição das medianas; não demonstram ausência de interferência em cada chamada. A tarefa não define um limite numérico de variação. Por isso, os indicadores são publicados junto dos tempos, sem excluir blocos nem tratar a variação como zero.
+
+Mesmo com o protocolo comum, não se atribui toda a diferença de tempo apenas à quantização: frequência da CPU, temperatura, sistema e processos concorrentes podem afetar as amostras. A ausência de sensores térmicos não deve ser interpretada como temperatura constante. Para analisar diferenças pequenas, como FP32 versus float16 nesta CPU, seriam necessárias mais sessões; estes dados não sustentam vantagem clara de velocidade entre os dois.
+
+### Custo para dispositivos móveis e aceite
+
+Todas as versões quantizadas ficam abaixo do limite proposto de **8 MB (RNF-01)**. O FP32 ocupa 13,531 MB e excede esse limite. A faixa dinâmica reduz mais o armazenamento (72,3%); float16 reduz 49,5%; os INT8 reduzem 70,4%. O tamanho do arquivo não representa RAM de execução nem tamanho total do APK.
+
+Os tempos informam o custo de inferência observado nesta CPU. Não são uma estimativa de energia ou bateria e não comprovam a latência em ARM, GPU ou NNAPI. A escolha para embarque também depende da qualidade de classificação avaliada na T8.1. Os números da T7.2 não são agrupados aqui: aquela medição usa imagem real e inclui (des)quantização no intervalo.
+
+| Critério da T8.2 | Evidência |
+| --- | --- |
+| Diferentes versões do modelo | Cinco arquivos oficiais T7.1–T7.3, conferidos por SHA-256 |
+| Tamanho de cada modelo | Bytes exatos, MB e redução na tabela, JSON e CSV |
+| Tempos sob condições comparáveis | Protocolo comum, fonte de energia fixa, mesma CPU lógica, uma thread, XNNPACK, aquecimento, ordem balanceada e três sessões; oscilação explicitada acima |
+| Resultados documentados | Ambiente, amostras individuais, código utilizado, comandos e testes de integridade publicados |
+
+**Validação no celular (RNF-04, p95 ≤ 300 ms): pendente e separada do aceite comparativo local.** Executar os mesmos arquivos no aparelho de referência, fixando runtime, threads e delegate e registrando energia e condições térmicas. RAM e consumo energético exigem medição no aparelho. Captura, decodificação e pré-processamento devem ser medidos separadamente para avaliar a espera total do usuário (RNF-03). Nenhum desses RNFs foi aprovado por extrapolação dos tempos locais.
+
+### Reprodução e evidências
+
+Na raiz do repositório, usar **Python 3.13 no Windows**. Ambiente utilizado: `.work/benchmark-python` (pasta ignorada pelo Git). Para preparar e executar uma nova coleta:
+
+```powershell
+& "$env:LOCALAPPDATA\Programs\Python\Python313\python.exe" -m venv .work/benchmark-python
+.\.work\benchmark-python\Scripts\python.exe -m pip install -r requirements-benchmark.txt
+.\.work\benchmark-python\Scripts\python.exe -m src.benchmark_t8_2 --saida runs/reproducao_T8_2 --sessoes 3 --rodadas 5 --repeticoes 40 --aquecimento 100 --cpu 0 --energia tomada
+.\.work\benchmark-python\Scripts\python.exe tests/validar_benchmark_t8_2.py
+```
+
+A saída deve ser uma pasta nova: o programa recusa sobrescrita. `--raiz` indica a raiz do repositório. `--cpu` escolhe um índice lógico disponível; `-1` permite escalonamento normal e registra essa diferença. `--energia bateria` existe para uma coleta explicitamente feita nessa condição; não se deve misturá-la à coleta na tomada. Para validar uma reprodução em vez da coleta publicada:
+
+```powershell
+.\.work\benchmark-python\Scripts\python.exe tests/validar_benchmark_t8_2.py --dados runs/reproducao_T8_2
+```
+
+Evidências: [JSON consolidado](../assets/data/benchmark_T8_2/oficiais_20261106/resultados.json), [CSV consolidado](../assets/data/benchmark_T8_2/oficiais_20261106/resumo.csv) e pastas de cada sessão no [diretório da coleta](../assets/data/benchmark_T8_2/oficiais_20261106). Cada sessão conserva seu JSON, CSV e uma cópia exata do script `protocolo.py`, identificada por hash. Código principal: [benchmark_t8_2.py](../src/benchmark_t8_2.py); dependências: [requirements-benchmark.txt](../requirements-benchmark.txt); validação: [validar_benchmark_t8_2.py](../tests/validar_benchmark_t8_2.py).
+
+Os testes conferem integridade dos arquivos históricos e atuais, cobertura das cinco versões, condições declaradas entre sessões, amostras e estatísticas por bloco/sessão/consolidado, CSV contra JSON, rotação balanceada, código preservado e recusas de artefato alterado, sobrescrita, energia divergente e parâmetros inválidos. Eles não certificam temperatura, energia consumida ou desempenho no celular.
+
+**Validação realizada: 8 testes passaram** na coleta publicada. O teste de integridade verifica as evidências, sem repetir as inferências.
