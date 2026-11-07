@@ -82,6 +82,7 @@
 <summary><strong>8. Desempenho para dispositivos móveis</strong></summary>
 
 - [8.2 Benchmark de inferência (T8.2)](#82-benchmark-de-inferência-t82)
+- [8.3 Seleção do modelo para mobile (T8.3)](#83-seleção-do-modelo-para-mobile-t83)
 
 </details>
 
@@ -3553,3 +3554,65 @@ Evidências: [JSON consolidado](../assets/data/benchmark_T8_2/oficiais_20261106/
 Os testes conferem integridade dos arquivos históricos e atuais, cobertura das cinco versões, condições declaradas entre sessões, amostras e estatísticas por bloco/sessão/consolidado, CSV contra JSON, rotação balanceada, código preservado e recusas de artefato alterado, sobrescrita, energia divergente e parâmetros inválidos. Eles não certificam temperatura, energia consumida ou desempenho no celular.
 
 **Validação realizada: 8 testes passaram** na coleta publicada. O teste de integridade verifica as evidências, sem repetir as inferências.
+
+## 8.3 Seleção do modelo para mobile (T8.3)
+
+**Decisão:** embarcar o **Float16** da T7.2 (`modelo_float16.tflite`, 6.833.548 bytes, SHA-256 `c9a26ce1…8a5a8fa2`), mantendo o **INT8 oficial da T7.3** como contingência. A decisão usa apenas evidências já versionadas (T7.2, T8.2 e política T6.5): nenhum modelo foi treinado, convertido ou executado de novo. O Float16 mantém entrada e saída em float32, com o mesmo contrato `[1, 224, 224, 3]` → `[1, 13]` do FP32. A seleção é reproduzível pelo [script](../src/selecao_mobile_t8_3.py), e o resultado está em [`decisao.json`](../assets/data/selecao_T8_3/decisao.json), [`tabela_decisao.csv`](../assets/data/selecao_T8_3/tabela_decisao.csv) e [`relatorio.md`](../assets/data/selecao_T8_3/relatorio.md).
+
+### Critério
+
+A partição de decisão é a **validação**. O teste já foi consultado em etapas anteriores e serve só como verificação exploratória; um teste automatizado confirma que alterá-lo não muda a ordem das versões.
+
+1. **Eliminatórios:** RNF-01 (arquivo ≤ 8 MB), RNF-09 (execução sem delegate), RNF-04 indicativo local (p95 < 300 ms) e RNF-06 pontual (perda de acurácia macro ≤ 2 p.p.).
+2. **Entre as elegíveis, na ordem em que a task lista os critérios:**
+   - **acurácia:** o RNF-06 é **demonstrado** quando o limite inferior do IC 95% da variação de acurácia macro, na validação, não fica abaixo de −2 p.p.;
+   - **desempenho por classe:** menor queda de F1 em uma classe em relação ao FP32;
+   - **latência:** menor p95 da T8.2;
+   - **tamanho:** menor arquivo.
+
+### Resultado
+
+| Versão | MB | Elegível | F1 macro (val.) | Δ acurácia macro (p.p.) e IC 95% | Pior queda de F1 por classe | p95 local (ms) |
+| --- | ---: | :---: | ---: | --- | --- | ---: |
+| FP32 (T7.1) | 13,53 | não — RNF-01 | 0,7811 | referência | — | 16,03 |
+| Faixa dinâmica (T7.2) | 3,75 | sim | 0,7755 | −0,33 [−2,48; 1,98] | −12,1 p.p. (Percevejo-verde, n=14) | 71,97 |
+| **Float16 (T7.2)** | 6,83 | **sim** | 0,7830 | +0,13 [0,00; 0,40] | 0,0 p.p. | 13,93 |
+| INT8 oficial (T7.3) | 4,00 | sim | 0,7767 | −0,22 [−3,26; 2,93] | −16,7 p.p. (Percevejo-verde, n=14) | 10,03 |
+| INT8 regenerado (T7.2) | 4,00 | sim | 0,7832 | +0,28 [−2,48; 3,20] | −10,7 p.p. (Percevejo-verde, n=14) | 12,67 |
+
+Fontes: [tabela da T7.2](../assets/modelos/comparacao_T7_2_candidato_T5_6_20261026/tabela_comparativa.csv), [métricas por classe da T7.2](../assets/modelos/comparacao_T7_2_candidato_T5_6_20261026/metricas_por_classe.csv) e [resumo do benchmark da T8.2](../assets/data/benchmark_T8_2/oficiais_20261106/resumo.csv). O INT8 regenerado só verificou a reprodutibilidade da T7.3 e não é byte a byte igual a ela. Ele aparece como evidência, não como candidato próprio.
+
+### Por que Float16 e não INT8
+
+- **É a única versão reduzida com o RNF-06 demonstrado.** Nas versões inteiras e na faixa dinâmica, o IC 95% desce abaixo de −2 p.p. com 474 imagens. Isso não indica perda; indica que a amostra não garante o limite. No Float16, o IC fica entre 0,00 e +0,40 p.p.
+- **Não piora nenhuma classe.** O Float16 teve 1 divergência de top-1 em relação ao FP32 na validação e nenhuma no teste. O INT8 oficial teve 15 nas duas partições. A fragilidade já conhecida do **Percevejo-verde** (14 imagens na validação) cai de 8/14 para 6/14 acertos no INT8 oficial e na faixa dinâmica.
+- **A política T6.5 continua válida sem recalibrar.** Com o limiar de 0,65 no top-1, o Float16 aceita as mesmas 430 de 474 imagens do FP32, com 90,7% de acerto nas aceitas, e seus scores diferem do FP32 em até 0,015. No INT8 oficial, a diferença chega a 0,42, e a T6.5 exige reconferir o limiar nessa versão (aceita 433 imagens, com 90,3% de acerto, quase na meta de 90%).
+- **Latência e tamanho não decidem.** O INT8 é o mais rápido (p95 de 10,0 contra 13,9 ms) e ocupa 2,8 MB menos, mas as duas versões ficam muito abaixo de 300 ms e de 8 MB. A medida é de um CPU x86, e o ganho do INT8 pode ser diferente em ARM.
+
+Esta decisão **revisa a recomendação da T7.2**, que indicava o INT8 oficial. A T7.2 já registrava que o Float16 era a alternativa quando a fidelidade importasse e que o RNF-06 não estava garantido para o INT8. A T8.3 aplica a ordem de critérios da task, que coloca a acurácia antes da latência e do tamanho, e agora dispõe do benchmark comparável da T8.2.
+
+### Contingência e custo
+
+- **Contingência:** se, no aparelho de referência, o Float16 violar o RNF-04 (p95 > 300 ms) ou o RNF-07 (memória), passar para o INT8 oficial da T7.3 (`quantizacao_T7_3_candidato_T5_6_20261026/modelo_int8.tflite`, 4.003.624 bytes). O Float16 em CPU carrega os pesos como float32, então o uso de RAM tende a se aproximar do FP32; isso precisa ser medido.
+- **RNF-02 (acréscimo ao pacote ≤ 9 MB):** o Float16 deixa cerca de 2,2 MB para rótulos, índice e eventual base técnica. Confirmar com o parceiro se o conteúdo técnico da T9.3 entra nessa conta.
+- **Arquivos já versionados:** o artefato escolhido continua em `comparacao_T7_2_candidato_T5_6_20261026/`. O pacote da T5.6 não foi alterado. O `modelo_int8.tflite` do pacote T5.6 (`07e78745…`) **não é** o INT8 oficial da T7.3 (`456caec5…`). O frontend em `feat/frontend`, ainda fora da `develop`, referencia o arquivo do pacote T5.6 e precisa apontar para o modelo escolhido.
+
+### Relação com a T8.1
+
+A avaliação pós-conversão (T8.1) não estava na `develop` quando esta decisão foi tomada. Seus números são recalculados a partir das mesmas previsões da T7.2, que são a fonte desta seção. Quando a T8.1 for integrada, execute `python -m src.selecao_mobile_t8_3`: o registro `t8_1` passa de `nao_integrada` para `conferida`, ou para `divergente` se algum número não coincidir. Esta seção deve então citar a revisão visual dos acertos perdidos pelo INT8 oficial e as tabelas por classe da T8.1. A decisão só deve ser reaberta se houver divergência.
+
+### Pendências e limites
+
+- **Aparelho de referência:** RNF-03, RNF-04 e RNF-07 não foram medidos no celular; a latência vem do CPU x86 da T8.2. A medição segue o protocolo de `adb` da [seção 7.2](#72-comparação-das-estratégias-de-quantização-t72) e vale para o Float16 e para a contingência.
+- **RNF-06 em conjunto independente:** o teste atual já foi consultado, e os intervalos reamostram imagens, não grupos de fotos da mesma planta; podem ser otimistas.
+- **Política de confiança:** foi recontada só no top-1 a partir dos scores da T7.2. O top-3 e o limiar no arquivo embarcado exigem nova inferência.
+- **Aprovação do parceiro:** pendente, como em todas as versões candidatas da T5.6.
+
+### Reprodução e verificação
+
+```bash
+python -m src.selecao_mobile_t8_3 --saida runs/reproducao_T8_3
+python tests/validar_selecao_mobile_t8_3.py
+```
+
+O script usa somente a biblioteca padrão do Python, confere bytes e SHA-256 de cada versão entre a T7.2 e a T8.2 e recusa divergências. Os **10 testes** passaram. Eles cobrem a reprodução da decisão publicada, os hashes do escolhido e da contingência, a ordem dos critérios, a independência em relação ao teste, o limite da política T6.5, o INT8 do pacote T5.6 e a conferência futura com a T8.1, inclusive a detecção de divergência.
