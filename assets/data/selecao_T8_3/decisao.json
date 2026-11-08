@@ -269,8 +269,9 @@
     "nota": "O pacote T5.6 não é alterado; o artefato de embarque desta decisão é o indicado em `escolhido`."
   },
   "t8_1": {
-    "status": "nao_integrada",
-    "nota": "T8.1 fora da árvore; os números vêm das previsões da T7.2, que ela também usa."
+    "status": "conferida",
+    "divergencias": [],
+    "nota": "T8.1 comparada com a T7.2 (teste, 473 imagens)."
   },
   "limites": [
     "Latência medida em CPU x86 de desenvolvimento; RNF-04, RNF-03 e RNF-07 exigem o aparelho de referência.",

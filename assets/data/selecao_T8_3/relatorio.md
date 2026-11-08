@@ -11,4 +11,4 @@
 | INT8 oficial (T7.3) | 4,00 | sim | 0,7767 | -3,26 | -16,7 p.p. (classe 5, n=14) | 10,03 |
 | INT8 regenerado (T7.2) | 4,00 | sim | 0,7832 | -2,48 | -10,7 p.p. (classe 5, n=14) | 12,67 |
 
-T8.1: nao_integrada. T8.1 fora da árvore; os números vêm das previsões da T7.2, que ela também usa.
+T8.1: conferida. T8.1 comparada com a T7.2 (teste, 473 imagens).
