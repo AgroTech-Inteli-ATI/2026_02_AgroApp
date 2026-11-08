@@ -39,11 +39,11 @@ Todas as classes, inclusive as sem queda, estão em comparacao_por_classe.csv. P
 - O protocolo de inferência herdado da T7.2 usa T4.1, sem augmentation, ponderação ou limiar de confiança. Não há mudança de pesos, calibração ou pré-processamento nesta consolidação.
 - As matrizes mantêm a ordem das classes do candidato: linhas reais, colunas previstas. Os suportes são iguais entre as versões.
 - mudancas_por_imagem.csv lista toda troca de argmax frente ao Keras, distinguindo acerto perdido, acerto ganho e erro alterado. Não descreve alterações de scores que preservam o argmax.
-- Melhor média global pode coexistir com perdas por classe. Suportes pequenos limitam a interpretação; não se atribuem causas visuais sem revisar fotos.
+- Melhor média global pode coexistir com perdas por classe. Suportes pequenos limitam a interpretação; a revisão visual dos sete acertos perdidos pelo INT8 oficial está em aprofundamento/ e não determina a causa das mudanças.
 - INT8 oficial T7.3 e INT8 regenerado T7.2 são artefatos distintos. Esta análise não substitui o oficial pelo modelo de maior F1 no teste.
 - Esta etapa não calcula novos testes estatísticos. McNemar e os ICs da T7.2 têm FP32 como referência e não são usados como prova de equivalência ao Keras ou entre os dois INT8.
 
-Teste exploratório, consultado em etapas anteriores; não é avaliação final independente. Não fundamenta seleção de modelo, ajuste de pesos ou limiares. Deltas descrevem esta amostra e não comprovam equivalência estatística nem atendimento definitivo ao RNF-06. Não houve nova inferência ou revisão visual.
+Teste exploratório, consultado em etapas anteriores; não é avaliação final independente. Não fundamenta seleção de modelo, ajuste de pesos ou limiares. Deltas descrevem esta amostra e não comprovam equivalência estatística nem atendimento definitivo ao RNF-06. Não houve nova inferência. A revisão visual dos acertos perdidos pelo INT8 oficial está em aprofundamento/ e não determina a causa das mudanças.
 
 Tamanho e latência estão na seção 7.2 de docs/Projeto.md; benchmark no aparelho pertence à T8.2 e seleção à T8.3.
 

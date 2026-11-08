@@ -1,6 +1,6 @@
 {
   "esquema": "aprofundamento_T8_1_v1",
-  "data_utc": "2026-11-06T23:34:44.040303+00:00",
+  "data_utc": "2026-11-08T18:11:58.314980+00:00",
   "nova_inferencia": false,
   "revisao_visual_realizada": true,
   "validacao_taxonomica": "pendente",
@@ -22,7 +22,7 @@
     "pillow": "12.3.0"
   },
   "fontes_sha256": {
-    "assets/data/avaliacao_T8_1/candidato_T5_6_20261026/proveniencia.json": "841afa0584e9493ca8f253c3a41a5285f2b10c19ca2af389e7907a75ab5e5626",
+    "assets/data/avaliacao_T8_1/candidato_T5_6_20261026/proveniencia.json": "d8b3950c3d73ba57f1f2cdb2adf5cc55f9cd10200ea1f2a3925c642f860ab82b",
     "assets/data/avaliacao_T8_1/candidato_T5_6_20261026/mudancas_por_imagem.csv": "a0d9003e7293585d276d3d50e42938cb36c308ce419cf714971adaa05bbe4bec",
     "assets/data/avaliacao_T8_1/candidato_T5_6_20261026/comparacao_por_classe.csv": "e2519a1600574d850111bfdefbf9c1e810ed04348a652dfeff32f2549511ab88",
     "assets/data/avaliacao_T8_1/candidato_T5_6_20261026/anotacoes_visuais_int8.json": "9aa44b0e5e6aad95232be7e042a6a4ea33d19a18e23a514c5d887d4d32b36ca4"
@@ -37,9 +37,9 @@
     "IMG_02637": "13176cf1fe679f71d1ff979b7fd93eb1d516c30a3ede3e526d0bfc0472dc194e"
   },
   "codigo_sha256": {
-    "src/aprofundamento_t8_1.py": "0520d3b2411199a7023ca7a6b6f614dd237ea981d242b2d766ef0f59906810be",
+    "src/aprofundamento_t8_1.py": "17e107c47b6e3937223917330aaf3cda71e17f0cd031b59301734095833b76fc",
     "src/preprocessamento.py": "6a2eacb95cbbb0ceb21db5f70d9e178b2c0b844b070e2d4fac4c4a39d0131820",
-    "src/avaliacao_pos_conversao_t8_1.py": "f09b9d8f970a799934b6d6e0cf21ce981b268acb78fb9f35eef570f144bb9b6d"
+    "src/avaliacao_pos_conversao_t8_1.py": "e7e914043e5f8336ffe57ed1aef9a8735f40ae04c236ba40340e3da5b93b7cdb"
   },
   "artefatos_sha256": {
     "figuras/delta_f1_por_classe.png": "f3421593a7dfbfd616939f8a1d19c58fee3065af02ad1415d69c53670a211072",

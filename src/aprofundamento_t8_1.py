@@ -1,7 +1,8 @@
 """Publica gráficos e a inspeção visual dos sete acertos perdidos pelo INT8 oficial.
 
 Usa os resultados consolidados da T8.1, sem nova inferência. As fotos originais
-permanecem externas; somente as pranchas de revisão são publicadas.
+permanecem externas; são publicadas cópias redimensionadas em fotos/, pranchas de
+revisão, gráficos, CSVs e relatório visual.
 """
 
 from __future__ import annotations

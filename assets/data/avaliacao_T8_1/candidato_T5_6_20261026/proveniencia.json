@@ -558,7 +558,7 @@
     "assets/modelos/comparacao_T7_2_candidato_T5_6_20261026/modelo_int8.tflite": "a0fa1ec2c7b4014819556259fceb11b49280e4c19adde843f8ec59cc356ff8e2"
   },
   "codigo_sha256": {
-    "src/avaliacao_pos_conversao_t8_1.py": "f09b9d8f970a799934b6d6e0cf21ce981b268acb78fb9f35eef570f144bb9b6d",
+    "src/avaliacao_pos_conversao_t8_1.py": "e7e914043e5f8336ffe57ed1aef9a8735f40ae04c236ba40340e3da5b93b7cdb",
     "src/avaliacao.py": "4b60b2efd74a88e900e745b638af21c341e8f6866c8c27cce99f754ce0a3c7af",
     "src/matriz_candidato_t6_2.py": "30e022e4298edca9c3a8a1886f29ed4c820d11daaa83ce7234cf22b175ec6d73"
   },
@@ -578,14 +578,14 @@
     "numpy": "2.5.2",
     "sistema": "Windows-11-10.0.26200-SP0"
   },
-  "limite_interpretacao": "Teste exploratório, consultado em etapas anteriores; não é avaliação final independente. Não fundamenta seleção de modelo, ajuste de pesos ou limiares. Deltas descrevem esta amostra e não comprovam equivalência estatística nem atendimento definitivo ao RNF-06. Não houve nova inferência ou revisão visual.",
-  "data_consolidacao_utc": "2026-11-06T13:56:26.946720+00:00",
+  "limite_interpretacao": "Teste exploratório, consultado em etapas anteriores; não é avaliação final independente. Não fundamenta seleção de modelo, ajuste de pesos ou limiares. Deltas descrevem esta amostra e não comprovam equivalência estatística nem atendimento definitivo ao RNF-06. Não houve nova inferência. A revisão visual dos acertos perdidos pelo INT8 oficial está em aprofundamento/ e não determina a causa das mudanças.",
+  "data_consolidacao_utc": "2026-11-08T18:10:26.104406+00:00",
   "artefatos_sha256": {
     "metricas_gerais.csv": "4f768c4cf4f056bea23cbfcf9d84a392e1ab82a85f1e908b41d9ec93f37bd218",
     "comparacao_por_classe.csv": "e2519a1600574d850111bfdefbf9c1e810ed04348a652dfeff32f2549511ab88",
     "predicoes_teste.csv": "37d1b98ecd7847c83b856cfd223b3d4c277098b46993e9bda99889d745db06e1",
     "mudancas_por_imagem.csv": "a0d9003e7293585d276d3d50e42938cb36c308ce419cf714971adaa05bbe4bec",
-    "relatorio_avaliacao.md": "1f1573aa15da9e494a38a0a5f21cd2a36a245c3e7135bf64b90e4fc618d8c06b",
+    "relatorio_avaliacao.md": "037b88f42e63440e406ed9be0aec5a12493c2ae819e10fc82e884df726379273",
     "matrizes/keras.csv": "fe50890efd41470d90a2a00c149bc42a2b13cd7d6c36755eadfa8786184b419e",
     "matrizes/fp32.csv": "fe50890efd41470d90a2a00c149bc42a2b13cd7d6c36755eadfa8786184b419e",
     "matrizes/faixa_dinamica.csv": "6674bbecced81e32a031c7e2d5c917d2d3d3bb0c64e8be8655796ada9a8f1b30",
