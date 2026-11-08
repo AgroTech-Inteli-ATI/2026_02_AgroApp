@@ -86,6 +86,13 @@
 
 </details>
 
+<details>
+<summary><strong>9. Integração Mobile</strong></summary>
+
+- [9.1 Pipeline de captura e processamento de imagens (T9.1)](#91-pipeline-de-captura-e-processamento-de-imagens-t91)
+
+</details>
+
 ---
 
 # 1. Entendimento de Negócio
@@ -3711,3 +3718,48 @@ Evidências: [JSON consolidado](../assets/data/benchmark_T8_2/oficiais_20261106/
 Os testes conferem integridade dos arquivos históricos e atuais, cobertura das cinco versões, condições declaradas entre sessões, amostras e estatísticas por bloco/sessão/consolidado, CSV contra JSON, rotação balanceada, código preservado e recusas de artefato alterado, sobrescrita, energia divergente e parâmetros inválidos. Eles não certificam temperatura, energia consumida ou desempenho no celular.
 
 **Validação realizada: 8 testes passaram** na coleta publicada. O teste de integridade verifica as evidências, sem repetir as inferências.
+
+# 9. Integração Mobile
+
+## 9.1 Pipeline de captura e processamento de imagens (T9.1)
+
+**Atualização em 08/11/2026. Estado:** pipeline web implementado e verificado localmente com Float16 T7.2 principal e INT8 oficial T7.3 de contingência, conforme a decisão T8.3 fornecida para a integração. A validação da câmera e dos limites de desempenho no aparelho físico e a aprovação do parceiro permanecem pendentes.
+
+### Captura e processamento
+
+O frontend React/TypeScript executa o modelo no próprio navegador, com LiteRT.js e um Web Worker. A ação **Tirar foto** abre o seletor nativo com preferência pela câmera traseira; **Escolher da galeria** abre um seletor separado. A câmera depende do navegador/aparelho. No computador ou em ambiente sem suporte à captura, o sistema pode oferecer seleção de arquivo. Arrastar e soltar também é aceito.
+
+As duas entradas encaminham um `File` para a mesma função de análise em [`App.tsx`](../frontend/src/App.tsx). Cancelar o seletor preserva a foto e o resultado. Depois da classificação, **Tirar outra foto** e **Trocar foto** permitem uma nova análise, inclusive da mesma imagem. As ações ficam indisponíveis enquanto a análise está em andamento. A aplicação não presume que o seletor nativo informe a razão de uma captura cancelada ou indisponível.
+
+O fluxo usa o contrato T4.1, reproduzido em [`preprocess.ts`](../frontend/src/lib/preprocess.ts): orientação EXIF aplicada uma vez, RGB, redimensionamento bicúbico com proporção preservada, entrada de 224 × 224 pixels e preenchimento cinza `(128,128,128)`, sem recorte. A entrada float32 é normalizada para [0,1]; no INT8, escala e zero point são lidos do arquivo. A normalização interna do backbone não é repetida.
+
+São aceitos JPEG, PNG e WebP até 10 MiB e 40 megapixels, sem transparência. O [`worker`](../frontend/src/lib/inference.worker.ts) reutiliza o modelo carregado, executa a inferência, desquantiza a saída quando usa INT8 e associa cada score ao índice original das 13 classes. A foto original e a entrada preparada podem ser conferidas na interface. A fotografia não é enviada a um servidor.
+
+### Artefatos e vínculo com as entregas anteriores
+
+[`model-sources.json`](../frontend/model-sources.json) centraliza as origens das classes e de cada modelo, os contratos e as chaves de hash. A situação registrada é `T8.3_integrada_pendente_celular_e_parceiro`. O empacotamento verifica os hashes e o vínculo entre classes e modelo, confere as dimensões/tipos dos tensores e gera cópias web com assinaturas de dimensões concretas, preservando os originais.
+
+| Item em execução nesta atualização | Origem | SHA-256 original |
+| --- | --- | --- |
+| Classes | `assets/modelos/candidato_T5_6_20261026/classes.json` | `1058619e188ffd7fa42bfc6821e2e122356b35d8503af71b987f37ae1e4572f4` |
+| Float16 principal T7.2 | `assets/modelos/comparacao_T7_2_candidato_T5_6_20261026/modelo_float16.tflite` | `c9a26ce13806a2fa26bffbd8cfbdac83ff4c05ffff1009ca9483bb587a5a8fa2` |
+| INT8 de contingência T7.3 | `assets/modelos/quantizacao_T7_3_candidato_T5_6_20261026/modelo_int8.tflite` | `456caec54fae3c57684f9afd6842cae611a1f6cb6587b40b0c5bd8256aea1340` |
+
+O manifesto servido em `models/manifest.json` registra os hashes original/web, versão da conversão, caminhos de origem/contrato e origem/hash das classes. O [`gerador de referências Python`](../frontend/scripts/generate-reference.py) lê esses mesmos caminhos e confere os hashes antes de inferir. Os testes de navegador conferem a identidade do modelo e das classes contra a referência antes de comparar os scores. Assim, referências do modelo antigo não validam silenciosamente um novo arquivo.
+
+O Float16 ocupa 6.833.548 bytes e mantém entrada e saída float32. O INT8 oficial ocupa 4.003.624 bytes e é distinto do INT8 T5.6 anteriormente usado pela interface. O carregador tenta Float16 com WebGPU, quando disponível, e CPU/WASM; se não conseguir compilar, validar os tensores ou aquecer o principal, usa o INT8 oficial em CPU/WASM e informa a troca. Falhas de download ou hash são informadas para permitir recuperação. A contingência por latência ou memória depende da medição no aparelho e de uma decisão de configuração; não é acionada automaticamente por uma medição isolada. O FP32 antigo não é empacotado nesta integração.
+
+### Evidências locais e limites do aceite
+
+Em Windows, foram executados:
+
+- **9 testes unitários:** referências do processamento Python, quantização e arredondamento.
+- **6 testes E2E em Chromium:** Float16 principal e INT8 oficial real após incompatibilidade simulada do principal, identidade dos artefatos, 13 scores e classe principal comparados com Python, EXIF, reutilização, ausência de uploads, entradas de galeria/captura, cancelamento, repetição da mesma foto, arquivos inválidos, recuperação de download e recusa de modelo alterado.
+- **Build de produção:** preparação de artefatos, TypeScript e Vite concluídos.
+- **Revisão visual:** desktop de 1440 px e viewport móvel de 390 px, sem rolagem horizontal nas telas verificadas. O teste de captura móvel também verifica a largura após o resultado.
+
+Ambiente das referências: TensorFlow 2.21.0, Pillow 12.2.0 e NumPy 2.4.4. Para os dois modelos, a execução Python exige saídas idênticas entre o original e a cópia web nas referências; entre Python e navegador, os testes usam tolerância de 2/256 por score. Essas amostras são sintéticas e verificam integração, não qualidade agronômica ou generalização.
+
+**Pendente no aparelho de referência:** registrar aparelho/SO/navegador e URL HTTPS; capturar pela câmera e selecionar da galeria; conferir EXIF, imagem preparada e classificação; cancelar e repetir; registrar indisponibilidade/permissões conforme o que o sistema expuser. Medir pré-processamento e inferência no aparelho, sem extrapolar a latência do notebook. A automação do input de captura não substitui essa evidência física.
+
+A T9.2 trata o limiar e o estado inconclusivo; a T9.3 trata associação e conteúdo técnico revisado; a T9.4 valida o fluxo offline. Esta atualização não acrescenta service worker, conteúdo técnico nem regra de confiança. Comandos de reprodução e limitações estão no [README do frontend](../frontend/README.md).
