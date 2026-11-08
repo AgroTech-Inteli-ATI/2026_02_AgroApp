@@ -1,0 +1,282 @@
+{
+  "esquema": "selecao_mobile_T8_3_v1",
+  "data": "2026-11-07",
+  "status": "decisao_aprovada_para_integracao_pendente_celular_e_parceiro",
+  "criterio": "Eliminatórios: RNF-01 (≤ 8 MB), RNF-09, RNF-04 indicativo local (p95 < 300 ms) e RNF-06 pontual. Entre as elegíveis, na ordem da task: (1) RNF-06 demonstrado pelo IC 95% da validação; (2) menor queda de F1 em uma classe; (3) menor p95 local; (4) menor tamanho.",
+  "particao_de_decisao": "validacao",
+  "teste": "exploratório e já consultado em etapas anteriores; não participou da escolha",
+  "escolhido": {
+    "versao": "float16",
+    "rotulo": "Float16 (T7.2)",
+    "arquivo": "assets/modelos/comparacao_T7_2_candidato_T5_6_20261026/modelo_float16.tflite",
+    "sha256": "c9a26ce13806a2fa26bffbd8cfbdac83ff4c05ffff1009ca9483bb587a5a8fa2",
+    "bytes": 6833548,
+    "entrada": "float32",
+    "saida": "float32"
+  },
+  "contingencia": {
+    "versao": "int8_t7_3",
+    "rotulo": "INT8 oficial (T7.3)",
+    "arquivo": "assets/modelos/quantizacao_T7_3_candidato_T5_6_20261026/modelo_int8.tflite",
+    "sha256": "456caec54fae3c57684f9afd6842cae611a1f6cb6587b40b0c5bd8256aea1340",
+    "bytes": 4003624,
+    "entrada": "int8",
+    "saida": "int8",
+    "quando": "Se, no aparelho de referência, o escolhido violar RNF-04 (p95 > 300 ms) ou RNF-07 (memória)."
+  },
+  "ordem_de_elegiveis": [
+    "float16",
+    "int8",
+    "faixa_dinamica",
+    "int8_t7_3"
+  ],
+  "eliminados": {
+    "fp32": [
+      "rnf01_ate_8mb"
+    ]
+  },
+  "tabela": [
+    {
+      "versao": "fp32",
+      "rotulo": "FP32 (T7.1)",
+      "arquivo": "assets/modelos/conversao_T7_1_candidato_T5_6_20261026/modelo.tflite",
+      "sha256": "50f7e7a6072c193fadd58d662e1c240acd48806cd5dab2197aaf7677da29da56",
+      "bytes": 13531184,
+      "f1_macro_validacao": 0.781106,
+      "delta_f1_validacao": 0.0,
+      "delta_acuracia_macro_pp_validacao": 0.0,
+      "ic95_inferior_acuracia_macro_pp_validacao": 0.0,
+      "rnf06_demonstrado_pelo_ic95": true,
+      "pior_classe_validacao": {
+        "delta_f1": 0.0,
+        "indice": 0,
+        "classe": "Vaquinha (Diabrotica speciosa)",
+        "suporte": 157,
+        "classes_com_queda": 0
+      },
+      "f1_macro_teste_exploratorio": 0.732928,
+      "pior_classe_teste_exploratorio": {
+        "delta_f1": 0.0,
+        "indice": 0,
+        "classe": "Vaquinha (Diabrotica speciosa)",
+        "suporte": 157,
+        "classes_com_queda": 0
+      },
+      "erro_abs_max_scores_vs_fp32_validacao": 0.0,
+      "politica_t6_5_top1_validacao": {
+        "imagens": 474,
+        "aceitas": 430,
+        "cobertura": 0.907173,
+        "acerto_nas_aceitas": 0.906977
+      },
+      "p95_ms_local_t8_2": 16.0296,
+      "mediana_ms_local_t8_2": 12.2492,
+      "entrada": "float32",
+      "saida": "float32",
+      "criterios_eliminatorios": {
+        "rnf01_ate_8mb": false,
+        "rnf09_sem_delegate": true,
+        "rnf04_p95_local_abaixo_300ms": true,
+        "rnf06_estimativa_pontual": true
+      },
+      "elegivel": false
+    },
+    {
+      "versao": "faixa_dinamica",
+      "rotulo": "Faixa dinâmica (T7.2)",
+      "arquivo": "assets/modelos/comparacao_T7_2_candidato_T5_6_20261026/modelo_faixa_dinamica.tflite",
+      "sha256": "f2066ef9166405e04ca07d9aff41195ca349b26fa5948455db53150e4fe00607",
+      "bytes": 3753152,
+      "f1_macro_validacao": 0.775527,
+      "delta_f1_validacao": -0.005579,
+      "delta_acuracia_macro_pp_validacao": -0.3305437731667138,
+      "ic95_inferior_acuracia_macro_pp_validacao": -2.48020055924469,
+      "rnf06_demonstrado_pelo_ic95": false,
+      "pior_classe_validacao": {
+        "delta_f1": -0.121212,
+        "indice": 5,
+        "classe": "Percevejo-verde (Nezara viridula)",
+        "suporte": 14,
+        "classes_com_queda": 4
+      },
+      "f1_macro_teste_exploratorio": 0.737057,
+      "pior_classe_teste_exploratorio": {
+        "delta_f1": -0.028606,
+        "indice": 3,
+        "classe": "Lagarta-do-cartucho (Spodoptera frugiperda)",
+        "suporte": 61,
+        "classes_com_queda": 2
+      },
+      "erro_abs_max_scores_vs_fp32_validacao": 0.16399,
+      "politica_t6_5_top1_validacao": {
+        "imagens": 474,
+        "aceitas": 427,
+        "cobertura": 0.900844,
+        "acerto_nas_aceitas": 0.906323
+      },
+      "p95_ms_local_t8_2": 71.9704,
+      "mediana_ms_local_t8_2": 60.3612,
+      "entrada": "float32",
+      "saida": "float32",
+      "criterios_eliminatorios": {
+        "rnf01_ate_8mb": true,
+        "rnf09_sem_delegate": true,
+        "rnf04_p95_local_abaixo_300ms": true,
+        "rnf06_estimativa_pontual": true
+      },
+      "elegivel": true
+    },
+    {
+      "versao": "float16",
+      "rotulo": "Float16 (T7.2)",
+      "arquivo": "assets/modelos/comparacao_T7_2_candidato_T5_6_20261026/modelo_float16.tflite",
+      "sha256": "c9a26ce13806a2fa26bffbd8cfbdac83ff4c05ffff1009ca9483bb587a5a8fa2",
+      "bytes": 6833548,
+      "f1_macro_validacao": 0.782961,
+      "delta_f1_validacao": 0.001855,
+      "delta_acuracia_macro_pp_validacao": 0.12610340479193294,
+      "ic95_inferior_acuracia_macro_pp_validacao": 0.0,
+      "rnf06_demonstrado_pelo_ic95": true,
+      "pior_classe_validacao": {
+        "delta_f1": 0.0,
+        "indice": 0,
+        "classe": "Vaquinha (Diabrotica speciosa)",
+        "suporte": 157,
+        "classes_com_queda": 0
+      },
+      "f1_macro_teste_exploratorio": 0.732928,
+      "pior_classe_teste_exploratorio": {
+        "delta_f1": 0.0,
+        "indice": 0,
+        "classe": "Vaquinha (Diabrotica speciosa)",
+        "suporte": 157,
+        "classes_com_queda": 0
+      },
+      "erro_abs_max_scores_vs_fp32_validacao": 0.014763,
+      "politica_t6_5_top1_validacao": {
+        "imagens": 474,
+        "aceitas": 430,
+        "cobertura": 0.907173,
+        "acerto_nas_aceitas": 0.906977
+      },
+      "p95_ms_local_t8_2": 13.9304,
+      "mediana_ms_local_t8_2": 12.2521,
+      "entrada": "float32",
+      "saida": "float32",
+      "criterios_eliminatorios": {
+        "rnf01_ate_8mb": true,
+        "rnf09_sem_delegate": true,
+        "rnf04_p95_local_abaixo_300ms": true,
+        "rnf06_estimativa_pontual": true
+      },
+      "elegivel": true
+    },
+    {
+      "versao": "int8_t7_3",
+      "rotulo": "INT8 oficial (T7.3)",
+      "arquivo": "assets/modelos/quantizacao_T7_3_candidato_T5_6_20261026/modelo_int8.tflite",
+      "sha256": "456caec54fae3c57684f9afd6842cae611a1f6cb6587b40b0c5bd8256aea1340",
+      "bytes": 4003624,
+      "f1_macro_validacao": 0.776707,
+      "delta_f1_validacao": -0.0044,
+      "delta_acuracia_macro_pp_validacao": -0.22022164661071875,
+      "ic95_inferior_acuracia_macro_pp_validacao": -3.260499725959938,
+      "rnf06_demonstrado_pelo_ic95": false,
+      "pior_classe_validacao": {
+        "delta_f1": -0.166667,
+        "indice": 5,
+        "classe": "Percevejo-verde (Nezara viridula)",
+        "suporte": 14,
+        "classes_com_queda": 3
+      },
+      "f1_macro_teste_exploratorio": 0.740019,
+      "pior_classe_teste_exploratorio": {
+        "delta_f1": -0.026144,
+        "indice": 8,
+        "classe": "Lagarta-falsa-medideira (Chrysodeixis includens)",
+        "suporte": 12,
+        "classes_com_queda": 6
+      },
+      "erro_abs_max_scores_vs_fp32_validacao": 0.424615,
+      "politica_t6_5_top1_validacao": {
+        "imagens": 474,
+        "aceitas": 433,
+        "cobertura": 0.913502,
+        "acerto_nas_aceitas": 0.903002
+      },
+      "p95_ms_local_t8_2": 10.0312,
+      "mediana_ms_local_t8_2": 8.5462,
+      "entrada": "int8",
+      "saida": "int8",
+      "criterios_eliminatorios": {
+        "rnf01_ate_8mb": true,
+        "rnf09_sem_delegate": true,
+        "rnf04_p95_local_abaixo_300ms": true,
+        "rnf06_estimativa_pontual": true
+      },
+      "elegivel": true
+    },
+    {
+      "versao": "int8",
+      "rotulo": "INT8 regenerado (T7.2)",
+      "arquivo": "assets/modelos/comparacao_T7_2_candidato_T5_6_20261026/modelo_int8.tflite",
+      "sha256": "a0fa1ec2c7b4014819556259fceb11b49280e4c19adde843f8ec59cc356ff8e2",
+      "bytes": 4003624,
+      "f1_macro_validacao": 0.783224,
+      "delta_f1_validacao": 0.002117,
+      "delta_acuracia_macro_pp_validacao": 0.2802333124429679,
+      "ic95_inferior_acuracia_macro_pp_validacao": -2.4845501814566266,
+      "rnf06_demonstrado_pelo_ic95": false,
+      "pior_classe_validacao": {
+        "delta_f1": -0.106667,
+        "indice": 5,
+        "classe": "Percevejo-verde (Nezara viridula)",
+        "suporte": 14,
+        "classes_com_queda": 3
+      },
+      "f1_macro_teste_exploratorio": 0.747141,
+      "pior_classe_teste_exploratorio": {
+        "delta_f1": -0.026144,
+        "indice": 8,
+        "classe": "Lagarta-falsa-medideira (Chrysodeixis includens)",
+        "suporte": 12,
+        "classes_com_queda": 2
+      },
+      "erro_abs_max_scores_vs_fp32_validacao": 0.389459,
+      "politica_t6_5_top1_validacao": {
+        "imagens": 474,
+        "aceitas": 432,
+        "cobertura": 0.911392,
+        "acerto_nas_aceitas": 0.902778
+      },
+      "p95_ms_local_t8_2": 12.6706,
+      "mediana_ms_local_t8_2": 8.5671,
+      "entrada": "int8",
+      "saida": "int8",
+      "criterios_eliminatorios": {
+        "rnf01_ate_8mb": true,
+        "rnf09_sem_delegate": true,
+        "rnf04_p95_local_abaixo_300ms": true,
+        "rnf06_estimativa_pontual": true
+      },
+      "elegivel": true
+    }
+  ],
+  "pacote_t5_6": {
+    "arquivo": "assets/modelos/candidato_T5_6_20261026/modelo_int8.tflite",
+    "sha256": "07e787453ab3775473f15e5081b0e0f0b67b67e4394c13ecbbea01b69c1c90cd",
+    "e_o_int8_da_t7_3": false,
+    "nota": "O pacote T5.6 não é alterado; o artefato de embarque desta decisão é o indicado em `escolhido`."
+  },
+  "t8_1": {
+    "status": "conferida",
+    "divergencias": [],
+    "nota": "T8.1 comparada com a T7.2 (teste, 473 imagens)."
+  },
+  "limites": [
+    "Latência medida em CPU x86 de desenvolvimento; RNF-04, RNF-03 e RNF-07 exigem o aparelho de referência.",
+    "RNF-06 em conjunto independente continua pendente; o teste atual já foi consultado.",
+    "A política T6.5 foi recontada só no top-1; top-3 e limiar no arquivo embarcado exigem nova inferência.",
+    "Aprovação do parceiro pendente."
+  ]
+}
