@@ -90,6 +90,7 @@
 <summary><strong>9. Integração Mobile</strong></summary>
 
 - [9.1 Pipeline de captura e processamento de imagens (T9.1)](#91-pipeline-de-captura-e-processamento-de-imagens-t91)
+- [9.2 Tratamento do limiar de confiança (T9.2)](#92-tratamento-do-limiar-de-confiança-t92)
 
 </details>
 
@@ -3763,3 +3764,52 @@ Ambiente das referências: TensorFlow 2.21.0, Pillow 12.2.0 e NumPy 2.4.4. Para 
 **Pendente no aparelho de referência:** registrar aparelho/SO/navegador e URL HTTPS; capturar pela câmera e selecionar da galeria; conferir EXIF, imagem preparada e classificação; cancelar e repetir; registrar indisponibilidade/permissões conforme o que o sistema expuser. Medir pré-processamento e inferência no aparelho, sem extrapolar a latência do notebook. A automação do input de captura não substitui essa evidência física.
 
 A T9.2 trata o limiar e o estado inconclusivo; a T9.3 trata associação e conteúdo técnico revisado; a T9.4 valida o fluxo offline. Esta atualização não acrescenta service worker, conteúdo técnico nem regra de confiança. Comandos de reprodução e limitações estão no [README do frontend](../frontend/README.md).
+
+## 9.2 Tratamento do limiar de confiança (T9.2)
+
+### Regra implementada
+
+O aplicativo aplica a política definida na [T6.5](#65-política-de-confiança-t65), usando diretamente o arquivo versionado [`parametros.json`](../assets/data/politica_T6_5/parametros.json). O limiar, a quantidade de hipóteses e os textos são incorporados ao JavaScript no build, sem uma segunda configuração de confiança ou consulta adicional à rede.
+
+| Maior score da imagem | Resultado apresentado |
+| --- | --- |
+| Menor que **0,65** | Resultado inconclusivo, sem classe, score ou orientação técnica associados à identificação da foto. |
+| Maior ou igual a **0,65** | As **três hipóteses** com maiores scores, em ordem decrescente; empate pelo menor índice da classe. |
+
+A decisão considera o score original, antes do arredondamento do percentual exibido. Assim, 0,649999 é inconclusivo e 0,65 é aceito. O limiar é aplicado somente ao maior score: quando ele é aceito, a segunda e a terceira hipóteses podem ter scores inferiores a 0,65, conforme a política. Nenhuma soma ou alteração de scores é realizada. Saída vazia, scores não finitos/fora de [0, 1] ou índices repetidos também não produzem identificação.
+
+### Estado inconclusivo e nova captura
+
+Quando nenhuma classe atinge o limiar, a interface apresenta os textos da política:
+
+> Resultado inconclusivo: não foi possível identificar o problema com segurança nesta foto.
+
+> Fotografe de novo, mais perto, com o inseto ou a parte da planta afetada em foco e bem iluminada.
+
+A imagem original e a entrada preparada continuam disponíveis para consulta. O botão **“Tentar outra foto”** abre o seletor de captura; a galeria também permanece disponível. Cancelar a seleção mantém o resultado atual. Ao analisar outra foto, a tela limpa o resultado e a classe selecionada anteriormente. Se o novo resultado for inconclusivo, as hipóteses e o conteúdo técnico anterior não aparecem; remover a foto retorna ao estado inicial.
+
+A lista geral de classes continua como consulta independente. Ela não é usada para preencher uma identificação inconclusiva. O resultado comunica que a identificação não foi obtida com segurança; não afirma ausência de praga nem identifica automaticamente imagens fora do escopo.
+
+### Integração e limites
+
+A regra está em [`confidence.ts`](../frontend/src/lib/confidence.ts), consumida pela interface [`App.tsx`](../frontend/src/App.tsx). O worker mantém sua inferência e os scores originais. O filtro é aplicado tanto ao **Float16 principal** quanto ao **INT8 oficial de contingência**, após a desquantização já realizada no worker, sem mudar a captura ou o preprocessamento.
+
+O limiar de 0,65 permanece o definido no projeto; sua calibração de origem foi feita em Keras FP32. Esta entrega implementa o tratamento do limiar e não recalibra os scores ou comprova desempenho diagnóstico no formato embarcado. Um score alto continua sendo apresentado como hipótese, não como probabilidade calibrada de acerto ou diagnóstico confirmado. A validação física no aparelho, a disponibilidade de conteúdo técnico e o fluxo offline completo permanecem nas respectivas entregas.
+
+### Verificação
+
+Em **08/11/2026**, passaram **19 testes unitários** (9 de preprocessamento e 10 de confiança), **8 testes de navegador Chromium** e o build TypeScript/Vite. A regra de confiança cobre fronteiras abaixo/igual/acima do limiar, top-k, desempate, preservação do vetor original, soma aproximada dos scores INT8 e recusa de saída inconsistente.
+
+Os testes de navegador mantêm a inferência real Float16/INT8 e a comparação dos 13 scores com as referências Python. Como as fotos sintéticas de referência têm score máximo abaixo de 0,65, verificam o estado inconclusivo real sem identificação. Dois testes adicionais usam dublê somente do transporte do worker para produzir os scores exatos de fronteira e verificar transições aceito → inconclusivo → aceito, limpeza da classe anterior, ausência de orientações técnicas, nova captura, cancelamento, remoção e viewport de 390 px sem rolagem horizontal. Esse dublê complementa a execução dos modelos reais; não substitui avaliação agronômica ou uso físico da câmera.
+
+Para reproduzir, na pasta `frontend`:
+
+```bash
+npm ci
+npm test
+npx playwright install chromium
+npm run test:e2e
+npm run build
+```
+
+O comando de inicialização e o build preparam os artefatos web a partir dos modelos versionados. A implementação do estado inconclusivo não altera pesos, classes, arquivos TFLite ou os parâmetros da T6.5.

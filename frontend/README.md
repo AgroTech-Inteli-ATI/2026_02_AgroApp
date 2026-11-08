@@ -60,7 +60,11 @@ O Float16 é conferido contra `comparacao.json` → `estrategias.float16.sha256`
 
 ## Resultados e conteúdo técnico
 
-Os três maiores scores são apresentados como hipóteses. Não se aplica limiar arbitrário e um score alto não confirma diagnóstico nem detecta automaticamente fotos fora das 13 classes.
+O aplicativo aplica a política versionada em [`assets/data/politica_T6_5/parametros.json`](../assets/data/politica_T6_5/parametros.json), empacotada no JavaScript sem requisição de rede adicional. Se o maior score for **maior ou igual a 0,65**, apresenta as três hipóteses em confiança decrescente (empate pelo menor índice). O limite vale só para a primeira hipótese; as outras duas podem ter score menor. A decisão usa o valor original, sem arredondar o percentual antes da comparação.
+
+Se o maior score for menor que 0,65, mostra a mensagem de resultado inconclusivo e a orientação de nova foto da política. A tela mantém a imagem e permite tentar outra foto, mas não exibe classes, scores ou conteúdo técnico como resultado dessa análise. Uma classe selecionada na análise anterior também é limpa. A aba de consulta das classes é independente da identificação de uma foto.
+
+A mesma regra de interface é aplicada ao Float16 principal e ao INT8 de contingência, depois da desquantização já feita pelo worker. O valor de 0,65 vem da política T6.5, cuja calibração foi feita em Keras FP32: esta implementação não recalibra os modelos ou afirma garantia estatística de acerto. Um score alto não confirma diagnóstico nem detecta automaticamente fotos fora das 13 classes.
 
 O catálogo de conteúdo técnico fica em `src/data/content.ts`, indexado pelo índice exato da classe do modelo. Preencha somente com texto, fonte e data de revisão aprovados, marcando `validated: true` após validação. Enquanto isso, a interface mostra conteúdo indisponível. Não existem recomendações de manejo ou links oficiais inventados.
 
@@ -75,7 +79,9 @@ npm.cmd run test:e2e
 npm.cmd run build
 ```
 
-Os 9 testes unitários comparam os bytes do processamento com seis referências sintéticas geradas em Python, incluindo quantização e arredondamento. Os 6 testes de navegador executam o Float16 principal e o INT8 oficial real após incompatibilidade simulada do principal. Conferem os hashes do manifesto contra as referências, comparam os 13 scores e a classe de maior score com Python e verificam EXIF, reutilização do modelo, ausência de uploads, navegação, arquivos inválidos, recuperação após falha no download e recusa de modelo alterado. Também exercitam os dois seletores, cancelamento e repetição da mesma foto em viewport móvel. A tolerância de comparação entre runtimes é de 2/256 por score.
+Os 19 testes unitários cobrem o processamento comparado com seis referências sintéticas Python e a política de confiança: fronteira do limiar, top-k, desempate, preservação dos scores e recusa de saída inconsistente. Os 8 testes de navegador mantêm a execução real do Float16 principal e do INT8 oficial após incompatibilidade simulada do principal, com comparação dos 13 scores e argmax com Python (tolerância de 2/256). Também verificam o estado inconclusivo nas imagens de referência, EXIF, reutilização do modelo, ausência de uploads, navegação, captura/galeria, cancelamento, recuperação e recusa de modelo alterado.
+
+Dois desses testes de navegador usam um dublê somente do transporte do worker para produzir scores exatamente abaixo, iguais e acima do limite. Conferem transições aceito → inconclusivo → aceito, ausência de classe/conteúdo anterior, orientação de nova foto, cancelamento, remoção e layout móvel. Eles complementam os testes com inferência real; não medem acurácia do modelo ou uso físico da câmera.
 
 Para regenerar as referências, em ambiente Python separado com TensorFlow 2.21.0, Pillow 12.2.0 e NumPy 2.4.4:
 
