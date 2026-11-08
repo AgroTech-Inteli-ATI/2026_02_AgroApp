@@ -307,7 +307,7 @@ export default function App() {
         {model?.fallback && (
           <div className={styles.notice} role="status">
             <Info size={18} />
-            Este navegador está usando a versão FP32 do modelo. Confira os
+            Este navegador está usando a versão {model.format} de contingência. Confira os
             detalhes da execução abaixo.
           </div>
         )}

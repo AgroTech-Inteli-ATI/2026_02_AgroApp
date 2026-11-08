@@ -55,14 +55,14 @@ async function init(base: string) {
     throw new Error("Catálogo de classes incompatível com o modelo.");
   await loadLiteRt(`${base}runtime/`);
   let lastError: unknown;
-  for (const candidate of manifest.models) {
+  for (const [index, candidate] of manifest.models.entries()) {
     const bytes = await checkedBytes(
       `${base}models/${candidate.filename}`,
       candidate.sha256,
     );
-    // O modelo INT8 roda na CPU; para FP32, tentamos WebGPU e depois CPU.
+    // O INT8 roda na CPU; para Float16, tentamos WebGPU e depois CPU.
     const accelerators: ("wasm" | "webgpu")[] =
-      candidate.format === "FP32" && "gpu" in navigator
+      candidate.format === "Float16" && "gpu" in navigator
         ? ["webgpu", "wasm"]
         : ["wasm"];
     for (const accelerator of accelerators) {
@@ -124,7 +124,7 @@ async function init(base: string) {
             accelerator === "webgpu" && model.isFullyAccelerated
               ? "WebGPU"
               : "CPU / WebAssembly",
-          fallback: candidate.format !== "INT8",
+          fallback: index > 0,
         };
         send({ type: "ready", info });
         return;

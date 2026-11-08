@@ -22,9 +22,9 @@ describe("Contrato do processamento Python", () => {
     ]);
   });
 
-  it("quantiza os 256 níveis RGB no contrato INT8 do candidato", () => {
+  it("quantiza os 256 níveis RGB no contrato INT8 oficial T7.3", () => {
     const pixels = Uint8Array.from({ length: 256 }, (_, i) => i);
-    const [scale, zero] = reference.quantization.input;
+    const [scale, zero] = reference.models.INT8.quantization.input;
     expect(Array.from(quantize(pixels, scale, zero))).toEqual(
       Array.from({ length: 256 }, (_, i) => i - 128),
     );

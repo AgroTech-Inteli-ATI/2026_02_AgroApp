@@ -25,8 +25,8 @@ const classSource = await checkedSource(sources.classes);
 const classes = JSON.parse(classSource.bytes.toString("utf8"));
 if (classes.length !== 13 || classes.some((item, i) => item.indice !== i))
   throw new Error("Ordem de classes inválida.");
-if (sources.models.map((model) => model.format).join() !== "INT8,FP32")
-  throw new Error("Esperados INT8 e FP32, nessa ordem.");
+if (sources.models.map((model) => model.format).join() !== "Float16,INT8")
+  throw new Error("Esperados Float16 principal e INT8 de contingência, nessa ordem.");
 
 // Lê do esquema oficial do TFLite os tensores de entrada e saída do modelo.
 // Assim, o contrato e os parâmetros de quantização vêm do próprio arquivo.
@@ -96,6 +96,9 @@ function tensorContract(buffer, specialize = false) {
 }
 
 await mkdir(destination, { recursive: true });
+// Retira apenas as antigas cópias FP32 geradas por este empacotador.
+for (const filename of ["modelo_fp32.tflite", "modelo_fp32_web.tflite"])
+  await rm(path.join(destination, filename), { force: true });
 const models = [];
 for (const source of sources.models) {
   const { format, version, sourcePath, contractPath } = source;
@@ -168,5 +171,5 @@ await build({
   minify: true,
 });
 console.log(
-  `Recursos preparados: ${classes.length} classes, INT8 e FP32 com hashes verificados, LiteRT.js local.`,
+  `Recursos preparados: ${classes.length} classes, Float16 T7.2 e INT8 T7.3 com hashes verificados, LiteRT.js local.`,
 );

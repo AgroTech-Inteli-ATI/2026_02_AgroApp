@@ -1,6 +1,6 @@
 {
   "id": "candidato_T5_6_20261026",
-  "selectionStatus": "T8.3_pendente",
+  "selectionStatus": "T8.3_integrada_pendente_celular_e_parceiro",
   "classes": {
     "sourcePath": "assets/modelos/candidato_T5_6_20261026/classes.json",
     "contractPath": "assets/modelos/candidato_T5_6_20261026/manifesto.json",
@@ -8,18 +8,18 @@
   },
   "models": [
     {
-      "format": "INT8",
-      "version": "T5.6",
-      "sourcePath": "assets/modelos/candidato_T5_6_20261026/modelo_int8.tflite",
-      "contractPath": "assets/modelos/candidato_T5_6_20261026/manifesto.json",
-      "sha256Key": ["sha256", "modelo_int8.tflite"]
+      "format": "Float16",
+      "version": "T7.2",
+      "sourcePath": "assets/modelos/comparacao_T7_2_candidato_T5_6_20261026/modelo_float16.tflite",
+      "contractPath": "assets/modelos/comparacao_T7_2_candidato_T5_6_20261026/comparacao.json",
+      "sha256Key": ["estrategias", "float16", "sha256"]
     },
     {
-      "format": "FP32",
-      "version": "T5.6",
-      "sourcePath": "assets/modelos/candidato_T5_6_20261026/modelo_fp32.tflite",
-      "contractPath": "assets/modelos/candidato_T5_6_20261026/manifesto.json",
-      "sha256Key": ["sha256", "modelo_fp32.tflite"]
+      "format": "INT8",
+      "version": "T7.3",
+      "sourcePath": "assets/modelos/quantizacao_T7_3_candidato_T5_6_20261026/modelo_int8.tflite",
+      "contractPath": "assets/modelos/quantizacao_T7_3_candidato_T5_6_20261026/contrato_int8.json",
+      "sha256Key": ["modelo_int8_sha256"]
     }
   ]
 }

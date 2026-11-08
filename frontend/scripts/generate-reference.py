@@ -21,21 +21,13 @@ from src.benchmark_t5_6 import prever
 OUT = ROOT / "frontend/tests/fixtures"
 OUT.mkdir(parents=True, exist_ok=True)
 manifest = json.loads((ROOT / "frontend/public/models/manifest.json").read_text(encoding="utf-8"))
-spec = next(model for model in manifest["models"] if model["format"] == "INT8")
-MODEL = ROOT / spec["sourcePath"]
-web_model = ROOT / "frontend/public/models" / spec["filename"]
-for model_path, expected_hash in ((MODEL, spec["sourceSha256"]), (web_model, spec["sha256"])):
-    if hashlib.sha256(model_path.read_bytes()).hexdigest() != expected_hash:
-        raise ValueError(f"Hash divergente do manifesto web: {model_path}")
+if [model["format"] for model in manifest["models"]] != ["Float16", "INT8"]:
+    raise ValueError("Esperados Float16 principal e INT8 de contingência")
 classes_path = ROOT / manifest["classesSource"]["sourcePath"]
 if hashlib.sha256(classes_path.read_bytes()).hexdigest() != manifest["classesSource"]["sha256"]:
     raise ValueError("Hash das classes diverge do manifesto web")
 if json.loads(classes_path.read_text(encoding="utf-8")) != manifest["classes"]:
     raise ValueError("Ordem das classes diverge do manifesto web")
-interpreter = tf.lite.Interpreter(model_path=str(MODEL), num_threads=1)
-interpreter.allocate_tensors()
-web_interpreter = tf.lite.Interpreter(model_path=str(web_model), num_threads=1)
-web_interpreter.allocate_tensors()
 
 def pattern(width, height):
     indices = np.arange(width * height * 3, dtype=np.uint64)
@@ -53,26 +45,40 @@ exif = Image.Exif()
 exif[274] = 6
 image.save(OUT / "orientation.jpg", quality=90, exif=exif)
 
-predictions = {}
-for filename in ("pattern.png", "orientation.jpg"):
-    prepared = preparar_imagem(OUT / filename)
-    expected = prever(interpreter, prepared)
-    np.testing.assert_array_equal(expected, prever(web_interpreter, prepared))
-    predictions[filename] = expected.tolist()
+models = {}
+for spec in manifest["models"]:
+    model = ROOT / spec["sourcePath"]
+    web_model = ROOT / "frontend/public/models" / spec["filename"]
+    for model_path, expected_hash in ((model, spec["sourceSha256"]), (web_model, spec["sha256"])):
+        if hashlib.sha256(model_path.read_bytes()).hexdigest() != expected_hash:
+            raise ValueError(f"Hash divergente do manifesto web: {model_path}")
+    interpreter = tf.lite.Interpreter(model_path=str(model), num_threads=1)
+    interpreter.allocate_tensors()
+    web_interpreter = tf.lite.Interpreter(model_path=str(web_model), num_threads=1)
+    web_interpreter.allocate_tensors()
+    predictions = {}
+    for filename in ("pattern.png", "orientation.jpg"):
+        prepared = preparar_imagem(OUT / filename)
+        expected = prever(interpreter, prepared)
+        np.testing.assert_array_equal(expected, prever(web_interpreter, prepared))
+        predictions[filename] = expected.tolist()
+    models[spec["format"]] = {
+        "modelSha256": hashlib.sha256(model.read_bytes()).hexdigest(),
+        "webModelSha256": hashlib.sha256(web_model.read_bytes()).hexdigest(),
+        "webSpecializationVerified": True,
+        "modelSourcePath": spec["sourcePath"],
+        "modelVersion": spec["version"],
+        "predictions": predictions,
+        "quantization": {
+            "input": interpreter.get_input_details()[0]["quantization"],
+            "output": interpreter.get_output_details()[0]["quantization"],
+        },
+    }
 
 data = {
-    "modelSha256": hashlib.sha256(MODEL.read_bytes()).hexdigest(),
-    "webModelSha256": hashlib.sha256(web_model.read_bytes()).hexdigest(),
-    "webSpecializationVerified": True,
-    "modelSourcePath": spec["sourcePath"],
-    "modelVersion": spec["version"],
     "classesSha256": manifest["classesSource"]["sha256"],
     "preprocessing": cases,
-    "predictions": predictions,
-    "quantization": {
-        "input": interpreter.get_input_details()[0]["quantization"],
-        "output": interpreter.get_output_details()[0]["quantization"],
-    },
+    "models": models,
 }
-(OUT / "reference.json").write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
-print(json.dumps({"reference": str(OUT), "preprocessing_cases": len(cases), "predictions": predictions}))
+(OUT / "reference.json").write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8", newline="")
+print(json.dumps({"reference": str(OUT), "preprocessing_cases": len(cases), "models_verified": list(models)}))

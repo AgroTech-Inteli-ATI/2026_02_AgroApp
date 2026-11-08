@@ -39,15 +39,16 @@ O servidor local adiciona COOP/COEP. Esses cabeçalhos permitem isolamento entre
 
 ## Modelo e contrato de imagem
 
-- Fonte: `assets/modelos/candidato_T5_6_20261026`, com 13 classes na ordem original.
-- A configuração `model-sources.json` separa as origens das classes e de cada modelo, com caminho do contrato e chave do hash esperado. O estado atual é `T8.3_pendente`: os modelos da T5.6 foram mantidos enquanto a seleção mobile não está documentada.
-- INT8 primeiro: 4.003.624 bytes. FP32: 13.531.184 bytes, baixado somente como alternativa quando a execução INT8 é incompatível; a troca é identificada na interface.
+- As 13 classes mantêm a ordem de `assets/modelos/candidato_T5_6_20261026/classes.json`.
+- `model-sources.json` separa as origens das classes e de cada modelo, com caminho do contrato e chave do hash esperado. A integração segue a decisão T8.3 fornecida para esta entrega; a seção e o script da seleção não são acrescentados por esta alteração. O estado `T8.3_integrada_pendente_celular_e_parceiro` mantém explícitas as validações externas pendentes.
+- **Principal:** Float16 T7.2, `comparacao_T7_2_candidato_T5_6_20261026/modelo_float16.tflite`, 6.833.548 bytes, com entrada e saída float32. **Contingência:** INT8 oficial T7.3, `quantizacao_T7_3_candidato_T5_6_20261026/modelo_int8.tflite`, 4.003.624 bytes. O INT8 antigo da T5.6 e o FP32 não são empacotados.
+- O carregador tenta o Float16 primeiro e baixa o INT8 somente se o principal não puder ser compilado, validar seus tensores ou executar o aquecimento. A troca é identificada na interface. Falhas de download ou hash são informadas e permitem recarregar; não causam troca silenciosa. A contingência por limites de latência ou memória depende da medição no aparelho e de uma decisão de configuração; não se aplica um limite automático a uma inferência isolada.
 - O runtime WASM também é baixado, aproximadamente 11 MB, além do modelo, dos scripts e das fontes. O tamanho do modelo sozinho não representa o download inicial nem o consumo de RAM.
 - Entrada RGB `[1,224,224,3]`, normalizada para `[0,1]`. EXIF aplicado uma vez, redimensionamento proporcional bicúbico com antialiasing e arredondamento compatível com Pillow 12.2, preenchimento `(128,128,128)`, sem recorte.
 - Quantização e desquantização usam os parâmetros lidos do TFLite, sem repetir a conversão do backbone já incorporada ao grafo.
 - JPEG, PNG e WebP de até 10 MiB e 40 megapixels. Imagens com transparência são recusadas para não alterar silenciosamente o contrato RGB.
 - Web Worker clássico separado mantém o cálculo fora da interface. O formato clássico é necessário porque o carregador Emscripten do LiteRT usa `importScripts`.
-- O INT8 usa CPU/WASM. Para o FP32, WebGPU é tentado quando disponível, com alternativa WASM. Não é usado WebNN experimental.
+- O INT8 usa CPU/WASM. Para o Float16, WebGPU é tentado quando disponível, com alternativa WASM. Não é usado WebNN experimental.
 
 ### Especialização para o navegador
 
@@ -55,7 +56,7 @@ Os arquivos originais têm formas alocadas de batch 1 e assinaturas com batch di
 
 O manifesto também registra versão da conversão, caminhos relativos de origem/contrato, origem/hash das classes e situação da seleção. O empacotamento verifica o vínculo das classes ao contrato de cada modelo, as dimensões e os tipos dos tensores. O gerador Python lê as origens desse mesmo manifesto e confere os hashes antes de inferir, evitando uma configuração independente para os testes.
 
-Quando a T8.3 definir o artefato, atualize `model-sources.json` com os caminhos e chaves de hash do contrato escolhido, rode `npm.cmd run assets` e regenere as referências Python antes dos testes. Para o INT8 T7.3, o hash está em `contrato_int8.json` → `modelo_int8_sha256`; para o FP32 T7.1, em `contrato_tensores.json` → `sha256.tflite`. A decisão deve definir também se o FP32 permanece como alternativa de compatibilidade. Não substitua o modelo nem marque a seleção como concluída apenas por editar a configuração.
+O Float16 é conferido contra `comparacao.json` → `estrategias.float16.sha256`; o INT8 T7.3, contra `contrato_int8.json` → `modelo_int8_sha256`. Ao atualizar um artefato, rode `npm.cmd run assets`, regenere as referências Python dos dois modelos e repita os testes. O empacotador preserva a ordem Float16 principal, INT8 de contingência.
 
 ## Resultados e conteúdo técnico
 
@@ -74,7 +75,7 @@ npm.cmd run test:e2e
 npm.cmd run build
 ```
 
-Os 9 testes unitários comparam os bytes do processamento com seis referências sintéticas geradas em Python, incluindo quantização e arredondamento. Os 5 testes de navegador executam o INT8 real, conferem os hashes do manifesto contra as referências antes de comparar os 13 scores com Python e verificam EXIF, reutilização do modelo, ausência de uploads, navegação, arquivos inválidos, recuperação após falha no download e alternativa FP32. Também exercitam os dois seletores, cancelamento e repetição da mesma foto em viewport móvel. A tolerância de comparação entre runtimes é de 2/256 por score.
+Os 9 testes unitários comparam os bytes do processamento com seis referências sintéticas geradas em Python, incluindo quantização e arredondamento. Os 6 testes de navegador executam o Float16 principal e o INT8 oficial real após incompatibilidade simulada do principal. Conferem os hashes do manifesto contra as referências, comparam os 13 scores e a classe de maior score com Python e verificam EXIF, reutilização do modelo, ausência de uploads, navegação, arquivos inválidos, recuperação após falha no download e recusa de modelo alterado. Também exercitam os dois seletores, cancelamento e repetição da mesma foto em viewport móvel. A tolerância de comparação entre runtimes é de 2/256 por score.
 
 Para regenerar as referências, em ambiente Python separado com TensorFlow 2.21.0, Pillow 12.2.0 e NumPy 2.4.4:
 
@@ -82,10 +83,10 @@ Para regenerar as referências, em ambiente Python separado com TensorFlow 2.21.
 python scripts/generate-reference.py
 ```
 
-Execute `npm.cmd run assets` antes. O gerador também exige resultados idênticos entre o modelo original e a cópia web na execução Python e registra os hashes dos dois, a versão, o caminho original e o hash das classes. As imagens de teste são padrões sintéticos, não fotos de usuários.
+Execute `npm.cmd run assets` antes. Para cada um dos dois modelos, o gerador exige resultados idênticos entre o original e a cópia web na execução Python e registra seus hashes, versão, caminho original, scores e parâmetros de quantização em `reference.json` → `models`. O hash das classes e as referências de processamento são comuns. As imagens de teste são padrões sintéticos, não fotos de usuários.
 
 Validação inicial: Chromium automatizado no Windows; layout desktop e viewport móvel de 390 px. Compatibilidade e desempenho em aparelho Android físico, Safari e Firefox ainda não foram certificados. As medições da tela são da sessão atual e não representam benchmark do celular-alvo.
 
-A seleção automatizada de um arquivo no input de captura não comprova a abertura da câmera física nem suas permissões. Para fechar a validação mobile da T9.1, registrar em aparelho real: modelo/hash, aparelho, SO, navegador, URL HTTPS, captura e galeria, cancelamento, repetição, orientação e classificação. A troca para o modelo selecionado na T8.3 exige repetir as verificações com os novos artefatos.
+A seleção automatizada de um arquivo no input de captura não comprova a abertura da câmera física nem suas permissões. Para fechar a validação mobile da T9.1, registrar em aparelho real: modelo/hash, aparelho, SO, navegador, URL HTTPS, captura e galeria, cancelamento, repetição, orientação e classificação, usando o Float16 escolhido e verificando também a contingência oficial.
 
 Ao editar o worker ou o processamento, rode `npm.cmd run assets` novamente e recarregue a página; esses arquivos são compilados separadamente do HMR da interface.

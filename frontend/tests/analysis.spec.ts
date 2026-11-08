@@ -6,110 +6,136 @@ import type { ModelManifest } from "../src/types";
 
 const fixtures = fileURLToPath(new URL("./fixtures/", import.meta.url));
 
-test("executa INT8 real, compara com Python e reutiliza o modelo sem enviar a foto", async ({
-  page,
-}) => {
-  const response = await page.request.get("/models/manifest.json");
-  expect(response.ok()).toBeTruthy();
-  const manifest = (await response.json()) as ModelManifest;
-  const int8 = manifest.models.find((model) => model.format === "INT8")!;
-  expect(int8.sourceSha256).toBe(reference.modelSha256);
-  expect(int8.sha256).toBe(reference.webModelSha256);
-  expect(int8.sourcePath).toBe(reference.modelSourcePath);
-  expect(int8.version).toBe(reference.modelVersion);
-  expect(manifest.classesSource.sha256).toBe(reference.classesSha256);
-  expect(reference.webSpecializationVerified).toBe(true);
-  const modelDownloads: string[] = [];
-  const uploadRequests: string[] = [];
-  page.on("request", (request) => {
-    if (request.url().endsWith(".tflite")) modelDownloads.push(request.url());
-    if (request.method() !== "GET") uploadRequests.push(request.url());
-  });
-  await page.addInitScript(() => {
-    const NativeWorker = window.Worker;
-    (window as unknown as { analysisMessages: unknown[] }).analysisMessages =
-      [];
-    window.Worker = class extends NativeWorker {
-      constructor(url: string | URL, options?: WorkerOptions) {
-        super(url, options);
-        this.addEventListener("message", (event) => {
-          if (event.data.type === "result")
-            (
-              window as unknown as { analysisMessages: unknown[] }
-            ).analysisMessages.push(event.data);
-        });
-      }
-    };
-  });
-  await page.goto("/");
-  await expect(
-    page.getByRole("button", { name: "Escolher da galeria", exact: true }),
-  ).toBeEnabled();
-  await expect(page.getByText("Modelo pronto", { exact: true })).toBeVisible();
-  const downloadsAfterLoad = modelDownloads.length;
-  for (const [i, filename] of [
-    "pattern.png",
-    "orientation.jpg",
-    "pattern.png",
-  ].entries()) {
-    const choosing = page.waitForEvent("filechooser");
-    await page.getByRole("button", {
-      name: i === 0 ? "Escolher da galeria" : "Tirar outra foto",
-      exact: true,
-    }).click();
-    const chooser = await choosing;
-    expect(await chooser.element().getAttribute("capture")).toBe(i === 0 ? null : "environment");
-    await chooser.setFiles(path.join(fixtures, filename));
-    await expect
-      .poll(() =>
-        page.evaluate(
-          () =>
-            (window as unknown as { analysisMessages: unknown[] })
-              .analysisMessages.length,
-        ),
-      )
-      .toBe(i + 1);
-    const predictions = await page.evaluate(() => {
-      const messages = (
-        window as unknown as {
-          analysisMessages: {
-            result: {
-              predictions: { indice: number; score: number }[];
-              width: number;
-              height: number;
-            };
-          }[];
-        }
-      ).analysisMessages;
-      return messages[messages.length - 1].result;
-    });
-    const expected =
-      reference.predictions[filename as keyof typeof reference.predictions];
-    for (const item of predictions.predictions)
-      expect(Math.abs(item.score - expected[item.indice])).toBeLessThanOrEqual(
-        2 / 256,
-      );
-    expect(predictions.predictions).toHaveLength(13);
-    if (filename === "orientation.jpg") {
-      expect(predictions.width).toBe(173);
-      expect(predictions.height).toBe(391);
+for (const format of ["Float16", "INT8"] as const) {
+  test(`executa ${format} real, compara com Python e reutiliza o modelo sem enviar a foto`, async ({
+    page,
+  }) => {
+    const response = await page.request.get("/models/manifest.json");
+    expect(response.ok()).toBeTruthy();
+    const manifest = (await response.json()) as ModelManifest;
+    expect(manifest.models.map((model) => model.format)).toEqual(["Float16", "INT8"]);
+    const modelReference = reference.models[format];
+    const selected = manifest.models.find((model) => model.format === format)!;
+    expect(selected.sourceSha256).toBe(modelReference.modelSha256);
+    expect(selected.sha256).toBe(modelReference.webModelSha256);
+    expect(selected.sourcePath).toBe(modelReference.modelSourcePath);
+    expect(selected.version).toBe(modelReference.modelVersion);
+    expect(manifest.classesSource.sha256).toBe(reference.classesSha256);
+    expect(modelReference.webSpecializationVerified).toBe(true);
+    if (format === "INT8") {
+      // Simula incompatibilidade do principal, sem substituir a inferência do INT8.
+      // O worker rejeita o contrato do Float16 e carrega a contingência oficial.
+      await page.route("**/models/manifest.json", async (route) => {
+        const response = await route.fetch();
+        const manifest = (await response.json()) as ModelManifest;
+        manifest.models[0].input.shape = [1, 225, 224, 3];
+        await route.fulfill({ response, json: manifest });
+      });
     }
-    await expect(page.getByText("Top 3 hipóteses")).toBeVisible();
-  }
-  expect(modelDownloads.length).toBe(downloadsAfterLoad);
-  expect(uploadRequests).toEqual([]);
-  await page
-    .getByRole("button", { name: "Entrada do modelo", exact: true })
-    .click();
-  await expect(
-    page.getByAltText("Foto preparada para o modelo, com preenchimento cinza"),
-  ).toBeVisible();
-  await page.getByRole("button", { name: "Remover foto", exact: true }).click();
-  await expect(
-    page.getByRole("button", { name: "Escolher da galeria", exact: true }),
-  ).toBeEnabled();
-  await expect(page.getByText("Top 3 hipóteses")).toHaveCount(0);
-});
+    const modelDownloads: string[] = [];
+    const uploadRequests: string[] = [];
+    page.on("request", (request) => {
+      if (request.url().endsWith(".tflite")) modelDownloads.push(request.url());
+      if (request.method() !== "GET") uploadRequests.push(request.url());
+    });
+    await page.addInitScript(() => {
+      const NativeWorker = window.Worker;
+      (window as unknown as { analysisMessages: unknown[] }).analysisMessages =
+        [];
+      window.Worker = class extends NativeWorker {
+        constructor(url: string | URL, options?: WorkerOptions) {
+          super(url, options);
+          this.addEventListener("message", (event) => {
+            if (event.data.type === "result")
+              (
+                window as unknown as { analysisMessages: unknown[] }
+              ).analysisMessages.push(event.data);
+          });
+        }
+      };
+    });
+    await page.goto("/");
+    await expect(
+      page.getByRole("button", { name: "Escolher da galeria", exact: true }),
+    ).toBeEnabled();
+    await expect(page.getByText("Modelo pronto", { exact: true })).toBeVisible();
+    await expect(page.locator("span[class*='modelFormat']")).toHaveText(format);
+    if (format === "INT8") {
+      await expect(page.getByText(/versão INT8 de contingência/)).toBeVisible();
+    } else {
+      await expect(page.getByText(/de contingência/)).toHaveCount(0);
+    }
+    const downloadsAfterLoad = modelDownloads.length;
+    expect(modelDownloads.map((url) => new URL(url).pathname)).toEqual(
+      format === "Float16"
+        ? ["/models/modelo_float16_web.tflite"]
+        : ["/models/modelo_float16_web.tflite", "/models/modelo_int8_web.tflite"],
+    );
+    for (const [i, filename] of [
+      "pattern.png",
+      "orientation.jpg",
+      "pattern.png",
+    ].entries()) {
+      const choosing = page.waitForEvent("filechooser");
+      await page.getByRole("button", {
+        name: i === 0 ? "Escolher da galeria" : "Tirar outra foto",
+        exact: true,
+      }).click();
+      const chooser = await choosing;
+      expect(await chooser.element().getAttribute("capture")).toBe(i === 0 ? null : "environment");
+      await chooser.setFiles(path.join(fixtures, filename));
+      await expect
+        .poll(() =>
+          page.evaluate(
+            () =>
+              (window as unknown as { analysisMessages: unknown[] })
+                .analysisMessages.length,
+          ),
+        )
+        .toBe(i + 1);
+      const predictions = await page.evaluate(() => {
+        const messages = (
+          window as unknown as {
+            analysisMessages: {
+              result: {
+                predictions: { indice: number; score: number }[];
+                width: number;
+                height: number;
+              };
+            }[];
+          }
+        ).analysisMessages;
+        return messages[messages.length - 1].result;
+      });
+      const expected =
+        modelReference.predictions[filename as keyof typeof modelReference.predictions];
+      for (const item of predictions.predictions)
+        expect(Math.abs(item.score - expected[item.indice])).toBeLessThanOrEqual(
+          2 / 256,
+        );
+      expect(predictions.predictions).toHaveLength(13);
+      expect(predictions.predictions[0].indice).toBe(expected.indexOf(Math.max(...expected)));
+      if (filename === "orientation.jpg") {
+        expect(predictions.width).toBe(173);
+        expect(predictions.height).toBe(391);
+      }
+      await expect(page.getByText("Top 3 hipóteses")).toBeVisible();
+    }
+    expect(modelDownloads.length).toBe(downloadsAfterLoad);
+    expect(uploadRequests).toEqual([]);
+    await page
+      .getByRole("button", { name: "Entrada do modelo", exact: true })
+      .click();
+    await expect(
+      page.getByAltText("Foto preparada para o modelo, com preenchimento cinza"),
+    ).toBeVisible();
+    await page.getByRole("button", { name: "Remover foto", exact: true }).click();
+    await expect(
+      page.getByRole("button", { name: "Escolher da galeria", exact: true }),
+    ).toBeEnabled();
+    await expect(page.getByText("Top 3 hipóteses")).toHaveCount(0);
+  });
+}
 
 test("trata arquivo inválido, consulta as classes e mantém ajuda acessível", async ({
   page,
@@ -169,18 +195,18 @@ test("explica falha ao carregar o modelo e oferece recuperação", async ({
   ).toBeEnabled();
 });
 
-test("executa a alternativa FP32 e identifica a troca de formato", async ({ page }) => {
-  await page.route("**/models/manifest.json", async (route) => {
-    const response = await route.fetch();
-    const manifest = await response.json();
-    manifest.models = manifest.models.filter((model: { format: string }) => model.format === "FP32");
-    await route.fulfill({ response, json: manifest });
+test("recusa modelo alterado sem ocultar a falha usando a contingência", async ({ page }) => {
+  const downloads: string[] = [];
+  page.on("request", (request) => {
+    if (request.url().endsWith(".tflite")) downloads.push(request.url());
   });
+  await page.route("**/models/modelo_float16_web.tflite", (route) =>
+    route.fulfill({ body: "modelo alterado", contentType: "application/octet-stream" }),
+  );
   await page.goto("/");
-  await expect(page.getByRole("button", { name: "Escolher da galeria", exact: true })).toBeEnabled();
-  await expect(page.getByText(/Este navegador está usando a versão FP32/)).toBeVisible();
-  await page.getByLabel("Selecionar foto da galeria", { exact: true }).setInputFiles(path.join(fixtures, "pattern.png"));
-  await expect(page.getByText("Top 3 hipóteses")).toBeVisible();
+  await expect(page.getByRole("alert")).toContainText("incompleto ou foi alterado");
+  await expect(page.getByRole("button", { name: "Escolher da galeria", exact: true })).toBeDisabled();
+  expect(downloads.some((url) => url.includes("modelo_int8"))).toBe(false);
 });
 
 test("mantém a foto ao cancelar e permite repetir a captura em tela móvel", async ({ page }) => {

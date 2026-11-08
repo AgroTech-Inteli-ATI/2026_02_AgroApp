@@ -9,7 +9,7 @@ export interface TensorSpec {
   zeroPoint?: number;
 }
 export interface ModelSpec {
-  format: "INT8" | "FP32";
+  format: "Float16" | "INT8";
   filename: string;
   bytes: number;
   sha256: string;
