@@ -1,0 +1,122 @@
+{
+  "id": "candidato_T5_6_20261026",
+  "architecture": "efficientnet_lite0",
+  "selectionStatus": "T8.3_integrada_pendente_celular_e_parceiro",
+  "classes": [
+    {
+      "indice": 0,
+      "nome": "Vaquinha (Diabrotica speciosa)"
+    },
+    {
+      "indice": 1,
+      "nome": "Cigarrinha-do-milho (Dalbulus maidis)"
+    },
+    {
+      "indice": 2,
+      "nome": "Percevejo-barriga-verde (Dichelops/Diceraeus)"
+    },
+    {
+      "indice": 3,
+      "nome": "Lagarta-do-cartucho (Spodoptera frugiperda)"
+    },
+    {
+      "indice": 4,
+      "nome": "Percevejo-marrom (Euschistus heros)"
+    },
+    {
+      "indice": 5,
+      "nome": "Percevejo-verde (Nezara viridula)"
+    },
+    {
+      "indice": 6,
+      "nome": "Percevejo-asa-preta (Edessa meditabunda)"
+    },
+    {
+      "indice": 7,
+      "nome": "Percevejo-do-milho (Leptoglossus zonatus)"
+    },
+    {
+      "indice": 8,
+      "nome": "Lagarta-falsa-medideira (Chrysodeixis includens)"
+    },
+    {
+      "indice": 9,
+      "nome": "Lagarta-da-soja (Anticarsia gemmatalis)"
+    },
+    {
+      "indice": 10,
+      "nome": "Lagarta-das-vagens (Spodoptera eridania e S. cosmioides)"
+    },
+    {
+      "indice": 11,
+      "nome": "Astylus variegatus"
+    },
+    {
+      "indice": 12,
+      "nome": "Cigarrinha-das-pastagens (Deois flavopicta)"
+    }
+  ],
+  "classesSource": {
+    "sourcePath": "assets/modelos/candidato_T5_6_20261026/classes.json",
+    "contractPath": "assets/modelos/candidato_T5_6_20261026/manifesto.json",
+    "sha256": "1058619e188ffd7fa42bfc6821e2e122356b35d8503af71b987f37ae1e4572f4"
+  },
+  "models": [
+    {
+      "format": "Float16",
+      "filename": "modelo_float16_web.tflite",
+      "bytes": 6833548,
+      "sha256": "9c18f0a2ca4a4e2eb0d84dd415046f0bd35385ede8c47e14463d3a0f134647ec",
+      "sourceSha256": "c9a26ce13806a2fa26bffbd8cfbdac83ff4c05ffff1009ca9483bb587a5a8fa2",
+      "sourcePath": "assets/modelos/comparacao_T7_2_candidato_T5_6_20261026/modelo_float16.tflite",
+      "contractPath": "assets/modelos/comparacao_T7_2_candidato_T5_6_20261026/comparacao.json",
+      "version": "T7.2",
+      "input": {
+        "shape": [
+          1,
+          224,
+          224,
+          3
+        ],
+        "dtype": "float32"
+      },
+      "output": {
+        "shape": [
+          1,
+          13
+        ],
+        "dtype": "float32"
+      }
+    },
+    {
+      "format": "INT8",
+      "filename": "modelo_int8_web.tflite",
+      "bytes": 4003624,
+      "sha256": "df2f5d4fe22b4d3f76c4b8f6dab6e0100231c83d606122999ed15ceb72c05978",
+      "sourceSha256": "456caec54fae3c57684f9afd6842cae611a1f6cb6587b40b0c5bd8256aea1340",
+      "sourcePath": "assets/modelos/quantizacao_T7_3_candidato_T5_6_20261026/modelo_int8.tflite",
+      "contractPath": "assets/modelos/quantizacao_T7_3_candidato_T5_6_20261026/contrato_int8.json",
+      "version": "T7.3",
+      "input": {
+        "shape": [
+          1,
+          224,
+          224,
+          3
+        ],
+        "dtype": "int8",
+        "scale": 0.003921568859368563,
+        "zeroPoint": -128
+      },
+      "output": {
+        "shape": [
+          1,
+          13
+        ],
+        "dtype": "int8",
+        "scale": 0.00390625,
+        "zeroPoint": -128
+      }
+    }
+  ]
+}

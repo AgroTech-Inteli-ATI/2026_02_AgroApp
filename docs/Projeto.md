@@ -79,15 +79,19 @@
 </details>
 
 <details>
-<summary><strong>8. Desempenho para dispositivos móveis</strong></summary>
+<summary><strong>8. Avaliação e desempenho do modelo convertido</strong></summary>
 
+- [8.1 Avaliação pós-conversão (T8.1)](#81-avaliação-pós-conversão-t81)
 - [8.2 Benchmark de inferência (T8.2)](#82-benchmark-de-inferência-t82)
+- [8.3 Seleção do modelo para mobile (T8.3)](#83-seleção-do-modelo-para-mobile-t83)
 
 </details>
 
 <details>
-<summary><strong>9. Integração mobile</strong></summary>
+<summary><strong>9. Integração Mobile</strong></summary>
 
+- [9.1 Pipeline de captura e processamento de imagens (T9.1)](#91-pipeline-de-captura-e-processamento-de-imagens-t91)
+- [9.2 Tratamento do limiar de confiança (T9.2)](#92-tratamento-do-limiar-de-confiança-t92)
 - [9.3 Associação da predição ao conteúdo técnico (T9.3)](#93-associação-da-predição-ao-conteúdo-técnico-t93)
 
 </details>
@@ -3461,7 +3465,164 @@ A revisão visual deve corresponder aos IDs e hashes efetivamente selecionados e
 
 Os **10 testes passaram**, incluindo seleção determinística, cobertura e diversidade de grupos, brilho sem padding, saturação/arredondamento, recusa de validação/teste mesmo com hash de manifesto atualizado, imagem alterada, classe ausente, grupo repetido, cobertura falsa e revisão visual incompleta. Ambiente da conversão: Python 3.12.15, TensorFlow 2.21.0, Keras 3.15.1, KerasHub 0.32.0 e NumPy 2.4.4, em macOS arm64. A entrega comprova conjunto documentado e conversão INT8 executada, com as limitações de cobertura descritas acima.
 
-# 8. Desempenho para dispositivos móveis
+# 8. Avaliação e desempenho do modelo convertido
+
+## 8.1 Avaliação pós-conversão (T8.1)
+
+Comparação do EfficientNet-Lite0 Keras selecionado na T5.6 com suas versões TFLite. As métricas foram recalculadas a partir das previsões da T7.2 e conferidas com a avaliação Keras da [T6.1](#61-métricas-por-classe-t61). Não houve novo treinamento, conversão ou inferência.
+
+### Método
+
+- **Teste:** 473 imagens, 13 classes, conforme [`indice_dataset.csv`](../assets/data/treino_T5_2/indice_dataset.csv). As previsões foram pareadas por `image_id` e rótulo.
+- **Referências:** Keras original para medir o efeito total; TFLite FP32 da T7.1 para separar conversão e quantização. Ambos produziram as mesmas classificações neste teste.
+- **Métricas:** F1 macro, acurácia macro (balanced accuracy), acurácia global, precisão, recall e suporte por classe. Foi usada a classe de maior pontuação, sem limiar de confiança ou ponderação.
+- **Integridade:** modelos, contratos, classes e índice conferidos por SHA-256. Fontes e ambientes estão em [`proveniencia.json`](../assets/data/avaliacao_T8_1/candidato_T5_6_20261026/proveniencia.json).
+
+### Resultados gerais
+
+| Versão | F1 macro | Acurácia macro | Acurácia global | Δ F1 vs Keras (p.p.) | Acertos perdidos / ganhos vs Keras |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Keras original | 0,7329 | 0,7126 | 0,8478 | — | — |
+| TFLite FP32 T7.1 | 0,7329 | 0,7126 | 0,8478 | 0,0000 | 0 / 0 |
+| Faixa dinâmica | 0,7371 | 0,7127 | 0,8478 | +0,4128 | 2 / 2 |
+| Float16 | 0,7329 | 0,7126 | 0,8478 | 0,0000 | 0 / 0 |
+| INT8 oficial T7.3 | 0,7400 | 0,7234 | 0,8436 | +0,7091 | 7 / 5 |
+| INT8 regenerado T7.2 | 0,7471 | 0,7270 | 0,8541 | +1,4212 | 4 / 7 |
+
+Deltas em pontos percentuais, calculados antes do arredondamento. FP32 e float16 mantiveram as 473 classificações do Keras. O INT8 oficial apresentou F1 macro maior, mas passou de 401 para 399 acertos. A [tabela completa](../assets/data/avaliacao_T8_1/candidato_T5_6_20261026/metricas_gerais.csv) contém os deltas das demais métricas.
+
+### Resultados por classe
+
+| Índice | Classe | Suporte | F1 Keras | F1 INT8 oficial | Δ F1 (p.p.) |
+| ---: | --- | ---: | ---: | ---: | ---: |
+| 0 | Vaquinha | 157 | 0,9274 | 0,9201 | −0,7317 |
+| 1 | Cigarrinha-do-milho | 29 | 0,9286 | 0,9474 | +1,8797 |
+| 2 | Percevejo-barriga-verde | 42 | 0,7816 | 0,7765 | −0,5139 |
+| 3 | Lagarta-do-cartucho | 61 | 0,8594 | 0,8594 | 0,0000 |
+| 4 | Percevejo-marrom | 10 | 0,6667 | 0,6667 | 0,0000 |
+| 5 | Percevejo-verde | 14 | 0,4167 | 0,4800 | +6,3333 |
+| 6 | Percevejo-asa-preta | 11 | 0,5333 | 0,6250 | +9,1667 |
+| 7 | Percevejo-do-milho | 12 | 0,7200 | 0,7200 | 0,0000 |
+| 8 | Lagarta-falsa-medideira | 12 | 0,4706 | 0,4444 | −2,6144 |
+| 9 | Lagarta-da-soja | 6 | 0,7692 | 0,7692 | 0,0000 |
+| 10 | Lagarta-das-vagens | 24 | 0,6275 | 0,6154 | −1,2066 |
+| 11 | Astylus variegatus | 71 | 0,9252 | 0,9116 | −1,3605 |
+| 12 | Cigarrinha-das-pastagens | 24 | 0,9020 | 0,8846 | −1,7345 |
+
+O INT8 oficial perdeu F1 em seis classes. A maior queda foi na lagarta-falsa-medideira: −2,6144 p.p., com 12 imagens. O recall permaneceu em 4/12; a precisão caiu de 0,8000 para 0,6667. No percevejo-barriga-verde, o recall passou de 34/42 para 33/42.
+
+As 13 classes das seis versões estão em [`comparacao_por_classe.csv`](../assets/data/avaliacao_T8_1/candidato_T5_6_20261026/comparacao_por_classe.csv), com precisão, recall, F1, suporte e deltas contra Keras e TFLite FP32.
+
+<div align="center">
+  <p><strong>Figura 1 — Variação de F1 por classe em relação ao Keras</strong></p>
+  <img src="../assets/data/avaliacao_T8_1/candidato_T5_6_20261026/aprofundamento/figuras/delta_f1_por_classe.png" alt="Variação de F1 das cinco conversões em relação ao Keras, em pontos percentuais, com suporte por classe" width="800">
+  <p><em>Fonte: previsões da T7.2, consolidadas na T8.1 (2026).</em></p>
+</div>
+
+As Figuras 2 e 3 comparam o Keras original e o INT8 oficial. Cada linha soma 100%, e a diagonal corresponde ao recall. As duas matrizes usam a mesma escala de cores.
+
+<div align="center">
+  <p><strong>Figura 2 — Matriz de confusão: Keras original</strong></p>
+  <img src="../assets/data/avaliacao_T8_1/candidato_T5_6_20261026/aprofundamento/figuras/matriz_keras.png" alt="Matriz de confusão normalizada do Keras original, com classes reais nas linhas e previstas nas colunas" width="800">
+  <p><em>Fonte: previsões da T7.2, conferidas com a T6.1 e consolidadas na T8.1 (2026).</em></p>
+</div>
+
+<div align="center">
+  <p><strong>Figura 3 — Matriz de confusão: INT8 oficial da T7.3</strong></p>
+  <img src="../assets/data/avaliacao_T8_1/candidato_T5_6_20261026/aprofundamento/figuras/matriz_int8_t7_3.png" alt="Matriz de confusão normalizada do INT8 oficial da T7.3, identificado separadamente do INT8 regenerado" width="800">
+  <p><em>Fonte: previsões da T7.2, consolidadas na T8.1 (2026).</em></p>
+</div>
+
+### Revisão dos sete acertos perdidos
+
+Os casos foram selecionados pela condição `previsto_keras == indice_real` e `previsto_int8_t7_3 != indice_real`, aplicada às 473 imagens de [`predicoes_teste.csv`](../assets/data/avaliacao_T8_1/candidato_T5_6_20261026/predicoes_teste.csv).
+
+| Resultado por foto | Quantidade |
+| --- | ---: |
+| Ambos os modelos acertaram | 394 |
+| Keras acertou e INT8 oficial errou | **7** |
+| Keras errou e INT8 oficial acertou | 5 |
+| Ambos os modelos erraram | 67 |
+| **Total** | **473** |
+
+O INT8 oficial errou 74 imagens: sete que Keras acertou e 67 que ambos erraram. A revisão visual abrange os sete acertos perdidos. Os originais foram conferidos por hash e observados também após a T4.1, em 224 × 224 pixels.
+
+| Foto | Rótulo real e previsão Keras | Previsão INT8 oficial | Observação visual |
+| --- | --- | --- | --- |
+| [IMG_00263](../assets/data/avaliacao_T8_1/candidato_T5_6_20261026/aprofundamento/fotos/IMG_00263.jpg) | Astylus variegatus | Percevejo-barriga-verde | Inseto sobre folha com textura e mão no quadro; os detalhes do corpo e das antenas ficam reduzidos em 224 × 224. |
+| [IMG_01540](../assets/data/avaliacao_T8_1/candidato_T5_6_20261026/aprofundamento/fotos/IMG_01540.jpg) | Vaquinha | Cigarrinha-das-pastagens | Inseto pequeno e escuro na parte superior de uma parede; o fundo ocupa grande parte da entrada. |
+| [IMG_01741](../assets/data/avaliacao_T8_1/candidato_T5_6_20261026/aprofundamento/fotos/IMG_01741.jpg) | Vaquinha | Astylus variegatus | Inseto muito pequeno entre flores amarelas; pouco contraste local e contorno parcialmente encoberto. |
+| [IMG_01812](../assets/data/avaliacao_T8_1/candidato_T5_6_20261026/aprofundamento/fotos/IMG_01812.jpg) | Vaquinha | Percevejo-verde | Inseto parcialmente encoberto pela folha em foto alta e estreita; o preenchimento cinza lateral preserva a proporção, mas o sujeito ocupa poucos pixels. |
+| [IMG_02004](../assets/data/avaliacao_T8_1/candidato_T5_6_20261026/aprofundamento/fotos/IMG_02004.jpg) | Vaquinha | Cigarrinha-das-pastagens | Inseto pequeno e escuro sobre fundo rosado texturizado, com pouco detalhe após redimensionar. |
+| [IMG_02168](../assets/data/avaliacao_T8_1/candidato_T5_6_20261026/aprofundamento/fotos/IMG_02168.jpg) | Percevejo-barriga-verde | Vaquinha | Composição com faixa de texto, moldura e foto inserida, mantendo duas vistas de insetos na entrada. |
+| [IMG_02637](../assets/data/avaliacao_T8_1/candidato_T5_6_20261026/aprofundamento/fotos/IMG_02637.jpg) | Lagarta-do-cartucho | Lagarta-falsa-medideira | Adulto alado aparente, com aspecto de mariposa, sobre superfície áspera de cores próximas às asas. A aparência adulta não demonstra erro do rótulo da espécie. |
+
+#### Imagens inspecionadas
+
+As cópias abaixo preservam o enquadramento e a proporção. A comparação com as entradas T4.1 está nas [pranchas dos casos 1 a 4](../assets/data/avaliacao_T8_1/candidato_T5_6_20261026/aprofundamento/pranchas/revisao_visual_01.png) e [dos casos 5 a 7](../assets/data/avaliacao_T8_1/candidato_T5_6_20261026/aprofundamento/pranchas/revisao_visual_02.png).
+
+<div align="center">
+  <p><strong>Figura 4 — IMG_00263: Astylus variegatus → percevejo-barriga-verde</strong></p>
+  <img src="../assets/data/avaliacao_T8_1/candidato_T5_6_20261026/aprofundamento/fotos/IMG_00263.jpg" alt="IMG_00263: inseto com padrão claro e escuro sobre folha, com mão e vegetação no quadro" width="300">
+  <p><em>Fonte: acervo de Dados do projeto; cópia redimensionada.</em></p>
+</div>
+
+<div align="center">
+  <p><strong>Figura 5 — IMG_01540: vaquinha → cigarrinha-das-pastagens</strong></p>
+  <img src="../assets/data/avaliacao_T8_1/candidato_T5_6_20261026/aprofundamento/fotos/IMG_01540.jpg" alt="IMG_01540: inseto pequeno na parte superior de uma parede clara, com grande área de fundo" width="300">
+  <p><em>Fonte: acervo de Dados do projeto; cópia redimensionada.</em></p>
+</div>
+
+<div align="center">
+  <p><strong>Figura 6 — IMG_01741: vaquinha → Astylus variegatus</strong></p>
+  <img src="../assets/data/avaliacao_T8_1/candidato_T5_6_20261026/aprofundamento/fotos/IMG_01741.jpg" alt="IMG_01741: inseto verde pequeno entre flores amarelas que dominam a composição" width="360">
+  <p><em>Fonte: acervo de Dados do projeto; cópia redimensionada.</em></p>
+</div>
+
+<div align="center">
+  <p><strong>Figura 7 — IMG_01812: vaquinha → percevejo-verde</strong></p>
+  <img src="../assets/data/avaliacao_T8_1/candidato_T5_6_20261026/aprofundamento/fotos/IMG_01812.jpg" alt="IMG_01812: inseto verde e amarelo parcialmente encoberto pela borda de uma folha em fotografia vertical" width="280">
+  <p><em>Fonte: acervo de Dados do projeto; cópia redimensionada.</em></p>
+</div>
+
+<div align="center">
+  <p><strong>Figura 8 — IMG_02004: vaquinha → cigarrinha-das-pastagens</strong></p>
+  <img src="../assets/data/avaliacao_T8_1/candidato_T5_6_20261026/aprofundamento/fotos/IMG_02004.jpg" alt="IMG_02004: inseto pequeno e escuro sobre superfície rosada com textura de tecido" width="277">
+  <p><em>Fonte: acervo de Dados do projeto; cópia para documentação.</em></p>
+</div>
+
+<div align="center">
+  <p><strong>Figura 9 — IMG_02168: percevejo-barriga-verde → vaquinha</strong></p>
+  <img src="../assets/data/avaliacao_T8_1/candidato_T5_6_20261026/aprofundamento/fotos/IMG_02168.jpg" alt="IMG_02168: imagem composta de inseto sobre planta, com foto inserida, moldura e faixa amarela de texto" width="480">
+  <p><em>Fonte: acervo de Dados do projeto; cópia redimensionada.</em></p>
+</div>
+
+<div align="center">
+  <p><strong>Figura 10 — IMG_02637: lagarta-do-cartucho → lagarta-falsa-medideira</strong></p>
+  <img src="../assets/data/avaliacao_T8_1/candidato_T5_6_20261026/aprofundamento/fotos/IMG_02637.jpg" alt="IMG_02637: inseto alado com aspecto de mariposa sobre superfície áspera de cores semelhantes às asas" width="360">
+  <p><em>Fonte: acervo de Dados do projeto; cópia redimensionada.</em></p>
+</div>
+
+As observações e hipóteses por imagem estão em [`revisao_visual.csv`](../assets/data/avaliacao_T8_1/candidato_T5_6_20261026/aprofundamento/revisao_visual.csv). A montagem com texto de IMG_02168 e o estágio alado aparente de IMG_02637 ficam registrados para revisão da frente de Dados. Os rótulos do teste foram preservados.
+
+### Limitações
+
+O teste já foi consultado em etapas anteriores; os resultados são exploratórios. Os rótulos são os históricos do conjunto, e a validação taxonômica está pendente. A inspeção visual não determina a causa das mudanças de classe. Classes com poucas imagens exigem cautela na leitura dos deltas.
+
+Esta avaliação não comprova o RNF-06 em dados independentes nem revalida os limiares da T6.5. Latência no celular e seleção da versão correspondem às tarefas T8.2 e T8.3. O INT8 da T7.3 permanece o artefato oficial.
+
+### Reprodução e artefatos
+
+Os [resultados completos](../assets/data/avaliacao_T8_1/candidato_T5_6_20261026/) incluem métricas das seis versões, matrizes em CSV, previsões, mudanças por imagem e registros de proveniência. O método da inspeção está nas [anotações visuais](../assets/data/avaliacao_T8_1/candidato_T5_6_20261026/anotacoes_visuais_int8.json).
+
+```bash
+python -m src.avaliacao_pos_conversao_t8_1 --saida runs/reproducao_T8_1
+python tests/validar_avaliacao_pos_conversao_t8_1.py
+python -m src.aprofundamento_t8_1 --raiz-imagens /caminho/das/fontes --saida runs/aprofundamento_T8_1
+python tests/validar_aprofundamento_t8_1.py
+```
+
+A consolidação requer NumPy; os gráficos e a revisão requerem Matplotlib, Pillow e as sete fotos originais. Os comandos recusam sobrescrever saídas existentes. Foram aprovados 16 testes da consolidação e 9 do aprofundamento, sem testes pulados.
 
 ## 8.2 Benchmark de inferência (T8.2)
 
@@ -3561,13 +3722,165 @@ Os testes conferem integridade dos arquivos históricos e atuais, cobertura das 
 
 **Validação realizada: 8 testes passaram** na coleta publicada. O teste de integridade verifica as evidências, sem repetir as inferências.
 
-# 9. Integração mobile
+## 8.3 Seleção do modelo para mobile (T8.3)
+
+**Atualização em 08/11/2026:** a [T8.1](#81-avaliação-pós-conversão-t81) entrou na `develop` e foi conferida contra esta seção, sem divergências (`t8_1: conferida` em [`decisao.json`](../assets/data/selecao_T8_3/decisao.json)), e o frontend da [T9.1](#91-pipeline-de-captura-e-processamento-de-imagens-t91) já integra esta decisão. A escolha não mudou.
+
+**Decisão:** embarcar o **Float16** da T7.2 (`modelo_float16.tflite`, 6.833.548 bytes, SHA-256 `c9a26ce1…8a5a8fa2`), mantendo o **INT8 oficial da T7.3** como contingência. A decisão usa apenas evidências já versionadas (T7.2, T8.1, T8.2 e política T6.5): nenhum modelo foi treinado, convertido ou executado de novo. O Float16 mantém entrada e saída em float32, com o mesmo contrato `[1, 224, 224, 3]` → `[1, 13]` do FP32. A seleção é reproduzível pelo [script](../src/selecao_mobile_t8_3.py), e o resultado está em [`decisao.json`](../assets/data/selecao_T8_3/decisao.json), [`tabela_decisao.csv`](../assets/data/selecao_T8_3/tabela_decisao.csv) e [`relatorio.md`](../assets/data/selecao_T8_3/relatorio.md).
+
+### Critério
+
+A partição de decisão é a **validação**. O teste já foi consultado em etapas anteriores e serve só como verificação exploratória; um teste automatizado confirma que alterá-lo não muda a ordem das versões.
+
+1. **Eliminatórios:** RNF-01 (arquivo ≤ 8 MB), RNF-09 (execução sem delegate), RNF-04 indicativo local (p95 < 300 ms) e RNF-06 pontual (perda de acurácia macro ≤ 2 p.p.).
+2. **Entre as elegíveis, na ordem em que a task lista os critérios:**
+   - **acurácia:** o RNF-06 é **demonstrado** quando o limite inferior do IC 95% da variação de acurácia macro, na validação, não fica abaixo de −2 p.p.;
+   - **desempenho por classe:** menor queda de F1 em uma classe em relação ao FP32;
+   - **latência:** menor p95 da T8.2;
+   - **tamanho:** menor arquivo.
+
+### Resultado
+
+| Versão | MB | Elegível | F1 macro (val.) | Δ acurácia macro (p.p.) e IC 95% | Pior queda de F1 por classe | p95 local (ms) |
+| --- | ---: | :---: | ---: | --- | --- | ---: |
+| FP32 (T7.1) | 13,53 | não — RNF-01 | 0,7811 | referência | — | 16,03 |
+| Faixa dinâmica (T7.2) | 3,75 | sim | 0,7755 | −0,33 [−2,48; 1,98] | −12,1 p.p. (Percevejo-verde, n=14) | 71,97 |
+| **Float16 (T7.2)** | 6,83 | **sim** | 0,7830 | +0,13 [0,00; 0,40] | 0,0 p.p. | 13,93 |
+| INT8 oficial (T7.3) | 4,00 | sim | 0,7767 | −0,22 [−3,26; 2,93] | −16,7 p.p. (Percevejo-verde, n=14) | 10,03 |
+| INT8 regenerado (T7.2) | 4,00 | sim | 0,7832 | +0,28 [−2,48; 3,20] | −10,7 p.p. (Percevejo-verde, n=14) | 12,67 |
+
+Fontes: [tabela da T7.2](../assets/modelos/comparacao_T7_2_candidato_T5_6_20261026/tabela_comparativa.csv), [métricas por classe da T7.2](../assets/modelos/comparacao_T7_2_candidato_T5_6_20261026/metricas_por_classe.csv) e [resumo do benchmark da T8.2](../assets/data/benchmark_T8_2/oficiais_20261106/resumo.csv). O INT8 regenerado só verificou a reprodutibilidade da T7.3 e não é byte a byte igual a ela. Ele aparece como evidência, não como candidato próprio.
+
+### Por que Float16 e não INT8
+
+- **É a única versão reduzida com o RNF-06 demonstrado.** Nas versões inteiras e na faixa dinâmica, o IC 95% desce abaixo de −2 p.p. com 474 imagens. Isso não indica perda; indica que a amostra não garante o limite. No Float16, o IC fica entre 0,00 e +0,40 p.p.
+- **Não piora nenhuma classe.** O Float16 teve 1 divergência de top-1 em relação ao FP32 na validação e nenhuma no teste. O INT8 oficial teve 15 nas duas partições. A fragilidade já conhecida do **Percevejo-verde** (14 imagens na validação) cai de 8/14 para 6/14 acertos no INT8 oficial e na faixa dinâmica. A [T8.1](#81-avaliação-pós-conversão-t81), no teste (473 imagens), confirma o quadro: o Float16 preserva as classificações do Keras (0 acertos perdidos), e o INT8 oficial perde 7 acertos e ganha 5, com F1 pior em seis classes. O F1 macro do INT8 oficial no teste é maior (+0,71 p.p.), mas a acurácia global cai 0,42 p.p.; como o teste já foi consultado, ele não participou da escolha.
+- **A política T6.5 continua válida sem recalibrar.** Com o limiar de 0,65 no top-1, o Float16 aceita as mesmas 430 de 474 imagens do FP32, com 90,7% de acerto nas aceitas, e seus scores diferem do FP32 em até 0,015. No INT8 oficial, a diferença chega a 0,42, e a T6.5 exige reconferir o limiar nessa versão (aceita 433 imagens, com 90,3% de acerto, quase na meta de 90%).
+- **Latência e tamanho não decidem.** O INT8 é o mais rápido (p95 de 10,0 contra 13,9 ms) e ocupa 2,8 MB menos, mas as duas versões ficam muito abaixo de 300 ms e de 8 MB. A medida é de um CPU x86, e o ganho do INT8 pode ser diferente em ARM.
+
+Esta decisão **revisa a recomendação da T7.2**, que indicava o INT8 oficial. A T7.2 já registrava que o Float16 era a alternativa quando a fidelidade importasse e que o RNF-06 não estava garantido para o INT8. A T8.3 aplica a ordem de critérios da task, que coloca a acurácia antes da latência e do tamanho, e agora dispõe do benchmark comparável da T8.2.
+
+### Contingência e custo
+
+- **Contingência:** se, no aparelho de referência, o Float16 violar o RNF-04 (p95 > 300 ms) ou o RNF-07 (memória), passar para o INT8 oficial da T7.3 (`quantizacao_T7_3_candidato_T5_6_20261026/modelo_int8.tflite`, 4.003.624 bytes). O Float16 em CPU carrega os pesos como float32, então o uso de RAM tende a se aproximar do FP32; isso precisa ser medido.
+- **RNF-02 (acréscimo ao pacote ≤ 9 MB):** o Float16 deixa cerca de 2,2 MB para rótulos, índice e eventual base técnica. Confirmar com o parceiro se o conteúdo técnico da T9.3 entra nessa conta.
+- **Arquivos já versionados:** o artefato escolhido continua em `comparacao_T7_2_candidato_T5_6_20261026/`. O pacote da T5.6 não foi alterado. O `modelo_int8.tflite` do pacote T5.6 (`07e78745…`) **não é** o INT8 oficial da T7.3 (`456caec5…`). O frontend da T9.1 já aponta para os dois arquivos desta decisão, Float16 principal e INT8 oficial da T7.3 de contingência ([`model-sources.json`](../frontend/model-sources.json)), e não empacota o INT8 antigo da T5.6 nem o FP32.
+
+### Pendências e limites
+
+- **Aparelho de referência:** RNF-03, RNF-04 e RNF-07 não foram medidos no celular; a latência vem do CPU x86 da T8.2. A medição segue o protocolo de `adb` da [seção 7.2](#72-comparação-das-estratégias-de-quantização-t72) e vale para o Float16 e para a contingência.
+- **RNF-06 em conjunto independente:** o teste atual já foi consultado, e os intervalos reamostram imagens, não grupos de fotos da mesma planta; podem ser otimistas.
+- **Política de confiança:** foi recontada só no top-1 a partir dos scores da T7.2. O top-3 e o limiar no arquivo embarcado exigem nova inferência.
+- **Aprovação do parceiro:** pendente, como em todas as versões candidatas da T5.6.
+
+### Reprodução e verificação
+
+```bash
+python -m src.selecao_mobile_t8_3 --saida runs/reproducao_T8_3
+python tests/validar_selecao_mobile_t8_3.py
+```
+
+O script usa somente a biblioteca padrão do Python, confere bytes e SHA-256 de cada versão entre a T7.2 e a T8.2 e recusa divergências. Os **10 testes** passaram. Eles cobrem a reprodução da decisão publicada, os hashes do escolhido e da contingência, a ordem dos critérios, a independência em relação ao teste, o limite da política T6.5, o INT8 do pacote T5.6 e a conferência com a T8.1, inclusive a detecção de divergência.
+
+# 9. Integração Mobile
+
+## 9.1 Pipeline de captura e processamento de imagens (T9.1)
+
+**Atualização em 08/11/2026. Estado:** pipeline web implementado e verificado localmente com Float16 T7.2 principal e INT8 oficial T7.3 de contingência, conforme a decisão T8.3 fornecida para a integração. A validação da câmera e dos limites de desempenho no aparelho físico e a aprovação do parceiro permanecem pendentes.
+
+### Captura e processamento
+
+O frontend React/TypeScript executa o modelo no próprio navegador, com LiteRT.js e um Web Worker. A ação **Tirar foto** abre o seletor nativo com preferência pela câmera traseira; **Escolher da galeria** abre um seletor separado. A câmera depende do navegador/aparelho. No computador ou em ambiente sem suporte à captura, o sistema pode oferecer seleção de arquivo. Arrastar e soltar também é aceito.
+
+As duas entradas encaminham um `File` para a mesma função de análise em [`App.tsx`](../frontend/src/App.tsx). Cancelar o seletor preserva a foto e o resultado. Depois da classificação, **Tirar outra foto** e **Trocar foto** permitem uma nova análise, inclusive da mesma imagem. As ações ficam indisponíveis enquanto a análise está em andamento. A aplicação não presume que o seletor nativo informe a razão de uma captura cancelada ou indisponível.
+
+O fluxo usa o contrato T4.1, reproduzido em [`preprocess.ts`](../frontend/src/lib/preprocess.ts): orientação EXIF aplicada uma vez, RGB, redimensionamento bicúbico com proporção preservada, entrada de 224 × 224 pixels e preenchimento cinza `(128,128,128)`, sem recorte. A entrada float32 é normalizada para [0,1]; no INT8, escala e zero point são lidos do arquivo. A normalização interna do backbone não é repetida.
+
+São aceitos JPEG, PNG e WebP até 10 MiB e 40 megapixels, sem transparência. O [`worker`](../frontend/src/lib/inference.worker.ts) reutiliza o modelo carregado, executa a inferência, desquantiza a saída quando usa INT8 e associa cada score ao índice original das 13 classes. A foto original e a entrada preparada podem ser conferidas na interface. A fotografia não é enviada a um servidor.
+
+### Artefatos e vínculo com as entregas anteriores
+
+[`model-sources.json`](../frontend/model-sources.json) centraliza as origens das classes e de cada modelo, os contratos e as chaves de hash. A situação registrada é `T8.3_integrada_pendente_celular_e_parceiro`. O empacotamento verifica os hashes e o vínculo entre classes e modelo, confere as dimensões/tipos dos tensores e gera cópias web com assinaturas de dimensões concretas, preservando os originais.
+
+| Item em execução nesta atualização | Origem | SHA-256 original |
+| --- | --- | --- |
+| Classes | `assets/modelos/candidato_T5_6_20261026/classes.json` | `1058619e188ffd7fa42bfc6821e2e122356b35d8503af71b987f37ae1e4572f4` |
+| Float16 principal T7.2 | `assets/modelos/comparacao_T7_2_candidato_T5_6_20261026/modelo_float16.tflite` | `c9a26ce13806a2fa26bffbd8cfbdac83ff4c05ffff1009ca9483bb587a5a8fa2` |
+| INT8 de contingência T7.3 | `assets/modelos/quantizacao_T7_3_candidato_T5_6_20261026/modelo_int8.tflite` | `456caec54fae3c57684f9afd6842cae611a1f6cb6587b40b0c5bd8256aea1340` |
+
+O manifesto servido em `models/manifest.json` registra os hashes original/web, versão da conversão, caminhos de origem/contrato e origem/hash das classes. O [`gerador de referências Python`](../frontend/scripts/generate-reference.py) lê esses mesmos caminhos e confere os hashes antes de inferir. Os testes de navegador conferem a identidade do modelo e das classes contra a referência antes de comparar os scores. Assim, referências do modelo antigo não validam silenciosamente um novo arquivo.
+
+O Float16 ocupa 6.833.548 bytes e mantém entrada e saída float32. O INT8 oficial ocupa 4.003.624 bytes e é distinto do INT8 T5.6 anteriormente usado pela interface. O carregador tenta Float16 com WebGPU, quando disponível, e CPU/WASM; se não conseguir compilar, validar os tensores ou aquecer o principal, usa o INT8 oficial em CPU/WASM e informa a troca. Falhas de download ou hash são informadas para permitir recuperação. A contingência por latência ou memória depende da medição no aparelho e de uma decisão de configuração; não é acionada automaticamente por uma medição isolada. O FP32 antigo não é empacotado nesta integração.
+
+### Evidências locais e limites do aceite
+
+Em Windows, foram executados:
+
+- **9 testes unitários:** referências do processamento Python, quantização e arredondamento.
+- **6 testes E2E em Chromium:** Float16 principal e INT8 oficial real após incompatibilidade simulada do principal, identidade dos artefatos, 13 scores e classe principal comparados com Python, EXIF, reutilização, ausência de uploads, entradas de galeria/captura, cancelamento, repetição da mesma foto, arquivos inválidos, recuperação de download e recusa de modelo alterado.
+- **Build de produção:** preparação de artefatos, TypeScript e Vite concluídos.
+- **Revisão visual:** desktop de 1440 px e viewport móvel de 390 px, sem rolagem horizontal nas telas verificadas. O teste de captura móvel também verifica a largura após o resultado.
+
+Ambiente das referências: TensorFlow 2.21.0, Pillow 12.2.0 e NumPy 2.4.4. Para os dois modelos, a execução Python exige saídas idênticas entre o original e a cópia web nas referências; entre Python e navegador, os testes usam tolerância de 2/256 por score. Essas amostras são sintéticas e verificam integração, não qualidade agronômica ou generalização.
+
+**Pendente no aparelho de referência:** registrar aparelho/SO/navegador e URL HTTPS; capturar pela câmera e selecionar da galeria; conferir EXIF, imagem preparada e classificação; cancelar e repetir; registrar indisponibilidade/permissões conforme o que o sistema expuser. Medir pré-processamento e inferência no aparelho, sem extrapolar a latência do notebook. A automação do input de captura não substitui essa evidência física.
+
+A T9.2 trata o limiar e o estado inconclusivo; a T9.3 trata associação e conteúdo técnico revisado; a T9.4 valida o fluxo offline. Esta atualização não acrescenta service worker, conteúdo técnico nem regra de confiança. Comandos de reprodução e limitações estão no [README do frontend](../frontend/README.md).
+
+## 9.2 Tratamento do limiar de confiança (T9.2)
+
+### Regra implementada
+
+O aplicativo aplica a política definida na [T6.5](#65-política-de-confiança-t65), usando diretamente o arquivo versionado [`parametros.json`](../assets/data/politica_T6_5/parametros.json). O limiar, a quantidade de hipóteses e os textos são incorporados ao JavaScript no build, sem uma segunda configuração de confiança ou consulta adicional à rede.
+
+| Maior score da imagem | Resultado apresentado |
+| --- | --- |
+| Menor que **0,65** | Resultado inconclusivo, sem classe, score ou orientação técnica associados à identificação da foto. |
+| Maior ou igual a **0,65** | As **três hipóteses** com maiores scores, em ordem decrescente; empate pelo menor índice da classe. |
+
+A decisão considera o score original, antes do arredondamento do percentual exibido. Assim, 0,649999 é inconclusivo e 0,65 é aceito. O limiar é aplicado somente ao maior score: quando ele é aceito, a segunda e a terceira hipóteses podem ter scores inferiores a 0,65, conforme a política. Nenhuma soma ou alteração de scores é realizada. Saída vazia, scores não finitos/fora de [0, 1] ou índices repetidos também não produzem identificação.
+
+### Estado inconclusivo e nova captura
+
+Quando nenhuma classe atinge o limiar, a interface apresenta os textos da política:
+
+> Resultado inconclusivo: não foi possível identificar o problema com segurança nesta foto.
+
+> Fotografe de novo, mais perto, com o inseto ou a parte da planta afetada em foco e bem iluminada.
+
+A imagem original e a entrada preparada continuam disponíveis para consulta. O botão **“Tentar outra foto”** abre o seletor de captura; a galeria também permanece disponível. Cancelar a seleção mantém o resultado atual. Ao analisar outra foto, a tela limpa o resultado e a classe selecionada anteriormente. Se o novo resultado for inconclusivo, as hipóteses e o conteúdo técnico anterior não aparecem; remover a foto retorna ao estado inicial.
+
+A lista geral de classes continua como consulta independente. Ela não é usada para preencher uma identificação inconclusiva. O resultado comunica que a identificação não foi obtida com segurança; não afirma ausência de praga nem identifica automaticamente imagens fora do escopo.
+
+### Integração e limites
+
+A regra está em [`confidence.ts`](../frontend/src/lib/confidence.ts), consumida pela interface [`App.tsx`](../frontend/src/App.tsx). O worker mantém sua inferência e os scores originais. O filtro é aplicado tanto ao **Float16 principal** quanto ao **INT8 oficial de contingência**, após a desquantização já realizada no worker, sem mudar a captura ou o preprocessamento.
+
+O limiar de 0,65 permanece o definido no projeto; sua calibração de origem foi feita em Keras FP32. Esta entrega implementa o tratamento do limiar e não recalibra os scores ou comprova desempenho diagnóstico no formato embarcado. Um score alto continua sendo apresentado como hipótese, não como probabilidade calibrada de acerto ou diagnóstico confirmado. A validação física no aparelho, a disponibilidade de conteúdo técnico e o fluxo offline completo permanecem nas respectivas entregas.
+
+### Verificação
+
+Em **08/11/2026**, passaram **19 testes unitários** (9 de preprocessamento e 10 de confiança), **8 testes de navegador Chromium** e o build TypeScript/Vite. A regra de confiança cobre fronteiras abaixo/igual/acima do limiar, top-k, desempate, preservação do vetor original, soma aproximada dos scores INT8 e recusa de saída inconsistente.
+
+Os testes de navegador mantêm a inferência real Float16/INT8 e a comparação dos 13 scores com as referências Python. Como as fotos sintéticas de referência têm score máximo abaixo de 0,65, verificam o estado inconclusivo real sem identificação. Dois testes adicionais usam dublê somente do transporte do worker para produzir os scores exatos de fronteira e verificar transições aceito → inconclusivo → aceito, limpeza da classe anterior, ausência de orientações técnicas, nova captura, cancelamento, remoção e viewport de 390 px sem rolagem horizontal. Esse dublê complementa a execução dos modelos reais; não substitui avaliação agronômica ou uso físico da câmera.
+
+Para reproduzir, na pasta `frontend`:
+
+```bash
+npm ci
+npm test
+npx playwright install chromium
+npm run test:e2e
+npm run build
+```
+
+O comando de inicialização e o build preparam os artefatos web a partir dos modelos versionados. A implementação do estado inconclusivo não altera pesos, classes, arquivos TFLite ou os parâmetros da T6.5.
 
 ## 9.3 Associação da predição ao conteúdo técnico (T9.3)
 
 **Autor:** Lucas. **Revisor:** Glauco. **Data:** 07/11/2026.
 
-**Situação: entrega parcial.** A associação entre cada classe do modelo, o dicionário de classes e a base local de conteúdo está implementada e testada, e funciona sem rede. O **conteúdo técnico em si ainda não existe**: o catálogo do Agro App não foi recebido, então nenhuma das 13 classes tem texto de sintomas ou manejo, e todas resolvem como *indisponível*. O critério de aceite ("cada classe reconhecida é associada ao conteúdo técnico correspondente, consultável sem internet") só será atendido por completo quando o catálogo for preenchido. Até lá, o aplicativo deve dizer que o conteúdo está indisponível, sem afirmar nenhuma orientação.
+**Situação: entrega parcial.** A associação entre cada classe do modelo, o dicionário de classes e a base local de conteúdo está implementada e testada, e funciona sem rede. O **conteúdo técnico em si ainda não existe**: o catálogo do Agro App não foi recebido, então nenhuma das 13 classes tem texto de sintomas ou manejo, e todas resolvem como *indisponível*. O critério de aceite ("cada classe reconhecida é associada ao conteúdo técnico correspondente, consultável sem internet") só será atendido por completo quando o catálogo for preenchido. Até lá, o aplicativo deve dizer que o conteúdo está indisponível, sem afirmar nenhuma orientação. Existe material de referência para 11 das 13 classes (ver o [mapa de fontes](#mapa-de-fontes-de-conteúdo)), mas ele tem direitos reservados e não foi copiado.
 
 ### Fluxo
 
@@ -3576,7 +3889,7 @@ Os testes conferem integridade dos arquivos históricos e atuais, cobertura das 
 3. A [base local](../assets/data/conteudo_T9_3/base_conteudo.json) guarda o texto de cada `chave_conteudo`, com fonte, data de revisão e o indicador `validated`.
 4. A função `associar_predicoes` ([`associacao_conteudo_t9_3.py`](../src/associacao_conteudo_t9_3.py)) enriquece cada previsão com a identificação e o estado do conteúdo. Mantém a ordem e o score do modelo e recusa índices fora das 13 classes.
 
-A T9.3 **não depende do limiar de confiança**. A T9.2 decide quais previsões aparecem (a proposta da [T6.5](#65-política-de-confiança-t65) é 3 hipóteses e limiar 0,65 no top-1) e chama a T9.3 com a lista já filtrada. Mudar o limiar não altera esta entrega.
+A T9.3 **não depende do limiar de confiança**. A [T9.2](#92-tratamento-do-limiar-de-confiança-t92) decide quais previsões aparecem (a proposta da [T6.5](#65-política-de-confiança-t65) é 3 hipóteses e limiar 0,65 no top-1) e chama a T9.3 com a lista já filtrada. Mudar o limiar não altera esta entrega.
 
 ### As 13 classes
 
@@ -3609,19 +3922,50 @@ O nome exibido é o do modelo. Na classe 11, o dataset do parceiro usa também "
 
 Nome comum e científico vêm da tabela das classes no `instruções.md` do dataset do parceiro (pasta `Agro_App/dataset/dataset` do Drive da equipe). Os nomes científicos são **referência a validar por agrônomo**, como o próprio arquivo indica. As pastas `Milho`, `Soja` e `dataset` do Drive contêm só imagens e metadados de imagem; não há texto técnico nelas. A associação com o dicionário da [T3.4](#dicionário-de-classes-t34) existe só para as três classes que também constam do acervo anterior (índices 1, 7 e 9); as demais não têm ID `AGRO-xxx`.
 
+### Mapa de fontes de conteúdo
+
+O [mapa de fontes](../assets/data/conteudo_T9_3/fontes_conteudo.json) indica, por classe, onde há material técnico de referência, com a citação da fonte e da página. Foram consultadas duas publicações da Embrapa citadas no [dicionário de classes](#dicionário-de-classes-t34), em 08/11/2026:
+
+- **Manual da soja** (SOSA-GÓMEZ et al., 2014): 3ª edição, Embrapa Soja, 102 páginas no PDF. Cada ficha traz as fases do inseto e um parágrafo de danos. Não há seção de manejo.
+- **Artigo da cigarrinha-do-milho** (OLIVEIRA, 2025): artigo da Revista Cultivar Grandes Culturas, de Ivênio Rubens de Oliveira (Embrapa Milho e Sorgo). Trata de sintomas, período de controle e manejo químico e biológico.
+
+A tabela usa a numeração **impressa** das páginas (a do PDF é uma a mais no manual); o mapa registra as duas. As referências completas estão ao final da seção.
+
+| Índice | Classe | Citação | O que a fonte traz | Observação |
+| ---: | --- | --- | --- | --- |
+| 0 | Vaquinha (Diabrotica speciosa) | (SOSA-GÓMEZ et al., 2014, p. 42) | descrição das fases, danos | Ficha no contexto da soja; a classe do modelo também cobre milho. |
+| 1 | Cigarrinha-do-milho (Dalbulus maidis) | (OLIVEIRA, 2025, p. 12-14) | sintomas, período de controle, manejo químico e biológico | Artigo de 3 páginas (12 a 14 impressas, PDF 1 a 3). Inclui manejo químico e biológico, que exige validação agronômica. |
+| 2 | Percevejo-barriga-verde (Dichelops/Diceraeus) | (SOSA-GÓMEZ et al., 2014, p. 84) | descrição das fases, danos | A fonte usa o gênero Dichelops; o modelo e o dataset usam Diceraeus spp. (ex-Dichelops). |
+| 3 | Lagarta-do-cartucho (Spodoptera frugiperda) | (SOSA-GÓMEZ et al., 2014, p. 74) | descrição das fases, danos | No manual a ficha usa o título lagarta-das-vagens e o contexto da soja; o modelo chama a classe de lagarta-do-cartucho. |
+| 4 | Percevejo-marrom (Euschistus heros) | (SOSA-GÓMEZ et al., 2014, p. 78) | descrição das fases, danos | A ficha faz menção pontual à resistência a inseticidas, sem seção de manejo. |
+| 5 | Percevejo-verde (Nezara viridula) | (SOSA-GÓMEZ et al., 2014, p. 82) | descrição das fases, danos | — |
+| 6 | Percevejo-asa-preta (Edessa meditabunda) | (SOSA-GÓMEZ et al., 2014, p. 86) | descrição das fases, danos | O manual chama a espécie de percevejo-edessa; o modelo, de percevejo-asa-preta. |
+| 7 | Percevejo-do-milho (Leptoglossus zonatus) | **sem fonte** | — | Obter a fonte com o parceiro. |
+| 8 | Lagarta-falsa-medideira (Chrysodeixis includens) | (SOSA-GÓMEZ et al., 2014, p. 36) | descrição das fases, danos | — |
+| 9 | Lagarta-da-soja (Anticarsia gemmatalis) | (SOSA-GÓMEZ et al., 2014, p. 34) | descrição das fases, danos | — |
+| 10 | Lagarta-das-vagens (Spodoptera eridania e S. cosmioides) | (SOSA-GÓMEZ et al., 2014, p. 70) | descrição das fases, danos | A classe reúne duas espécies; há uma ficha para cada. |
+| 10 | Lagarta-das-vagens (Spodoptera eridania e S. cosmioides) | (SOSA-GÓMEZ et al., 2014, p. 72) | descrição das fases, danos | A classe reúne duas espécies; há uma ficha para cada. |
+| 11 | Astylus variegatus | (SOSA-GÓMEZ et al., 2014, p. 98) | descrição das fases, danos | A ficha descreve danos apenas eventuais. O manual usa o nome larva-angorá; o modelo usa o nome científico. |
+| 12 | Cigarrinha-das-pastagens (Deois flavopicta) | **sem fonte** | — | Obter a fonte com o parceiro. |
+
+**Onze das 13 classes têm material de referência; as classes 7 e 12 não têm.** Dez classes têm descrição e danos (manual) e a classe 1 tem sintomas e manejo (artigo). O manual é do contexto da soja, então para vaquinha, barriga-verde e lagarta-do-cartucho, que também ocorrem em milho, a ficha vale só para soja. O iNaturalist e o AgroInsect, consultados antes, trazem apenas identificação (taxonomia, nomes e fotos), sem sintomas nem manejo.
+
+O mapa **não contém texto das fontes** e o resolvedor não o usa. As duas publicações têm direitos reservados (Lei nº 9.610), e o repositório não as versiona; o hash de cada PDF consultado fica no mapa. O uso permitido é a referência bibliográfica e a redação própria a partir delas, **sempre com citação da fonte e da página**. Copiar o texto para o aplicativo depende de autorização da Embrapa ou do parceiro, e o manejo químico não entra sem validação. Um teste recusa o mapa se faltar a referência completa (com ano, link e data de acesso) ou a citação por página, se algum campo de texto for longo o bastante para conter trecho copiado, e se o uso do texto for marcado como autorizado sem registro de responsável, data e evidência.
+
 ### Como completar quando o catálogo chegar
 
 1. Receber do parceiro o catálogo com chaves oficiais, título, texto, fonte e data de cada praga.
 2. Em `associacao_classes.json`, preencher `chave_conteudo` e `validacao_conteudo` (responsável, data, evidência) e mudar `status_conteudo` para `validado`. O comando `python -m src.associacao_conteudo_t9_3 gerar` preserva esses campos ao atualizar o restante e nunca sobrescreve a base.
-3. Em `base_conteudo.json`, incluir um item por `chave` com `titulo`, `texto`, `fonte`, `revisado_em` e `validated: true`. Os campos coincidem com o `TechnicalContent` do frontend (`title`, `text`, `source`, `reviewedAt`, `validated`); quando o frontend entrar na `develop`, o `content.ts` deve ser gerado a partir destes arquivos.
+3. Em `base_conteudo.json`, incluir um item por `chave` com `titulo`, `texto`, `fonte`, `revisado_em` e `validated: true`. No campo `fonte`, usar a citação do mapa de fontes (por exemplo, `SOSA-GÓMEZ et al., 2014, p. 78`) e listar a referência completa em Referências. Os campos coincidem com o `TechnicalContent` do frontend (`title`, `text`, `source`, `reviewedAt`, `validated`); o `content.ts` do frontend (já na `develop`) deve ser gerado a partir destes arquivos.
 4. Executar `python -m src.associacao_conteudo_t9_3 verificar --exigir-conteudo`. O comando só termina com sucesso quando as 13 classes têm conteúdo validado, o que corresponde ao RNF-08 (100% das classes resolvem para conteúdo válido). Hoje ele falha de propósito.
 5. Verificar a abertura do conteúdo no aparelho em modo avião (T9.4).
 
 ### Pendências e limites
 
 - **Catálogo de conteúdo técnico do Agro App:** não recebido; sem ele, 0 das 13 classes tem conteúdo disponível e o critério de aceite não está completo.
+- **Fontes de referência:** as classes 7 (*Leptoglossus zonatus*) e 12 (*Deois flavopicta*) não têm fonte; as demais têm material com direitos reservados, cujo uso no aplicativo depende de autorização ou de redação própria validada.
 - **Validação do parceiro:** nomes científicos, cultura e associação de cada classe ao conteúdo precisam ser confirmados, e os pares da T6.4 dependem da decisão agronômica.
-- **Integração no aplicativo:** o frontend ainda não está na `develop`, e a tela da T9.2 (limiar) não foi implementada; esta entrega fornece os dados e a função de associação.
+- **Integração no aplicativo:** o frontend da T9.1 e o limiar da T9.2 já estão na `develop`, mas o `frontend/src/data/content.ts` continua vazio e não consome estes arquivos. Gerá-lo a partir da associação e da base é o passo seguinte.
 - **RNF-08 completo** (100% de conteúdo válido) e a demonstração **sem rede no aparelho** (T9.4) continuam pendentes.
 
 ### Reprodução e verificação
@@ -3630,6 +3974,21 @@ Nome comum e científico vêm da tabela das classes no `instruções.md` do data
 python -m src.associacao_conteudo_t9_3 gerar
 python -m src.associacao_conteudo_t9_3 verificar
 python tests/validar_associacao_conteudo_t9_3.py
+python tests/validar_fontes_conteudo_t9_3.py
 ```
 
-Os comandos usam somente a biblioteca padrão do Python. Os **14 testes** passam. Eles cobrem a reprodução da associação a partir das fontes e seus hashes, as 13 classes na ordem do modelo, os IDs do inventário e do acervo, as chaves únicas e a recusa de URLs, as relações da T6.4, o estado indisponível sem catálogo, um catálogo sintético completo, os estados intermediários, o contrato de validação, a preservação do preenchimento manual ao regenerar, a recusa de índices inválidos e a ausência de acesso à rede.
+Os comandos usam somente a biblioteca padrão do Python. Os **14 testes** da associação passam. Eles cobrem a reprodução da associação a partir das fontes e seus hashes, as 13 classes na ordem do modelo, os IDs do inventário e do acervo, as chaves únicas e a recusa de URLs, as relações da T6.4, o estado indisponível sem catálogo, um catálogo sintético completo, os estados intermediários, o contrato de validação, a preservação do preenchimento manual ao regenerar, a recusa de índices inválidos e a ausência de acesso à rede.
+
+Os **14 testes** do mapa de fontes também passam. Eles cobrem a coerência com as 13 classes, as lacunas, o intervalo e a numeração das páginas, o vocabulário das seções, a referência completa e a citação por página, os direitos e a autorização de uso, e a recusa de texto copiado.
+
+### Referências
+
+ALMEIDA, G.; NAZARIO, L.; TEIXEIRA, M.; STIRLE, J.; FRANCA, H.; OLIVEIRA, M.; OLIVEIRA, R.; NOVAK, S.; BAILÃO, A.; GONTIJO, P. **AGROINSECT: a dataset for identifying agricultural insects and pests of interest**. Versão 2. [S. l.]: Mendeley Data, 2026. DOI: 10.17632/4jyp4m9gxj.2. Disponível em: https://data.mendeley.com/datasets/4jyp4m9gxj/2. Acesso em: 8 nov. 2026. Licença CC BY 4.0.
+
+AGROTECH INTELI. **Dataset de pragas de soja e milho: AgroTech Inteli × Agro App**. Documento interno (instruções.md), pasta Agro_App/dataset/dataset do Drive da equipe, 2026.
+
+INATURALIST. **Observações de pragas de soja e milho no Brasil**. Disponível em: https://www.inaturalist.org. Acesso em: 4 out. 2026. Licenças CC0 e CC BY, foto a foto; os créditos individuais estão em `field_labels.csv`.
+
+OLIVEIRA, I. R. de. **Estratégias contra a cigarrinha-do-milho**. Cultivar Grandes Culturas, [S. l.], n. 312, p. 12-14, 2025. Disponível em: https://www.embrapa.br/en/busca-de-publicacoes/-/publicacao/1179329/estrategias-contra-a-cigarrinha-do-milho. Acesso em: 8 nov. 2026.
+
+SOSA-GÓMEZ, D. R. et al. **Manual de identificação de insetos e outros invertebrados da cultura da soja**. 3. ed. Londrina: Embrapa Soja, 2014. (Embrapa Soja. Documentos, 269). ISSN 1516-781X. Disponível em: https://www.embrapa.br/en/busca-de-publicacoes/-/publicacao/991685/manual-de-identificacao-de-insetos-e-outros-invertebrados-da-cultura-da-soja. Acesso em: 8 nov. 2026.
