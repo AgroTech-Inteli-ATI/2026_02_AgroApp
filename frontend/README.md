@@ -35,6 +35,30 @@ Publique o diretório `dist/` integralmente em hospedagem estática com HTTPS. S
 
 Para hospedagem em subdiretório, defina `VITE_BASE_PATH` com barras inicial e final antes de gerar o build, por exemplo `/agroapp/`. Para atualizar o frontend e o modelo, publique o build completo de forma atômica e faça o host revalidar `models/manifest.json` e `runtime/inference.js`, evitando misturar versões.
 
+### Congelar a demonstração da Sprint 04
+
+`npm run preview` serve o `dist` existente: ele não regenera modelos ou compila a aplicação. Para produzir um pacote separado e identificado, execute em `frontend/`:
+
+```sh
+npm ci
+npm run demo:package
+DEMO_PREVIEW=1 npm run test:e2e
+```
+
+No PowerShell, use `$env:DEMO_PREVIEW="1"` antes de `npm.cmd run test:e2e` e remova com `Remove-Item Env:DEMO_PREVIEW` depois. Nesse modo os testes usam o build de produção em `4173`, sem iniciar o servidor de desenvolvimento ou reutilizar uma sessão anterior. Os testes automatizados não comprovam uso em aparelho físico.
+
+O empacotamento regenera modelos e runtime, compila a aplicação e copia o build para `.work/demo/agroapp-demo-<data>-<commit>/site/`. Gera também um `.tar.gz` e seu SHA-256. Esses pacotes são locais e ignorados pelo Git. O `site/release.json` registra commit, alterações locais presentes no empacotamento, hashes dos arquivos, modelos de origem/web, classes, política de confiança e dependências. Uma árvore com alterações locais fica explicitamente identificada; o commit sozinho não descreve essas alterações.
+
+Para conferir o pacote preservado:
+
+```sh
+npm run demo:verify -- .work/demo/<identificador>/site
+```
+
+Publique **essa pasta `site/` integralmente**, em HTTPS, e confira `/release.json` e `/models/manifest.json` na URL apresentada. O `LEIA-ME.txt` do pacote inclui o comando para ensaiar localmente sem recompilar. Preserve também o arquivo e seu checksum; não substitua seus modelos depois do ensaio. Um novo build gera uma nova versão. O verificador detecta alterações nos arquivos em relação a `release.json`; o checksum externo identifica o arquivo completo, incluindo esse manifesto.
+
+O pacote mantém Float16 T7.2 principal e INT8 T7.3 de contingência. Este procedimento não corrige a divergência de decodificação/cor entre Python e navegador, não recalibra o limiar e não resolve a independência da avaliação histórica. Conteúdo técnico e validação no aparelho continuam pendentes.
+
 O servidor local adiciona COOP/COEP. Esses cabeçalhos permitem isolamento entre origens; a versão atual usa um único thread em WASM e não depende de multithreading. Todos os arquivos e fontes são servidos na mesma origem.
 
 ## Modelo e contrato de imagem

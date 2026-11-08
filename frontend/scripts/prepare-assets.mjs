@@ -95,6 +95,10 @@ function tensorContract(buffer, specialize = false) {
   return { input: readTensor(inputs[0]), output: readTensor(outputs[0]) };
 }
 
+// Estas pastas contêm somente saídas geradas. Não carregar modelos ou runtimes
+// de uma preparação anterior para o próximo build.
+await rm(destination, { recursive: true, force: true });
+await rm(path.join(app, "public/runtime"), { recursive: true, force: true });
 await mkdir(destination, { recursive: true });
 // Retira apenas as antigas cópias FP32 geradas por este empacotador.
 for (const filename of ["modelo_fp32.tflite", "modelo_fp32_web.tflite"])
