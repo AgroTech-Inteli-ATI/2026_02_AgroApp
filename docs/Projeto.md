@@ -79,8 +79,9 @@
 </details>
 
 <details>
-<summary><strong>8. Desempenho para dispositivos móveis</strong></summary>
+<summary><strong>8. Avaliação e desempenho do modelo convertido</strong></summary>
 
+- [8.1 Avaliação pós-conversão (T8.1)](#81-avaliação-pós-conversão-t81)
 - [8.2 Benchmark de inferência (T8.2)](#82-benchmark-de-inferência-t82)
 
 </details>
@@ -3454,7 +3455,164 @@ A revisão visual deve corresponder aos IDs e hashes efetivamente selecionados e
 
 Os **10 testes passaram**, incluindo seleção determinística, cobertura e diversidade de grupos, brilho sem padding, saturação/arredondamento, recusa de validação/teste mesmo com hash de manifesto atualizado, imagem alterada, classe ausente, grupo repetido, cobertura falsa e revisão visual incompleta. Ambiente da conversão: Python 3.12.15, TensorFlow 2.21.0, Keras 3.15.1, KerasHub 0.32.0 e NumPy 2.4.4, em macOS arm64. A entrega comprova conjunto documentado e conversão INT8 executada, com as limitações de cobertura descritas acima.
 
-# 8. Desempenho para dispositivos móveis
+# 8. Avaliação e desempenho do modelo convertido
+
+## 8.1 Avaliação pós-conversão (T8.1)
+
+Comparação do EfficientNet-Lite0 Keras selecionado na T5.6 com suas versões TFLite. As métricas foram recalculadas a partir das previsões da T7.2 e conferidas com a avaliação Keras da [T6.1](#61-métricas-por-classe-t61). Não houve novo treinamento, conversão ou inferência.
+
+### Método
+
+- **Teste:** 473 imagens, 13 classes, conforme [`indice_dataset.csv`](../assets/data/treino_T5_2/indice_dataset.csv). As previsões foram pareadas por `image_id` e rótulo.
+- **Referências:** Keras original para medir o efeito total; TFLite FP32 da T7.1 para separar conversão e quantização. Ambos produziram as mesmas classificações neste teste.
+- **Métricas:** F1 macro, acurácia macro (balanced accuracy), acurácia global, precisão, recall e suporte por classe. Foi usada a classe de maior pontuação, sem limiar de confiança ou ponderação.
+- **Integridade:** modelos, contratos, classes e índice conferidos por SHA-256. Fontes e ambientes estão em [`proveniencia.json`](../assets/data/avaliacao_T8_1/candidato_T5_6_20261026/proveniencia.json).
+
+### Resultados gerais
+
+| Versão | F1 macro | Acurácia macro | Acurácia global | Δ F1 vs Keras (p.p.) | Acertos perdidos / ganhos vs Keras |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Keras original | 0,7329 | 0,7126 | 0,8478 | — | — |
+| TFLite FP32 T7.1 | 0,7329 | 0,7126 | 0,8478 | 0,0000 | 0 / 0 |
+| Faixa dinâmica | 0,7371 | 0,7127 | 0,8478 | +0,4128 | 2 / 2 |
+| Float16 | 0,7329 | 0,7126 | 0,8478 | 0,0000 | 0 / 0 |
+| INT8 oficial T7.3 | 0,7400 | 0,7234 | 0,8436 | +0,7091 | 7 / 5 |
+| INT8 regenerado T7.2 | 0,7471 | 0,7270 | 0,8541 | +1,4212 | 4 / 7 |
+
+Deltas em pontos percentuais, calculados antes do arredondamento. FP32 e float16 mantiveram as 473 classificações do Keras. O INT8 oficial apresentou F1 macro maior, mas passou de 401 para 399 acertos. A [tabela completa](../assets/data/avaliacao_T8_1/candidato_T5_6_20261026/metricas_gerais.csv) contém os deltas das demais métricas.
+
+### Resultados por classe
+
+| Índice | Classe | Suporte | F1 Keras | F1 INT8 oficial | Δ F1 (p.p.) |
+| ---: | --- | ---: | ---: | ---: | ---: |
+| 0 | Vaquinha | 157 | 0,9274 | 0,9201 | −0,7317 |
+| 1 | Cigarrinha-do-milho | 29 | 0,9286 | 0,9474 | +1,8797 |
+| 2 | Percevejo-barriga-verde | 42 | 0,7816 | 0,7765 | −0,5139 |
+| 3 | Lagarta-do-cartucho | 61 | 0,8594 | 0,8594 | 0,0000 |
+| 4 | Percevejo-marrom | 10 | 0,6667 | 0,6667 | 0,0000 |
+| 5 | Percevejo-verde | 14 | 0,4167 | 0,4800 | +6,3333 |
+| 6 | Percevejo-asa-preta | 11 | 0,5333 | 0,6250 | +9,1667 |
+| 7 | Percevejo-do-milho | 12 | 0,7200 | 0,7200 | 0,0000 |
+| 8 | Lagarta-falsa-medideira | 12 | 0,4706 | 0,4444 | −2,6144 |
+| 9 | Lagarta-da-soja | 6 | 0,7692 | 0,7692 | 0,0000 |
+| 10 | Lagarta-das-vagens | 24 | 0,6275 | 0,6154 | −1,2066 |
+| 11 | Astylus variegatus | 71 | 0,9252 | 0,9116 | −1,3605 |
+| 12 | Cigarrinha-das-pastagens | 24 | 0,9020 | 0,8846 | −1,7345 |
+
+O INT8 oficial perdeu F1 em seis classes. A maior queda foi na lagarta-falsa-medideira: −2,6144 p.p., com 12 imagens. O recall permaneceu em 4/12; a precisão caiu de 0,8000 para 0,6667. No percevejo-barriga-verde, o recall passou de 34/42 para 33/42.
+
+As 13 classes das seis versões estão em [`comparacao_por_classe.csv`](../assets/data/avaliacao_T8_1/candidato_T5_6_20261026/comparacao_por_classe.csv), com precisão, recall, F1, suporte e deltas contra Keras e TFLite FP32.
+
+<div align="center">
+  <p><strong>Figura 1 — Variação de F1 por classe em relação ao Keras</strong></p>
+  <img src="../assets/data/avaliacao_T8_1/candidato_T5_6_20261026/aprofundamento/figuras/delta_f1_por_classe.png" alt="Variação de F1 das cinco conversões em relação ao Keras, em pontos percentuais, com suporte por classe" width="800">
+  <p><em>Fonte: previsões da T7.2, consolidadas na T8.1 (2026).</em></p>
+</div>
+
+As Figuras 2 e 3 comparam o Keras original e o INT8 oficial. Cada linha soma 100%, e a diagonal corresponde ao recall. As duas matrizes usam a mesma escala de cores.
+
+<div align="center">
+  <p><strong>Figura 2 — Matriz de confusão: Keras original</strong></p>
+  <img src="../assets/data/avaliacao_T8_1/candidato_T5_6_20261026/aprofundamento/figuras/matriz_keras.png" alt="Matriz de confusão normalizada do Keras original, com classes reais nas linhas e previstas nas colunas" width="800">
+  <p><em>Fonte: previsões da T7.2, conferidas com a T6.1 e consolidadas na T8.1 (2026).</em></p>
+</div>
+
+<div align="center">
+  <p><strong>Figura 3 — Matriz de confusão: INT8 oficial da T7.3</strong></p>
+  <img src="../assets/data/avaliacao_T8_1/candidato_T5_6_20261026/aprofundamento/figuras/matriz_int8_t7_3.png" alt="Matriz de confusão normalizada do INT8 oficial da T7.3, identificado separadamente do INT8 regenerado" width="800">
+  <p><em>Fonte: previsões da T7.2, consolidadas na T8.1 (2026).</em></p>
+</div>
+
+### Revisão dos sete acertos perdidos
+
+Os casos foram selecionados pela condição `previsto_keras == indice_real` e `previsto_int8_t7_3 != indice_real`, aplicada às 473 imagens de [`predicoes_teste.csv`](../assets/data/avaliacao_T8_1/candidato_T5_6_20261026/predicoes_teste.csv).
+
+| Resultado por foto | Quantidade |
+| --- | ---: |
+| Ambos os modelos acertaram | 394 |
+| Keras acertou e INT8 oficial errou | **7** |
+| Keras errou e INT8 oficial acertou | 5 |
+| Ambos os modelos erraram | 67 |
+| **Total** | **473** |
+
+O INT8 oficial errou 74 imagens: sete que Keras acertou e 67 que ambos erraram. A revisão visual abrange os sete acertos perdidos. Os originais foram conferidos por hash e observados também após a T4.1, em 224 × 224 pixels.
+
+| Foto | Rótulo real e previsão Keras | Previsão INT8 oficial | Observação visual |
+| --- | --- | --- | --- |
+| [IMG_00263](../assets/data/avaliacao_T8_1/candidato_T5_6_20261026/aprofundamento/fotos/IMG_00263.jpg) | Astylus variegatus | Percevejo-barriga-verde | Inseto sobre folha com textura e mão no quadro; os detalhes do corpo e das antenas ficam reduzidos em 224 × 224. |
+| [IMG_01540](../assets/data/avaliacao_T8_1/candidato_T5_6_20261026/aprofundamento/fotos/IMG_01540.jpg) | Vaquinha | Cigarrinha-das-pastagens | Inseto pequeno e escuro na parte superior de uma parede; o fundo ocupa grande parte da entrada. |
+| [IMG_01741](../assets/data/avaliacao_T8_1/candidato_T5_6_20261026/aprofundamento/fotos/IMG_01741.jpg) | Vaquinha | Astylus variegatus | Inseto muito pequeno entre flores amarelas; pouco contraste local e contorno parcialmente encoberto. |
+| [IMG_01812](../assets/data/avaliacao_T8_1/candidato_T5_6_20261026/aprofundamento/fotos/IMG_01812.jpg) | Vaquinha | Percevejo-verde | Inseto parcialmente encoberto pela folha em foto alta e estreita; o preenchimento cinza lateral preserva a proporção, mas o sujeito ocupa poucos pixels. |
+| [IMG_02004](../assets/data/avaliacao_T8_1/candidato_T5_6_20261026/aprofundamento/fotos/IMG_02004.jpg) | Vaquinha | Cigarrinha-das-pastagens | Inseto pequeno e escuro sobre fundo rosado texturizado, com pouco detalhe após redimensionar. |
+| [IMG_02168](../assets/data/avaliacao_T8_1/candidato_T5_6_20261026/aprofundamento/fotos/IMG_02168.jpg) | Percevejo-barriga-verde | Vaquinha | Composição com faixa de texto, moldura e foto inserida, mantendo duas vistas de insetos na entrada. |
+| [IMG_02637](../assets/data/avaliacao_T8_1/candidato_T5_6_20261026/aprofundamento/fotos/IMG_02637.jpg) | Lagarta-do-cartucho | Lagarta-falsa-medideira | Adulto alado aparente, com aspecto de mariposa, sobre superfície áspera de cores próximas às asas. A aparência adulta não demonstra erro do rótulo da espécie. |
+
+#### Imagens inspecionadas
+
+As cópias abaixo preservam o enquadramento e a proporção. A comparação com as entradas T4.1 está nas [pranchas dos casos 1 a 4](../assets/data/avaliacao_T8_1/candidato_T5_6_20261026/aprofundamento/pranchas/revisao_visual_01.png) e [dos casos 5 a 7](../assets/data/avaliacao_T8_1/candidato_T5_6_20261026/aprofundamento/pranchas/revisao_visual_02.png).
+
+<div align="center">
+  <p><strong>Figura 4 — IMG_00263: Astylus variegatus → percevejo-barriga-verde</strong></p>
+  <img src="../assets/data/avaliacao_T8_1/candidato_T5_6_20261026/aprofundamento/fotos/IMG_00263.jpg" alt="IMG_00263: inseto com padrão claro e escuro sobre folha, com mão e vegetação no quadro" width="300">
+  <p><em>Fonte: acervo de Dados do projeto; cópia redimensionada.</em></p>
+</div>
+
+<div align="center">
+  <p><strong>Figura 5 — IMG_01540: vaquinha → cigarrinha-das-pastagens</strong></p>
+  <img src="../assets/data/avaliacao_T8_1/candidato_T5_6_20261026/aprofundamento/fotos/IMG_01540.jpg" alt="IMG_01540: inseto pequeno na parte superior de uma parede clara, com grande área de fundo" width="300">
+  <p><em>Fonte: acervo de Dados do projeto; cópia redimensionada.</em></p>
+</div>
+
+<div align="center">
+  <p><strong>Figura 6 — IMG_01741: vaquinha → Astylus variegatus</strong></p>
+  <img src="../assets/data/avaliacao_T8_1/candidato_T5_6_20261026/aprofundamento/fotos/IMG_01741.jpg" alt="IMG_01741: inseto verde pequeno entre flores amarelas que dominam a composição" width="360">
+  <p><em>Fonte: acervo de Dados do projeto; cópia redimensionada.</em></p>
+</div>
+
+<div align="center">
+  <p><strong>Figura 7 — IMG_01812: vaquinha → percevejo-verde</strong></p>
+  <img src="../assets/data/avaliacao_T8_1/candidato_T5_6_20261026/aprofundamento/fotos/IMG_01812.jpg" alt="IMG_01812: inseto verde e amarelo parcialmente encoberto pela borda de uma folha em fotografia vertical" width="280">
+  <p><em>Fonte: acervo de Dados do projeto; cópia redimensionada.</em></p>
+</div>
+
+<div align="center">
+  <p><strong>Figura 8 — IMG_02004: vaquinha → cigarrinha-das-pastagens</strong></p>
+  <img src="../assets/data/avaliacao_T8_1/candidato_T5_6_20261026/aprofundamento/fotos/IMG_02004.jpg" alt="IMG_02004: inseto pequeno e escuro sobre superfície rosada com textura de tecido" width="277">
+  <p><em>Fonte: acervo de Dados do projeto; cópia para documentação.</em></p>
+</div>
+
+<div align="center">
+  <p><strong>Figura 9 — IMG_02168: percevejo-barriga-verde → vaquinha</strong></p>
+  <img src="../assets/data/avaliacao_T8_1/candidato_T5_6_20261026/aprofundamento/fotos/IMG_02168.jpg" alt="IMG_02168: imagem composta de inseto sobre planta, com foto inserida, moldura e faixa amarela de texto" width="480">
+  <p><em>Fonte: acervo de Dados do projeto; cópia redimensionada.</em></p>
+</div>
+
+<div align="center">
+  <p><strong>Figura 10 — IMG_02637: lagarta-do-cartucho → lagarta-falsa-medideira</strong></p>
+  <img src="../assets/data/avaliacao_T8_1/candidato_T5_6_20261026/aprofundamento/fotos/IMG_02637.jpg" alt="IMG_02637: inseto alado com aspecto de mariposa sobre superfície áspera de cores semelhantes às asas" width="360">
+  <p><em>Fonte: acervo de Dados do projeto; cópia redimensionada.</em></p>
+</div>
+
+As observações e hipóteses por imagem estão em [`revisao_visual.csv`](../assets/data/avaliacao_T8_1/candidato_T5_6_20261026/aprofundamento/revisao_visual.csv). A montagem com texto de IMG_02168 e o estágio alado aparente de IMG_02637 ficam registrados para revisão da frente de Dados. Os rótulos do teste foram preservados.
+
+### Limitações
+
+O teste já foi consultado em etapas anteriores; os resultados são exploratórios. Os rótulos são os históricos do conjunto, e a validação taxonômica está pendente. A inspeção visual não determina a causa das mudanças de classe. Classes com poucas imagens exigem cautela na leitura dos deltas.
+
+Esta avaliação não comprova o RNF-06 em dados independentes nem revalida os limiares da T6.5. Latência no celular e seleção da versão correspondem às tarefas T8.2 e T8.3. O INT8 da T7.3 permanece o artefato oficial.
+
+### Reprodução e artefatos
+
+Os [resultados completos](../assets/data/avaliacao_T8_1/candidato_T5_6_20261026/) incluem métricas das seis versões, matrizes em CSV, previsões, mudanças por imagem e registros de proveniência. O método da inspeção está nas [anotações visuais](../assets/data/avaliacao_T8_1/candidato_T5_6_20261026/anotacoes_visuais_int8.json).
+
+```bash
+python -m src.avaliacao_pos_conversao_t8_1 --saida runs/reproducao_T8_1
+python tests/validar_avaliacao_pos_conversao_t8_1.py
+python -m src.aprofundamento_t8_1 --raiz-imagens /caminho/das/fontes --saida runs/aprofundamento_T8_1
+python tests/validar_aprofundamento_t8_1.py
+```
+
+A consolidação requer NumPy; os gráficos e a revisão requerem Matplotlib, Pillow e as sete fotos originais. Os comandos recusam sobrescrever saídas existentes. Foram aprovados 16 testes da consolidação e 9 do aprofundamento, sem testes pulados.
 
 ## 8.2 Benchmark de inferência (T8.2)
 

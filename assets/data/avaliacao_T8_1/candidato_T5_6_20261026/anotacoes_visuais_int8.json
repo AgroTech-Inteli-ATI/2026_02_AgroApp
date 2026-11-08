@@ -1,0 +1,59 @@
+{
+  "esquema": "anotacoes_visuais_T8_1_v1",
+  "data": "2026-11-06",
+  "metodo": "Inspeção das sete fotos originais e das respectivas entradas T4.1 de 224 × 224 pixels. As observações são preliminares; a validação taxonômica está pendente.",
+  "apoio_revisao": "Inspeção realizada com assistência de IA, sem validação por especialista.",
+  "criterio_selecao": "Todos os acertos Keras que viraram erros no INT8 oficial da T7.3 no teste da T8.1; não inclui o INT8 regenerado.",
+  "limites": "Observações descrevem o conteúdo visível. As hipóteses não demonstram a causa da mudança de predição; não houve nova inferência, alteração de rótulos, pesos, limiares ou conjunto de teste.",
+  "anotacoes": {
+    "IMG_00263": {
+      "fatores_observados": ["sujeito_pequeno", "fundo_detalhado", "corpo_visivel"],
+      "observacao_original": "Inseto com padrão claro e escuro sobre folha; corpo e antenas visíveis. Folhas, nervuras e parte de uma mão ocupam grande área da imagem.",
+      "observacao_entrada": "Em 224x224 o inseto permanece visível, mas detalhes do padrão e das antenas ficam reduzidos em meio à textura das folhas.",
+      "hipoteses": ["sensibilidade_a_detalhes_finos", "influencia_do_fundo"],
+      "verificacao_sugerida": "Comparar os vetores completos de saída FP32/INT8 nesta foto e revisar outras imagens com inseto pequeno sobre folhas; não alterar o rótulo pela predição."
+    },
+    "IMG_01540": {
+      "fatores_observados": ["sujeito_pequeno", "sujeito_escuro", "fundo_dominante"],
+      "observacao_original": "Inseto verde e amarelo no alto de uma parede clara; o corpo aparece escuro. A parede e suas junções ocupam a maior parte do quadro.",
+      "observacao_entrada": "O inseto ocupa uma região pequena no alto da entrada; o padrão amarelo do corpo fica pouco detalhado após o redimensionamento.",
+      "hipoteses": ["sensibilidade_a_detalhes_finos", "influencia_do_fundo"],
+      "verificacao_sugerida": "Examinar as saídas completas e comparar com fotos de insetos pequenos em fundos não vegetais, usando uma seleção independente para novas avaliações."
+    },
+    "IMG_01741": {
+      "fatores_observados": ["sujeito_muito_pequeno", "fundo_floral", "baixo_contraste_local"],
+      "observacao_original": "Inseto verde pequeno entre flores amarelas na região central. Flores e caules dominam a composição e encobrem parte do contorno do sujeito.",
+      "observacao_entrada": "Em 224x224 o inseto fica difícil de distinguir do conjunto de flores; o fundo floral continua visualmente dominante.",
+      "hipoteses": ["sensibilidade_a_detalhes_finos", "influencia_do_fundo", "oclusao"],
+      "verificacao_sugerida": "Revisar o enquadramento e a visibilidade do inseto com um especialista; investigar se a troca para Astylus se repete em outras fotos com flores."
+    },
+    "IMG_01812": {
+      "fatores_observados": ["oclusao_parcial", "sujeito_pequeno", "formato_vertical", "fundo_foliar"],
+      "observacao_original": "Inseto verde e amarelo junto à borda de duas folhas. A folha superior encobre parte do sujeito; a fotografia é alta e estreita.",
+      "observacao_entrada": "A preservação da proporção gera faixas cinzas laterais largas. O inseto ocupa poucos pixels na junção das folhas e parte do contorno permanece encoberta.",
+      "hipoteses": ["oclusao", "sensibilidade_a_detalhes_finos"],
+      "verificacao_sugerida": "Conferir as saídas completas e avaliar, em outro conjunto, a influência da proporção da foto e da oclusão. O padding é o contrato T4.1 e não foi alterado."
+    },
+    "IMG_02004": {
+      "fatores_observados": ["sujeito_muito_pequeno", "sujeito_escuro", "fundo_texturizado"],
+      "observacao_original": "Inseto pequeno e escuro sobre superfície rosada com textura de tecido; há grande área de fundo ao redor do corpo.",
+      "observacao_entrada": "Após redimensionar, o inseto permanece pequeno e os detalhes de cor e marcação são limitados.",
+      "hipoteses": ["sensibilidade_a_detalhes_finos", "influencia_do_fundo"],
+      "verificacao_sugerida": "Comparar os scores completos e outros exemplos de sujeito pequeno em fundo texturizado. Não atribuir a troca de classe à iluminação sem experimento controlado."
+    },
+    "IMG_02168": {
+      "fatores_observados": ["imagem_composta", "texto_incorporado", "moldura_colorida", "duas_vistas_de_insetos"],
+      "observacao_original": "Imagem composta com inseto castanho sobre planta, uma foto inserida no canto superior esquerdo, molduras e faixa amarela com identificação textual.",
+      "observacao_entrada": "Em 224x224 a faixa e a foto inserida continuam presentes; os detalhes dos insetos ficam reduzidos. Há mais de uma região com sujeito na mesma entrada.",
+      "hipoteses": ["influencia_do_fundo", "conteudo_composto"],
+      "verificacao_sugerida": "Registrar a imagem como composição e discutir com a frente de Dados o tratamento de texto e montagens em versões futuras do acervo. Preservar este teste e seu rótulo histórico."
+    },
+    "IMG_02637": {
+      "fatores_observados": ["adulto_alado_aparente", "corpo_grande_no_quadro", "fundo_texturizado", "cores_semelhantes_ao_fundo"],
+      "observacao_original": "Inseto alado com aspecto de mariposa, asas abertas e parte clara visível, sobre uma superfície áspera. As regiões castanhas do corpo e o fundo têm cores próximas.",
+      "observacao_entrada": "A silhueta alada permanece visível e ocupa área relevante do quadro. A textura do fundo e partes escuras das asas se aproximam visualmente.",
+      "hipoteses": ["semelhanca_visual", "variacao_de_estagio"],
+      "verificacao_sugerida": "Solicitar revisão taxonômica e de estágio do par lagarta-do-cartucho/falsa-medideira. A aparência adulta não demonstra erro do rótulo, que pode representar a espécie em diferentes estágios."
+    }
+  }
+}
