@@ -1,0 +1,122 @@
+{
+  "id": "candidato_T5_6_20261026",
+  "architecture": "efficientnet_lite0",
+  "selectionStatus": "T8.3_pendente",
+  "classes": [
+    {
+      "indice": 0,
+      "nome": "Vaquinha (Diabrotica speciosa)"
+    },
+    {
+      "indice": 1,
+      "nome": "Cigarrinha-do-milho (Dalbulus maidis)"
+    },
+    {
+      "indice": 2,
+      "nome": "Percevejo-barriga-verde (Dichelops/Diceraeus)"
+    },
+    {
+      "indice": 3,
+      "nome": "Lagarta-do-cartucho (Spodoptera frugiperda)"
+    },
+    {
+      "indice": 4,
+      "nome": "Percevejo-marrom (Euschistus heros)"
+    },
+    {
+      "indice": 5,
+      "nome": "Percevejo-verde (Nezara viridula)"
+    },
+    {
+      "indice": 6,
+      "nome": "Percevejo-asa-preta (Edessa meditabunda)"
+    },
+    {
+      "indice": 7,
+      "nome": "Percevejo-do-milho (Leptoglossus zonatus)"
+    },
+    {
+      "indice": 8,
+      "nome": "Lagarta-falsa-medideira (Chrysodeixis includens)"
+    },
+    {
+      "indice": 9,
+      "nome": "Lagarta-da-soja (Anticarsia gemmatalis)"
+    },
+    {
+      "indice": 10,
+      "nome": "Lagarta-das-vagens (Spodoptera eridania e S. cosmioides)"
+    },
+    {
+      "indice": 11,
+      "nome": "Astylus variegatus"
+    },
+    {
+      "indice": 12,
+      "nome": "Cigarrinha-das-pastagens (Deois flavopicta)"
+    }
+  ],
+  "classesSource": {
+    "sourcePath": "assets/modelos/candidato_T5_6_20261026/classes.json",
+    "contractPath": "assets/modelos/candidato_T5_6_20261026/manifesto.json",
+    "sha256": "1058619e188ffd7fa42bfc6821e2e122356b35d8503af71b987f37ae1e4572f4"
+  },
+  "models": [
+    {
+      "format": "INT8",
+      "filename": "modelo_int8_web.tflite",
+      "bytes": 4003624,
+      "sha256": "4831bd2420e79a83bf4e23aaf25ac6f2156e0f959f59ff347ce27b15aa773185",
+      "sourceSha256": "07e787453ab3775473f15e5081b0e0f0b67b67e4394c13ecbbea01b69c1c90cd",
+      "sourcePath": "assets/modelos/candidato_T5_6_20261026/modelo_int8.tflite",
+      "contractPath": "assets/modelos/candidato_T5_6_20261026/manifesto.json",
+      "version": "T5.6",
+      "input": {
+        "shape": [
+          1,
+          224,
+          224,
+          3
+        ],
+        "dtype": "int8",
+        "scale": 0.003921568859368563,
+        "zeroPoint": -128
+      },
+      "output": {
+        "shape": [
+          1,
+          13
+        ],
+        "dtype": "int8",
+        "scale": 0.00390625,
+        "zeroPoint": -128
+      }
+    },
+    {
+      "format": "FP32",
+      "filename": "modelo_fp32_web.tflite",
+      "bytes": 13531184,
+      "sha256": "4d1a84431ddce1d99ffc56afbe70de23f29b4a8abb28d7ad4e7d79ac21c13d42",
+      "sourceSha256": "0b02b285e924f4577b1d4ad6084369f1f6fef14aea149ab818185d6fcf893569",
+      "sourcePath": "assets/modelos/candidato_T5_6_20261026/modelo_fp32.tflite",
+      "contractPath": "assets/modelos/candidato_T5_6_20261026/manifesto.json",
+      "version": "T5.6",
+      "input": {
+        "shape": [
+          1,
+          224,
+          224,
+          3
+        ],
+        "dtype": "float32"
+      },
+      "output": {
+        "shape": [
+          1,
+          13
+        ],
+        "dtype": "float32"
+      }
+    }
+  ]
+}

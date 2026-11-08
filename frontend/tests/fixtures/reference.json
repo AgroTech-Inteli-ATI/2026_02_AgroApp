@@ -1,0 +1,135 @@
+{
+  "classesSha256": "1058619e188ffd7fa42bfc6821e2e122356b35d8503af71b987f37ae1e4572f4",
+  "preprocessing": [
+    {
+      "width": 17,
+      "height": 9,
+      "sha256": "d44a44003ae9e50ff2056797c8afd21d33d02af99d1a060cebfb129d483f1941"
+    },
+    {
+      "width": 391,
+      "height": 173,
+      "sha256": "94d9d7d946e0ba80b508d397d6202e9fc4999aa92383bd9617a36e90021ba3aa"
+    },
+    {
+      "width": 45,
+      "height": 301,
+      "sha256": "0b146892df9d41ab144ac61a717d6ade4d3dc00e989adb4cfe4bf6a69cb0ca74"
+    },
+    {
+      "width": 7,
+      "height": 7,
+      "sha256": "0041e986ba4cc1bb0cc3cf24c7128d5e5610b4d37a292ac78a2a87ac153ecf00"
+    },
+    {
+      "width": 448,
+      "height": 223,
+      "sha256": "a5b19f06d7131bbf2b2eb995613c4aac3f1c34b86fc498576a130ba506e57054"
+    },
+    {
+      "width": 1,
+      "height": 13,
+      "sha256": "5dd1d8b3a3a8d02b112721c0778a400a2a44c36fd9eb9de685da6e68fa7df3ad"
+    }
+  ],
+  "models": {
+    "Float16": {
+      "modelSha256": "c9a26ce13806a2fa26bffbd8cfbdac83ff4c05ffff1009ca9483bb587a5a8fa2",
+      "webModelSha256": "9c18f0a2ca4a4e2eb0d84dd415046f0bd35385ede8c47e14463d3a0f134647ec",
+      "webSpecializationVerified": true,
+      "modelSourcePath": "assets/modelos/comparacao_T7_2_candidato_T5_6_20261026/modelo_float16.tflite",
+      "modelVersion": "T7.2",
+      "predictions": {
+        "pattern.png": [
+          0.4886864125728607,
+          0.2362886369228363,
+          0.06360951066017151,
+          0.0834442526102066,
+          0.0004644426517188549,
+          0.012411972507834435,
+          0.004044301342219114,
+          0.007668966427445412,
+          0.0022152182646095753,
+          0.0027969719376415014,
+          0.023184461519122124,
+          0.05539470165967941,
+          0.019790107384324074
+        ],
+        "orientation.jpg": [
+          0.3537464141845703,
+          0.13208164274692535,
+          0.08909381181001663,
+          0.10467743873596191,
+          0.0011394850444048643,
+          0.044736579060554504,
+          0.007206101901829243,
+          0.02075941674411297,
+          0.008321466855704784,
+          0.0036972954403609037,
+          0.06057816743850708,
+          0.14874501526355743,
+          0.025217240676283836
+        ]
+      },
+      "quantization": {
+        "input": [
+          0.0,
+          0
+        ],
+        "output": [
+          0.0,
+          0
+        ]
+      }
+    },
+    "INT8": {
+      "modelSha256": "456caec54fae3c57684f9afd6842cae611a1f6cb6587b40b0c5bd8256aea1340",
+      "webModelSha256": "df2f5d4fe22b4d3f76c4b8f6dab6e0100231c83d606122999ed15ceb72c05978",
+      "webSpecializationVerified": true,
+      "modelSourcePath": "assets/modelos/quantizacao_T7_3_candidato_T5_6_20261026/modelo_int8.tflite",
+      "modelVersion": "T7.3",
+      "predictions": {
+        "pattern.png": [
+          0.46875,
+          0.23046875,
+          0.06640625,
+          0.09765625,
+          0.0,
+          0.01171875,
+          0.00390625,
+          0.0078125,
+          0.00390625,
+          0.00390625,
+          0.02734375,
+          0.0546875,
+          0.01953125
+        ],
+        "orientation.jpg": [
+          0.39453125,
+          0.13671875,
+          0.08203125,
+          0.09375,
+          0.0,
+          0.03125,
+          0.0078125,
+          0.015625,
+          0.0078125,
+          0.00390625,
+          0.06640625,
+          0.13671875,
+          0.0234375
+        ]
+      },
+      "quantization": {
+        "input": [
+          0.003921568859368563,
+          -128
+        ],
+        "output": [
+          0.00390625,
+          -128
+        ]
+      }
+    }
+  }
+}

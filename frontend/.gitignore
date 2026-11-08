@@ -1,0 +1,8 @@
+node_modules/
+.work/
+dist/
+public/runtime/
+public/models/
+test-results/
+playwright-report/
+*.tsbuildinfo

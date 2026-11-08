@@ -1,0 +1,62 @@
+{
+  "esquema": "aprofundamento_T8_1_v1",
+  "data_utc": "2026-11-08T18:11:58.314980+00:00",
+  "nova_inferencia": false,
+  "revisao_visual_realizada": true,
+  "validacao_taxonomica": "pendente",
+  "modelo_revisado": "int8_t7_3",
+  "image_ids": [
+    "IMG_00263",
+    "IMG_01540",
+    "IMG_01741",
+    "IMG_01812",
+    "IMG_02004",
+    "IMG_02168",
+    "IMG_02637"
+  ],
+  "metodo": "Inspeção das sete fotos originais e das respectivas entradas T4.1 de 224 × 224 pixels. As observações são preliminares; a validação taxonômica está pendente.",
+  "apoio_revisao": "Inspeção realizada com assistência de IA, sem validação por especialista.",
+  "ambiente": {
+    "numpy": "2.5.2",
+    "matplotlib": "3.11.1",
+    "pillow": "12.3.0"
+  },
+  "fontes_sha256": {
+    "assets/data/avaliacao_T8_1/candidato_T5_6_20261026/proveniencia.json": "d8b3950c3d73ba57f1f2cdb2adf5cc55f9cd10200ea1f2a3925c642f860ab82b",
+    "assets/data/avaliacao_T8_1/candidato_T5_6_20261026/mudancas_por_imagem.csv": "a0d9003e7293585d276d3d50e42938cb36c308ce419cf714971adaa05bbe4bec",
+    "assets/data/avaliacao_T8_1/candidato_T5_6_20261026/comparacao_por_classe.csv": "e2519a1600574d850111bfdefbf9c1e810ed04348a652dfeff32f2549511ab88",
+    "assets/data/avaliacao_T8_1/candidato_T5_6_20261026/anotacoes_visuais_int8.json": "9aa44b0e5e6aad95232be7e042a6a4ea33d19a18e23a514c5d887d4d32b36ca4"
+  },
+  "originais_sha256": {
+    "IMG_00263": "2333824aeab90901db31190368a8c192e22694d7f43e3501a89e8e277f42a4b1",
+    "IMG_01540": "d406d8d95579816063eec80212bc864d171196af73b798f759ef1f8fbfb30400",
+    "IMG_01741": "955c6e91a9adcaccaf44d78f85b8b5eb1662b5a51a38b8d620aceb6b583e0cfe",
+    "IMG_01812": "5afc5e8cc8ac06ee4e8cef5e8e2be7bdb94fc77ebed686f05bc74e3ef7fbef94",
+    "IMG_02004": "fd7b31c8cbd81b92da6e0aaa8aa46dfd7fd5e537031a23040c7e172aacc1016a",
+    "IMG_02168": "fc352b16ea430fa921361530c59451436d33011039b465aaafa788b8d9149186",
+    "IMG_02637": "13176cf1fe679f71d1ff979b7fd93eb1d516c30a3ede3e526d0bfc0472dc194e"
+  },
+  "codigo_sha256": {
+    "src/aprofundamento_t8_1.py": "17e107c47b6e3937223917330aaf3cda71e17f0cd031b59301734095833b76fc",
+    "src/preprocessamento.py": "6a2eacb95cbbb0ceb21db5f70d9e178b2c0b844b070e2d4fac4c4a39d0131820",
+    "src/avaliacao_pos_conversao_t8_1.py": "e7e914043e5f8336ffe57ed1aef9a8735f40ae04c236ba40340e3da5b93b7cdb"
+  },
+  "artefatos_sha256": {
+    "figuras/delta_f1_por_classe.png": "f3421593a7dfbfd616939f8a1d19c58fee3065af02ad1415d69c53670a211072",
+    "figuras/matriz_int8_t7_3.png": "2be60dbce4513b810d3385bc515f635a07e4b797d736780682a40d1e9b36be0a",
+    "figuras/matriz_keras.png": "96f279a05a8a64071a2e5cc7053acca62821169638cb19a424980195b15895c7",
+    "fotos/IMG_00263.jpg": "422a5b668741113b6393e3d5109f3058a716da94898a8256d06b51e9bfde136b",
+    "fotos/IMG_01540.jpg": "98faabfeb21d3ea572a32fb115bb3f494b43553586c6bd1a1361446fcf779790",
+    "fotos/IMG_01741.jpg": "76c3dc3cb6837db8dae4803937911d4b947e3f324ba98d24703706038d22703b",
+    "fotos/IMG_01812.jpg": "e892f987d08ac0f956f5f4076d4e4e048b4f1af37e0f7552de7b2e9481b4b51e",
+    "fotos/IMG_02004.jpg": "4c318b772546d6ecba5486807464dc63a3046ccbc2041bb5a8d44e271926eb33",
+    "fotos/IMG_02168.jpg": "d17278de7ace3b4d4b3b4b053e47134da1301da16ace680d3a1cc4d67122e6e7",
+    "fotos/IMG_02637.jpg": "56748ab4f0f0afed17dfbf83c55cbcc636ccb4cc4b28acdee42e2583ff455ec4",
+    "matrizes_normalizadas.csv": "a6db2714204ad9c8c2d432ef9000c612aca424fa5d55e792306c140bb826632b",
+    "pranchas/revisao_visual_01.png": "5686d7bd85b7879cc49a6563b2df5eb770664cfc2a4fb03d81504cf7b4372670",
+    "pranchas/revisao_visual_02.png": "1193cceff69f4a9bc8dcde0756e43ae6e4d64a21def92074c5b8fdc6df7025c5",
+    "relatorio_visual.md": "a29df1955cc62e2281bcf19962d75c335513ee52bb42b3a795b239974cff796b",
+    "revisao_visual.csv": "6b15360881ef3792690b74fc3d90ce45c3e02baa1711b04f1d90d1a75b752d29"
+  },
+  "limites": "Observações descrevem o conteúdo visível. As hipóteses não demonstram a causa da mudança de predição; não houve nova inferência, alteração de rótulos, pesos, limiares ou conjunto de teste."
+}
