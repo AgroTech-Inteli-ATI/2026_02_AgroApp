@@ -60,6 +60,12 @@ export default function App() {
   const [result, setResult] = useState<AnalysisResult>();
   const [selectedClass, setSelectedClass] = useState<number>();
   const [retryCount, setRetryCount] = useState(0);
+  const [offlineReady, setOfflineReady] = useState(false);
+
+  // `ready` só resolve depois que o service worker guardou todos os arquivos.
+  useEffect(() => {
+    void navigator.serviceWorker?.ready.then(() => setOfflineReady(true));
+  }, []);
   const worker = useRef<Worker | null>(null);
   const request = useRef(0);
   const urls = useRef({ original: "", preview: "" });
@@ -288,7 +294,7 @@ export default function App() {
                 {loadError
                   ? "Tente carregar novamente"
                   : model
-                    ? "EfficientNet-Lite0 · 13 classes"
+                    ? `EfficientNet-Lite0 · 13 classes${offlineReady ? " · disponível offline" : ""}`
                     : status}
               </span>
             </div>
