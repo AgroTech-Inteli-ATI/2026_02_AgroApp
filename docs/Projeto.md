@@ -3878,7 +3878,7 @@ O comando de inicialização e o build preparam os artefatos web a partir dos mo
 
 ## 9.3 Associação da predição ao conteúdo técnico (T9.3)
 
-**Autor:** Lucas. **Revisor:** Glauco. **Data:** 07/11/2026.
+**Autor:** Lucas. **Revisor:** Glauco. **Data:** 08/11/2026.
 
 **Situação: entrega parcial.** A associação entre cada classe do modelo, o dicionário de classes e a base local de conteúdo está implementada e testada, e funciona sem rede. O **conteúdo técnico em si ainda não existe**: o catálogo do Agro App não foi recebido, então nenhuma das 13 classes tem texto de sintomas ou manejo, e todas resolvem como *indisponível*. O critério de aceite ("cada classe reconhecida é associada ao conteúdo técnico correspondente, consultável sem internet") só será atendido por completo quando o catálogo for preenchido. Até lá, o aplicativo deve dizer que o conteúdo está indisponível, sem afirmar nenhuma orientação. Existe material de referência para 11 das 13 classes (ver o [mapa de fontes](#mapa-de-fontes-de-conteúdo)), mas ele tem direitos reservados e não foi copiado.
 
@@ -3889,7 +3889,7 @@ O comando de inicialização e o build preparam os artefatos web a partir dos mo
 3. A [base local](../assets/data/conteudo_T9_3/base_conteudo.json) guarda o texto de cada `chave_conteudo`, com fonte, data de revisão e o indicador `validated`.
 4. A função `associar_predicoes` ([`associacao_conteudo_t9_3.py`](../src/associacao_conteudo_t9_3.py)) enriquece cada previsão com a identificação e o estado do conteúdo. Mantém a ordem e o score do modelo e recusa índices fora das 13 classes.
 
-A T9.3 **não depende do limiar de confiança**. A [T9.2](#92-tratamento-do-limiar-de-confiança-t92) decide quais previsões aparecem (a proposta da [T6.5](#65-política-de-confiança-t65) é 3 hipóteses e limiar 0,65 no top-1) e chama a T9.3 com a lista já filtrada. Mudar o limiar não altera esta entrega.
+A T9.3 **não depende do limiar de confiança**. A [T9.2](#92-tratamento-do-limiar-de-confiança-t92) decide quais previsões aparecem (a proposta da [T6.5](#65-política-de-confiança-t65) é 3 hipóteses e limiar 0,65 no top-1) e o painel de orientações mostra o conteúdo da classe escolhida entre as hipóteses aceitas. O app não chama `associar_predicoes` (função Python, usada nos testes): ele lê o `frontend/src/data/content.ts`, gerado destes arquivos (ver abaixo). Mudar o limiar não altera esta entrega.
 
 ### As 13 classes
 
@@ -3956,7 +3956,7 @@ O mapa **não contém texto das fontes** e o resolvedor não o usa. As duas publ
 
 1. Receber do parceiro o catálogo com chaves oficiais, título, texto, fonte e data de cada praga.
 2. Em `associacao_classes.json`, preencher `chave_conteudo` e `validacao_conteudo` (responsável, data, evidência) e mudar `status_conteudo` para `validado`. O comando `python -m src.associacao_conteudo_t9_3 gerar` preserva esses campos ao atualizar o restante e nunca sobrescreve a base.
-3. Em `base_conteudo.json`, incluir um item por `chave` com `titulo`, `texto`, `fonte`, `revisado_em` e `validated: true`. No campo `fonte`, usar a citação do mapa de fontes (por exemplo, `SOSA-GÓMEZ et al., 2014, p. 78`) e listar a referência completa em Referências. Os campos coincidem com o `TechnicalContent` do frontend (`title`, `text`, `source`, `reviewedAt`, `validated`); o `content.ts` do frontend (já na `develop`) deve ser gerado a partir destes arquivos.
+3. Em `base_conteudo.json`, incluir um item por `chave` com `titulo`, `texto`, `fonte`, `revisado_em` e `validated: true`. No campo `fonte`, usar a citação do mapa de fontes (por exemplo, `SOSA-GÓMEZ et al., 2014, p. 78`) e listar a referência completa em Referências. Os campos coincidem com o `TechnicalContent` do frontend (`title`, `text`, `source`, `reviewedAt`, `validated`); gere o `frontend/src/data/content.ts` com `python -m src.associacao_conteudo_t9_3 frontend`, que inclui só as classes que o resolvedor dá como disponíveis.
 4. Executar `python -m src.associacao_conteudo_t9_3 verificar --exigir-conteudo`. O comando só termina com sucesso quando as 13 classes têm conteúdo validado, o que corresponde ao RNF-08 (100% das classes resolvem para conteúdo válido). Hoje ele falha de propósito.
 5. Verificar a abertura do conteúdo no aparelho em modo avião (T9.4).
 
@@ -3965,7 +3965,7 @@ O mapa **não contém texto das fontes** e o resolvedor não o usa. As duas publ
 - **Catálogo de conteúdo técnico do Agro App:** não recebido; sem ele, 0 das 13 classes tem conteúdo disponível e o critério de aceite não está completo.
 - **Fontes de referência:** as classes 7 (*Leptoglossus zonatus*) e 12 (*Deois flavopicta*) não têm fonte; as demais têm material com direitos reservados, cujo uso no aplicativo depende de autorização ou de redação própria validada.
 - **Validação do parceiro:** nomes científicos, cultura e associação de cada classe ao conteúdo precisam ser confirmados, e os pares da T6.4 dependem da decisão agronômica.
-- **Integração no aplicativo:** o frontend da T9.1 e o limiar da T9.2 já estão na `develop`, mas o `frontend/src/data/content.ts` continua vazio e não consome estes arquivos. Gerá-lo a partir da associação e da base é o passo seguinte.
+- **Integração no aplicativo:** o `frontend/src/data/content.ts` é gerado da associação e da base (comando `frontend`), e um teste falha se ele ficar desatualizado. Hoje sai vazio, porque nenhuma classe tem conteúdo validado.
 - **RNF-08 completo** (100% de conteúdo válido) e a demonstração **sem rede no aparelho** (T9.4) continuam pendentes.
 
 ### Reprodução e verificação
@@ -3973,11 +3973,12 @@ O mapa **não contém texto das fontes** e o resolvedor não o usa. As duas publ
 ```bash
 python -m src.associacao_conteudo_t9_3 gerar
 python -m src.associacao_conteudo_t9_3 verificar
+python -m src.associacao_conteudo_t9_3 frontend
 python tests/validar_associacao_conteudo_t9_3.py
 python tests/validar_fontes_conteudo_t9_3.py
 ```
 
-Os comandos usam somente a biblioteca padrão do Python. Os **14 testes** da associação passam. Eles cobrem a reprodução da associação a partir das fontes e seus hashes, as 13 classes na ordem do modelo, os IDs do inventário e do acervo, as chaves únicas e a recusa de URLs, as relações da T6.4, o estado indisponível sem catálogo, um catálogo sintético completo, os estados intermediários, o contrato de validação, a preservação do preenchimento manual ao regenerar, a recusa de índices inválidos e a ausência de acesso à rede.
+Os comandos usam somente a biblioteca padrão do Python. Os **15 testes** da associação passam. Eles cobrem o `content.ts` do frontend gerado a partir da associação, a reprodução da associação a partir das fontes e seus hashes, as 13 classes na ordem do modelo, os IDs do inventário e do acervo, as chaves únicas e a recusa de URLs, as relações da T6.4, o estado indisponível sem catálogo, um catálogo sintético completo, os estados intermediários, o contrato de validação, a preservação do preenchimento manual ao regenerar, a recusa de índices inválidos e a ausência de acesso à rede.
 
 Os **14 testes** do mapa de fontes também passam. Eles cobrem a coerência com as 13 classes, as lacunas, o intervalo e a numeração das páginas, o vocabulário das seções, a referência completa e a citação por página, os direitos e a autorização de uso, e a recusa de texto copiado.
 
@@ -3992,3 +3993,62 @@ INATURALIST. **Observações de pragas de soja e milho no Brasil**. Disponível 
 OLIVEIRA, I. R. de. **Estratégias contra a cigarrinha-do-milho**. Cultivar Grandes Culturas, [S. l.], n. 312, p. 12-14, 2025. Disponível em: https://www.embrapa.br/en/busca-de-publicacoes/-/publicacao/1179329/estrategias-contra-a-cigarrinha-do-milho. Acesso em: 8 nov. 2026.
 
 SOSA-GÓMEZ, D. R. et al. **Manual de identificação de insetos e outros invertebrados da cultura da soja**. 3. ed. Londrina: Embrapa Soja, 2014. (Embrapa Soja. Documentos, 269). ISSN 1516-781X. Disponível em: https://www.embrapa.br/en/busca-de-publicacoes/-/publicacao/991685/manual-de-identificacao-de-insetos-e-outros-invertebrados-da-cultura-da-soja. Acesso em: 8 nov. 2026.
+
+## 9.4 Validação do funcionamento offline (T9.4)
+
+**Autor:** Glauco. **Revisor:** Lucas. **Data:** 08/11/2026.
+
+**Situação: entrega parcial.** O app abre e classifica sem rede depois da primeira visita, e isso está coberto por teste automatizado. Falta a demonstração no celular físico, exigida pelo critério de aceite, e o conteúdo técnico continua vazio por depender do catálogo da [T9.3](#93-associação-da-predição-ao-conteúdo-técnico-t93).
+
+### O que foi implementado
+
+- **Service worker sem dependência.** O modelo fica em [`scripts/sw.js`](../frontend/scripts/sw.js). O build ([`vite.config.ts`](../frontend/vite.config.ts)) grava `dist/sw.js` com a lista de arquivos do próprio build: app, fontes, `models/manifest.json`, os dois `.tflite` do manifesto (Float16 principal e INT8 de contingência) e as variantes do runtime WASM, cerca de 60 MB.
+- **Pré-cache atômico.** Na primeira visita com rede, `cache.addAll` baixa tudo de uma vez. Se um arquivo falhar, nada é considerado pronto.
+- **Versão do cache.** O nome do cache é `agroapp-<hash>`, com os 16 primeiros caracteres do SHA-256 da lista e do conteúdo dos arquivos. Cada build novo troca o nome e apaga o cache anterior. Esse nome identifica o build na demonstração.
+- **Estado visível.** Quando o pré-cache termina, o status mostra **Modelo pronto · disponível offline**. Se ele falhar (cota do navegador ou queda de rede no meio do download), o status mostra **modo offline indisponível**, em vez de só registrar o erro no console.
+- **Conteúdo técnico.** O `content.ts` vai embutido no bundle JS, então entra no cache junto com o app. Hoje está vazio e o painel mostra "Conteúdo técnico ainda indisponível".
+- No `npm run dev` o service worker não é registrado.
+
+### Como foi validado
+
+O projeto Playwright `offline` ([`tests/offline.spec.ts`](../frontend/tests/offline.spec.ts)) roda no Chromium de desktop sobre o build de produção (`npm run build` + `npm run preview`):
+
+1. Abre o app com rede e espera **disponível offline**.
+2. Desliga a rede, recarrega e espera **Modelo pronto**.
+3. Escolhe uma foto e confere que a inferência real termina. A foto sintética fica abaixo do limiar da T9.2, então o teste aceita o estado inconclusivo ou as hipóteses.
+4. Ainda sem rede, recarrega com um dublê só do worker (como no `confidence.spec.ts`) para forçar um resultado aceito e confere o painel de orientações técnicas: hoje "indisponível"; quando o `content.ts` for preenchido, o painel com a fonte.
+5. Confere que nenhuma requisição falhou com a rede desligada.
+
+Um segundo teste aborta o download de um `.tflite` pelo service worker e confere o aviso **modo offline indisponível**.
+
+Em 08/11/2026 passaram os 2 testes `offline`, os 8 testes `chromium` e os 19 testes unitários.
+
+```bash
+cd frontend
+npx playwright test --project=offline
+```
+
+O build e o preview só sobem quando o projeto `offline` roda; `--project=chromium` usa apenas o servidor de desenvolvimento.
+
+### Demonstração no celular (pendente)
+
+O critério pede capturar, classificar e ver o conteúdo em modo avião num aparelho. O roteiro está no [README do frontend](../frontend/README.md#funcionamento-offline-t94). Registro a preencher:
+
+| Campo | Valor |
+| --- | --- |
+| Aparelho | — |
+| Versão do Android | — |
+| Navegador e versão | — |
+| URL HTTPS | — |
+| Nome do cache (hash do build) | — |
+| Resultado (abriu, classificou, painel de conteúdo) | — |
+| Print ou vídeo | — |
+
+### Limites
+
+- O teste automatizado roda no Chromium de desktop com a rede desligada pelo Playwright. Ele não prova o comportamento no Android, a câmera real nem o modo avião.
+- O service worker exige HTTPS (ou `localhost`). Pelo IP da rede local em HTTP, o app não fica disponível offline.
+- O pré-cache ocupa cerca de 60 MB. Em aparelhos com pouco espaço o navegador pode recusar, e o app avisa que o modo offline ficou indisponível. O navegador também pode apagar o cache sob pressão de armazenamento.
+- O conteúdo técnico está vazio (T9.3). O painel aparece offline, mas só com o aviso de indisponível.
+- A demonstração congelada da Sprint 04 (`frontend/dist`, #49) foi gerada antes desta tarefa e não tem `sw.js`. O pacote da demo precisa ser gerado de novo depois do merge.
+- Modo offline e PWA instalável continuam fora do escopo do produto (`PRODUCT.md`). Esta tarefa só garante que o app, já aberto uma vez, volte a funcionar sem rede.

@@ -61,11 +61,28 @@ export default function App() {
   const [result, setResult] = useState<AnalysisResult>();
   const [selectedClass, setSelectedClass] = useState<number>();
   const [retryCount, setRetryCount] = useState(0);
-  const [offlineReady, setOfflineReady] = useState(false);
+  const [offline, setOffline] = useState<"ready" | "failed">();
 
-  // `ready` só resolve depois que o service worker guardou todos os arquivos.
+  // Só no build: no dev o Vite serve módulos sem hash e o cache ficaria desatualizado.
   useEffect(() => {
-    void navigator.serviceWorker?.ready.then(() => setOfflineReady(true));
+    if (!import.meta.env.PROD || !("serviceWorker" in navigator)) return;
+    const fail = (error: unknown) => {
+      console.error("Falha ao preparar o modo offline:", error);
+      setOffline("failed");
+    };
+    // `ready` só resolve depois que o service worker guardou todos os arquivos.
+    void navigator.serviceWorker.ready.then(() => setOffline("ready"));
+    navigator.serviceWorker
+      .register(`${import.meta.env.BASE_URL}sw.js`)
+      .then((registration) => {
+        const installing = registration.installing;
+        // Pré-cache recusado (cota, queda de rede): o worker vira "redundant" sem nada ativo.
+        installing?.addEventListener("statechange", () => {
+          if (installing.state === "redundant" && !registration.active)
+            fail("pré-cache não concluído");
+        });
+      })
+      .catch(fail);
   }, []);
   const worker = useRef<Worker | null>(null);
   const request = useRef(0);
@@ -298,7 +315,7 @@ export default function App() {
                 {loadError
                   ? "Tente carregar novamente"
                   : model
-                    ? `EfficientNet-Lite0 · 13 classes${offlineReady ? " · disponível offline" : ""}`
+                    ? `EfficientNet-Lite0 · 13 classes${offline === "ready" ? " · disponível offline" : offline === "failed" ? " · modo offline indisponível" : ""}`
                     : status}
               </span>
             </div>

@@ -28,6 +28,7 @@ TRATAMENTO = "assets/data/tratamento_T6_4/proposta_tratamento.json"
 SAIDA = "assets/data/conteudo_T9_3"
 ASSOCIACAO = "associacao_classes.json"
 BASE = "base_conteudo.json"
+CONTENT_TS = "frontend/src/data/content.ts"
 
 ESQUEMA_ASSOCIACAO = "associacao_conteudo_T9_3_v1"
 ESQUEMA_BASE = "base_conteudo_T9_3_v1"
@@ -64,7 +65,9 @@ def ler_json(caminho: Path):
 
 
 def gravar_json(caminho: Path, dados) -> None:
-    caminho.write_text(json.dumps(dados, ensure_ascii=False, indent=2, allow_nan=False) + "\n", encoding="utf-8")
+    # newline="\n": no Windows o padrão gravaria CRLF e deixaria o arquivo versionado como modificado.
+    caminho.write_text(json.dumps(dados, ensure_ascii=False, indent=2, allow_nan=False) + "\n", encoding="utf-8",
+                       newline="\n")
 
 
 def _inteiros(texto: str) -> list[int]:
@@ -231,14 +234,42 @@ def gerar(raiz: Path = RAIZ, saida: Path | None = None) -> dict:
     return associacao
 
 
+def content_ts(associacao: dict, base: dict) -> str:
+    """Texto do frontend/src/data/content.ts: só as classes que o resolvedor dá como disponíveis."""
+    validar_contrato(associacao, base)
+    conteudo = {}
+    for c in associacao["classes"]:
+        r = resolver(c["indice"], associacao, base)
+        if r["disponivel"]:
+            x = r["conteudo"]
+            conteudo[c["indice"]] = {"title": x["titulo"], "text": x["texto"], "source": x["fonte"],
+                                     "reviewedAt": x["revisado_em"], "validated": True}
+    return f"""// Gerado por `python -m src.associacao_conteudo_t9_3 frontend` (T9.3). Não edite à mão:
+// altere associacao_classes.json e base_conteudo.json em {SAIDA} e gere de novo.
+export interface TechnicalContent {{
+  title: string;
+  text: string;
+  source: string;
+  reviewedAt: string;
+  validated: boolean;
+}}
+
+// Chaves são os índices de classes.json do modelo versionado.
+export const technicalContent: Partial<Record<number, TechnicalContent>> = {json.dumps(conteudo, ensure_ascii=False, indent=2)};
+"""
+
+
 if __name__ == "__main__":
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("comando", choices=("gerar", "verificar"))
+    ap.add_argument("comando", choices=("gerar", "verificar", "frontend"))
     ap.add_argument("--saida", type=Path, default=None, help=f"pasta de saída do gerar (padrão: {SAIDA})")
     ap.add_argument("--exigir-conteudo", action="store_true",
                     help="falha se alguma classe não tiver conteúdo validado (RNF-08 completo)")
     args = ap.parse_args()
-    if args.comando == "gerar":
+    if args.comando == "frontend":
+        (RAIZ / CONTENT_TS).write_text(content_ts(*carregar()), encoding="utf-8", newline="\n")
+        print(f"{CONTENT_TS} gerado.")
+    elif args.comando == "gerar":
         print(f"{gerar(saida=args.saida)['total_classes']} classes associadas.")
     else:
         assoc, base = carregar()

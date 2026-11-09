@@ -2,14 +2,17 @@ import { defineConfig, devices } from "@playwright/test";
 
 const production = process.env.DEMO_PREVIEW === "1";
 const port = production ? 4173 : 5173;
+// O build + preview só é necessário para o projeto offline (ou para a demo congelada).
+const args = process.argv.join(" ");
+const onlyChromium = /--project[= ]chromium/.test(args) && !/offline/.test(args);
+const preview = production || !onlyChromium;
 
 export default defineConfig({
   testDir: "./tests",
   timeout: 120_000,
   expect: { timeout: 60_000 },
   workers: 1,
-<<<<<<< HEAD
-  use: { baseURL: "http://127.0.0.1:5173", trace: "retain-on-failure" },
+  use: { baseURL: `http://127.0.0.1:${port}`, trace: "retain-on-failure" },
   projects: [
     {
       name: "chromium",
@@ -24,27 +27,26 @@ export default defineConfig({
     },
   ],
   webServer: [
-    {
-      command: "npm run dev -- --port 5173",
-      url: "http://127.0.0.1:5173",
-      reuseExistingServer: !process.env.CI,
-      timeout: 120_000,
-    },
-    {
-      command: "npm run build && npm run preview -- --port 4173 --strictPort",
-      url: "http://127.0.0.1:4173",
-      reuseExistingServer: !process.env.CI,
-      timeout: 300_000,
-    },
+    ...(production
+      ? []
+      : [
+          {
+            command: "npm run dev -- --port 5173 --strictPort",
+            url: "http://127.0.0.1:5173",
+            reuseExistingServer: !process.env.CI,
+            timeout: 120_000,
+          },
+        ]),
+    ...(preview
+      ? [
+          {
+            // Na demo congelada serve o dist existente; senão gera o build com o sw.js.
+            command: `${production ? "" : "npm run build && "}npm run preview -- --port 4173 --strictPort`,
+            url: "http://127.0.0.1:4173",
+            reuseExistingServer: !production && !process.env.CI,
+            timeout: 300_000,
+          },
+        ]
+      : []),
   ],
-=======
-  use: { baseURL: `http://127.0.0.1:${port}`, trace: "retain-on-failure" },
-  projects: [{ name: "chromium", use: { ...devices["Desktop Chrome"] } }],
-  webServer: {
-    command: `npm run ${production ? "preview" : "dev"} -- --port ${port} --strictPort`,
-    url: `http://127.0.0.1:${port}`,
-    reuseExistingServer: !production && !process.env.CI,
-    timeout: 120_000,
-  },
->>>>>>> 5c13d2447fa3751a7c81b5dbcc83a776551268cb
 });

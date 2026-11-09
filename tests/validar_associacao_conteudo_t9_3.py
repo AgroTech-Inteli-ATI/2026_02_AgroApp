@@ -160,6 +160,16 @@ class AssociacaoTest(unittest.TestCase):
             self.assertEqual(novo["classes"][7]["status_conteudo"], "validado")
             self.assertEqual(json.loads((saida / t93.BASE).read_text(encoding="utf-8")), curada)
 
+    def test_content_ts_do_frontend_reproduz_a_associacao(self):
+        atual = (RAIZ / t93.CONTENT_TS).read_text(encoding="utf-8")
+        self.assertEqual(t93.content_ts(self.assoc, self.base), atual, "rode: python -m src.associacao_conteudo_t9_3 frontend")
+        assoc, base = self.novo()
+        validar_classe(assoc, base, 4, "oficial.percevejo_marrom")
+        gerado = t93.content_ts(assoc, base)
+        self.assertIn('"4": {', gerado)
+        self.assertIn('"source": "fonte de teste"', gerado)
+        self.assertNotIn('"0": {', gerado)  # classe sem conteúdo validado não entra
+
     def test_nenhum_acesso_a_rede(self):
         codigo = (RAIZ / "src/associacao_conteudo_t9_3.py").read_text(encoding="utf-8")
         for proibido in ("urllib", "requests", "socket", "http.client", "urlopen", "webbrowser"):

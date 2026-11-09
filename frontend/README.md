@@ -63,9 +63,9 @@ O servidor local adiciona COOP/COEP. Esses cabeçalhos permitem isolamento entre
 
 ## Funcionamento offline (T9.4)
 
-O build gera `dist/sw.js` (modelo em `scripts/sw.js`, lista de arquivos montada em `vite.config.ts`). Na primeira visita com rede, ele baixa e guarda de uma vez o app, as fontes, `models/manifest.json`, os dois `.tflite` do manifesto e as quatro variantes do runtime WASM (cerca de 60 MB). Quando termina, o status mostra **disponível offline**. A partir daí o app abre e classifica sem rede. Cada build novo troca o nome do cache e apaga o anterior. No `npm run dev` o service worker não é registrado.
+O build gera `dist/sw.js` (modelo em `scripts/sw.js`, lista de arquivos montada em `vite.config.ts`). Na primeira visita com rede, ele baixa e guarda de uma vez o app, as fontes, `models/manifest.json`, os dois `.tflite` do manifesto e as quatro variantes do runtime WASM (cerca de 60 MB). Quando termina, o status mostra **disponível offline**; se falhar (cota ou queda de rede), mostra **modo offline indisponível**. A partir daí o app abre e classifica sem rede. Cada build novo troca o nome do cache e apaga o anterior. No `npm run dev` o service worker não é registrado.
 
-`npx playwright test --project=offline` gera o build, abre o preview, espera o cache, desliga a rede, recarrega e classifica uma foto sem nenhuma requisição falha.
+`npx playwright test --project=offline` gera o build, abre o preview, espera o cache, desliga a rede, recarrega, classifica uma foto, confere o painel de conteúdo técnico e verifica que nenhuma requisição falhou. Também confere o aviso quando o pré-cache falha. O build e o preview só sobem para esse projeto; `--project=chromium` usa só o servidor de desenvolvimento.
 
 Demonstração no celular (critério da T9.4):
 
@@ -74,7 +74,7 @@ Demonstração no celular (critério da T9.4):
 3. Abra a URL de novo, tire uma foto com **Tirar foto** e confira as hipóteses e o conteúdo técnico.
 4. Registre aparelho, Android, navegador, URL e o hash do build (nome do cache em DevTools → Application → Cache Storage).
 
-O conteúdo técnico vai embutido no bundle JS (`src/data/content.ts`), então também fica disponível offline assim que for preenchido.
+O conteúdo técnico vai embutido no bundle JS (`src/data/content.ts`, gerado por `python -m src.associacao_conteudo_t9_3 frontend` na raiz), então também fica disponível offline assim que for preenchido.
 
 ## Modelo e contrato de imagem
 
