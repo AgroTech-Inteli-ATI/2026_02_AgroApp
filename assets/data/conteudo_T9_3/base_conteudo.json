@@ -1,0 +1,14 @@
+{
+  "esquema": "base_conteudo_T9_3_v1",
+  "versao": "0.0.0",
+  "status": "vazia_aguardando_catalogo_do_parceiro",
+  "campos_item": [
+    "chave",
+    "titulo",
+    "texto",
+    "fonte",
+    "revisado_em",
+    "validated"
+  ],
+  "itens": []
+}
