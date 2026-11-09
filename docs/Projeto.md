@@ -92,6 +92,7 @@
 
 - [9.1 Pipeline de captura e processamento de imagens (T9.1)](#91-pipeline-de-captura-e-processamento-de-imagens-t91)
 - [9.2 Tratamento do limiar de confiança (T9.2)](#92-tratamento-do-limiar-de-confiança-t92)
+- [9.3 Associação da predição ao conteúdo técnico (T9.3)](#93-associação-da-predição-ao-conteúdo-técnico-t93)
 
 </details>
 
@@ -3874,3 +3875,120 @@ npm run build
 ```
 
 O comando de inicialização e o build preparam os artefatos web a partir dos modelos versionados. A implementação do estado inconclusivo não altera pesos, classes, arquivos TFLite ou os parâmetros da T6.5.
+
+## 9.3 Associação da predição ao conteúdo técnico (T9.3)
+
+**Autor:** Lucas. **Revisor:** Glauco. **Data:** 07/11/2026.
+
+**Situação: entrega parcial.** A associação entre cada classe do modelo, o dicionário de classes e a base local de conteúdo está implementada e testada, e funciona sem rede. O **conteúdo técnico em si ainda não existe**: o catálogo do Agro App não foi recebido, então nenhuma das 13 classes tem texto de sintomas ou manejo, e todas resolvem como *indisponível*. O critério de aceite ("cada classe reconhecida é associada ao conteúdo técnico correspondente, consultável sem internet") só será atendido por completo quando o catálogo for preenchido. Até lá, o aplicativo deve dizer que o conteúdo está indisponível, sem afirmar nenhuma orientação. Existe material de referência para 11 das 13 classes (ver o [mapa de fontes](#mapa-de-fontes-de-conteúdo)), mas ele tem direitos reservados e não foi copiado.
+
+### Fluxo
+
+1. O modelo devolve o índice da classe (0 a 12), na ordem de [`classes.json`](../assets/modelos/candidato_T5_6_20261026/classes.json).
+2. A [associação](../assets/data/conteudo_T9_3/associacao_classes.json) liga o índice ao nome do modelo, à identificação da praga, aos IDs do inventário e do acervo anterior e à `chave_conteudo` oficial.
+3. A [base local](../assets/data/conteudo_T9_3/base_conteudo.json) guarda o texto de cada `chave_conteudo`, com fonte, data de revisão e o indicador `validated`.
+4. A função `associar_predicoes` ([`associacao_conteudo_t9_3.py`](../src/associacao_conteudo_t9_3.py)) enriquece cada previsão com a identificação e o estado do conteúdo. Mantém a ordem e o score do modelo e recusa índices fora das 13 classes.
+
+A T9.3 **não depende do limiar de confiança**. A [T9.2](#92-tratamento-do-limiar-de-confiança-t92) decide quais previsões aparecem (a proposta da [T6.5](#65-política-de-confiança-t65) é 3 hipóteses e limiar 0,65 no top-1) e chama a T9.3 com a lista já filtrada. Mudar o limiar não altera esta entrega.
+
+### As 13 classes
+
+| Índice | Classe (nome do modelo) | Cultura | IDs no inventário | ID no acervo anterior | Chave proposta | Classes relacionadas (T6.4) | Conteúdo |
+| ---: | --- | --- | --- | --- | --- | --- | --- |
+| 0 | Vaquinha (Diabrotica speciosa) | Milho/Soja | 0 | — | `praga.diabrotica_speciosa` | 1, 2, 5, 6, 10, 11, 12 | indisponível |
+| 1 | Cigarrinha-do-milho (Dalbulus maidis) | Milho | 1 | AGRO-001 | `praga.dalbulus_maidis` | 0 | indisponível |
+| 2 | Percevejo-barriga-verde (Dichelops/Diceraeus) | Milho/Soja | 2 | — | `praga.dichelops_sp` | 0, 3, 4, 5, 7, 9, 10, 11 | indisponível |
+| 3 | Lagarta-do-cartucho (Spodoptera frugiperda) | Milho/Soja | 3 | — | `praga.spodoptera_frugiperda` | 2, 7, 8, 9, 10 | indisponível |
+| 4 | Percevejo-marrom (Euschistus heros) | Soja | 4 | — | `praga.euschistus_heros` | 2, 7, 11 | indisponível |
+| 5 | Percevejo-verde (Nezara viridula) | Soja | 5 | — | `praga.nezara_viridula` | 0, 2, 6, 10 | indisponível |
+| 6 | Percevejo-asa-preta (Edessa meditabunda) | Soja | 6 | — | `praga.edessa_meditabunda` | 0, 5 | indisponível |
+| 7 | Percevejo-do-milho (Leptoglossus zonatus) | Milho | 7 | AGRO-003 | `praga.leptoglossus_zonatus` | 2, 3, 4, 11, 12 | indisponível |
+| 8 | Lagarta-falsa-medideira (Chrysodeixis includens) | Soja | 8 | — | `praga.chrysodeixis_includens` | 3, 10 | indisponível |
+| 9 | Lagarta-da-soja (Anticarsia gemmatalis) | Soja | 9 | AGRO-053 | `praga.anticarsia_gemmatalis` | 2, 3 | indisponível |
+| 10 | Lagarta-das-vagens (Spodoptera eridania e S. cosmioides) | Soja | 10, 11 | — | `praga.spodoptera_eridania_cosmioides` | 0, 2, 3, 5, 8, 11, 12 | indisponível |
+| 11 | Astylus variegatus | Milho | 12 | — | `praga.astylus_variegatus` | 0, 2, 4, 7, 10 | indisponível |
+| 12 | Cigarrinha-das-pastagens (Deois flavopicta) | Milho | 13 | — | `praga.deois_flavopicta` | 0, 7, 10 | indisponível |
+
+O nome exibido é o do modelo. Na classe 11, o dataset do parceiro usa também "larva-angorá"; esse nome comum não foi adotado, para não divergir do modelo e do restante da documentação. A coluna "Classes relacionadas" vem dos 27 pares da [T6.4](#64-proposta-de-tratamento-de-classes-t64). Na classe 10, os IDs 10 e 11 do inventário (*Spodoptera eridania* e *S. cosmioides*) formam uma única classe, conforme a [seção 3.5](#35-classes-do-mvp).
+
+### Regras de associação
+
+- **Só a chave oficial abre conteúdo.** Enquanto `chave_conteudo` for `null`, ou o status não for `validado`, a classe resolve como indisponível. A `chave_conteudo_proposta` (`praga.<espécie>`) serve apenas à organização local e nunca é usada para abrir conteúdo; segue a regra da [seção do dicionário](#vinculação-ao-conteúdo-técnico).
+- **Classes relacionadas na T6.4 ficam separadas.** O contrato recusa duas classes de um mesmo par com o mesmo conteúdo. A relação não soma scores, não altera o ranking e não força uma classe a aparecer.
+- **Nada é inventado.** Um item só é *disponível* com texto, fonte e data de revisão, `validated` verdadeiro, e a classe com `validacao_conteudo` (responsável, data e evidência).
+- **Sem rede.** A associação e a base são arquivos locais; o código não importa nenhum módulo de rede, e um teste confere isso.
+
+### Origem da identificação
+
+Nome comum e científico vêm da tabela das classes no `instruções.md` do dataset do parceiro (pasta `Agro_App/dataset/dataset` do Drive da equipe). Os nomes científicos são **referência a validar por agrônomo**, como o próprio arquivo indica. As pastas `Milho`, `Soja` e `dataset` do Drive contêm só imagens e metadados de imagem; não há texto técnico nelas. A associação com o dicionário da [T3.4](#dicionário-de-classes-t34) existe só para as três classes que também constam do acervo anterior (índices 1, 7 e 9); as demais não têm ID `AGRO-xxx`.
+
+### Mapa de fontes de conteúdo
+
+O [mapa de fontes](../assets/data/conteudo_T9_3/fontes_conteudo.json) indica, por classe, onde há material técnico de referência, com a citação da fonte e da página. Foram consultadas duas publicações da Embrapa citadas no [dicionário de classes](#dicionário-de-classes-t34), em 08/11/2026:
+
+- **Manual da soja** (SOSA-GÓMEZ et al., 2014): 3ª edição, Embrapa Soja, 102 páginas no PDF. Cada ficha traz as fases do inseto e um parágrafo de danos. Não há seção de manejo.
+- **Artigo da cigarrinha-do-milho** (OLIVEIRA, 2025): artigo da Revista Cultivar Grandes Culturas, de Ivênio Rubens de Oliveira (Embrapa Milho e Sorgo). Trata de sintomas, período de controle e manejo químico e biológico.
+
+A tabela usa a numeração **impressa** das páginas (a do PDF é uma a mais no manual); o mapa registra as duas. As referências completas estão ao final da seção.
+
+| Índice | Classe | Citação | O que a fonte traz | Observação |
+| ---: | --- | --- | --- | --- |
+| 0 | Vaquinha (Diabrotica speciosa) | (SOSA-GÓMEZ et al., 2014, p. 42) | descrição das fases, danos | Ficha no contexto da soja; a classe do modelo também cobre milho. |
+| 1 | Cigarrinha-do-milho (Dalbulus maidis) | (OLIVEIRA, 2025, p. 12-14) | sintomas, período de controle, manejo químico e biológico | Artigo de 3 páginas (12 a 14 impressas, PDF 1 a 3). Inclui manejo químico e biológico, que exige validação agronômica. |
+| 2 | Percevejo-barriga-verde (Dichelops/Diceraeus) | (SOSA-GÓMEZ et al., 2014, p. 84) | descrição das fases, danos | A fonte usa o gênero Dichelops; o modelo e o dataset usam Diceraeus spp. (ex-Dichelops). |
+| 3 | Lagarta-do-cartucho (Spodoptera frugiperda) | (SOSA-GÓMEZ et al., 2014, p. 74) | descrição das fases, danos | No manual a ficha usa o título lagarta-das-vagens e o contexto da soja; o modelo chama a classe de lagarta-do-cartucho. |
+| 4 | Percevejo-marrom (Euschistus heros) | (SOSA-GÓMEZ et al., 2014, p. 78) | descrição das fases, danos | A ficha faz menção pontual à resistência a inseticidas, sem seção de manejo. |
+| 5 | Percevejo-verde (Nezara viridula) | (SOSA-GÓMEZ et al., 2014, p. 82) | descrição das fases, danos | — |
+| 6 | Percevejo-asa-preta (Edessa meditabunda) | (SOSA-GÓMEZ et al., 2014, p. 86) | descrição das fases, danos | O manual chama a espécie de percevejo-edessa; o modelo, de percevejo-asa-preta. |
+| 7 | Percevejo-do-milho (Leptoglossus zonatus) | **sem fonte** | — | Obter a fonte com o parceiro. |
+| 8 | Lagarta-falsa-medideira (Chrysodeixis includens) | (SOSA-GÓMEZ et al., 2014, p. 36) | descrição das fases, danos | — |
+| 9 | Lagarta-da-soja (Anticarsia gemmatalis) | (SOSA-GÓMEZ et al., 2014, p. 34) | descrição das fases, danos | — |
+| 10 | Lagarta-das-vagens (Spodoptera eridania e S. cosmioides) | (SOSA-GÓMEZ et al., 2014, p. 70) | descrição das fases, danos | A classe reúne duas espécies; há uma ficha para cada. |
+| 10 | Lagarta-das-vagens (Spodoptera eridania e S. cosmioides) | (SOSA-GÓMEZ et al., 2014, p. 72) | descrição das fases, danos | A classe reúne duas espécies; há uma ficha para cada. |
+| 11 | Astylus variegatus | (SOSA-GÓMEZ et al., 2014, p. 98) | descrição das fases, danos | A ficha descreve danos apenas eventuais. O manual usa o nome larva-angorá; o modelo usa o nome científico. |
+| 12 | Cigarrinha-das-pastagens (Deois flavopicta) | **sem fonte** | — | Obter a fonte com o parceiro. |
+
+**Onze das 13 classes têm material de referência; as classes 7 e 12 não têm.** Dez classes têm descrição e danos (manual) e a classe 1 tem sintomas e manejo (artigo). O manual é do contexto da soja, então para vaquinha, barriga-verde e lagarta-do-cartucho, que também ocorrem em milho, a ficha vale só para soja. O iNaturalist e o AgroInsect, consultados antes, trazem apenas identificação (taxonomia, nomes e fotos), sem sintomas nem manejo.
+
+O mapa **não contém texto das fontes** e o resolvedor não o usa. As duas publicações têm direitos reservados (Lei nº 9.610), e o repositório não as versiona; o hash de cada PDF consultado fica no mapa. O uso permitido é a referência bibliográfica e a redação própria a partir delas, **sempre com citação da fonte e da página**. Copiar o texto para o aplicativo depende de autorização da Embrapa ou do parceiro, e o manejo químico não entra sem validação. Um teste recusa o mapa se faltar a referência completa (com ano, link e data de acesso) ou a citação por página, se algum campo de texto for longo o bastante para conter trecho copiado, e se o uso do texto for marcado como autorizado sem registro de responsável, data e evidência.
+
+### Como completar quando o catálogo chegar
+
+1. Receber do parceiro o catálogo com chaves oficiais, título, texto, fonte e data de cada praga.
+2. Em `associacao_classes.json`, preencher `chave_conteudo` e `validacao_conteudo` (responsável, data, evidência) e mudar `status_conteudo` para `validado`. O comando `python -m src.associacao_conteudo_t9_3 gerar` preserva esses campos ao atualizar o restante e nunca sobrescreve a base.
+3. Em `base_conteudo.json`, incluir um item por `chave` com `titulo`, `texto`, `fonte`, `revisado_em` e `validated: true`. No campo `fonte`, usar a citação do mapa de fontes (por exemplo, `SOSA-GÓMEZ et al., 2014, p. 78`) e listar a referência completa em Referências. Os campos coincidem com o `TechnicalContent` do frontend (`title`, `text`, `source`, `reviewedAt`, `validated`); o `content.ts` do frontend (já na `develop`) deve ser gerado a partir destes arquivos.
+4. Executar `python -m src.associacao_conteudo_t9_3 verificar --exigir-conteudo`. O comando só termina com sucesso quando as 13 classes têm conteúdo validado, o que corresponde ao RNF-08 (100% das classes resolvem para conteúdo válido). Hoje ele falha de propósito.
+5. Verificar a abertura do conteúdo no aparelho em modo avião (T9.4).
+
+### Pendências e limites
+
+- **Catálogo de conteúdo técnico do Agro App:** não recebido; sem ele, 0 das 13 classes tem conteúdo disponível e o critério de aceite não está completo.
+- **Fontes de referência:** as classes 7 (*Leptoglossus zonatus*) e 12 (*Deois flavopicta*) não têm fonte; as demais têm material com direitos reservados, cujo uso no aplicativo depende de autorização ou de redação própria validada.
+- **Validação do parceiro:** nomes científicos, cultura e associação de cada classe ao conteúdo precisam ser confirmados, e os pares da T6.4 dependem da decisão agronômica.
+- **Integração no aplicativo:** o frontend da T9.1 e o limiar da T9.2 já estão na `develop`, mas o `frontend/src/data/content.ts` continua vazio e não consome estes arquivos. Gerá-lo a partir da associação e da base é o passo seguinte.
+- **RNF-08 completo** (100% de conteúdo válido) e a demonstração **sem rede no aparelho** (T9.4) continuam pendentes.
+
+### Reprodução e verificação
+
+```bash
+python -m src.associacao_conteudo_t9_3 gerar
+python -m src.associacao_conteudo_t9_3 verificar
+python tests/validar_associacao_conteudo_t9_3.py
+python tests/validar_fontes_conteudo_t9_3.py
+```
+
+Os comandos usam somente a biblioteca padrão do Python. Os **14 testes** da associação passam. Eles cobrem a reprodução da associação a partir das fontes e seus hashes, as 13 classes na ordem do modelo, os IDs do inventário e do acervo, as chaves únicas e a recusa de URLs, as relações da T6.4, o estado indisponível sem catálogo, um catálogo sintético completo, os estados intermediários, o contrato de validação, a preservação do preenchimento manual ao regenerar, a recusa de índices inválidos e a ausência de acesso à rede.
+
+Os **14 testes** do mapa de fontes também passam. Eles cobrem a coerência com as 13 classes, as lacunas, o intervalo e a numeração das páginas, o vocabulário das seções, a referência completa e a citação por página, os direitos e a autorização de uso, e a recusa de texto copiado.
+
+### Referências
+
+ALMEIDA, G.; NAZARIO, L.; TEIXEIRA, M.; STIRLE, J.; FRANCA, H.; OLIVEIRA, M.; OLIVEIRA, R.; NOVAK, S.; BAILÃO, A.; GONTIJO, P. **AGROINSECT: a dataset for identifying agricultural insects and pests of interest**. Versão 2. [S. l.]: Mendeley Data, 2026. DOI: 10.17632/4jyp4m9gxj.2. Disponível em: https://data.mendeley.com/datasets/4jyp4m9gxj/2. Acesso em: 8 nov. 2026. Licença CC BY 4.0.
+
+AGROTECH INTELI. **Dataset de pragas de soja e milho: AgroTech Inteli × Agro App**. Documento interno (instruções.md), pasta Agro_App/dataset/dataset do Drive da equipe, 2026.
+
+INATURALIST. **Observações de pragas de soja e milho no Brasil**. Disponível em: https://www.inaturalist.org. Acesso em: 4 out. 2026. Licenças CC0 e CC BY, foto a foto; os créditos individuais estão em `field_labels.csv`.
+
+OLIVEIRA, I. R. de. **Estratégias contra a cigarrinha-do-milho**. Cultivar Grandes Culturas, [S. l.], n. 312, p. 12-14, 2025. Disponível em: https://www.embrapa.br/en/busca-de-publicacoes/-/publicacao/1179329/estrategias-contra-a-cigarrinha-do-milho. Acesso em: 8 nov. 2026.
+
+SOSA-GÓMEZ, D. R. et al. **Manual de identificação de insetos e outros invertebrados da cultura da soja**. 3. ed. Londrina: Embrapa Soja, 2014. (Embrapa Soja. Documentos, 269). ISSN 1516-781X. Disponível em: https://www.embrapa.br/en/busca-de-publicacoes/-/publicacao/991685/manual-de-identificacao-de-insetos-e-outros-invertebrados-da-cultura-da-soja. Acesso em: 8 nov. 2026.

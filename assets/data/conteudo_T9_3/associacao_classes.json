@@ -1,0 +1,515 @@
+{
+  "esquema": "associacao_conteudo_T9_3_v1",
+  "versao": "1.0.0",
+  "status": "parcial_aguardando_catalogo_do_parceiro",
+  "pacote": "assets/modelos/candidato_T5_6_20261026",
+  "total_classes": 13,
+  "identificacao_fonte": "Tabela da seção 2 do instruções.md do dataset (Drive Agro_App, dataset/dataset). Nomes científicos são referência a validar por agrônomo.",
+  "regras": [
+    "O conteúdo só é aberto pela chave_conteudo oficial; a chave proposta nunca abre conteúdo.",
+    "Classes relacionadas na T6.4 mantêm conteúdo e chave separados; a relação não une classes nem altera o ranking.",
+    "Sem chave oficial, status validado e item validado na base, a classe resolve como indisponível."
+  ],
+  "fontes": {
+    "classes_modelo": {
+      "arquivo": "assets/modelos/candidato_T5_6_20261026/classes.json",
+      "sha256": "1058619e188ffd7fa42bfc6821e2e122356b35d8503af71b987f37ae1e4572f4"
+    },
+    "classes_modelo_csv": {
+      "arquivo": "assets/data/classes-modelo.csv",
+      "sha256": "5338b34df4cf6424b5e611e349067f45f94c07ac36c47ad6260661f48c59e067"
+    },
+    "dicionario_t3_4": {
+      "arquivo": "assets/data/dicionario-classes.json",
+      "sha256": "58b329445390d51cf71fad61744e845bac8422ae1efa342630f80cd471c4a1a2"
+    },
+    "tratamento_t6_4": {
+      "arquivo": "assets/data/tratamento_T6_4/proposta_tratamento.json",
+      "sha256": "ffcc1e153ec84124b7200fe6a457812b50af6aa72dabe3bf52bed425112a3827"
+    }
+  },
+  "classes": [
+    {
+      "indice": 0,
+      "nome": "Vaquinha (Diabrotica speciosa)",
+      "nome_comum": "Vaquinha",
+      "nome_cientifico": "Diabrotica speciosa",
+      "cultura": [
+        "Milho",
+        "Soja"
+      ],
+      "ids_inventario": [
+        0
+      ],
+      "ids_acervo": [],
+      "chave_conteudo_proposta": "praga.diabrotica_speciosa",
+      "chave_conteudo": null,
+      "status_conteudo": "aguardando_catalogo_agroapp",
+      "validacao_conteudo": null,
+      "relacionadas_t6_4": [
+        {
+          "indice": 1,
+          "par": "PAR-00-01"
+        },
+        {
+          "indice": 2,
+          "par": "PAR-00-02"
+        },
+        {
+          "indice": 5,
+          "par": "PAR-00-05"
+        },
+        {
+          "indice": 6,
+          "par": "PAR-00-06"
+        },
+        {
+          "indice": 10,
+          "par": "PAR-00-10"
+        },
+        {
+          "indice": 11,
+          "par": "PAR-00-11"
+        },
+        {
+          "indice": 12,
+          "par": "PAR-00-12"
+        }
+      ]
+    },
+    {
+      "indice": 1,
+      "nome": "Cigarrinha-do-milho (Dalbulus maidis)",
+      "nome_comum": "Cigarrinha-do-milho",
+      "nome_cientifico": "Dalbulus maidis",
+      "cultura": [
+        "Milho"
+      ],
+      "ids_inventario": [
+        1
+      ],
+      "ids_acervo": [
+        {
+          "id": "AGRO-001",
+          "chave_proposta_dicionario": "milho.ocorrencia.agro-001"
+        }
+      ],
+      "chave_conteudo_proposta": "praga.dalbulus_maidis",
+      "chave_conteudo": null,
+      "status_conteudo": "aguardando_catalogo_agroapp",
+      "validacao_conteudo": null,
+      "relacionadas_t6_4": [
+        {
+          "indice": 0,
+          "par": "PAR-00-01"
+        }
+      ]
+    },
+    {
+      "indice": 2,
+      "nome": "Percevejo-barriga-verde (Dichelops/Diceraeus)",
+      "nome_comum": "Percevejo-barriga-verde",
+      "nome_cientifico": "Diceraeus spp. (ex-Dichelops)",
+      "cultura": [
+        "Milho",
+        "Soja"
+      ],
+      "ids_inventario": [
+        2
+      ],
+      "ids_acervo": [],
+      "chave_conteudo_proposta": "praga.dichelops_sp",
+      "chave_conteudo": null,
+      "status_conteudo": "aguardando_catalogo_agroapp",
+      "validacao_conteudo": null,
+      "relacionadas_t6_4": [
+        {
+          "indice": 0,
+          "par": "PAR-00-02"
+        },
+        {
+          "indice": 3,
+          "par": "PAR-02-03"
+        },
+        {
+          "indice": 4,
+          "par": "PAR-02-04"
+        },
+        {
+          "indice": 5,
+          "par": "PAR-02-05"
+        },
+        {
+          "indice": 7,
+          "par": "PAR-02-07"
+        },
+        {
+          "indice": 9,
+          "par": "PAR-02-09"
+        },
+        {
+          "indice": 10,
+          "par": "PAR-02-10"
+        },
+        {
+          "indice": 11,
+          "par": "PAR-02-11"
+        }
+      ]
+    },
+    {
+      "indice": 3,
+      "nome": "Lagarta-do-cartucho (Spodoptera frugiperda)",
+      "nome_comum": "Lagarta-do-cartucho",
+      "nome_cientifico": "Spodoptera frugiperda",
+      "cultura": [
+        "Milho",
+        "Soja"
+      ],
+      "ids_inventario": [
+        3
+      ],
+      "ids_acervo": [],
+      "chave_conteudo_proposta": "praga.spodoptera_frugiperda",
+      "chave_conteudo": null,
+      "status_conteudo": "aguardando_catalogo_agroapp",
+      "validacao_conteudo": null,
+      "relacionadas_t6_4": [
+        {
+          "indice": 2,
+          "par": "PAR-02-03"
+        },
+        {
+          "indice": 7,
+          "par": "PAR-03-07"
+        },
+        {
+          "indice": 8,
+          "par": "PAR-03-08"
+        },
+        {
+          "indice": 9,
+          "par": "PAR-03-09"
+        },
+        {
+          "indice": 10,
+          "par": "PAR-03-10"
+        }
+      ]
+    },
+    {
+      "indice": 4,
+      "nome": "Percevejo-marrom (Euschistus heros)",
+      "nome_comum": "Percevejo-marrom",
+      "nome_cientifico": "Euschistus heros",
+      "cultura": [
+        "Soja"
+      ],
+      "ids_inventario": [
+        4
+      ],
+      "ids_acervo": [],
+      "chave_conteudo_proposta": "praga.euschistus_heros",
+      "chave_conteudo": null,
+      "status_conteudo": "aguardando_catalogo_agroapp",
+      "validacao_conteudo": null,
+      "relacionadas_t6_4": [
+        {
+          "indice": 2,
+          "par": "PAR-02-04"
+        },
+        {
+          "indice": 7,
+          "par": "PAR-04-07"
+        },
+        {
+          "indice": 11,
+          "par": "PAR-04-11"
+        }
+      ]
+    },
+    {
+      "indice": 5,
+      "nome": "Percevejo-verde (Nezara viridula)",
+      "nome_comum": "Percevejo-verde",
+      "nome_cientifico": "Nezara viridula",
+      "cultura": [
+        "Soja"
+      ],
+      "ids_inventario": [
+        5
+      ],
+      "ids_acervo": [],
+      "chave_conteudo_proposta": "praga.nezara_viridula",
+      "chave_conteudo": null,
+      "status_conteudo": "aguardando_catalogo_agroapp",
+      "validacao_conteudo": null,
+      "relacionadas_t6_4": [
+        {
+          "indice": 0,
+          "par": "PAR-00-05"
+        },
+        {
+          "indice": 2,
+          "par": "PAR-02-05"
+        },
+        {
+          "indice": 6,
+          "par": "PAR-05-06"
+        },
+        {
+          "indice": 10,
+          "par": "PAR-05-10"
+        }
+      ]
+    },
+    {
+      "indice": 6,
+      "nome": "Percevejo-asa-preta (Edessa meditabunda)",
+      "nome_comum": "Percevejo-asa-preta",
+      "nome_cientifico": "Edessa meditabunda",
+      "cultura": [
+        "Soja"
+      ],
+      "ids_inventario": [
+        6
+      ],
+      "ids_acervo": [],
+      "chave_conteudo_proposta": "praga.edessa_meditabunda",
+      "chave_conteudo": null,
+      "status_conteudo": "aguardando_catalogo_agroapp",
+      "validacao_conteudo": null,
+      "relacionadas_t6_4": [
+        {
+          "indice": 0,
+          "par": "PAR-00-06"
+        },
+        {
+          "indice": 5,
+          "par": "PAR-05-06"
+        }
+      ]
+    },
+    {
+      "indice": 7,
+      "nome": "Percevejo-do-milho (Leptoglossus zonatus)",
+      "nome_comum": "Percevejo-do-milho",
+      "nome_cientifico": "Leptoglossus zonatus",
+      "cultura": [
+        "Milho"
+      ],
+      "ids_inventario": [
+        7
+      ],
+      "ids_acervo": [
+        {
+          "id": "AGRO-003",
+          "chave_proposta_dicionario": "milho.ocorrencia.agro-003"
+        }
+      ],
+      "chave_conteudo_proposta": "praga.leptoglossus_zonatus",
+      "chave_conteudo": null,
+      "status_conteudo": "aguardando_catalogo_agroapp",
+      "validacao_conteudo": null,
+      "relacionadas_t6_4": [
+        {
+          "indice": 2,
+          "par": "PAR-02-07"
+        },
+        {
+          "indice": 3,
+          "par": "PAR-03-07"
+        },
+        {
+          "indice": 4,
+          "par": "PAR-04-07"
+        },
+        {
+          "indice": 11,
+          "par": "PAR-07-11"
+        },
+        {
+          "indice": 12,
+          "par": "PAR-07-12"
+        }
+      ]
+    },
+    {
+      "indice": 8,
+      "nome": "Lagarta-falsa-medideira (Chrysodeixis includens)",
+      "nome_comum": "Lagarta-falsa-medideira",
+      "nome_cientifico": "Chrysodeixis includens",
+      "cultura": [
+        "Soja"
+      ],
+      "ids_inventario": [
+        8
+      ],
+      "ids_acervo": [],
+      "chave_conteudo_proposta": "praga.chrysodeixis_includens",
+      "chave_conteudo": null,
+      "status_conteudo": "aguardando_catalogo_agroapp",
+      "validacao_conteudo": null,
+      "relacionadas_t6_4": [
+        {
+          "indice": 3,
+          "par": "PAR-03-08"
+        },
+        {
+          "indice": 10,
+          "par": "PAR-08-10"
+        }
+      ]
+    },
+    {
+      "indice": 9,
+      "nome": "Lagarta-da-soja (Anticarsia gemmatalis)",
+      "nome_comum": "Lagarta-da-soja",
+      "nome_cientifico": "Anticarsia gemmatalis",
+      "cultura": [
+        "Soja"
+      ],
+      "ids_inventario": [
+        9
+      ],
+      "ids_acervo": [
+        {
+          "id": "AGRO-053",
+          "chave_proposta_dicionario": "soja.ocorrencia.agro-053"
+        }
+      ],
+      "chave_conteudo_proposta": "praga.anticarsia_gemmatalis",
+      "chave_conteudo": null,
+      "status_conteudo": "aguardando_catalogo_agroapp",
+      "validacao_conteudo": null,
+      "relacionadas_t6_4": [
+        {
+          "indice": 2,
+          "par": "PAR-02-09"
+        },
+        {
+          "indice": 3,
+          "par": "PAR-03-09"
+        }
+      ]
+    },
+    {
+      "indice": 10,
+      "nome": "Lagarta-das-vagens (Spodoptera eridania e S. cosmioides)",
+      "nome_comum": "Lagarta-das-vagens",
+      "nome_cientifico": "Spodoptera eridania e S. cosmioides",
+      "cultura": [
+        "Soja"
+      ],
+      "ids_inventario": [
+        10,
+        11
+      ],
+      "ids_acervo": [],
+      "chave_conteudo_proposta": "praga.spodoptera_eridania_cosmioides",
+      "chave_conteudo": null,
+      "status_conteudo": "aguardando_catalogo_agroapp",
+      "validacao_conteudo": null,
+      "relacionadas_t6_4": [
+        {
+          "indice": 0,
+          "par": "PAR-00-10"
+        },
+        {
+          "indice": 2,
+          "par": "PAR-02-10"
+        },
+        {
+          "indice": 3,
+          "par": "PAR-03-10"
+        },
+        {
+          "indice": 5,
+          "par": "PAR-05-10"
+        },
+        {
+          "indice": 8,
+          "par": "PAR-08-10"
+        },
+        {
+          "indice": 11,
+          "par": "PAR-10-11"
+        },
+        {
+          "indice": 12,
+          "par": "PAR-10-12"
+        }
+      ]
+    },
+    {
+      "indice": 11,
+      "nome": "Astylus variegatus",
+      "nome_comum": null,
+      "nome_cientifico": "Astylus variegatus",
+      "cultura": [
+        "Milho"
+      ],
+      "ids_inventario": [
+        12
+      ],
+      "ids_acervo": [],
+      "chave_conteudo_proposta": "praga.astylus_variegatus",
+      "chave_conteudo": null,
+      "status_conteudo": "aguardando_catalogo_agroapp",
+      "validacao_conteudo": null,
+      "relacionadas_t6_4": [
+        {
+          "indice": 0,
+          "par": "PAR-00-11"
+        },
+        {
+          "indice": 2,
+          "par": "PAR-02-11"
+        },
+        {
+          "indice": 4,
+          "par": "PAR-04-11"
+        },
+        {
+          "indice": 7,
+          "par": "PAR-07-11"
+        },
+        {
+          "indice": 10,
+          "par": "PAR-10-11"
+        }
+      ]
+    },
+    {
+      "indice": 12,
+      "nome": "Cigarrinha-das-pastagens (Deois flavopicta)",
+      "nome_comum": "Cigarrinha-das-pastagens",
+      "nome_cientifico": "Deois flavopicta",
+      "cultura": [
+        "Milho"
+      ],
+      "ids_inventario": [
+        13
+      ],
+      "ids_acervo": [],
+      "chave_conteudo_proposta": "praga.deois_flavopicta",
+      "chave_conteudo": null,
+      "status_conteudo": "aguardando_catalogo_agroapp",
+      "validacao_conteudo": null,
+      "relacionadas_t6_4": [
+        {
+          "indice": 0,
+          "par": "PAR-00-12"
+        },
+        {
+          "indice": 7,
+          "par": "PAR-07-12"
+        },
+        {
+          "indice": 10,
+          "par": "PAR-10-12"
+        }
+      ]
+    }
+  ]
+}
