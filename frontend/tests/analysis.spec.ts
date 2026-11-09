@@ -3,6 +3,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import reference from "./fixtures/reference.json" with { type: "json" };
 import type { ModelManifest } from "../src/types";
+import politica from "../../assets/data/politica_T6_5/parametros.json" with { type: "json" };
 
 const fixtures = fileURLToPath(new URL("./fixtures/", import.meta.url));
 
@@ -119,7 +120,14 @@ for (const format of ["Float16", "INT8"] as const) {
         expect(predictions.width).toBe(173);
         expect(predictions.height).toBe(391);
       }
-      await expect(page.getByText("Top 3 hipóteses")).toBeVisible();
+      const region = page.getByRole("region", { name: "Resultado da análise" });
+      if (predictions.predictions[0].score >= politica.limiar_confianca) {
+        await expect(region.getByRole("group", { name: "Hipóteses de identificação" })).toBeVisible();
+      } else {
+        await expect(region.getByText(politica.abaixo_do_limiar.mensagem, { exact: true })).toBeVisible();
+        await expect(region.getByRole("group", { name: "Hipóteses de identificação" })).toHaveCount(0);
+        await expect(region.getByRole("heading", { name: "Orientações técnicas" })).toHaveCount(0);
+      }
     }
     expect(modelDownloads.length).toBe(downloadsAfterLoad);
     expect(uploadRequests).toEqual([]);
@@ -219,7 +227,7 @@ test("mantém a foto ao cancelar e permite repetir a captura em tela móvel", as
   const camera = await openingCamera;
   expect(await camera.element().getAttribute("capture")).toBe("environment");
   await camera.setFiles(path.join(fixtures, "orientation.jpg"));
-  await expect(page.getByText("Top 3 hipóteses")).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Identificação inconclusiva" })).toBeVisible();
   const photo = page.getByAltText("Foto selecionada para análise");
   const originalUrl = await photo.getAttribute("src");
   const resultRegion = page.getByRole("region", { name: "Resultado da análise" });
@@ -239,6 +247,6 @@ test("mantém a foto ao cancelar e permite repetir a captura em tela móvel", as
   await (await choosing).setFiles(path.join(fixtures, "orientation.jpg"));
   await expect(photo).not.toHaveAttribute("src", originalUrl!);
   await expect(page.getByRole("button", { name: "Tirar outra foto", exact: true })).toBeEnabled();
-  await expect(page.getByText("Top 3 hipóteses")).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Identificação inconclusiva" })).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(false);
 });

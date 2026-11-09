@@ -703,6 +703,27 @@
   color: var(--muted);
   margin-bottom: 10px;
 }
+.inconclusive {
+  padding: 30px 4px;
+  color: var(--ink);
+}
+.inconclusive > svg {
+  color: var(--green-dark);
+  margin-bottom: 14px;
+}
+.inconclusive h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 12px;
+}
+.inconclusive p {
+  font-size: 13px;
+  line-height: 1.7;
+  margin: 0 0 12px;
+}
+.inconclusive .textButton {
+  margin-top: 8px;
+}
 .predictions {
   display: flex;
   flex-direction: column;

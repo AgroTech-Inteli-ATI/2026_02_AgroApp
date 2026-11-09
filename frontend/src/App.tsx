@@ -20,6 +20,7 @@ import {
   X,
 } from "lucide-react";
 import { technicalContent } from "./data/content";
+import { avaliarConfianca, politicaConfianca } from "./lib/confidence";
 import type {
   AnalysisResult,
   ClassLabel,
@@ -119,7 +120,8 @@ export default function App() {
         urls.current.preview = URL.createObjectURL(message.result.preview);
         setPreview(urls.current.preview);
         setResult(message.result);
-        setSelectedClass(message.result.predictions[0].indice);
+        const decisao = avaliarConfianca(message.result.predictions);
+        setSelectedClass(decisao.status === "aceito" ? decisao.hipoteses[0].indice : undefined);
         setBusy(false);
       }
     };
@@ -197,15 +199,17 @@ export default function App() {
     event.currentTarget.value = "";
   };
 
-  const chosen = result?.predictions.find(
+  const decisao = result ? avaliarConfianca(result.predictions) : undefined;
+  const hipoteses = decisao?.status === "aceito" ? decisao.hipoteses : [];
+  const chosen = hipoteses.find(
     (prediction) => prediction.indice === selectedClass,
   );
   const content =
-    selectedClass === undefined ? undefined : technicalContent[selectedClass];
+    chosen === undefined ? undefined : technicalContent[chosen.indice];
   const stage = busy
     ? "Analisando sua foto…"
     : result
-      ? "Análise concluída"
+      ? decisao?.status === "inconclusivo" ? "Resultado inconclusivo" : "Análise concluída"
       : status;
 
   return (
@@ -513,7 +517,9 @@ export default function App() {
                 <div className={styles.panelHeading}>
                   <h2 id="analysis-result-title">Resultado da análise</h2>
                   <span className={styles.smallBadge}>
-                    {result ? "Top 3 hipóteses" : "Reconhecimento visual"}
+                    {result
+                      ? decisao?.status === "inconclusivo" ? "Inconclusivo" : `Top ${politicaConfianca.numeroHipoteses} hipóteses`
+                      : "Reconhecimento visual"}
                   </span>
                 </div>
                 {!result ? (
@@ -550,6 +556,20 @@ export default function App() {
                       </span>
                     </div>
                   </div>
+                ) : decisao?.status === "inconclusivo" ? (
+                  <div className={styles.inconclusive} role="status">
+                    <CircleHelp size={30} strokeWidth={1.5} aria-hidden="true" />
+                    <h3>Identificação inconclusiva</h3>
+                    <p>{politicaConfianca.mensagem}</p>
+                    <p>{politicaConfianca.orientacao}</p>
+                    <button
+                      className={styles.textButton}
+                      disabled={busy || !model}
+                      onClick={() => cameraInput.current?.click()}
+                    >
+                      <Camera size={16} /> Tentar outra foto
+                    </button>
+                  </div>
                 ) : (
                   <div className={styles.results}>
                     <div className={styles.completed}>
@@ -565,10 +585,9 @@ export default function App() {
                     <p className={styles.resultIntro}>
                       Possíveis identificações
                     </p>
-                    {/* Mostra as três classes com maiores scores retornados pelo modelo. */}
-                    <div className={styles.predictions}>
-                      {result.predictions
-                        .slice(0, 3)
+                    {/* Só expõe hipóteses após a aceitação do maior score. */}
+                    <div className={styles.predictions} role="group" aria-label="Hipóteses de identificação">
+                      {hipoteses
                         .map((prediction, index) => {
                           const label = splitLabel(prediction.nome);
                           return (
@@ -822,9 +841,10 @@ export default function App() {
             </span>
           </li>
           <li>
-            <strong>Explore as três hipóteses</strong>
+            <strong>Confira o resultado</strong>
             <span>
-              O modelo compara a imagem com 13 classes de pragas. Os scores não
+              Quando a análise tem confiança suficiente, você pode consultar as
+              hipóteses. Caso contrário, orientamos uma nova foto. Os scores não
               substituem uma avaliação técnica.
             </span>
           </li>

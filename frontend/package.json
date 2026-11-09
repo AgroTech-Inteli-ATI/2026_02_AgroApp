@@ -10,6 +10,8 @@
     "prebuild": "npm run assets",
     "build": "tsc -b && vite build",
     "preview": "vite preview --host 127.0.0.1",
+    "demo:package": "node scripts/package-demo.mjs",
+    "demo:verify": "node scripts/package-demo.mjs --verify",
     "test": "vitest run src",
     "test:e2e": "playwright test"
   },

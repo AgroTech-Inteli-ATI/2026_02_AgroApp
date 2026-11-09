@@ -1,0 +1,349 @@
+{
+  "esquema": "fontes_conteudo_T9_3_v1",
+  "versao": "1.0.0",
+  "data": "2026-11-08",
+  "status": "mapa_de_fontes_sem_texto_copiado",
+  "finalidade": "Indicar, por classe do modelo, onde existe material técnico de referência. O mapa não contém texto das fontes e não abre conteúdo no aplicativo.",
+  "regras": [
+    "Nenhum trecho das fontes foi copiado para este repositório.",
+    "As duas fontes têm direitos reservados: copiar o texto para o aplicativo depende de autorização da Embrapa ou do parceiro.",
+    "Uso permitido por esta entrega: referência bibliográfica e base para redação própria, com citação e validação agronômica.",
+    "Manejo químico e biológico não entra no aplicativo sem validação agronômica.",
+    "Os PDFs não são versionados; o hash registrado identifica o arquivo consultado.",
+    "Toda informação extraída de uma fonte deve ser citada com a referência completa (referencia_abnt) e a página; o campo fonte de cada item da base usa essa citação."
+  ],
+  "fontes": [
+    {
+      "id": "EMB-DOC269",
+      "tipo": "manual",
+      "titulo": "Manual de identificação de insetos e outros invertebrados da cultura da soja",
+      "referencia_abnt": "SOSA-GÓMEZ, D. R. et al. Manual de identificação de insetos e outros invertebrados da cultura da soja. 3. ed. Londrina: Embrapa Soja, 2014. (Embrapa Soja. Documentos, 269). ISSN 1516-781X. Disponível em: https://www.embrapa.br/en/busca-de-publicacoes/-/publicacao/991685/manual-de-identificacao-de-insetos-e-outros-invertebrados-da-cultura-da-soja. Acesso em: 8 nov. 2026.",
+      "citacao_curta": "SOSA-GÓMEZ et al., 2014",
+      "edicao": "3ª edição",
+      "serie": "Documentos 269 (ISSN 1516-781X)",
+      "instituicao": "Embrapa Soja, Londrina, PR",
+      "ano": 2014,
+      "autores": "Sosa-Gómez, D. R. et al. (10 autores)",
+      "paginas_total": 102,
+      "deslocamento_pagina_impressa": -1,
+      "url_publicacao": "https://www.embrapa.br/en/busca-de-publicacoes/-/publicacao/991685/manual-de-identificacao-de-insetos-e-outros-invertebrados-da-cultura-da-soja",
+      "url_pdf": "https://www.infoteca.cnptia.embrapa.br/infoteca/bitstream/doc/991685/1/Doc269OL.pdf",
+      "arquivo_consultado": "Doc269OL.pdf",
+      "sha256_arquivo_consultado": "9ea109220382a7b565aa55c72bd2d431f40d82135855c4a751488f18c190c008",
+      "consultado_em": "2026-11-08",
+      "contexto": "soja",
+      "estrutura_das_fichas": "Cada ficha traz o nome comum e científico, a descrição das fases do inseto e um parágrafo de danos, com fotos. Não há seção própria de manejo; ocorrem apenas menções pontuais a controle.",
+      "direitos": "direitos_reservados",
+      "base_dos_direitos": "A página da publicação indica direitos reservados, conforme a Lei nº 9.610.",
+      "uso_do_texto": "nao_autorizado",
+      "catalogo_embrapa": "Portal Embrapa: ano 2014, tipo livro, unidade Embrapa Soja."
+    },
+    {
+      "id": "CULT-312-CIGARRINHA",
+      "tipo": "artigo_de_revista",
+      "titulo": "Estratégias contra a cigarrinha-do-milho",
+      "referencia_abnt": "OLIVEIRA, I. R. de. Estratégias contra a cigarrinha-do-milho. Cultivar Grandes Culturas, [S. l.], n. 312, p. 12-14, 2025. Disponível em: https://www.embrapa.br/en/busca-de-publicacoes/-/publicacao/1179329/estrategias-contra-a-cigarrinha-do-milho. Acesso em: 8 nov. 2026.",
+      "citacao_curta": "OLIVEIRA, 2025",
+      "veiculo": "Revista Cultivar Grandes Culturas, nº 312, p. 12-14",
+      "autor": "Ivênio Rubens de Oliveira (Embrapa)",
+      "ano": 2025,
+      "paginas_total": 3,
+      "deslocamento_pagina_impressa": 11,
+      "url_publicacao": "https://www.embrapa.br/en/busca-de-publicacoes/-/publicacao/1179329/estrategias-contra-a-cigarrinha-do-milho",
+      "url_pdf": "https://www.alice.cnptia.embrapa.br/alice/bitstream/doc/1179329/1/Estrategias-contra-a-cigarrinha-do-milho.pdf",
+      "arquivo_consultado": "Estrategias-contra-a-cigarrinha-do-milho.pdf",
+      "sha256_arquivo_consultado": "0164f645c361cfc12975d3ffde211c351468ed28440332a50e714b014b05a3ad",
+      "consultado_em": "2026-11-08",
+      "contexto": "milho",
+      "estrutura_das_fichas": "Artigo corrido, sem ficha de identificação do inseto. Trata da importância da praga, dos sintomas nas plantas, do período de controle e dos produtos para controle.",
+      "direitos": "direitos_reservados",
+      "base_dos_direitos": "A página da publicação indica direitos reservados, conforme a Lei nº 9.610.",
+      "uso_do_texto": "nao_autorizado",
+      "unidade_embrapa": "Embrapa Milho e Sorgo",
+      "catalogo_embrapa": "Portal Embrapa: ano 2025, tipo artigo de periódico, unidade Embrapa Milho e Sorgo."
+    }
+  ],
+  "lacunas": [
+    {
+      "indice": 7,
+      "nome": "Percevejo-do-milho (Leptoglossus zonatus)",
+      "providencia": "Nenhuma das duas fontes cobre a classe; obter a fonte com o parceiro."
+    },
+    {
+      "indice": 12,
+      "nome": "Cigarrinha-das-pastagens (Deois flavopicta)",
+      "providencia": "Nenhuma das duas fontes cobre a classe; obter a fonte com o parceiro."
+    }
+  ],
+  "classes": [
+    {
+      "indice": 0,
+      "nome": "Vaquinha (Diabrotica speciosa)",
+      "cobertura": "descricao_e_danos",
+      "fontes": [
+        {
+          "fonte": "EMB-DOC269",
+          "nome_na_fonte": "Vaquinha-verde ou patriota (Diabrotica speciosa)",
+          "pagina_pdf": 43,
+          "pagina_impressa": 42,
+          "paginas_citadas": "42",
+          "citacao": "SOSA-GÓMEZ et al., 2014, p. 42",
+          "secoes": [
+            "descricao_das_fases",
+            "danos"
+          ],
+          "observacao": "Ficha no contexto da soja; a classe do modelo também cobre milho."
+        }
+      ]
+    },
+    {
+      "indice": 1,
+      "nome": "Cigarrinha-do-milho (Dalbulus maidis)",
+      "cobertura": "sintomas_e_manejo",
+      "fontes": [
+        {
+          "fonte": "CULT-312-CIGARRINHA",
+          "nome_na_fonte": "Estratégias contra a cigarrinha-do-milho (Dalbulus maidis)",
+          "pagina_pdf": 1,
+          "pagina_impressa": 12,
+          "paginas_citadas": "12-14",
+          "citacao": "OLIVEIRA, 2025, p. 12-14",
+          "secoes": [
+            "sintomas_nas_plantas",
+            "periodo_de_controle",
+            "manejo_quimico_e_biologico"
+          ],
+          "observacao": "Artigo de 3 páginas (12 a 14 impressas, PDF 1 a 3). Inclui manejo químico e biológico, que exige validação agronômica."
+        }
+      ]
+    },
+    {
+      "indice": 2,
+      "nome": "Percevejo-barriga-verde (Dichelops/Diceraeus)",
+      "cobertura": "descricao_e_danos",
+      "fontes": [
+        {
+          "fonte": "EMB-DOC269",
+          "nome_na_fonte": "Percevejo-barriga-verde (Dichelops melacanthus e D. furcatus)",
+          "pagina_pdf": 85,
+          "pagina_impressa": 84,
+          "paginas_citadas": "84",
+          "citacao": "SOSA-GÓMEZ et al., 2014, p. 84",
+          "secoes": [
+            "descricao_das_fases",
+            "danos"
+          ],
+          "observacao": "A fonte usa o gênero Dichelops; o modelo e o dataset usam Diceraeus spp. (ex-Dichelops)."
+        }
+      ]
+    },
+    {
+      "indice": 3,
+      "nome": "Lagarta-do-cartucho (Spodoptera frugiperda)",
+      "cobertura": "descricao_e_danos",
+      "fontes": [
+        {
+          "fonte": "EMB-DOC269",
+          "nome_na_fonte": "Lagarta-das-vagens (Spodoptera frugiperda)",
+          "pagina_pdf": 75,
+          "pagina_impressa": 74,
+          "paginas_citadas": "74",
+          "citacao": "SOSA-GÓMEZ et al., 2014, p. 74",
+          "secoes": [
+            "descricao_das_fases",
+            "danos"
+          ],
+          "observacao": "No manual a ficha usa o título lagarta-das-vagens e o contexto da soja; o modelo chama a classe de lagarta-do-cartucho."
+        }
+      ]
+    },
+    {
+      "indice": 4,
+      "nome": "Percevejo-marrom (Euschistus heros)",
+      "cobertura": "descricao_e_danos",
+      "fontes": [
+        {
+          "fonte": "EMB-DOC269",
+          "nome_na_fonte": "Percevejo-marrom (Euschistus heros)",
+          "pagina_pdf": 79,
+          "pagina_impressa": 78,
+          "paginas_citadas": "78",
+          "citacao": "SOSA-GÓMEZ et al., 2014, p. 78",
+          "secoes": [
+            "descricao_das_fases",
+            "danos"
+          ],
+          "observacao": "A ficha faz menção pontual à resistência a inseticidas, sem seção de manejo."
+        }
+      ]
+    },
+    {
+      "indice": 5,
+      "nome": "Percevejo-verde (Nezara viridula)",
+      "cobertura": "descricao_e_danos",
+      "fontes": [
+        {
+          "fonte": "EMB-DOC269",
+          "nome_na_fonte": "Percevejo-verde (Nezara viridula)",
+          "pagina_pdf": 83,
+          "pagina_impressa": 82,
+          "paginas_citadas": "82",
+          "citacao": "SOSA-GÓMEZ et al., 2014, p. 82",
+          "secoes": [
+            "descricao_das_fases",
+            "danos"
+          ],
+          "observacao": null
+        }
+      ]
+    },
+    {
+      "indice": 6,
+      "nome": "Percevejo-asa-preta (Edessa meditabunda)",
+      "cobertura": "descricao_e_danos",
+      "fontes": [
+        {
+          "fonte": "EMB-DOC269",
+          "nome_na_fonte": "Percevejo-edessa (Edessa meditabunda)",
+          "pagina_pdf": 87,
+          "pagina_impressa": 86,
+          "paginas_citadas": "86",
+          "citacao": "SOSA-GÓMEZ et al., 2014, p. 86",
+          "secoes": [
+            "descricao_das_fases",
+            "danos"
+          ],
+          "observacao": "O manual chama a espécie de percevejo-edessa; o modelo, de percevejo-asa-preta."
+        }
+      ]
+    },
+    {
+      "indice": 7,
+      "nome": "Percevejo-do-milho (Leptoglossus zonatus)",
+      "cobertura": "sem_fonte",
+      "fontes": []
+    },
+    {
+      "indice": 8,
+      "nome": "Lagarta-falsa-medideira (Chrysodeixis includens)",
+      "cobertura": "descricao_e_danos",
+      "fontes": [
+        {
+          "fonte": "EMB-DOC269",
+          "nome_na_fonte": "Falsa-medideira (Chrysodeixis includens)",
+          "pagina_pdf": 37,
+          "pagina_impressa": 36,
+          "paginas_citadas": "36",
+          "citacao": "SOSA-GÓMEZ et al., 2014, p. 36",
+          "secoes": [
+            "descricao_das_fases",
+            "danos"
+          ],
+          "observacao": null
+        }
+      ]
+    },
+    {
+      "indice": 9,
+      "nome": "Lagarta-da-soja (Anticarsia gemmatalis)",
+      "cobertura": "descricao_e_danos",
+      "fontes": [
+        {
+          "fonte": "EMB-DOC269",
+          "nome_na_fonte": "Lagarta-da-soja (Anticarsia gemmatalis)",
+          "pagina_pdf": 35,
+          "pagina_impressa": 34,
+          "paginas_citadas": "34",
+          "citacao": "SOSA-GÓMEZ et al., 2014, p. 34",
+          "secoes": [
+            "descricao_das_fases",
+            "danos"
+          ],
+          "observacao": null
+        }
+      ]
+    },
+    {
+      "indice": 10,
+      "nome": "Lagarta-das-vagens (Spodoptera eridania e S. cosmioides)",
+      "cobertura": "descricao_e_danos",
+      "fontes": [
+        {
+          "fonte": "EMB-DOC269",
+          "nome_na_fonte": "Lagarta-das-vagens (Spodoptera cosmioides)",
+          "pagina_pdf": 71,
+          "pagina_impressa": 70,
+          "paginas_citadas": "70",
+          "citacao": "SOSA-GÓMEZ et al., 2014, p. 70",
+          "secoes": [
+            "descricao_das_fases",
+            "danos"
+          ],
+          "observacao": "A classe reúne duas espécies; há uma ficha para cada."
+        },
+        {
+          "fonte": "EMB-DOC269",
+          "nome_na_fonte": "Lagarta-das-vagens (Spodoptera eridania)",
+          "pagina_pdf": 73,
+          "pagina_impressa": 72,
+          "paginas_citadas": "72",
+          "citacao": "SOSA-GÓMEZ et al., 2014, p. 72",
+          "secoes": [
+            "descricao_das_fases",
+            "danos"
+          ],
+          "observacao": "A classe reúne duas espécies; há uma ficha para cada."
+        }
+      ]
+    },
+    {
+      "indice": 11,
+      "nome": "Astylus variegatus",
+      "cobertura": "descricao_e_danos",
+      "fontes": [
+        {
+          "fonte": "EMB-DOC269",
+          "nome_na_fonte": "Larva-angorá (Astylus variegatus)",
+          "pagina_pdf": 99,
+          "pagina_impressa": 98,
+          "paginas_citadas": "98",
+          "citacao": "SOSA-GÓMEZ et al., 2014, p. 98",
+          "secoes": [
+            "descricao_das_fases",
+            "danos"
+          ],
+          "observacao": "A ficha descreve danos apenas eventuais. O manual usa o nome larva-angorá; o modelo usa o nome científico."
+        }
+      ]
+    },
+    {
+      "indice": 12,
+      "nome": "Cigarrinha-das-pastagens (Deois flavopicta)",
+      "cobertura": "sem_fonte",
+      "fontes": []
+    }
+  ],
+  "fontes_identificacao": [
+    {
+      "id": "AGROINSECT",
+      "uso": "Fotos das classes 0 a 3 e nomes das espécies.",
+      "licenca": "CC BY 4.0",
+      "referencia_abnt": "ALMEIDA, G.; NAZARIO, L.; TEIXEIRA, M.; STIRLE, J.; FRANCA, H.; OLIVEIRA, M.; OLIVEIRA, R.; NOVAK, S.; BAILÃO, A.; GONTIJO, P. AGROINSECT: a dataset for identifying agricultural insects and pests of interest. Versão 2. [S. l.]: Mendeley Data, 2026. DOI: 10.17632/4jyp4m9gxj.2. Disponível em: https://data.mendeley.com/datasets/4jyp4m9gxj/2. Acesso em: 8 nov. 2026.",
+      "citacao_curta": "ALMEIDA et al., 2026"
+    },
+    {
+      "id": "INATURALIST",
+      "uso": "Fotos de campo das 13 classes; crédito de cada autor em field_labels.csv.",
+      "licenca": "CC0 ou CC BY, foto a foto",
+      "referencia_abnt": "INATURALIST. Observações de pragas de soja e milho no Brasil. Disponível em: https://www.inaturalist.org. Acesso em: 4 out. 2026.",
+      "citacao_curta": "INATURALIST, 2026"
+    },
+    {
+      "id": "DATASET-INSTRUCOES",
+      "uso": "Nomes comum e científico das classes (tabela da seção 2).",
+      "licenca": "documento interno do projeto",
+      "referencia_abnt": "AGROTECH INTELI. Dataset de pragas de soja e milho: AgroTech Inteli × Agro App. Documento interno (instruções.md), pasta Agro_App/dataset/dataset do Drive da equipe, 2026.",
+      "citacao_curta": "AGROTECH INTELI, 2026"
+    }
+  ]
+}
