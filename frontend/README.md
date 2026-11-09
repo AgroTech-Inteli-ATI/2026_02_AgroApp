@@ -1,6 +1,6 @@
 # AgroApp — frontend de análise visual
 
-React + TypeScript + Vite. O EfficientNet-Lite0 é executado no próprio navegador com LiteRT.js. Não há backend, execução de notebooks, envio de fotografias, PWA ou modo offline.
+React + TypeScript + Vite. O EfficientNet-Lite0 é executado no próprio navegador com LiteRT.js. Não há backend, execução de notebooks nem envio de fotografias. No build de produção, um service worker guarda o app para funcionar offline (T9.4).
 
 ## Executar localmente
 
@@ -31,7 +31,7 @@ npm.cmd run build
 npm.cmd run preview
 ```
 
-Publique o diretório `dist/` integralmente em hospedagem estática com HTTPS. Sirva `.wasm` com `Content-Type: application/wasm` e preserve os caminhos `models/`, `runtime/`, `brand/` e `assets/`. Não há API a provisionar. Sem service worker; nenhuma promessa de funcionamento offline.
+Publique o diretório `dist/` integralmente em hospedagem estática com HTTPS. Sirva `.wasm` com `Content-Type: application/wasm` e preserve os caminhos `models/`, `runtime/`, `brand/` e `assets/`. Não há API a provisionar. Sirva `sw.js` sem cache longo, para que o navegador detecte versões novas.
 
 Para hospedagem em subdiretório, defina `VITE_BASE_PATH` com barras inicial e final antes de gerar o build, por exemplo `/agroapp/`. Para atualizar o frontend e o modelo, publique o build completo de forma atômica e faça o host revalidar `models/manifest.json` e `runtime/inference.js`, evitando misturar versões.
 
@@ -60,6 +60,21 @@ Publique **essa pasta `site/` integralmente**, em HTTPS, e confira `/release.jso
 O pacote mantém Float16 T7.2 principal e INT8 T7.3 de contingência. Este procedimento não corrige a divergência de decodificação/cor entre Python e navegador, não recalibra o limiar e não resolve a independência da avaliação histórica. Conteúdo técnico e validação no aparelho continuam pendentes.
 
 O servidor local adiciona COOP/COEP. Esses cabeçalhos permitem isolamento entre origens; a versão atual usa um único thread em WASM e não depende de multithreading. Todos os arquivos e fontes são servidos na mesma origem.
+
+## Funcionamento offline (T9.4)
+
+O build gera `dist/sw.js` (modelo em `scripts/sw.js`, lista de arquivos montada em `vite.config.ts`). Na primeira visita com rede, ele baixa e guarda de uma vez o app, as fontes, `models/manifest.json`, os dois `.tflite` do manifesto e as quatro variantes do runtime WASM (cerca de 60 MB). Quando termina, o status mostra **disponível offline**; se falhar (cota ou queda de rede), mostra **modo offline indisponível**. A partir daí o app abre e classifica sem rede. Cada build novo troca o nome do cache e apaga o anterior. No `npm run dev` o service worker não é registrado.
+
+`npx playwright test --project=offline` gera o build, abre o preview, espera o cache, desliga a rede, recarrega, classifica uma foto, confere o painel de conteúdo técnico e verifica que nenhuma requisição falhou. Também confere o aviso quando o pré-cache falha. O build e o preview só sobem para esse projeto; `--project=chromium` usa só o servidor de desenvolvimento.
+
+Demonstração no celular (critério da T9.4):
+
+1. Abra a URL HTTPS com rede e espere **Modelo pronto · disponível offline**.
+2. Ative o modo avião e feche a aba.
+3. Abra a URL de novo, tire uma foto com **Tirar foto** e confira as hipóteses e o conteúdo técnico.
+4. Registre aparelho, Android, navegador, URL e o hash do build (nome do cache em DevTools → Application → Cache Storage).
+
+O conteúdo técnico vai embutido no bundle JS (`src/data/content.ts`, gerado por `python -m src.associacao_conteudo_t9_3 frontend` na raiz), então também fica disponível offline assim que for preenchido.
 
 ## Modelo e contrato de imagem
 
