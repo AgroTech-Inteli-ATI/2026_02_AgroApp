@@ -1,0 +1,15 @@
+{
+  "auditoria_data": "2026-11-08",
+  "commit_auditado": "fe9db3192dad55ef704d22add7bc619a8e4d8a30",
+  "relatorio_arquivo": "Auditoria_AgroApp_Sprint05.md",
+  "relatorio_sha256": "12039e1dfb9d28bb9a65c31b5977ecdf9559ba075899e984b9ea3d72a475cc69",
+  "pacote_arquivo": "Evidencias_Auditoria_AgroApp.zip",
+  "pacote_sha256": "292f600ec197e3f95460023fb1d02632dc75d8d3c4c6db5302b41f315591fc21",
+  "extratos_sha256": {
+    "candidatos_auditoria.csv": "2dd14d4fab5cbab8f3293107474e7c24ac7f46cb896eb7773c15fee34cfcb951",
+    "par_duplicado_confirmado.jpg": "3795de29093a7027f8f2ff6094aa919b92fae6487d084ab1be8e5e6f2f46af32",
+    "par_relacao_suspeita.jpg": "0ddbab71ff49939732fdd548e322dacbf7b8b20a35dd5e2114d94c68a93ddb8d"
+  },
+  "reinspecao_data": "2026-11-13",
+  "metodo": "Inspeção visual assistida por IA dos 45 pares originais, sem usar predições do modelo. Revisão humana de Ana Célia pendente."
+}
