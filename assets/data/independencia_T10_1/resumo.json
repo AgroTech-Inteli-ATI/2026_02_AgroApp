@@ -1,0 +1,50 @@
+{
+  "esquema": "revisao_independencia_T10_1_v1",
+  "indice": "assets/data/treino_T5_2/indice_dataset.csv",
+  "indice_sha256": "28ee662885202f0bda3dec9660e44b28f99b8bd183210bcbdd795b103269b2eb",
+  "metadados_sha256": "ec4f6fa9e316107a3f97d1014a6abc7b22de8b7aac999bc6110db3d64fb4100b",
+  "manifesto_candidato_sha256": "72bd8194246cf5673cb6194491bbe1c0410d526a4c14027a087c414b9fa14f62",
+  "codigo_sha256": "ce19c1517d97d93ed4d0d88cd97d4b02d480670f3f5644cbaff1c6e66c3c71a5",
+  "revisao_pares_sha256": "be7dab6d05830b3dc51d31f130b18597e63206f1bf9fb7da5a3b6b037ea2b9b6",
+  "agrupamento_codigo_sha256": "813480e410008b2fe76fd27b5deececaa38dd0cbab102931814772094ff512ab",
+  "ambiente": {
+    "python": "3.12.15",
+    "numpy": "2.4.4",
+    "pillow": "12.2.0",
+    "scipy": "1.18.1"
+  },
+  "imagens_verificadas": 3156,
+  "particoes": {
+    "teste": 473,
+    "treino": 2209,
+    "validacao": 474
+  },
+  "sobreposicoes": {
+    "grupo_particao": 0,
+    "sha256_original": 0,
+    "sha256_pixels_rgb_exif": 0,
+    "inat_obs_id": 0
+  },
+  "busca_perceptual": {
+    "algoritmo": "L EXIF, Lanczos 32x32, DCT-II 8x8, mediana incluindo DC",
+    "bits": 64,
+    "distancia_maxima": 6,
+    "pares": 45
+  },
+  "revisao_visual": {
+    "duplicata_confirmada": 1,
+    "relacao_suspeita": 1,
+    "sem_vinculo_confirmado": 43
+  },
+  "grupos_relacionados": 2,
+  "imagens_em_grupos_relacionados": 5,
+  "classificacao_avaliacao_historica": "exploratoria",
+  "independencia_comprovada": false,
+  "novo_teste_independente": "nenhum_conjunto_reservado_identificado_nesta_revisao",
+  "artefatos_sha256": {
+    "assinaturas_imagens.csv": "d342b0617060ebb8c5462f378329143fe828f4b3c34280fe8fb23ad570c5d47c",
+    "pares_revisados.csv": "1f8ff90f687d06d3d39340b50fb6fbbf15c9b387269ea59f81a6375c776cbe20",
+    "grupos_relacionados.csv": "7237777de86c8f6d88e736cf0c2a0862f429b1d43c3d552b8985084638627ea4",
+    "sobreposicoes_exatas.csv": "e1c3458653e29160d6c4ac40eb09478d4ab189012ae5070f5953d1c5fab9d570"
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "esquema": "decisao_independencia_T10_1_v1",
+  "data": "2026-11-13",
+  "autor": "Rui",
+  "revisora": "Ana Célia",
+  "estado_revisao": "pendente",
+  "indice_sha256": "28ee662885202f0bda3dec9660e44b28f99b8bd183210bcbdd795b103269b2eb",
+  "resumo_sha256": "bc5b300f4760efa9d6cc336b9a2a1563157a26e49d11dd0b0c05606b5b3e6002",
+  "decisao_particao": "preservar_indice_historico_para_rastreabilidade",
+  "classificacao_resultados_historicos": "exploratorios",
+  "uso_permitido": [
+    "comparacao_descritiva_no_mesmo_recorte",
+    "regressao_do_pipeline",
+    "analise_de_erros",
+    "demonstracao_identificada"
+  ],
+  "limitacoes": [
+    "duplicata_transformada_entre_treino_e_teste",
+    "suspeita_de_cena_compartilhada_entre_validacao_e_teste",
+    "teste_ja_consultado_no_desenvolvimento",
+    "validacao_compartilhada_pela_selecao_do_checkpoint_e_do_limiar",
+    "busca_perceptual_limitada_e_nao_exaustiva"
+  ],
+  "generalizacao_comprovada": false,
+  "impacto_do_vazamento_nas_metricas": "nao_quantificado",
+  "tratamento_proxima_versao": [
+    {
+      "grupo": "REV-IMG_01019",
+      "membros": [
+        "IMG_01019",
+        "IMG_01020",
+        "IMG_01874"
+      ],
+      "decisao": "manter_observacao_e_copia_transformada_na_mesma_particao"
+    },
+    {
+      "grupo": "REV-IMG_01752",
+      "membros": [
+        "IMG_01752",
+        "IMG_01835"
+      ],
+      "decisao": "agrupar_preventivamente_ate_esclarecimento_da_origem",
+      "natureza": "suspeita_sem_confirmacao_de_mesma_fotografia"
+    }
+  ],
+  "novo_teste_independente": {
+    "status": "nao_identificado",
+    "manifesto_reservado": null,
+    "evidencia_temporal_reserva": null
+  },
+  "avaliacao_final": {
+    "orientacao": "classificar_como_exploratoria_enquanto_usar_este_indice",
+    "identificar": [
+      "hash_modelo",
+      "hash_build_ou_codigo",
+      "runtime",
+      "preprocessamento",
+      "hash_indice",
+      "particao",
+      "suporte_por_classe",
+      "pares_e_grupos_relacionados"
+    ],
+    "exclusao_retroativa": "pode_ser_analise_de_sensibilidade_identificada_sem_restaurar_independencia"
+  }
+}

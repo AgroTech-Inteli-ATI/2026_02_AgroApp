@@ -96,6 +96,13 @@
 
 </details>
 
+<details>
+<summary><strong>10. Consolidação da avaliação</strong></summary>
+
+- [10.1 Independência dos conjuntos de dados](#101-independência-dos-conjuntos-de-dados)
+
+</details>
+
 ---
 
 # 1. Entendimento de Negócio
@@ -4052,3 +4059,24 @@ O critério pede capturar, classificar e ver o conteúdo em modo avião num apar
 - O conteúdo técnico está vazio (T9.3). O painel aparece offline, mas só com o aviso de indisponível.
 - A demonstração congelada da Sprint 04 (`frontend/dist`, #49) foi gerada antes desta tarefa e não tem `sw.js`. O pacote da demo precisa ser gerado de novo depois do merge.
 - Modo offline e PWA instalável continuam fora do escopo do produto (`PRODUCT.md`). Esta tarefa só garante que o app, já aberto uma vez, volte a funcionar sem rede.
+
+# 10. Consolidação da avaliação
+
+## 10.1 Independência dos conjuntos de dados
+
+A revisão de 13/11/2026 conferiu as **3.156 imagens** do candidato EfficientNet-Lite0 de 26/10/2026, distribuídas em **2.209 de treino, 474 de validação e 473 de teste**. O índice utilizado possui SHA-256 `28ee662885202f0bda3dec9660e44b28f99b8bd183210bcbdd795b103269b2eb`, correspondente ao manifesto do candidato.
+
+Foram conferidos os arquivos originais, pixels após orientação EXIF, grupos registrados e IDs de observação iNaturalist. Essas chaves apresentaram zero sobreposições entre partições. A busca perceptual reproduziu os **45 pares candidatos** da auditoria, com as mesmas distâncias. A inspeção visual assistida por IA classificou um par como duplicata confirmada, um como relação suspeita e 43 como sem vínculo confirmado. A revisão humana permanece pendente.
+
+| Relação | Imagens | Tratamento definido |
+| --- | --- | --- |
+| Mesma fotografia em versões diferentes | `IMG_01019`, treino, e `IMG_01874`, teste | Registrar o vazamento entre fontes e vincular as duas versões à mesma unidade em uma futura partição. Incluir `IMG_01020`, outra foto da observação `142398716`, nesse grupo. |
+| Possível mesma cena ou sequência | `IMG_01752`, validação, e `IMG_01835`, teste | Manter o vínculo como suspeito e agrupar preventivamente em uma próxima versão até esclarecer a origem. |
+
+O índice histórico foi preservado para rastrear o treinamento e as avaliações. **Os resultados obtidos nesse recorte são exploratórios**, considerando o vazamento, os vínculos ainda desconhecidos e a consulta prévia ao teste durante o desenvolvimento. As comparações entre versões e análises de erros continuam possíveis com identificação do recorte, modelo, runtime e preprocessing. A magnitude do efeito dessas limitações sobre as métricas permanece desconhecida.
+
+Uma exclusão retrospectiva pode ser publicada como análise de sensibilidade, com regra, IDs removidos e novos suportes explicitados. A comprovação de generalização depende de um novo conjunto representativo, com grupos e manifesto reservados antes da avaliação e sem uso para ajuste de modelo ou limiar. **Nenhum novo teste com essa evidência de reserva foi identificado nesta revisão.**
+
+A busca perceptual possui alcance limitado. Recortes, rotações e fotos diferentes de uma mesma sessão podem escapar da triagem. Os 43 pares sem vínculo confirmado e os zeros nas chaves exatas devem ser lidos com essa restrição.
+
+O [registro completo da revisão](../assets/data/independencia_T10_1/README.md) reúne as figuras dos casos, a classificação dos 45 pares, as cinco imagens dos grupos relacionados, assinaturas das 3.156 imagens, hashes, método de reprodução e protocolo para um eventual novo teste. A [decisão sobre o uso dos resultados](../assets/data/independencia_T10_1/decisao_avaliacao.json) está vinculada ao índice e ao resumo da verificação.
