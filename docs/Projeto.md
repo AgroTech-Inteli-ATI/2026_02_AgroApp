@@ -4087,13 +4087,59 @@ O [registro completo da revisão](../assets/data/independencia_T10_1/README.md) 
 
 **Autora:** Ana Célia. **Revisora prevista:** Karol. **Meta de entrega:** a definir. **Entrega formal:** pendente de revisão; implementação e evidências técnicas registradas em 14/11/2026.
 
-O [contrato T10.2](Preprocessamento_T10_2.md) explicita a decodificação RGB8, a política de ignorar ICC nos dois ambientes para preservar a entrada histórica do treinamento, EXIF aplicado uma vez, resize bicúbico Pillow, padding cinza e normalização float32/INT8. O navegador passou a usar `colorSpaceConversion: 'none'` e canvas sRGB explícito; o Python passou a recusar transparência como a web e expor os pixels anteriores à normalização para auditoria.
+O contrato T10.2 é implementado em [`preprocessamento.py`](../src/preprocessamento.py) e [`preprocess.ts`](../frontend/src/lib/preprocess.ts). Ele explicita a decodificação RGB8, a política de ignorar ICC nos dois ambientes para preservar a entrada histórica do treinamento, EXIF aplicado uma vez, resize bicúbico Pillow, padding cinza e normalização float32/INT8. O navegador passou a usar `colorSpaceConversion: 'none'` e canvas sRGB explícito; o Python passou a recusar transparência como a web e expor os pixels anteriores à normalização para auditoria.
 
 Os testes com 18 entradas fotográficas (originais sem perfil, sRGB e Display P3; variantes com oito orientações EXIF e casos de fronteira de confiança) apresentaram **igualdade exata dos pixels e dos tensores** em Python e Chromium desktop. O controle negativo do comportamento anterior revelou diferenças máximas de 9 níveis RGB no JPEG Display P3 e 13 no PNG com ICC.
 
-A [comparação dos modelos finais Float16 T7.2 e INT8 T7.3](Comparacao_preprocessamento_T10_2.md) registra os hashes, 13 scores, classes, decisões e decomposição por etapa. Contra Python sem delegates, o erro máximo de score foi aproximadamente `4,62e-6` no Float16 e `0,11328125` no INT8, com duas mudanças de decisão nesse último. **Com XNNPACK habilitado no Python, o INT8 coincidiu exatamente com a web; o Float16 diferiu em até `1,20e-7`, sem mudanças de classe/decisão nos dois modelos.** A configuração de runtime deve acompanhar a versão do modelo nas validações. Esses resultados não representam uma nova avaliação independente de acurácia nem recalibração do limiar.
+A [comparação dos modelos finais Float16 T7.2 e INT8 T7.3](#103-comparação-dos-modelos-float16-e-int8-entre-python-e-web) registra os hashes, 13 scores, classes, decisões e decomposição por etapa. Contra Python sem delegates, o erro máximo de score foi aproximadamente `4,62e-6` no Float16 e `0,11328125` no INT8, com duas mudanças de decisão nesse último. **Com XNNPACK habilitado no Python, o INT8 coincidiu exatamente com a web; o Float16 diferiu em até `1,20e-7`, sem mudanças de classe/decisão nos dois modelos.** A configuração de runtime deve acompanhar a versão do modelo nas validações. Esses resultados não representam uma nova avaliação independente de acurácia nem recalibração do limiar.
 
 **Conferência do aceite técnico:** contrato definido e implementado nos dois ambientes; testes fotográficos com ICC, sem perfil e com EXIF; correspondência demonstrada no corpus; comparação dos modelos finais documentada na seção 10.3. A revisão humana de Karol não é presumida por essa verificação automatizada.
+
+### Contrato de preprocessing
+
+Identificador: `T10.2-rgb8-sem-conversao-icc-v1`. Treino, calibração e avaliação Python usam `preparar_imagem`; a inferência web usa `prepareImage`, `normalize` e `quantize` no worker.
+
+| Etapa | Regra comum aos pipelines |
+| --- | --- |
+| Decodificação | JPEG, PNG e WebP estáticos de fotografias RGB8 opacas. Pillow no Python; `createImageBitmap` no navegador, sem redimensionamento na decodificação. Cinza de 8 bits é expandido para RGB; paleta e alpha totalmente opaco podem ser convertidos. |
+| ICC e cor | Preservar os códigos RGB8 e ignorar ICC e correção de gama dos metadados. Python usa `convert('RGB')` sem `ImageCms`; a web usa `colorSpaceConversion: 'none'`, `premultiplyAlpha: 'none'` e canvas/leitura sRGB explícitos. Os códigos são tratados como sRGB na leitura e no preview. |
+| EXIF | Aplicar a orientação 1–8, incluindo espelhamentos, exatamente uma vez antes de calcular as dimensões. Python usa `ImageOps.exif_transpose`; a web, `imageOrientation: 'from-image'`. As dimensões devolvidas são as orientadas. |
+| Transparência | Recusar qualquer pixel com alpha menor que 255, inclusive transparência de paleta. Não compor a foto sobre outra cor nem descartar alpha silenciosamente. |
+| Dimensões | Limite de 40 milhões de pixels. A interface também limita o arquivo a 10 MiB. A verificação de pixels ocorre após abrir o cabeçalho no Python e criar o bitmap na web; não garante um limite de memória durante a decodificação. |
+| Geometria | Escala = `224 / max(largura, altura)`; cada dimensão = `max(1, round_even(dimensão * escala))`. Preservar proporção e ampliar imagens pequenas. Empates são arredondados para o inteiro par. |
+| Reamostragem | Bicúbica separável do Pillow 12.2, com antialiasing na redução e arredondamento/clipping RGB8 entre os passes. A web reproduz os coeficientes de precisão de 22 bits, sem usar o resize nativo do canvas. |
+| Preenchimento | Quadro 224×224 com RGB8 `(128,128,128)`. Deslocamento = `floor((224 - dimensão) / 2)`; sobra ímpar à direita/embaixo. Sem recorte. |
+| Float | HWC RGB contíguo, `float32(pixel / 255)` em `[0,1]`, com batch `[1,224,224,3]`. O modelo Float16 final recebe float32. Não repetir a normalização do backbone embutida no modelo. |
+| INT8 | A partir do float32: `clip(round_even(x / scale + zero_point), -128,127)`. Escala e zero point vêm do modelo final. Os testes cobrem os 256 níveis RGB com a escala oficial T7.3. |
+| Preview | Gerado dos próprios RGB8 224×224 usados no tensor, sem segunda decodificação ou conversão ICC. |
+
+Ignorar ICC preserva os valores utilizados no treinamento T4.1 e elimina a conversão automática que ocorria somente na web. A regra estabelece correspondência numérica; não converte Display P3 ou Adobe RGB para sRGB colorimétrico. Uma mudança dessa política exige outro contrato, novas referências e reavaliação dos modelos. CMYK/YCCK, HDR, canais de 16 bits, imagens animadas, perfis inválidos e outros formatos não têm equivalência certificada nesta entrega.
+
+### Evidências, tolerâncias e verificação
+
+As [referências fotográficas](../frontend/tests/fixtures/preprocessing/README.md) incluem três originais intactos (sem perfil, sRGB e Display P3), variantes lossless com/sem ICC, WebP, oito orientações EXIF controladas e quatro casos de fronteira de confiança. EXIF e brilho das variantes são transformações de teste sobre fotos reais; não são registros originais de câmera. `reference.json` registra hashes, dimensões, perfil, orientação e versões Python; `boundary-provenance.json` registra a origem, o brilho e o modelo utilizados na seleção dos casos críticos.
+
+Os arquivos `.decoded.gz` e `.pixels.gz` preservam os RGB8 do Python antes e depois da geometria. PNG e WebP lossless exigem igualdade exata. Para os JPEGs deste corpus, o teto de regressão é diferença máxima de 3 níveis RGB e MAE de 0,35 por canal na escala 0–255, nas duas etapas. Esses limites acomodam diferenças entre decodificadores e não garantem o mesmo teto para qualquer JPEG. **Na execução registrada, todos os 18 casos tiveram diferença zero.**
+
+A normalização e a quantização exigem igualdade exata quando os RGB8 são iguais. Os hashes float32 e dos tensores são conferidos contra as referências Python; código, dependências, política ou imagens desatualizados impedem a comparação. Os seis padrões sintéticos anteriores continuam exigindo os hashes exatos do Pillow e cobrem ampliação, redução, dimensões estreitas e empate no arredondamento. O controle negativo usa a conversão ICC automática antiga nas mesmas fotos e detecta o defeito corrigido.
+
+Para verificar o preprocessing sem TensorFlow, com Pillow 12.2.0 e NumPy 2.4.4:
+
+```powershell
+python frontend/scripts/generate-preprocessing-reference.py
+python tests/validar_preprocessamento.py
+python tests/validar_preprocessamento_t10_2.py
+cd frontend
+npm.cmd test
+npx.cmd playwright test tests/preprocessing.spec.ts --project=chromium
+npm.cmd run build
+```
+
+O teste de inferência é ativado com `MODEL_COMPARISON=1` após gerar as referências dos modelos, conforme a seção 10.3. Ele exige correspondência com Python usando XNNPACK: scores INT8 exatos neste corpus e tolerância de `1e-5` no Float16. As diferenças contra Python sem delegates são registradas, incluindo mudanças de decisão.
+
+Fotos RGB8 opacas mantêm os pixels de entrada Python anteriores, inclusive com ICC. A recusa de transparência é uma restrição nova no Python, alinhada à web. Os resultados e hashes históricos de código continuam identificando suas execuções originais; não são substituídos para simular nova calibração. Uma nova execução de etapas que conferem proveniência deve gerar sua própria evidência.
+
+Referências das APIs: [WHATWG, ImageBitmap](https://html.spec.whatwg.org/multipage/imagebitmap-and-animations.html), para decodificação sem conversão com `none`, e [Pillow, ImageCms](https://pillow.readthedocs.io/en/stable/reference/ImageCms.html), para a transformação colorimétrica explícita que este contrato não aplica.
 
 ## 10.3 Comparação dos modelos Float16 e INT8 entre Python e web
 
@@ -4182,4 +4228,4 @@ python -m src.comparacao_preprocessamento_t10_2 relatorio
 
 Na execução de 14/11/2026 passaram os **19 testes unitários**, os **12 testes de navegador**, incluindo inferência real e offline, as validações Python do preprocessing e o build TypeScript/Vite. Após acrescentar a checagem explícita das referências XNNPACK, os dois testes comparativos de navegador e as validações Python foram executados novamente e passaram.
 
-O [relatório detalhado](Comparacao_preprocessamento_T10_2.md) e os [dados completos](../assets/data/comparacao_preprocessamento_T10_2/comparacao.json) preservam os scores por classe, as decisões, as margens em relação ao limiar, os erros por etapa e a identidade dos modelos. A reprodução gera os tensores intermediários em `frontend/.work/model-comparison-*.json`.
+Os [dados completos](../assets/data/comparacao_preprocessamento_T10_2/comparacao.json) preservam os scores por classe, as decisões, as margens em relação ao limiar, os erros por etapa e a identidade dos modelos. O comando `relatorio` atualiza esse JSON; a análise descritiva é mantida nesta seção. A reprodução gera os tensores intermediários em `frontend/.work/model-comparison-*.json`.

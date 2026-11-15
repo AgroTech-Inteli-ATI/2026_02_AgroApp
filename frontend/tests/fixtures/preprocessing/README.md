@@ -11,7 +11,7 @@
 com gzip determinístico. Os JPEGs originais são entradas fixas. A busca de
 fronteiras requer `python -m src.comparacao_preprocessamento_t10_2 referencia`.
 
-Consulte [o contrato](../../../../docs/Preprocessamento_T10_2.md) para tolerâncias
-e [o relatório](../../../../docs/Comparacao_preprocessamento_T10_2.md) para
+Consulte [o contrato](../../../../docs/Projeto.md#102-correspondência-do-preprocessing-python-e-web) para tolerâncias
+e [o relatório](../../../../docs/Projeto.md#103-comparação-dos-modelos-float16-e-int8-entre-python-e-web) para
 divergências dos runtimes. O corpus é de regressão de preprocessing, sem alegação
 de acurácia, calibração ou independência estatística.

@@ -22,7 +22,7 @@ def decodificar_imagem(origem: Path | str | Image.Image) -> Image.Image:
 
     Preserva os valores codificados usados no treinamento T4.1. Não usar
     ImageCms aqui: na web createImageBitmap usa colorSpaceConversion='none'.
-    Consulte docs/Preprocessamento_T10_2.md para o domínio e as tolerâncias.
+    Consulte a seção 10.2 de docs/Projeto.md para o domínio e as tolerâncias.
     """
     if not isinstance(origem, Image.Image):
         with Image.open(origem) as imagem:

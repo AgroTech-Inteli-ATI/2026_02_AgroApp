@@ -249,65 +249,7 @@ def relatorio():
                   for f, m in result["models"].items())
     result["status"] = "correspondencia_com_XNNPACK_divergencia_INT8_sem_delegate" if aligned else "requer_analise_mesmo_com_delegate_alinhado"
     write(OUT / "comparacao.json", result)
-    lines = ["# Comparação Python × web após T10.2", "", f"**Resultado: {result['status']}.** O preprocessing e o efeito do delegate são quantificados separadamente abaixo. A configuração do runtime precisa acompanhar a versão do modelo nas validações.", "", f"Contrato: `{CONTRATO_PREPROCESSAMENTO}`. Limiar: {THRESHOLD} (top-1 ≥ limiar).",
-             "", f"Python {python['environment']['python']}, Pillow {pillow_version}, NumPy {np.__version__}, TensorFlow {python['environment']['tensorflow']}; CPU, 1 thread, sem delegates padrão.",
-             f"Chromium {web['browser']}; LiteRT.js 2.6.0 CPU/WASM, 1 thread. Windows; execução desktop automatizada.",
-             "", "As fotos não formam uma amostra independente de acurácia. Variantes EXIF e brilho são casos de regressão derivados de fotos reais; os quatro casos de fronteira foram procurados deliberadamente nos modelos finais.",
-             "", "## Identidade dos modelos", ""]
-    for format, model in result["models"].items():
-        spec = model["spec"]
-        lines += [f"- **{format} {spec['version']}**: `{spec['sourcePath']}`; SHA-256 original `{spec['sourceSha256']}`; cópia web `{spec['sha256']}`."]
-    lines += ["", "Originais e cópias web produziram os mesmos 13 scores no Python em todos os casos. Classes, política, arquivos de entrada e código têm hashes no JSON anexo.",
-              "", "## Python sem delegates × web CPU/WASM", "", "Esta configuração explicita o caminho de kernels sem delegates usado pelo helper de benchmark. O ensaio com delegates padrão, também usado pela avaliação T8.1 e pelo gerador de referência do frontend, aparece em seguida.", "", "| Modelo | Casos | Δ pixel máx. (0–255) | Δ tensor máx. | Δ score máx. | MAE scores | Classes diferentes | Decisões diferentes |",
-              "|---|---:|---:|---:|---:|---:|---:|---:|"]
-    for format, model in result["models"].items():
-        s = model["summary"]
-        lines.append(f"| {format} | {s['cases']} | {s['maxPixelDifference']:.0f} | {s['maxTensorDifference']:.9g} | {s['maxScoreDifference']:.9g} | {s['meanAbsoluteScoreDifference']:.9g} | {s['classChanges']} | {s['decisionChanges']} |")
-    lines += ["", "A tolerância de scores de 2/256 dos testes sintéticos históricos é usada como sinal de investigação, sem generalizá-la como garantia para fotos reais. " + "; ".join(f"{format}: {m['summary']['casesExceedingHistoricalTolerance']} casos acima dessa referência" for format, m in result["models"].items()) + "."]
-    lines += ["", "Controle negativo do pipeline antigo (conversão ICC automática):", ""]
-    for item in preprocessing["legacy"]:
-        lines.append(f"- `{item['file']}`: Δ pixel máximo {item['pixels']['max']}; MAE {item['pixels']['mae']:.6f}. Após a correção, Δ=0 em todos os casos medidos.")
-    lines += ["", "Diferenças de tensor usam a unidade de cada entrada: float32 em [0,1] para Float16, inteiros [-128,127] para INT8. Cada elemento normalizado/quantizado da web foi comparado exatamente com Python usando os mesmos RGB8 da web.",
-              "", "A decomposição executa Python com o tensor produzido na web: Δ preprocessing = Python(tensor web) − Python(tensor Python); Δ runtime = web(tensor web) − Python(tensor web). Os máximos não são somáveis, pois podem ocorrer em classes diferentes.", ""]
-    for format, model in result["models"].items():
-        s = model["summary"]
-        lines.append(f"- {format}: Δ score máx. atribuído ao preprocessing {s['maxPreprocessingScoreDifference']:.9g}; ao runtime {s['maxRuntimeScoreDifference']:.9g}; web contra Python com delegate padrão {s['maxWebVsPythonDefaultDelegateDifference']:.9g}.")
-    lines += ["", "O ensaio adicional habilita o delegate padrão do TFLite Python (XNNPACK nesta execução), mantendo o tensor web. Isso testa a influência do caminho otimizado sem alterar os modelos. A proximidade dos resultados apoia uma hipótese sobre os kernels; não identifica sozinha o operador causador."]
-    lines += ["", "## Python com XNNPACK × web CPU/WASM", "", "| Modelo | Δ score máx. | Classes diferentes | Decisões diferentes |",
-              "|---|---:|---:|---:|"]
-    for format, model in result["models"].items():
-        s = model["summary"]
-        lines.append(f"| {format} | {s['maxWebVsPythonDefaultDelegateDifference']:.9g} | {s['defaultDelegateClassChanges']} | {s['defaultDelegateDecisionChanges']} |")
-    lines += ["", "A referência Python com delegates padrão corresponde à configuração documentada em `src/avaliacao_pos_conversao_t8_1.py` (T8.1 usou 4 threads; este ensaio usa 1). A igualdade observada no INT8 com XNNPACK é evidência deste corpus, sem garantir que todos os operadores/builds de runtimes sejam intercambiáveis."]
-    lines += ["", "## Casos próximos ao limiar e divergências", "", "A tabela abaixo usa Python **sem delegates**. Com XNNPACK no Python, não houve mudanças de classe/decisão em nenhum desses casos.", "", "| Modelo / foto | Classe Python → web (índice) | Top-1 Python | Top-1 web | Decisão Python → web | Δ score máx. |",
-              "|---|---|---:|---:|---|---:|"]
-    for format, model in result["models"].items():
-        for r in model["cases"]:
-            if r["file"].startswith("boundary-") or r["classChanged"] or r["decisionChanged"] or r["exceedsHistoricalTolerance"] or abs(r["python"]["margin"]) < .03:
-                a, b = r["python"], r["web"]
-                lines.append(f"| {format} / {r['file']} | {a['class']} → {b['class']} | {a['score']:.9f} | {b['score']:.9f} | {a['decision']} → {b['decision']} | {r['scoresEndToEnd']['max']:.9g} |")
-    lines += ["", "## Diferenças entre os modelos finais", "", "Os índices e nomes completos das 13 classes estão no JSON anexo. Divergências entre Float16 e INT8 não são divergências Python × web:", "",
-              "| Foto | Float16 Python: classe / score / decisão | INT8 Python: classe / score / decisão |",
-              "|---|---|---|"]
-    for r in cross:
-        if r["pythonClassChanged"] or r["pythonDecisionChanged"]:
-            a = next(c["python"] for c in result["models"]["Float16"]["cases"] if c["file"] == r["file"])
-            b = next(c["python"] for c in result["models"]["INT8"]["cases"] if c["file"] == r["file"])
-            lines.append(f"| {r['file']} | {a['class']} / {a['score']:.6f} / {a['decision']} | {b['class']} / {b['score']:.6f} / {b['decision']} |")
-    lines += ["", "## Pontos para análise", "",
-              "- **Prioridade: padronizar a configuração de referência do INT8.** Com XNNPACK no Python os scores coincidiram com a web; sem delegates houve diferenças de até 0,11328125 e duas mudanças de decisão. Registrar delegate, threads e build junto ao hash do modelo. Caso seja necessário sustentar equivalência também sem delegates, reduzir os casos críticos e localizar o primeiro operador divergente. Os tensores de entrada são idênticos.",
-              "- Scores muito próximos de 0,65 podem mudar a decisão mesmo com a classe preservada e erro numérico pequeno. Não ampliar a tolerância do limiar nem arredondar scores para ocultar o efeito; qualquer margem de abstenção exige decisão de produto e validação/calibração própria.",
-              f"- Float16 × INT8 no Python: {sum(r['pythonClassChanged'] for r in cross)} diferenças de classe e {sum(r['pythonDecisionChanged'] for r in cross)} diferenças de decisão. Na web: {sum(r['webClassChanged'] for r in cross)} e {sum(r['webDecisionChanged'] for r in cross)}, respectivamente. São modelos numericamente distintos; não atribuir essas diferenças automaticamente ao preprocessing.",
-              "- A política de ignorar ICC preserva os valores usados no treino. Uma futura migração para conversão colorimétrica sRGB precisa versionar o contrato e reavaliar treino, calibração e métricas, sobretudo para Display P3.",
-              "- CPU/WASM foi medido aqui. WebGPU, Safari/Firefox e aparelho Android físico exigem execução equivalente antes de generalizar a correspondência.",
-              "- O limiar 0,65 foi calibrado anteriormente em Keras FP32; estes testes não demonstram calibração estatística do Float16 ou INT8.",
-              "- Os pares de fronteira foram obtidos por busca binária no brilho de uma foto. RGB8 e quantização tornam a função descontínua; o arquivo `boundary-int8-above.png` fica mais distante de 0,65 no Python e cruza para baixo na web. Não interpretar o par como estimativa da frequência de erro em fotos naturais.",
-              "", "## Reprodução e evidência", "", "Na raiz, em ambiente com TensorFlow 2.21.0, Pillow 12.2.0 e NumPy 2.4.4:", "", "```powershell",
-              "cd frontend", "npm.cmd run assets", "cd ..", "python -m src.comparacao_preprocessamento_t10_2 referencia", "cd frontend",
-              "$env:MODEL_COMPARISON='1'", "npx.cmd playwright test tests/preprocessing.spec.ts --project=chromium", "Remove-Item Env:MODEL_COMPARISON", "cd ..",
-              "python -m src.comparacao_preprocessamento_t10_2 relatorio", "```", "",
-              "[Dados completos](../assets/data/comparacao_preprocessamento_T10_2/comparacao.json): 13 scores de cada execução, hashes dos tensores, erros por etapa, decisões, margens e proveniência dos casos. Arquivos intermediários com os tensores completos ficam em `frontend/.work/model-comparison-*.json` e podem ser regenerados."]
-    (ROOT / "docs/Comparacao_preprocessamento_T10_2.md").write_text("\n".join(lines) + "\n", encoding="utf-8", newline="\n")
+    # Consulte a analise descritiva na secao 10.3 de docs/Projeto.md.
     print(json.dumps({k: v["summary"] for k, v in result["models"].items()}, indent=2))
 
 

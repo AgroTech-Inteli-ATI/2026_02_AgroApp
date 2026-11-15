@@ -1,6 +1,6 @@
 {
   "contract": "T10.2-rgb8-sem-conversao-icc-v1",
-  "createdUtc": "2026-11-15T01:02:39.445858+00:00",
+  "createdUtc": "2026-11-15T01:15:26.912182+00:00",
   "pythonEnvironment": {
     "python": "3.13.14",
     "pillow": "12.2.0",
@@ -72,12 +72,12 @@
   "policySha256": "78bf5cd6805ec97f55109e15efe70f0d05f7cfd89723de6e48e3f0aaa798452f",
   "threshold": 0.65,
   "codeSha256": {
-    "src/preprocessamento.py": "34e70deb33d0b5c3300d204f58a0756e5ad6f2153cce5f918151ef6ea675eace",
+    "src/preprocessamento.py": "fe5ac7f77674ac1bbe3a986951c19f6f293685df617f5030f7ef7a82c2bd3375",
     "frontend/src/lib/preprocess.ts": "1b0f3d2983504543732a515735b04ac039e68d405e73a3086df309c091582be5",
     "frontend/src/lib/inference.worker.ts": "81163e691fdaf322fe7529ffeb29a34656703bfbbdeb1fb66f89d2ac8438c16c",
     "frontend/tests/preprocessing.worker.ts": "521a59910a08df1c75511062a86225413332d27ae4f4a4ad71e9aebf120e3b24",
     "frontend/tests/preprocessing.spec.ts": "be2abf82d5787bc5ef9406a6cef70ec77db6a6d019e5288b92cd7ff06e25f73a",
-    "src/comparacao_preprocessamento_t10_2.py": "c7d11f8754dce1cbcc304e85abdd92b03235553de8f89b0c1c339265f04d08de",
+    "src/comparacao_preprocessamento_t10_2.py": "2bbd8f9de219021b29eca7d0dbfab3dd59fb4117ee4a1a94fca151ae2e8b6c70",
     "frontend/package-lock.json": "8be565b1aab50e9bdce8e59da8d839e781e1292a03af5ef4e76d9d1a27a0255a",
     "frontend/src/lib/confidence.ts": "2c3e53eb784aa8e7fb3fce380a1d3f6604db0d96018c6f4e81266d20ad7ab768",
     "src/benchmark_t5_6.py": "c44decee72eeb2cf51bbadf2cce16a707c640cc76410bdc5c144db56cfaaa2c7",
