@@ -100,6 +100,8 @@
 <summary><strong>10. Consolidação da avaliação</strong></summary>
 
 - [10.1 Independência dos conjuntos de dados](#101-independência-dos-conjuntos-de-dados)
+- [10.2 Correspondência do preprocessing Python e web](#102-correspondência-do-preprocessing-python-e-web)
+- [10.3 Comparação dos modelos Float16 e INT8 entre Python e web](#103-comparação-dos-modelos-float16-e-int8-entre-python-e-web)
 
 </details>
 
@@ -4080,3 +4082,104 @@ Uma exclusão retrospectiva pode ser publicada como análise de sensibilidade, c
 A busca perceptual possui alcance limitado. Recortes, rotações e fotos diferentes de uma mesma sessão podem escapar da triagem. Os 43 pares sem vínculo confirmado e os zeros nas chaves exatas devem ser lidos com essa restrição.
 
 O [registro completo da revisão](../assets/data/independencia_T10_1/README.md) reúne as figuras dos casos, a classificação dos 45 pares, as cinco imagens dos grupos relacionados, assinaturas das 3.156 imagens, hashes, método de reprodução e protocolo para um eventual novo teste. A [decisão sobre o uso dos resultados](../assets/data/independencia_T10_1/decisao_avaliacao.json) está vinculada ao índice e ao resumo da verificação.
+
+## 10.2 Correspondência do preprocessing Python e web
+
+**Autora:** Ana Célia. **Revisora prevista:** Karol. **Meta de entrega:** a definir. **Entrega formal:** pendente de revisão; implementação e evidências técnicas registradas em 14/11/2026.
+
+O [contrato T10.2](Preprocessamento_T10_2.md) explicita a decodificação RGB8, a política de ignorar ICC nos dois ambientes para preservar a entrada histórica do treinamento, EXIF aplicado uma vez, resize bicúbico Pillow, padding cinza e normalização float32/INT8. O navegador passou a usar `colorSpaceConversion: 'none'` e canvas sRGB explícito; o Python passou a recusar transparência como a web e expor os pixels anteriores à normalização para auditoria.
+
+Os testes com 18 entradas fotográficas (originais sem perfil, sRGB e Display P3; variantes com oito orientações EXIF e casos de fronteira de confiança) apresentaram **igualdade exata dos pixels e dos tensores** em Python e Chromium desktop. O controle negativo do comportamento anterior revelou diferenças máximas de 9 níveis RGB no JPEG Display P3 e 13 no PNG com ICC.
+
+A [comparação dos modelos finais Float16 T7.2 e INT8 T7.3](Comparacao_preprocessamento_T10_2.md) registra os hashes, 13 scores, classes, decisões e decomposição por etapa. Contra Python sem delegates, o erro máximo de score foi aproximadamente `4,62e-6` no Float16 e `0,11328125` no INT8, com duas mudanças de decisão nesse último. **Com XNNPACK habilitado no Python, o INT8 coincidiu exatamente com a web; o Float16 diferiu em até `1,20e-7`, sem mudanças de classe/decisão nos dois modelos.** A configuração de runtime deve acompanhar a versão do modelo nas validações. Esses resultados não representam uma nova avaliação independente de acurácia nem recalibração do limiar.
+
+**Conferência do aceite técnico:** contrato definido e implementado nos dois ambientes; testes fotográficos com ICC, sem perfil e com EXIF; correspondência demonstrada no corpus; comparação dos modelos finais documentada na seção 10.3. A revisão humana de Karol não é presumida por essa verificação automatizada.
+
+## 10.3 Comparação dos modelos Float16 e INT8 entre Python e web
+
+Em **14/11/2026**, após a correção do preprocessing da T10.2, foram executados testes comparativos com os modelos finais **Float16 T7.2**, principal, e **INT8 T7.3**, de contingência. O objetivo foi verificar se a mesma foto produz tensores, scores, classes e decisões de confiança correspondentes no Python e no navegador, separando o efeito da preparação da imagem do efeito do runtime de inferência.
+
+**Resultado:** os pixels e os tensores de entrada foram idênticos nos dois ambientes nos 18 casos. Com XNNPACK habilitado no Python, os scores INT8 coincidiram exatamente com os da web; no Float16, a diferença máxima foi `1,1920929e-7`. Nessa configuração não houve mudança de classe ou de decisão. Ao desativar os delegates no Python, o INT8 apresentou diferenças maiores e duas mudanças de decisão, detalhadas abaixo.
+
+### Modelos e rastreabilidade
+
+Os testes utilizaram o candidato EfficientNet-Lite0 `candidato_T5_6_20261026`, com a mesma ordem das [13 classes](../assets/modelos/candidato_T5_6_20261026/classes.json) e os artefatos selecionados para o frontend:
+
+| Papel | Modelo e versão | Artefato original | SHA-256 original |
+| --- | --- | --- | --- |
+| Principal | Float16 T7.2 | [`modelo_float16.tflite`](../assets/modelos/comparacao_T7_2_candidato_T5_6_20261026/modelo_float16.tflite) | `c9a26ce13806a2fa26bffbd8cfbdac83ff4c05ffff1009ca9483bb587a5a8fa2` |
+| Contingência | INT8 T7.3 | [`modelo_int8.tflite`](../assets/modelos/quantizacao_T7_3_candidato_T5_6_20261026/modelo_int8.tflite) | `456caec54fae3c57684f9afd6842cae611a1f6cb6587b40b0c5bd8256aea1340` |
+
+As cópias especializadas para a web tiveram seus hashes conferidos contra o manifesto do frontend. No Python sem delegates, cada original e sua cópia web produziram os mesmos 13 scores em todos os casos. Os hashes das cópias, dos tensores, das imagens, do código, das classes e da política de confiança estão nos [dados completos da comparação](../assets/data/comparacao_preprocessamento_T10_2/comparacao.json). Nenhum modelo foi retreinado ou alterado por estes testes.
+
+A comparação recusa referências antigas quando mudam código, dependências, política ou imagens. Os hashes float32 e dos tensores do navegador também são conferidos contra as referências Python, evitando que resultados de versões diferentes sejam apresentados como uma única execução.
+
+### Protocolo de comparação
+
+O corpus contém **18 entradas fotográficas**, entre originais sem perfil de cor, com sRGB e com Display P3, variantes lossless com e sem ICC, WebP, oito orientações EXIF e quatro casos de fronteira de confiança. As orientações e os ajustes de brilho foram aplicados deliberadamente a fotografias reais para testar o processamento. São casos de regressão; não constituem 18 observações independentes nem um novo conjunto de avaliação de acurácia. A origem e as transformações estão nas [referências fotográficas](../frontend/tests/fixtures/preprocessing/README.md).
+
+O ambiente Python utilizou **Python 3.13.14, Pillow 12.2.0, NumPy 2.4.4 e TensorFlow 2.21.0**, em CPU com uma thread, nas configurações sem delegates e com delegate padrão XNNPACK. O navegador foi **Chromium 156.0.8078.4**, no Windows, com **LiteRT.js 2.6.0 em CPU/WASM e uma thread**. A configuração com delegates padrão corresponde ao caminho documentado na T8.1, embora aquela avaliação tenha utilizado quatro threads.
+
+Para cada combinação de foto e modelo, foram comparados:
+
+1. **Decodificação e geometria:** dimensões após EXIF, RGB8 decodificado e pixels após redimensionamento e preenchimento cinza.
+2. **Tensor de entrada:** forma `[1,224,224,3]`, valores e hash. O modelo Float16 recebe float32 em `[0,1]`; o INT8 recebe valores quantizados com escala e zero point do próprio modelo. A normalização interna do backbone não é repetida.
+3. **Saída:** os 13 scores, erro absoluto máximo e médio, classe de maior score e decisão da política de confiança. A regra permanece **top-1 maior ou igual a 0,65**, sem arredondar o score antes da comparação.
+4. **Origem da divergência:** o Python também executou a inferência com o tensor produzido na web. Isso permite separar diferenças de preprocessing das diferenças de runtime, mantendo o mesmo modelo e a mesma entrada.
+
+### Resultados entre os ambientes
+
+Nos 18 casos, a diferença máxima dos pixels RGB8 foi **zero**, tanto na decodificação quanto após a geometria. A diferença dos tensores também foi **zero**. As diferenças de score observadas abaixo pertencem à inferência, não à preparação das imagens.
+
+| Modelo | Configuração Python comparada à web | Diferença máxima no tensor | Diferença máxima de score | Classes diferentes | Decisões diferentes |
+| --- | --- | ---: | ---: | ---: | ---: |
+| Float16 T7.2 | Sem delegates | 0 | `4,61935997e-6` | 0/18 | 0/18 |
+| INT8 T7.3 | Sem delegates | 0 | `0,11328125` | 0/18 | 2/18 |
+| Float16 T7.2 | Com XNNPACK | 0 | `1,1920929e-7` | 0/18 | 0/18 |
+| INT8 T7.3 | Com XNNPACK | 0 | 0 | 0/18 | 0/18 |
+
+Na comparação sem delegates, o erro absoluto médio dos 13 scores foi aproximadamente `1,86e-7` no Float16 e `0,00300481` no INT8. Seis dos 18 casos INT8 ultrapassaram a referência de `2/256` usada nos testes sintéticos anteriores. Essa referência serve como sinal de investigação; os testes anteriores não garantiam esse limite para qualquer fotografia.
+
+**A igualdade dos scores INT8 com XNNPACK associa a divergência observada à configuração da inferência.** O ensaio não localiza o primeiro operador responsável pela diferença entre os caminhos de execução e não demonstra equivalência de todos os builds ou dispositivos.
+
+### Casos críticos no limiar de confiança
+
+A tabela apresenta três casos relevantes usando **Python sem delegates** como referência. A classe de maior score foi preservada, mas as duas entradas INT8 mudaram de decisão na web:
+
+| Modelo e entrada | Classe prevista nos dois ambientes | Top-1 Python | Top-1 web | Decisão Python → web |
+| --- | --- | ---: | ---: | --- |
+| Float16 — `boundary-float16-above.png` | 0 — Vaquinha | `0,650361896` | `0,650360882` | Aceito → aceito |
+| INT8 — `exif-6.png` | 2 — Percevejo-barriga-verde | `0,585937500` | `0,667968750` | Inconclusivo → aceito |
+| INT8 — `boundary-int8-above.png` | 0 — Vaquinha | `0,761718750` | `0,648437500` | Aceito → inconclusivo |
+
+O caso Float16 ficou próximo do limiar e manteve a decisão apesar da pequena diferença numérica. No INT8, os casos evidenciam mudanças nos dois sentidos, mesmo com tensores idênticos. **Com XNNPACK no Python, as classes e decisões coincidiram com a web também nesses casos.**
+
+Os arquivos `boundary-*` foram procurados por ajuste de brilho nos modelos finais sem delegates. Os valores RGB8 e a quantização tornam a resposta descontínua; o nome `above` identifica o lado encontrado nessa configuração, sem garantir que o score continue acima de 0,65 em outro runtime. Esses casos não estimam a frequência de mudança de decisão em fotos naturais.
+
+### Pontos para análise e limites
+
+- **Configuração de referência:** registrar delegate, número de threads e versão/build do runtime junto ao hash do modelo. A correspondência observada com XNNPACK não deve ser estendida ao Python sem delegates. Se a equivalência sem delegates for necessária, reduzir os casos críticos e localizar o primeiro operador divergente.
+- **Troca entre os modelos:** Float16 e INT8 tiveram quatro diferenças de classe e quatro diferenças de decisão nos 18 casos, tanto no Python sem delegates quanto na web, embora os casos de decisão não sejam necessariamente os mesmos. Por exemplo, em `display-p3.jpg`, o Float16 indicou Vaquinha, com top-1 `0,824377`, e o INT8 indicou Cigarrinha-das-pastagens, com `0,664062`; ambos foram aceitos. A contingência exige avaliação própria, mesmo quando o preprocessing corresponde.
+- **Limiar de confiança:** o valor de 0,65 foi definido anteriormente em Keras FP32. A comparação não recalibra Float16 ou INT8 e não justifica alterar o limiar ou arredondar scores para ocultar divergências. Qualquer nova margem de abstenção depende de decisão de produto e validação específica.
+- **Alcance da evidência:** os resultados são de regressão em CPU/WASM no Chromium desktop. WebGPU, Safari, Firefox e Android físico permanecem fora desta comprovação. As variantes controladas e a consulta aos modelos na seleção dos casos de fronteira impedem interpretar o corpus como avaliação independente de generalização.
+
+### Reprodução e verificação
+
+A implementação da comparação está em [`comparacao_preprocessamento_t10_2.py`](../src/comparacao_preprocessamento_t10_2.py), e o teste no navegador está em [`preprocessing.spec.ts`](../frontend/tests/preprocessing.spec.ts). Em ambiente Python com as versões indicadas acima:
+
+```powershell
+cd frontend
+npm.cmd run assets
+cd ..
+python -m src.comparacao_preprocessamento_t10_2 referencia
+cd frontend
+$env:MODEL_COMPARISON='1'
+npx.cmd playwright test tests/preprocessing.spec.ts --project=chromium
+Remove-Item Env:MODEL_COMPARISON
+cd ..
+python -m src.comparacao_preprocessamento_t10_2 relatorio
+```
+
+Na execução de 14/11/2026 passaram os **19 testes unitários**, os **12 testes de navegador**, incluindo inferência real e offline, as validações Python do preprocessing e o build TypeScript/Vite. Após acrescentar a checagem explícita das referências XNNPACK, os dois testes comparativos de navegador e as validações Python foram executados novamente e passaram.
+
+O [relatório detalhado](Comparacao_preprocessamento_T10_2.md) e os [dados completos](../assets/data/comparacao_preprocessamento_T10_2/comparacao.json) preservam os scores por classe, as decisões, as margens em relação ao limiar, os erros por etapa e a identidade dos modelos. A reprodução gera os tensores intermediários em `frontend/.work/model-comparison-*.json`.

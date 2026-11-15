@@ -72,7 +72,7 @@ if (process.argv[2] === "--verify") {
     confidencePolicy: await json(path.join(root, "assets/data/politica_T6_5/parametros.json")),
     limitations: [
       "Protótipo experimental de 13 classes; score não é probabilidade calibrada de acerto.",
-      "Divergência de decodificação/cor Python e navegador permanece pendente.",
+      "T10.2: preprocessing validado no corpus fotográfico; scores INT8 dependem da configuração do delegate (ver relatório comparativo).",
       "Avaliação histórica exploratória; independência dos dados comprometida.",
       "Conteúdo técnico e validação em aparelho físico permanecem pendentes.",
     ],

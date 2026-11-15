@@ -1,0 +1,5639 @@
+{
+  "contract": "T10.2-rgb8-sem-conversao-icc-v1",
+  "createdUtc": "2026-11-15T01:02:39.445858+00:00",
+  "pythonEnvironment": {
+    "python": "3.13.14",
+    "pillow": "12.2.0",
+    "numpy": "2.4.4",
+    "tensorflow": "2.21.0",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "delegate": "BUILTIN_WITHOUT_DEFAULT_DELEGATES",
+    "threads": 1
+  },
+  "webEnvironment": {
+    "browser": "156.0.8078.4",
+    "platform": "win32"
+  },
+  "classesSha256": "1058619e188ffd7fa42bfc6821e2e122356b35d8503af71b987f37ae1e4572f4",
+  "classes": [
+    {
+      "indice": 0,
+      "nome": "Vaquinha (Diabrotica speciosa)"
+    },
+    {
+      "indice": 1,
+      "nome": "Cigarrinha-do-milho (Dalbulus maidis)"
+    },
+    {
+      "indice": 2,
+      "nome": "Percevejo-barriga-verde (Dichelops/Diceraeus)"
+    },
+    {
+      "indice": 3,
+      "nome": "Lagarta-do-cartucho (Spodoptera frugiperda)"
+    },
+    {
+      "indice": 4,
+      "nome": "Percevejo-marrom (Euschistus heros)"
+    },
+    {
+      "indice": 5,
+      "nome": "Percevejo-verde (Nezara viridula)"
+    },
+    {
+      "indice": 6,
+      "nome": "Percevejo-asa-preta (Edessa meditabunda)"
+    },
+    {
+      "indice": 7,
+      "nome": "Percevejo-do-milho (Leptoglossus zonatus)"
+    },
+    {
+      "indice": 8,
+      "nome": "Lagarta-falsa-medideira (Chrysodeixis includens)"
+    },
+    {
+      "indice": 9,
+      "nome": "Lagarta-da-soja (Anticarsia gemmatalis)"
+    },
+    {
+      "indice": 10,
+      "nome": "Lagarta-das-vagens (Spodoptera eridania e S. cosmioides)"
+    },
+    {
+      "indice": 11,
+      "nome": "Astylus variegatus"
+    },
+    {
+      "indice": 12,
+      "nome": "Cigarrinha-das-pastagens (Deois flavopicta)"
+    }
+  ],
+  "policySha256": "78bf5cd6805ec97f55109e15efe70f0d05f7cfd89723de6e48e3f0aaa798452f",
+  "threshold": 0.65,
+  "codeSha256": {
+    "src/preprocessamento.py": "34e70deb33d0b5c3300d204f58a0756e5ad6f2153cce5f918151ef6ea675eace",
+    "frontend/src/lib/preprocess.ts": "1b0f3d2983504543732a515735b04ac039e68d405e73a3086df309c091582be5",
+    "frontend/src/lib/inference.worker.ts": "81163e691fdaf322fe7529ffeb29a34656703bfbbdeb1fb66f89d2ac8438c16c",
+    "frontend/tests/preprocessing.worker.ts": "521a59910a08df1c75511062a86225413332d27ae4f4a4ad71e9aebf120e3b24",
+    "frontend/tests/preprocessing.spec.ts": "be2abf82d5787bc5ef9406a6cef70ec77db6a6d019e5288b92cd7ff06e25f73a",
+    "src/comparacao_preprocessamento_t10_2.py": "c7d11f8754dce1cbcc304e85abdd92b03235553de8f89b0c1c339265f04d08de",
+    "frontend/package-lock.json": "8be565b1aab50e9bdce8e59da8d839e781e1292a03af5ef4e76d9d1a27a0255a",
+    "frontend/src/lib/confidence.ts": "2c3e53eb784aa8e7fb3fce380a1d3f6604db0d96018c6f4e81266d20ad7ab768",
+    "src/benchmark_t5_6.py": "c44decee72eeb2cf51bbadf2cce16a707c640cc76410bdc5c144db56cfaaa2c7",
+    "frontend/scripts/generate-preprocessing-reference.py": "b578a1b142ff840275971a88e933bf34a585dde7eebd0e879971f0d865768c6c"
+  },
+  "fixturesReferenceSha256": "67b3088d9d1aa71c9c63eaa60b589b9df1a882815143d13afe12f8b55f9c3f16",
+  "fixtures": [
+    {
+      "file": "display-p3.jpg",
+      "source": "IMG_01540; dataset/image/4bb174ff-imag24.jpg",
+      "sha256": "d406d8d95579816063eec80212bc864d171196af73b798f759ef1f8fbfb30400",
+      "originalSize": [
+        500,
+        667
+      ],
+      "width": 500,
+      "height": 667,
+      "icc": "Display P3",
+      "orientation": 1,
+      "decodedSha256": "9d189d74061032f29b5b4f4a252df39aa53dd83d775a6d8ba3157a5a6f191f3e",
+      "pixelsSha256": "f4ba5bbd92b5c030afcbd0b9020e1de9a7ea4465a541ec9d49689ee0d507c2aa",
+      "normalizedSha256": "ad654b06c2ddf284f640c2bb59fe8e0ff4fbcc92c5afa67444745078076e6687",
+      "tolerance": {
+        "max": 3,
+        "mae": 0.35
+      }
+    },
+    {
+      "file": "srgb.jpg",
+      "source": "IMG_01812; dataset/image/test504.jpg",
+      "sha256": "5afc5e8cc8ac06ee4e8cef5e8e2be7bdb94fc77ebed686f05bc74e3ef7fbef94",
+      "originalSize": [
+        500,
+        1082
+      ],
+      "width": 500,
+      "height": 1082,
+      "icc": "sRGB",
+      "orientation": 1,
+      "decodedSha256": "bf3ec91e781d53b1323e3fcb6d548a3887a7e7a6fdf659c9e7095dd929b68d9f",
+      "pixelsSha256": "24895d88209815ff81ed063abf6fcd3fdbffb07c61354a12c1337b319a2f499f",
+      "normalizedSha256": "94d46a6ce6f247c928579d3b7894ef5b7ec4f2cace59b7fe2ae3a91e4d68f5e0",
+      "tolerance": {
+        "max": 3,
+        "mae": 0.35
+      }
+    },
+    {
+      "file": "no-profile.jpg",
+      "source": "assets/revisão_imagens/IMG_0125.jpg",
+      "sha256": "74a1c4d0f5636656aceab0654127f1439f91456abad25cba6b3db7d008591770",
+      "originalSize": [
+        121,
+        136
+      ],
+      "width": 121,
+      "height": 136,
+      "icc": null,
+      "orientation": 1,
+      "decodedSha256": "17d79a8db9c96b08d78b8e0574854e328211f9f66d6d1a579beb7f6d009e61e7",
+      "pixelsSha256": "4f99cac070b8d8fc23dc8bd57609745a8c3cd2662caa251e32d1868a2ad15b2f",
+      "normalizedSha256": "c9d3923b17770e43fa4fb10c96734ebd29b258d7d782efe831aec794edba3a16",
+      "tolerance": {
+        "max": 3,
+        "mae": 0.35
+      }
+    },
+    {
+      "file": "photo.png",
+      "source": "derivada de no-profile.jpg; metadados controlados",
+      "sha256": "68c7b2a951786177b3ce5b390075aaf52959d8fe8400e5c16dae6154ac3cde59",
+      "originalSize": [
+        121,
+        136
+      ],
+      "width": 121,
+      "height": 136,
+      "icc": null,
+      "orientation": 1,
+      "decodedSha256": "17d79a8db9c96b08d78b8e0574854e328211f9f66d6d1a579beb7f6d009e61e7",
+      "pixelsSha256": "4f99cac070b8d8fc23dc8bd57609745a8c3cd2662caa251e32d1868a2ad15b2f",
+      "normalizedSha256": "c9d3923b17770e43fa4fb10c96734ebd29b258d7d782efe831aec794edba3a16",
+      "tolerance": {
+        "max": 0,
+        "mae": 0
+      }
+    },
+    {
+      "file": "photo-icc.png",
+      "source": "derivada de no-profile.jpg; metadados controlados",
+      "sha256": "d5a43bdc76ab0202b9990026e1ebc4ce705d3520d05122c4bbdeac103db8924b",
+      "originalSize": [
+        121,
+        136
+      ],
+      "width": 121,
+      "height": 136,
+      "icc": "Display P3",
+      "orientation": 1,
+      "decodedSha256": "17d79a8db9c96b08d78b8e0574854e328211f9f66d6d1a579beb7f6d009e61e7",
+      "pixelsSha256": "4f99cac070b8d8fc23dc8bd57609745a8c3cd2662caa251e32d1868a2ad15b2f",
+      "normalizedSha256": "c9d3923b17770e43fa4fb10c96734ebd29b258d7d782efe831aec794edba3a16",
+      "tolerance": {
+        "max": 0,
+        "mae": 0
+      }
+    },
+    {
+      "file": "photo.webp",
+      "source": "derivada de no-profile.jpg; metadados controlados",
+      "sha256": "288773add34c0973a732512b0bc9997e44dd72b003ee611887b59715d3af931b",
+      "originalSize": [
+        121,
+        136
+      ],
+      "width": 121,
+      "height": 136,
+      "icc": null,
+      "orientation": 1,
+      "decodedSha256": "17d79a8db9c96b08d78b8e0574854e328211f9f66d6d1a579beb7f6d009e61e7",
+      "pixelsSha256": "4f99cac070b8d8fc23dc8bd57609745a8c3cd2662caa251e32d1868a2ad15b2f",
+      "normalizedSha256": "c9d3923b17770e43fa4fb10c96734ebd29b258d7d782efe831aec794edba3a16",
+      "tolerance": {
+        "max": 0,
+        "mae": 0
+      }
+    },
+    {
+      "file": "exif-1.png",
+      "source": "derivada de no-profile.jpg; metadados controlados",
+      "sha256": "a8b4fe693061c262a8523bc4b2d05babcc583d1f94d3fe9c9828f79568eb14bf",
+      "originalSize": [
+        121,
+        136
+      ],
+      "width": 121,
+      "height": 136,
+      "icc": "Display P3",
+      "orientation": 1,
+      "decodedSha256": "17d79a8db9c96b08d78b8e0574854e328211f9f66d6d1a579beb7f6d009e61e7",
+      "pixelsSha256": "4f99cac070b8d8fc23dc8bd57609745a8c3cd2662caa251e32d1868a2ad15b2f",
+      "normalizedSha256": "c9d3923b17770e43fa4fb10c96734ebd29b258d7d782efe831aec794edba3a16",
+      "tolerance": {
+        "max": 0,
+        "mae": 0
+      }
+    },
+    {
+      "file": "exif-2.png",
+      "source": "derivada de no-profile.jpg; metadados controlados",
+      "sha256": "c55a9c750f1e95993a9b9d28ea774786dc4127bfb397fddaaf27804f71928a9e",
+      "originalSize": [
+        121,
+        136
+      ],
+      "width": 121,
+      "height": 136,
+      "icc": "Display P3",
+      "orientation": 2,
+      "decodedSha256": "9962401f700d11b1f50fc0ac0c205961705403cf68b16af5d93e4cd15454258b",
+      "pixelsSha256": "07ea107ca9f78888a297c036202f4b36e0754c9bcf353df02a1f9f99aa9d8fcf",
+      "normalizedSha256": "2d196b0fa569922aa47155b89c1b6940d55f9f139346bd102332ff7a84f084bb",
+      "tolerance": {
+        "max": 0,
+        "mae": 0
+      }
+    },
+    {
+      "file": "exif-3.png",
+      "source": "derivada de no-profile.jpg; metadados controlados",
+      "sha256": "c1470c1737fee0d0794683e92b504a091505ccc314441a13e0e358ac2aa4ea6d",
+      "originalSize": [
+        121,
+        136
+      ],
+      "width": 121,
+      "height": 136,
+      "icc": "Display P3",
+      "orientation": 3,
+      "decodedSha256": "6de912d874adb3672252dba92137422ae22312cf8ea82c45a727a8d54ec3d139",
+      "pixelsSha256": "5b872fc732068a2469fc9995b08bc650e32f4e6d5c7e03338cd4dfd93bbb64d3",
+      "normalizedSha256": "89c3f759b0d20b23752babe9bc1e43b33ff4d65eb62f309ce6aaa8465059bfef",
+      "tolerance": {
+        "max": 0,
+        "mae": 0
+      }
+    },
+    {
+      "file": "exif-4.png",
+      "source": "derivada de no-profile.jpg; metadados controlados",
+      "sha256": "3642aa2c080d454b2a88269abc08e778c10ccdfae017af1dbd3f958393fca513",
+      "originalSize": [
+        121,
+        136
+      ],
+      "width": 121,
+      "height": 136,
+      "icc": "Display P3",
+      "orientation": 4,
+      "decodedSha256": "b096f45681c1befab6a9713f379fa49956adcaef1ccc31db82b031e03666408e",
+      "pixelsSha256": "38fa11bfe9c238cc46bb8e9812fd9f925185c08b015eebb9732506230c595095",
+      "normalizedSha256": "3ed405741d1dd6206d5c9ec0010eba1446b581e39e820b9725ca9abd172c81ae",
+      "tolerance": {
+        "max": 0,
+        "mae": 0
+      }
+    },
+    {
+      "file": "exif-5.png",
+      "source": "derivada de no-profile.jpg; metadados controlados",
+      "sha256": "a70cd3f9d375abb44f264722fa12fa6cf5df162b57bcedfa1b51c53d9e7bf54b",
+      "originalSize": [
+        121,
+        136
+      ],
+      "width": 136,
+      "height": 121,
+      "icc": "Display P3",
+      "orientation": 5,
+      "decodedSha256": "251c005a8243bb98dd5700b62d7b23b58a217d68055ca731599f5e0d97d6f4fd",
+      "pixelsSha256": "bced5410e41aebed2a7eb88087811a0a119f8fa9546ee23d48b1c87e391c58b8",
+      "normalizedSha256": "dd9d1b8e1e8fb82932c88c0885d33a668289f0d45002412de015eb9315f8b9e1",
+      "tolerance": {
+        "max": 0,
+        "mae": 0
+      }
+    },
+    {
+      "file": "exif-6.png",
+      "source": "derivada de no-profile.jpg; metadados controlados",
+      "sha256": "10c3112e2df16edda1e800239e687a171e3618f66618f0c1ad48b7f4b9e61337",
+      "originalSize": [
+        121,
+        136
+      ],
+      "width": 136,
+      "height": 121,
+      "icc": "Display P3",
+      "orientation": 6,
+      "decodedSha256": "0f4838cd58142da4ef207d95922bd30706c78c635857c2a84e16ebbe6c048a65",
+      "pixelsSha256": "5aa0454f92dd5b4da5f023584927fa0ecf2f25daf64ae7db39508c214efd6cdf",
+      "normalizedSha256": "637e4d7f261cfe9c874fab84500adea8d4fee73d596ca5754224bb3a9a3dc706",
+      "tolerance": {
+        "max": 0,
+        "mae": 0
+      }
+    },
+    {
+      "file": "exif-7.png",
+      "source": "derivada de no-profile.jpg; metadados controlados",
+      "sha256": "845cbd89807e39e9e2553c37f558556fa78c6b1607d1684035acb7aea88c3851",
+      "originalSize": [
+        121,
+        136
+      ],
+      "width": 136,
+      "height": 121,
+      "icc": "Display P3",
+      "orientation": 7,
+      "decodedSha256": "5ea7c281bf921203d37db0eb6adcaccf9bfd72238e9033fc8fcf018ad1940261",
+      "pixelsSha256": "98f2ad0955e52123d7d7efe66945044f0d1332a482904aad6d94fee9ceee25d7",
+      "normalizedSha256": "4d87671e127a9128f5359dbcb82747e7fb423da4b1507fddf34af7d38541ad06",
+      "tolerance": {
+        "max": 0,
+        "mae": 0
+      }
+    },
+    {
+      "file": "exif-8.png",
+      "source": "derivada de no-profile.jpg; metadados controlados",
+      "sha256": "a7cab4e22442aeb763a45851c00fc1d2eea7d58e17943bfd2888e1999d62ed37",
+      "originalSize": [
+        121,
+        136
+      ],
+      "width": 136,
+      "height": 121,
+      "icc": "Display P3",
+      "orientation": 8,
+      "decodedSha256": "e6b1fec27046f83313928181ae2ad82f016ee8188a836a66860e244336230318",
+      "pixelsSha256": "30fcd459110b3cd7996b8fcd58fbd652bfd0c0d4088044926b269ce0e42736d5",
+      "normalizedSha256": "572e368b8e325459b21f04dc3ec45b466fa62ddfe40d731be4892111cecbacc2",
+      "tolerance": {
+        "max": 0,
+        "mae": 0
+      }
+    },
+    {
+      "file": "boundary-float16-above.png",
+      "source": "derivada de assets/revisão_imagens/IMG_0021.jpg; brilho 0.21428680419921875",
+      "sha256": "f032fce34ec80b72bc393b7493aaa9033b162bde5557feef449301a4602a7d3e",
+      "originalSize": [
+        300,
+        214
+      ],
+      "width": 300,
+      "height": 214,
+      "icc": null,
+      "orientation": 1,
+      "decodedSha256": "a494dedc6012e615f52ddf149ad168276ff64f3ef4d598630e6a9bef21f0358f",
+      "pixelsSha256": "9fb82becaaf2217cfdefd47408e7cc78d9940c8fdecb220b7cd6b3e580e7d053",
+      "normalizedSha256": "0761f29ad487ccd291169077cf5aacb5075dab0b8144ca64a5749da204ca593e",
+      "tolerance": {
+        "max": 0,
+        "mae": 0
+      }
+    },
+    {
+      "file": "boundary-float16-below.png",
+      "source": "derivada de assets/revisão_imagens/IMG_0021.jpg; brilho 0.21428298950195312",
+      "sha256": "e09d03896eb94e6bb7bf5d593c42567243975dc8e6e0b347e8556f7a0b0e0893",
+      "originalSize": [
+        300,
+        214
+      ],
+      "width": 300,
+      "height": 214,
+      "icc": null,
+      "orientation": 1,
+      "decodedSha256": "f721b095bfa395e790f4ef390cf0f8edc26d679abbb571fb6980ff33392e8ee0",
+      "pixelsSha256": "33de9404145a712fe8156e6e363f9f7c66b7ae4c8fdb4c72214010b75a006db3",
+      "normalizedSha256": "8e1acfe011c4ad74d7163dd65302da16f4ccb33a15f1f08cd5c97d008704902f",
+      "tolerance": {
+        "max": 0,
+        "mae": 0
+      }
+    },
+    {
+      "file": "boundary-int8-above.png",
+      "source": "derivada de assets/revisão_imagens/IMG_0021.jpg; brilho 0.3000030517578125",
+      "sha256": "d416fa86083dac8b1e2363e9f1e46b5d54609f1045c157f14cf42082ca94c697",
+      "originalSize": [
+        300,
+        214
+      ],
+      "width": 300,
+      "height": 214,
+      "icc": null,
+      "orientation": 1,
+      "decodedSha256": "9291bcbc4bf891d2ba18d699f00f5b948f6cec38be12c11286f3803771a76307",
+      "pixelsSha256": "06ae6a5384af20a072dc587ee1cb75e6ae9ba4da9f726c859f131a25017939c4",
+      "normalizedSha256": "4e1d1723a9cf2c19be016ed9c42fcde9d5af1b47383cf8629ed1bcf08ecba4ea",
+      "tolerance": {
+        "max": 0,
+        "mae": 0
+      }
+    },
+    {
+      "file": "boundary-int8-below.png",
+      "source": "derivada de assets/revisão_imagens/IMG_0021.jpg; brilho 0.2999992370605469",
+      "sha256": "8a95c0c1f475cea649d0b0e64856a3bf78c7594e39a1a44d40bed3027765c752",
+      "originalSize": [
+        300,
+        214
+      ],
+      "width": 300,
+      "height": 214,
+      "icc": null,
+      "orientation": 1,
+      "decodedSha256": "e22ec1aafa397487d58c536b50144c02cdf24566d62fbb9cec32b54c4fb9892d",
+      "pixelsSha256": "085f500530ea012a4d04cc7cd84d263f36d3c2f15cd0ec9b2f40a6b8b95e6f67",
+      "normalizedSha256": "90de69348569b093506bafbb20721cc979148d55c82d1a71cb3702196ec36f54",
+      "tolerance": {
+        "max": 0,
+        "mae": 0
+      }
+    }
+  ],
+  "boundaryProbes": [
+    {
+      "file": "boundary-float16-below.png",
+      "source": "assets/revisão_imagens/IMG_0021.jpg",
+      "sourceSha256": "581ec2ad87154a964c22ad29276b55054d67a673c380ed52e2224d933f641bd3",
+      "operation": "round_even(RGB8 * brightness)",
+      "brightness": 0.21428298950195312,
+      "selectedForModel": "Float16",
+      "selectedForRuntime": "sem delegates",
+      "class": 0,
+      "score": 0.6374636292457581,
+      "decision": "inconclusivo",
+      "margin": -0.012536370754241966
+    },
+    {
+      "file": "boundary-float16-above.png",
+      "source": "assets/revisão_imagens/IMG_0021.jpg",
+      "sourceSha256": "581ec2ad87154a964c22ad29276b55054d67a673c380ed52e2224d933f641bd3",
+      "operation": "round_even(RGB8 * brightness)",
+      "brightness": 0.21428680419921875,
+      "selectedForModel": "Float16",
+      "selectedForRuntime": "sem delegates",
+      "class": 0,
+      "score": 0.6503618955612183,
+      "decision": "aceito",
+      "margin": 0.0003618955612182395
+    },
+    {
+      "file": "boundary-int8-below.png",
+      "source": "assets/revisão_imagens/IMG_0021.jpg",
+      "sourceSha256": "581ec2ad87154a964c22ad29276b55054d67a673c380ed52e2224d933f641bd3",
+      "operation": "round_even(RGB8 * brightness)",
+      "brightness": 0.2999992370605469,
+      "selectedForModel": "INT8",
+      "selectedForRuntime": "sem delegates",
+      "class": 0,
+      "score": 0.6484375,
+      "decision": "inconclusivo",
+      "margin": -0.0015625000000000222
+    },
+    {
+      "file": "boundary-int8-above.png",
+      "source": "assets/revisão_imagens/IMG_0021.jpg",
+      "sourceSha256": "581ec2ad87154a964c22ad29276b55054d67a673c380ed52e2224d933f641bd3",
+      "operation": "round_even(RGB8 * brightness)",
+      "brightness": 0.3000030517578125,
+      "selectedForModel": "INT8",
+      "selectedForRuntime": "sem delegates",
+      "class": 0,
+      "score": 0.76171875,
+      "decision": "aceito",
+      "margin": 0.11171874999999998
+    }
+  ],
+  "preprocessing": {
+    "browser": "156.0.8078.4",
+    "contract": "T10.2-rgb8-sem-conversao-icc-v1",
+    "fixturesReferenceSha256": "67b3088d9d1aa71c9c63eaa60b589b9df1a882815143d13afe12f8b55f9c3f16",
+    "cases": [
+      {
+        "file": "display-p3.jpg",
+        "decoded": {
+          "max": 0,
+          "mae": 0,
+          "changed": 0,
+          "total": 1000500
+        },
+        "pixels": {
+          "max": 0,
+          "mae": 0,
+          "changed": 0,
+          "total": 150528
+        }
+      },
+      {
+        "file": "srgb.jpg",
+        "decoded": {
+          "max": 0,
+          "mae": 0,
+          "changed": 0,
+          "total": 1623000
+        },
+        "pixels": {
+          "max": 0,
+          "mae": 0,
+          "changed": 0,
+          "total": 150528
+        }
+      },
+      {
+        "file": "no-profile.jpg",
+        "decoded": {
+          "max": 0,
+          "mae": 0,
+          "changed": 0,
+          "total": 49368
+        },
+        "pixels": {
+          "max": 0,
+          "mae": 0,
+          "changed": 0,
+          "total": 150528
+        }
+      },
+      {
+        "file": "photo.png",
+        "decoded": {
+          "max": 0,
+          "mae": 0,
+          "changed": 0,
+          "total": 49368
+        },
+        "pixels": {
+          "max": 0,
+          "mae": 0,
+          "changed": 0,
+          "total": 150528
+        }
+      },
+      {
+        "file": "photo-icc.png",
+        "decoded": {
+          "max": 0,
+          "mae": 0,
+          "changed": 0,
+          "total": 49368
+        },
+        "pixels": {
+          "max": 0,
+          "mae": 0,
+          "changed": 0,
+          "total": 150528
+        }
+      },
+      {
+        "file": "photo.webp",
+        "decoded": {
+          "max": 0,
+          "mae": 0,
+          "changed": 0,
+          "total": 49368
+        },
+        "pixels": {
+          "max": 0,
+          "mae": 0,
+          "changed": 0,
+          "total": 150528
+        }
+      },
+      {
+        "file": "exif-1.png",
+        "decoded": {
+          "max": 0,
+          "mae": 0,
+          "changed": 0,
+          "total": 49368
+        },
+        "pixels": {
+          "max": 0,
+          "mae": 0,
+          "changed": 0,
+          "total": 150528
+        }
+      },
+      {
+        "file": "exif-2.png",
+        "decoded": {
+          "max": 0,
+          "mae": 0,
+          "changed": 0,
+          "total": 49368
+        },
+        "pixels": {
+          "max": 0,
+          "mae": 0,
+          "changed": 0,
+          "total": 150528
+        }
+      },
+      {
+        "file": "exif-3.png",
+        "decoded": {
+          "max": 0,
+          "mae": 0,
+          "changed": 0,
+          "total": 49368
+        },
+        "pixels": {
+          "max": 0,
+          "mae": 0,
+          "changed": 0,
+          "total": 150528
+        }
+      },
+      {
+        "file": "exif-4.png",
+        "decoded": {
+          "max": 0,
+          "mae": 0,
+          "changed": 0,
+          "total": 49368
+        },
+        "pixels": {
+          "max": 0,
+          "mae": 0,
+          "changed": 0,
+          "total": 150528
+        }
+      },
+      {
+        "file": "exif-5.png",
+        "decoded": {
+          "max": 0,
+          "mae": 0,
+          "changed": 0,
+          "total": 49368
+        },
+        "pixels": {
+          "max": 0,
+          "mae": 0,
+          "changed": 0,
+          "total": 150528
+        }
+      },
+      {
+        "file": "exif-6.png",
+        "decoded": {
+          "max": 0,
+          "mae": 0,
+          "changed": 0,
+          "total": 49368
+        },
+        "pixels": {
+          "max": 0,
+          "mae": 0,
+          "changed": 0,
+          "total": 150528
+        }
+      },
+      {
+        "file": "exif-7.png",
+        "decoded": {
+          "max": 0,
+          "mae": 0,
+          "changed": 0,
+          "total": 49368
+        },
+        "pixels": {
+          "max": 0,
+          "mae": 0,
+          "changed": 0,
+          "total": 150528
+        }
+      },
+      {
+        "file": "exif-8.png",
+        "decoded": {
+          "max": 0,
+          "mae": 0,
+          "changed": 0,
+          "total": 49368
+        },
+        "pixels": {
+          "max": 0,
+          "mae": 0,
+          "changed": 0,
+          "total": 150528
+        }
+      },
+      {
+        "file": "boundary-float16-above.png",
+        "decoded": {
+          "max": 0,
+          "mae": 0,
+          "changed": 0,
+          "total": 192600
+        },
+        "pixels": {
+          "max": 0,
+          "mae": 0,
+          "changed": 0,
+          "total": 150528
+        }
+      },
+      {
+        "file": "boundary-float16-below.png",
+        "decoded": {
+          "max": 0,
+          "mae": 0,
+          "changed": 0,
+          "total": 192600
+        },
+        "pixels": {
+          "max": 0,
+          "mae": 0,
+          "changed": 0,
+          "total": 150528
+        }
+      },
+      {
+        "file": "boundary-int8-above.png",
+        "decoded": {
+          "max": 0,
+          "mae": 0,
+          "changed": 0,
+          "total": 192600
+        },
+        "pixels": {
+          "max": 0,
+          "mae": 0,
+          "changed": 0,
+          "total": 150528
+        }
+      },
+      {
+        "file": "boundary-int8-below.png",
+        "decoded": {
+          "max": 0,
+          "mae": 0,
+          "changed": 0,
+          "total": 192600
+        },
+        "pixels": {
+          "max": 0,
+          "mae": 0,
+          "changed": 0,
+          "total": 150528
+        }
+      }
+    ],
+    "legacy": [
+      {
+        "file": "display-p3.jpg",
+        "pixels": {
+          "max": 9,
+          "mae": 0.5726907950680272,
+          "changed": 73834,
+          "total": 150528
+        }
+      },
+      {
+        "file": "photo-icc.png",
+        "pixels": {
+          "max": 13,
+          "mae": 1.2548828125,
+          "changed": 80704,
+          "total": 150528
+        }
+      }
+    ]
+  },
+  "models": {
+    "Float16": {
+      "spec": {
+        "format": "Float16",
+        "filename": "modelo_float16_web.tflite",
+        "bytes": 6833548,
+        "sha256": "9c18f0a2ca4a4e2eb0d84dd415046f0bd35385ede8c47e14463d3a0f134647ec",
+        "sourceSha256": "c9a26ce13806a2fa26bffbd8cfbdac83ff4c05ffff1009ca9483bb587a5a8fa2",
+        "sourcePath": "assets/modelos/comparacao_T7_2_candidato_T5_6_20261026/modelo_float16.tflite",
+        "contractPath": "assets/modelos/comparacao_T7_2_candidato_T5_6_20261026/comparacao.json",
+        "version": "T7.2",
+        "input": {
+          "shape": [
+            1,
+            224,
+            224,
+            3
+          ],
+          "dtype": "float32"
+        },
+        "output": {
+          "shape": [
+            1,
+            13
+          ],
+          "dtype": "float32"
+        }
+      },
+      "runtime": "LiteRT.js 2.6.0 CPU/WASM, 1 thread",
+      "originalEqualsWebSpecialization": true,
+      "cases": [
+        {
+          "file": "display-p3.jpg",
+          "pixels": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 150528
+          },
+          "tensor": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 150528
+          },
+          "pythonTensorSha256": "ad654b06c2ddf284f640c2bb59fe8e0ff4fbcc92c5afa67444745078076e6687",
+          "webTensorSha256": "ad654b06c2ddf284f640c2bb59fe8e0ff4fbcc92c5afa67444745078076e6687",
+          "pythonScores": [
+            0.82437664270401,
+            7.87503751098484e-09,
+            0.009021111764013767,
+            2.379990974077373e-06,
+            5.580024264872918e-08,
+            0.005025062244385481,
+            0.0011634323745965958,
+            7.26283724361565e-06,
+            1.382847045761082e-07,
+            1.038215577864321e-05,
+            1.2798885506981605e-07,
+            4.1726205381564796e-05,
+            0.16035160422325134
+          ],
+          "pythonOnWebTensorScores": [
+            0.82437664270401,
+            7.87503751098484e-09,
+            0.009021111764013767,
+            2.379990974077373e-06,
+            5.580024264872918e-08,
+            0.005025062244385481,
+            0.0011634323745965958,
+            7.26283724361565e-06,
+            1.382847045761082e-07,
+            1.038215577864321e-05,
+            1.2798885506981605e-07,
+            4.1726205381564796e-05,
+            0.16035160422325134
+          ],
+          "pythonDefaultDelegateOnWebTensorScores": [
+            0.8243756890296936,
+            7.875012641989088e-09,
+            0.009021234698593616,
+            2.3799971131666098e-06,
+            5.580081108291779e-08,
+            0.005025106482207775,
+            0.0011634437832981348,
+            7.262919098138809e-06,
+            1.382857277576477e-07,
+            1.0382291293353774e-05,
+            1.2798808768366143e-07,
+            4.172587432549335e-05,
+            0.16035251319408417
+          ],
+          "webScores": [
+            0.8243756294250488,
+            7.875012641989088e-09,
+            0.009021233767271042,
+            2.3799968857929343e-06,
+            5.580080397749043e-08,
+            0.005025106016546488,
+            0.0011634437832981348,
+            7.2629181886441074e-06,
+            1.382857277576477e-07,
+            1.0382290383859072e-05,
+            1.2798808768366143e-07,
+            4.1725870687514544e-05,
+            0.16035251319408417
+          ],
+          "scoresEndToEnd": {
+            "max": 1.0132789611816406e-06,
+            "mae": 1.6153788050788674e-07,
+            "changed": 13,
+            "total": 13
+          },
+          "scoresPreprocessingOnly": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "scoresRuntimeOnly": {
+            "max": 1.0132789611816406e-06,
+            "mae": 1.6153788050788674e-07,
+            "changed": 13,
+            "total": 13
+          },
+          "scoresWebVsPythonDefaultDelegate": {
+            "max": 5.960464477539063e-08,
+            "mae": 4.69287077574056e-09,
+            "changed": 8,
+            "total": 13
+          },
+          "python": {
+            "class": 0,
+            "score": 0.82437664270401,
+            "decision": "aceito",
+            "margin": 0.17437664270401
+          },
+          "web": {
+            "class": 0,
+            "score": 0.8243756294250488,
+            "decision": "aceito",
+            "margin": 0.1743756294250488
+          },
+          "pythonDefaultDelegate": {
+            "class": 0,
+            "score": 0.8243756890296936,
+            "decision": "aceito",
+            "margin": 0.17437568902969358
+          },
+          "defaultDelegateClassChanged": false,
+          "defaultDelegateDecisionChanged": false,
+          "classChanged": false,
+          "decisionChanged": false,
+          "thresholdAtRisk": false,
+          "exceedsHistoricalTolerance": false
+        },
+        {
+          "file": "srgb.jpg",
+          "pixels": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 150528
+          },
+          "tensor": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 150528
+          },
+          "pythonTensorSha256": "94d46a6ce6f247c928579d3b7894ef5b7ec4f2cace59b7fe2ae3a91e4d68f5e0",
+          "webTensorSha256": "94d46a6ce6f247c928579d3b7894ef5b7ec4f2cace59b7fe2ae3a91e4d68f5e0",
+          "pythonScores": [
+            0.7268862724304199,
+            0.00017151341307908297,
+            0.028184279799461365,
+            4.34689391113352e-05,
+            1.8114976683136774e-06,
+            0.23217250406742096,
+            4.0082522900775075e-05,
+            0.00027323313406668603,
+            2.8399613256624434e-06,
+            1.0223076060356107e-05,
+            0.012132571078836918,
+            7.213223580038175e-05,
+            9.017437150760088e-06
+          ],
+          "pythonOnWebTensorScores": [
+            0.7268862724304199,
+            0.00017151341307908297,
+            0.028184279799461365,
+            4.34689391113352e-05,
+            1.8114976683136774e-06,
+            0.23217250406742096,
+            4.0082522900775075e-05,
+            0.00027323313406668603,
+            2.8399613256624434e-06,
+            1.0223076060356107e-05,
+            0.012132571078836918,
+            7.213223580038175e-05,
+            9.017437150760088e-06
+          ],
+          "pythonDefaultDelegateOnWebTensorScores": [
+            0.7268871665000916,
+            0.00017151395149994642,
+            0.028184138238430023,
+            4.346849163994193e-05,
+            1.8114809563485323e-06,
+            0.232171893119812,
+            4.008237738162279e-05,
+            0.00027322996174916625,
+            2.8399240363796707e-06,
+            1.0222931450698525e-05,
+            0.012132405303418636,
+            7.21316973795183e-05,
+            9.017404408950824e-06
+          ],
+          "webScores": [
+            0.7268871665000916,
+            0.00017151395149994642,
+            0.028184138238430023,
+            4.346849163994193e-05,
+            1.8114809563485323e-06,
+            0.232171893119812,
+            4.008237738162279e-05,
+            0.00027322996174916625,
+            2.8399240363796707e-06,
+            1.0222931450698525e-05,
+            0.012132405303418636,
+            7.21316973795183e-05,
+            9.017404408950824e-06
+          ],
+          "scoresEndToEnd": {
+            "max": 8.940696716308594e-07,
+            "mae": 1.3980209482374798e-07,
+            "changed": 13,
+            "total": 13
+          },
+          "scoresPreprocessingOnly": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "scoresRuntimeOnly": {
+            "max": 8.940696716308594e-07,
+            "mae": 1.3980209482374798e-07,
+            "changed": 13,
+            "total": 13
+          },
+          "scoresWebVsPythonDefaultDelegate": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "python": {
+            "class": 0,
+            "score": 0.7268862724304199,
+            "decision": "aceito",
+            "margin": 0.0768862724304199
+          },
+          "web": {
+            "class": 0,
+            "score": 0.7268871665000916,
+            "decision": "aceito",
+            "margin": 0.07688716650009153
+          },
+          "pythonDefaultDelegate": {
+            "class": 0,
+            "score": 0.7268871665000916,
+            "decision": "aceito",
+            "margin": 0.07688716650009153
+          },
+          "defaultDelegateClassChanged": false,
+          "defaultDelegateDecisionChanged": false,
+          "classChanged": false,
+          "decisionChanged": false,
+          "thresholdAtRisk": false,
+          "exceedsHistoricalTolerance": false
+        },
+        {
+          "file": "no-profile.jpg",
+          "pixels": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 150528
+          },
+          "tensor": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 150528
+          },
+          "pythonTensorSha256": "c9d3923b17770e43fa4fb10c96734ebd29b258d7d782efe831aec794edba3a16",
+          "webTensorSha256": "c9d3923b17770e43fa4fb10c96734ebd29b258d7d782efe831aec794edba3a16",
+          "pythonScores": [
+            4.763449794609187e-07,
+            7.191643947024318e-10,
+            0.4673422873020172,
+            4.686812189902412e-06,
+            3.465378028977284e-07,
+            0.532524049282074,
+            4.6344783186214045e-05,
+            7.16883223503828e-05,
+            1.5947898557300277e-10,
+            4.321380231431249e-08,
+            1.4393044978078251e-08,
+            3.632176337475812e-09,
+            1.0076951184601057e-05
+          ],
+          "pythonOnWebTensorScores": [
+            4.763449794609187e-07,
+            7.191643947024318e-10,
+            0.4673422873020172,
+            4.686812189902412e-06,
+            3.465378028977284e-07,
+            0.532524049282074,
+            4.6344783186214045e-05,
+            7.16883223503828e-05,
+            1.5947898557300277e-10,
+            4.321380231431249e-08,
+            1.4393044978078251e-08,
+            3.632176337475812e-09,
+            1.0076951184601057e-05
+          ],
+          "pythonDefaultDelegateOnWebTensorScores": [
+            4.763535059737478e-07,
+            7.19180770492045e-10,
+            0.4673403799533844,
+            4.686864031100413e-06,
+            3.4653871239243017e-07,
+            0.5325259566307068,
+            4.634587457985617e-05,
+            7.168823503889143e-05,
+            1.5947712594943653e-10,
+            4.3214537726044e-08,
+            1.4393233271903227e-08,
+            3.6322307384040187e-09,
+            1.0077016668219585e-05
+          ],
+          "webScores": [
+            4.763535059737478e-07,
+            7.19180770492045e-10,
+            0.4673403799533844,
+            4.686864031100413e-06,
+            3.4653871239243017e-07,
+            0.5325259566307068,
+            4.634587457985617e-05,
+            7.168823503889143e-05,
+            1.5947712594943653e-10,
+            4.3214537726044e-08,
+            1.4393233271903227e-08,
+            3.6322307384040187e-09,
+            1.0077016668219585e-05
+          ],
+          "scoresEndToEnd": {
+            "max": 1.9073486328125e-06,
+            "mae": 2.9353874830188114e-07,
+            "changed": 13,
+            "total": 13
+          },
+          "scoresPreprocessingOnly": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "scoresRuntimeOnly": {
+            "max": 1.9073486328125e-06,
+            "mae": 2.9353874830188114e-07,
+            "changed": 13,
+            "total": 13
+          },
+          "scoresWebVsPythonDefaultDelegate": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "python": {
+            "class": 5,
+            "score": 0.532524049282074,
+            "decision": "inconclusivo",
+            "margin": -0.11747595071792605
+          },
+          "web": {
+            "class": 5,
+            "score": 0.5325259566307068,
+            "decision": "inconclusivo",
+            "margin": -0.11747404336929324
+          },
+          "pythonDefaultDelegate": {
+            "class": 5,
+            "score": 0.5325259566307068,
+            "decision": "inconclusivo",
+            "margin": -0.11747404336929324
+          },
+          "defaultDelegateClassChanged": false,
+          "defaultDelegateDecisionChanged": false,
+          "classChanged": false,
+          "decisionChanged": false,
+          "thresholdAtRisk": false,
+          "exceedsHistoricalTolerance": false
+        },
+        {
+          "file": "photo.png",
+          "pixels": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 150528
+          },
+          "tensor": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 150528
+          },
+          "pythonTensorSha256": "c9d3923b17770e43fa4fb10c96734ebd29b258d7d782efe831aec794edba3a16",
+          "webTensorSha256": "c9d3923b17770e43fa4fb10c96734ebd29b258d7d782efe831aec794edba3a16",
+          "pythonScores": [
+            4.763449794609187e-07,
+            7.191643947024318e-10,
+            0.4673422873020172,
+            4.686812189902412e-06,
+            3.465378028977284e-07,
+            0.532524049282074,
+            4.6344783186214045e-05,
+            7.16883223503828e-05,
+            1.5947898557300277e-10,
+            4.321380231431249e-08,
+            1.4393044978078251e-08,
+            3.632176337475812e-09,
+            1.0076951184601057e-05
+          ],
+          "pythonOnWebTensorScores": [
+            4.763449794609187e-07,
+            7.191643947024318e-10,
+            0.4673422873020172,
+            4.686812189902412e-06,
+            3.465378028977284e-07,
+            0.532524049282074,
+            4.6344783186214045e-05,
+            7.16883223503828e-05,
+            1.5947898557300277e-10,
+            4.321380231431249e-08,
+            1.4393044978078251e-08,
+            3.632176337475812e-09,
+            1.0076951184601057e-05
+          ],
+          "pythonDefaultDelegateOnWebTensorScores": [
+            4.763535059737478e-07,
+            7.19180770492045e-10,
+            0.4673403799533844,
+            4.686864031100413e-06,
+            3.4653871239243017e-07,
+            0.5325259566307068,
+            4.634587457985617e-05,
+            7.168823503889143e-05,
+            1.5947712594943653e-10,
+            4.3214537726044e-08,
+            1.4393233271903227e-08,
+            3.6322307384040187e-09,
+            1.0077016668219585e-05
+          ],
+          "webScores": [
+            4.763535059737478e-07,
+            7.19180770492045e-10,
+            0.4673403799533844,
+            4.686864031100413e-06,
+            3.4653871239243017e-07,
+            0.5325259566307068,
+            4.634587457985617e-05,
+            7.168823503889143e-05,
+            1.5947712594943653e-10,
+            4.3214537726044e-08,
+            1.4393233271903227e-08,
+            3.6322307384040187e-09,
+            1.0077016668219585e-05
+          ],
+          "scoresEndToEnd": {
+            "max": 1.9073486328125e-06,
+            "mae": 2.9353874830188114e-07,
+            "changed": 13,
+            "total": 13
+          },
+          "scoresPreprocessingOnly": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "scoresRuntimeOnly": {
+            "max": 1.9073486328125e-06,
+            "mae": 2.9353874830188114e-07,
+            "changed": 13,
+            "total": 13
+          },
+          "scoresWebVsPythonDefaultDelegate": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "python": {
+            "class": 5,
+            "score": 0.532524049282074,
+            "decision": "inconclusivo",
+            "margin": -0.11747595071792605
+          },
+          "web": {
+            "class": 5,
+            "score": 0.5325259566307068,
+            "decision": "inconclusivo",
+            "margin": -0.11747404336929324
+          },
+          "pythonDefaultDelegate": {
+            "class": 5,
+            "score": 0.5325259566307068,
+            "decision": "inconclusivo",
+            "margin": -0.11747404336929324
+          },
+          "defaultDelegateClassChanged": false,
+          "defaultDelegateDecisionChanged": false,
+          "classChanged": false,
+          "decisionChanged": false,
+          "thresholdAtRisk": false,
+          "exceedsHistoricalTolerance": false
+        },
+        {
+          "file": "photo-icc.png",
+          "pixels": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 150528
+          },
+          "tensor": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 150528
+          },
+          "pythonTensorSha256": "c9d3923b17770e43fa4fb10c96734ebd29b258d7d782efe831aec794edba3a16",
+          "webTensorSha256": "c9d3923b17770e43fa4fb10c96734ebd29b258d7d782efe831aec794edba3a16",
+          "pythonScores": [
+            4.763449794609187e-07,
+            7.191643947024318e-10,
+            0.4673422873020172,
+            4.686812189902412e-06,
+            3.465378028977284e-07,
+            0.532524049282074,
+            4.6344783186214045e-05,
+            7.16883223503828e-05,
+            1.5947898557300277e-10,
+            4.321380231431249e-08,
+            1.4393044978078251e-08,
+            3.632176337475812e-09,
+            1.0076951184601057e-05
+          ],
+          "pythonOnWebTensorScores": [
+            4.763449794609187e-07,
+            7.191643947024318e-10,
+            0.4673422873020172,
+            4.686812189902412e-06,
+            3.465378028977284e-07,
+            0.532524049282074,
+            4.6344783186214045e-05,
+            7.16883223503828e-05,
+            1.5947898557300277e-10,
+            4.321380231431249e-08,
+            1.4393044978078251e-08,
+            3.632176337475812e-09,
+            1.0076951184601057e-05
+          ],
+          "pythonDefaultDelegateOnWebTensorScores": [
+            4.763535059737478e-07,
+            7.19180770492045e-10,
+            0.4673403799533844,
+            4.686864031100413e-06,
+            3.4653871239243017e-07,
+            0.5325259566307068,
+            4.634587457985617e-05,
+            7.168823503889143e-05,
+            1.5947712594943653e-10,
+            4.3214537726044e-08,
+            1.4393233271903227e-08,
+            3.6322307384040187e-09,
+            1.0077016668219585e-05
+          ],
+          "webScores": [
+            4.763535059737478e-07,
+            7.19180770492045e-10,
+            0.4673403799533844,
+            4.686864031100413e-06,
+            3.4653871239243017e-07,
+            0.5325259566307068,
+            4.634587457985617e-05,
+            7.168823503889143e-05,
+            1.5947712594943653e-10,
+            4.3214537726044e-08,
+            1.4393233271903227e-08,
+            3.6322307384040187e-09,
+            1.0077016668219585e-05
+          ],
+          "scoresEndToEnd": {
+            "max": 1.9073486328125e-06,
+            "mae": 2.9353874830188114e-07,
+            "changed": 13,
+            "total": 13
+          },
+          "scoresPreprocessingOnly": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "scoresRuntimeOnly": {
+            "max": 1.9073486328125e-06,
+            "mae": 2.9353874830188114e-07,
+            "changed": 13,
+            "total": 13
+          },
+          "scoresWebVsPythonDefaultDelegate": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "python": {
+            "class": 5,
+            "score": 0.532524049282074,
+            "decision": "inconclusivo",
+            "margin": -0.11747595071792605
+          },
+          "web": {
+            "class": 5,
+            "score": 0.5325259566307068,
+            "decision": "inconclusivo",
+            "margin": -0.11747404336929324
+          },
+          "pythonDefaultDelegate": {
+            "class": 5,
+            "score": 0.5325259566307068,
+            "decision": "inconclusivo",
+            "margin": -0.11747404336929324
+          },
+          "defaultDelegateClassChanged": false,
+          "defaultDelegateDecisionChanged": false,
+          "classChanged": false,
+          "decisionChanged": false,
+          "thresholdAtRisk": false,
+          "exceedsHistoricalTolerance": false
+        },
+        {
+          "file": "photo.webp",
+          "pixels": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 150528
+          },
+          "tensor": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 150528
+          },
+          "pythonTensorSha256": "c9d3923b17770e43fa4fb10c96734ebd29b258d7d782efe831aec794edba3a16",
+          "webTensorSha256": "c9d3923b17770e43fa4fb10c96734ebd29b258d7d782efe831aec794edba3a16",
+          "pythonScores": [
+            4.763449794609187e-07,
+            7.191643947024318e-10,
+            0.4673422873020172,
+            4.686812189902412e-06,
+            3.465378028977284e-07,
+            0.532524049282074,
+            4.6344783186214045e-05,
+            7.16883223503828e-05,
+            1.5947898557300277e-10,
+            4.321380231431249e-08,
+            1.4393044978078251e-08,
+            3.632176337475812e-09,
+            1.0076951184601057e-05
+          ],
+          "pythonOnWebTensorScores": [
+            4.763449794609187e-07,
+            7.191643947024318e-10,
+            0.4673422873020172,
+            4.686812189902412e-06,
+            3.465378028977284e-07,
+            0.532524049282074,
+            4.6344783186214045e-05,
+            7.16883223503828e-05,
+            1.5947898557300277e-10,
+            4.321380231431249e-08,
+            1.4393044978078251e-08,
+            3.632176337475812e-09,
+            1.0076951184601057e-05
+          ],
+          "pythonDefaultDelegateOnWebTensorScores": [
+            4.763535059737478e-07,
+            7.19180770492045e-10,
+            0.4673403799533844,
+            4.686864031100413e-06,
+            3.4653871239243017e-07,
+            0.5325259566307068,
+            4.634587457985617e-05,
+            7.168823503889143e-05,
+            1.5947712594943653e-10,
+            4.3214537726044e-08,
+            1.4393233271903227e-08,
+            3.6322307384040187e-09,
+            1.0077016668219585e-05
+          ],
+          "webScores": [
+            4.763535059737478e-07,
+            7.19180770492045e-10,
+            0.4673403799533844,
+            4.686864031100413e-06,
+            3.4653871239243017e-07,
+            0.5325259566307068,
+            4.634587457985617e-05,
+            7.168823503889143e-05,
+            1.5947712594943653e-10,
+            4.3214537726044e-08,
+            1.4393233271903227e-08,
+            3.6322307384040187e-09,
+            1.0077016668219585e-05
+          ],
+          "scoresEndToEnd": {
+            "max": 1.9073486328125e-06,
+            "mae": 2.9353874830188114e-07,
+            "changed": 13,
+            "total": 13
+          },
+          "scoresPreprocessingOnly": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "scoresRuntimeOnly": {
+            "max": 1.9073486328125e-06,
+            "mae": 2.9353874830188114e-07,
+            "changed": 13,
+            "total": 13
+          },
+          "scoresWebVsPythonDefaultDelegate": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "python": {
+            "class": 5,
+            "score": 0.532524049282074,
+            "decision": "inconclusivo",
+            "margin": -0.11747595071792605
+          },
+          "web": {
+            "class": 5,
+            "score": 0.5325259566307068,
+            "decision": "inconclusivo",
+            "margin": -0.11747404336929324
+          },
+          "pythonDefaultDelegate": {
+            "class": 5,
+            "score": 0.5325259566307068,
+            "decision": "inconclusivo",
+            "margin": -0.11747404336929324
+          },
+          "defaultDelegateClassChanged": false,
+          "defaultDelegateDecisionChanged": false,
+          "classChanged": false,
+          "decisionChanged": false,
+          "thresholdAtRisk": false,
+          "exceedsHistoricalTolerance": false
+        },
+        {
+          "file": "exif-1.png",
+          "pixels": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 150528
+          },
+          "tensor": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 150528
+          },
+          "pythonTensorSha256": "c9d3923b17770e43fa4fb10c96734ebd29b258d7d782efe831aec794edba3a16",
+          "webTensorSha256": "c9d3923b17770e43fa4fb10c96734ebd29b258d7d782efe831aec794edba3a16",
+          "pythonScores": [
+            4.763449794609187e-07,
+            7.191643947024318e-10,
+            0.4673422873020172,
+            4.686812189902412e-06,
+            3.465378028977284e-07,
+            0.532524049282074,
+            4.6344783186214045e-05,
+            7.16883223503828e-05,
+            1.5947898557300277e-10,
+            4.321380231431249e-08,
+            1.4393044978078251e-08,
+            3.632176337475812e-09,
+            1.0076951184601057e-05
+          ],
+          "pythonOnWebTensorScores": [
+            4.763449794609187e-07,
+            7.191643947024318e-10,
+            0.4673422873020172,
+            4.686812189902412e-06,
+            3.465378028977284e-07,
+            0.532524049282074,
+            4.6344783186214045e-05,
+            7.16883223503828e-05,
+            1.5947898557300277e-10,
+            4.321380231431249e-08,
+            1.4393044978078251e-08,
+            3.632176337475812e-09,
+            1.0076951184601057e-05
+          ],
+          "pythonDefaultDelegateOnWebTensorScores": [
+            4.763535059737478e-07,
+            7.19180770492045e-10,
+            0.4673403799533844,
+            4.686864031100413e-06,
+            3.4653871239243017e-07,
+            0.5325259566307068,
+            4.634587457985617e-05,
+            7.168823503889143e-05,
+            1.5947712594943653e-10,
+            4.3214537726044e-08,
+            1.4393233271903227e-08,
+            3.6322307384040187e-09,
+            1.0077016668219585e-05
+          ],
+          "webScores": [
+            4.763535059737478e-07,
+            7.19180770492045e-10,
+            0.4673403799533844,
+            4.686864031100413e-06,
+            3.4653871239243017e-07,
+            0.5325259566307068,
+            4.634587457985617e-05,
+            7.168823503889143e-05,
+            1.5947712594943653e-10,
+            4.3214537726044e-08,
+            1.4393233271903227e-08,
+            3.6322307384040187e-09,
+            1.0077016668219585e-05
+          ],
+          "scoresEndToEnd": {
+            "max": 1.9073486328125e-06,
+            "mae": 2.9353874830188114e-07,
+            "changed": 13,
+            "total": 13
+          },
+          "scoresPreprocessingOnly": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "scoresRuntimeOnly": {
+            "max": 1.9073486328125e-06,
+            "mae": 2.9353874830188114e-07,
+            "changed": 13,
+            "total": 13
+          },
+          "scoresWebVsPythonDefaultDelegate": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "python": {
+            "class": 5,
+            "score": 0.532524049282074,
+            "decision": "inconclusivo",
+            "margin": -0.11747595071792605
+          },
+          "web": {
+            "class": 5,
+            "score": 0.5325259566307068,
+            "decision": "inconclusivo",
+            "margin": -0.11747404336929324
+          },
+          "pythonDefaultDelegate": {
+            "class": 5,
+            "score": 0.5325259566307068,
+            "decision": "inconclusivo",
+            "margin": -0.11747404336929324
+          },
+          "defaultDelegateClassChanged": false,
+          "defaultDelegateDecisionChanged": false,
+          "classChanged": false,
+          "decisionChanged": false,
+          "thresholdAtRisk": false,
+          "exceedsHistoricalTolerance": false
+        },
+        {
+          "file": "exif-2.png",
+          "pixels": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 150528
+          },
+          "tensor": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 150528
+          },
+          "pythonTensorSha256": "2d196b0fa569922aa47155b89c1b6940d55f9f139346bd102332ff7a84f084bb",
+          "webTensorSha256": "2d196b0fa569922aa47155b89c1b6940d55f9f139346bd102332ff7a84f084bb",
+          "pythonScores": [
+            2.1501341507246252e-06,
+            3.1123348342987356e-09,
+            0.3664354383945465,
+            2.1461608412209898e-05,
+            3.7657803204638185e-06,
+            0.6333573460578918,
+            4.493018059292808e-05,
+            0.00012624458759091794,
+            1.570922725235846e-09,
+            1.7821592734890146e-07,
+            2.2701379975842428e-07,
+            1.6947286241020265e-08,
+            8.166988664015662e-06
+          ],
+          "pythonOnWebTensorScores": [
+            2.1501341507246252e-06,
+            3.1123348342987356e-09,
+            0.3664354383945465,
+            2.1461608412209898e-05,
+            3.7657803204638185e-06,
+            0.6333573460578918,
+            4.493018059292808e-05,
+            0.00012624458759091794,
+            1.570922725235846e-09,
+            1.7821592734890146e-07,
+            2.2701379975842428e-07,
+            1.6947286241020265e-08,
+            8.166988664015662e-06
+          ],
+          "pythonDefaultDelegateOnWebTensorScores": [
+            2.1501255105249584e-06,
+            3.1123077448569347e-09,
+            0.3664337396621704,
+            2.1461482901941054e-05,
+            3.765761675822432e-06,
+            0.6333590745925903,
+            4.493012238526717e-05,
+            0.00012624444207176566,
+            1.570921059901309e-09,
+            1.782148473239431e-07,
+            2.2701182444961887e-07,
+            1.69473644007212e-08,
+            8.167017767846119e-06
+          ],
+          "webScores": [
+            2.1501255105249584e-06,
+            3.1123077448569347e-09,
+            0.3664337396621704,
+            2.1461482901941054e-05,
+            3.765761675822432e-06,
+            0.6333590745925903,
+            4.493012238526717e-05,
+            0.00012624444207176566,
+            1.570921059901309e-09,
+            1.782148473239431e-07,
+            2.2701182444961887e-07,
+            1.69473644007212e-08,
+            8.167017767846119e-06
+          ],
+          "scoresEndToEnd": {
+            "max": 1.7285346984863281e-06,
+            "mae": 2.6366583558359645e-07,
+            "changed": 13,
+            "total": 13
+          },
+          "scoresPreprocessingOnly": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "scoresRuntimeOnly": {
+            "max": 1.7285346984863281e-06,
+            "mae": 2.6366583558359645e-07,
+            "changed": 13,
+            "total": 13
+          },
+          "scoresWebVsPythonDefaultDelegate": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "python": {
+            "class": 5,
+            "score": 0.6333573460578918,
+            "decision": "inconclusivo",
+            "margin": -0.016642653942108177
+          },
+          "web": {
+            "class": 5,
+            "score": 0.6333590745925903,
+            "decision": "inconclusivo",
+            "margin": -0.01664092540740969
+          },
+          "pythonDefaultDelegate": {
+            "class": 5,
+            "score": 0.6333590745925903,
+            "decision": "inconclusivo",
+            "margin": -0.01664092540740969
+          },
+          "defaultDelegateClassChanged": false,
+          "defaultDelegateDecisionChanged": false,
+          "classChanged": false,
+          "decisionChanged": false,
+          "thresholdAtRisk": false,
+          "exceedsHistoricalTolerance": false
+        },
+        {
+          "file": "exif-3.png",
+          "pixels": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 150528
+          },
+          "tensor": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 150528
+          },
+          "pythonTensorSha256": "89c3f759b0d20b23752babe9bc1e43b33ff4d65eb62f309ce6aaa8465059bfef",
+          "webTensorSha256": "89c3f759b0d20b23752babe9bc1e43b33ff4d65eb62f309ce6aaa8465059bfef",
+          "pythonScores": [
+            5.705278908862965e-06,
+            1.042639863335637e-09,
+            0.9976366758346558,
+            0.0001717899285722524,
+            2.004169346037088e-07,
+            0.0015013774391263723,
+            1.6020250086512533e-06,
+            3.341281626489945e-05,
+            5.439917405425376e-09,
+            6.847503755125217e-06,
+            5.424016435995327e-08,
+            8.345988788960312e-08,
+            0.0006423752056434751
+          ],
+          "pythonOnWebTensorScores": [
+            5.705278908862965e-06,
+            1.042639863335637e-09,
+            0.9976366758346558,
+            0.0001717899285722524,
+            2.004169346037088e-07,
+            0.0015013774391263723,
+            1.6020250086512533e-06,
+            3.341281626489945e-05,
+            5.439917405425376e-09,
+            6.847503755125217e-06,
+            5.424016435995327e-08,
+            8.345988788960312e-08,
+            0.0006423752056434751
+          ],
+          "pythonDefaultDelegateOnWebTensorScores": [
+            5.705236162611982e-06,
+            1.042629760306113e-09,
+            0.9976366758346558,
+            0.0001717900886433199,
+            2.0041635195866547e-07,
+            0.001501373015344143,
+            1.602020233804069e-06,
+            3.341287811053917e-05,
+            5.439917849514586e-09,
+            6.847529220976867e-06,
+            5.4240057778542905e-08,
+            8.345988788960312e-08,
+            0.0006423746235668659
+          ],
+          "webScores": [
+            5.705236162611982e-06,
+            1.042629760306113e-09,
+            0.9976366758346558,
+            0.0001717900886433199,
+            2.0041635195866547e-07,
+            0.001501373015344143,
+            1.602020233804069e-06,
+            3.341287811053917e-05,
+            5.439917849514586e-09,
+            6.847529220976867e-06,
+            5.4240057778542905e-08,
+            8.345988788960312e-08,
+            0.0006423746235668659
+          ],
+          "scoresEndToEnd": {
+            "max": 4.423782229423523e-09,
+            "mae": 4.078047899369608e-10,
+            "changed": 11,
+            "total": 13
+          },
+          "scoresPreprocessingOnly": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "scoresRuntimeOnly": {
+            "max": 4.423782229423523e-09,
+            "mae": 4.078047899369608e-10,
+            "changed": 11,
+            "total": 13
+          },
+          "scoresWebVsPythonDefaultDelegate": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "python": {
+            "class": 2,
+            "score": 0.9976366758346558,
+            "decision": "aceito",
+            "margin": 0.34763667583465574
+          },
+          "web": {
+            "class": 2,
+            "score": 0.9976366758346558,
+            "decision": "aceito",
+            "margin": 0.34763667583465574
+          },
+          "pythonDefaultDelegate": {
+            "class": 2,
+            "score": 0.9976366758346558,
+            "decision": "aceito",
+            "margin": 0.34763667583465574
+          },
+          "defaultDelegateClassChanged": false,
+          "defaultDelegateDecisionChanged": false,
+          "classChanged": false,
+          "decisionChanged": false,
+          "thresholdAtRisk": false,
+          "exceedsHistoricalTolerance": false
+        },
+        {
+          "file": "exif-4.png",
+          "pixels": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 150528
+          },
+          "tensor": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 150528
+          },
+          "pythonTensorSha256": "3ed405741d1dd6206d5c9ec0010eba1446b581e39e820b9725ca9abd172c81ae",
+          "webTensorSha256": "3ed405741d1dd6206d5c9ec0010eba1446b581e39e820b9725ca9abd172c81ae",
+          "pythonScores": [
+            1.5025790389699978e-06,
+            9.337864925740291e-10,
+            0.9982748031616211,
+            2.634203883644659e-05,
+            4.275102298834099e-07,
+            0.0015620306367054582,
+            7.938388080219738e-07,
+            1.1921782061108388e-05,
+            1.6687455861585931e-09,
+            1.6198667935896083e-06,
+            2.0093175123747642e-08,
+            3.9643235361097595e-09,
+            0.00012058430002070963
+          ],
+          "pythonOnWebTensorScores": [
+            1.5025790389699978e-06,
+            9.337864925740291e-10,
+            0.9982748031616211,
+            2.634203883644659e-05,
+            4.275102298834099e-07,
+            0.0015620306367054582,
+            7.938388080219738e-07,
+            1.1921782061108388e-05,
+            1.6687455861585931e-09,
+            1.6198667935896083e-06,
+            2.0093175123747642e-08,
+            3.9643235361097595e-09,
+            0.00012058430002070963
+          ],
+          "pythonDefaultDelegateOnWebTensorScores": [
+            1.5025716493255459e-06,
+            9.337846051948873e-10,
+            0.9982746839523315,
+            2.6342158889747225e-05,
+            4.275117930774286e-07,
+            0.0015620167832821608,
+            7.938386943351361e-07,
+            1.1921621080546174e-05,
+            1.6687358161959764e-09,
+            1.6198741832340602e-06,
+            2.0093287034228524e-08,
+            3.9643532900868195e-09,
+            0.00012058451829943806
+          ],
+          "webScores": [
+            1.5025717630123836e-06,
+            9.337847162171897e-10,
+            0.9982748031616211,
+            2.6342162527726032e-05,
+            4.2751184992084745e-07,
+            0.0015620170161128044,
+            7.93838751178555e-07,
+            1.1921621990040876e-05,
+            1.668735927218279e-09,
+            1.6198744106077356e-06,
+            2.0093290586942203e-08,
+            3.964353734176029e-09,
+            0.00012058453285135329
+          ],
+          "scoresEndToEnd": {
+            "max": 1.3620592653751373e-08,
+            "mae": 1.0887625075011005e-09,
+            "changed": 12,
+            "total": 13
+          },
+          "scoresPreprocessingOnly": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "scoresRuntimeOnly": {
+            "max": 1.3620592653751373e-08,
+            "mae": 1.0887625075011005e-09,
+            "changed": 12,
+            "total": 13
+          },
+          "scoresWebVsPythonDefaultDelegate": {
+            "max": 1.1920928955078125e-07,
+            "mae": 9.189359888413133e-09,
+            "changed": 13,
+            "total": 13
+          },
+          "python": {
+            "class": 2,
+            "score": 0.9982748031616211,
+            "decision": "aceito",
+            "margin": 0.34827480316162107
+          },
+          "web": {
+            "class": 2,
+            "score": 0.9982748031616211,
+            "decision": "aceito",
+            "margin": 0.34827480316162107
+          },
+          "pythonDefaultDelegate": {
+            "class": 2,
+            "score": 0.9982746839523315,
+            "decision": "aceito",
+            "margin": 0.3482746839523315
+          },
+          "defaultDelegateClassChanged": false,
+          "defaultDelegateDecisionChanged": false,
+          "classChanged": false,
+          "decisionChanged": false,
+          "thresholdAtRisk": false,
+          "exceedsHistoricalTolerance": false
+        },
+        {
+          "file": "exif-5.png",
+          "pixels": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 150528
+          },
+          "tensor": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 150528
+          },
+          "pythonTensorSha256": "dd9d1b8e1e8fb82932c88c0885d33a668289f0d45002412de015eb9315f8b9e1",
+          "webTensorSha256": "dd9d1b8e1e8fb82932c88c0885d33a668289f0d45002412de015eb9315f8b9e1",
+          "pythonScores": [
+            4.314110810810234e-06,
+            2.8151164732648226e-10,
+            0.9722524881362915,
+            8.509121835231781e-05,
+            7.776856847385716e-08,
+            0.02754082717001438,
+            1.1057520168833435e-05,
+            1.1381354852346703e-05,
+            1.5469652225874597e-09,
+            5.34681930730585e-07,
+            6.89772061690519e-09,
+            1.438617847071555e-08,
+            9.417877299711108e-05
+          ],
+          "pythonOnWebTensorScores": [
+            4.314110810810234e-06,
+            2.8151164732648226e-10,
+            0.9722524881362915,
+            8.509121835231781e-05,
+            7.776856847385716e-08,
+            0.02754082717001438,
+            1.1057520168833435e-05,
+            1.1381354852346703e-05,
+            1.5469652225874597e-09,
+            5.34681930730585e-07,
+            6.89772061690519e-09,
+            1.438617847071555e-08,
+            9.417877299711108e-05
+          ],
+          "pythonDefaultDelegateOnWebTensorScores": [
+            4.314098987379111e-06,
+            2.815143673728926e-10,
+            0.972252607345581,
+            8.509106555720791e-05,
+            7.776814925364306e-08,
+            0.02754080854356289,
+            1.1057552910642698e-05,
+            1.1381345757399686e-05,
+            1.5469563408032627e-09,
+            5.346773264136573e-07,
+            6.897721505083609e-09,
+            1.4386125180010367e-08,
+            9.417859837412834e-05
+          ],
+          "webScores": [
+            4.3140985326317605e-06,
+            2.81514339617317e-10,
+            0.9722524881362915,
+            8.50910582812503e-05,
+            7.776813504278834e-08,
+            0.02754080481827259,
+            1.1057552001147997e-05,
+            1.1381343938410282e-05,
+            1.5469561187586578e-09,
+            5.346772695702384e-07,
+            6.89772061690519e-09,
+            1.4386123403653528e-08,
+            9.417858382221311e-05
+          ],
+          "scoresEndToEnd": {
+            "max": 2.2351741790771484e-08,
+            "mae": 1.750859510792816e-09,
+            "changed": 11,
+            "total": 13
+          },
+          "scoresPreprocessingOnly": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "scoresRuntimeOnly": {
+            "max": 2.2351741790771484e-08,
+            "mae": 1.750859510792816e-09,
+            "changed": 11,
+            "total": 13
+          },
+          "scoresWebVsPythonDefaultDelegate": {
+            "max": 1.1920928955078125e-07,
+            "mae": 9.45843576324238e-09,
+            "changed": 13,
+            "total": 13
+          },
+          "python": {
+            "class": 2,
+            "score": 0.9722524881362915,
+            "decision": "aceito",
+            "margin": 0.3222524881362915
+          },
+          "web": {
+            "class": 2,
+            "score": 0.9722524881362915,
+            "decision": "aceito",
+            "margin": 0.3222524881362915
+          },
+          "pythonDefaultDelegate": {
+            "class": 2,
+            "score": 0.972252607345581,
+            "decision": "aceito",
+            "margin": 0.32225260734558103
+          },
+          "defaultDelegateClassChanged": false,
+          "defaultDelegateDecisionChanged": false,
+          "classChanged": false,
+          "decisionChanged": false,
+          "thresholdAtRisk": false,
+          "exceedsHistoricalTolerance": false
+        },
+        {
+          "file": "exif-6.png",
+          "pixels": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 150528
+          },
+          "tensor": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 150528
+          },
+          "pythonTensorSha256": "637e4d7f261cfe9c874fab84500adea8d4fee73d596ca5754224bb3a9a3dc706",
+          "webTensorSha256": "637e4d7f261cfe9c874fab84500adea8d4fee73d596ca5754224bb3a9a3dc706",
+          "pythonScores": [
+            2.5832518986135256e-06,
+            5.879904896310961e-10,
+            0.6629243493080139,
+            0.00021126378851477057,
+            6.044034535079845e-07,
+            0.3366483449935913,
+            7.129350706236437e-06,
+            4.3959994400211144e-06,
+            1.5922869689433128e-09,
+            2.4570013920310885e-05,
+            3.458238779785461e-07,
+            3.022103811645138e-08,
+            0.00017644528998062015
+          ],
+          "pythonOnWebTensorScores": [
+            2.5832518986135256e-06,
+            5.879904896310961e-10,
+            0.6629243493080139,
+            0.00021126378851477057,
+            6.044034535079845e-07,
+            0.3366483449935913,
+            7.129350706236437e-06,
+            4.3959994400211144e-06,
+            1.5922869689433128e-09,
+            2.4570013920310885e-05,
+            3.458238779785461e-07,
+            3.022103811645138e-08,
+            0.00017644528998062015
+          ],
+          "pythonDefaultDelegateOnWebTensorScores": [
+            2.5832232495304197e-06,
+            5.87994541945136e-10,
+            0.6629289388656616,
+            0.0002112636575475335,
+            6.044047609066183e-07,
+            0.3366437256336212,
+            7.1292565735348035e-06,
+            4.395995802042307e-06,
+            1.5922979601512566e-09,
+            2.457034497638233e-05,
+            3.458216326635011e-07,
+            3.0220729030361326e-08,
+            0.00017644584295339882
+          ],
+          "webScores": [
+            2.5832232495304197e-06,
+            5.87994541945136e-10,
+            0.6629289388656616,
+            0.0002112636575475335,
+            6.044047609066183e-07,
+            0.3366437256336212,
+            7.1292565735348035e-06,
+            4.395995802042307e-06,
+            1.5922979601512566e-09,
+            2.457034497638233e-05,
+            3.458216326635011e-07,
+            3.0220729030361326e-08,
+            0.00017644584295339882
+          ],
+          "scoresEndToEnd": {
+            "max": 4.6193599700927734e-06,
+            "mae": 7.084663777301436e-07,
+            "changed": 13,
+            "total": 13
+          },
+          "scoresPreprocessingOnly": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "scoresRuntimeOnly": {
+            "max": 4.6193599700927734e-06,
+            "mae": 7.084663777301436e-07,
+            "changed": 13,
+            "total": 13
+          },
+          "scoresWebVsPythonDefaultDelegate": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "python": {
+            "class": 2,
+            "score": 0.6629243493080139,
+            "decision": "aceito",
+            "margin": 0.012924349308013894
+          },
+          "web": {
+            "class": 2,
+            "score": 0.6629289388656616,
+            "decision": "aceito",
+            "margin": 0.012928938865661599
+          },
+          "pythonDefaultDelegate": {
+            "class": 2,
+            "score": 0.6629289388656616,
+            "decision": "aceito",
+            "margin": 0.012928938865661599
+          },
+          "defaultDelegateClassChanged": false,
+          "defaultDelegateDecisionChanged": false,
+          "classChanged": false,
+          "decisionChanged": false,
+          "thresholdAtRisk": false,
+          "exceedsHistoricalTolerance": false
+        },
+        {
+          "file": "exif-7.png",
+          "pixels": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 150528
+          },
+          "tensor": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 150528
+          },
+          "pythonTensorSha256": "4d87671e127a9128f5359dbcb82747e7fb423da4b1507fddf34af7d38541ad06",
+          "webTensorSha256": "4d87671e127a9128f5359dbcb82747e7fb423da4b1507fddf34af7d38541ad06",
+          "pythonScores": [
+            5.946382771071512e-06,
+            2.720670133626868e-09,
+            0.9782163500785828,
+            0.00034151619183830917,
+            4.059878847328946e-06,
+            0.020750800147652626,
+            1.3001260867895326e-06,
+            0.00052069709636271,
+            8.616079405499022e-09,
+            6.830710503891169e-07,
+            3.16513713016775e-08,
+            3.1641231856838203e-08,
+            0.0001585937279742211
+          ],
+          "pythonOnWebTensorScores": [
+            5.946382771071512e-06,
+            2.720670133626868e-09,
+            0.9782163500785828,
+            0.00034151619183830917,
+            4.059878847328946e-06,
+            0.020750800147652626,
+            1.3001260867895326e-06,
+            0.00052069709636271,
+            8.616079405499022e-09,
+            6.830710503891169e-07,
+            3.16513713016775e-08,
+            3.1641231856838203e-08,
+            0.0001585937279742211
+          ],
+          "pythonDefaultDelegateOnWebTensorScores": [
+            5.946360033703968e-06,
+            2.7206499275678198e-09,
+            0.9782164096832275,
+            0.00034151619183830917,
+            4.059875209350139e-06,
+            0.020750736817717552,
+            1.3001211982555105e-06,
+            0.0005207010544836521,
+            8.616062530109048e-09,
+            6.830613301644917e-07,
+            3.165125050941242e-08,
+            3.164135264910328e-08,
+            0.00015859284030739218
+          ],
+          "webScores": [
+            5.946360033703968e-06,
+            2.7206499275678198e-09,
+            0.9782164096832275,
+            0.00034151619183830917,
+            4.059875209350139e-06,
+            0.020750736817717552,
+            1.3001211982555105e-06,
+            0.0005207010544836521,
+            8.616062530109048e-09,
+            6.830613301644917e-07,
+            3.165125050941242e-08,
+            3.164135264910328e-08,
+            0.00015859284030739218
+          ],
+          "scoresEndToEnd": {
+            "max": 6.332993507385254e-08,
+            "mae": 9.83243310702055e-09,
+            "changed": 12,
+            "total": 13
+          },
+          "scoresPreprocessingOnly": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "scoresRuntimeOnly": {
+            "max": 6.332993507385254e-08,
+            "mae": 9.83243310702055e-09,
+            "changed": 12,
+            "total": 13
+          },
+          "scoresWebVsPythonDefaultDelegate": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "python": {
+            "class": 2,
+            "score": 0.9782163500785828,
+            "decision": "aceito",
+            "margin": 0.32821635007858274
+          },
+          "web": {
+            "class": 2,
+            "score": 0.9782164096832275,
+            "decision": "aceito",
+            "margin": 0.3282164096832275
+          },
+          "pythonDefaultDelegate": {
+            "class": 2,
+            "score": 0.9782164096832275,
+            "decision": "aceito",
+            "margin": 0.3282164096832275
+          },
+          "defaultDelegateClassChanged": false,
+          "defaultDelegateDecisionChanged": false,
+          "classChanged": false,
+          "decisionChanged": false,
+          "thresholdAtRisk": false,
+          "exceedsHistoricalTolerance": false
+        },
+        {
+          "file": "exif-8.png",
+          "pixels": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 150528
+          },
+          "tensor": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 150528
+          },
+          "pythonTensorSha256": "572e368b8e325459b21f04dc3ec45b466fa62ddfe40d731be4892111cecbacc2",
+          "webTensorSha256": "572e368b8e325459b21f04dc3ec45b466fa62ddfe40d731be4892111cecbacc2",
+          "pythonScores": [
+            1.2461172445910051e-05,
+            2.171072877032998e-09,
+            0.9925448298454285,
+            0.00041768429218791425,
+            1.4058488204682362e-06,
+            0.005768533330410719,
+            1.7641500562604051e-06,
+            0.0009359450777992606,
+            4.090525607125528e-08,
+            1.198435711557977e-06,
+            6.34866665905065e-08,
+            1.631459412010372e-07,
+            0.00031582918018102646
+          ],
+          "pythonOnWebTensorScores": [
+            1.2461172445910051e-05,
+            2.171072877032998e-09,
+            0.9925448298454285,
+            0.00041768429218791425,
+            1.4058488204682362e-06,
+            0.005768533330410719,
+            1.7641500562604051e-06,
+            0.0009359450777992606,
+            4.090525607125528e-08,
+            1.198435711557977e-06,
+            6.34866665905065e-08,
+            1.631459412010372e-07,
+            0.00031582918018102646
+          ],
+          "pythonDefaultDelegateOnWebTensorScores": [
+            1.2461277037800755e-05,
+            2.1710477859926414e-09,
+            0.9925448298454285,
+            0.0004176840593572706,
+            1.4058474562261836e-06,
+            0.005768531002104282,
+            1.7641551721681026e-06,
+            0.0009359459509141743,
+            4.09054869976444e-08,
+            1.198441395899863e-06,
+            6.348726344640454e-08,
+            1.631468791174484e-07,
+            0.0003158349427394569
+          ],
+          "webScores": [
+            1.2461277037800755e-05,
+            2.1710477859926414e-09,
+            0.9925448298454285,
+            0.0004176840593572706,
+            1.4058474562261836e-06,
+            0.005768531002104282,
+            1.7641551721681026e-06,
+            0.0009359459509141743,
+            4.09054869976444e-08,
+            1.198441395899863e-06,
+            6.348726344640454e-08,
+            1.631468791174484e-07,
+            0.0003158349427394569
+          ],
+          "scoresEndToEnd": {
+            "max": 5.762558430433273e-09,
+            "mae": 7.165659689543593e-10,
+            "changed": 12,
+            "total": 13
+          },
+          "scoresPreprocessingOnly": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "scoresRuntimeOnly": {
+            "max": 5.762558430433273e-09,
+            "mae": 7.165659689543593e-10,
+            "changed": 12,
+            "total": 13
+          },
+          "scoresWebVsPythonDefaultDelegate": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "python": {
+            "class": 2,
+            "score": 0.9925448298454285,
+            "decision": "aceito",
+            "margin": 0.34254482984542844
+          },
+          "web": {
+            "class": 2,
+            "score": 0.9925448298454285,
+            "decision": "aceito",
+            "margin": 0.34254482984542844
+          },
+          "pythonDefaultDelegate": {
+            "class": 2,
+            "score": 0.9925448298454285,
+            "decision": "aceito",
+            "margin": 0.34254482984542844
+          },
+          "defaultDelegateClassChanged": false,
+          "defaultDelegateDecisionChanged": false,
+          "classChanged": false,
+          "decisionChanged": false,
+          "thresholdAtRisk": false,
+          "exceedsHistoricalTolerance": false
+        },
+        {
+          "file": "boundary-float16-above.png",
+          "pixels": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 150528
+          },
+          "tensor": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 150528
+          },
+          "pythonTensorSha256": "0761f29ad487ccd291169077cf5aacb5075dab0b8144ca64a5749da204ca593e",
+          "webTensorSha256": "0761f29ad487ccd291169077cf5aacb5075dab0b8144ca64a5749da204ca593e",
+          "pythonScores": [
+            0.6503618955612183,
+            0.004436694085597992,
+            0.10098958015441895,
+            3.43384308507666e-05,
+            1.268660980713321e-07,
+            0.24386046826839447,
+            1.6503454389749095e-05,
+            0.00025097798788920045,
+            2.9950086172902957e-05,
+            1.97307329585783e-07,
+            4.954984433425125e-06,
+            1.084205177903641e-05,
+            3.4876104564318666e-06
+          ],
+          "pythonOnWebTensorScores": [
+            0.6503618955612183,
+            0.004436694085597992,
+            0.10098958015441895,
+            3.43384308507666e-05,
+            1.268660980713321e-07,
+            0.24386046826839447,
+            1.6503454389749095e-05,
+            0.00025097798788920045,
+            2.9950086172902957e-05,
+            1.97307329585783e-07,
+            4.954984433425125e-06,
+            1.084205177903641e-05,
+            3.4876104564318666e-06
+          ],
+          "pythonDefaultDelegateOnWebTensorScores": [
+            0.6503608822822571,
+            0.004436650779098272,
+            0.10098928213119507,
+            3.4337623219471425e-05,
+            1.2686383854543237e-07,
+            0.24386176466941833,
+            1.6503363440278918e-05,
+            0.000250974582741037,
+            2.994949863932561e-05,
+            1.9730646272364538e-07,
+            4.9548730203241576e-06,
+            1.0841868061106652e-05,
+            3.48755838786019e-06
+          ],
+          "webScores": [
+            0.6503608822822571,
+            0.004436650779098272,
+            0.10098928213119507,
+            3.4337623219471425e-05,
+            1.2686383854543237e-07,
+            0.24386176466941833,
+            1.6503363440278918e-05,
+            0.000250974582741037,
+            2.994949863932561e-05,
+            1.9730646272364538e-07,
+            4.9548730203241576e-06,
+            1.0841868061106652e-05,
+            3.48755838786019e-06
+          ],
+          "scoresEndToEnd": {
+            "max": 1.296401023864746e-06,
+            "mae": 2.043270228568872e-07,
+            "changed": 13,
+            "total": 13
+          },
+          "scoresPreprocessingOnly": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "scoresRuntimeOnly": {
+            "max": 1.296401023864746e-06,
+            "mae": 2.043270228568872e-07,
+            "changed": 13,
+            "total": 13
+          },
+          "scoresWebVsPythonDefaultDelegate": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "python": {
+            "class": 0,
+            "score": 0.6503618955612183,
+            "decision": "aceito",
+            "margin": 0.0003618955612182395
+          },
+          "web": {
+            "class": 0,
+            "score": 0.6503608822822571,
+            "decision": "aceito",
+            "margin": 0.0003608822822570579
+          },
+          "pythonDefaultDelegate": {
+            "class": 0,
+            "score": 0.6503608822822571,
+            "decision": "aceito",
+            "margin": 0.0003608822822570579
+          },
+          "defaultDelegateClassChanged": false,
+          "defaultDelegateDecisionChanged": false,
+          "classChanged": false,
+          "decisionChanged": false,
+          "thresholdAtRisk": false,
+          "exceedsHistoricalTolerance": false
+        },
+        {
+          "file": "boundary-float16-below.png",
+          "pixels": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 150528
+          },
+          "tensor": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 150528
+          },
+          "pythonTensorSha256": "8e1acfe011c4ad74d7163dd65302da16f4ccb33a15f1f08cd5c97d008704902f",
+          "webTensorSha256": "8e1acfe011c4ad74d7163dd65302da16f4ccb33a15f1f08cd5c97d008704902f",
+          "pythonScores": [
+            0.6374636292457581,
+            0.003677521599456668,
+            0.10279427468776703,
+            3.6094163078814745e-05,
+            1.158346094598528e-07,
+            0.25573810935020447,
+            1.4412455129786395e-05,
+            0.0002284020883962512,
+            2.6883111786446534e-05,
+            2.1630437174735562e-07,
+            4.753384473588085e-06,
+            1.242752477992326e-05,
+            3.0898759177944157e-06
+          ],
+          "pythonOnWebTensorScores": [
+            0.6374636292457581,
+            0.003677521599456668,
+            0.10279427468776703,
+            3.6094163078814745e-05,
+            1.158346094598528e-07,
+            0.25573810935020447,
+            1.4412455129786395e-05,
+            0.0002284020883962512,
+            2.6883111786446534e-05,
+            2.1630437174735562e-07,
+            4.753384473588085e-06,
+            1.242752477992326e-05,
+            3.0898759177944157e-06
+          ],
+          "pythonDefaultDelegateOnWebTensorScores": [
+            0.6374639272689819,
+            0.003677450120449066,
+            0.10279437154531479,
+            3.6093762901145965e-05,
+            1.1583411207993777e-07,
+            0.255737841129303,
+            1.4412394193641376e-05,
+            0.00022840002202428877,
+            2.6882891688728705e-05,
+            2.1630424384966318e-07,
+            4.753318989969557e-06,
+            1.2427577530615963e-05,
+            3.0898656859790208e-06
+          ],
+          "webScores": [
+            0.6374639272689819,
+            0.003677450120449066,
+            0.10279437154531479,
+            3.6093762901145965e-05,
+            1.1583411207993777e-07,
+            0.255737841129303,
+            1.4412394193641376e-05,
+            0.00022840002202428877,
+            2.6882891688728705e-05,
+            2.1630424384966318e-07,
+            4.753318989969557e-06,
+            1.2427577530615963e-05,
+            3.0898656859790208e-06
+          ],
+          "scoresEndToEnd": {
+            "max": 2.980232238769531e-07,
+            "mae": 5.672748889432674e-08,
+            "changed": 13,
+            "total": 13
+          },
+          "scoresPreprocessingOnly": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "scoresRuntimeOnly": {
+            "max": 2.980232238769531e-07,
+            "mae": 5.672748889432674e-08,
+            "changed": 13,
+            "total": 13
+          },
+          "scoresWebVsPythonDefaultDelegate": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "python": {
+            "class": 0,
+            "score": 0.6374636292457581,
+            "decision": "inconclusivo",
+            "margin": -0.012536370754241966
+          },
+          "web": {
+            "class": 0,
+            "score": 0.6374639272689819,
+            "decision": "inconclusivo",
+            "margin": -0.012536072731018089
+          },
+          "pythonDefaultDelegate": {
+            "class": 0,
+            "score": 0.6374639272689819,
+            "decision": "inconclusivo",
+            "margin": -0.012536072731018089
+          },
+          "defaultDelegateClassChanged": false,
+          "defaultDelegateDecisionChanged": false,
+          "classChanged": false,
+          "decisionChanged": false,
+          "thresholdAtRisk": false,
+          "exceedsHistoricalTolerance": false
+        },
+        {
+          "file": "boundary-int8-above.png",
+          "pixels": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 150528
+          },
+          "tensor": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 150528
+          },
+          "pythonTensorSha256": "4e1d1723a9cf2c19be016ed9c42fcde9d5af1b47383cf8629ed1bcf08ecba4ea",
+          "webTensorSha256": "4e1d1723a9cf2c19be016ed9c42fcde9d5af1b47383cf8629ed1bcf08ecba4ea",
+          "pythonScores": [
+            0.8259456753730774,
+            0.0014580599963665009,
+            0.03867518529295921,
+            4.010456450487254e-06,
+            2.1195494248615887e-09,
+            0.13387148082256317,
+            3.569333557607024e-07,
+            3.923171971109696e-05,
+            6.121368869571597e-07,
+            9.269720102622614e-09,
+            6.998646995270974e-07,
+            4.458909188542748e-06,
+            3.0165176667651394e-07
+          ],
+          "pythonOnWebTensorScores": [
+            0.8259456753730774,
+            0.0014580599963665009,
+            0.03867518529295921,
+            4.010456450487254e-06,
+            2.1195494248615887e-09,
+            0.13387148082256317,
+            3.569333557607024e-07,
+            3.923171971109696e-05,
+            6.121368869571597e-07,
+            9.269720102622614e-09,
+            6.998646995270974e-07,
+            4.458909188542748e-06,
+            3.0165176667651394e-07
+          ],
+          "pythonDefaultDelegateOnWebTensorScores": [
+            0.8259453177452087,
+            0.0014580272836610675,
+            0.038674913346767426,
+            4.010454631497851e-06,
+            2.1195405430773917e-09,
+            0.13387203216552734,
+            3.5693116728907626e-07,
+            3.923166514141485e-05,
+            6.121383648860501e-07,
+            9.269698786340541e-09,
+            6.998563435445249e-07,
+            4.458919192984467e-06,
+            3.016533867139515e-07
+          ],
+          "webScores": [
+            0.8259453177452087,
+            0.0014580272836610675,
+            0.038674913346767426,
+            4.010454631497851e-06,
+            2.1195405430773917e-09,
+            0.13387203216552734,
+            3.5693116728907626e-07,
+            3.923166514141485e-05,
+            6.121383648860501e-07,
+            9.269698786340541e-09,
+            6.998563435445249e-07,
+            4.458919192984467e-06,
+            3.016533867139515e-07
+          ],
+          "scoresEndToEnd": {
+            "max": 5.513429641723633e-07,
+            "mae": 9.336229198289367e-08,
+            "changed": 13,
+            "total": 13
+          },
+          "scoresPreprocessingOnly": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "scoresRuntimeOnly": {
+            "max": 5.513429641723633e-07,
+            "mae": 9.336229198289367e-08,
+            "changed": 13,
+            "total": 13
+          },
+          "scoresWebVsPythonDefaultDelegate": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "python": {
+            "class": 0,
+            "score": 0.8259456753730774,
+            "decision": "aceito",
+            "margin": 0.17594567537307737
+          },
+          "web": {
+            "class": 0,
+            "score": 0.8259453177452087,
+            "decision": "aceito",
+            "margin": 0.17594531774520872
+          },
+          "pythonDefaultDelegate": {
+            "class": 0,
+            "score": 0.8259453177452087,
+            "decision": "aceito",
+            "margin": 0.17594531774520872
+          },
+          "defaultDelegateClassChanged": false,
+          "defaultDelegateDecisionChanged": false,
+          "classChanged": false,
+          "decisionChanged": false,
+          "thresholdAtRisk": false,
+          "exceedsHistoricalTolerance": false
+        },
+        {
+          "file": "boundary-int8-below.png",
+          "pixels": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 150528
+          },
+          "tensor": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 150528
+          },
+          "pythonTensorSha256": "90de69348569b093506bafbb20721cc979148d55c82d1a71cb3702196ec36f54",
+          "webTensorSha256": "90de69348569b093506bafbb20721cc979148d55c82d1a71cb3702196ec36f54",
+          "pythonScores": [
+            0.7837237119674683,
+            0.001737580867484212,
+            0.042455654591321945,
+            4.304260528442683e-06,
+            2.1728829846523467e-09,
+            0.17203380167484283,
+            3.612643126871262e-07,
+            3.967209704569541e-05,
+            5.555270377044508e-07,
+            9.027556480134535e-09,
+            6.61071908325539e-07,
+            3.4058664368785685e-06,
+            3.2148770401363436e-07
+          ],
+          "pythonOnWebTensorScores": [
+            0.7837237119674683,
+            0.001737580867484212,
+            0.042455654591321945,
+            4.304260528442683e-06,
+            2.1728829846523467e-09,
+            0.17203380167484283,
+            3.612643126871262e-07,
+            3.967209704569541e-05,
+            5.555270377044508e-07,
+            9.027556480134535e-09,
+            6.61071908325539e-07,
+            3.4058664368785685e-06,
+            3.2148770401363436e-07
+          ],
+          "pythonDefaultDelegateOnWebTensorScores": [
+            0.7837222814559937,
+            0.0017375468742102385,
+            0.04245561361312866,
+            4.304297817725455e-06,
+            2.17288764758905e-09,
+            0.17203529179096222,
+            3.6125712199464033e-07,
+            3.967235534219071e-05,
+            5.555303346227447e-07,
+            9.02757335552451e-09,
+            6.610732157241728e-07,
+            3.4058664368785685e-06,
+            3.214907451365434e-07
+          ],
+          "webScores": [
+            0.7837222814559937,
+            0.0017375468742102385,
+            0.04245561361312866,
+            4.304297817725455e-06,
+            2.17288764758905e-09,
+            0.17203529179096222,
+            3.6125712199464033e-07,
+            3.967235534219071e-05,
+            5.555303346227447e-07,
+            9.02757335552451e-09,
+            6.610732157241728e-07,
+            3.4058664368785685e-06,
+            3.214907451365434e-07
+          ],
+          "scoresEndToEnd": {
+            "max": 1.4901161193847656e-06,
+            "mae": 2.3045457728457018e-07,
+            "changed": 12,
+            "total": 13
+          },
+          "scoresPreprocessingOnly": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "scoresRuntimeOnly": {
+            "max": 1.4901161193847656e-06,
+            "mae": 2.3045457728457018e-07,
+            "changed": 12,
+            "total": 13
+          },
+          "scoresWebVsPythonDefaultDelegate": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "python": {
+            "class": 0,
+            "score": 0.7837237119674683,
+            "decision": "aceito",
+            "margin": 0.13372371196746824
+          },
+          "web": {
+            "class": 0,
+            "score": 0.7837222814559937,
+            "decision": "aceito",
+            "margin": 0.13372228145599363
+          },
+          "pythonDefaultDelegate": {
+            "class": 0,
+            "score": 0.7837222814559937,
+            "decision": "aceito",
+            "margin": 0.13372228145599363
+          },
+          "defaultDelegateClassChanged": false,
+          "defaultDelegateDecisionChanged": false,
+          "classChanged": false,
+          "decisionChanged": false,
+          "thresholdAtRisk": false,
+          "exceedsHistoricalTolerance": false
+        }
+      ],
+      "summary": {
+        "cases": 18,
+        "maxPixelDifference": 0.0,
+        "maxTensorDifference": 0.0,
+        "maxScoreDifference": 4.6193599700927734e-06,
+        "meanAbsoluteScoreDifference": 1.8554631872542578e-07,
+        "maxPreprocessingScoreDifference": 0.0,
+        "maxRuntimeScoreDifference": 4.6193599700927734e-06,
+        "maxWebVsPythonDefaultDelegateDifference": 1.1920928955078125e-07,
+        "defaultDelegateClassChanges": 0,
+        "defaultDelegateDecisionChanges": 0,
+        "casesExceedingHistoricalTolerance": 0,
+        "classChanges": 0,
+        "decisionChanges": 0,
+        "thresholdAtRisk": 0
+      }
+    },
+    "INT8": {
+      "spec": {
+        "format": "INT8",
+        "filename": "modelo_int8_web.tflite",
+        "bytes": 4003624,
+        "sha256": "df2f5d4fe22b4d3f76c4b8f6dab6e0100231c83d606122999ed15ceb72c05978",
+        "sourceSha256": "456caec54fae3c57684f9afd6842cae611a1f6cb6587b40b0c5bd8256aea1340",
+        "sourcePath": "assets/modelos/quantizacao_T7_3_candidato_T5_6_20261026/modelo_int8.tflite",
+        "contractPath": "assets/modelos/quantizacao_T7_3_candidato_T5_6_20261026/contrato_int8.json",
+        "version": "T7.3",
+        "input": {
+          "shape": [
+            1,
+            224,
+            224,
+            3
+          ],
+          "dtype": "int8",
+          "scale": 0.003921568859368563,
+          "zeroPoint": -128
+        },
+        "output": {
+          "shape": [
+            1,
+            13
+          ],
+          "dtype": "int8",
+          "scale": 0.00390625,
+          "zeroPoint": -128
+        }
+      },
+      "runtime": "LiteRT.js 2.6.0 CPU/WASM, 1 thread",
+      "originalEqualsWebSpecialization": true,
+      "cases": [
+        {
+          "file": "display-p3.jpg",
+          "pixels": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 150528
+          },
+          "tensor": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 150528
+          },
+          "pythonTensorSha256": "faf8599d5384e1f200f6a01f530a8a1ac3e4e83b156e33f49524815379cb6f02",
+          "webTensorSha256": "faf8599d5384e1f200f6a01f530a8a1ac3e4e83b156e33f49524815379cb6f02",
+          "pythonScores": [
+            0.328125,
+            0.0,
+            0.00390625,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.6640625
+          ],
+          "pythonOnWebTensorScores": [
+            0.328125,
+            0.0,
+            0.00390625,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.6640625
+          ],
+          "pythonDefaultDelegateOnWebTensorScores": [
+            0.328125,
+            0.0,
+            0.00390625,
+            0.0,
+            0.0,
+            0.00390625,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.6640625
+          ],
+          "webScores": [
+            0.328125,
+            0.0,
+            0.00390625,
+            0.0,
+            0.0,
+            0.00390625,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.6640625
+          ],
+          "scoresEndToEnd": {
+            "max": 0.00390625,
+            "mae": 0.00030048076923076925,
+            "changed": 1,
+            "total": 13
+          },
+          "scoresPreprocessingOnly": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "scoresRuntimeOnly": {
+            "max": 0.00390625,
+            "mae": 0.00030048076923076925,
+            "changed": 1,
+            "total": 13
+          },
+          "scoresWebVsPythonDefaultDelegate": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "python": {
+            "class": 12,
+            "score": 0.6640625,
+            "decision": "aceito",
+            "margin": 0.014062499999999978
+          },
+          "web": {
+            "class": 12,
+            "score": 0.6640625,
+            "decision": "aceito",
+            "margin": 0.014062499999999978
+          },
+          "pythonDefaultDelegate": {
+            "class": 12,
+            "score": 0.6640625,
+            "decision": "aceito",
+            "margin": 0.014062499999999978
+          },
+          "defaultDelegateClassChanged": false,
+          "defaultDelegateDecisionChanged": false,
+          "classChanged": false,
+          "decisionChanged": false,
+          "thresholdAtRisk": false,
+          "exceedsHistoricalTolerance": false
+        },
+        {
+          "file": "srgb.jpg",
+          "pixels": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 150528
+          },
+          "tensor": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 150528
+          },
+          "pythonTensorSha256": "7e464f92f4a7dcfd357301396b7c1e47a36fdc97a5d56820ee9c8df89b4b0921",
+          "webTensorSha256": "7e464f92f4a7dcfd357301396b7c1e47a36fdc97a5d56820ee9c8df89b4b0921",
+          "pythonScores": [
+            0.39453125,
+            0.0,
+            0.02734375,
+            0.0,
+            0.0,
+            0.5625,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.01171875,
+            0.0,
+            0.0
+          ],
+          "pythonOnWebTensorScores": [
+            0.39453125,
+            0.0,
+            0.02734375,
+            0.0,
+            0.0,
+            0.5625,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.01171875,
+            0.0,
+            0.0
+          ],
+          "pythonDefaultDelegateOnWebTensorScores": [
+            0.359375,
+            0.0,
+            0.01953125,
+            0.0,
+            0.0,
+            0.609375,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0078125,
+            0.0,
+            0.0
+          ],
+          "webScores": [
+            0.359375,
+            0.0,
+            0.01953125,
+            0.0,
+            0.0,
+            0.609375,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0078125,
+            0.0,
+            0.0
+          ],
+          "scoresEndToEnd": {
+            "max": 0.046875,
+            "mae": 0.007211538461538462,
+            "changed": 4,
+            "total": 13
+          },
+          "scoresPreprocessingOnly": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "scoresRuntimeOnly": {
+            "max": 0.046875,
+            "mae": 0.007211538461538462,
+            "changed": 4,
+            "total": 13
+          },
+          "scoresWebVsPythonDefaultDelegate": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "python": {
+            "class": 5,
+            "score": 0.5625,
+            "decision": "inconclusivo",
+            "margin": -0.08750000000000002
+          },
+          "web": {
+            "class": 5,
+            "score": 0.609375,
+            "decision": "inconclusivo",
+            "margin": -0.04062500000000002
+          },
+          "pythonDefaultDelegate": {
+            "class": 5,
+            "score": 0.609375,
+            "decision": "inconclusivo",
+            "margin": -0.04062500000000002
+          },
+          "defaultDelegateClassChanged": false,
+          "defaultDelegateDecisionChanged": false,
+          "classChanged": false,
+          "decisionChanged": false,
+          "thresholdAtRisk": false,
+          "exceedsHistoricalTolerance": true
+        },
+        {
+          "file": "no-profile.jpg",
+          "pixels": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 150528
+          },
+          "tensor": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 150528
+          },
+          "pythonTensorSha256": "b2ae178fbbc01f92352577519d84edf2aa2a9d435d9ad22d664833dff25ba300",
+          "webTensorSha256": "b2ae178fbbc01f92352577519d84edf2aa2a9d435d9ad22d664833dff25ba300",
+          "pythonScores": [
+            0.0,
+            0.0,
+            0.4140625,
+            0.0,
+            0.0,
+            0.5859375,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "pythonOnWebTensorScores": [
+            0.0,
+            0.0,
+            0.4140625,
+            0.0,
+            0.0,
+            0.5859375,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "pythonDefaultDelegateOnWebTensorScores": [
+            0.0,
+            0.0,
+            0.4140625,
+            0.0,
+            0.0,
+            0.5859375,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "webScores": [
+            0.0,
+            0.0,
+            0.4140625,
+            0.0,
+            0.0,
+            0.5859375,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scoresEndToEnd": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "scoresPreprocessingOnly": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "scoresRuntimeOnly": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "scoresWebVsPythonDefaultDelegate": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "python": {
+            "class": 5,
+            "score": 0.5859375,
+            "decision": "inconclusivo",
+            "margin": -0.06406250000000002
+          },
+          "web": {
+            "class": 5,
+            "score": 0.5859375,
+            "decision": "inconclusivo",
+            "margin": -0.06406250000000002
+          },
+          "pythonDefaultDelegate": {
+            "class": 5,
+            "score": 0.5859375,
+            "decision": "inconclusivo",
+            "margin": -0.06406250000000002
+          },
+          "defaultDelegateClassChanged": false,
+          "defaultDelegateDecisionChanged": false,
+          "classChanged": false,
+          "decisionChanged": false,
+          "thresholdAtRisk": false,
+          "exceedsHistoricalTolerance": false
+        },
+        {
+          "file": "photo.png",
+          "pixels": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 150528
+          },
+          "tensor": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 150528
+          },
+          "pythonTensorSha256": "b2ae178fbbc01f92352577519d84edf2aa2a9d435d9ad22d664833dff25ba300",
+          "webTensorSha256": "b2ae178fbbc01f92352577519d84edf2aa2a9d435d9ad22d664833dff25ba300",
+          "pythonScores": [
+            0.0,
+            0.0,
+            0.4140625,
+            0.0,
+            0.0,
+            0.5859375,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "pythonOnWebTensorScores": [
+            0.0,
+            0.0,
+            0.4140625,
+            0.0,
+            0.0,
+            0.5859375,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "pythonDefaultDelegateOnWebTensorScores": [
+            0.0,
+            0.0,
+            0.4140625,
+            0.0,
+            0.0,
+            0.5859375,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "webScores": [
+            0.0,
+            0.0,
+            0.4140625,
+            0.0,
+            0.0,
+            0.5859375,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scoresEndToEnd": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "scoresPreprocessingOnly": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "scoresRuntimeOnly": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "scoresWebVsPythonDefaultDelegate": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "python": {
+            "class": 5,
+            "score": 0.5859375,
+            "decision": "inconclusivo",
+            "margin": -0.06406250000000002
+          },
+          "web": {
+            "class": 5,
+            "score": 0.5859375,
+            "decision": "inconclusivo",
+            "margin": -0.06406250000000002
+          },
+          "pythonDefaultDelegate": {
+            "class": 5,
+            "score": 0.5859375,
+            "decision": "inconclusivo",
+            "margin": -0.06406250000000002
+          },
+          "defaultDelegateClassChanged": false,
+          "defaultDelegateDecisionChanged": false,
+          "classChanged": false,
+          "decisionChanged": false,
+          "thresholdAtRisk": false,
+          "exceedsHistoricalTolerance": false
+        },
+        {
+          "file": "photo-icc.png",
+          "pixels": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 150528
+          },
+          "tensor": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 150528
+          },
+          "pythonTensorSha256": "b2ae178fbbc01f92352577519d84edf2aa2a9d435d9ad22d664833dff25ba300",
+          "webTensorSha256": "b2ae178fbbc01f92352577519d84edf2aa2a9d435d9ad22d664833dff25ba300",
+          "pythonScores": [
+            0.0,
+            0.0,
+            0.4140625,
+            0.0,
+            0.0,
+            0.5859375,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "pythonOnWebTensorScores": [
+            0.0,
+            0.0,
+            0.4140625,
+            0.0,
+            0.0,
+            0.5859375,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "pythonDefaultDelegateOnWebTensorScores": [
+            0.0,
+            0.0,
+            0.4140625,
+            0.0,
+            0.0,
+            0.5859375,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "webScores": [
+            0.0,
+            0.0,
+            0.4140625,
+            0.0,
+            0.0,
+            0.5859375,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scoresEndToEnd": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "scoresPreprocessingOnly": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "scoresRuntimeOnly": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "scoresWebVsPythonDefaultDelegate": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "python": {
+            "class": 5,
+            "score": 0.5859375,
+            "decision": "inconclusivo",
+            "margin": -0.06406250000000002
+          },
+          "web": {
+            "class": 5,
+            "score": 0.5859375,
+            "decision": "inconclusivo",
+            "margin": -0.06406250000000002
+          },
+          "pythonDefaultDelegate": {
+            "class": 5,
+            "score": 0.5859375,
+            "decision": "inconclusivo",
+            "margin": -0.06406250000000002
+          },
+          "defaultDelegateClassChanged": false,
+          "defaultDelegateDecisionChanged": false,
+          "classChanged": false,
+          "decisionChanged": false,
+          "thresholdAtRisk": false,
+          "exceedsHistoricalTolerance": false
+        },
+        {
+          "file": "photo.webp",
+          "pixels": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 150528
+          },
+          "tensor": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 150528
+          },
+          "pythonTensorSha256": "b2ae178fbbc01f92352577519d84edf2aa2a9d435d9ad22d664833dff25ba300",
+          "webTensorSha256": "b2ae178fbbc01f92352577519d84edf2aa2a9d435d9ad22d664833dff25ba300",
+          "pythonScores": [
+            0.0,
+            0.0,
+            0.4140625,
+            0.0,
+            0.0,
+            0.5859375,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "pythonOnWebTensorScores": [
+            0.0,
+            0.0,
+            0.4140625,
+            0.0,
+            0.0,
+            0.5859375,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "pythonDefaultDelegateOnWebTensorScores": [
+            0.0,
+            0.0,
+            0.4140625,
+            0.0,
+            0.0,
+            0.5859375,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "webScores": [
+            0.0,
+            0.0,
+            0.4140625,
+            0.0,
+            0.0,
+            0.5859375,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scoresEndToEnd": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "scoresPreprocessingOnly": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "scoresRuntimeOnly": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "scoresWebVsPythonDefaultDelegate": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "python": {
+            "class": 5,
+            "score": 0.5859375,
+            "decision": "inconclusivo",
+            "margin": -0.06406250000000002
+          },
+          "web": {
+            "class": 5,
+            "score": 0.5859375,
+            "decision": "inconclusivo",
+            "margin": -0.06406250000000002
+          },
+          "pythonDefaultDelegate": {
+            "class": 5,
+            "score": 0.5859375,
+            "decision": "inconclusivo",
+            "margin": -0.06406250000000002
+          },
+          "defaultDelegateClassChanged": false,
+          "defaultDelegateDecisionChanged": false,
+          "classChanged": false,
+          "decisionChanged": false,
+          "thresholdAtRisk": false,
+          "exceedsHistoricalTolerance": false
+        },
+        {
+          "file": "exif-1.png",
+          "pixels": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 150528
+          },
+          "tensor": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 150528
+          },
+          "pythonTensorSha256": "b2ae178fbbc01f92352577519d84edf2aa2a9d435d9ad22d664833dff25ba300",
+          "webTensorSha256": "b2ae178fbbc01f92352577519d84edf2aa2a9d435d9ad22d664833dff25ba300",
+          "pythonScores": [
+            0.0,
+            0.0,
+            0.4140625,
+            0.0,
+            0.0,
+            0.5859375,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "pythonOnWebTensorScores": [
+            0.0,
+            0.0,
+            0.4140625,
+            0.0,
+            0.0,
+            0.5859375,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "pythonDefaultDelegateOnWebTensorScores": [
+            0.0,
+            0.0,
+            0.4140625,
+            0.0,
+            0.0,
+            0.5859375,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "webScores": [
+            0.0,
+            0.0,
+            0.4140625,
+            0.0,
+            0.0,
+            0.5859375,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scoresEndToEnd": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "scoresPreprocessingOnly": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "scoresRuntimeOnly": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "scoresWebVsPythonDefaultDelegate": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "python": {
+            "class": 5,
+            "score": 0.5859375,
+            "decision": "inconclusivo",
+            "margin": -0.06406250000000002
+          },
+          "web": {
+            "class": 5,
+            "score": 0.5859375,
+            "decision": "inconclusivo",
+            "margin": -0.06406250000000002
+          },
+          "pythonDefaultDelegate": {
+            "class": 5,
+            "score": 0.5859375,
+            "decision": "inconclusivo",
+            "margin": -0.06406250000000002
+          },
+          "defaultDelegateClassChanged": false,
+          "defaultDelegateDecisionChanged": false,
+          "classChanged": false,
+          "decisionChanged": false,
+          "thresholdAtRisk": false,
+          "exceedsHistoricalTolerance": false
+        },
+        {
+          "file": "exif-2.png",
+          "pixels": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 150528
+          },
+          "tensor": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 150528
+          },
+          "pythonTensorSha256": "56febcaecf6bc3061161bb3c052f8126aea5e41ff838eea2ba46c6ddda1cda23",
+          "webTensorSha256": "56febcaecf6bc3061161bb3c052f8126aea5e41ff838eea2ba46c6ddda1cda23",
+          "pythonScores": [
+            0.0,
+            0.0,
+            0.37109375,
+            0.0,
+            0.0,
+            0.62890625,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "pythonOnWebTensorScores": [
+            0.0,
+            0.0,
+            0.37109375,
+            0.0,
+            0.0,
+            0.62890625,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "pythonDefaultDelegateOnWebTensorScores": [
+            0.0,
+            0.0,
+            0.37109375,
+            0.0,
+            0.0,
+            0.62890625,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "webScores": [
+            0.0,
+            0.0,
+            0.37109375,
+            0.0,
+            0.0,
+            0.62890625,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scoresEndToEnd": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "scoresPreprocessingOnly": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "scoresRuntimeOnly": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "scoresWebVsPythonDefaultDelegate": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "python": {
+            "class": 5,
+            "score": 0.62890625,
+            "decision": "inconclusivo",
+            "margin": -0.021093750000000022
+          },
+          "web": {
+            "class": 5,
+            "score": 0.62890625,
+            "decision": "inconclusivo",
+            "margin": -0.021093750000000022
+          },
+          "pythonDefaultDelegate": {
+            "class": 5,
+            "score": 0.62890625,
+            "decision": "inconclusivo",
+            "margin": -0.021093750000000022
+          },
+          "defaultDelegateClassChanged": false,
+          "defaultDelegateDecisionChanged": false,
+          "classChanged": false,
+          "decisionChanged": false,
+          "thresholdAtRisk": false,
+          "exceedsHistoricalTolerance": false
+        },
+        {
+          "file": "exif-3.png",
+          "pixels": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 150528
+          },
+          "tensor": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 150528
+          },
+          "pythonTensorSha256": "a592da0032b7b95f2962a6b02c5a5eb3bed302fd28bf3cc6093710eff408f069",
+          "webTensorSha256": "a592da0032b7b95f2962a6b02c5a5eb3bed302fd28bf3cc6093710eff408f069",
+          "pythonScores": [
+            0.0,
+            0.0,
+            0.99609375,
+            0.0,
+            0.0,
+            0.00390625,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "pythonOnWebTensorScores": [
+            0.0,
+            0.0,
+            0.99609375,
+            0.0,
+            0.0,
+            0.00390625,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "pythonDefaultDelegateOnWebTensorScores": [
+            0.0,
+            0.0,
+            0.99609375,
+            0.0,
+            0.0,
+            0.00390625,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "webScores": [
+            0.0,
+            0.0,
+            0.99609375,
+            0.0,
+            0.0,
+            0.00390625,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scoresEndToEnd": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "scoresPreprocessingOnly": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "scoresRuntimeOnly": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "scoresWebVsPythonDefaultDelegate": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "python": {
+            "class": 2,
+            "score": 0.99609375,
+            "decision": "aceito",
+            "margin": 0.34609375
+          },
+          "web": {
+            "class": 2,
+            "score": 0.99609375,
+            "decision": "aceito",
+            "margin": 0.34609375
+          },
+          "pythonDefaultDelegate": {
+            "class": 2,
+            "score": 0.99609375,
+            "decision": "aceito",
+            "margin": 0.34609375
+          },
+          "defaultDelegateClassChanged": false,
+          "defaultDelegateDecisionChanged": false,
+          "classChanged": false,
+          "decisionChanged": false,
+          "thresholdAtRisk": false,
+          "exceedsHistoricalTolerance": false
+        },
+        {
+          "file": "exif-4.png",
+          "pixels": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 150528
+          },
+          "tensor": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 150528
+          },
+          "pythonTensorSha256": "c4c613c5207ecbadb5a94ee39c86349a879bc37d88f77b10030cdeca25883871",
+          "webTensorSha256": "c4c613c5207ecbadb5a94ee39c86349a879bc37d88f77b10030cdeca25883871",
+          "pythonScores": [
+            0.0,
+            0.0,
+            0.99609375,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "pythonOnWebTensorScores": [
+            0.0,
+            0.0,
+            0.99609375,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "pythonDefaultDelegateOnWebTensorScores": [
+            0.0,
+            0.0,
+            0.99609375,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "webScores": [
+            0.0,
+            0.0,
+            0.99609375,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scoresEndToEnd": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "scoresPreprocessingOnly": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "scoresRuntimeOnly": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "scoresWebVsPythonDefaultDelegate": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "python": {
+            "class": 2,
+            "score": 0.99609375,
+            "decision": "aceito",
+            "margin": 0.34609375
+          },
+          "web": {
+            "class": 2,
+            "score": 0.99609375,
+            "decision": "aceito",
+            "margin": 0.34609375
+          },
+          "pythonDefaultDelegate": {
+            "class": 2,
+            "score": 0.99609375,
+            "decision": "aceito",
+            "margin": 0.34609375
+          },
+          "defaultDelegateClassChanged": false,
+          "defaultDelegateDecisionChanged": false,
+          "classChanged": false,
+          "decisionChanged": false,
+          "thresholdAtRisk": false,
+          "exceedsHistoricalTolerance": false
+        },
+        {
+          "file": "exif-5.png",
+          "pixels": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 150528
+          },
+          "tensor": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 150528
+          },
+          "pythonTensorSha256": "fa4c704110acde9dbbe0ac4851f2086fad05cf708c7c376f990c86034304b589",
+          "webTensorSha256": "fa4c704110acde9dbbe0ac4851f2086fad05cf708c7c376f990c86034304b589",
+          "pythonScores": [
+            0.0,
+            0.0,
+            0.953125,
+            0.0,
+            0.0,
+            0.046875,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "pythonOnWebTensorScores": [
+            0.0,
+            0.0,
+            0.953125,
+            0.0,
+            0.0,
+            0.046875,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "pythonDefaultDelegateOnWebTensorScores": [
+            0.0,
+            0.0,
+            0.96484375,
+            0.0,
+            0.0,
+            0.03515625,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "webScores": [
+            0.0,
+            0.0,
+            0.96484375,
+            0.0,
+            0.0,
+            0.03515625,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scoresEndToEnd": {
+            "max": 0.01171875,
+            "mae": 0.0018028846153846155,
+            "changed": 2,
+            "total": 13
+          },
+          "scoresPreprocessingOnly": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "scoresRuntimeOnly": {
+            "max": 0.01171875,
+            "mae": 0.0018028846153846155,
+            "changed": 2,
+            "total": 13
+          },
+          "scoresWebVsPythonDefaultDelegate": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "python": {
+            "class": 2,
+            "score": 0.953125,
+            "decision": "aceito",
+            "margin": 0.303125
+          },
+          "web": {
+            "class": 2,
+            "score": 0.96484375,
+            "decision": "aceito",
+            "margin": 0.31484375
+          },
+          "pythonDefaultDelegate": {
+            "class": 2,
+            "score": 0.96484375,
+            "decision": "aceito",
+            "margin": 0.31484375
+          },
+          "defaultDelegateClassChanged": false,
+          "defaultDelegateDecisionChanged": false,
+          "classChanged": false,
+          "decisionChanged": false,
+          "thresholdAtRisk": false,
+          "exceedsHistoricalTolerance": true
+        },
+        {
+          "file": "exif-6.png",
+          "pixels": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 150528
+          },
+          "tensor": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 150528
+          },
+          "pythonTensorSha256": "7151b17f895cdc5757d10c37c36c94583718adf0485aa91d1bebff6e9e46b683",
+          "webTensorSha256": "7151b17f895cdc5757d10c37c36c94583718adf0485aa91d1bebff6e9e46b683",
+          "pythonScores": [
+            0.0,
+            0.0,
+            0.5859375,
+            0.0,
+            0.0,
+            0.4140625,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "pythonOnWebTensorScores": [
+            0.0,
+            0.0,
+            0.5859375,
+            0.0,
+            0.0,
+            0.4140625,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "pythonDefaultDelegateOnWebTensorScores": [
+            0.0,
+            0.0,
+            0.66796875,
+            0.0,
+            0.0,
+            0.328125,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "webScores": [
+            0.0,
+            0.0,
+            0.66796875,
+            0.0,
+            0.0,
+            0.328125,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scoresEndToEnd": {
+            "max": 0.0859375,
+            "mae": 0.012920673076923076,
+            "changed": 2,
+            "total": 13
+          },
+          "scoresPreprocessingOnly": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "scoresRuntimeOnly": {
+            "max": 0.0859375,
+            "mae": 0.012920673076923076,
+            "changed": 2,
+            "total": 13
+          },
+          "scoresWebVsPythonDefaultDelegate": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "python": {
+            "class": 2,
+            "score": 0.5859375,
+            "decision": "inconclusivo",
+            "margin": -0.06406250000000002
+          },
+          "web": {
+            "class": 2,
+            "score": 0.66796875,
+            "decision": "aceito",
+            "margin": 0.017968749999999978
+          },
+          "pythonDefaultDelegate": {
+            "class": 2,
+            "score": 0.66796875,
+            "decision": "aceito",
+            "margin": 0.017968749999999978
+          },
+          "defaultDelegateClassChanged": false,
+          "defaultDelegateDecisionChanged": false,
+          "classChanged": false,
+          "decisionChanged": true,
+          "thresholdAtRisk": true,
+          "exceedsHistoricalTolerance": true
+        },
+        {
+          "file": "exif-7.png",
+          "pixels": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 150528
+          },
+          "tensor": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 150528
+          },
+          "pythonTensorSha256": "4eaef616110d5b7b4bb8a940b979d507ee9b3fdd9d18b019067ca3f7fd1e6a47",
+          "webTensorSha256": "4eaef616110d5b7b4bb8a940b979d507ee9b3fdd9d18b019067ca3f7fd1e6a47",
+          "pythonScores": [
+            0.0,
+            0.0,
+            0.984375,
+            0.0,
+            0.0,
+            0.015625,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "pythonOnWebTensorScores": [
+            0.0,
+            0.0,
+            0.984375,
+            0.0,
+            0.0,
+            0.015625,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "pythonDefaultDelegateOnWebTensorScores": [
+            0.0,
+            0.0,
+            0.98828125,
+            0.0,
+            0.0,
+            0.01171875,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "webScores": [
+            0.0,
+            0.0,
+            0.98828125,
+            0.0,
+            0.0,
+            0.01171875,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scoresEndToEnd": {
+            "max": 0.00390625,
+            "mae": 0.0006009615384615385,
+            "changed": 2,
+            "total": 13
+          },
+          "scoresPreprocessingOnly": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "scoresRuntimeOnly": {
+            "max": 0.00390625,
+            "mae": 0.0006009615384615385,
+            "changed": 2,
+            "total": 13
+          },
+          "scoresWebVsPythonDefaultDelegate": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "python": {
+            "class": 2,
+            "score": 0.984375,
+            "decision": "aceito",
+            "margin": 0.334375
+          },
+          "web": {
+            "class": 2,
+            "score": 0.98828125,
+            "decision": "aceito",
+            "margin": 0.33828125
+          },
+          "pythonDefaultDelegate": {
+            "class": 2,
+            "score": 0.98828125,
+            "decision": "aceito",
+            "margin": 0.33828125
+          },
+          "defaultDelegateClassChanged": false,
+          "defaultDelegateDecisionChanged": false,
+          "classChanged": false,
+          "decisionChanged": false,
+          "thresholdAtRisk": false,
+          "exceedsHistoricalTolerance": false
+        },
+        {
+          "file": "exif-8.png",
+          "pixels": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 150528
+          },
+          "tensor": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 150528
+          },
+          "pythonTensorSha256": "f6694e05110d929b2454e50bc4502fc33bb6b0daacd2be5b4008364baa192113",
+          "webTensorSha256": "f6694e05110d929b2454e50bc4502fc33bb6b0daacd2be5b4008364baa192113",
+          "pythonScores": [
+            0.0,
+            0.0,
+            0.98828125,
+            0.0,
+            0.0,
+            0.0078125,
+            0.0,
+            0.00390625,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "pythonOnWebTensorScores": [
+            0.0,
+            0.0,
+            0.98828125,
+            0.0,
+            0.0,
+            0.0078125,
+            0.0,
+            0.00390625,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "pythonDefaultDelegateOnWebTensorScores": [
+            0.0,
+            0.0,
+            0.9921875,
+            0.0,
+            0.0,
+            0.0078125,
+            0.0,
+            0.00390625,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "webScores": [
+            0.0,
+            0.0,
+            0.9921875,
+            0.0,
+            0.0,
+            0.0078125,
+            0.0,
+            0.00390625,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scoresEndToEnd": {
+            "max": 0.00390625,
+            "mae": 0.00030048076923076925,
+            "changed": 1,
+            "total": 13
+          },
+          "scoresPreprocessingOnly": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "scoresRuntimeOnly": {
+            "max": 0.00390625,
+            "mae": 0.00030048076923076925,
+            "changed": 1,
+            "total": 13
+          },
+          "scoresWebVsPythonDefaultDelegate": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "python": {
+            "class": 2,
+            "score": 0.98828125,
+            "decision": "aceito",
+            "margin": 0.33828125
+          },
+          "web": {
+            "class": 2,
+            "score": 0.9921875,
+            "decision": "aceito",
+            "margin": 0.3421875
+          },
+          "pythonDefaultDelegate": {
+            "class": 2,
+            "score": 0.9921875,
+            "decision": "aceito",
+            "margin": 0.3421875
+          },
+          "defaultDelegateClassChanged": false,
+          "defaultDelegateDecisionChanged": false,
+          "classChanged": false,
+          "decisionChanged": false,
+          "thresholdAtRisk": false,
+          "exceedsHistoricalTolerance": false
+        },
+        {
+          "file": "boundary-float16-above.png",
+          "pixels": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 150528
+          },
+          "tensor": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 150528
+          },
+          "pythonTensorSha256": "bcc57130dac0bfcebdc7bd77f2200d801847bc59bf53840617051d01f47775fe",
+          "webTensorSha256": "bcc57130dac0bfcebdc7bd77f2200d801847bc59bf53840617051d01f47775fe",
+          "pythonScores": [
+            0.34375,
+            0.01171875,
+            0.05859375,
+            0.0,
+            0.0,
+            0.5859375,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "pythonOnWebTensorScores": [
+            0.34375,
+            0.01171875,
+            0.05859375,
+            0.0,
+            0.0,
+            0.5859375,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "pythonDefaultDelegateOnWebTensorScores": [
+            0.30859375,
+            0.0078125,
+            0.0625,
+            0.0,
+            0.0,
+            0.625,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "webScores": [
+            0.30859375,
+            0.0078125,
+            0.0625,
+            0.0,
+            0.0,
+            0.625,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scoresEndToEnd": {
+            "max": 0.0390625,
+            "mae": 0.006310096153846154,
+            "changed": 4,
+            "total": 13
+          },
+          "scoresPreprocessingOnly": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "scoresRuntimeOnly": {
+            "max": 0.0390625,
+            "mae": 0.006310096153846154,
+            "changed": 4,
+            "total": 13
+          },
+          "scoresWebVsPythonDefaultDelegate": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "python": {
+            "class": 5,
+            "score": 0.5859375,
+            "decision": "inconclusivo",
+            "margin": -0.06406250000000002
+          },
+          "web": {
+            "class": 5,
+            "score": 0.625,
+            "decision": "inconclusivo",
+            "margin": -0.025000000000000022
+          },
+          "pythonDefaultDelegate": {
+            "class": 5,
+            "score": 0.625,
+            "decision": "inconclusivo",
+            "margin": -0.025000000000000022
+          },
+          "defaultDelegateClassChanged": false,
+          "defaultDelegateDecisionChanged": false,
+          "classChanged": false,
+          "decisionChanged": false,
+          "thresholdAtRisk": false,
+          "exceedsHistoricalTolerance": true
+        },
+        {
+          "file": "boundary-float16-below.png",
+          "pixels": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 150528
+          },
+          "tensor": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 150528
+          },
+          "pythonTensorSha256": "a63528868e69884478683fbadee6150b09b598823591f40d58e3963aca66bf9c",
+          "webTensorSha256": "a63528868e69884478683fbadee6150b09b598823591f40d58e3963aca66bf9c",
+          "pythonScores": [
+            0.3125,
+            0.0078125,
+            0.04296875,
+            0.0,
+            0.0,
+            0.6328125,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "pythonOnWebTensorScores": [
+            0.3125,
+            0.0078125,
+            0.04296875,
+            0.0,
+            0.0,
+            0.6328125,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "pythonDefaultDelegateOnWebTensorScores": [
+            0.34375,
+            0.01171875,
+            0.05859375,
+            0.0,
+            0.0,
+            0.5859375,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "webScores": [
+            0.34375,
+            0.01171875,
+            0.05859375,
+            0.0,
+            0.0,
+            0.5859375,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scoresEndToEnd": {
+            "max": 0.046875,
+            "mae": 0.007512019230769231,
+            "changed": 4,
+            "total": 13
+          },
+          "scoresPreprocessingOnly": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "scoresRuntimeOnly": {
+            "max": 0.046875,
+            "mae": 0.007512019230769231,
+            "changed": 4,
+            "total": 13
+          },
+          "scoresWebVsPythonDefaultDelegate": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "python": {
+            "class": 5,
+            "score": 0.6328125,
+            "decision": "inconclusivo",
+            "margin": -0.017187500000000022
+          },
+          "web": {
+            "class": 5,
+            "score": 0.5859375,
+            "decision": "inconclusivo",
+            "margin": -0.06406250000000002
+          },
+          "pythonDefaultDelegate": {
+            "class": 5,
+            "score": 0.5859375,
+            "decision": "inconclusivo",
+            "margin": -0.06406250000000002
+          },
+          "defaultDelegateClassChanged": false,
+          "defaultDelegateDecisionChanged": false,
+          "classChanged": false,
+          "decisionChanged": false,
+          "thresholdAtRisk": true,
+          "exceedsHistoricalTolerance": true
+        },
+        {
+          "file": "boundary-int8-above.png",
+          "pixels": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 150528
+          },
+          "tensor": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 150528
+          },
+          "pythonTensorSha256": "955210da2a34bc58ac037060e5c07f8794adfba580eaa1ef379399d6927c4bf6",
+          "webTensorSha256": "955210da2a34bc58ac037060e5c07f8794adfba580eaa1ef379399d6927c4bf6",
+          "pythonScores": [
+            0.76171875,
+            0.00390625,
+            0.015625,
+            0.0,
+            0.0,
+            0.22265625,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "pythonOnWebTensorScores": [
+            0.76171875,
+            0.00390625,
+            0.015625,
+            0.0,
+            0.0,
+            0.22265625,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "pythonDefaultDelegateOnWebTensorScores": [
+            0.6484375,
+            0.00390625,
+            0.02734375,
+            0.0,
+            0.0,
+            0.3203125,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "webScores": [
+            0.6484375,
+            0.00390625,
+            0.02734375,
+            0.0,
+            0.0,
+            0.3203125,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scoresEndToEnd": {
+            "max": 0.11328125,
+            "mae": 0.017127403846153848,
+            "changed": 3,
+            "total": 13
+          },
+          "scoresPreprocessingOnly": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "scoresRuntimeOnly": {
+            "max": 0.11328125,
+            "mae": 0.017127403846153848,
+            "changed": 3,
+            "total": 13
+          },
+          "scoresWebVsPythonDefaultDelegate": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "python": {
+            "class": 0,
+            "score": 0.76171875,
+            "decision": "aceito",
+            "margin": 0.11171874999999998
+          },
+          "web": {
+            "class": 0,
+            "score": 0.6484375,
+            "decision": "inconclusivo",
+            "margin": -0.0015625000000000222
+          },
+          "pythonDefaultDelegate": {
+            "class": 0,
+            "score": 0.6484375,
+            "decision": "inconclusivo",
+            "margin": -0.0015625000000000222
+          },
+          "defaultDelegateClassChanged": false,
+          "defaultDelegateDecisionChanged": false,
+          "classChanged": false,
+          "decisionChanged": true,
+          "thresholdAtRisk": true,
+          "exceedsHistoricalTolerance": true
+        },
+        {
+          "file": "boundary-int8-below.png",
+          "pixels": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 150528
+          },
+          "tensor": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 150528
+          },
+          "pythonTensorSha256": "e3ac480b6ee66adbb60f612e88a4a1bbfd5bc36ea3ca4bf7b5f178741223ace0",
+          "webTensorSha256": "e3ac480b6ee66adbb60f612e88a4a1bbfd5bc36ea3ca4bf7b5f178741223ace0",
+          "pythonScores": [
+            0.6484375,
+            0.00390625,
+            0.02734375,
+            0.0,
+            0.0,
+            0.3203125,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "pythonOnWebTensorScores": [
+            0.6484375,
+            0.00390625,
+            0.02734375,
+            0.0,
+            0.0,
+            0.3203125,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "pythonDefaultDelegateOnWebTensorScores": [
+            0.6484375,
+            0.00390625,
+            0.02734375,
+            0.0,
+            0.0,
+            0.3203125,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "webScores": [
+            0.6484375,
+            0.00390625,
+            0.02734375,
+            0.0,
+            0.0,
+            0.3203125,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scoresEndToEnd": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "scoresPreprocessingOnly": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "scoresRuntimeOnly": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "scoresWebVsPythonDefaultDelegate": {
+            "max": 0.0,
+            "mae": 0.0,
+            "changed": 0,
+            "total": 13
+          },
+          "python": {
+            "class": 0,
+            "score": 0.6484375,
+            "decision": "inconclusivo",
+            "margin": -0.0015625000000000222
+          },
+          "web": {
+            "class": 0,
+            "score": 0.6484375,
+            "decision": "inconclusivo",
+            "margin": -0.0015625000000000222
+          },
+          "pythonDefaultDelegate": {
+            "class": 0,
+            "score": 0.6484375,
+            "decision": "inconclusivo",
+            "margin": -0.0015625000000000222
+          },
+          "defaultDelegateClassChanged": false,
+          "defaultDelegateDecisionChanged": false,
+          "classChanged": false,
+          "decisionChanged": false,
+          "thresholdAtRisk": false,
+          "exceedsHistoricalTolerance": false
+        }
+      ],
+      "summary": {
+        "cases": 18,
+        "maxPixelDifference": 0.0,
+        "maxTensorDifference": 0.0,
+        "maxScoreDifference": 0.11328125,
+        "meanAbsoluteScoreDifference": 0.0030048076923076925,
+        "maxPreprocessingScoreDifference": 0.0,
+        "maxRuntimeScoreDifference": 0.11328125,
+        "maxWebVsPythonDefaultDelegateDifference": 0.0,
+        "defaultDelegateClassChanges": 0,
+        "defaultDelegateDecisionChanges": 0,
+        "casesExceedingHistoricalTolerance": 6,
+        "classChanges": 0,
+        "decisionChanges": 2,
+        "thresholdAtRisk": 3
+      }
+    }
+  },
+  "betweenModels": [
+    {
+      "file": "display-p3.jpg",
+      "pythonScores": {
+        "max": 0.5037108957767487,
+        "mae": 0.0777944596924594,
+        "changed": 13,
+        "total": 13
+      },
+      "pythonClassChanged": true,
+      "pythonDecisionChanged": false,
+      "webClassChanged": true,
+      "webDecisionChanged": false
+    },
+    {
+      "file": "srgb.jpg",
+      "pythonScores": {
+        "max": 0.3323550224304199,
+        "mae": 0.05112009165065082,
+        "changed": 13,
+        "total": 13
+      },
+      "pythonClassChanged": true,
+      "pythonDecisionChanged": true,
+      "webClassChanged": true,
+      "webDecisionChanged": true
+    },
+    {
+      "file": "no-profile.jpg",
+      "pythonScores": {
+        "max": 0.053413450717926025,
+        "mae": 0.008217455376100285,
+        "changed": 13,
+        "total": 13
+      },
+      "pythonClassChanged": false,
+      "pythonDecisionChanged": false,
+      "webClassChanged": false,
+      "webDecisionChanged": false
+    },
+    {
+      "file": "photo.png",
+      "pythonScores": {
+        "max": 0.053413450717926025,
+        "mae": 0.008217455376100285,
+        "changed": 13,
+        "total": 13
+      },
+      "pythonClassChanged": false,
+      "pythonDecisionChanged": false,
+      "webClassChanged": false,
+      "webDecisionChanged": false
+    },
+    {
+      "file": "photo-icc.png",
+      "pythonScores": {
+        "max": 0.053413450717926025,
+        "mae": 0.008217455376100285,
+        "changed": 13,
+        "total": 13
+      },
+      "pythonClassChanged": false,
+      "pythonDecisionChanged": false,
+      "webClassChanged": false,
+      "webDecisionChanged": false
+    },
+    {
+      "file": "photo.webp",
+      "pythonScores": {
+        "max": 0.053413450717926025,
+        "mae": 0.008217455376100285,
+        "changed": 13,
+        "total": 13
+      },
+      "pythonClassChanged": false,
+      "pythonDecisionChanged": false,
+      "webClassChanged": false,
+      "webDecisionChanged": false
+    },
+    {
+      "file": "exif-1.png",
+      "pythonScores": {
+        "max": 0.053413450717926025,
+        "mae": 0.008217455376100285,
+        "changed": 13,
+        "total": 13
+      },
+      "pythonClassChanged": false,
+      "pythonDecisionChanged": false,
+      "webClassChanged": false,
+      "webDecisionChanged": false
+    },
+    {
+      "file": "exif-2.png",
+      "pythonScores": {
+        "max": 0.004658311605453491,
+        "mae": 0.000716657984872885,
+        "changed": 13,
+        "total": 13
+      },
+      "pythonClassChanged": false,
+      "pythonDecisionChanged": false,
+      "webClassChanged": false,
+      "webDecisionChanged": false
+    },
+    {
+      "file": "exif-3.png",
+      "pythonScores": {
+        "max": 0.0024048725608736277,
+        "mae": 0.000369990442555906,
+        "changed": 13,
+        "total": 13
+      },
+      "pythonClassChanged": false,
+      "pythonDecisionChanged": false,
+      "webClassChanged": false,
+      "webDecisionChanged": false
+    },
+    {
+      "file": "exif-4.png",
+      "pythonScores": {
+        "max": 0.0021810531616210938,
+        "mae": 0.0003004847980112323,
+        "changed": 13,
+        "total": 13
+      },
+      "pythonClassChanged": false,
+      "pythonDecisionChanged": false,
+      "webClassChanged": false,
+      "webDecisionChanged": false
+    },
+    {
+      "file": "exif-5.png",
+      "pythonScores": {
+        "max": 0.01933417282998562,
+        "mae": 0.0029744861158718236,
+        "changed": 13,
+        "total": 13
+      },
+      "pythonClassChanged": false,
+      "pythonDecisionChanged": false,
+      "webClassChanged": false,
+      "webDecisionChanged": false
+    },
+    {
+      "file": "exif-6.png",
+      "pythonScores": {
+        "max": 0.07741415500640869,
+        "mae": 0.01190987497211771,
+        "changed": 13,
+        "total": 13
+      },
+      "pythonClassChanged": false,
+      "pythonDecisionChanged": true,
+      "webClassChanged": false,
+      "webDecisionChanged": false
+    },
+    {
+      "file": "exif-7.png",
+      "pythonScores": {
+        "max": 0.006158649921417236,
+        "mae": 0.0009474862441041061,
+        "changed": 13,
+        "total": 13
+      },
+      "pythonClassChanged": false,
+      "pythonDecisionChanged": false,
+      "webClassChanged": false,
+      "webDecisionChanged": false
+    },
+    {
+      "file": "exif-8.png",
+      "pythonScores": {
+        "max": 0.004263579845428467,
+        "mae": 0.0007714203250429511,
+        "changed": 13,
+        "total": 13
+      },
+      "pythonClassChanged": false,
+      "pythonDecisionChanged": false,
+      "webClassChanged": false,
+      "webDecisionChanged": false
+    },
+    {
+      "file": "boundary-float16-above.png",
+      "pythonScores": {
+        "max": 0.34207703173160553,
+        "mae": 0.05374755324161876,
+        "changed": 13,
+        "total": 13
+      },
+      "pythonClassChanged": true,
+      "pythonDecisionChanged": true,
+      "webClassChanged": true,
+      "webDecisionChanged": true
+    },
+    {
+      "file": "boundary-float16-below.png",
+      "pythonScores": {
+        "max": 0.37707439064979553,
+        "mae": 0.058948070594339055,
+        "changed": 13,
+        "total": 13
+      },
+      "pythonClassChanged": true,
+      "pythonDecisionChanged": false,
+      "webClassChanged": true,
+      "webDecisionChanged": false
+    },
+    {
+      "file": "boundary-int8-above.png",
+      "pythonScores": {
+        "max": 0.08878476917743683,
+        "mae": 0.013735365608341193,
+        "changed": 13,
+        "total": 13
+      },
+      "pythonClassChanged": false,
+      "pythonDecisionChanged": false,
+      "webClassChanged": false,
+      "webDecisionChanged": true
+    },
+    {
+      "file": "boundary-int8-below.png",
+      "pythonScores": {
+        "max": 0.14827869832515717,
+        "mae": 0.023145752060913568,
+        "changed": 13,
+        "total": 13
+      },
+      "pythonClassChanged": false,
+      "pythonDecisionChanged": true,
+      "webClassChanged": false,
+      "webDecisionChanged": true
+    }
+  ],
+  "status": "correspondencia_com_XNNPACK_divergencia_INT8_sem_delegate"
+}
