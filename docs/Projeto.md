@@ -2409,8 +2409,15 @@ e avaliação final ainda depende de definição e de novas imagens independente
 
 O pacote está em
 [`assets/modelos/candidato_T5_6_20261026/`](../assets/modelos/candidato_T5_6_20261026/).
-O arquivo destinado ao embarque é **`modelo_int8.tflite`**; o checkpoint Keras
-e o TFLite FP32 são referências de auditoria, não componentes do pacote móvel.
+Na T5.6, o arquivo destinado ao embarque era **`modelo_int8.tflite`**; o checkpoint Keras
+e o TFLite FP32 eram referências de auditoria, não componentes do pacote móvel.
+
+> **Histórico:** este pacote não é mais o embarcado. Desde a
+> [T8.3](#83-seleção-do-modelo-para-mobile-t83), consolidada na
+> [T10.4](#104-consolidação-da-seleção-e-versionamento-do-modelo-final-t104),
+> o modelo principal é o **Float16 da [T7.2](#72-comparação-das-estratégias-de-quantização-t72)**
+> e a contingência é o **INT8 da [T7.3](#73-quantização-int8-com-conjunto-representativo-t73)**.
+> O `modelo_int8.tflite` abaixo permanece apenas como registro histórico.
 
 | Arquivo | Conteúdo |
 | --- | --- |
