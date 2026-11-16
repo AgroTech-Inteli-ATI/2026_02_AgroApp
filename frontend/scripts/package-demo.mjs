@@ -31,7 +31,7 @@ async function verify(directory) {
   if (JSON.stringify(actual) !== JSON.stringify(release.files))
     throw new Error("Pacote alterado: arquivos ausentes, adicionais ou com hash divergente.");
   const models = await json(path.join(directory, "models/manifest.json"));
-  if (models.models.map((model) => `${model.format}:${model.version}`).join() !== "Float16:T7.2,INT8:T7.3")
+  if (models.models.map((m) => `${m.format}:${m.version}:${m.role}`).join() !== "Float16:T7.2:principal,INT8:T7.3:contingencia")
     throw new Error("Seleção de modelos inesperada.");
   for (const model of models.models) {
     if (actual[`models/${model.filename}`]?.sha256 !== model.sha256)

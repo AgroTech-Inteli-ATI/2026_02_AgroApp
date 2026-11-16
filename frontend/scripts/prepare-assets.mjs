@@ -25,8 +25,11 @@ const classSource = await checkedSource(sources.classes);
 const classes = JSON.parse(classSource.bytes.toString("utf8"));
 if (classes.length !== 13 || classes.some((item, i) => item.indice !== i))
   throw new Error("Ordem de classes inválida.");
-if (sources.models.map((model) => model.format).join() !== "Float16,INT8")
+if (sources.models.map((model) => `${model.format}:${model.role}`).join() !== "Float16:principal,INT8:contingencia")
   throw new Error("Esperados Float16 principal e INT8 de contingência, nessa ordem.");
+// O build só embarca os arquivos escolhidos na T8.3 (escolhido e contingência).
+const decision = JSON.parse(await readFile(path.join(root, sources.selection.sourcePath), "utf8"));
+const selected = { principal: decision.escolhido, contingencia: decision.contingencia };
 
 // Lê do esquema oficial do TFLite os tensores de entrada e saída do modelo.
 // Assim, o contrato e os parâmetros de quantização vêm do próprio arquivo.
@@ -107,6 +110,8 @@ const models = [];
 for (const source of sources.models) {
   const { format, version, sourcePath, contractPath } = source;
   const { bytes, sha256: sourceSha256, contract: provenance } = await checkedSource(source);
+  if (selected[source.role].arquivo !== sourcePath || selected[source.role].sha256 !== sourceSha256)
+    throw new Error(`Modelo ${source.role} diverge da decisão T8.3: ${sourcePath}`);
   const classesSha256 = provenance.origem_selecao?.classes_sha256 ?? provenance.sha256?.["classes.json"];
   if (classesSha256 !== classSource.sha256 ||
       (provenance.classes && JSON.stringify(provenance.classes) !== JSON.stringify(classes)))
@@ -129,6 +134,7 @@ for (const source of sources.models) {
   await rm(path.join(destination, filename), { force: true });
   models.push({
     format,
+    role: source.role,
     filename: webFilename,
     bytes: bytes.length,
     sha256,
@@ -144,8 +150,10 @@ await writeFile(
   JSON.stringify(
     {
       id: sources.id,
+      version: sources.version,
       architecture: classSource.contract.arquitetura,
       selectionStatus: sources.selectionStatus,
+      selection: { sourcePath: sources.selection.sourcePath, status: decision.status },
       classes,
       classesSource: {
         sourcePath: sources.classes.sourcePath,
@@ -175,5 +183,5 @@ await build({
   minify: true,
 });
 console.log(
-  `Recursos preparados: ${classes.length} classes, Float16 T7.2 e INT8 T7.3 com hashes verificados, LiteRT.js local.`,
+  `Recursos preparados: versão ${sources.version}, ${classes.length} classes, Float16 T7.2 principal e INT8 T7.3 de contingência conferidos com a T8.3, LiteRT.js local.`,
 );

@@ -186,7 +186,7 @@ def decidir(raiz: Path = RAIZ) -> dict:
     return {
         "esquema": "selecao_mobile_T8_3_v1",
         "data": DATA,
-        "status": "decisao_aprovada_para_integracao_pendente_celular_e_parceiro",
+        "status": "concluida_versao_oficial_mvp",
         "criterio": ("Eliminatórios: RNF-01 (≤ 8 MB), RNF-09, RNF-04 indicativo local (p95 < 300 ms) e RNF-06 "
                      "pontual. Entre as elegíveis, na ordem da task: (1) RNF-06 demonstrado pelo IC 95% da "
                      "validação; (2) menor queda de F1 em uma classe; (3) menor p95 local; (4) menor tamanho."),

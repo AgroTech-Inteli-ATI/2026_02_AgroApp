@@ -14,7 +14,11 @@ for (const format of ["Float16", "INT8"] as const) {
     const response = await page.request.get("/models/manifest.json");
     expect(response.ok()).toBeTruthy();
     const manifest = (await response.json()) as ModelManifest;
-    expect(manifest.models.map((model) => model.format)).toEqual(["Float16", "INT8"]);
+    expect(manifest.models.map((model) => `${model.format}:${model.role}`)).toEqual([
+      "Float16:principal",
+      "INT8:contingencia",
+    ]);
+    expect(manifest.selectionStatus).toBe("T8.3_concluida_versao_oficial_mvp");
     const modelReference = reference.models[format];
     const selected = manifest.models.find((model) => model.format === format)!;
     expect(selected.sourceSha256).toBe(modelReference.modelSha256);
