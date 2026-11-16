@@ -1,4 +1,5 @@
 export const INPUT_SIZE = 224;
+export const PREPROCESS_CONTRACT = "T10.2-rgb8-sem-conversao-icc-v1";
 const PRECISION = 2 ** 22;
 
 // Python round() / NumPy rint: ties to even, including negative values.
@@ -113,10 +114,21 @@ export function quantize(rgb: Uint8Array, scale: number, zero: number) {
   );
 }
 
-export async function prepareImage(file: File) {
+/** Float32 HWC in [0,1]; backbone normalization already belongs to the model. */
+export function normalize(rgb: Uint8Array) {
+  return Float32Array.from(rgb, (pixel) => pixel / 255);
+}
+
+export async function decodeImage(file: File) {
   let bitmap: ImageBitmap;
   try {
-    bitmap = await createImageBitmap(file, { imageOrientation: "from-image" });
+    // Preserve the encoded RGB values, as Pillow convert('RGB') did at training.
+    // The default allows browser-dependent ICC/gamma conversion, including P3.
+    bitmap = await createImageBitmap(file, {
+      imageOrientation: "from-image",
+      colorSpaceConversion: "none",
+      premultiplyAlpha: "none",
+    });
   } catch {
     throw new Error(
       "Não foi possível abrir a foto. Escolha um JPEG, PNG ou WebP válido.",
@@ -129,13 +141,16 @@ export async function prepareImage(file: File) {
         "A foto é grande demais. Reduza para até 40 megapixels e tente novamente.",
       );
     const canvas = new OffscreenCanvas(width, height);
-    const context = canvas.getContext("2d", { willReadFrequently: true });
+    const context = canvas.getContext("2d", {
+      willReadFrequently: true,
+      colorSpace: "srgb",
+    });
     if (!context)
       throw new Error(
         "Seu navegador não oferece o processamento de imagem necessário. Use Chrome ou Edge atualizado.",
       );
     context.drawImage(bitmap, 0, 0);
-    const rgba = context.getImageData(0, 0, width, height).data;
+    const rgba = context.getImageData(0, 0, width, height, { colorSpace: "srgb" }).data;
     const rgb = new Uint8Array(width * height * 3);
     for (let i = 0, j = 0; i < rgba.length; i += 4, j += 3) {
       if (rgba[i + 3] !== 255)
@@ -146,24 +161,29 @@ export async function prepareImage(file: File) {
       rgb[j + 1] = rgba[i + 1];
       rgb[j + 2] = rgba[i + 2];
     }
-    const pixels = letterbox(rgb, width, height);
-    const previewCanvas = new OffscreenCanvas(INPUT_SIZE, INPUT_SIZE);
-    const previewContext = previewCanvas.getContext("2d")!;
-    const imageData = previewContext.createImageData(INPUT_SIZE, INPUT_SIZE);
-    for (let i = 0, j = 0; i < pixels.length; i += 3, j += 4) {
-      imageData.data[j] = pixels[i];
-      imageData.data[j + 1] = pixels[i + 1];
-      imageData.data[j + 2] = pixels[i + 2];
-      imageData.data[j + 3] = 255;
-    }
-    previewContext.putImageData(imageData, 0, 0);
-    return {
-      pixels,
-      width,
-      height,
-      preview: await previewCanvas.convertToBlob({ type: "image/png" }),
-    };
+    return { rgb, width, height };
   } finally {
     bitmap.close();
   }
+}
+
+export async function prepareImage(file: File) {
+  const { rgb, width, height } = await decodeImage(file);
+  const pixels = letterbox(rgb, width, height);
+  const previewCanvas = new OffscreenCanvas(INPUT_SIZE, INPUT_SIZE);
+  const previewContext = previewCanvas.getContext("2d", { colorSpace: "srgb" })!;
+  const imageData = previewContext.createImageData(INPUT_SIZE, INPUT_SIZE);
+  for (let i = 0, j = 0; i < pixels.length; i += 3, j += 4) {
+    imageData.data[j] = pixels[i];
+    imageData.data[j + 1] = pixels[i + 1];
+    imageData.data[j + 2] = pixels[i + 2];
+    imageData.data[j + 3] = 255;
+  }
+  previewContext.putImageData(imageData, 0, 0);
+  return {
+    pixels,
+    width,
+    height,
+    preview: await previewCanvas.convertToBlob({ type: "image/png" }),
+  };
 }

@@ -1,0 +1,54 @@
+[
+  {
+    "file": "boundary-float16-below.png",
+    "source": "assets/revisão_imagens/IMG_0021.jpg",
+    "sourceSha256": "581ec2ad87154a964c22ad29276b55054d67a673c380ed52e2224d933f641bd3",
+    "operation": "round_even(RGB8 * brightness)",
+    "brightness": 0.21428298950195312,
+    "selectedForModel": "Float16",
+    "selectedForRuntime": "sem delegates",
+    "class": 0,
+    "score": 0.6374636292457581,
+    "decision": "inconclusivo",
+    "margin": -0.012536370754241966
+  },
+  {
+    "file": "boundary-float16-above.png",
+    "source": "assets/revisão_imagens/IMG_0021.jpg",
+    "sourceSha256": "581ec2ad87154a964c22ad29276b55054d67a673c380ed52e2224d933f641bd3",
+    "operation": "round_even(RGB8 * brightness)",
+    "brightness": 0.21428680419921875,
+    "selectedForModel": "Float16",
+    "selectedForRuntime": "sem delegates",
+    "class": 0,
+    "score": 0.6503618955612183,
+    "decision": "aceito",
+    "margin": 0.0003618955612182395
+  },
+  {
+    "file": "boundary-int8-below.png",
+    "source": "assets/revisão_imagens/IMG_0021.jpg",
+    "sourceSha256": "581ec2ad87154a964c22ad29276b55054d67a673c380ed52e2224d933f641bd3",
+    "operation": "round_even(RGB8 * brightness)",
+    "brightness": 0.2999992370605469,
+    "selectedForModel": "INT8",
+    "selectedForRuntime": "sem delegates",
+    "class": 0,
+    "score": 0.6484375,
+    "decision": "inconclusivo",
+    "margin": -0.0015625000000000222
+  },
+  {
+    "file": "boundary-int8-above.png",
+    "source": "assets/revisão_imagens/IMG_0021.jpg",
+    "sourceSha256": "581ec2ad87154a964c22ad29276b55054d67a673c380ed52e2224d933f641bd3",
+    "operation": "round_even(RGB8 * brightness)",
+    "brightness": 0.3000030517578125,
+    "selectedForModel": "INT8",
+    "selectedForRuntime": "sem delegates",
+    "class": 0,
+    "score": 0.76171875,
+    "decision": "aceito",
+    "margin": 0.11171874999999998
+  }
+]
