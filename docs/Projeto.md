@@ -102,6 +102,7 @@
 - [10.1 Independência dos conjuntos de dados](#101-independência-dos-conjuntos-de-dados)
 - [10.2 Correspondência do preprocessing Python e web](#102-correspondência-do-preprocessing-python-e-web)
 - [10.3 Comparação dos modelos Float16 e INT8 entre Python e web](#103-comparação-dos-modelos-float16-e-int8-entre-python-e-web)
+- [10.4 Consolidação da seleção e versionamento do modelo final](#104-consolidação-da-seleção-e-versionamento-do-modelo-final-t104)
 
 </details>
 
@@ -2408,8 +2409,15 @@ e avaliação final ainda depende de definição e de novas imagens independente
 
 O pacote está em
 [`assets/modelos/candidato_T5_6_20261026/`](../assets/modelos/candidato_T5_6_20261026/).
-O arquivo destinado ao embarque é **`modelo_int8.tflite`**; o checkpoint Keras
-e o TFLite FP32 são referências de auditoria, não componentes do pacote móvel.
+Na T5.6, o arquivo destinado ao embarque era **`modelo_int8.tflite`**; o checkpoint Keras
+e o TFLite FP32 eram referências de auditoria, não componentes do pacote móvel.
+
+> **Histórico:** este pacote não é mais o embarcado. Desde a
+> [T8.3](#83-seleção-do-modelo-para-mobile-t83), consolidada na
+> [T10.4](#104-consolidação-da-seleção-e-versionamento-do-modelo-final-t104),
+> o modelo principal é o **Float16 da [T7.2](#72-comparação-das-estratégias-de-quantização-t72)**
+> e a contingência é o **INT8 da [T7.3](#73-quantização-int8-com-conjunto-representativo-t73)**.
+> O `modelo_int8.tflite` abaixo permanece apenas como registro histórico.
 
 | Arquivo | Conteúdo |
 | --- | --- |
@@ -3733,6 +3741,8 @@ Os testes conferem integridade dos arquivos históricos e atuais, cobertura das 
 
 ## 8.3 Seleção do modelo para mobile (T8.3)
 
+**Atualização em 16/11/2026:** seleção concluída na [T10.4](#104-consolidação-da-seleção-e-versionamento-do-modelo-final-t104). O Float16 abaixo é o modelo oficial da versão `1.0.0` do MVP, e o `status` de [`decisao.json`](../assets/data/selecao_T8_3/decisao.json) passou a `concluida_versao_oficial_mvp`. A escolha e as métricas não mudaram.
+
 **Atualização em 08/11/2026:** a [T8.1](#81-avaliação-pós-conversão-t81) entrou na `develop` e foi conferida contra esta seção, sem divergências (`t8_1: conferida` em [`decisao.json`](../assets/data/selecao_T8_3/decisao.json)), e o frontend da [T9.1](#91-pipeline-de-captura-e-processamento-de-imagens-t91) já integra esta decisão. A escolha não mudou.
 
 **Decisão:** embarcar o **Float16** da T7.2 (`modelo_float16.tflite`, 6.833.548 bytes, SHA-256 `c9a26ce1…8a5a8fa2`), mantendo o **INT8 oficial da T7.3** como contingência. A decisão usa apenas evidências já versionadas (T7.2, T8.1, T8.2 e política T6.5): nenhum modelo foi treinado, convertido ou executado de novo. O Float16 mantém entrada e saída em float32, com o mesmo contrato `[1, 224, 224, 3]` → `[1, 13]` do FP32. A seleção é reproduzível pelo [script](../src/selecao_mobile_t8_3.py), e o resultado está em [`decisao.json`](../assets/data/selecao_T8_3/decisao.json), [`tabela_decisao.csv`](../assets/data/selecao_T8_3/tabela_decisao.csv) e [`relatorio.md`](../assets/data/selecao_T8_3/relatorio.md).
@@ -3809,7 +3819,7 @@ São aceitos JPEG, PNG e WebP até 10 MiB e 40 megapixels, sem transparência. O
 
 ### Artefatos e vínculo com as entregas anteriores
 
-[`model-sources.json`](../frontend/model-sources.json) centraliza as origens das classes e de cada modelo, os contratos e as chaves de hash. A situação registrada é `T8.3_integrada_pendente_celular_e_parceiro`. O empacotamento verifica os hashes e o vínculo entre classes e modelo, confere as dimensões/tipos dos tensores e gera cópias web com assinaturas de dimensões concretas, preservando os originais.
+[`model-sources.json`](../frontend/model-sources.json) centraliza as origens das classes e de cada modelo, os contratos e as chaves de hash. A situação registrada é `T8.3_concluida_versao_oficial_mvp` (atualizada na [T10.4](#104-consolidação-da-seleção-e-versionamento-do-modelo-final-t104)). O empacotamento verifica os hashes e o vínculo entre classes e modelo, confere as dimensões/tipos dos tensores e gera cópias web com assinaturas de dimensões concretas, preservando os originais.
 
 | Item em execução nesta atualização | Origem | SHA-256 original |
 | --- | --- | --- |
@@ -4229,3 +4239,30 @@ python -m src.comparacao_preprocessamento_t10_2 relatorio
 Na execução de 14/11/2026 passaram os **19 testes unitários**, os **12 testes de navegador**, incluindo inferência real e offline, as validações Python do preprocessing e o build TypeScript/Vite. Após acrescentar a checagem explícita das referências XNNPACK, os dois testes comparativos de navegador e as validações Python foram executados novamente e passaram.
 
 Os [dados completos](../assets/data/comparacao_preprocessamento_T10_2/comparacao.json) preservam os scores por classe, as decisões, as margens em relação ao limiar, os erros por etapa e a identidade dos modelos. O comando `relatorio` atualiza esse JSON; a análise descritiva é mantida nesta seção. A reprodução gera os tensores intermediários em `frontend/.work/model-comparison-*.json`.
+
+## 10.4 Consolidação da seleção e versionamento do modelo final (T10.4)
+
+Em 16/11/2026, a seleção da [T8.3](#83-seleção-do-modelo-para-mobile-t83) foi concluída e a versão oficial do MVP foi fixada como **`1.0.0`**. O modelo já consumido pelo frontend é o definitivo: nenhum modelo foi treinado, convertido, quantizado ou trocado nesta etapa.
+
+| Papel | Formato | Origem | SHA-256 original | Arquivo entregue | SHA-256 entregue |
+| --- | --- | --- | --- | --- | --- |
+| **Principal** | Float16 (T7.2) | `assets/modelos/comparacao_T7_2_candidato_T5_6_20261026/modelo_float16.tflite` | `c9a26ce13806a2fa26bffbd8cfbdac83ff4c05ffff1009ca9483bb587a5a8fa2` | `models/modelo_float16_web.tflite` (6.833.548 bytes) | `9c18f0a2ca4a4e2eb0d84dd415046f0bd35385ede8c47e14463d3a0f134647ec` |
+| **Contingência** | INT8 oficial (T7.3) | `assets/modelos/quantizacao_T7_3_candidato_T5_6_20261026/modelo_int8.tflite` | `456caec54fae3c57684f9afd6842cae611a1f6cb6587b40b0c5bd8256aea1340` | `models/modelo_int8_web.tflite` (4.003.624 bytes) | `df2f5d4fe22b4d3f76c4b8f6dab6e0100231c83d606122999ed15ceb72c05978` |
+
+O hash entregue difere do original porque a cópia web só torna concretas as dimensões dinâmicas da assinatura; pesos, operadores e quantização são preservados ([seção 9.1](#91-pipeline-de-captura-e-processamento-de-imagens-t91)).
+
+### O que mudou
+
+- [`decisao.json`](../assets/data/selecao_T8_3/decisao.json) e o [script da T8.3](../src/selecao_mobile_t8_3.py): `status` de `decisao_aprovada_para_integracao_pendente_celular_e_parceiro` para `concluida_versao_oficial_mvp`. A tabela, os critérios e a escolha continuam reproduzidos pelo script.
+- [`model-sources.json`](../frontend/model-sources.json): versão `1.0.0`, estado `T8.3_concluida_versao_oficial_mvp`, caminho da decisão T8.3 e papel explícito de cada modelo (`principal` e `contingencia`), que antes só era dado pela ordem da lista.
+- [`prepare-assets.mjs`](../frontend/scripts/prepare-assets.mjs): o build lê a decisão T8.3 e **recusa** gerar os artefatos se o caminho ou o SHA-256 do principal ou da contingência divergir de `escolhido` ou `contingencia`. O manifesto servido (`models/manifest.json`) passa a registrar `version`, `selection` (origem e estado da decisão) e `role` de cada modelo, além dos hashes original e web já existentes.
+- A verificação do pacote de demonstração e o teste de navegador conferem o papel de cada modelo e o estado da seleção.
+- `frontend/public/models` e `frontend/dist` foram regenerados pelo build.
+
+### Verificação
+
+Após `npm.cmd run build`, os dois manifestos (`public/models` e `dist/models`) conferem com os arquivos entregues: tamanho e SHA-256 de cada cópia web, SHA-256 de cada origem e a lista de modelos do pré-cache offline (`dist/sw.js`), que contém só os dois arquivos do manifesto. Passaram os 10 testes da T8.3, os 19 testes unitários e os 10 testes de navegador. Uma alteração proposital do hash da contingência em `decisao.json` interrompeu o build, como esperado.
+
+### Limites
+
+A conclusão da seleção não fecha as pendências já registradas na T8.3: RNF-03, RNF-04 e RNF-07 no aparelho de referência, RNF-06 em conjunto independente ([seção 10.1](#101-independência-dos-conjuntos-de-dados)), a política T6.5 no top-3 do arquivo embarcado e a aprovação do parceiro. A contingência continua sendo acionada pelo carregador apenas quando o principal não compila, não valida os tensores ou falha no aquecimento; a troca por latência ou memória depende da medição no aparelho.

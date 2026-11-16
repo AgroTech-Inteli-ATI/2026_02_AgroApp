@@ -10,6 +10,7 @@ export interface TensorSpec {
 }
 export interface ModelSpec {
   format: "Float16" | "INT8";
+  role: "principal" | "contingencia";
   filename: string;
   bytes: number;
   sha256: string;
@@ -22,8 +23,10 @@ export interface ModelSpec {
 }
 export interface ModelManifest {
   id: string;
+  version: string;
   architecture: string;
   selectionStatus: string;
+  selection: { sourcePath: string; status: string };
   classesSource: {
     sourcePath: string;
     contractPath: string;

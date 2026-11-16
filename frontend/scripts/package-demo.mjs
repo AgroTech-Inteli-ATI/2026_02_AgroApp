@@ -31,7 +31,11 @@ async function verify(directory) {
   if (JSON.stringify(actual) !== JSON.stringify(release.files))
     throw new Error("Pacote alterado: arquivos ausentes, adicionais ou com hash divergente.");
   const models = await json(path.join(directory, "models/manifest.json"));
-  if (models.models.map((model) => `${model.format}:${model.version}`).join() !== "Float16:T7.2,INT8:T7.3")
+  // Pacotes anteriores à T10.4 (sem "version" no manifesto) não têm role nem selection.
+  const legacy = models.version === undefined;
+  const expected = legacy ? "Float16:T7.2,INT8:T7.3" : "Float16:T7.2:principal,INT8:T7.3:contingencia";
+  const found = models.models.map((m) => [m.format, m.version, ...(legacy ? [] : [m.role])].join(":")).join();
+  if (found !== expected || (!legacy && !models.selection?.sourcePath))
     throw new Error("Seleção de modelos inesperada.");
   for (const model of models.models) {
     if (actual[`models/${model.filename}`]?.sha256 !== model.sha256)
