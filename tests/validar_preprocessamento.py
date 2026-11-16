@@ -32,7 +32,12 @@ def validar():
 
     # Modo não RGB (escala de cinza e RGBA) vira RGB de 3 canais
     assert preparar_imagem(Image.new('L', (300, 300), 90)).shape[-1] == 3
-    assert preparar_imagem(Image.new('RGBA', (300, 300), (1, 2, 3, 0))).shape[-1] == 3
+    assert preparar_imagem(Image.new('RGBA', (300, 300), (1, 2, 3, 255))).shape[-1] == 3
+    try:
+        preparar_imagem(Image.new('RGBA', (300, 300), (1, 2, 3, 0)))
+        raise AssertionError('transparência deveria ser recusada como no navegador')
+    except ValueError as erro:
+        assert 'transparência' in str(erro)
 
     # Orientação EXIF é aplicada: 100x200 girada 90° vira paisagem
     retrato = Image.new('RGB', (100, 200), (255, 0, 0))

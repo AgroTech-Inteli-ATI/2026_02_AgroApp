@@ -5,7 +5,7 @@ import {
   Tensor,
   type CompiledModel,
 } from "@litertjs/core";
-import { prepareImage, quantize } from "./preprocess";
+import { prepareImage, quantize, normalize } from "./preprocess";
 import type {
   ModelInfo,
   ModelManifest,
@@ -155,7 +155,7 @@ async function analyze(id: number, file: File) {
     const data =
       spec.input.dtype === "int8"
         ? quantize(pixels, spec.input.scale!, spec.input.zeroPoint!)
-        : Float32Array.from(pixels, (value) => value / 255);
+        : normalize(pixels);
     const input = new Tensor(data, [1, 224, 224, 3]);
     const preparationMs = performance.now() - start;
     let outputs: Tensor[] = [];
