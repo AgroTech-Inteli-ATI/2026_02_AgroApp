@@ -1,5 +1,7 @@
 # AgroApp
 
+Medição dos modelos finais e do pacote web: [Validação T12.1](docs/Validacao_T12_1.md).
+
 Repositório do projeto AgroApp — AgroTech Inteli ATI, 2026/02.
 
 ## Sumário

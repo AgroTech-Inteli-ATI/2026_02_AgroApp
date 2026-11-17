@@ -1,5 +1,7 @@
 # Documentação do Projeto — AgroApp
 
+Validação de desempenho e integração web: [T12.1 — Tamanho dos modelos e pacote](Validacao_T12_1.md).
+
 ## Sumário
 
 <details>

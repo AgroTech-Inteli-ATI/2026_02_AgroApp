@@ -1,0 +1,281 @@
+{
+  "esquema": "tamanho_T12_1_v1",
+  "build": "frontend/dist",
+  "modelos": [
+    {
+      "formato": "Float16",
+      "papel": "principal",
+      "original": {
+        "arquivo": "assets/modelos/comparacao_T7_2_candidato_T5_6_20261026/modelo_float16.tflite",
+        "categoria": "Modelo original",
+        "bytes": 6833548,
+        "gzip_bytes": 6244526,
+        "sha256": "c9a26ce13806a2fa26bffbd8cfbdac83ff4c05ffff1009ca9483bb587a5a8fa2"
+      },
+      "web": {
+        "arquivo": "models/modelo_float16_web.tflite",
+        "categoria": "Modelos web",
+        "bytes": 6833548,
+        "gzip_bytes": 6244479,
+        "sha256": "9c18f0a2ca4a4e2eb0d84dd415046f0bd35385ede8c47e14463d3a0f134647ec"
+      }
+    },
+    {
+      "formato": "INT8",
+      "papel": "contingencia",
+      "original": {
+        "arquivo": "assets/modelos/quantizacao_T7_3_candidato_T5_6_20261026/modelo_int8.tflite",
+        "categoria": "Modelo original",
+        "bytes": 4003624,
+        "gzip_bytes": 3280815,
+        "sha256": "456caec54fae3c57684f9afd6842cae611a1f6cb6587b40b0c5bd8256aea1340"
+      },
+      "web": {
+        "arquivo": "models/modelo_int8_web.tflite",
+        "categoria": "Modelos web",
+        "bytes": 4003624,
+        "gzip_bytes": 3280753,
+        "sha256": "df2f5d4fe22b4d3f76c4b8f6dab6e0100231c83d606122999ed15ceb72c05978"
+      }
+    }
+  ],
+  "componentes": {
+    "Interface, estilos e suporte offline": {
+      "arquivos": 5,
+      "bytes": 275386,
+      "gzip_bytes": 85266
+    },
+    "Fontes": {
+      "arquivos": 8,
+      "bytes": 73384,
+      "gzip_bytes": 73336
+    },
+    "Imagens": {
+      "arquivos": 2,
+      "bytes": 37502,
+      "gzip_bytes": 36268
+    },
+    "Manifesto, rótulos e contratos": {
+      "arquivos": 1,
+      "bytes": 3401,
+      "gzip_bytes": 1116
+    },
+    "Modelos web": {
+      "arquivos": 2,
+      "bytes": 10837172,
+      "gzip_bytes": 9525232
+    },
+    "Runtime LiteRT e worker": {
+      "arquivos": 9,
+      "bytes": 47034349,
+      "gzip_bytes": 13151518
+    }
+  },
+  "arquivos": [
+    {
+      "arquivo": "assets/index-DctKqicf.js",
+      "categoria": "Interface, estilos e suporte offline",
+      "bytes": 249140,
+      "gzip_bytes": 77997,
+      "sha256": "8f9b71e6e3706cf3fc600a9ab25d8a4b3d74c0ebc841f49fb43ca22cb51f2283"
+    },
+    {
+      "arquivo": "assets/index-DsjAQYRZ.css",
+      "categoria": "Interface, estilos e suporte offline",
+      "bytes": 22496,
+      "gzip_bytes": 5374,
+      "sha256": "b3638695526babde24ff4613d54130334a075d55e23a1d1fe06ff321b8393828"
+    },
+    {
+      "arquivo": "assets/poppins-latin-400-normal-BOb3E3N0.woff",
+      "categoria": "Fontes",
+      "bytes": 10532,
+      "gzip_bytes": 10499,
+      "sha256": "6076b418803564833cde2aece96c51b29927ab0a98dfbe727774d1a6c6e6c445"
+    },
+    {
+      "arquivo": "assets/poppins-latin-400-normal-cpxAROuN.woff2",
+      "categoria": "Fontes",
+      "bytes": 7884,
+      "gzip_bytes": 7907,
+      "sha256": "7d93459d86585bfcdbb7e0376056226adb25821ee54b96236fe2123e9560929f"
+    },
+    {
+      "arquivo": "assets/poppins-latin-500-normal-C8OXljZJ.woff2",
+      "categoria": "Fontes",
+      "bytes": 7748,
+      "gzip_bytes": 7771,
+      "sha256": "cd36de204aca2d5fa263a731f7c20009b5e3d754ba1f1e03c33e93a48f3e7446"
+    },
+    {
+      "arquivo": "assets/poppins-latin-500-normal-DGXqpDMm.woff",
+      "categoria": "Fontes",
+      "bytes": 10372,
+      "gzip_bytes": 10335,
+      "sha256": "abdc91ec7e4438b1e1d7f808d388614789d69037059b74a9d6166d00eb9b8b04"
+    },
+    {
+      "arquivo": "assets/poppins-latin-600-normal-BJdTmd5m.woff",
+      "categoria": "Fontes",
+      "bytes": 10600,
+      "gzip_bytes": 10565,
+      "sha256": "55fffef7b100460605349fa5215eb7dcd6e558e195d08e43eddc64c4b27d43b3"
+    },
+    {
+      "arquivo": "assets/poppins-latin-600-normal-zEkxB9Mr.woff2",
+      "categoria": "Fontes",
+      "bytes": 8000,
+      "gzip_bytes": 8023,
+      "sha256": "f4e80d9dfd374d02989b87a27b5ed4cb78fbb177c27f1478e9a8b0afb7513149"
+    },
+    {
+      "arquivo": "assets/poppins-latin-700-normal-BVuQR_eA.woff",
+      "categoria": "Fontes",
+      "bytes": 10432,
+      "gzip_bytes": 10397,
+      "sha256": "927ba66258ea405f06205be694080f1126d186633c3c69cb839cfd0cfc5ee8ff"
+    },
+    {
+      "arquivo": "assets/poppins-latin-700-normal-Qrb0O0WB.woff2",
+      "categoria": "Fontes",
+      "bytes": 7816,
+      "gzip_bytes": 7839,
+      "sha256": "9338e65fc077355c7a87ae0d64cc101e23b9bf8ad78ae65f0f319c857311b526"
+    },
+    {
+      "arquivo": "brand/agroapp.png",
+      "categoria": "Imagens",
+      "bytes": 5023,
+      "gzip_bytes": 4732,
+      "sha256": "6dfd36b1b3cf8ac33b1935afe97abc037ba26fab17892dda51c861c652af1c02"
+    },
+    {
+      "arquivo": "brand/leaves.png",
+      "categoria": "Imagens",
+      "bytes": 32479,
+      "gzip_bytes": 31536,
+      "sha256": "178d35010c085687ee4215179811eda191e543707493a1d9e20c192857249267"
+    },
+    {
+      "arquivo": "brand/PROVENANCE.md",
+      "categoria": "Interface, estilos e suporte offline",
+      "bytes": 686,
+      "gzip_bytes": 428,
+      "sha256": "dfba38aa46e7cf50639d43f2e7ec4d040d8c0e84c0c23aeea61cfc32d0b3bae1"
+    },
+    {
+      "arquivo": "index.html",
+      "categoria": "Interface, estilos e suporte offline",
+      "bytes": 730,
+      "gzip_bytes": 433,
+      "sha256": "a565f224c0e2ca6381740a0b2bbe54fa9a417796543f092a08382131a28acd82"
+    },
+    {
+      "arquivo": "models/manifest.json",
+      "categoria": "Manifesto, rótulos e contratos",
+      "bytes": 3401,
+      "gzip_bytes": 1116,
+      "sha256": "0d171afdf46918bc378388497c597d29c4789434730b88d6ded7b3158c1bb31b"
+    },
+    {
+      "arquivo": "models/modelo_float16_web.tflite",
+      "categoria": "Modelos web",
+      "bytes": 6833548,
+      "gzip_bytes": 6244479,
+      "sha256": "9c18f0a2ca4a4e2eb0d84dd415046f0bd35385ede8c47e14463d3a0f134647ec"
+    },
+    {
+      "arquivo": "models/modelo_int8_web.tflite",
+      "categoria": "Modelos web",
+      "bytes": 4003624,
+      "gzip_bytes": 3280753,
+      "sha256": "df2f5d4fe22b4d3f76c4b8f6dab6e0100231c83d606122999ed15ceb72c05978"
+    },
+    {
+      "arquivo": "runtime/inference.js",
+      "categoria": "Runtime LiteRT e worker",
+      "bytes": 51733,
+      "gzip_bytes": 15433,
+      "sha256": "9025c840fd8064bd791659357a9d1ab9eaf6c51930850aef1e2b4d257b71f5c3"
+    },
+    {
+      "arquivo": "runtime/litert_wasm_compat_internal.js",
+      "categoria": "Runtime LiteRT e worker",
+      "bytes": 279036,
+      "gzip_bytes": 68529,
+      "sha256": "cffb7bebb9411e2160d711ccff00c3921b0031a66a692f58c25ce8204b7ec541"
+    },
+    {
+      "arquivo": "runtime/litert_wasm_compat_internal.wasm",
+      "categoria": "Runtime LiteRT e worker",
+      "bytes": 10948854,
+      "gzip_bytes": 3055522,
+      "sha256": "4190033238e53ec86b832bad4649851ad111025c226c1688cfae20e1f8fe8926"
+    },
+    {
+      "arquivo": "runtime/litert_wasm_internal.js",
+      "categoria": "Runtime LiteRT e worker",
+      "bytes": 278825,
+      "gzip_bytes": 68467,
+      "sha256": "43bc8c66b43e04630337c90edcea16b133a9f543d008e496a1550d3a229bc9ac"
+    },
+    {
+      "arquivo": "runtime/litert_wasm_internal.wasm",
+      "categoria": "Runtime LiteRT e worker",
+      "bytes": 11131135,
+      "gzip_bytes": 3089385,
+      "sha256": "13db768de5c7a087517e46a0172c81102a7983bd159e6e47b0a0b933bae60014"
+    },
+    {
+      "arquivo": "runtime/litert_wasm_jspi_internal.js",
+      "categoria": "Runtime LiteRT e worker",
+      "bytes": 299650,
+      "gzip_bytes": 71837,
+      "sha256": "af44bcbda6fb77bfb48d0bddffdbc6b68da9f7987481bf4f5e87ff7cce531ef8"
+    },
+    {
+      "arquivo": "runtime/litert_wasm_jspi_internal.wasm",
+      "categoria": "Runtime LiteRT e worker",
+      "bytes": 12561552,
+      "gzip_bytes": 3597317,
+      "sha256": "24776f94170f0ad825cff8697a0573adab2258276c861db49bf5f9e72b95c291"
+    },
+    {
+      "arquivo": "runtime/litert_wasm_threaded_internal.js",
+      "categoria": "Runtime LiteRT e worker",
+      "bytes": 323431,
+      "gzip_bytes": 80346,
+      "sha256": "88f9cde94a3ffd906fc35a9c77eded6ee7e168d149b76344998ced3635f47fc1"
+    },
+    {
+      "arquivo": "runtime/litert_wasm_threaded_internal.wasm",
+      "categoria": "Runtime LiteRT e worker",
+      "bytes": 11160133,
+      "gzip_bytes": 3104682,
+      "sha256": "625f55564e869e7bb4d8a14d12ea382868f4ad32555f0f670b94422822611120"
+    },
+    {
+      "arquivo": "sw.js",
+      "categoria": "Interface, estilos e suporte offline",
+      "bytes": 2334,
+      "gzip_bytes": 1034,
+      "sha256": "12b25147d1b41a3bc4ac5bd55afd2fcaa997a11f654793fdf88d98685f4260ae"
+    }
+  ],
+  "total_bytes": 58261194,
+  "gzip_por_arquivo_total_bytes": 22872736,
+  "limites": {
+    "fonte": "docs/Projeto.md, seção 2.1",
+    "status": "propostas da equipe; confirmação do parceiro pendente",
+    "modelo_bytes": 8000000,
+    "acrescimo_pacote_bytes": 9000000
+  },
+  "aceite": "pendente de limites acordados e escopo web confirmado",
+  "proveniencia": {
+    "frontend/package-lock.json": "8be565b1aab50e9bdce8e59da8d839e781e1292a03af5ef4e76d9d1a27a0255a",
+    "frontend/model-sources.json": "e1066c92df464fdf2c6da71081287f621036d0acfa08e9aa3bb0200698d06e92",
+    "frontend/scripts/prepare-assets.mjs": "35fc42d462ec7271718ccc4158e9dfcb74013744e4e14ca78092b696dfdf5289",
+    "frontend/vite.config.ts": "a3f2b2f65627072253987c364df175a5568b08d0446b308b42650bc01acdc607",
+    "src/validacao_tamanho_t12_1.py": "3e003b042a71998eaa207f80f48e7c468c2e1bde712e71ffd158f91989ad1713"
+  }
+}
