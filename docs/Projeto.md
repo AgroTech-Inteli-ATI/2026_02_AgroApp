@@ -4266,3 +4266,10 @@ Após `npm.cmd run build`, os dois manifestos (`public/models` e `dist/models`) 
 ### Limites
 
 A conclusão da seleção não fecha as pendências já registradas na T8.3: RNF-03, RNF-04 e RNF-07 no aparelho de referência, RNF-06 em conjunto independente ([seção 10.1](#101-independência-dos-conjuntos-de-dados)), a política T6.5 no top-3 do arquivo embarcado e a aprovação do parceiro. A contingência continua sendo acionada pelo carregador apenas quando o principal não compila, não valida os tensores ou falha no aquecimento; a troca por latência ou memória depende da medição no aparelho.
+# Guias operacionais da versão final — T14
+
+- [T14.2 — Preparação de dados, ambiente e treinamento](T14_2_Pipeline_Treinamento.md)
+- [T14.3 — Avaliação, conversão e quantização Float16/INT8](T14_3_Avaliacao_Conversao.md)
+- [T14.4 — Arquitetura final e integração web](T14_4_Arquitetura_Web.md)
+
+Os guias distinguem a reprodução dos artefatos históricos do uso com novos dados. Autora: Karol; revisor: Rui. Documentação implementada em 17/11/2026, com revisão pendente e meta de entrega a definir.
