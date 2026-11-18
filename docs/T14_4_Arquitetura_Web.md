@@ -1,7 +1,7 @@
 # T14.4 — Arquitetura final e integração web
 
 Autora: Karol · Revisor: Rui · Meta de entrega: a definir.
-Documentação implementada em 17/11/2026; revisão de Rui pendente.
+Documentação implementada em 17/11/2026; revisão técnica de Rui em 18/11/2026. O alcance das verificações está registrado ao final do guia.
 
 ## Fluxo do MVP 1.0.0
 
@@ -80,25 +80,51 @@ npm.cmd run dev
 ```powershell
 npm.cmd test
 npm.cmd run build
-npm.cmd run preview
 npx.cmd playwright install chromium
 npm.cmd run test:e2e
 ```
 
-Para conferir novamente os dois modelos contra Python, execute `npm.cmd run assets`, volte à raiz, use o ambiente de T14.2 e siga:
+Depois dos testes, `npm.cmd run preview` inicia o servidor para navegação manual e ocupa o terminal até ser encerrado. A comparação completa de inferência é ativada com `MODEL_COMPARISON=1`, após preparar suas referências.
+
+Para conferir novamente os dois modelos contra Python, use o ambiente de T14.2 e inicie na raiz do repositório. Execute em checkout dedicado, pois os geradores atualizam as referências fotográficas/sintéticas versionadas e o comando `relatorio` atualiza o JSON comparativo histórico.
 
 ```powershell
-& $python scripts/generate-reference.py
-cd frontend
+Push-Location frontend
+npm.cmd run assets
+Pop-Location
+& $python frontend/scripts/generate-reference.py
+& $python -m src.comparacao_preprocessamento_t10_2 referencia
+
+Push-Location frontend
+Remove-Item Env:DEMO_PREVIEW -ErrorAction SilentlyContinue
 $env:MODEL_COMPARISON = "1"
-npm.cmd run test:e2e
+npm.cmd run test:e2e -- --project chromium
 Remove-Item Env:MODEL_COMPARISON
+Pop-Location
+
+& $python -m src.comparacao_preprocessamento_t10_2 relatorio
 ```
 
-O gerador exige equivalência Python entre original e cópia web e registra hashes/scores de ambos. A regressão compara preprocessing e inferência, inclusive divergências INT8 entre delegates. Isso verifica integração, não a acurácia em novas fotos. Instruções detalhadas de publicação e testes estão em [frontend/README.md](../frontend/README.md).
+`generate-reference.py` gera as referências sintéticas e confere a equivalência Python entre os modelos originais e as cópias web. `comparacao_preprocessamento_t10_2 referencia` prepara `frontend/.work/model-comparison-python.json` e o corpus fotográfico com os casos de fronteira. Os testes gravam os resultados web e as diferenças de pixels. O comando `relatorio` combina essas saídas e registra os efeitos de preprocessing e delegates. O corpus de regressão possui entradas controladas e serve para conferir correspondência entre ambientes.
+
+A comparação fotográfica acima usa o servidor de desenvolvimento do projeto `chromium`, onde o worker temporário do teste é interceptado pelo Playwright. No preview com cache ativo, o service worker pode interceptar essa requisição e impedir o carregamento do worker de teste. Para uma comparação adicional no preview, isole o teste com `serviceWorkers: 'block'` na configuração do Playwright. Os testes offline usam sua própria sessão com service worker habilitado.
+
+Para gerar uma versão preservada e conferir sua integridade, inicie na raiz do repositório.
+
+```powershell
+cd frontend
+npm.cmd run demo:package
+npm.cmd run demo:verify -- .work/demo/IDENTIFICADOR_GERADO/site
+```
+
+Substitua `IDENTIFICADOR_GERADO` pela pasta informada pelo empacotador. Publique a pasta `site` integralmente em HTTPS e preserve seu `release.json`, arquivo compactado e checksum. Detalhes de publicação e testes estão em [frontend/README.md](../frontend/README.md).
 
 ## Offline e limitações
 
 O build registra service worker e pré-carrega app, fontes, ambos os modelos e variantes WASM (aproximadamente 60 MB no conjunto). Aguarde a indicação de disponibilidade offline antes de desconectar. Falha de cota/rede indica indisponibilidade; primeiro acesso sem rede não funciona. Novo build troca o cache. Desenvolvimento com `npm run dev` não registra esse worker. Use HTTPS para publicação e câmera; localhost serve para desenvolvimento.
 
 Validação automatizada histórica: Chromium no Windows e viewport móvel; ainda requer comprovação em Android físico e outros navegadores. Latência de sessão não é benchmark do aparelho-alvo. Tamanho do `.tflite` não representa download total ou RAM, e WebGPU depende do navegador/dispositivo. O teste histórico já foi consultado e a independência de avaliação permanece uma limitação. Ao atualizar modelo, política ou preprocessing, regenere assets/referências, compare ambos os formatos e registre nova decisão de versão antes de publicar.
+
+## Alcance da revisão
+
+Foram conferidos os componentes e contratos contra o código atual, os caminhos dos scripts e a sequência de geração das referências. A revisão incluiu o build e os 12 testes automatizados de navegador, com a comparação completa Float16/INT8 ativada e os dois casos offline. A checagem adicional dos dois testes comparativos no preview passou com o service worker bloqueado em uma configuração temporária de revisão. O ensaio em dispositivo físico e a validação por participante externo exigem registros próprios.
