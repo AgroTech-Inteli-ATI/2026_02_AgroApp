@@ -1,5 +1,7 @@
 # AgroApp
 
+Guias técnicos: [treinamento (T14.2)](docs/T14_2_Pipeline_Treinamento.md), [avaliação e conversão (T14.3)](docs/T14_3_Avaliacao_Conversao.md) e [arquitetura web (T14.4)](docs/T14_4_Arquitetura_Web.md).
+
 Medição dos modelos finais e do pacote web: [Validação T12.1](docs/Validacao_T12_1.md).
 
 Repositório do projeto AgroApp — AgroTech Inteli ATI, 2026/02.

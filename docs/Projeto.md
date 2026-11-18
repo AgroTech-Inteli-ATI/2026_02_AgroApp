@@ -108,6 +108,15 @@ Validação de desempenho e integração web: [T12.1 — Tamanho dos modelos e p
 
 </details>
 
+<details>
+<summary><strong>14. Documentação técnica e transferência de conhecimento</strong></summary>
+
+- [14.2 Pipeline de treinamento](#142-pipeline-de-treinamento)
+- [14.3 Avaliação e conversão](#143-avaliação-e-conversão)
+- [14.4 Arquitetura e integração web](#144-arquitetura-e-integração-web)
+
+</details>
+
 ---
 
 # 1. Entendimento de Negócio
@@ -4268,3 +4277,17 @@ Após `npm.cmd run build`, os dois manifestos (`public/models` e `dist/models`) 
 ### Limites
 
 A conclusão da seleção não fecha as pendências já registradas na T8.3: RNF-03, RNF-04 e RNF-07 no aparelho de referência, RNF-06 em conjunto independente ([seção 10.1](#101-independência-dos-conjuntos-de-dados)), a política T6.5 no top-3 do arquivo embarcado e a aprovação do parceiro. A contingência continua sendo acionada pelo carregador apenas quando o principal não compila, não valida os tensores ou falha no aquecimento; a troca por latência ou memória depende da medição no aparelho.
+
+# 14. Documentação técnica e transferência de conhecimento
+
+## 14.2 Pipeline de treinamento
+
+O [guia de treinamento](T14_2_Pipeline_Treinamento.md) descreve o ambiente, a configuração selecionada, o índice e os pesos das 3.156 imagens do candidato, os artefatos de saída e a preparação necessária para novos dados. A reprodução do manifesto histórico anterior é identificada separadamente.
+
+## 14.3 Avaliação e conversão
+
+O [guia de avaliação e conversão](T14_3_Avaliacao_Conversao.md) apresenta comandos, entradas e saídas para métricas, exportação FP32, quantização Float16/INT8 e comparação das versões. Os resultados históricos são identificados como exploratórios, com os limites de proveniência e validação explicitados.
+
+## 14.4 Arquitetura e integração web
+
+O [guia de arquitetura web](T14_4_Arquitetura_Web.md) reúne o fluxo da fotografia, componentes, contratos, runtime, contingência, política de confiança e preparação dos recursos. Inclui os procedimentos de build, comparação Python/web, empacotamento e execução, com o alcance das verificações e as validações externas pendentes.
