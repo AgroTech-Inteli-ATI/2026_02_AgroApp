@@ -1,0 +1,105 @@
+{
+  "sourceVideo": {
+    "filename": "ScreenRecording_11-19-2026 15-43-54_1.MP4",
+    "bytes": 186527307,
+    "sha256": "5dfe5997a0b0307bb682aa6d3e9496c08f775694143e08135cb1f7856e6ce740"
+  },
+  "durationSeconds": 108.32501133786847,
+  "nominalFrameRate": 38.393723,
+  "method": "Inspeção visual por AVFoundation, usando PTS retornados pelo decodificador. Quadros reduzidos para largura máxima 440 px. Animação de captura é proxy: toque e instante físico do sensor não são expostos. Retorno à página aproxima fechamento da câmera, não o toque em Use Photo. Decisão legível exige rolagem; indicador de análise finalizada é separado.",
+  "resolution": "Quadros de disparo amostrados a 0,05 s; demais marcos a 0,2 s. Intervalos reportados arredondados a 0,1 s, sem alegar precisão do instante físico.",
+  "conditions": "Gravação de tela ativa; fotografias de imagens no monitor. Aparelho/navegador associados ao ensaio Chrome informado pelo operador, sem novo manifesto criptográfico dentro do vídeo. Não comprova ausência de rede: painel final mostra modo avião e Wi-Fi habilitado.",
+  "attempts": [
+    {
+      "attempt": 1,
+      "outcome": "Hipóteses; primeira: Percevejo-barriga-verde, score 96,9%",
+      "captureVisualCue": {
+        "requestedSeconds": 23.45,
+        "actualFramePtsSeconds": 23.425,
+        "file": "frame_00023.450.png",
+        "sha256": "42342507ed05caa2485db2906683c0bf2fa3ccd49138e8172c94b4e357d7ff98"
+      },
+      "nativeCameraClosing": {
+        "requestedSeconds": 25.8,
+        "actualFramePtsSeconds": 25.79,
+        "file": "frame_00025.800.png",
+        "sha256": "bd975928c0d86e53c9518125f8d49c272e6961f73fe7ae7c2cd58da00f3e262e"
+      },
+      "analysisFinishedIndicator": {
+        "requestedSeconds": 27.0,
+        "actualFramePtsSeconds": 26.9583,
+        "file": "frame_00027.000.png",
+        "sha256": "3672115ee06c03b1950163a7c4ff1fcbeb40fe3b823f9cc1e8cd01bd49da2d77"
+      },
+      "readableDecisionAfterScroll": {
+        "requestedSeconds": 31.0,
+        "actualFramePtsSeconds": 30.995,
+        "file": "frame_00031.000.png",
+        "sha256": "1bde6facb8064101849afcdcd4c8c0486c90c3bd55e37edfd3eb44d5ec4d4c04"
+      },
+      "captureCueToReadableSecondsApprox": 7.6,
+      "cameraClosingToFinishedSecondsApprox": 1.2
+    },
+    {
+      "attempt": 2,
+      "outcome": "Identificação inconclusiva",
+      "captureVisualCue": {
+        "requestedSeconds": 51.9,
+        "actualFramePtsSeconds": 51.8917,
+        "file": "frame_00051.900.png",
+        "sha256": "1e6e9212ffff10316a9adae98d34cd35cf9373b4157937b3c04c9bcc40958bf3"
+      },
+      "nativeCameraClosing": {
+        "requestedSeconds": 57.0,
+        "actualFramePtsSeconds": 56.995,
+        "file": "frame_00057.000.png",
+        "sha256": "011f8c59c0a2762e0a8014595c1e3fac2f9e4ac6ae1c9bba91fdb3a3b6edc493"
+      },
+      "analysisFinishedIndicator": {
+        "requestedSeconds": 58.2,
+        "actualFramePtsSeconds": 58.1967,
+        "file": "frame_00058.200.png",
+        "sha256": "f37f4c598f77e61e79427a3dedf876f7a52576e50557d4b50a6a703cc4cee68e"
+      },
+      "readableDecisionAfterScroll": {
+        "requestedSeconds": 60.2,
+        "actualFramePtsSeconds": 60.1983,
+        "file": "frame_00060.200.png",
+        "sha256": "86460283cb9bcd3ec65831427630a538b631b74c526d9a4fd62e16ad32e562e4"
+      },
+      "captureCueToReadableSecondsApprox": 8.3,
+      "cameraClosingToFinishedSecondsApprox": 1.2
+    },
+    {
+      "attempt": 3,
+      "outcome": "Hipóteses; primeira: Astylus variegatus, score 99,9%",
+      "captureVisualCue": {
+        "requestedSeconds": 84.5,
+        "actualFramePtsSeconds": 84.4917,
+        "file": "frame_00084.500.png",
+        "sha256": "559a97988fa69396225694018dd32b40c807b53d842281702f7ba44278795ecd"
+      },
+      "nativeCameraClosing": {
+        "requestedSeconds": 86.4,
+        "actualFramePtsSeconds": 86.3917,
+        "file": "frame_00086.400.png",
+        "sha256": "ef8b2d8ce5a2715989a7485005ac921f25a679a8d3a5b73137a919660c8fc6a9"
+      },
+      "analysisFinishedIndicator": {
+        "requestedSeconds": 87.4,
+        "actualFramePtsSeconds": 87.3933,
+        "file": "frame_00087.400.png",
+        "sha256": "40f52601fd1148567983170d03733b626ae0b5e95809c2a5f67998c4c1fc04df"
+      },
+      "readableDecisionAfterScroll": {
+        "requestedSeconds": 88.6,
+        "actualFramePtsSeconds": 88.595,
+        "file": "frame_00088.600.png",
+        "sha256": "29f820f1fd66d71412ef805581682f7434cb9c6b7539b57a1fc640a46ff76803"
+      },
+      "captureCueToReadableSecondsApprox": 4.1,
+      "cameraClosingToFinishedSecondsApprox": 1.0
+    }
+  ],
+  "scope": "Três observações funcionais; não certifica p95 captura→resultado de 50 execuções, qualidade agronômica ou inferência isolada. Não mesclar com lotes automáticos."
+}

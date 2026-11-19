@@ -22,6 +22,7 @@ export interface ModelSpec {
   output: TensorSpec;
 }
 export interface ModelManifest {
+  runtime?: { name: string; version: string };
   id: string;
   version: string;
   architecture: string;
@@ -36,6 +37,12 @@ export interface ModelManifest {
   models: ModelSpec[];
 }
 export interface ModelInfo {
+  sha256?: string;
+  sourceSha256?: string;
+  runtime?: { name: string; version: string };
+  requestedAccelerator?: string;
+  fullyAccelerated?: boolean;
+  cpuThreads?: number;
   id: string;
   format: string;
   bytes: number;

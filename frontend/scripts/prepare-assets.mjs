@@ -11,6 +11,9 @@ const sources = JSON.parse(
   await readFile(path.join(app, "model-sources.json"), "utf8"),
 );
 const digest = (bytes) => createHash("sha256").update(bytes).digest("hex");
+const runtimePackage = JSON.parse(
+  await readFile(path.join(app, "node_modules/@litertjs/core/package.json"), "utf8"),
+);
 
 async function checkedSource(source) {
   const contract = JSON.parse(await readFile(path.join(root, source.contractPath), "utf8"));
@@ -150,6 +153,7 @@ await writeFile(
   JSON.stringify(
     {
       id: sources.id,
+      runtime: { name: runtimePackage.name, version: runtimePackage.version },
       version: sources.version,
       architecture: classSource.contract.arquitetura,
       selectionStatus: sources.selectionStatus,

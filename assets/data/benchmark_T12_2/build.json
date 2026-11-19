@@ -1,0 +1,114 @@
+{
+  "description": "Build preparado para coleta de latência; não contém resultados do aparelho",
+  "baseCommit": "fe33e353671fa9ea8bea905654af7b8b6f62566a",
+  "files": {
+    "assets/index-B5nIR1NY.css": {
+      "bytes": 23285,
+      "sha256": "31e4713ada0ad6e2ee9dbd90af43f332e5d9df4e41d69951d81829b209f154ec"
+    },
+    "assets/index-S7VdlQlL.js": {
+      "bytes": 257900,
+      "sha256": "e70c8b341eea433dee4cc86c7024feee68729b122e0174b8653a1891d6b211e0"
+    },
+    "assets/poppins-latin-400-normal-BOb3E3N0.woff": {
+      "bytes": 10532,
+      "sha256": "6076b418803564833cde2aece96c51b29927ab0a98dfbe727774d1a6c6e6c445"
+    },
+    "assets/poppins-latin-400-normal-cpxAROuN.woff2": {
+      "bytes": 7884,
+      "sha256": "7d93459d86585bfcdbb7e0376056226adb25821ee54b96236fe2123e9560929f"
+    },
+    "assets/poppins-latin-500-normal-C8OXljZJ.woff2": {
+      "bytes": 7748,
+      "sha256": "cd36de204aca2d5fa263a731f7c20009b5e3d754ba1f1e03c33e93a48f3e7446"
+    },
+    "assets/poppins-latin-500-normal-DGXqpDMm.woff": {
+      "bytes": 10372,
+      "sha256": "abdc91ec7e4438b1e1d7f808d388614789d69037059b74a9d6166d00eb9b8b04"
+    },
+    "assets/poppins-latin-600-normal-BJdTmd5m.woff": {
+      "bytes": 10600,
+      "sha256": "55fffef7b100460605349fa5215eb7dcd6e558e195d08e43eddc64c4b27d43b3"
+    },
+    "assets/poppins-latin-600-normal-zEkxB9Mr.woff2": {
+      "bytes": 8000,
+      "sha256": "f4e80d9dfd374d02989b87a27b5ed4cb78fbb177c27f1478e9a8b0afb7513149"
+    },
+    "assets/poppins-latin-700-normal-BVuQR_eA.woff": {
+      "bytes": 10432,
+      "sha256": "927ba66258ea405f06205be694080f1126d186633c3c69cb839cfd0cfc5ee8ff"
+    },
+    "assets/poppins-latin-700-normal-Qrb0O0WB.woff2": {
+      "bytes": 7816,
+      "sha256": "9338e65fc077355c7a87ae0d64cc101e23b9bf8ad78ae65f0f319c857311b526"
+    },
+    "brand/PROVENANCE.md": {
+      "bytes": 686,
+      "sha256": "dfba38aa46e7cf50639d43f2e7ec4d040d8c0e84c0c23aeea61cfc32d0b3bae1"
+    },
+    "brand/agroapp.png": {
+      "bytes": 5023,
+      "sha256": "6dfd36b1b3cf8ac33b1935afe97abc037ba26fab17892dda51c861c652af1c02"
+    },
+    "brand/leaves.png": {
+      "bytes": 32479,
+      "sha256": "178d35010c085687ee4215179811eda191e543707493a1d9e20c192857249267"
+    },
+    "index.html": {
+      "bytes": 730,
+      "sha256": "b00cbc9d726a7efd6a63ab464d6f036b7e9213260778a5fb5cce734080f2394d"
+    },
+    "models/manifest.json": {
+      "bytes": 3474,
+      "sha256": "1a901ea9fff580f4722ae1cba76d287904c8417a6f400a4a9074e5a771c2d065"
+    },
+    "models/modelo_float16_web.tflite": {
+      "bytes": 6833548,
+      "sha256": "9c18f0a2ca4a4e2eb0d84dd415046f0bd35385ede8c47e14463d3a0f134647ec"
+    },
+    "models/modelo_int8_web.tflite": {
+      "bytes": 4003624,
+      "sha256": "df2f5d4fe22b4d3f76c4b8f6dab6e0100231c83d606122999ed15ceb72c05978"
+    },
+    "runtime/inference.js": {
+      "bytes": 51873,
+      "sha256": "88990aedb77f77c82e404ba650db7f933a5e260187032cd397ea8495a1ca01cf"
+    },
+    "runtime/litert_wasm_compat_internal.js": {
+      "bytes": 279036,
+      "sha256": "cffb7bebb9411e2160d711ccff00c3921b0031a66a692f58c25ce8204b7ec541"
+    },
+    "runtime/litert_wasm_compat_internal.wasm": {
+      "bytes": 10948854,
+      "sha256": "4190033238e53ec86b832bad4649851ad111025c226c1688cfae20e1f8fe8926"
+    },
+    "runtime/litert_wasm_internal.js": {
+      "bytes": 278825,
+      "sha256": "43bc8c66b43e04630337c90edcea16b133a9f543d008e496a1550d3a229bc9ac"
+    },
+    "runtime/litert_wasm_internal.wasm": {
+      "bytes": 11131135,
+      "sha256": "13db768de5c7a087517e46a0172c81102a7983bd159e6e47b0a0b933bae60014"
+    },
+    "runtime/litert_wasm_jspi_internal.js": {
+      "bytes": 299650,
+      "sha256": "af44bcbda6fb77bfb48d0bddffdbc6b68da9f7987481bf4f5e87ff7cce531ef8"
+    },
+    "runtime/litert_wasm_jspi_internal.wasm": {
+      "bytes": 12561552,
+      "sha256": "24776f94170f0ad825cff8697a0573adab2258276c861db49bf5f9e72b95c291"
+    },
+    "runtime/litert_wasm_threaded_internal.js": {
+      "bytes": 323431,
+      "sha256": "88f9cde94a3ffd906fc35a9c77eded6ee7e168d149b76344998ced3635f47fc1"
+    },
+    "runtime/litert_wasm_threaded_internal.wasm": {
+      "bytes": 11160133,
+      "sha256": "625f55564e869e7bb4d8a14d12ea382868f4ad32555f0f670b94422822611120"
+    },
+    "sw.js": {
+      "bytes": 2334,
+      "sha256": "9518039ecd7ab77bfd684f858eadaff9c44862241f6a2748a54870a43d4335ae"
+    }
+  }
+}
