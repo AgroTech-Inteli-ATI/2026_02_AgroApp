@@ -1,0 +1,96 @@
+{
+  "esquema": "ficha_dataset_T14_1_v1",
+  "data_documentacao": "2026-11-18",
+  "identificacao_dataset": "candidato_20261026_indice_28ee6628",
+  "total_imagens": 3156,
+  "classes": 13,
+  "particoes": {
+    "validacao": 474,
+    "treino": 2209,
+    "teste": 473
+  },
+  "fontes": {
+    "iNaturalist": 1792,
+    "AgroInsect": 1364
+  },
+  "grupos_registrados": 2292,
+  "grupos_por_particao": {
+    "validacao": 351,
+    "treino": 1589,
+    "teste": 352
+  },
+  "observacoes_inaturalist_distintas": 928,
+  "licencas": [
+    {
+      "fonte": "AgroInsect",
+      "licenca": "CC BY 4.0",
+      "escopo": "registro_do_conjunto",
+      "imagens": 1364
+    },
+    {
+      "fonte": "iNaturalist",
+      "licenca": "cc-by",
+      "escopo": "foto",
+      "imagens": 1472
+    },
+    {
+      "fonte": "iNaturalist",
+      "licenca": "cc0",
+      "escopo": "foto",
+      "imagens": 320
+    }
+  ],
+  "formatos": {
+    "JPEG": 3107,
+    "GIF": 1,
+    "PNG": 23,
+    "WEBP": 25
+  },
+  "dimensoes_originais": {
+    "largura_min": 88,
+    "largura_max": 4608,
+    "altura_min": 100,
+    "altura_max": 3468,
+    "lado_maior_abaixo_224": 18
+  },
+  "arquivos_animados": [
+    {
+      "image_id": "IMG_00020",
+      "formato": "GIF",
+      "quadros": 8
+    }
+  ],
+  "com_perfil_icc": 1762,
+  "originais_verificados": 3156,
+  "verificacao": "SHA-256 contra índice, abertura de cabeçalhos e Image.verify; sem nova inferência",
+  "hashes_repositorio": {
+    "assets/data/treino_T5_2/indice_dataset.csv": "28ee662885202f0bda3dec9660e44b28f99b8bd183210bcbdd795b103269b2eb",
+    "assets/data/treino_T5_2/pesos_dataset.json": "b342f9a821778840d6a86024ddaef8ccbe6ff18b250b540f0025fadf222046b9",
+    "assets/data/treino_T5_2/auditoria_dataset.json": "ad2f2e345ac131f36b019f83a478d158c30c2d9e64fdfb8e5e9d4082383b0625",
+    "assets/data/classes-modelo.csv": "917fb14444b397646c23c73b2d1670f9e40fe3eddc73ae8411f0a45138552e1c",
+    "assets/data/particionamento_T4_2/manifesto_modelo.csv": "ae44089134194ed0c2602373a9a77784c9c0fd0bcc62e8c63c818a1211eb8794",
+    "assets/data/particionamento_T4_2/auditoria_modelo.json": "af05afc23f71da04028d39b6eeb0bdab53ce87dbc6de3f66dc2b8473bec64590",
+    "assets/modelos/candidato_T5_6_20261026/classes.json": "1058619e188ffd7fa42bfc6821e2e122356b35d8503af71b987f37ae1e4572f4",
+    "assets/modelos/candidato_T5_6_20261026/manifesto.json": "72bd8194246cf5673cb6194491bbe1c0410d526a4c14027a087c414b9fa14f62",
+    "assets/modelos/candidato_T5_6_20261026/configuracao_treino.json": "ca177cde5aff96e418cb045eb86320fb14afc5f7b85514f0da2f3bd54aa8a86f",
+    "assets/data/independencia_T10_1/resumo.json": "bc5b300f4760efa9d6cc336b9a2a1563157a26e49d11dd0b0c05606b5b3e6002",
+    "assets/data/independencia_T10_1/decisao_avaliacao.json": "1683fcd7d185af684b027428afe867786de81435c1c2fc5ea26b20df0425bd7c",
+    "assets/data/calibracao_T7_3/manifesto_calibracao.csv": "b517be0fd50bdb4431c94102b6b207824e7178a45f6d3b59cc2105f875493f8c",
+    "frontend/model-sources.json": "e1066c92df464fdf2c6da71081287f621036d0acfa08e9aa3bb0200698d06e92",
+    "src/preprocessamento.py": "fe5ac7f77674ac1bbe3a986951c19f6f293685df617f5030f7ef7a82c2bd3375"
+  },
+  "metadados_origem_sha256": {
+    "dataset/field/field_labels.csv": "ec4f6fa9e316107a3f97d1014a6abc7b22de8b7aac999bc6110db3d64fb4100b",
+    "dataset/labels.csv": "09a43377e7b18d52fa4db9604445509a9360be46b4e069ce51695a1d5096250d",
+    "dataset/instruções.md": "84737a59e633b15ebace959c41e2d6b79cdd71fa0a820b16772051206b627481"
+  },
+  "arquivos_gerados_sha256": {
+    "contagens_por_classe.csv": "4ce4440666b1802b86388f591d05891db4c35e1dac0a0d03b9b56f1b20f1ce1f",
+    "estagios_por_classe.csv": "7efb55523acc84b3ad604459482c749a14184887afa593bced547648563f1ffe",
+    "fontes_por_particao.csv": "047f72d556ea7567351d992242bf46ab11769b2d7bbed856a9a089bd7f0d388d",
+    "metadados_imagens.csv": "ed0b1b8afda68e3e9f4721e7f0c471b1ba7112cb5ecc9abf3292a6a71270a572"
+  },
+  "criterio_rotulagem": "IDs e nomes herdados dos metadados e do mapeamento versionado; validação agronômica integral pendente",
+  "independencia": "historico_exploratorio_com_vazamento_confirmado",
+  "novo_teste_reservado_identificado": false
+}
