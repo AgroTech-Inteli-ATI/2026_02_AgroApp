@@ -4278,6 +4278,27 @@ Após `npm.cmd run build`, os dois manifestos (`public/models` e `dist/models`) 
 
 A conclusão da seleção não fecha as pendências já registradas na T8.3: RNF-03, RNF-04 e RNF-07 no aparelho de referência, RNF-06 em conjunto independente ([seção 10.1](#101-independência-dos-conjuntos-de-dados)), a política T6.5 no top-3 do arquivo embarcado e a aprovação do parceiro. A contingência continua sendo acionada pelo carregador apenas quando o principal não compila, não valida os tensores ou falha no aquecimento; a troca por latência ou memória depende da medição no aparelho.
 
+# 11. Avaliação final do modelo
+
+## 11.1 Avaliação final e métricas por classe (T11.1)
+
+**Autor:** Glauco. **Revisor:** Rui. **Meta de entrega:** a definir. Execução registrada em 20/11/2026.
+
+Avaliamos os dois arquivos `.tflite` do build entregue (`frontend/dist/models`, versão **1.0.0**), com hashes conferidos contra o manifesto servido. Usamos o contrato de preprocessing T10.2 e o runtime TFLite com XNNPACK e uma thread. Antes de avaliar, o script reexecutou os 18 casos da [seção 10.3](#103-comparação-dos-modelos-float16-e-int8-entre-python-e-web) e reproduziu os scores medidos no navegador: diferença máxima de `1,19e-7` no Float16 e zero no INT8, sem mudança de classe ou decisão.
+
+**Classificação: exploratória.** O conjunto avaliado é o teste histórico do índice auditado na [seção 10.1](#101-independência-dos-conjuntos-de-dados), que já foi consultado durante o desenvolvimento. A validação aparece como complemento e é otimista, porque participou da seleção do checkpoint e do limiar. Nenhum conjunto independente estava disponível.
+
+| Modelo | Conjunto | Imagens | Acurácia | F1 macro | Precisão macro | Recall macro |
+| --- | --- | ---: | ---: | ---: | ---: | ---: |
+| **Float16 (principal)** | **teste histórico** | **473** | **0,8478** | **0,7329** | **0,8080** | **0,7126** |
+| INT8 (contingência) | teste histórico | 473 | 0,8436 | 0,7400 | 0,7976 | 0,7234 |
+| Float16 (principal) | validação | 474 | 0,8586 | 0,7830 | 0,8337 | 0,7563 |
+| INT8 (contingência) | validação | 474 | 0,8586 | 0,7767 | 0,8185 | 0,7528 |
+
+As predições do build coincidem com as da T8.1 em 473/473 imagens nos dois formatos. Com o limiar de 0,65, o Float16 aceita 93,2% das imagens do teste, com acurácia de 0,8821 entre as aceitas. Esse valor fica abaixo da meta de 0,90 definida na validação. Percevejo-verde, Percevejo-asa-preta e Lagarta-falsa-medideira têm F1 abaixo de 0,60, com suportes de 11 a 14 imagens. Excluir as duas imagens de teste vinculadas na T10.1 (`IMG_01835`, `IMG_01874`) muda o F1 macro em no máximo 0,0001 e a acurácia em 0,0007 nos dois formatos.
+
+O [relatório da T11.1](Avaliacao_Final_T11_1.md) traz acurácia (um-contra-todos), precisão, recall, F1 e suporte das 13 classes para cada modelo e conjunto, além da matriz de confusão, intervalos bootstrap, política de confiança, sensibilidade, identificação completa do build e runtime, limitações metodológicas e reprodução. Predições com os 13 scores e métricas em CSV/JSON estão em [`assets/data/avaliacao_final_T11_1`](../assets/data/avaliacao_final_T11_1/metricas.json).
+
 # 14. Documentação técnica e transferência de conhecimento
 
 ## 14.2 Pipeline de treinamento
