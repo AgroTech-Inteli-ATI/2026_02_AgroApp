@@ -114,6 +114,7 @@ Validação de desempenho e integração web: [T12.1 — Tamanho dos modelos e p
 - [14.2 Pipeline de treinamento](#142-pipeline-de-treinamento)
 - [14.3 Avaliação e conversão](#143-avaliação-e-conversão)
 - [14.4 Arquitetura e integração web](#144-arquitetura-e-integração-web)
+- [14.5 Retreinamento e atualização do modelo](#145-retreinamento-e-atualização-do-modelo)
 
 </details>
 
@@ -4312,3 +4313,9 @@ O [guia de avaliação e conversão](T14_3_Avaliacao_Conversao.md) apresenta com
 ## 14.4 Arquitetura e integração web
 
 O [guia de arquitetura web](T14_4_Arquitetura_Web.md) reúne o fluxo da fotografia, componentes, contratos, runtime, contingência, política de confiança e preparação dos recursos. Inclui os procedimentos de build, comparação Python/web, empacotamento e execução, com o alcance das verificações e as validações externas pendentes.
+
+## 14.5 Retreinamento e atualização do modelo
+
+O [guia de retreinamento](T14_5_Guia_Retreinamento.md) reúne o procedimento para receber e revisar novas imagens, congelar grupos e partições, calcular hashes e pesos de treino, executar uma rodada e selecionar o checkpoint pela validação. A manutenção preserva o contrato de 13 classes e distingue o teste histórico exploratório de um eventual conjunto independente reservado antes do desenvolvimento.
+
+O guia descreve a preparação de um novo pacote com proveniência, calibração INT8 exclusivamente no treino, comparação dos formatos, avaliação após congelamento da decisão, integração web e verificação no aparelho. Explicita os caminhos que precisam substituir os defaults históricos e as referências de testes que devem acompanhar a nova versão. A publicação usa o pacote completo identificado por hashes e inclui procedimento de reversão para a versão anterior preservada. A conferência técnica dos exemplos não equivale à validação operacional por um participante externo nem a um novo treinamento executado.
