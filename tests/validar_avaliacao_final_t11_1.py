@@ -5,6 +5,7 @@ import json
 from pathlib import Path
 import sys
 import tempfile
+from types import SimpleNamespace
 import unittest
 from unittest.mock import patch
 
@@ -84,6 +85,45 @@ class BuildTest(unittest.TestCase):
         outro.write_text("image_id\n", encoding="utf-8")
         with self.assertRaisesRegex(ValueError, "auditado na T10.1"):
             t11.carregar_indice(outro, [])
+
+
+class GravacaoBuildExternoTest(unittest.TestCase):
+    def test_avaliacao_salva_resultados_e_relatorio_com_build_fora_do_checkout(self):
+        # Exercita a gravação real, substituindo somente os dados de entrada e
+        # a inferência para não exigir TensorFlow nem o acervo original no teste.
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp).resolve()
+            build = root / "pacote"
+            (build / "models").mkdir(parents=True)
+            manifesto = t11.conferir_build(t11.BUILD)
+            (build / "models/manifest.json").write_text(json.dumps(manifesto), encoding="utf-8")
+            arquivo = root / "foto.jpg"
+            arquivo.write_bytes(b"imagem sintetica para conferir hash")
+            linhas, vistos = [], set()
+            for original in t11._csv(t11.INDICE):
+                chave = (original["particao"], original["indice_modelo"])
+                if chave[0] not in t11.PARTICOES or chave in vistos:
+                    continue
+                vistos.add(chave)
+                linhas.append({**original, "caminho_relativo": arquivo.name,
+                               "sha256_original": t11._sha(arquivo)})
+            equivalencia = t11._json(SAIDA / "metricas.json")["proveniencia"]["equivalencia_runtime_web"]
+            scores = np.eye(13, dtype=np.float32)[0]
+            saida, doc = root / "resultados", root / "relatorio.md"
+            with (patch.dict(sys.modules, {"tensorflow": SimpleNamespace(__version__="teste")}),
+                  patch.object(t11, "conferir_build", return_value=manifesto),
+                  patch.object(t11, "carregar_indice", return_value=linhas),
+                  patch.object(t11, "interpretador"),
+                  patch.object(t11, "conferir_runtime_web", return_value=equivalencia),
+                  patch.object(t11, "preparar_imagem"),
+                  patch.object(t11, "prever", return_value=scores)):
+                t11.avaliar(root, build=build, saida=saida, doc=doc)
+            metricas = t11._json(saida / "metricas.json")
+            self.assertEqual(metricas["proveniencia"]["build"], build.as_posix())
+            self.assertEqual(len(t11._csv(saida / "predicoes.csv")), 52)
+            integrais = [l for l in t11._csv(saida / "metricas_por_classe.csv") if l["recorte"] == "integral"]
+            self.assertEqual(len(integrais), 52)
+            self.assertIn(build.as_posix(), doc.read_text(encoding="utf-8"))
 
 
 @unittest.skipUnless((SAIDA / "metricas.json").is_file(), "artefatos da T11.1 ainda não gerados")

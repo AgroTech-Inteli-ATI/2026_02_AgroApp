@@ -219,12 +219,18 @@ def avaliar(raiz_imagens: Path, build: Path = BUILD, indice: Path = INDICE,
                     **{f"score_{k}": f"{v:.8f}" for k, v in enumerate(valores)},
                 })
 
+    # Pacotes congelados também podem estar fora do checkout.
+    try:
+        caminho_build = build.relative_to(RAIZ)
+    except ValueError:
+        caminho_build = build
+
     agora = datetime.now(timezone(timedelta(hours=-3)))
     proveniencia = {
         "data": agora.strftime("%Y-%m-%d"),
         "git_commit": _git("rev-parse", "HEAD"),
         "git_alteracoes_locais": bool(_git("status", "--porcelain", "--untracked-files=no", "--", "src", "frontend")),
-        "build": build.relative_to(RAIZ).as_posix(),
+        "build": caminho_build.as_posix(),
         "manifesto_sha256": _sha(build / "models/manifest.json"),
         "modelo": {"id": manifesto["id"], "versao": manifesto["version"], "arquitetura": manifesto["architecture"],
                    "selecao": manifesto["selection"]},

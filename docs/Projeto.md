@@ -4282,7 +4282,7 @@ A conclusão da seleção não fecha as pendências já registradas na T8.3: RNF
 
 ## 11.1 Avaliação final e métricas por classe (T11.1)
 
-**Autor:** Glauco. **Revisor:** Rui. **Meta de entrega:** a definir. Execução registrada em 20/11/2026.
+Execução registrada em 20/11/2026.
 
 Avaliamos os dois arquivos `.tflite` do build entregue (`frontend/dist/models`, versão **1.0.0**), com hashes conferidos contra o manifesto servido. Usamos o contrato de preprocessing T10.2 e o runtime TFLite com XNNPACK e uma thread. Antes de avaliar, o script reexecutou os 18 casos da [seção 10.3](#103-comparação-dos-modelos-float16-e-int8-entre-python-e-web) e reproduziu os scores medidos no navegador: diferença máxima de `1,19e-7` no Float16 e zero no INT8, sem mudança de classe ou decisão.
 
