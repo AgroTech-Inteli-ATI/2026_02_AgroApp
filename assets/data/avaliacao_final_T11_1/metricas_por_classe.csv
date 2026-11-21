@@ -1,0 +1,79 @@
+modelo,particao,recorte,indice,nome,status,suporte,precisao,recall,f1,acuracia_ovr
+Float16,teste,integral,0,Vaquinha (Diabrotica speciosa),avaliada,157,0.91875,0.9363057324840764,0.9274447949526814,0.9513742071881607
+Float16,teste,integral,1,Cigarrinha-do-milho (Dalbulus maidis),avaliada,29,0.9629629629629629,0.896551724137931,0.9285714285714286,0.9915433403805497
+Float16,teste,integral,2,Percevejo-barriga-verde (Dichelops/Diceraeus),avaliada,42,0.7555555555555555,0.8095238095238095,0.7816091954022989,0.959830866807611
+Float16,teste,integral,3,Lagarta-do-cartucho (Spodoptera frugiperda),avaliada,61,0.8208955223880597,0.9016393442622951,0.8593750000000001,0.9619450317124736
+Float16,teste,integral,4,Percevejo-marrom (Euschistus heros),avaliada,10,1.0,0.5,0.6666666666666666,0.9894291754756871
+Float16,teste,integral,5,Percevejo-verde (Nezara viridula),avaliada,14,0.5,0.35714285714285715,0.41666666666666663,0.9704016913319239
+Float16,teste,integral,6,Percevejo-asa-preta (Edessa meditabunda),avaliada,11,1.0,0.36363636363636365,0.5333333333333333,0.985200845665962
+Float16,teste,integral,7,Percevejo-do-milho (Leptoglossus zonatus),avaliada,12,0.6923076923076923,0.75,0.7199999999999999,0.985200845665962
+Float16,teste,integral,8,Lagarta-falsa-medideira (Chrysodeixis includens),avaliada,12,0.8,0.3333333333333333,0.47058823529411764,0.9809725158562368
+Float16,teste,integral,9,Lagarta-da-soja (Anticarsia gemmatalis),avaliada,6,0.7142857142857143,0.8333333333333334,0.7692307692307692,0.9936575052854123
+Float16,teste,integral,10,Lagarta-das-vagens (Spodoptera eridania e S. cosmioides),avaliada,24,0.5925925925925926,0.6666666666666666,0.627450980392157,0.959830866807611
+Float16,teste,integral,11,Astylus variegatus,avaliada,71,0.8947368421052632,0.9577464788732394,0.9251700680272109,0.9767441860465116
+Float16,teste,integral,12,Cigarrinha-das-pastagens (Deois flavopicta),avaliada,24,0.8518518518518519,0.9583333333333334,0.9019607843137256,0.9894291754756871
+Float16,teste,sem_vinculos,0,Vaquinha (Diabrotica speciosa),avaliada,155,0.9177215189873418,0.9354838709677419,0.926517571884984,0.9511677282377919
+Float16,teste,sem_vinculos,1,Cigarrinha-do-milho (Dalbulus maidis),avaliada,29,0.9629629629629629,0.896551724137931,0.9285714285714286,0.9915074309978769
+Float16,teste,sem_vinculos,2,Percevejo-barriga-verde (Dichelops/Diceraeus),avaliada,42,0.7555555555555555,0.8095238095238095,0.7816091954022989,0.9596602972399151
+Float16,teste,sem_vinculos,3,Lagarta-do-cartucho (Spodoptera frugiperda),avaliada,61,0.8208955223880597,0.9016393442622951,0.8593750000000001,0.9617834394904459
+Float16,teste,sem_vinculos,4,Percevejo-marrom (Euschistus heros),avaliada,10,1.0,0.5,0.6666666666666666,0.9893842887473461
+Float16,teste,sem_vinculos,5,Percevejo-verde (Nezara viridula),avaliada,14,0.5,0.35714285714285715,0.41666666666666663,0.970276008492569
+Float16,teste,sem_vinculos,6,Percevejo-asa-preta (Edessa meditabunda),avaliada,11,1.0,0.36363636363636365,0.5333333333333333,0.9851380042462845
+Float16,teste,sem_vinculos,7,Percevejo-do-milho (Leptoglossus zonatus),avaliada,12,0.6923076923076923,0.75,0.7199999999999999,0.9851380042462845
+Float16,teste,sem_vinculos,8,Lagarta-falsa-medideira (Chrysodeixis includens),avaliada,12,0.8,0.3333333333333333,0.47058823529411764,0.9808917197452229
+Float16,teste,sem_vinculos,9,Lagarta-da-soja (Anticarsia gemmatalis),avaliada,6,0.7142857142857143,0.8333333333333334,0.7692307692307692,0.9936305732484076
+Float16,teste,sem_vinculos,10,Lagarta-das-vagens (Spodoptera eridania e S. cosmioides),avaliada,24,0.5925925925925926,0.6666666666666666,0.627450980392157,0.9596602972399151
+Float16,teste,sem_vinculos,11,Astylus variegatus,avaliada,71,0.8947368421052632,0.9577464788732394,0.9251700680272109,0.9766454352441614
+Float16,teste,sem_vinculos,12,Cigarrinha-das-pastagens (Deois flavopicta),avaliada,24,0.8518518518518519,0.9583333333333334,0.9019607843137256,0.9893842887473461
+INT8,teste,integral,0,Vaquinha (Diabrotica speciosa),avaliada,157,0.9230769230769231,0.9171974522292994,0.9201277955271566,0.9471458773784355
+INT8,teste,integral,1,Cigarrinha-do-milho (Dalbulus maidis),avaliada,29,0.9642857142857143,0.9310344827586207,0.9473684210526316,0.9936575052854123
+INT8,teste,integral,2,Percevejo-barriga-verde (Dichelops/Diceraeus),avaliada,42,0.7674418604651163,0.7857142857142857,0.7764705882352941,0.959830866807611
+INT8,teste,integral,3,Lagarta-do-cartucho (Spodoptera frugiperda),avaliada,61,0.8208955223880597,0.9016393442622951,0.8593750000000001,0.9619450317124736
+INT8,teste,integral,4,Percevejo-marrom (Euschistus heros),avaliada,10,1.0,0.5,0.6666666666666666,0.9894291754756871
+INT8,teste,integral,5,Percevejo-verde (Nezara viridula),avaliada,14,0.5454545454545454,0.42857142857142855,0.4799999999999999,0.9725158562367865
+INT8,teste,integral,6,Percevejo-asa-preta (Edessa meditabunda),avaliada,11,1.0,0.45454545454545453,0.625,0.9873150105708245
+INT8,teste,integral,7,Percevejo-do-milho (Leptoglossus zonatus),avaliada,12,0.6923076923076923,0.75,0.7199999999999999,0.985200845665962
+INT8,teste,integral,8,Lagarta-falsa-medideira (Chrysodeixis includens),avaliada,12,0.6666666666666666,0.3333333333333333,0.4444444444444444,0.9788583509513742
+INT8,teste,integral,9,Lagarta-da-soja (Anticarsia gemmatalis),avaliada,6,0.7142857142857143,0.8333333333333334,0.7692307692307692,0.9936575052854123
+INT8,teste,integral,10,Lagarta-das-vagens (Spodoptera eridania e S. cosmioides),avaliada,24,0.5714285714285714,0.6666666666666666,0.6153846153846153,0.9577167019027484
+INT8,teste,integral,11,Astylus variegatus,avaliada,71,0.881578947368421,0.9436619718309859,0.9115646258503401,0.9725158562367865
+INT8,teste,integral,12,Cigarrinha-das-pastagens (Deois flavopicta),avaliada,24,0.8214285714285714,0.9583333333333334,0.8846153846153847,0.9873150105708245
+INT8,teste,sem_vinculos,0,Vaquinha (Diabrotica speciosa),avaliada,155,0.922077922077922,0.9161290322580645,0.919093851132686,0.9469214437367304
+INT8,teste,sem_vinculos,1,Cigarrinha-do-milho (Dalbulus maidis),avaliada,29,0.9642857142857143,0.9310344827586207,0.9473684210526316,0.9936305732484076
+INT8,teste,sem_vinculos,2,Percevejo-barriga-verde (Dichelops/Diceraeus),avaliada,42,0.7674418604651163,0.7857142857142857,0.7764705882352941,0.9596602972399151
+INT8,teste,sem_vinculos,3,Lagarta-do-cartucho (Spodoptera frugiperda),avaliada,61,0.8208955223880597,0.9016393442622951,0.8593750000000001,0.9617834394904459
+INT8,teste,sem_vinculos,4,Percevejo-marrom (Euschistus heros),avaliada,10,1.0,0.5,0.6666666666666666,0.9893842887473461
+INT8,teste,sem_vinculos,5,Percevejo-verde (Nezara viridula),avaliada,14,0.5454545454545454,0.42857142857142855,0.4799999999999999,0.9723991507430998
+INT8,teste,sem_vinculos,6,Percevejo-asa-preta (Edessa meditabunda),avaliada,11,1.0,0.45454545454545453,0.625,0.9872611464968153
+INT8,teste,sem_vinculos,7,Percevejo-do-milho (Leptoglossus zonatus),avaliada,12,0.6923076923076923,0.75,0.7199999999999999,0.9851380042462845
+INT8,teste,sem_vinculos,8,Lagarta-falsa-medideira (Chrysodeixis includens),avaliada,12,0.6666666666666666,0.3333333333333333,0.4444444444444444,0.9787685774946921
+INT8,teste,sem_vinculos,9,Lagarta-da-soja (Anticarsia gemmatalis),avaliada,6,0.7142857142857143,0.8333333333333334,0.7692307692307692,0.9936305732484076
+INT8,teste,sem_vinculos,10,Lagarta-das-vagens (Spodoptera eridania e S. cosmioides),avaliada,24,0.5714285714285714,0.6666666666666666,0.6153846153846153,0.9575371549893843
+INT8,teste,sem_vinculos,11,Astylus variegatus,avaliada,71,0.881578947368421,0.9436619718309859,0.9115646258503401,0.9723991507430998
+INT8,teste,sem_vinculos,12,Cigarrinha-das-pastagens (Deois flavopicta),avaliada,24,0.8214285714285714,0.9583333333333334,0.8846153846153847,0.9872611464968153
+Float16,validacao,integral,0,Vaquinha (Diabrotica speciosa),avaliada,157,0.9141104294478528,0.9490445859872612,0.9312500000000001,0.9535864978902954
+Float16,validacao,integral,1,Cigarrinha-do-milho (Dalbulus maidis),avaliada,29,0.9642857142857143,0.9310344827586207,0.9473684210526316,0.9936708860759493
+Float16,validacao,integral,2,Percevejo-barriga-verde (Dichelops/Diceraeus),avaliada,42,0.7169811320754716,0.9047619047619048,0.8,0.959915611814346
+Float16,validacao,integral,3,Lagarta-do-cartucho (Spodoptera frugiperda),avaliada,61,0.8524590163934426,0.8524590163934426,0.8524590163934426,0.9620253164556962
+Float16,validacao,integral,4,Percevejo-marrom (Euschistus heros),avaliada,10,1.0,0.7,0.8235294117647058,0.9936708860759493
+Float16,validacao,integral,5,Percevejo-verde (Nezara viridula),avaliada,14,0.8,0.5714285714285714,0.6666666666666666,0.9831223628691983
+Float16,validacao,integral,6,Percevejo-asa-preta (Edessa meditabunda),avaliada,11,0.875,0.6363636363636364,0.7368421052631579,0.989451476793249
+Float16,validacao,integral,7,Percevejo-do-milho (Leptoglossus zonatus),avaliada,12,1.0,0.8333333333333334,0.9090909090909091,0.9957805907172996
+Float16,validacao,integral,8,Lagarta-falsa-medideira (Chrysodeixis includens),avaliada,12,0.5,0.25,0.3333333333333333,0.9746835443037974
+Float16,validacao,integral,9,Lagarta-da-soja (Anticarsia gemmatalis),avaliada,7,0.75,0.8571428571428571,0.7999999999999999,0.9936708860759493
+Float16,validacao,integral,10,Lagarta-das-vagens (Spodoptera eridania e S. cosmioides),avaliada,24,0.75,0.5,0.6,0.9662447257383966
+Float16,validacao,integral,11,Astylus variegatus,avaliada,71,0.8354430379746836,0.9295774647887324,0.88,0.9620253164556962
+Float16,validacao,integral,12,Cigarrinha-das-pastagens (Deois flavopicta),avaliada,24,0.88,0.9166666666666666,0.8979591836734694,0.989451476793249
+INT8,validacao,integral,0,Vaquinha (Diabrotica speciosa),avaliada,157,0.9146341463414634,0.9554140127388535,0.9345794392523364,0.9556962025316456
+INT8,validacao,integral,1,Cigarrinha-do-milho (Dalbulus maidis),avaliada,29,0.9310344827586207,0.9310344827586207,0.9310344827586207,0.9915611814345991
+INT8,validacao,integral,2,Percevejo-barriga-verde (Dichelops/Diceraeus),avaliada,42,0.75,0.8571428571428571,0.7999999999999999,0.9620253164556962
+INT8,validacao,integral,3,Lagarta-do-cartucho (Spodoptera frugiperda),avaliada,61,0.8524590163934426,0.8524590163934426,0.8524590163934426,0.9620253164556962
+INT8,validacao,integral,4,Percevejo-marrom (Euschistus heros),avaliada,10,1.0,0.7,0.8235294117647058,0.9936708860759493
+INT8,validacao,integral,5,Percevejo-verde (Nezara viridula),avaliada,14,0.6,0.42857142857142855,0.5,0.9746835443037974
+INT8,validacao,integral,6,Percevejo-asa-preta (Edessa meditabunda),avaliada,11,0.7777777777777778,0.6363636363636364,0.7000000000000001,0.9873417721518988
+INT8,validacao,integral,7,Percevejo-do-milho (Leptoglossus zonatus),avaliada,12,1.0,0.8333333333333334,0.9090909090909091,0.9957805907172996
+INT8,validacao,integral,8,Lagarta-falsa-medideira (Chrysodeixis includens),avaliada,12,0.5714285714285714,0.3333333333333333,0.4210526315789474,0.9767932489451476
+INT8,validacao,integral,9,Lagarta-da-soja (Anticarsia gemmatalis),avaliada,7,0.75,0.8571428571428571,0.7999999999999999,0.9936708860759493
+INT8,validacao,integral,10,Lagarta-das-vagens (Spodoptera eridania e S. cosmioides),avaliada,24,0.7647058823529411,0.5416666666666666,0.6341463414634146,0.9683544303797469
+INT8,validacao,integral,11,Astylus variegatus,avaliada,71,0.8481012658227848,0.9436619718309859,0.8933333333333333,0.9662447257383966
+INT8,validacao,integral,12,Cigarrinha-das-pastagens (Deois flavopicta),avaliada,24,0.88,0.9166666666666666,0.8979591836734694,0.989451476793249
