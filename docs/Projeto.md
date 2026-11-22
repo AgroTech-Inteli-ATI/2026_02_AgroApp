@@ -111,9 +111,11 @@ Validação de desempenho e integração web: [T12.1 — Tamanho dos modelos e p
 <details>
 <summary><strong>14. Documentação técnica e transferência de conhecimento</strong></summary>
 
+- [14.1 Dataset final](#141-dataset-final)
 - [14.2 Pipeline de treinamento](#142-pipeline-de-treinamento)
 - [14.3 Avaliação e conversão](#143-avaliação-e-conversão)
 - [14.4 Arquitetura e integração web](#144-arquitetura-e-integração-web)
+- [14.5 Retreinamento e atualização do modelo](#145-retreinamento-e-atualização-do-modelo)
 
 </details>
 
@@ -4278,6 +4280,27 @@ Após `npm.cmd run build`, os dois manifestos (`public/models` e `dist/models`) 
 
 A conclusão da seleção não fecha as pendências já registradas na T8.3: RNF-03, RNF-04 e RNF-07 no aparelho de referência, RNF-06 em conjunto independente ([seção 10.1](#101-independência-dos-conjuntos-de-dados)), a política T6.5 no top-3 do arquivo embarcado e a aprovação do parceiro. A contingência continua sendo acionada pelo carregador apenas quando o principal não compila, não valida os tensores ou falha no aquecimento; a troca por latência ou memória depende da medição no aparelho.
 
+# 11. Avaliação final do modelo
+
+## 11.1 Avaliação final e métricas por classe (T11.1)
+
+Execução registrada em 20/11/2026.
+
+Avaliamos os dois arquivos `.tflite` do build entregue (`frontend/dist/models`, versão **1.0.0**), com hashes conferidos contra o manifesto servido. Usamos o contrato de preprocessing T10.2 e o runtime TFLite com XNNPACK e uma thread. Antes de avaliar, o script reexecutou os 18 casos da [seção 10.3](#103-comparação-dos-modelos-float16-e-int8-entre-python-e-web) e reproduziu os scores medidos no navegador: diferença máxima de `1,19e-7` no Float16 e zero no INT8, sem mudança de classe ou decisão.
+
+**Classificação: exploratória.** O conjunto avaliado é o teste histórico do índice auditado na [seção 10.1](#101-independência-dos-conjuntos-de-dados), que já foi consultado durante o desenvolvimento. A validação aparece como complemento e é otimista, porque participou da seleção do checkpoint e do limiar. Nenhum conjunto independente estava disponível.
+
+| Modelo | Conjunto | Imagens | Acurácia | F1 macro | Precisão macro | Recall macro |
+| --- | --- | ---: | ---: | ---: | ---: | ---: |
+| **Float16 (principal)** | **teste histórico** | **473** | **0,8478** | **0,7329** | **0,8080** | **0,7126** |
+| INT8 (contingência) | teste histórico | 473 | 0,8436 | 0,7400 | 0,7976 | 0,7234 |
+| Float16 (principal) | validação | 474 | 0,8586 | 0,7830 | 0,8337 | 0,7563 |
+| INT8 (contingência) | validação | 474 | 0,8586 | 0,7767 | 0,8185 | 0,7528 |
+
+As predições do build coincidem com as da T8.1 em 473/473 imagens nos dois formatos. Com o limiar de 0,65, o Float16 aceita 93,2% das imagens do teste, com acurácia de 0,8821 entre as aceitas. Esse valor fica abaixo da meta de 0,90 definida na validação. Percevejo-verde, Percevejo-asa-preta e Lagarta-falsa-medideira têm F1 abaixo de 0,60, com suportes de 11 a 14 imagens. Excluir as duas imagens de teste vinculadas na T10.1 (`IMG_01835`, `IMG_01874`) muda o F1 macro em no máximo 0,0001 e a acurácia em 0,0007 nos dois formatos.
+
+O [relatório da T11.1](Avaliacao_Final_T11_1.md) traz acurácia (um-contra-todos), precisão, recall, F1 e suporte das 13 classes para cada modelo e conjunto, além da matriz de confusão, intervalos bootstrap, política de confiança, sensibilidade, identificação completa do build e runtime, limitações metodológicas e reprodução. Predições com os 13 scores e métricas em CSV/JSON estão em [`assets/data/avaliacao_final_T11_1`](../assets/data/avaliacao_final_T11_1/metricas.json).
+
 # 12. Validação de desempenho no dispositivo
 
 ## 12.2 Medição de latência no navegador do dispositivo
@@ -4303,6 +4326,16 @@ Uma gravação complementar de três capturas de imagens em monitor documentou d
 
 # 14. Documentação técnica e transferência de conhecimento
 
+## 14.1 Dataset final
+
+O modelo do MVP utiliza o recorte histórico de **3.156 imagens**, com **2.209 de treino, 474 de validação e 473 de teste**, distribuídas em 13 classes. São **1.792 imagens do iNaturalist**, associadas a 928 IDs de observação, e **1.364 do AgroInsect**. A [ficha do dataset](T14_1_Dataset_Final.md) consolida fontes, dicionário e contagens por classe, mapeamento dos 14 IDs de origem para as 13 saídas, estrutura dos arquivos, transformações, licenças registradas e restrições conhecidas.
+
+O índice `assets/data/treino_T5_2/indice_dataset.csv`, SHA-256 `28ee662885202f0bda3dec9660e44b28f99b8bd183210bcbdd795b103269b2eb`, corresponde ao manifesto do candidato. A ficha distingue esse recorte do manifesto anterior de 3.163 imagens e registra a retirada das sete imagens do outro acervo antes do treinamento do candidato. Os [anexos estruturados](../assets/data/dataset_T14_1/resumo.json) contêm hashes, partições, grupos, fontes, estágios anotados e metadados de aquisição vinculados aos IDs.
+
+O particionamento foi herdado da separação por grupos com semente 42 e proporções-alvo 70%/15%/15%. A revisão posterior identificou uma duplicata transformada entre treino e teste e uma relação suspeita entre validação e teste, conforme a [seção 10.1](#101-independência-dos-conjuntos-de-dados). O índice histórico fica preservado para rastreabilidade e os resultados desse teste são classificados como exploratórios. A ausência de revisão agronômica integral, as lacunas de estágio e origem, o desbalanceamento e a dependência entre fotos limitam as conclusões de generalização.
+
+Na conferência de 18/11/2026, os 3.156 originais corresponderam aos hashes do índice. A leitura dos cabeçalhos encontrou JPEG, PNG, WebP e um GIF animado com extensão `.jpg`, identificado na ficha. O conjunto e suas limitações devem acompanhar a transferência do modelo, incluindo os originais e seus metadados de origem por meio definido com o parceiro.
+
 ## 14.2 Pipeline de treinamento
 
 O [guia de treinamento](T14_2_Pipeline_Treinamento.md) descreve o ambiente, a configuração selecionada, o índice e os pesos das 3.156 imagens do candidato, os artefatos de saída e a preparação necessária para novos dados. A reprodução do manifesto histórico anterior é identificada separadamente.
@@ -4314,3 +4347,9 @@ O [guia de avaliação e conversão](T14_3_Avaliacao_Conversao.md) apresenta com
 ## 14.4 Arquitetura e integração web
 
 O [guia de arquitetura web](T14_4_Arquitetura_Web.md) reúne o fluxo da fotografia, componentes, contratos, runtime, contingência, política de confiança e preparação dos recursos. Inclui os procedimentos de build, comparação Python/web, empacotamento e execução, com o alcance das verificações e as validações externas pendentes.
+
+## 14.5 Retreinamento e atualização do modelo
+
+O [guia de retreinamento](T14_5_Guia_Retreinamento.md) reúne o procedimento para receber e revisar novas imagens, congelar grupos e partições, calcular hashes e pesos de treino, executar uma rodada e selecionar o checkpoint pela validação. A manutenção preserva o contrato de 13 classes e distingue o teste histórico exploratório de um eventual conjunto independente reservado antes do desenvolvimento.
+
+O guia descreve a preparação de um novo pacote com proveniência, calibração INT8 exclusivamente no treino, comparação dos formatos, avaliação após congelamento da decisão, integração web e verificação no aparelho. Explicita os caminhos que precisam substituir os defaults históricos e as referências de testes que devem acompanhar a nova versão. A publicação usa o pacote completo identificado por hashes e inclui procedimento de reversão para a versão anterior preservada. A conferência técnica dos exemplos não equivale à validação operacional por um participante externo nem a um novo treinamento executado.

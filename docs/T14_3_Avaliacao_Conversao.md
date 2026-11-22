@@ -81,4 +81,4 @@ O hash Float16 vem de [comparacao.json](../assets/modelos/comparacao_T7_2_candid
 
 ## Alcance da revisão
 
-Foram conferidos os parâmetros dos conversores e avaliadores, os arquivos de origem, os valores históricos e o procedimento de comparação. A revisão executou regressões existentes e reproduziu a consolidação das predições históricas em saída separada. As conversões e o treino descritos neste guia permanecem como procedimentos para execução posterior. A avaliação final da versão entregue será registrada separadamente, vinculada ao build e ao runtime utilizados.
+Foram conferidos os parâmetros dos conversores e avaliadores, os arquivos de origem, os valores históricos e o procedimento de comparação. A revisão executou regressões existentes e reproduziu a consolidação das predições históricas em saída separada. As conversões e o treino descritos neste guia permanecem como procedimentos para execução posterior. A avaliação final da versão entregue está registrada na [T11.1](Avaliacao_Final_T11_1.md), vinculada ao build e ao runtime utilizados.
