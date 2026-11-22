@@ -111,6 +111,7 @@ Validação de desempenho e integração web: [T12.1 — Tamanho dos modelos e p
 <details>
 <summary><strong>14. Documentação técnica e transferência de conhecimento</strong></summary>
 
+- [14.1 Dataset final](#141-dataset-final)
 - [14.2 Pipeline de treinamento](#142-pipeline-de-treinamento)
 - [14.3 Avaliação e conversão](#143-avaliação-e-conversão)
 - [14.4 Arquitetura e integração web](#144-arquitetura-e-integração-web)
@@ -4301,6 +4302,16 @@ As predições do build coincidem com as da T8.1 em 473/473 imagens nos dois for
 O [relatório da T11.1](Avaliacao_Final_T11_1.md) traz acurácia (um-contra-todos), precisão, recall, F1 e suporte das 13 classes para cada modelo e conjunto, além da matriz de confusão, intervalos bootstrap, política de confiança, sensibilidade, identificação completa do build e runtime, limitações metodológicas e reprodução. Predições com os 13 scores e métricas em CSV/JSON estão em [`assets/data/avaliacao_final_T11_1`](../assets/data/avaliacao_final_T11_1/metricas.json).
 
 # 14. Documentação técnica e transferência de conhecimento
+
+## 14.1 Dataset final
+
+O modelo do MVP utiliza o recorte histórico de **3.156 imagens**, com **2.209 de treino, 474 de validação e 473 de teste**, distribuídas em 13 classes. São **1.792 imagens do iNaturalist**, associadas a 928 IDs de observação, e **1.364 do AgroInsect**. A [ficha do dataset](T14_1_Dataset_Final.md) consolida fontes, dicionário e contagens por classe, mapeamento dos 14 IDs de origem para as 13 saídas, estrutura dos arquivos, transformações, licenças registradas e restrições conhecidas.
+
+O índice `assets/data/treino_T5_2/indice_dataset.csv`, SHA-256 `28ee662885202f0bda3dec9660e44b28f99b8bd183210bcbdd795b103269b2eb`, corresponde ao manifesto do candidato. A ficha distingue esse recorte do manifesto anterior de 3.163 imagens e registra a retirada das sete imagens do outro acervo antes do treinamento do candidato. Os [anexos estruturados](../assets/data/dataset_T14_1/resumo.json) contêm hashes, partições, grupos, fontes, estágios anotados e metadados de aquisição vinculados aos IDs.
+
+O particionamento foi herdado da separação por grupos com semente 42 e proporções-alvo 70%/15%/15%. A revisão posterior identificou uma duplicata transformada entre treino e teste e uma relação suspeita entre validação e teste, conforme a [seção 10.1](#101-independência-dos-conjuntos-de-dados). O índice histórico fica preservado para rastreabilidade e os resultados desse teste são classificados como exploratórios. A ausência de revisão agronômica integral, as lacunas de estágio e origem, o desbalanceamento e a dependência entre fotos limitam as conclusões de generalização.
+
+Na conferência de 18/11/2026, os 3.156 originais corresponderam aos hashes do índice. A leitura dos cabeçalhos encontrou JPEG, PNG, WebP e um GIF animado com extensão `.jpg`, identificado na ficha. O conjunto e suas limitações devem acompanhar a transferência do modelo, incluindo os originais e seus metadados de origem por meio definido com o parceiro.
 
 ## 14.2 Pipeline de treinamento
 
