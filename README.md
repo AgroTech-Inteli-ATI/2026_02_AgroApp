@@ -4,6 +4,8 @@ Guias técnicos: [dataset (T14.1)](docs/T14_1_Dataset_Final.md), [treinamento (T
 
 Medição dos modelos finais e do pacote web: [Validação T12.1](docs/Validacao_T12_1.md).
 
+Entrega da Sprint 5: [checklist final (T15.1)](docs/T15_1_Checklist_Final.md), [roteiro e ensaio (T15.2)](docs/T15_2_Roteiro_Demonstracao.md) e [pacote e validação com o parceiro (T15.3)](docs/T15_3_Entrega_Parceiro.md).
+
 Repositório do projeto AgroApp — AgroTech Inteli ATI, 2026/02.
 
 ## Sumário

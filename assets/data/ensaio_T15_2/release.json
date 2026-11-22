@@ -1,0 +1,312 @@
+{
+  "id": "agroapp-demo-2026-11-22T17-58-58-271Z-42c280dd",
+  "createdAt": "2026-11-22T17:58:58.271Z",
+  "commit": "42c280ddc0fe5df4e81a737083347388b66f512f",
+  "workingTreeStatus": " M frontend/tsconfig.tsbuildinfo\n",
+  "node": "v22.13.1",
+  "dependencies": {
+    "name": "agroapp-frontend",
+    "version": "0.1.0",
+    "dependencies": {
+      "@fontsource/poppins": "^5.2.7",
+      "@litertjs/core": "2.6.0",
+      "lucide-react": "^0.468.0",
+      "react": "^19.2.0",
+      "react-dom": "^19.2.0"
+    },
+    "devDependencies": {
+      "@playwright/test": "^1.64.1",
+      "@types/node": "^24.0.0",
+      "@types/react": "^19.2.0",
+      "@types/react-dom": "^19.2.0",
+      "@vitejs/plugin-react": "^5.1.0",
+      "esbuild": "^0.28.2",
+      "typescript": "~5.9.3",
+      "vite": "^7.3.0",
+      "vitest": "^5.0.5"
+    }
+  },
+  "sources": {
+    "frontend/package-lock.json": "8be565b1aab50e9bdce8e59da8d839e781e1292a03af5ef4e76d9d1a27a0255a",
+    "frontend/model-sources.json": "e1066c92df464fdf2c6da71081287f621036d0acfa08e9aa3bb0200698d06e92",
+    "frontend/src/lib/preprocess.ts": "1b0f3d2983504543732a515735b04ac039e68d405e73a3086df309c091582be5",
+    "frontend/src/lib/confidence.ts": "2c3e53eb784aa8e7fb3fce380a1d3f6604db0d96018c6f4e81266d20ad7ab768",
+    "frontend/src/lib/inference.worker.ts": "2d6c6584bb7cd5ba184c204281878aab7f9dae380b1067be80ffd1943c667645",
+    "frontend/src/data/content.ts": "bb6cdd50942b1a05989d1a545ae3370e1f3cf4b7f3de8e2a392576c6a3041467",
+    "assets/data/politica_T6_5/parametros.json": "78bf5cd6805ec97f55109e15efe70f0d05f7cfd89723de6e48e3f0aaa798452f"
+  },
+  "modelManifest": {
+    "id": "candidato_T5_6_20261026",
+    "runtime": {
+      "name": "@litertjs/core",
+      "version": "2.6.0"
+    },
+    "version": "1.0.0",
+    "architecture": "efficientnet_lite0",
+    "selectionStatus": "T8.3_concluida_versao_oficial_mvp",
+    "selection": {
+      "sourcePath": "assets/data/selecao_T8_3/decisao.json",
+      "status": "concluida_versao_oficial_mvp"
+    },
+    "classes": [
+      {
+        "indice": 0,
+        "nome": "Vaquinha (Diabrotica speciosa)"
+      },
+      {
+        "indice": 1,
+        "nome": "Cigarrinha-do-milho (Dalbulus maidis)"
+      },
+      {
+        "indice": 2,
+        "nome": "Percevejo-barriga-verde (Dichelops/Diceraeus)"
+      },
+      {
+        "indice": 3,
+        "nome": "Lagarta-do-cartucho (Spodoptera frugiperda)"
+      },
+      {
+        "indice": 4,
+        "nome": "Percevejo-marrom (Euschistus heros)"
+      },
+      {
+        "indice": 5,
+        "nome": "Percevejo-verde (Nezara viridula)"
+      },
+      {
+        "indice": 6,
+        "nome": "Percevejo-asa-preta (Edessa meditabunda)"
+      },
+      {
+        "indice": 7,
+        "nome": "Percevejo-do-milho (Leptoglossus zonatus)"
+      },
+      {
+        "indice": 8,
+        "nome": "Lagarta-falsa-medideira (Chrysodeixis includens)"
+      },
+      {
+        "indice": 9,
+        "nome": "Lagarta-da-soja (Anticarsia gemmatalis)"
+      },
+      {
+        "indice": 10,
+        "nome": "Lagarta-das-vagens (Spodoptera eridania e S. cosmioides)"
+      },
+      {
+        "indice": 11,
+        "nome": "Astylus variegatus"
+      },
+      {
+        "indice": 12,
+        "nome": "Cigarrinha-das-pastagens (Deois flavopicta)"
+      }
+    ],
+    "classesSource": {
+      "sourcePath": "assets/modelos/candidato_T5_6_20261026/classes.json",
+      "contractPath": "assets/modelos/candidato_T5_6_20261026/manifesto.json",
+      "sha256": "1058619e188ffd7fa42bfc6821e2e122356b35d8503af71b987f37ae1e4572f4"
+    },
+    "models": [
+      {
+        "format": "Float16",
+        "role": "principal",
+        "filename": "modelo_float16_web.tflite",
+        "bytes": 6833548,
+        "sha256": "9c18f0a2ca4a4e2eb0d84dd415046f0bd35385ede8c47e14463d3a0f134647ec",
+        "sourceSha256": "c9a26ce13806a2fa26bffbd8cfbdac83ff4c05ffff1009ca9483bb587a5a8fa2",
+        "sourcePath": "assets/modelos/comparacao_T7_2_candidato_T5_6_20261026/modelo_float16.tflite",
+        "contractPath": "assets/modelos/comparacao_T7_2_candidato_T5_6_20261026/comparacao.json",
+        "version": "T7.2",
+        "input": {
+          "shape": [
+            1,
+            224,
+            224,
+            3
+          ],
+          "dtype": "float32"
+        },
+        "output": {
+          "shape": [
+            1,
+            13
+          ],
+          "dtype": "float32"
+        }
+      },
+      {
+        "format": "INT8",
+        "role": "contingencia",
+        "filename": "modelo_int8_web.tflite",
+        "bytes": 4003624,
+        "sha256": "df2f5d4fe22b4d3f76c4b8f6dab6e0100231c83d606122999ed15ceb72c05978",
+        "sourceSha256": "456caec54fae3c57684f9afd6842cae611a1f6cb6587b40b0c5bd8256aea1340",
+        "sourcePath": "assets/modelos/quantizacao_T7_3_candidato_T5_6_20261026/modelo_int8.tflite",
+        "contractPath": "assets/modelos/quantizacao_T7_3_candidato_T5_6_20261026/contrato_int8.json",
+        "version": "T7.3",
+        "input": {
+          "shape": [
+            1,
+            224,
+            224,
+            3
+          ],
+          "dtype": "int8",
+          "scale": 0.003921568859368563,
+          "zeroPoint": -128
+        },
+        "output": {
+          "shape": [
+            1,
+            13
+          ],
+          "dtype": "int8",
+          "scale": 0.00390625,
+          "zeroPoint": -128
+        }
+      }
+    ]
+  },
+  "confidencePolicy": {
+    "numero_hipoteses": 3,
+    "limiar_confianca": 0.65,
+    "regra_limiar": "top1_maior_ou_igual",
+    "abaixo_do_limiar": {
+      "indica_classe": false,
+      "mensagem": "Resultado inconclusivo: não foi possível identificar o problema com segurança nesta foto.",
+      "orientacao_nova_foto": "Fotografe de novo, mais perto, com o inseto ou a parte da planta afetada em foco e bem iluminada.",
+      "conteudos_relacionados_quando_catalogo": true
+    },
+    "base": {
+      "particao": "validacao",
+      "n_imagens": 474,
+      "modelo": "assets/modelos/candidato_T5_6_20261026/modelo.keras",
+      "modelo_sha256": "089a8d903a78898badf385f0d57006a4fb556d76e3e8fae719babdaf564aa51a",
+      "indice": "assets/data/treino_T5_2/indice_dataset.csv",
+      "indice_sha256": "28ee662885202f0bda3dec9660e44b28f99b8bd183210bcbdd795b103269b2eb",
+      "origem_inferencia": "Keras FP32",
+      "score_confianca": "softmax_nao_calibrado",
+      "curva": "assets/data/politica_T6_5/curva_limiar_validacao.csv",
+      "cobertura_por_classe": "assets/data/politica_T6_5/cobertura_por_classe_validacao.csv",
+      "meta_acerto": 0.9,
+      "f1_macro_validacao": 0.7811
+    }
+  },
+  "limitations": [
+    "Protótipo experimental de 13 classes; score não é probabilidade calibrada de acerto.",
+    "T10.2: preprocessing validado no corpus fotográfico; scores INT8 dependem da configuração do delegate (ver relatório comparativo).",
+    "Avaliação histórica exploratória; independência dos dados comprometida.",
+    "Conteúdo técnico e validação em aparelho físico permanecem pendentes."
+  ],
+  "files": {
+    "assets/index-B5nIR1NY.css": {
+      "bytes": 23285,
+      "sha256": "31e4713ada0ad6e2ee9dbd90af43f332e5d9df4e41d69951d81829b209f154ec"
+    },
+    "assets/index-S7VdlQlL.js": {
+      "bytes": 257900,
+      "sha256": "e70c8b341eea433dee4cc86c7024feee68729b122e0174b8653a1891d6b211e0"
+    },
+    "assets/poppins-latin-400-normal-BOb3E3N0.woff": {
+      "bytes": 10532,
+      "sha256": "6076b418803564833cde2aece96c51b29927ab0a98dfbe727774d1a6c6e6c445"
+    },
+    "assets/poppins-latin-400-normal-cpxAROuN.woff2": {
+      "bytes": 7884,
+      "sha256": "7d93459d86585bfcdbb7e0376056226adb25821ee54b96236fe2123e9560929f"
+    },
+    "assets/poppins-latin-500-normal-C8OXljZJ.woff2": {
+      "bytes": 7748,
+      "sha256": "cd36de204aca2d5fa263a731f7c20009b5e3d754ba1f1e03c33e93a48f3e7446"
+    },
+    "assets/poppins-latin-500-normal-DGXqpDMm.woff": {
+      "bytes": 10372,
+      "sha256": "abdc91ec7e4438b1e1d7f808d388614789d69037059b74a9d6166d00eb9b8b04"
+    },
+    "assets/poppins-latin-600-normal-BJdTmd5m.woff": {
+      "bytes": 10600,
+      "sha256": "55fffef7b100460605349fa5215eb7dcd6e558e195d08e43eddc64c4b27d43b3"
+    },
+    "assets/poppins-latin-600-normal-zEkxB9Mr.woff2": {
+      "bytes": 8000,
+      "sha256": "f4e80d9dfd374d02989b87a27b5ed4cb78fbb177c27f1478e9a8b0afb7513149"
+    },
+    "assets/poppins-latin-700-normal-BVuQR_eA.woff": {
+      "bytes": 10432,
+      "sha256": "927ba66258ea405f06205be694080f1126d186633c3c69cb839cfd0cfc5ee8ff"
+    },
+    "assets/poppins-latin-700-normal-Qrb0O0WB.woff2": {
+      "bytes": 7816,
+      "sha256": "9338e65fc077355c7a87ae0d64cc101e23b9bf8ad78ae65f0f319c857311b526"
+    },
+    "brand/agroapp.png": {
+      "bytes": 5023,
+      "sha256": "6dfd36b1b3cf8ac33b1935afe97abc037ba26fab17892dda51c861c652af1c02"
+    },
+    "brand/leaves.png": {
+      "bytes": 32479,
+      "sha256": "178d35010c085687ee4215179811eda191e543707493a1d9e20c192857249267"
+    },
+    "brand/PROVENANCE.md": {
+      "bytes": 686,
+      "sha256": "dfba38aa46e7cf50639d43f2e7ec4d040d8c0e84c0c23aeea61cfc32d0b3bae1"
+    },
+    "index.html": {
+      "bytes": 730,
+      "sha256": "b00cbc9d726a7efd6a63ab464d6f036b7e9213260778a5fb5cce734080f2394d"
+    },
+    "models/manifest.json": {
+      "bytes": 3474,
+      "sha256": "1a901ea9fff580f4722ae1cba76d287904c8417a6f400a4a9074e5a771c2d065"
+    },
+    "models/modelo_float16_web.tflite": {
+      "bytes": 6833548,
+      "sha256": "9c18f0a2ca4a4e2eb0d84dd415046f0bd35385ede8c47e14463d3a0f134647ec"
+    },
+    "models/modelo_int8_web.tflite": {
+      "bytes": 4003624,
+      "sha256": "df2f5d4fe22b4d3f76c4b8f6dab6e0100231c83d606122999ed15ceb72c05978"
+    },
+    "runtime/inference.js": {
+      "bytes": 51873,
+      "sha256": "88990aedb77f77c82e404ba650db7f933a5e260187032cd397ea8495a1ca01cf"
+    },
+    "runtime/litert_wasm_compat_internal.js": {
+      "bytes": 279036,
+      "sha256": "cffb7bebb9411e2160d711ccff00c3921b0031a66a692f58c25ce8204b7ec541"
+    },
+    "runtime/litert_wasm_compat_internal.wasm": {
+      "bytes": 10948854,
+      "sha256": "4190033238e53ec86b832bad4649851ad111025c226c1688cfae20e1f8fe8926"
+    },
+    "runtime/litert_wasm_internal.js": {
+      "bytes": 278825,
+      "sha256": "43bc8c66b43e04630337c90edcea16b133a9f543d008e496a1550d3a229bc9ac"
+    },
+    "runtime/litert_wasm_internal.wasm": {
+      "bytes": 11131135,
+      "sha256": "13db768de5c7a087517e46a0172c81102a7983bd159e6e47b0a0b933bae60014"
+    },
+    "runtime/litert_wasm_jspi_internal.js": {
+      "bytes": 299650,
+      "sha256": "af44bcbda6fb77bfb48d0bddffdbc6b68da9f7987481bf4f5e87ff7cce531ef8"
+    },
+    "runtime/litert_wasm_jspi_internal.wasm": {
+      "bytes": 12561552,
+      "sha256": "24776f94170f0ad825cff8697a0573adab2258276c861db49bf5f9e72b95c291"
+    },
+    "runtime/litert_wasm_threaded_internal.js": {
+      "bytes": 323431,
+      "sha256": "88f9cde94a3ffd906fc35a9c77eded6ee7e168d149b76344998ced3635f47fc1"
+    },
+    "runtime/litert_wasm_threaded_internal.wasm": {
+      "bytes": 11160133,
+      "sha256": "625f55564e869e7bb4d8a14d12ea382868f4ad32555f0f670b94422822611120"
+    },
+    "sw.js": {
+      "bytes": 2334,
+      "sha256": "9518039ecd7ab77bfd684f858eadaff9c44862241f6a2748a54870a43d4335ae"
+    }
+  }
+}
