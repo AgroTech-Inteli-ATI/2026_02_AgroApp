@@ -16,13 +16,14 @@ export default defineConfig({
   projects: [
     {
       name: "chromium",
-      testIgnore: "offline.spec.ts",
+      testIgnore: ["offline.spec.ts", "sessao-local.spec.ts"],
       use: { ...devices["Desktop Chrome"] },
     },
     {
       // O service worker só existe no build; por isso este projeto usa o preview.
+      // A sessão local (T12.3) também roda no build de produção, o mesmo levado ao celular.
       name: "offline",
-      testMatch: "offline.spec.ts",
+      testMatch: ["offline.spec.ts", "sessao-local.spec.ts"],
       use: { ...devices["Desktop Chrome"], baseURL: "http://127.0.0.1:4173" },
     },
   ],
