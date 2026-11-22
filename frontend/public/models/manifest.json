@@ -1,5 +1,9 @@
 {
   "id": "candidato_T5_6_20261026",
+  "runtime": {
+    "name": "@litertjs/core",
+    "version": "2.6.0"
+  },
   "version": "1.0.0",
   "architecture": "efficientnet_lite0",
   "selectionStatus": "T8.3_concluida_versao_oficial_mvp",

@@ -117,6 +117,12 @@ async function init(base: string) {
         compiled = model;
         spec = candidate;
         const info: ModelInfo = {
+          sha256: candidate.sha256,
+          sourceSha256: candidate.sourceSha256,
+          runtime: manifest.runtime,
+          requestedAccelerator: accelerator,
+          fullyAccelerated: model.isFullyAccelerated,
+          cpuThreads: 1,
           id: manifest.id,
           format: candidate.format,
           bytes: candidate.bytes,
@@ -163,6 +169,8 @@ async function analyze(id: number, file: File) {
       const inferenceStart = performance.now();
       outputs = await compiled.run(input);
       const raw = await outputs[0].data();
+      // Inclui a sincronização/leitura da saída; exclui ordenação e apresentação.
+      const inferenceMs = performance.now() - inferenceStart;
       const numeric = Array.from(raw as ArrayLike<number | bigint>, Number);
       const scores = numeric.map((value) =>
         spec.output.dtype === "int8"
@@ -190,7 +198,7 @@ async function analyze(id: number, file: File) {
           height,
           preview,
           preparationMs,
-          inferenceMs: performance.now() - inferenceStart,
+          inferenceMs,
         },
       });
     } finally {

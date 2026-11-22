@@ -1,0 +1,615 @@
+{
+  "schema": "agroapp-benchmark-browser-v1",
+  "startedAt": "2026-11-19T18:32:17.637Z",
+  "finishedAt": "2026-11-19T18:32:23.287Z",
+  "complete": true,
+  "failure": null,
+  "device": "iPhone 13",
+  "os": "iOS 26.6.2",
+  "browser": "Chrome 158.0.8127.35",
+  "conditions": "71%, economia de energia: nao, temperatura: normal - celular nao está quente.",
+  "airplaneModeDeclared": true,
+  "navigatorOnlineStart": false,
+  "navigatorOnlineEnd": false,
+  "offlineCacheReady": true,
+  "userAgent": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6.1 Mobile/15E148 Safari/604.1",
+  "hardwareConcurrency": 4,
+  "crossOriginIsolated": true,
+  "delegate": "LiteRT.js default; internal CPU delegate not exposed by application API",
+  "deviceMetadataSource": "User-declared; userAgent recorded separately",
+  "location": "https://kissing-accommodate-stick-tulsa.trycloudflare.com/",
+  "initialization": {
+    "workerToReadyMs": 19762.640000000003,
+    "navigationToReadyMs": 20152.800000000003,
+    "model": {
+      "sha256": "9c18f0a2ca4a4e2eb0d84dd415046f0bd35385ede8c47e14463d3a0f134647ec",
+      "sourceSha256": "c9a26ce13806a2fa26bffbd8cfbdac83ff4c05ffff1009ca9483bb587a5a8fa2",
+      "runtime": {
+        "name": "@litertjs/core",
+        "version": "2.6.0"
+      },
+      "requestedAccelerator": "webgpu",
+      "fullyAccelerated": true,
+      "cpuThreads": 1,
+      "id": "candidato_T5_6_20261026",
+      "format": "Float16",
+      "bytes": 6833548,
+      "accelerator": "WebGPU",
+      "fallback": false
+    }
+  },
+  "build": {
+    "serviceWorkerSha256": "9518039ecd7ab77bfd684f858eadaff9c44862241f6a2748a54870a43d4335ae",
+    "manifest": {
+      "id": "candidato_T5_6_20261026",
+      "runtime": {
+        "name": "@litertjs/core",
+        "version": "2.6.0"
+      },
+      "version": "1.0.0",
+      "architecture": "efficientnet_lite0",
+      "selectionStatus": "T8.3_concluida_versao_oficial_mvp",
+      "selection": {
+        "sourcePath": "assets/data/selecao_T8_3/decisao.json",
+        "status": "concluida_versao_oficial_mvp"
+      },
+      "classes": [
+        {
+          "indice": 0,
+          "nome": "Vaquinha (Diabrotica speciosa)"
+        },
+        {
+          "indice": 1,
+          "nome": "Cigarrinha-do-milho (Dalbulus maidis)"
+        },
+        {
+          "indice": 2,
+          "nome": "Percevejo-barriga-verde (Dichelops/Diceraeus)"
+        },
+        {
+          "indice": 3,
+          "nome": "Lagarta-do-cartucho (Spodoptera frugiperda)"
+        },
+        {
+          "indice": 4,
+          "nome": "Percevejo-marrom (Euschistus heros)"
+        },
+        {
+          "indice": 5,
+          "nome": "Percevejo-verde (Nezara viridula)"
+        },
+        {
+          "indice": 6,
+          "nome": "Percevejo-asa-preta (Edessa meditabunda)"
+        },
+        {
+          "indice": 7,
+          "nome": "Percevejo-do-milho (Leptoglossus zonatus)"
+        },
+        {
+          "indice": 8,
+          "nome": "Lagarta-falsa-medideira (Chrysodeixis includens)"
+        },
+        {
+          "indice": 9,
+          "nome": "Lagarta-da-soja (Anticarsia gemmatalis)"
+        },
+        {
+          "indice": 10,
+          "nome": "Lagarta-das-vagens (Spodoptera eridania e S. cosmioides)"
+        },
+        {
+          "indice": 11,
+          "nome": "Astylus variegatus"
+        },
+        {
+          "indice": 12,
+          "nome": "Cigarrinha-das-pastagens (Deois flavopicta)"
+        }
+      ],
+      "classesSource": {
+        "sourcePath": "assets/modelos/candidato_T5_6_20261026/classes.json",
+        "contractPath": "assets/modelos/candidato_T5_6_20261026/manifesto.json",
+        "sha256": "1058619e188ffd7fa42bfc6821e2e122356b35d8503af71b987f37ae1e4572f4"
+      },
+      "models": [
+        {
+          "format": "Float16",
+          "role": "principal",
+          "filename": "modelo_float16_web.tflite",
+          "bytes": 6833548,
+          "sha256": "9c18f0a2ca4a4e2eb0d84dd415046f0bd35385ede8c47e14463d3a0f134647ec",
+          "sourceSha256": "c9a26ce13806a2fa26bffbd8cfbdac83ff4c05ffff1009ca9483bb587a5a8fa2",
+          "sourcePath": "assets/modelos/comparacao_T7_2_candidato_T5_6_20261026/modelo_float16.tflite",
+          "contractPath": "assets/modelos/comparacao_T7_2_candidato_T5_6_20261026/comparacao.json",
+          "version": "T7.2",
+          "input": {
+            "shape": [
+              1,
+              224,
+              224,
+              3
+            ],
+            "dtype": "float32"
+          },
+          "output": {
+            "shape": [
+              1,
+              13
+            ],
+            "dtype": "float32"
+          }
+        },
+        {
+          "format": "INT8",
+          "role": "contingencia",
+          "filename": "modelo_int8_web.tflite",
+          "bytes": 4003624,
+          "sha256": "df2f5d4fe22b4d3f76c4b8f6dab6e0100231c83d606122999ed15ceb72c05978",
+          "sourceSha256": "456caec54fae3c57684f9afd6842cae611a1f6cb6587b40b0c5bd8256aea1340",
+          "sourcePath": "assets/modelos/quantizacao_T7_3_candidato_T5_6_20261026/modelo_int8.tflite",
+          "contractPath": "assets/modelos/quantizacao_T7_3_candidato_T5_6_20261026/contrato_int8.json",
+          "version": "T7.3",
+          "input": {
+            "shape": [
+              1,
+              224,
+              224,
+              3
+            ],
+            "dtype": "int8",
+            "scale": 0.003921568859368563,
+            "zeroPoint": -128
+          },
+          "output": {
+            "shape": [
+              1,
+              13
+            ],
+            "dtype": "int8",
+            "scale": 0.00390625,
+            "zeroPoint": -128
+          }
+        }
+      ]
+    },
+    "scripts": [
+      "https://kissing-accommodate-stick-tulsa.trycloudflare.com/assets/index-S7VdlQlL.js"
+    ]
+  },
+  "productionBuild": true,
+  "images": [
+    {
+      "name": "cm.png",
+      "bytes": 751490,
+      "type": "image/png",
+      "sha256": "1cfbbffb6f358b0dac1ccce780c9e85ce5a8336a472cc5e91153537579838307"
+    },
+    {
+      "name": "Screenshot 2026-11-08 at 20.51.58.png",
+      "bytes": 2291447,
+      "type": "image/png",
+      "sha256": "2aeb1ceb05fb4d1739a563d3b4e40edaf310fabd80fb57e2c7d5a191196bdc85"
+    },
+    {
+      "name": "pdm.jpeg",
+      "bytes": 27014,
+      "type": "image/jpeg",
+      "sha256": "08a32b4bc38f9837cf7e51dab91941ed50f0ddfbd243cefe09f09dc3cbda24ca"
+    },
+    {
+      "name": "Screenshot 2026-11-08 at 21.07.20.png",
+      "bytes": 1284771,
+      "type": "image/png",
+      "sha256": "c85140000634da0cdf5fc48d6e1eb8dbf0a36fedb63689521fdd4f13a3b24af8"
+    },
+    {
+      "name": "IMG_3621.png",
+      "bytes": 3334142,
+      "type": "image/png",
+      "sha256": "749b0778988e33d33f994fbdabdbc0c101d6b10ea5fdb00e456c5892147219e3"
+    }
+  ],
+  "samples": [
+    {
+      "preparationMs": 311.9200000000128,
+      "inferenceMs": 26.520000000018626,
+      "fileToPaintMs": 389.2399999999907,
+      "image": 0,
+      "phase": "warmup"
+    },
+    {
+      "preparationMs": 87.66000000000349,
+      "inferenceMs": 10.839999999967404,
+      "fileToPaintMs": 133.19999999998254,
+      "image": 1,
+      "phase": "warmup"
+    },
+    {
+      "preparationMs": 29.54000000000815,
+      "inferenceMs": 11.180000000022119,
+      "fileToPaintMs": 66.37999999997555,
+      "image": 2,
+      "phase": "warmup"
+    },
+    {
+      "preparationMs": 45.439999999973224,
+      "inferenceMs": 10.38000000003376,
+      "fileToPaintMs": 83.47999999995227,
+      "image": 3,
+      "phase": "measured"
+    },
+    {
+      "preparationMs": 138.73999999996158,
+      "inferenceMs": 10.440000000031432,
+      "fileToPaintMs": 183.39999999999418,
+      "image": 4,
+      "phase": "measured"
+    },
+    {
+      "preparationMs": 35,
+      "inferenceMs": 10.080000000016298,
+      "fileToPaintMs": 66.29999999998836,
+      "image": 0,
+      "phase": "measured"
+    },
+    {
+      "preparationMs": 68.87999999997555,
+      "inferenceMs": 9.059999999997672,
+      "fileToPaintMs": 100.05999999999767,
+      "image": 1,
+      "phase": "measured"
+    },
+    {
+      "preparationMs": 19.120000000024447,
+      "inferenceMs": 13.39999999999418,
+      "fileToPaintMs": 66.64000000001397,
+      "image": 2,
+      "phase": "measured"
+    },
+    {
+      "preparationMs": 43.360000000015134,
+      "inferenceMs": 9.959999999991851,
+      "fileToPaintMs": 83.3399999999674,
+      "image": 3,
+      "phase": "measured"
+    },
+    {
+      "preparationMs": 135.89999999999418,
+      "inferenceMs": 9.78000000002794,
+      "fileToPaintMs": 166.8399999999965,
+      "image": 4,
+      "phase": "measured"
+    },
+    {
+      "preparationMs": 34.76000000000931,
+      "inferenceMs": 9.71999999997206,
+      "fileToPaintMs": 66.46000000002095,
+      "image": 0,
+      "phase": "measured"
+    },
+    {
+      "preparationMs": 69.19999999998254,
+      "inferenceMs": 9.559999999997672,
+      "fileToPaintMs": 99.89999999999418,
+      "image": 1,
+      "phase": "measured"
+    },
+    {
+      "preparationMs": 18.60000000000582,
+      "inferenceMs": 12.75999999998021,
+      "fileToPaintMs": 49.98000000001048,
+      "image": 2,
+      "phase": "measured"
+    },
+    {
+      "preparationMs": 41.42000000004191,
+      "inferenceMs": 10.059999999968568,
+      "fileToPaintMs": 83.5799999999872,
+      "image": 3,
+      "phase": "measured"
+    },
+    {
+      "preparationMs": 134.3400000000256,
+      "inferenceMs": 9.679999999963911,
+      "fileToPaintMs": 166.64000000001397,
+      "image": 4,
+      "phase": "measured"
+    },
+    {
+      "preparationMs": 35.0800000000163,
+      "inferenceMs": 9.580000000016298,
+      "fileToPaintMs": 66.54000000000815,
+      "image": 0,
+      "phase": "measured"
+    },
+    {
+      "preparationMs": 68.85999999998603,
+      "inferenceMs": 9.720000000001164,
+      "fileToPaintMs": 100.15999999997439,
+      "image": 1,
+      "phase": "measured"
+    },
+    {
+      "preparationMs": 18.419999999983702,
+      "inferenceMs": 12.74000000001979,
+      "fileToPaintMs": 49.71999999997206,
+      "image": 2,
+      "phase": "measured"
+    },
+    {
+      "preparationMs": 41.639999999984866,
+      "inferenceMs": 9.779999999998836,
+      "fileToPaintMs": 83.55999999999767,
+      "image": 3,
+      "phase": "measured"
+    },
+    {
+      "preparationMs": 132.52000000001863,
+      "inferenceMs": 9.880000000004657,
+      "fileToPaintMs": 166.59999999997672,
+      "image": 4,
+      "phase": "measured"
+    },
+    {
+      "preparationMs": 34.35999999998603,
+      "inferenceMs": 9.559999999997672,
+      "fileToPaintMs": 66.51999999998952,
+      "image": 0,
+      "phase": "measured"
+    },
+    {
+      "preparationMs": 68.73999999999069,
+      "inferenceMs": 9.519999999989523,
+      "fileToPaintMs": 100.03999999997905,
+      "image": 1,
+      "phase": "measured"
+    },
+    {
+      "preparationMs": 18.74000000001979,
+      "inferenceMs": 12.679999999993015,
+      "fileToPaintMs": 66.62000000002445,
+      "image": 2,
+      "phase": "measured"
+    },
+    {
+      "preparationMs": 42.4199999999837,
+      "inferenceMs": 9.700000000011642,
+      "fileToPaintMs": 83.44000000000233,
+      "image": 3,
+      "phase": "measured"
+    },
+    {
+      "preparationMs": 129.6600000000035,
+      "inferenceMs": 10.020000000018626,
+      "fileToPaintMs": 166.64000000001397,
+      "image": 4,
+      "phase": "measured"
+    },
+    {
+      "preparationMs": 34.78000000002794,
+      "inferenceMs": 9.559999999997672,
+      "fileToPaintMs": 66.81999999997788,
+      "image": 0,
+      "phase": "measured"
+    },
+    {
+      "preparationMs": 69.35999999998603,
+      "inferenceMs": 9.559999999997672,
+      "fileToPaintMs": 100,
+      "image": 1,
+      "phase": "measured"
+    },
+    {
+      "preparationMs": 18.699999999982538,
+      "inferenceMs": 12.680000000022119,
+      "fileToPaintMs": 66.74000000001979,
+      "image": 2,
+      "phase": "measured"
+    },
+    {
+      "preparationMs": 42.499999999970896,
+      "inferenceMs": 9.739999999990687,
+      "fileToPaintMs": 83.26000000000931,
+      "image": 3,
+      "phase": "measured"
+    },
+    {
+      "preparationMs": 132.14000000004307,
+      "inferenceMs": 9.839999999996508,
+      "fileToPaintMs": 166.51999999998952,
+      "image": 4,
+      "phase": "measured"
+    },
+    {
+      "preparationMs": 35.060000000026776,
+      "inferenceMs": 9.680000000022119,
+      "fileToPaintMs": 66.5799999999872,
+      "image": 0,
+      "phase": "measured"
+    },
+    {
+      "preparationMs": 68.80000000001746,
+      "inferenceMs": 10,
+      "fileToPaintMs": 100.21999999997206,
+      "image": 1,
+      "phase": "measured"
+    },
+    {
+      "preparationMs": 18.74000000001979,
+      "inferenceMs": 12.839999999967404,
+      "fileToPaintMs": 65.13999999998487,
+      "image": 2,
+      "phase": "measured"
+    },
+    {
+      "preparationMs": 44.5,
+      "inferenceMs": 9.679999999993015,
+      "fileToPaintMs": 82.95999999999185,
+      "image": 3,
+      "phase": "measured"
+    },
+    {
+      "preparationMs": 134.35999999998603,
+      "inferenceMs": 13.360000000015134,
+      "fileToPaintMs": 168.67999999999302,
+      "image": 4,
+      "phase": "measured"
+    },
+    {
+      "preparationMs": 38.44000000000233,
+      "inferenceMs": 20.479999999981374,
+      "fileToPaintMs": 83.36000000001513,
+      "image": 0,
+      "phase": "measured"
+    },
+    {
+      "preparationMs": 75.78000000002794,
+      "inferenceMs": 8.339999999996508,
+      "fileToPaintMs": 116.5799999999872,
+      "image": 1,
+      "phase": "measured"
+    },
+    {
+      "preparationMs": 22.779999999998836,
+      "inferenceMs": 11.720000000001164,
+      "fileToPaintMs": 66.72000000000116,
+      "image": 2,
+      "phase": "measured"
+    },
+    {
+      "preparationMs": 46.920000000012806,
+      "inferenceMs": 9.679999999993015,
+      "fileToPaintMs": 83.27999999999884,
+      "image": 3,
+      "phase": "measured"
+    },
+    {
+      "preparationMs": 134.30000000001746,
+      "inferenceMs": 13.220000000001164,
+      "fileToPaintMs": 166.9200000000128,
+      "image": 4,
+      "phase": "measured"
+    },
+    {
+      "preparationMs": 37.51999999998952,
+      "inferenceMs": 12.800000000017462,
+      "fileToPaintMs": 83.1600000000326,
+      "image": 0,
+      "phase": "measured"
+    },
+    {
+      "preparationMs": 74.14000000001397,
+      "inferenceMs": 9.71999999997206,
+      "fileToPaintMs": 116.82000000000698,
+      "image": 1,
+      "phase": "measured"
+    },
+    {
+      "preparationMs": 21.139999999984866,
+      "inferenceMs": 12.160000000032596,
+      "fileToPaintMs": 66.84000000002561,
+      "image": 2,
+      "phase": "measured"
+    },
+    {
+      "preparationMs": 46.30000000001746,
+      "inferenceMs": 10.739999999990687,
+      "fileToPaintMs": 83.44000000000233,
+      "image": 3,
+      "phase": "measured"
+    },
+    {
+      "preparationMs": 133.79999999995925,
+      "inferenceMs": 13.400000000023283,
+      "fileToPaintMs": 166.64000000001397,
+      "image": 4,
+      "phase": "measured"
+    },
+    {
+      "preparationMs": 36.33999999999651,
+      "inferenceMs": 13.339999999996508,
+      "fileToPaintMs": 83.40000000002328,
+      "image": 0,
+      "phase": "measured"
+    },
+    {
+      "preparationMs": 74.03999999997905,
+      "inferenceMs": 9.699999999982538,
+      "fileToPaintMs": 116.70000000001164,
+      "image": 1,
+      "phase": "measured"
+    },
+    {
+      "preparationMs": 21.119999999995343,
+      "inferenceMs": 11.779999999998836,
+      "fileToPaintMs": 66.80000000001746,
+      "image": 2,
+      "phase": "measured"
+    },
+    {
+      "preparationMs": 46.39999999999418,
+      "inferenceMs": 11.120000000024447,
+      "fileToPaintMs": 83.5800000000163,
+      "image": 3,
+      "phase": "measured"
+    },
+    {
+      "preparationMs": 131.27999999999884,
+      "inferenceMs": 12.880000000004657,
+      "fileToPaintMs": 166.67999999999302,
+      "image": 4,
+      "phase": "measured"
+    },
+    {
+      "preparationMs": 36.80000000001746,
+      "inferenceMs": 12.799999999988358,
+      "fileToPaintMs": 83.33999999999651,
+      "image": 0,
+      "phase": "measured"
+    },
+    {
+      "preparationMs": 76.9200000000128,
+      "inferenceMs": 9.880000000004657,
+      "fileToPaintMs": 116.88000000003376,
+      "image": 1,
+      "phase": "measured"
+    },
+    {
+      "preparationMs": 20.05999999999767,
+      "inferenceMs": 12.64000000001397,
+      "fileToPaintMs": 66.67999999999302,
+      "image": 2,
+      "phase": "measured"
+    }
+  ],
+  "percentiles": "linear interpolation, index=(n-1)*p; milliseconds; excludes 3 warmups",
+  "summary": {
+    "preparationMs": {
+      "n": 50,
+      "p50": 43.93000000000757,
+      "p95": 134.35100000000384
+    },
+    "inferenceMs": {
+      "n": 50,
+      "p50": 10.010000000009313,
+      "p95": 13.38200000000361
+    },
+    "fileToPaintMs": {
+      "n": 50,
+      "p50": 83.44000000000233,
+      "p95": 166.88400000000547
+    }
+  },
+  "boundaries": {
+    "workerToReadyMs": "Worker creation to ready; downloads/cache, compile and synthetic warmup included",
+    "navigationToReadyMs": "Navigation time origin to ready; not OS process cold start",
+    "inferenceMs": "LiteRT.js run + await output.data; excludes postprocessing and UI",
+    "fileToPaintMs": "File available in app to double requestAnimationFrame after React commit; paint approximation, excludes native camera/shutter/file picker and image preview decoding"
+  },
+  "proposedLimits": {
+    "inferenceP95Ms": 300,
+    "fileToPaintP95Ms": 3000,
+    "status": "Not partner-ratified; browser is not native Benchmark Tool; file-to-paint is not shutter-to-result"
+  }
+}

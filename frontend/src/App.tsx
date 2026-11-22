@@ -29,8 +29,11 @@ import type {
   WorkerResponse,
 } from "./types";
 import styles from "./App.module.css";
+import { BenchmarkPanel } from "./components/BenchmarkPanel";
+import type { BenchmarkSample, InitializationMeasurement } from "./lib/benchmark";
 
 const base = import.meta.env.BASE_URL;
+const benchmarkEnabled = new URLSearchParams(window.location.search).get("benchmark") === "1";
 const percent = (value: number) =>
   new Intl.NumberFormat("pt-BR", {
     style: "percent",
@@ -62,6 +65,14 @@ export default function App() {
   const [selectedClass, setSelectedClass] = useState<number>();
   const [retryCount, setRetryCount] = useState(0);
   const [offline, setOffline] = useState<"ready" | "failed">();
+
+  const [initialization, setInitialization] = useState<InitializationMeasurement>();
+  const benchmarkRunning = useRef(false);
+  const benchmarkRequest = useRef<{
+    id: number; start: number;
+    resolve: (sample: BenchmarkSample) => void;
+    reject: (error: Error) => void;
+  } | null>(null);
 
   // Só no build: no dev o Vite serve módulos sem hash e o cache ficaria desatualizado.
   useEffect(() => {
@@ -112,6 +123,8 @@ export default function App() {
     }
     setLoadError("");
     setModel(undefined);
+    setInitialization(undefined);
+    const initializationStart = performance.now();
     setStatus("Carregando o modelo…");
     const instance = new Worker(`${base}runtime/inference.js`);
     worker.current = instance;
@@ -120,9 +133,16 @@ export default function App() {
       if (message.type === "status") setStatus(message.message);
       if (message.type === "ready") {
         setModel(message.info);
+        setInitialization({
+          workerToReadyMs: performance.now() - initializationStart,
+          navigationToReadyMs: performance.now(),
+          model: message.info,
+        });
         setStatus("Pronto para analisar");
       }
       if (message.type === "error") {
+        if (message.id === undefined || message.id === benchmarkRequest.current?.id)
+          benchmarkRequest.current?.reject(new Error(message.message));
         if (message.id === undefined) {
           setLoadError(message.message);
           setBusy(false);
@@ -143,6 +163,7 @@ export default function App() {
       }
     };
     instance.onerror = () => {
+      benchmarkRequest.current?.reject(new Error("Worker interrompido."));
       setLoadError(
         "O processamento foi interrompido. Recarregue o modelo para tentar novamente.",
       );
@@ -153,6 +174,7 @@ export default function App() {
       base: new URL(base, window.location.href).href,
     } satisfies WorkerRequest);
     return () => {
+      benchmarkRequest.current?.reject(new Error("Modelo reinicializado."));
       instance.terminate();
       worker.current = null;
     };
@@ -166,8 +188,9 @@ export default function App() {
     [],
   );
 
-  const analyze = (nextFile: File) => {
-    if (!model || busy || !worker.current) return;
+  const analyze = (nextFile: File, fromBenchmark = false) => {
+    if (!model || busy || !worker.current || (benchmarkRunning.current && !fromBenchmark)) return;
+    const analysisStart = performance.now();
     setError("");
     if (!["image/jpeg", "image/png", "image/webp"].includes(nextFile.type)) {
       setError("Formato não aceito. Escolha uma foto JPEG, PNG ou WebP.");
@@ -193,10 +216,49 @@ export default function App() {
       id: request.current,
       file: nextFile,
     } satisfies WorkerRequest);
+    return { id: request.current, start: analysisStart };
   };
 
+  const runBenchmark = (nextFile: File, signal: AbortSignal): Promise<BenchmarkSample> =>
+    new Promise((resolve, reject) => {
+      if (signal.aborted) { reject(new Error("Coleta interrompida.")); return; }
+      const started = analyze(nextFile, true);
+      if (!started) { reject(new Error("Imagem inválida ou análise indisponível.")); return; }
+      const finish = (sample?: BenchmarkSample, error?: Error) => {
+        clearTimeout(timer);
+        signal.removeEventListener("abort", cancel);
+        if (benchmarkRequest.current?.id === started.id) benchmarkRequest.current = null;
+        if (error) reject(error); else resolve(sample!);
+      };
+      const cancel = () => finish(undefined, new Error("Coleta interrompida."));
+      const timer = window.setTimeout(() => finish(undefined, new Error("Análise excedeu 60 segundos.")), 60_000);
+      signal.addEventListener("abort", cancel, { once: true });
+      benchmarkRequest.current = {
+        ...started,
+        resolve: (sample) => finish(sample),
+        reject: (error) => finish(undefined, error),
+      };
+    });
+
+  useEffect(() => {
+    const pending = benchmarkRequest.current;
+    if (!result || !pending || pending.id !== request.current) return;
+    let second = 0;
+    const first = requestAnimationFrame(() => {
+      second = requestAnimationFrame(() => {
+        if (pending !== benchmarkRequest.current) return;
+        pending.resolve({
+          preparationMs: result.preparationMs,
+          inferenceMs: result.inferenceMs,
+          fileToPaintMs: performance.now() - pending.start,
+        });
+      });
+    });
+    return () => { cancelAnimationFrame(first); cancelAnimationFrame(second); };
+  }, [result]);
+
   const reset = () => {
-    if (busy) return;
+    if (busy || benchmarkRunning.current) return;
     request.current += 1;
     Object.values(urls.current).filter(Boolean).forEach(URL.revokeObjectURL);
     urls.current = { original: "", preview: "" };
@@ -276,6 +338,12 @@ export default function App() {
       </header>
 
       <main id="main" className={styles.main}>
+        {benchmarkEnabled && <BenchmarkPanel
+          initialization={initialization}
+          offlineReady={offline === "ready"}
+          run={runBenchmark}
+          onRunning={(running) => { benchmarkRunning.current = running; }}
+        />}
         <div className={styles.pageHeading}>
           <div>
             <h1>

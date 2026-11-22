@@ -1,0 +1,48 @@
+{
+  "rawFile": "iphone13_chrome_20261119_183837.json",
+  "rawSha256": "6c8e4102abd74e2d3d75cd03eee924bae943644733e9e96d4c28b269da58cc9d",
+  "checks": {
+    "samples": true,
+    "percentilesRecomputed": true,
+    "manifestMatchesBuild": true,
+    "modelHashes": true,
+    "serviceWorkerHash": true,
+    "scriptsListedInBuild": true,
+    "tenMeasurementsPerImage": true,
+    "sameImageHashesAsSafari": true,
+    "sameBuildAndBackendAsSafari": true,
+    "chromeVersionMatchesUserAgent": true
+  },
+  "summaryMs": {
+    "preparationMs": {
+      "n": 50,
+      "p50": 45.44000000000233,
+      "p95": 136.2029999999868,
+      "min": 18.420000000012806,
+      "max": 138.77999999999884
+    },
+    "inferenceMs": {
+      "n": 50,
+      "p50": 10.15999999998894,
+      "p95": 13.104000000006636,
+      "min": 5.699999999982538,
+      "max": 13.179999999993015
+    },
+    "fileToPaintMs": {
+      "n": 50,
+      "p50": 83.40999999998894,
+      "p95": 166.8749999999971,
+      "min": 50.01999999998952,
+      "max": 183.70000000001164
+    }
+  },
+  "deviceMetadataStatus": "Chrome 158.0.8127.35 coerente com CriOS/158.0.8127.35; iOS 26.6.2 declarado e coerente com user-agent. Modelo do aparelho declarado por Rui.",
+  "conditionsNote": "Campo original informa economia de rede: nao; não confirma modo de economia de energia nesta rodada. Não corrigido por inferência.",
+  "initializationCacheStatus": "nao isolado; cache pronto para o lote",
+  "airplaneModeDeclared": true,
+  "onlineAtBothEnds": [
+    false,
+    false
+  ],
+  "cameraToResultMeasured": false
+}

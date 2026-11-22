@@ -4301,6 +4301,29 @@ As predições do build coincidem com as da T8.1 em 473/473 imagens nos dois for
 
 O [relatório da T11.1](Avaliacao_Final_T11_1.md) traz acurácia (um-contra-todos), precisão, recall, F1 e suporte das 13 classes para cada modelo e conjunto, além da matriz de confusão, intervalos bootstrap, política de confiança, sensibilidade, identificação completa do build e runtime, limitações metodológicas e reprodução. Predições com os 13 scores e métricas em CSV/JSON estão em [`assets/data/avaliacao_final_T11_1`](../assets/data/avaliacao_final_T11_1/metricas.json).
 
+# 12. Validação de desempenho no dispositivo
+
+## 12.2 Medição de latência no navegador do dispositivo
+
+O benchmark da aplicação é habilitado por `?benchmark=1`. Executa três aquecimentos e cinquenta análises sequenciais pelo fluxo de produção, sem envio das fotos ao servidor. O relatório JSON preserva amostras brutas e p50/p95, aparelho e condições declarados, user-agent, identidade do modelo efetivamente carregado, runtime, configuração de aceleração e hashes dos arquivos.
+
+As medidas separam inicialização do worker, preparação da imagem, inferência com sincronização da saída e arquivo disponível → apresentação aproximada do resultado. A última medida usa dois ciclos de `requestAnimationFrame` após a atualização React e exclui a captura nativa, cujo instante de disparo não é disponibilizado pela API do navegador. Captura → resultado requer medição complementar em vídeo; o lote automático não comprova sozinho esse intervalo.
+
+A comparação numérica deve distinguir o limite proposto de 300 ms de inferência, originalmente definido com ferramenta nativa, e o limite proposto de 3 s de captura → resultado. Os limites permanecem sujeitos à ratificação do parceiro. O [protocolo de medição](Benchmark_T12_2.md) define condições, fronteiras e evidências necessárias; a primeira coleta física está registrada abaixo, separada dos testes automatizados em computador.
+
+Em 19/11/2026, duas coletas no **iPhone 13, iOS 26.6.2 declarado**, executaram cada uma 3 aquecimentos e 50 análises offline das mesmas 5 imagens. Foram usados Float16 principal, LiteRT.js 2.6.0 e WebGPU totalmente acelerado, com hashes do modelo e do build conferidos e percentis recalculados independentemente.
+
+| Navegador | Preparação p95 | Inferência p95 | Arquivo → apresentação aproximada p95 | Inicialização do worker (1 observação) |
+| --- | ---: | ---: | ---: | ---: |
+| Safari, Version 26.6.1 no user-agent | 134,35 ms | 13,38 ms | 166,88 ms | 19,76 s |
+| Chrome 158.0.8127.35, confirmado por CriOS no user-agent | 136,20 ms | 13,10 ms | 166,87 ms | 20,48 s |
+
+O campo de navegador do [primeiro JSON bruto](../assets/data/benchmark_T12_2/iphone13_20261119_183217.json) foi preenchido incorretamente como Chrome; a [validação separada](../assets/data/benchmark_T12_2/validacao_iphone13_20261119.json) preserva o original e registra a confirmação do operador de que usou Safari. A [segunda coleta](../assets/data/benchmark_T12_2/iphone13_chrome_20261119_183837.json) e sua [validação](../assets/data/benchmark_T12_2/validacao_iphone13_chrome_20261119.json) identificam o Chrome. Os lotes permanecem separados; as pequenas diferenças não demonstram superioridade de um navegador.
+
+As baterias declaradas eram 71% e 70%, respectivamente, com temperatura percebida normal, modo avião declarado e ausência de conectividade reportada no início e no fim. O modo de economia de energia foi declarado desativado no Safari; o texto da coleta Chrome informa economia de rede, sem confirmar economia de energia. O cache estava pronto durante os lotes, mas não foi isolado durante a inicialização, cujos tempos incluem carregamento, compilação e aquecimento e não são percentis. A inferência fica numericamente abaixo da proposta de 300 ms sob a metodologia LiteRT.js; o resultado não comprova captura → resultado em 3 s nem desempenho em outros aparelhos. O protocolo e as amostras completas estão no [relatório de latência](Benchmark_T12_2.md).
+
+Uma gravação complementar de três capturas de imagens em monitor documentou duas respostas com hipóteses e uma inconclusiva, permitindo repetir a captura após esse resultado. A análise visual encontrou aproximadamente **1,0–1,2 s do retorno da câmera ao indicador de análise finalizada**. Até a decisão ficar legível após rolagem, os intervalos a partir do proxy visual da captura foram cerca de **7,6 s, 8,3 s e 4,1 s**, incluindo confirmação humana e navegação na página. Esses números não são inferência isolada nem p95 de cinquenta capturas: a gravação usa uma aproximação visual do disparo, tem interação humana e não comprova ausência de rede. Os [marcos e hashes dos quadros](../assets/data/benchmark_T12_2/camera_20261119/observacoes.json) preservam as evidências e as limitações da medição.
+
 # 14. Documentação técnica e transferência de conhecimento
 
 ## 14.1 Dataset final
