@@ -2,7 +2,7 @@
 
 Responsável pela atividade: Karol · Pacote preparado em 22/11/2026
 
-## Pacote versionado para entrega
+## Pacote preparado e inventário versionado
 
 | Item | Identificação e localização |
 | --- | --- |
@@ -13,6 +13,8 @@ Responsável pela atividade: Karol · Pacote preparado em 22/11/2026
 | Relatórios | [Avaliação histórica](Avaliacao_Final_T11_1.md), [tamanho](Validacao_T12_1.md), [benchmark](Benchmark_T12_2.md), [protocolo funcional no aparelho](Testes_Dispositivo_T12_3.md), [checklist](T15_1_Checklist_Final.md) e [ensaio](T15_2_Roteiro_Demonstracao.md). |
 
 O arquivo local está em `frontend/.work/demo/agroapp-demo-2026-11-22T17-58-58-271Z-42c280dd.tar.gz`, com SHA-256 `ad2d812de8edd1850254591e7cd2eee228b1004f58983370c91c7eff69c77a51`. O arquivo inclui o site completo, os dois modelos web, o manifesto de integridade e as instruções de uso. Código, relatórios e documentação acompanham a entrega por referência aos commits do repositório.
+
+Esse caminho pertence ao ambiente de geração e fica fora do Git. A evidência versionada neste PR é o inventário, junto com o commit do build; o arquivo compactado não acompanha o clone. Antes da entrega, disponibilizar o pacote congelado em armazenamento autorizado e recuperável pelo destinatário, registrar sua localização e confirmar o checksum ao obtê-lo. Até esse registro, a transferência do pacote permanece pendente. Gerar outro pacote com os comandos abaixo atribui um novo identificador e não comprova, por si só, acesso ao arquivo original identificado acima.
 
 ### Reprodução
 
@@ -34,11 +36,12 @@ Abra `http://127.0.0.1:4173` e siga o roteiro T15.2. Para reproduzir as mediçõ
 
 ## Registro da validação com o parceiro
 
-**Estado:** pacote preparado e ensaiado localmente. Apresentação, feedback, ajustes acordados e aceite seguem pendentes de registro com o Agro App.
+**Estado:** pacote preparado e ensaiado localmente, com inventário versionado. Disponibilização do arquivo congelado, apresentação, feedback, ajustes acordados e aceite seguem pendentes de registro com o Agro App.
 
 | Campo da ata | Registro |
 | --- | --- |
 | Data, participantes e canal | Pendente |
+| Localização recuperável do pacote, acesso do destinatário e checksum conferido | Pendente |
 | Identificador, URL e hash do build efetivamente apresentado | Pendente |
 | Casos executados na sessão e evidências | Pendente |
 | Feedback do Agro App e decisão de aceite | Pendente |
@@ -53,5 +56,6 @@ Abra `http://127.0.0.1:4173` e siga o roteiro T15.2. Para reproduzir as mediçõ
 | Conteúdo técnico | Validar as 13 classes, nomes, hipóteses concorrentes, chaves e destinos oficiais do catálogo. |
 | Modelo | Discutir o limiar, a meta de acurácia entre aceitas e a coleta independente para avaliar generalização e perda por quantização. |
 | Dispositivo | Concluir captura, galeria, uso offline com inspeção de tráfego, 50 capturas fim a fim e medição de memória no aparelho acordado. |
+| Transferência de conhecimento | Revisar o [registro da T14.6, PR #62](https://github.com/AgroTech-Inteli-ATI/2026_02_AgroApp/pull/62): o ciclo completo foi relatado com Tobias em Windows, sem dúvidas, mas os logs e artefatos produzidos não foram recebidos para conferência técnica. |
 
 Após a sessão, registrar cada ajuste com evidência, responsável, prazo e estado. Se um ajuste alterar o site, publicar um novo manifesto e vincular o novo build à ata.
