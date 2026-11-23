@@ -1,0 +1,199 @@
+{
+  "browser": "158.0.8127.36",
+  "model": {
+    "sha256": "df2f5d4fe22b4d3f76c4b8f6dab6e0100231c83d606122999ed15ceb72c05978",
+    "sourceSha256": "456caec54fae3c57684f9afd6842cae611a1f6cb6587b40b0c5bd8256aea1340",
+    "runtime": {
+      "name": "@litertjs/core",
+      "version": "2.6.0"
+    },
+    "requestedAccelerator": "wasm",
+    "fullyAccelerated": false,
+    "cpuThreads": 1,
+    "id": "candidato_T5_6_20261026",
+    "format": "INT8",
+    "bytes": 4003624,
+    "accelerator": "CPU / WebAssembly",
+    "fallback": true
+  },
+  "cases": [
+    {
+      "file": "IMG_00263.jpg",
+      "sha256": "422a5b668741113b6393e3d5109f3058a716da94898a8256d06b51e9bfde136b",
+      "accepted": false,
+      "top3": [
+        {
+          "indice": 10,
+          "nome": "Lagarta-das-vagens (Spodoptera eridania e S. cosmioides)",
+          "score": 0.33984375
+        },
+        {
+          "indice": 11,
+          "nome": "Astylus variegatus",
+          "score": 0.33984375
+        },
+        {
+          "indice": 2,
+          "nome": "Percevejo-barriga-verde (Dichelops/Diceraeus)",
+          "score": 0.23828125
+        }
+      ]
+    },
+    {
+      "file": "IMG_01540.jpg",
+      "sha256": "98faabfeb21d3ea572a32fb115bb3f494b43553586c6bd1a1361446fcf779790",
+      "accepted": false,
+      "top3": [
+        {
+          "indice": 12,
+          "nome": "Cigarrinha-das-pastagens (Deois flavopicta)",
+          "score": 0.58203125
+        },
+        {
+          "indice": 0,
+          "nome": "Vaquinha (Diabrotica speciosa)",
+          "score": 0.40625
+        },
+        {
+          "indice": 2,
+          "nome": "Percevejo-barriga-verde (Dichelops/Diceraeus)",
+          "score": 0.0078125
+        }
+      ]
+    },
+    {
+      "file": "IMG_01741.jpg",
+      "sha256": "76c3dc3cb6837db8dae4803937911d4b947e3f324ba98d24703706038d22703b",
+      "accepted": false,
+      "top3": [
+        {
+          "indice": 0,
+          "nome": "Vaquinha (Diabrotica speciosa)",
+          "score": 0.55859375
+        },
+        {
+          "indice": 11,
+          "nome": "Astylus variegatus",
+          "score": 0.39453125
+        },
+        {
+          "indice": 2,
+          "nome": "Percevejo-barriga-verde (Dichelops/Diceraeus)",
+          "score": 0.046875
+        }
+      ]
+    },
+    {
+      "file": "IMG_01812.jpg",
+      "sha256": "e892f987d08ac0f956f5f4076d4e4e048b4f1af37e0f7552de7b2e9481b4b51e",
+      "accepted": false,
+      "top3": [
+        {
+          "indice": 5,
+          "nome": "Percevejo-verde (Nezara viridula)",
+          "score": 0.6015625
+        },
+        {
+          "indice": 0,
+          "nome": "Vaquinha (Diabrotica speciosa)",
+          "score": 0.35546875
+        },
+        {
+          "indice": 2,
+          "nome": "Percevejo-barriga-verde (Dichelops/Diceraeus)",
+          "score": 0.03125
+        }
+      ]
+    },
+    {
+      "file": "IMG_02004.jpg",
+      "sha256": "4c318b772546d6ecba5486807464dc63a3046ccbc2041bb5a8d44e271926eb33",
+      "accepted": true,
+      "top3": [
+        {
+          "indice": 12,
+          "nome": "Cigarrinha-das-pastagens (Deois flavopicta)",
+          "score": 0.71875
+        },
+        {
+          "indice": 0,
+          "nome": "Vaquinha (Diabrotica speciosa)",
+          "score": 0.25
+        },
+        {
+          "indice": 2,
+          "nome": "Percevejo-barriga-verde (Dichelops/Diceraeus)",
+          "score": 0.03125
+        }
+      ]
+    },
+    {
+      "file": "IMG_02168.jpg",
+      "sha256": "d17278de7ace3b4d4b3b4b053e47134da1301da16ace680d3a1cc4d67122e6e7",
+      "accepted": true,
+      "top3": [
+        {
+          "indice": 0,
+          "nome": "Vaquinha (Diabrotica speciosa)",
+          "score": 0.78125
+        },
+        {
+          "indice": 2,
+          "nome": "Percevejo-barriga-verde (Dichelops/Diceraeus)",
+          "score": 0.19140625
+        },
+        {
+          "indice": 11,
+          "nome": "Astylus variegatus",
+          "score": 0.02734375
+        }
+      ]
+    },
+    {
+      "file": "IMG_02637.jpg",
+      "sha256": "56748ab4f0f0afed17dfbf83c55cbcc636ccb4cc4b28acdee42e2583ff455ec4",
+      "accepted": false,
+      "top3": [
+        {
+          "indice": 3,
+          "nome": "Lagarta-do-cartucho (Spodoptera frugiperda)",
+          "score": 0.5
+        },
+        {
+          "indice": 8,
+          "nome": "Lagarta-falsa-medideira (Chrysodeixis includens)",
+          "score": 0.5
+        },
+        {
+          "indice": 12,
+          "nome": "Cigarrinha-das-pastagens (Deois flavopicta)",
+          "score": 0.00390625
+        }
+      ]
+    },
+    {
+      "file": "orientation.jpg",
+      "sha256": "ee39be0cae4d06519ac38b4fa662ca5f0b1f978f52c2a1c8e9a88a28bd2e7218",
+      "accepted": false,
+      "top3": [
+        {
+          "indice": 0,
+          "nome": "Vaquinha (Diabrotica speciosa)",
+          "score": 0.39453125
+        },
+        {
+          "indice": 1,
+          "nome": "Cigarrinha-do-milho (Dalbulus maidis)",
+          "score": 0.13671875
+        },
+        {
+          "indice": 11,
+          "nome": "Astylus variegatus",
+          "score": 0.13671875
+        }
+      ]
+    }
+  ],
+  "invalidPhoto": "Não foi possível abrir a foto. Escolha um JPEG, PNG ou WebP válido.",
+  "recovery": true
+}
