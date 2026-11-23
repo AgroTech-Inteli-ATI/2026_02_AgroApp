@@ -1,0 +1,2790 @@
+{
+  "esquema": "limiar_T11_3_v1",
+  "classificacao": "exploratoria",
+  "generalizacao_comprovada": false,
+  "limiar": 0.65,
+  "score": "softmax_nao_calibrado",
+  "entradas_sha256": {
+    "predicoes_t11_1": "0c65b64a184ac7ab3629a1d797f8a8757142607d8fd247f066e6df3677d2c2b0",
+    "politica": "78bf5cd6805ec97f55109e15efe70f0d05f7cfd89723de6e48e3f0aaa798452f",
+    "manifesto": "b6ff54b024543fee43e6cc38c143ded70b8fa68149364c3d61ad171563a67802",
+    "inferencias_web": "2023a926ff93b912a1de359c4a13edee7682e6a195542f9d48fb277e6e704a57"
+  },
+  "historico": {
+    "Float16|teste": {
+      "quadrantes": {
+        "acerto_aceito": 389,
+        "acerto_inconclusivo": 12,
+        "erro_aceito": 52,
+        "erro_inconclusivo": 20,
+        "total": 473,
+        "aceitos": 441,
+        "cobertura": 0.9323467230443975,
+        "acuracia_aceitos": 0.8820861678004536,
+        "acuracia_sem_limiar": 0.8477801268498943,
+        "inconclusivos": 32,
+        "inconclusivos_que_eram_erro": 0.625
+      },
+      "curva": [
+        {
+          "limiar": 0.5,
+          "cobertura": 0.9682875264270613,
+          "aceitos": 458,
+          "acuracia_aceitos": 0.8624454148471615,
+          "erros_aceitos": 63,
+          "acertos_inconclusivos": 6
+        },
+        {
+          "limiar": 0.55,
+          "cobertura": 0.9556025369978859,
+          "aceitos": 452,
+          "acuracia_aceitos": 0.8716814159292036,
+          "erros_aceitos": 58,
+          "acertos_inconclusivos": 7
+        },
+        {
+          "limiar": 0.6,
+          "cobertura": 0.9429175475687104,
+          "aceitos": 446,
+          "acuracia_aceitos": 0.8789237668161435,
+          "erros_aceitos": 54,
+          "acertos_inconclusivos": 9
+        },
+        {
+          "limiar": 0.65,
+          "cobertura": 0.9323467230443975,
+          "aceitos": 441,
+          "acuracia_aceitos": 0.8820861678004536,
+          "erros_aceitos": 52,
+          "acertos_inconclusivos": 12
+        },
+        {
+          "limiar": 0.7,
+          "cobertura": 0.919661733615222,
+          "aceitos": 435,
+          "acuracia_aceitos": 0.8873563218390804,
+          "erros_aceitos": 49,
+          "acertos_inconclusivos": 15
+        },
+        {
+          "limiar": 0.75,
+          "cobertura": 0.9006342494714588,
+          "aceitos": 426,
+          "acuracia_aceitos": 0.8990610328638498,
+          "erros_aceitos": 43,
+          "acertos_inconclusivos": 18
+        },
+        {
+          "limiar": 0.8,
+          "cobertura": 0.8668076109936576,
+          "aceitos": 410,
+          "acuracia_aceitos": 0.9097560975609756,
+          "erros_aceitos": 37,
+          "acertos_inconclusivos": 28
+        },
+        {
+          "limiar": 0.85,
+          "cobertura": 0.8393234672304439,
+          "aceitos": 397,
+          "acuracia_aceitos": 0.9269521410579346,
+          "erros_aceitos": 29,
+          "acertos_inconclusivos": 33
+        },
+        {
+          "limiar": 0.9,
+          "cobertura": 0.813953488372093,
+          "aceitos": 385,
+          "acuracia_aceitos": 0.9298701298701298,
+          "erros_aceitos": 27,
+          "acertos_inconclusivos": 43
+        },
+        {
+          "limiar": 0.95,
+          "cobertura": 0.773784355179704,
+          "aceitos": 366,
+          "acuracia_aceitos": 0.9398907103825137,
+          "erros_aceitos": 22,
+          "acertos_inconclusivos": 57
+        }
+      ],
+      "faixas": [
+        {
+          "de": 0.0,
+          "ate": 0.5,
+          "imagens": 15,
+          "acertos": 6,
+          "erros": 9,
+          "score_medio": 0.4239700106666667,
+          "acerto": 0.4
+        },
+        {
+          "de": 0.5,
+          "ate": 0.65,
+          "imagens": 17,
+          "acertos": 6,
+          "erros": 11,
+          "score_medio": 0.5789776870588235,
+          "acerto": 0.35294117647058826
+        },
+        {
+          "de": 0.65,
+          "ate": 0.8,
+          "imagens": 31,
+          "acertos": 16,
+          "erros": 15,
+          "score_medio": 0.7388279306451613,
+          "acerto": 0.5161290322580645
+        },
+        {
+          "de": 0.8,
+          "ate": 0.9,
+          "imagens": 25,
+          "acertos": 15,
+          "erros": 10,
+          "score_medio": 0.8517867476000001,
+          "acerto": 0.6
+        },
+        {
+          "de": 0.9,
+          "ate": 0.95,
+          "imagens": 19,
+          "acertos": 14,
+          "erros": 5,
+          "score_medio": 0.9265564910526316,
+          "acerto": 0.7368421052631579
+        },
+        {
+          "de": 0.95,
+          "ate": 0.99,
+          "imagens": 58,
+          "acertos": 43,
+          "erros": 15,
+          "score_medio": 0.9757357649999999,
+          "acerto": 0.7413793103448276
+        },
+        {
+          "de": 0.99,
+          "ate": 1.0,
+          "imagens": 308,
+          "acertos": 301,
+          "erros": 7,
+          "score_medio": 0.9988007741558441,
+          "acerto": 0.9772727272727273
+        }
+      ],
+      "calibracao": {
+        "ece": 0.0937252718816067,
+        "faixas": [
+          {
+            "de": 0.2,
+            "ate": 0.3,
+            "imagens": 1,
+            "score_medio": 0.27740186,
+            "acerto": 0.0
+          },
+          {
+            "de": 0.3,
+            "ate": 0.4,
+            "imagens": 4,
+            "score_medio": 0.36204224,
+            "acerto": 0.75
+          },
+          {
+            "de": 0.4,
+            "ate": 0.5,
+            "imagens": 10,
+            "score_medio": 0.46339793399999996,
+            "acerto": 0.3
+          },
+          {
+            "de": 0.5,
+            "ate": 0.6,
+            "imagens": 12,
+            "score_medio": 0.5559371866666667,
+            "acerto": 0.25
+          },
+          {
+            "de": 0.6,
+            "ate": 0.7,
+            "imagens": 11,
+            "score_medio": 0.6593397799999999,
+            "acerto": 0.5454545454545454
+          },
+          {
+            "de": 0.7,
+            "ate": 0.8,
+            "imagens": 25,
+            "score_medio": 0.7528921084,
+            "acerto": 0.52
+          },
+          {
+            "de": 0.8,
+            "ate": 0.9,
+            "imagens": 25,
+            "score_medio": 0.8517867476000001,
+            "acerto": 0.6
+          },
+          {
+            "de": 0.9,
+            "ate": 1.0,
+            "imagens": 385,
+            "score_medio": 0.9917607432207791,
+            "acerto": 0.9298701298701298
+          }
+        ],
+        "faixas_com_score_acima_do_acerto": 7
+      },
+      "erros_altos": {
+        "erros": 72,
+        "aceitos": 52,
+        "altos": 27,
+        "limite_alto": 0.9,
+        "real_no_top3_entre_aceitos": 38,
+        "lista": [
+          {
+            "id": "IMG_03197",
+            "real": 5,
+            "previsto": 0,
+            "score": 0.99989879,
+            "real_no_top3": true
+          },
+          {
+            "id": "IMG_03447",
+            "real": 10,
+            "previsto": 3,
+            "score": 0.99939048,
+            "real_no_top3": true
+          },
+          {
+            "id": "IMG_03091",
+            "real": 6,
+            "previsto": 0,
+            "score": 0.99888903,
+            "real_no_top3": true
+          },
+          {
+            "id": "IMG_03037",
+            "real": 8,
+            "previsto": 10,
+            "score": 0.99846679,
+            "real_no_top3": false
+          },
+          {
+            "id": "IMG_02973",
+            "real": 8,
+            "previsto": 3,
+            "score": 0.99759763,
+            "real_no_top3": true
+          },
+          {
+            "id": "IMG_03089",
+            "real": 6,
+            "previsto": 5,
+            "score": 0.99537992,
+            "real_no_top3": true
+          },
+          {
+            "id": "IMG_03384",
+            "real": 10,
+            "previsto": 3,
+            "score": 0.99458367,
+            "real_no_top3": true
+          },
+          {
+            "id": "IMG_01012",
+            "real": 0,
+            "previsto": 11,
+            "score": 0.98842782,
+            "real_no_top3": true
+          },
+          {
+            "id": "IMG_02972",
+            "real": 8,
+            "previsto": 3,
+            "score": 0.98827332,
+            "real_no_top3": true
+          },
+          {
+            "id": "IMG_00142",
+            "real": 11,
+            "previsto": 0,
+            "score": 0.98482251,
+            "real_no_top3": true
+          },
+          {
+            "id": "IMG_03198",
+            "real": 5,
+            "previsto": 0,
+            "score": 0.98147124,
+            "real_no_top3": true
+          },
+          {
+            "id": "IMG_03086",
+            "real": 6,
+            "previsto": 5,
+            "score": 0.9776563,
+            "real_no_top3": false
+          },
+          {
+            "id": "IMG_03187",
+            "real": 4,
+            "previsto": 2,
+            "score": 0.97748905,
+            "real_no_top3": true
+          },
+          {
+            "id": "IMG_03088",
+            "real": 6,
+            "previsto": 5,
+            "score": 0.97704971,
+            "real_no_top3": true
+          },
+          {
+            "id": "IMG_03156",
+            "real": 4,
+            "previsto": 11,
+            "score": 0.97371554,
+            "real_no_top3": false
+          },
+          {
+            "id": "IMG_02978",
+            "real": 8,
+            "previsto": 3,
+            "score": 0.97353595,
+            "real_no_top3": true
+          },
+          {
+            "id": "IMG_03427",
+            "real": 10,
+            "previsto": 3,
+            "score": 0.97296089,
+            "real_no_top3": true
+          },
+          {
+            "id": "IMG_00529",
+            "real": 1,
+            "previsto": 0,
+            "score": 0.9707855,
+            "real_no_top3": true
+          },
+          {
+            "id": "IMG_03254",
+            "real": 5,
+            "previsto": 2,
+            "score": 0.96638852,
+            "real_no_top3": false
+          },
+          {
+            "id": "IMG_02123",
+            "real": 2,
+            "previsto": 3,
+            "score": 0.96594721,
+            "real_no_top3": true
+          },
+          {
+            "id": "IMG_03154",
+            "real": 4,
+            "previsto": 7,
+            "score": 0.96514398,
+            "real_no_top3": false
+          },
+          {
+            "id": "IMG_00909",
+            "real": 7,
+            "previsto": 12,
+            "score": 0.95810938,
+            "real_no_top3": false
+          },
+          {
+            "id": "IMG_03160",
+            "real": 4,
+            "previsto": 2,
+            "score": 0.94923878,
+            "real_no_top3": true
+          },
+          {
+            "id": "IMG_03036",
+            "real": 8,
+            "previsto": 10,
+            "score": 0.9488433,
+            "real_no_top3": false
+          },
+          {
+            "id": "IMG_01175",
+            "real": 0,
+            "previsto": 11,
+            "score": 0.93067694,
+            "real_no_top3": true
+          },
+          {
+            "id": "IMG_01855",
+            "real": 0,
+            "previsto": 10,
+            "score": 0.92735052,
+            "real_no_top3": true
+          },
+          {
+            "id": "IMG_03258",
+            "real": 5,
+            "previsto": 2,
+            "score": 0.90924609,
+            "real_no_top3": false
+          }
+        ]
+      },
+      "por_classe": [
+        {
+          "indice": 0,
+          "classe": "Vaquinha (Diabrotica speciosa)",
+          "suporte": 157,
+          "aceitos": 154,
+          "cobertura": 0.9808917197452229,
+          "acertos_aceitos": 146,
+          "recall_no_limiar": 0.9299363057324841,
+          "mostrada_como_principal": 155,
+          "precisao_quando_mostrada": 0.9419354838709677
+        },
+        {
+          "indice": 1,
+          "classe": "Cigarrinha-do-milho (Dalbulus maidis)",
+          "suporte": 29,
+          "aceitos": 27,
+          "cobertura": 0.9310344827586207,
+          "acertos_aceitos": 25,
+          "recall_no_limiar": 0.8620689655172413,
+          "mostrada_como_principal": 25,
+          "precisao_quando_mostrada": 1.0
+        },
+        {
+          "indice": 2,
+          "classe": "Percevejo-barriga-verde (Dichelops/Diceraeus)",
+          "suporte": 42,
+          "aceitos": 35,
+          "cobertura": 0.8333333333333334,
+          "acertos_aceitos": 30,
+          "recall_no_limiar": 0.7142857142857143,
+          "mostrada_como_principal": 38,
+          "precisao_quando_mostrada": 0.7894736842105263
+        },
+        {
+          "indice": 3,
+          "classe": "Lagarta-do-cartucho (Spodoptera frugiperda)",
+          "suporte": 61,
+          "aceitos": 57,
+          "cobertura": 0.9344262295081968,
+          "acertos_aceitos": 54,
+          "recall_no_limiar": 0.8852459016393442,
+          "mostrada_como_principal": 63,
+          "precisao_quando_mostrada": 0.8571428571428571
+        },
+        {
+          "indice": 4,
+          "classe": "Percevejo-marrom (Euschistus heros)",
+          "suporte": 10,
+          "aceitos": 10,
+          "cobertura": 1.0,
+          "acertos_aceitos": 5,
+          "recall_no_limiar": 0.5,
+          "mostrada_como_principal": 5,
+          "precisao_quando_mostrada": 1.0
+        },
+        {
+          "indice": 5,
+          "classe": "Percevejo-verde (Nezara viridula)",
+          "suporte": 14,
+          "aceitos": 10,
+          "cobertura": 0.7142857142857143,
+          "acertos_aceitos": 5,
+          "recall_no_limiar": 0.35714285714285715,
+          "mostrada_como_principal": 9,
+          "precisao_quando_mostrada": 0.5555555555555556
+        },
+        {
+          "indice": 6,
+          "classe": "Percevejo-asa-preta (Edessa meditabunda)",
+          "suporte": 11,
+          "aceitos": 9,
+          "cobertura": 0.8181818181818182,
+          "acertos_aceitos": 4,
+          "recall_no_limiar": 0.36363636363636365,
+          "mostrada_como_principal": 4,
+          "precisao_quando_mostrada": 1.0
+        },
+        {
+          "indice": 7,
+          "classe": "Percevejo-do-milho (Leptoglossus zonatus)",
+          "suporte": 12,
+          "aceitos": 11,
+          "cobertura": 0.9166666666666666,
+          "acertos_aceitos": 9,
+          "recall_no_limiar": 0.75,
+          "mostrada_como_principal": 12,
+          "precisao_quando_mostrada": 0.75
+        },
+        {
+          "indice": 8,
+          "classe": "Lagarta-falsa-medideira (Chrysodeixis includens)",
+          "suporte": 12,
+          "aceitos": 11,
+          "cobertura": 0.9166666666666666,
+          "acertos_aceitos": 4,
+          "recall_no_limiar": 0.3333333333333333,
+          "mostrada_como_principal": 4,
+          "precisao_quando_mostrada": 1.0
+        },
+        {
+          "indice": 9,
+          "classe": "Lagarta-da-soja (Anticarsia gemmatalis)",
+          "suporte": 6,
+          "aceitos": 6,
+          "cobertura": 1.0,
+          "acertos_aceitos": 5,
+          "recall_no_limiar": 0.8333333333333334,
+          "mostrada_como_principal": 6,
+          "precisao_quando_mostrada": 0.8333333333333334
+        },
+        {
+          "indice": 10,
+          "classe": "Lagarta-das-vagens (Spodoptera eridania e S. cosmioides)",
+          "suporte": 24,
+          "aceitos": 21,
+          "cobertura": 0.875,
+          "acertos_aceitos": 16,
+          "recall_no_limiar": 0.6666666666666666,
+          "mostrada_como_principal": 23,
+          "precisao_quando_mostrada": 0.6956521739130435
+        },
+        {
+          "indice": 11,
+          "classe": "Astylus variegatus",
+          "suporte": 71,
+          "aceitos": 66,
+          "cobertura": 0.9295774647887324,
+          "acertos_aceitos": 63,
+          "recall_no_limiar": 0.8873239436619719,
+          "mostrada_como_principal": 71,
+          "precisao_quando_mostrada": 0.8873239436619719
+        },
+        {
+          "indice": 12,
+          "classe": "Cigarrinha-das-pastagens (Deois flavopicta)",
+          "suporte": 24,
+          "aceitos": 24,
+          "cobertura": 1.0,
+          "acertos_aceitos": 23,
+          "recall_no_limiar": 0.9583333333333334,
+          "mostrada_como_principal": 26,
+          "precisao_quando_mostrada": 0.8846153846153846
+        }
+      ]
+    },
+    "Float16|validacao": {
+      "quadrantes": {
+        "acerto_aceito": 390,
+        "acerto_inconclusivo": 17,
+        "erro_aceito": 40,
+        "erro_inconclusivo": 27,
+        "total": 474,
+        "aceitos": 430,
+        "cobertura": 0.9071729957805907,
+        "acuracia_aceitos": 0.9069767441860465,
+        "acuracia_sem_limiar": 0.8586497890295358,
+        "inconclusivos": 44,
+        "inconclusivos_que_eram_erro": 0.6136363636363636
+      },
+      "curva": [
+        {
+          "limiar": 0.5,
+          "cobertura": 0.9662447257383966,
+          "aceitos": 458,
+          "acuracia_aceitos": 0.87117903930131,
+          "erros_aceitos": 59,
+          "acertos_inconclusivos": 8
+        },
+        {
+          "limiar": 0.55,
+          "cobertura": 0.9451476793248945,
+          "aceitos": 448,
+          "acuracia_aceitos": 0.8839285714285714,
+          "erros_aceitos": 52,
+          "acertos_inconclusivos": 11
+        },
+        {
+          "limiar": 0.6,
+          "cobertura": 0.930379746835443,
+          "aceitos": 441,
+          "acuracia_aceitos": 0.8934240362811792,
+          "erros_aceitos": 47,
+          "acertos_inconclusivos": 13
+        },
+        {
+          "limiar": 0.65,
+          "cobertura": 0.9071729957805907,
+          "aceitos": 430,
+          "acuracia_aceitos": 0.9069767441860465,
+          "erros_aceitos": 40,
+          "acertos_inconclusivos": 17
+        },
+        {
+          "limiar": 0.7,
+          "cobertura": 0.8860759493670886,
+          "aceitos": 420,
+          "acuracia_aceitos": 0.9142857142857143,
+          "erros_aceitos": 36,
+          "acertos_inconclusivos": 23
+        },
+        {
+          "limiar": 0.75,
+          "cobertura": 0.8755274261603375,
+          "aceitos": 415,
+          "acuracia_aceitos": 0.9204819277108434,
+          "erros_aceitos": 33,
+          "acertos_inconclusivos": 25
+        },
+        {
+          "limiar": 0.8,
+          "cobertura": 0.8544303797468354,
+          "aceitos": 405,
+          "acuracia_aceitos": 0.9333333333333333,
+          "erros_aceitos": 27,
+          "acertos_inconclusivos": 29
+        },
+        {
+          "limiar": 0.85,
+          "cobertura": 0.8459915611814346,
+          "aceitos": 401,
+          "acuracia_aceitos": 0.9351620947630923,
+          "erros_aceitos": 26,
+          "acertos_inconclusivos": 32
+        },
+        {
+          "limiar": 0.9,
+          "cobertura": 0.820675105485232,
+          "aceitos": 389,
+          "acuracia_aceitos": 0.9460154241645244,
+          "erros_aceitos": 21,
+          "acertos_inconclusivos": 39
+        },
+        {
+          "limiar": 0.95,
+          "cobertura": 0.7679324894514767,
+          "aceitos": 364,
+          "acuracia_aceitos": 0.9587912087912088,
+          "erros_aceitos": 15,
+          "acertos_inconclusivos": 58
+        }
+      ],
+      "faixas": [
+        {
+          "de": 0.0,
+          "ate": 0.5,
+          "imagens": 16,
+          "acertos": 8,
+          "erros": 8,
+          "score_medio": 0.419384279375,
+          "acerto": 0.5
+        },
+        {
+          "de": 0.5,
+          "ate": 0.65,
+          "imagens": 28,
+          "acertos": 9,
+          "erros": 19,
+          "score_medio": 0.5777136325,
+          "acerto": 0.32142857142857145
+        },
+        {
+          "de": 0.65,
+          "ate": 0.8,
+          "imagens": 25,
+          "acertos": 12,
+          "erros": 13,
+          "score_medio": 0.722595554,
+          "acerto": 0.48
+        },
+        {
+          "de": 0.8,
+          "ate": 0.9,
+          "imagens": 16,
+          "acertos": 10,
+          "erros": 6,
+          "score_medio": 0.863067255,
+          "acerto": 0.625
+        },
+        {
+          "de": 0.9,
+          "ate": 0.95,
+          "imagens": 25,
+          "acertos": 19,
+          "erros": 6,
+          "score_medio": 0.9327220016,
+          "acerto": 0.76
+        },
+        {
+          "de": 0.95,
+          "ate": 0.99,
+          "imagens": 45,
+          "acertos": 38,
+          "erros": 7,
+          "score_medio": 0.9743021224444445,
+          "acerto": 0.8444444444444444
+        },
+        {
+          "de": 0.99,
+          "ate": 1.0,
+          "imagens": 319,
+          "acertos": 311,
+          "erros": 8,
+          "score_medio": 0.9989507601567399,
+          "acerto": 0.9749216300940439
+        }
+      ],
+      "calibracao": {
+        "ece": 0.07735379158227851,
+        "faixas": [
+          {
+            "de": 0.2,
+            "ate": 0.3,
+            "imagens": 1,
+            "score_medio": 0.2494805,
+            "acerto": 0.0
+          },
+          {
+            "de": 0.3,
+            "ate": 0.4,
+            "imagens": 5,
+            "score_medio": 0.35588549,
+            "acerto": 0.6
+          },
+          {
+            "de": 0.4,
+            "ate": 0.5,
+            "imagens": 10,
+            "score_medio": 0.468124052,
+            "acerto": 0.5
+          },
+          {
+            "de": 0.5,
+            "ate": 0.6,
+            "imagens": 17,
+            "score_medio": 0.5466012264705882,
+            "acerto": 0.29411764705882354
+          },
+          {
+            "de": 0.6,
+            "ate": 0.7,
+            "imagens": 21,
+            "score_medio": 0.6470922052380952,
+            "acerto": 0.47619047619047616
+          },
+          {
+            "de": 0.7,
+            "ate": 0.8,
+            "imagens": 15,
+            "score_medio": 0.7573142266666667,
+            "acerto": 0.4
+          },
+          {
+            "de": 0.8,
+            "ate": 0.9,
+            "imagens": 16,
+            "score_medio": 0.863067255,
+            "acerto": 0.625
+          },
+          {
+            "de": 0.9,
+            "ate": 1.0,
+            "imagens": 389,
+            "score_medio": 0.9918430283804628,
+            "acerto": 0.9460154241645244
+          }
+        ],
+        "faixas_com_score_acima_do_acerto": 5
+      },
+      "erros_altos": {
+        "erros": 67,
+        "aceitos": 40,
+        "altos": 21,
+        "limite_alto": 0.9,
+        "real_no_top3_entre_aceitos": 26,
+        "lista": [
+          {
+            "id": "IMG_02360",
+            "real": 2,
+            "previsto": 8,
+            "score": 0.99996626,
+            "real_no_top3": false
+          },
+          {
+            "id": "IMG_02992",
+            "real": 8,
+            "previsto": 2,
+            "score": 0.9999218,
+            "real_no_top3": true
+          },
+          {
+            "id": "IMG_02422",
+            "real": 3,
+            "previsto": 0,
+            "score": 0.99974817,
+            "real_no_top3": false
+          },
+          {
+            "id": "IMG_03321",
+            "real": 10,
+            "previsto": 3,
+            "score": 0.999506,
+            "real_no_top3": true
+          },
+          {
+            "id": "IMG_03189",
+            "real": 4,
+            "previsto": 2,
+            "score": 0.99946362,
+            "real_no_top3": true
+          },
+          {
+            "id": "IMG_03006",
+            "real": 8,
+            "previsto": 3,
+            "score": 0.99664462,
+            "real_no_top3": true
+          },
+          {
+            "id": "IMG_02989",
+            "real": 8,
+            "previsto": 3,
+            "score": 0.99382389,
+            "real_no_top3": true
+          },
+          {
+            "id": "IMG_03305",
+            "real": 10,
+            "previsto": 3,
+            "score": 0.99263752,
+            "real_no_top3": true
+          },
+          {
+            "id": "IMG_03099",
+            "real": 6,
+            "previsto": 5,
+            "score": 0.98989397,
+            "real_no_top3": true
+          },
+          {
+            "id": "IMG_01342",
+            "real": 0,
+            "previsto": 11,
+            "score": 0.98884684,
+            "real_no_top3": true
+          },
+          {
+            "id": "IMG_03398",
+            "real": 10,
+            "previsto": 11,
+            "score": 0.96955204,
+            "real_no_top3": true
+          },
+          {
+            "id": "IMG_03209",
+            "real": 5,
+            "previsto": 0,
+            "score": 0.96624416,
+            "real_no_top3": true
+          },
+          {
+            "id": "IMG_03239",
+            "real": 5,
+            "previsto": 11,
+            "score": 0.96579617,
+            "real_no_top3": true
+          },
+          {
+            "id": "IMG_02578",
+            "real": 3,
+            "previsto": 1,
+            "score": 0.95816422,
+            "real_no_top3": true
+          },
+          {
+            "id": "IMG_02421",
+            "real": 3,
+            "previsto": 2,
+            "score": 0.95671839,
+            "real_no_top3": false
+          },
+          {
+            "id": "IMG_02939",
+            "real": 9,
+            "previsto": 3,
+            "score": 0.94576168,
+            "real_no_top3": false
+          },
+          {
+            "id": "IMG_00157",
+            "real": 11,
+            "previsto": 0,
+            "score": 0.94312996,
+            "real_no_top3": true
+          },
+          {
+            "id": "IMG_00414",
+            "real": 11,
+            "previsto": 0,
+            "score": 0.93757164,
+            "real_no_top3": true
+          },
+          {
+            "id": "IMG_00868",
+            "real": 7,
+            "previsto": 0,
+            "score": 0.91614878,
+            "real_no_top3": true
+          },
+          {
+            "id": "IMG_00155",
+            "real": 11,
+            "previsto": 0,
+            "score": 0.90974098,
+            "real_no_top3": true
+          },
+          {
+            "id": "IMG_03077",
+            "real": 6,
+            "previsto": 2,
+            "score": 0.90189314,
+            "real_no_top3": false
+          }
+        ]
+      },
+      "por_classe": [
+        {
+          "indice": 0,
+          "classe": "Vaquinha (Diabrotica speciosa)",
+          "suporte": 157,
+          "aceitos": 152,
+          "cobertura": 0.9681528662420382,
+          "acertos_aceitos": 146,
+          "recall_no_limiar": 0.9299363057324841,
+          "mostrada_como_principal": 155,
+          "precisao_quando_mostrada": 0.9419354838709677
+        },
+        {
+          "indice": 1,
+          "classe": "Cigarrinha-do-milho (Dalbulus maidis)",
+          "suporte": 29,
+          "aceitos": 27,
+          "cobertura": 0.9310344827586207,
+          "acertos_aceitos": 26,
+          "recall_no_limiar": 0.896551724137931,
+          "mostrada_como_principal": 27,
+          "precisao_quando_mostrada": 0.9629629629629629
+        },
+        {
+          "indice": 2,
+          "classe": "Percevejo-barriga-verde (Dichelops/Diceraeus)",
+          "suporte": 42,
+          "aceitos": 36,
+          "cobertura": 0.8571428571428571,
+          "acertos_aceitos": 34,
+          "recall_no_limiar": 0.8095238095238095,
+          "mostrada_como_principal": 44,
+          "precisao_quando_mostrada": 0.7727272727272727
+        },
+        {
+          "indice": 3,
+          "classe": "Lagarta-do-cartucho (Spodoptera frugiperda)",
+          "suporte": 61,
+          "aceitos": 56,
+          "cobertura": 0.9180327868852459,
+          "acertos_aceitos": 50,
+          "recall_no_limiar": 0.819672131147541,
+          "mostrada_como_principal": 58,
+          "precisao_quando_mostrada": 0.8620689655172413
+        },
+        {
+          "indice": 4,
+          "classe": "Percevejo-marrom (Euschistus heros)",
+          "suporte": 10,
+          "aceitos": 8,
+          "cobertura": 0.8,
+          "acertos_aceitos": 6,
+          "recall_no_limiar": 0.6,
+          "mostrada_como_principal": 6,
+          "precisao_quando_mostrada": 1.0
+        },
+        {
+          "indice": 5,
+          "classe": "Percevejo-verde (Nezara viridula)",
+          "suporte": 14,
+          "aceitos": 7,
+          "cobertura": 0.5,
+          "acertos_aceitos": 5,
+          "recall_no_limiar": 0.35714285714285715,
+          "mostrada_como_principal": 7,
+          "precisao_quando_mostrada": 0.7142857142857143
+        },
+        {
+          "indice": 6,
+          "classe": "Percevejo-asa-preta (Edessa meditabunda)",
+          "suporte": 11,
+          "aceitos": 8,
+          "cobertura": 0.7272727272727273,
+          "acertos_aceitos": 6,
+          "recall_no_limiar": 0.5454545454545454,
+          "mostrada_como_principal": 7,
+          "precisao_quando_mostrada": 0.8571428571428571
+        },
+        {
+          "indice": 7,
+          "classe": "Percevejo-do-milho (Leptoglossus zonatus)",
+          "suporte": 12,
+          "aceitos": 12,
+          "cobertura": 1.0,
+          "acertos_aceitos": 10,
+          "recall_no_limiar": 0.8333333333333334,
+          "mostrada_como_principal": 10,
+          "precisao_quando_mostrada": 1.0
+        },
+        {
+          "indice": 8,
+          "classe": "Lagarta-falsa-medideira (Chrysodeixis includens)",
+          "suporte": 12,
+          "aceitos": 10,
+          "cobertura": 0.8333333333333334,
+          "acertos_aceitos": 3,
+          "recall_no_limiar": 0.25,
+          "mostrada_como_principal": 4,
+          "precisao_quando_mostrada": 0.75
+        },
+        {
+          "indice": 9,
+          "classe": "Lagarta-da-soja (Anticarsia gemmatalis)",
+          "suporte": 7,
+          "aceitos": 7,
+          "cobertura": 1.0,
+          "acertos_aceitos": 6,
+          "recall_no_limiar": 0.8571428571428571,
+          "mostrada_como_principal": 6,
+          "precisao_quando_mostrada": 1.0
+        },
+        {
+          "indice": 10,
+          "classe": "Lagarta-das-vagens (Spodoptera eridania e S. cosmioides)",
+          "suporte": 24,
+          "aceitos": 16,
+          "cobertura": 0.6666666666666666,
+          "acertos_aceitos": 11,
+          "recall_no_limiar": 0.4583333333333333,
+          "mostrada_como_principal": 12,
+          "precisao_quando_mostrada": 0.9166666666666666
+        },
+        {
+          "indice": 11,
+          "classe": "Astylus variegatus",
+          "suporte": 71,
+          "aceitos": 69,
+          "cobertura": 0.971830985915493,
+          "acertos_aceitos": 65,
+          "recall_no_limiar": 0.9154929577464789,
+          "mostrada_como_principal": 70,
+          "precisao_quando_mostrada": 0.9285714285714286
+        },
+        {
+          "indice": 12,
+          "classe": "Cigarrinha-das-pastagens (Deois flavopicta)",
+          "suporte": 24,
+          "aceitos": 22,
+          "cobertura": 0.9166666666666666,
+          "acertos_aceitos": 22,
+          "recall_no_limiar": 0.9166666666666666,
+          "mostrada_como_principal": 24,
+          "precisao_quando_mostrada": 0.9166666666666666
+        }
+      ]
+    },
+    "INT8|teste": {
+      "quadrantes": {
+        "acerto_aceito": 385,
+        "acerto_inconclusivo": 14,
+        "erro_aceito": 55,
+        "erro_inconclusivo": 19,
+        "total": 473,
+        "aceitos": 440,
+        "cobertura": 0.9302325581395349,
+        "acuracia_aceitos": 0.875,
+        "acuracia_sem_limiar": 0.8435517970401691,
+        "inconclusivos": 33,
+        "inconclusivos_que_eram_erro": 0.5757575757575758
+      },
+      "curva": [
+        {
+          "limiar": 0.5,
+          "cobertura": 0.9746300211416491,
+          "aceitos": 461,
+          "acuracia_aceitos": 0.8546637744034707,
+          "erros_aceitos": 67,
+          "acertos_inconclusivos": 5
+        },
+        {
+          "limiar": 0.55,
+          "cobertura": 0.959830866807611,
+          "aceitos": 454,
+          "acuracia_aceitos": 0.8612334801762115,
+          "erros_aceitos": 63,
+          "acertos_inconclusivos": 8
+        },
+        {
+          "limiar": 0.6,
+          "cobertura": 0.9429175475687104,
+          "aceitos": 446,
+          "acuracia_aceitos": 0.8677130044843049,
+          "erros_aceitos": 59,
+          "acertos_inconclusivos": 12
+        },
+        {
+          "limiar": 0.65,
+          "cobertura": 0.9302325581395349,
+          "aceitos": 440,
+          "acuracia_aceitos": 0.875,
+          "erros_aceitos": 55,
+          "acertos_inconclusivos": 14
+        },
+        {
+          "limiar": 0.7,
+          "cobertura": 0.9006342494714588,
+          "aceitos": 426,
+          "acuracia_aceitos": 0.8873239436619719,
+          "erros_aceitos": 48,
+          "acertos_inconclusivos": 21
+        },
+        {
+          "limiar": 0.75,
+          "cobertura": 0.8773784355179705,
+          "aceitos": 415,
+          "acuracia_aceitos": 0.8987951807228916,
+          "erros_aceitos": 42,
+          "acertos_inconclusivos": 26
+        },
+        {
+          "limiar": 0.8,
+          "cobertura": 0.8604651162790697,
+          "aceitos": 407,
+          "acuracia_aceitos": 0.9115479115479116,
+          "erros_aceitos": 36,
+          "acertos_inconclusivos": 28
+        },
+        {
+          "limiar": 0.85,
+          "cobertura": 0.8435517970401691,
+          "aceitos": 399,
+          "acuracia_aceitos": 0.9172932330827067,
+          "erros_aceitos": 33,
+          "acertos_inconclusivos": 33
+        },
+        {
+          "limiar": 0.9,
+          "cobertura": 0.8054968287526427,
+          "aceitos": 381,
+          "acuracia_aceitos": 0.9291338582677166,
+          "erros_aceitos": 27,
+          "acertos_inconclusivos": 45
+        },
+        {
+          "limiar": 0.95,
+          "cobertura": 0.7632135306553911,
+          "aceitos": 361,
+          "acuracia_aceitos": 0.9418282548476454,
+          "erros_aceitos": 21,
+          "acertos_inconclusivos": 59
+        }
+      ],
+      "faixas": [
+        {
+          "de": 0.0,
+          "ate": 0.5,
+          "imagens": 12,
+          "acertos": 5,
+          "erros": 7,
+          "score_medio": 0.412109375,
+          "acerto": 0.4166666666666667
+        },
+        {
+          "de": 0.5,
+          "ate": 0.65,
+          "imagens": 21,
+          "acertos": 9,
+          "erros": 12,
+          "score_medio": 0.5712425595238095,
+          "acerto": 0.42857142857142855
+        },
+        {
+          "de": 0.65,
+          "ate": 0.8,
+          "imagens": 33,
+          "acertos": 14,
+          "erros": 19,
+          "score_medio": 0.716500946969697,
+          "acerto": 0.42424242424242425
+        },
+        {
+          "de": 0.8,
+          "ate": 0.9,
+          "imagens": 26,
+          "acertos": 17,
+          "erros": 9,
+          "score_medio": 0.8616286057692307,
+          "acerto": 0.6538461538461539
+        },
+        {
+          "de": 0.9,
+          "ate": 0.95,
+          "imagens": 20,
+          "acertos": 14,
+          "erros": 6,
+          "score_medio": 0.9349609375,
+          "acerto": 0.7
+        },
+        {
+          "de": 0.95,
+          "ate": 0.99,
+          "imagens": 51,
+          "acertos": 37,
+          "erros": 14,
+          "score_medio": 0.9774816176470589,
+          "acerto": 0.7254901960784313
+        },
+        {
+          "de": 0.99,
+          "ate": 1.0,
+          "imagens": 310,
+          "acertos": 303,
+          "erros": 7,
+          "score_medio": 0.9957535282258064,
+          "acerto": 0.9774193548387097
+        }
+      ],
+      "calibracao": {
+        "ece": 0.0885223969344609,
+        "faixas": [
+          {
+            "de": 0.3,
+            "ate": 0.4,
+            "imagens": 5,
+            "score_medio": 0.33515625,
+            "acerto": 0.4
+          },
+          {
+            "de": 0.4,
+            "ate": 0.5,
+            "imagens": 7,
+            "score_medio": 0.46707589285714285,
+            "acerto": 0.42857142857142855
+          },
+          {
+            "de": 0.5,
+            "ate": 0.6,
+            "imagens": 15,
+            "score_medio": 0.5518229166666667,
+            "acerto": 0.4666666666666667
+          },
+          {
+            "de": 0.6,
+            "ate": 0.7,
+            "imagens": 20,
+            "score_medio": 0.6587890625,
+            "acerto": 0.45
+          },
+          {
+            "de": 0.7,
+            "ate": 0.8,
+            "imagens": 19,
+            "score_medio": 0.7467105263157895,
+            "acerto": 0.3684210526315789
+          },
+          {
+            "de": 0.8,
+            "ate": 0.9,
+            "imagens": 26,
+            "score_medio": 0.8616286057692307,
+            "acerto": 0.6538461538461539
+          },
+          {
+            "de": 0.9,
+            "ate": 1.0,
+            "imagens": 381,
+            "score_medio": 0.990116469816273,
+            "acerto": 0.9291338582677166
+          }
+        ],
+        "faixas_com_score_acima_do_acerto": 5
+      },
+      "erros_altos": {
+        "erros": 74,
+        "aceitos": 55,
+        "altos": 27,
+        "limite_alto": 0.9,
+        "real_no_top3_entre_aceitos": 37,
+        "lista": [
+          {
+            "id": "IMG_03037",
+            "real": 8,
+            "previsto": 10,
+            "score": 0.99609375,
+            "real_no_top3": false
+          },
+          {
+            "id": "IMG_03089",
+            "real": 6,
+            "previsto": 5,
+            "score": 0.99609375,
+            "real_no_top3": false
+          },
+          {
+            "id": "IMG_03091",
+            "real": 6,
+            "previsto": 0,
+            "score": 0.99609375,
+            "real_no_top3": false
+          },
+          {
+            "id": "IMG_03197",
+            "real": 5,
+            "previsto": 0,
+            "score": 0.99609375,
+            "real_no_top3": false
+          },
+          {
+            "id": "IMG_03447",
+            "real": 10,
+            "previsto": 3,
+            "score": 0.99609375,
+            "real_no_top3": true
+          },
+          {
+            "id": "IMG_01012",
+            "real": 0,
+            "previsto": 11,
+            "score": 0.9921875,
+            "real_no_top3": true
+          },
+          {
+            "id": "IMG_02973",
+            "real": 8,
+            "previsto": 3,
+            "score": 0.9921875,
+            "real_no_top3": true
+          },
+          {
+            "id": "IMG_02972",
+            "real": 8,
+            "previsto": 3,
+            "score": 0.984375,
+            "real_no_top3": true
+          },
+          {
+            "id": "IMG_03086",
+            "real": 6,
+            "previsto": 5,
+            "score": 0.984375,
+            "real_no_top3": false
+          },
+          {
+            "id": "IMG_00909",
+            "real": 7,
+            "previsto": 12,
+            "score": 0.98046875,
+            "real_no_top3": false
+          },
+          {
+            "id": "IMG_03154",
+            "real": 4,
+            "previsto": 7,
+            "score": 0.98046875,
+            "real_no_top3": false
+          },
+          {
+            "id": "IMG_03384",
+            "real": 10,
+            "previsto": 3,
+            "score": 0.98046875,
+            "real_no_top3": false
+          },
+          {
+            "id": "IMG_03156",
+            "real": 4,
+            "previsto": 11,
+            "score": 0.9765625,
+            "real_no_top3": false
+          },
+          {
+            "id": "IMG_03187",
+            "real": 4,
+            "previsto": 2,
+            "score": 0.9765625,
+            "real_no_top3": true
+          },
+          {
+            "id": "IMG_03198",
+            "real": 5,
+            "previsto": 0,
+            "score": 0.9765625,
+            "real_no_top3": true
+          },
+          {
+            "id": "IMG_03427",
+            "real": 10,
+            "previsto": 3,
+            "score": 0.9765625,
+            "real_no_top3": true
+          },
+          {
+            "id": "IMG_00142",
+            "real": 11,
+            "previsto": 0,
+            "score": 0.97265625,
+            "real_no_top3": true
+          },
+          {
+            "id": "IMG_03088",
+            "real": 6,
+            "previsto": 5,
+            "score": 0.97265625,
+            "real_no_top3": true
+          },
+          {
+            "id": "IMG_01175",
+            "real": 0,
+            "previsto": 11,
+            "score": 0.96484375,
+            "real_no_top3": true
+          },
+          {
+            "id": "IMG_01855",
+            "real": 0,
+            "previsto": 10,
+            "score": 0.96484375,
+            "real_no_top3": true
+          },
+          {
+            "id": "IMG_03036",
+            "real": 8,
+            "previsto": 10,
+            "score": 0.95703125,
+            "real_no_top3": false
+          },
+          {
+            "id": "IMG_00529",
+            "real": 1,
+            "previsto": 0,
+            "score": 0.94921875,
+            "real_no_top3": true
+          },
+          {
+            "id": "IMG_02978",
+            "real": 8,
+            "previsto": 3,
+            "score": 0.9453125,
+            "real_no_top3": true
+          },
+          {
+            "id": "IMG_03254",
+            "real": 5,
+            "previsto": 2,
+            "score": 0.9375,
+            "real_no_top3": false
+          },
+          {
+            "id": "IMG_03344",
+            "real": 10,
+            "previsto": 2,
+            "score": 0.93359375,
+            "real_no_top3": true
+          },
+          {
+            "id": "IMG_02123",
+            "real": 2,
+            "previsto": 3,
+            "score": 0.9296875,
+            "real_no_top3": false
+          },
+          {
+            "id": "IMG_03155",
+            "real": 4,
+            "previsto": 7,
+            "score": 0.91796875,
+            "real_no_top3": false
+          }
+        ]
+      },
+      "por_classe": [
+        {
+          "indice": 0,
+          "classe": "Vaquinha (Diabrotica speciosa)",
+          "suporte": 157,
+          "aceitos": 150,
+          "cobertura": 0.9554140127388535,
+          "acertos_aceitos": 141,
+          "recall_no_limiar": 0.8980891719745223,
+          "mostrada_como_principal": 150,
+          "precisao_quando_mostrada": 0.94
+        },
+        {
+          "indice": 1,
+          "classe": "Cigarrinha-do-milho (Dalbulus maidis)",
+          "suporte": 29,
+          "aceitos": 28,
+          "cobertura": 0.9655172413793104,
+          "acertos_aceitos": 26,
+          "recall_no_limiar": 0.896551724137931,
+          "mostrada_como_principal": 26,
+          "precisao_quando_mostrada": 1.0
+        },
+        {
+          "indice": 2,
+          "classe": "Percevejo-barriga-verde (Dichelops/Diceraeus)",
+          "suporte": 42,
+          "aceitos": 34,
+          "cobertura": 0.8095238095238095,
+          "acertos_aceitos": 28,
+          "recall_no_limiar": 0.6666666666666666,
+          "mostrada_como_principal": 36,
+          "precisao_quando_mostrada": 0.7777777777777778
+        },
+        {
+          "indice": 3,
+          "classe": "Lagarta-do-cartucho (Spodoptera frugiperda)",
+          "suporte": 61,
+          "aceitos": 59,
+          "cobertura": 0.9672131147540983,
+          "acertos_aceitos": 54,
+          "recall_no_limiar": 0.8852459016393442,
+          "mostrada_como_principal": 64,
+          "precisao_quando_mostrada": 0.84375
+        },
+        {
+          "indice": 4,
+          "classe": "Percevejo-marrom (Euschistus heros)",
+          "suporte": 10,
+          "aceitos": 10,
+          "cobertura": 1.0,
+          "acertos_aceitos": 5,
+          "recall_no_limiar": 0.5,
+          "mostrada_como_principal": 5,
+          "precisao_quando_mostrada": 1.0
+        },
+        {
+          "indice": 5,
+          "classe": "Percevejo-verde (Nezara viridula)",
+          "suporte": 14,
+          "aceitos": 10,
+          "cobertura": 0.7142857142857143,
+          "acertos_aceitos": 5,
+          "recall_no_limiar": 0.35714285714285715,
+          "mostrada_como_principal": 9,
+          "precisao_quando_mostrada": 0.5555555555555556
+        },
+        {
+          "indice": 6,
+          "classe": "Percevejo-asa-preta (Edessa meditabunda)",
+          "suporte": 11,
+          "aceitos": 9,
+          "cobertura": 0.8181818181818182,
+          "acertos_aceitos": 4,
+          "recall_no_limiar": 0.36363636363636365,
+          "mostrada_como_principal": 4,
+          "precisao_quando_mostrada": 1.0
+        },
+        {
+          "indice": 7,
+          "classe": "Percevejo-do-milho (Leptoglossus zonatus)",
+          "suporte": 12,
+          "aceitos": 11,
+          "cobertura": 0.9166666666666666,
+          "acertos_aceitos": 9,
+          "recall_no_limiar": 0.75,
+          "mostrada_como_principal": 13,
+          "precisao_quando_mostrada": 0.6923076923076923
+        },
+        {
+          "indice": 8,
+          "classe": "Lagarta-falsa-medideira (Chrysodeixis includens)",
+          "suporte": 12,
+          "aceitos": 12,
+          "cobertura": 1.0,
+          "acertos_aceitos": 4,
+          "recall_no_limiar": 0.3333333333333333,
+          "mostrada_como_principal": 4,
+          "precisao_quando_mostrada": 1.0
+        },
+        {
+          "indice": 9,
+          "classe": "Lagarta-da-soja (Anticarsia gemmatalis)",
+          "suporte": 6,
+          "aceitos": 6,
+          "cobertura": 1.0,
+          "acertos_aceitos": 5,
+          "recall_no_limiar": 0.8333333333333334,
+          "mostrada_como_principal": 6,
+          "precisao_quando_mostrada": 0.8333333333333334
+        },
+        {
+          "indice": 10,
+          "classe": "Lagarta-das-vagens (Spodoptera eridania e S. cosmioides)",
+          "suporte": 24,
+          "aceitos": 20,
+          "cobertura": 0.8333333333333334,
+          "acertos_aceitos": 16,
+          "recall_no_limiar": 0.6666666666666666,
+          "mostrada_como_principal": 24,
+          "precisao_quando_mostrada": 0.6666666666666666
+        },
+        {
+          "indice": 11,
+          "classe": "Astylus variegatus",
+          "suporte": 71,
+          "aceitos": 67,
+          "cobertura": 0.9436619718309859,
+          "acertos_aceitos": 65,
+          "recall_no_limiar": 0.9154929577464789,
+          "mostrada_como_principal": 72,
+          "precisao_quando_mostrada": 0.9027777777777778
+        },
+        {
+          "indice": 12,
+          "classe": "Cigarrinha-das-pastagens (Deois flavopicta)",
+          "suporte": 24,
+          "aceitos": 24,
+          "cobertura": 1.0,
+          "acertos_aceitos": 23,
+          "recall_no_limiar": 0.9583333333333334,
+          "mostrada_como_principal": 27,
+          "precisao_quando_mostrada": 0.8518518518518519
+        }
+      ]
+    },
+    "INT8|validacao": {
+      "quadrantes": {
+        "acerto_aceito": 391,
+        "acerto_inconclusivo": 16,
+        "erro_aceito": 42,
+        "erro_inconclusivo": 25,
+        "total": 474,
+        "aceitos": 433,
+        "cobertura": 0.9135021097046413,
+        "acuracia_aceitos": 0.9030023094688222,
+        "acuracia_sem_limiar": 0.8586497890295358,
+        "inconclusivos": 41,
+        "inconclusivos_que_eram_erro": 0.6097560975609756
+      },
+      "curva": [
+        {
+          "limiar": 0.5,
+          "cobertura": 0.9662447257383966,
+          "aceitos": 458,
+          "acuracia_aceitos": 0.8820960698689956,
+          "erros_aceitos": 54,
+          "acertos_inconclusivos": 3
+        },
+        {
+          "limiar": 0.55,
+          "cobertura": 0.9493670886075949,
+          "aceitos": 450,
+          "acuracia_aceitos": 0.8911111111111111,
+          "erros_aceitos": 49,
+          "acertos_inconclusivos": 6
+        },
+        {
+          "limiar": 0.6,
+          "cobertura": 0.9345991561181435,
+          "aceitos": 443,
+          "acuracia_aceitos": 0.8939051918735892,
+          "erros_aceitos": 47,
+          "acertos_inconclusivos": 11
+        },
+        {
+          "limiar": 0.65,
+          "cobertura": 0.9135021097046413,
+          "aceitos": 433,
+          "acuracia_aceitos": 0.9030023094688222,
+          "erros_aceitos": 42,
+          "acertos_inconclusivos": 16
+        },
+        {
+          "limiar": 0.7,
+          "cobertura": 0.8987341772151899,
+          "aceitos": 426,
+          "acuracia_aceitos": 0.9154929577464789,
+          "erros_aceitos": 36,
+          "acertos_inconclusivos": 17
+        },
+        {
+          "limiar": 0.75,
+          "cobertura": 0.8818565400843882,
+          "aceitos": 418,
+          "acuracia_aceitos": 0.9210526315789473,
+          "erros_aceitos": 33,
+          "acertos_inconclusivos": 22
+        },
+        {
+          "limiar": 0.8,
+          "cobertura": 0.869198312236287,
+          "aceitos": 412,
+          "acuracia_aceitos": 0.9271844660194175,
+          "erros_aceitos": 30,
+          "acertos_inconclusivos": 25
+        },
+        {
+          "limiar": 0.85,
+          "cobertura": 0.8459915611814346,
+          "aceitos": 401,
+          "acuracia_aceitos": 0.9376558603491272,
+          "erros_aceitos": 25,
+          "acertos_inconclusivos": 31
+        },
+        {
+          "limiar": 0.9,
+          "cobertura": 0.8185654008438819,
+          "aceitos": 388,
+          "acuracia_aceitos": 0.9458762886597938,
+          "erros_aceitos": 21,
+          "acertos_inconclusivos": 40
+        },
+        {
+          "limiar": 0.95,
+          "cobertura": 0.7637130801687764,
+          "aceitos": 362,
+          "acuracia_aceitos": 0.9696132596685083,
+          "erros_aceitos": 11,
+          "acertos_inconclusivos": 56
+        }
+      ],
+      "faixas": [
+        {
+          "de": 0.0,
+          "ate": 0.5,
+          "imagens": 16,
+          "acertos": 3,
+          "erros": 13,
+          "score_medio": 0.414306640625,
+          "acerto": 0.1875
+        },
+        {
+          "de": 0.5,
+          "ate": 0.65,
+          "imagens": 25,
+          "acertos": 13,
+          "erros": 12,
+          "score_medio": 0.5771875,
+          "acerto": 0.52
+        },
+        {
+          "de": 0.65,
+          "ate": 0.8,
+          "imagens": 21,
+          "acertos": 9,
+          "erros": 12,
+          "score_medio": 0.7211681547619048,
+          "acerto": 0.42857142857142855
+        },
+        {
+          "de": 0.8,
+          "ate": 0.9,
+          "imagens": 24,
+          "acertos": 15,
+          "erros": 9,
+          "score_medio": 0.8494466145833334,
+          "acerto": 0.625
+        },
+        {
+          "de": 0.9,
+          "ate": 0.95,
+          "imagens": 26,
+          "acertos": 16,
+          "erros": 10,
+          "score_medio": 0.9275841346153846,
+          "acerto": 0.6153846153846154
+        },
+        {
+          "de": 0.95,
+          "ate": 0.99,
+          "imagens": 46,
+          "acertos": 44,
+          "erros": 2,
+          "score_medio": 0.9755434782608695,
+          "acerto": 0.9565217391304348
+        },
+        {
+          "de": 0.99,
+          "ate": 1.0,
+          "imagens": 316,
+          "acertos": 307,
+          "erros": 9,
+          "score_medio": 0.9959083267405063,
+          "acerto": 0.9715189873417721
+        }
+      ],
+      "calibracao": {
+        "ece": 0.07410337552742619,
+        "faixas": [
+          {
+            "de": 0.2,
+            "ate": 0.3,
+            "imagens": 2,
+            "score_medio": 0.267578125,
+            "acerto": 0.0
+          },
+          {
+            "de": 0.3,
+            "ate": 0.4,
+            "imagens": 3,
+            "score_medio": 0.3606770833333333,
+            "acerto": 0.6666666666666666
+          },
+          {
+            "de": 0.4,
+            "ate": 0.5,
+            "imagens": 11,
+            "score_medio": 0.45561079545454547,
+            "acerto": 0.09090909090909091
+          },
+          {
+            "de": 0.5,
+            "ate": 0.6,
+            "imagens": 15,
+            "score_medio": 0.5471354166666667,
+            "acerto": 0.5333333333333333
+          },
+          {
+            "de": 0.6,
+            "ate": 0.7,
+            "imagens": 17,
+            "score_medio": 0.6447610294117647,
+            "acerto": 0.35294117647058826
+          },
+          {
+            "de": 0.7,
+            "ate": 0.8,
+            "imagens": 14,
+            "score_medio": 0.7433035714285714,
+            "acerto": 0.5714285714285714
+          },
+          {
+            "de": 0.8,
+            "ate": 0.9,
+            "imagens": 24,
+            "score_medio": 0.8494466145833334,
+            "acerto": 0.625
+          },
+          {
+            "de": 0.9,
+            "ate": 1.0,
+            "imagens": 388,
+            "score_medio": 0.988915512242268,
+            "acerto": 0.9458762886597938
+          }
+        ],
+        "faixas_com_score_acima_do_acerto": 5
+      },
+      "erros_altos": {
+        "erros": 67,
+        "aceitos": 42,
+        "altos": 21,
+        "limite_alto": 0.9,
+        "real_no_top3_entre_aceitos": 25,
+        "lista": [
+          {
+            "id": "IMG_02360",
+            "real": 2,
+            "previsto": 8,
+            "score": 0.99609375,
+            "real_no_top3": false
+          },
+          {
+            "id": "IMG_02422",
+            "real": 3,
+            "previsto": 0,
+            "score": 0.99609375,
+            "real_no_top3": false
+          },
+          {
+            "id": "IMG_02992",
+            "real": 8,
+            "previsto": 2,
+            "score": 0.99609375,
+            "real_no_top3": false
+          },
+          {
+            "id": "IMG_03006",
+            "real": 8,
+            "previsto": 3,
+            "score": 0.99609375,
+            "real_no_top3": true
+          },
+          {
+            "id": "IMG_03189",
+            "real": 4,
+            "previsto": 2,
+            "score": 0.99609375,
+            "real_no_top3": false
+          },
+          {
+            "id": "IMG_03321",
+            "real": 10,
+            "previsto": 3,
+            "score": 0.99609375,
+            "real_no_top3": false
+          },
+          {
+            "id": "IMG_02989",
+            "real": 8,
+            "previsto": 3,
+            "score": 0.9921875,
+            "real_no_top3": true
+          },
+          {
+            "id": "IMG_03099",
+            "real": 6,
+            "previsto": 5,
+            "score": 0.9921875,
+            "real_no_top3": true
+          },
+          {
+            "id": "IMG_03305",
+            "real": 10,
+            "previsto": 3,
+            "score": 0.9921875,
+            "real_no_top3": true
+          },
+          {
+            "id": "IMG_01342",
+            "real": 0,
+            "previsto": 11,
+            "score": 0.98046875,
+            "real_no_top3": true
+          },
+          {
+            "id": "IMG_03239",
+            "real": 5,
+            "previsto": 11,
+            "score": 0.9609375,
+            "real_no_top3": true
+          },
+          {
+            "id": "IMG_00157",
+            "real": 11,
+            "previsto": 0,
+            "score": 0.9453125,
+            "real_no_top3": true
+          },
+          {
+            "id": "IMG_00868",
+            "real": 7,
+            "previsto": 0,
+            "score": 0.9453125,
+            "real_no_top3": true
+          },
+          {
+            "id": "IMG_02939",
+            "real": 9,
+            "previsto": 3,
+            "score": 0.9453125,
+            "real_no_top3": false
+          },
+          {
+            "id": "IMG_03398",
+            "real": 10,
+            "previsto": 11,
+            "score": 0.9453125,
+            "real_no_top3": true
+          },
+          {
+            "id": "IMG_03048",
+            "real": 8,
+            "previsto": 12,
+            "score": 0.92578125,
+            "real_no_top3": false
+          },
+          {
+            "id": "IMG_00155",
+            "real": 11,
+            "previsto": 0,
+            "score": 0.921875,
+            "real_no_top3": true
+          },
+          {
+            "id": "IMG_00414",
+            "real": 11,
+            "previsto": 0,
+            "score": 0.90625,
+            "real_no_top3": true
+          },
+          {
+            "id": "IMG_02421",
+            "real": 3,
+            "previsto": 2,
+            "score": 0.90625,
+            "real_no_top3": false
+          },
+          {
+            "id": "IMG_03209",
+            "real": 5,
+            "previsto": 0,
+            "score": 0.90625,
+            "real_no_top3": true
+          },
+          {
+            "id": "IMG_02578",
+            "real": 3,
+            "previsto": 1,
+            "score": 0.90234375,
+            "real_no_top3": true
+          }
+        ]
+      },
+      "por_classe": [
+        {
+          "indice": 0,
+          "classe": "Vaquinha (Diabrotica speciosa)",
+          "suporte": 157,
+          "aceitos": 153,
+          "cobertura": 0.9745222929936306,
+          "acertos_aceitos": 147,
+          "recall_no_limiar": 0.9363057324840764,
+          "mostrada_como_principal": 157,
+          "precisao_quando_mostrada": 0.9363057324840764
+        },
+        {
+          "indice": 1,
+          "classe": "Cigarrinha-do-milho (Dalbulus maidis)",
+          "suporte": 29,
+          "aceitos": 27,
+          "cobertura": 0.9310344827586207,
+          "acertos_aceitos": 26,
+          "recall_no_limiar": 0.896551724137931,
+          "mostrada_como_principal": 27,
+          "precisao_quando_mostrada": 0.9629629629629629
+        },
+        {
+          "indice": 2,
+          "classe": "Percevejo-barriga-verde (Dichelops/Diceraeus)",
+          "suporte": 42,
+          "aceitos": 36,
+          "cobertura": 0.8571428571428571,
+          "acertos_aceitos": 34,
+          "recall_no_limiar": 0.8095238095238095,
+          "mostrada_como_principal": 43,
+          "precisao_quando_mostrada": 0.7906976744186046
+        },
+        {
+          "indice": 3,
+          "classe": "Lagarta-do-cartucho (Spodoptera frugiperda)",
+          "suporte": 61,
+          "aceitos": 57,
+          "cobertura": 0.9344262295081968,
+          "acertos_aceitos": 49,
+          "recall_no_limiar": 0.8032786885245902,
+          "mostrada_como_principal": 57,
+          "precisao_quando_mostrada": 0.8596491228070176
+        },
+        {
+          "indice": 4,
+          "classe": "Percevejo-marrom (Euschistus heros)",
+          "suporte": 10,
+          "aceitos": 7,
+          "cobertura": 0.7,
+          "acertos_aceitos": 5,
+          "recall_no_limiar": 0.5,
+          "mostrada_como_principal": 5,
+          "precisao_quando_mostrada": 1.0
+        },
+        {
+          "indice": 5,
+          "classe": "Percevejo-verde (Nezara viridula)",
+          "suporte": 14,
+          "aceitos": 7,
+          "cobertura": 0.5,
+          "acertos_aceitos": 4,
+          "recall_no_limiar": 0.2857142857142857,
+          "mostrada_como_principal": 5,
+          "precisao_quando_mostrada": 0.8
+        },
+        {
+          "indice": 6,
+          "classe": "Percevejo-asa-preta (Edessa meditabunda)",
+          "suporte": 11,
+          "aceitos": 9,
+          "cobertura": 0.8181818181818182,
+          "acertos_aceitos": 7,
+          "recall_no_limiar": 0.6363636363636364,
+          "mostrada_como_principal": 8,
+          "precisao_quando_mostrada": 0.875
+        },
+        {
+          "indice": 7,
+          "classe": "Percevejo-do-milho (Leptoglossus zonatus)",
+          "suporte": 12,
+          "aceitos": 11,
+          "cobertura": 0.9166666666666666,
+          "acertos_aceitos": 10,
+          "recall_no_limiar": 0.8333333333333334,
+          "mostrada_como_principal": 10,
+          "precisao_quando_mostrada": 1.0
+        },
+        {
+          "indice": 8,
+          "classe": "Lagarta-falsa-medideira (Chrysodeixis includens)",
+          "suporte": 12,
+          "aceitos": 9,
+          "cobertura": 0.75,
+          "acertos_aceitos": 3,
+          "recall_no_limiar": 0.25,
+          "mostrada_como_principal": 4,
+          "precisao_quando_mostrada": 0.75
+        },
+        {
+          "indice": 9,
+          "classe": "Lagarta-da-soja (Anticarsia gemmatalis)",
+          "suporte": 7,
+          "aceitos": 7,
+          "cobertura": 1.0,
+          "acertos_aceitos": 6,
+          "recall_no_limiar": 0.8571428571428571,
+          "mostrada_como_principal": 6,
+          "precisao_quando_mostrada": 1.0
+        },
+        {
+          "indice": 10,
+          "classe": "Lagarta-das-vagens (Spodoptera eridania e S. cosmioides)",
+          "suporte": 24,
+          "aceitos": 16,
+          "cobertura": 0.6666666666666666,
+          "acertos_aceitos": 11,
+          "recall_no_limiar": 0.4583333333333333,
+          "mostrada_como_principal": 13,
+          "precisao_quando_mostrada": 0.8461538461538461
+        },
+        {
+          "indice": 11,
+          "classe": "Astylus variegatus",
+          "suporte": 71,
+          "aceitos": 71,
+          "cobertura": 1.0,
+          "acertos_aceitos": 67,
+          "recall_no_limiar": 0.9436619718309859,
+          "mostrada_como_principal": 74,
+          "precisao_quando_mostrada": 0.9054054054054054
+        },
+        {
+          "indice": 12,
+          "classe": "Cigarrinha-das-pastagens (Deois flavopicta)",
+          "suporte": 24,
+          "aceitos": 23,
+          "cobertura": 0.9583333333333334,
+          "acertos_aceitos": 22,
+          "recall_no_limiar": 0.9166666666666666,
+          "mostrada_como_principal": 24,
+          "precisao_quando_mostrada": 0.9166666666666666
+        }
+      ]
+    }
+  },
+  "origem_teste_referencia": {
+    "iNaturalist": {
+      "imagens": 269,
+      "aceitos": 251,
+      "erros_aceitos": 40
+    },
+    "AgroInsect": {
+      "imagens": 204,
+      "aceitos": 190,
+      "erros_aceitos": 12
+    }
+  },
+  "web": {
+    "Float16": {
+      "por_cenario": {
+        "sintetico": {
+          "imagens": 17,
+          "aceitos": 3,
+          "pct_aceitos": 0.17647058823529413,
+          "score_mediano": 0.3942175805568695,
+          "score_maximo": 0.8070237040519714,
+          "score_minimo": 0.2275393158197403,
+          "score_p90": 0.7598509788513184,
+          "classes_mostradas": {
+            "0": 3
+          }
+        },
+        "fundo": {
+          "imagens": 60,
+          "aceitos": 21,
+          "pct_aceitos": 0.35,
+          "score_mediano": 0.5109347105026245,
+          "score_maximo": 0.9893277287483215,
+          "score_minimo": 0.22071252763271332,
+          "score_p90": 0.8598911762237549,
+          "classes_mostradas": {
+            "0": 9,
+            "1": 5,
+            "2": 5,
+            "5": 1,
+            "10": 1
+          }
+        },
+        "original": {
+          "imagens": 40,
+          "aceitos": 39,
+          "pct_aceitos": 0.975,
+          "score_mediano": 0.9995771050453186,
+          "score_maximo": 1,
+          "score_minimo": 0.5415350794792175,
+          "score_p90": 0.9999978542327881,
+          "classes_mostradas": {
+            "0": 17,
+            "3": 10,
+            "1": 5,
+            "2": 5,
+            "9": 1,
+            "10": 1
+          },
+          "acertos_aceitos": 35,
+          "acuracia_aceitos": 0.8974358974358975,
+          "acertos_sem_limiar": 35
+        },
+        "desfoque": {
+          "imagens": 40,
+          "aceitos": 14,
+          "pct_aceitos": 0.35,
+          "score_mediano": 0.5896145403385162,
+          "score_maximo": 0.9995786547660828,
+          "score_minimo": 0.2719326615333557,
+          "score_p90": 0.9227631092071533,
+          "classes_mostradas": {
+            "0": 8,
+            "1": 2,
+            "10": 2,
+            "3": 1,
+            "12": 1
+          },
+          "acertos_aceitos": 9,
+          "acuracia_aceitos": 0.6428571428571429,
+          "acertos_sem_limiar": 25
+        },
+        "escuro": {
+          "imagens": 40,
+          "aceitos": 33,
+          "pct_aceitos": 0.825,
+          "score_mediano": 0.9894511103630066,
+          "score_maximo": 1,
+          "score_minimo": 0.3458373546600342,
+          "score_p90": 0.9999415874481201,
+          "classes_mostradas": {
+            "0": 14,
+            "3": 8,
+            "1": 5,
+            "2": 4,
+            "8": 1,
+            "10": 1
+          },
+          "acertos_aceitos": 31,
+          "acuracia_aceitos": 0.9393939393939394,
+          "acertos_sem_limiar": 34
+        },
+        "superexposto": {
+          "imagens": 40,
+          "aceitos": 34,
+          "pct_aceitos": 0.85,
+          "score_mediano": 0.9878605902194977,
+          "score_maximo": 1,
+          "score_minimo": 0.4697814881801605,
+          "score_p90": 0.9999501705169678,
+          "classes_mostradas": {
+            "0": 16,
+            "3": 10,
+            "1": 4,
+            "2": 4
+          },
+          "acertos_aceitos": 32,
+          "acuracia_aceitos": 0.9411764705882353,
+          "acertos_sem_limiar": 35
+        },
+        "cinza": {
+          "imagens": 40,
+          "aceitos": 29,
+          "pct_aceitos": 0.725,
+          "score_mediano": 0.8899722993373871,
+          "score_maximo": 0.9999986886978149,
+          "score_minimo": 0.2703568935394287,
+          "score_p90": 0.9984318614006042,
+          "classes_mostradas": {
+            "3": 9,
+            "0": 5,
+            "1": 4,
+            "2": 4,
+            "11": 4,
+            "9": 2,
+            "10": 1
+          },
+          "acertos_aceitos": 21,
+          "acuracia_aceitos": 0.7241379310344828,
+          "acertos_sem_limiar": 23
+        },
+        "ruido": {
+          "imagens": 40,
+          "aceitos": 37,
+          "pct_aceitos": 0.925,
+          "score_mediano": 0.9669952988624573,
+          "score_maximo": 0.9999440908432007,
+          "score_minimo": 0.36173608899116516,
+          "score_p90": 0.9993189573287964,
+          "classes_mostradas": {
+            "0": 15,
+            "3": 10,
+            "1": 5,
+            "2": 4,
+            "5": 1,
+            "8": 1,
+            "10": 1
+          },
+          "acertos_aceitos": 34,
+          "acuracia_aceitos": 0.918918918918919,
+          "acertos_sem_limiar": 34
+        },
+        "jpeg_q10": {
+          "imagens": 40,
+          "aceitos": 37,
+          "pct_aceitos": 0.925,
+          "score_mediano": 0.9953774511814117,
+          "score_maximo": 0.9999998807907104,
+          "score_minimo": 0.5321794152259827,
+          "score_p90": 0.9999961853027344,
+          "classes_mostradas": {
+            "0": 17,
+            "3": 9,
+            "1": 5,
+            "2": 4,
+            "8": 1,
+            "9": 1
+          },
+          "acertos_aceitos": 33,
+          "acuracia_aceitos": 0.8918918918918919,
+          "acertos_sem_limiar": 34
+        },
+        "sujeito_pequeno": {
+          "imagens": 40,
+          "aceitos": 30,
+          "pct_aceitos": 0.75,
+          "score_mediano": 0.8406340181827545,
+          "score_maximo": 0.9999983310699463,
+          "score_minimo": 0.40509334206581116,
+          "score_p90": 0.9937365055084229,
+          "classes_mostradas": {
+            "0": 12,
+            "2": 9,
+            "3": 4,
+            "11": 2,
+            "1": 1,
+            "8": 1,
+            "12": 1
+          },
+          "acertos_aceitos": 17,
+          "acuracia_aceitos": 0.5666666666666667,
+          "acertos_sem_limiar": 21
+        }
+      },
+      "pares_degradacao": {
+        "desfoque": {
+          "pares": 40,
+          "decisao_mudou": 27,
+          "aceito_para_inconclusivo": 26,
+          "inconclusivo_para_aceito": 1,
+          "classe_prevista_mudou": 16,
+          "erros_aceitos": 5,
+          "erros_aceitos_novos": 5,
+          "queda_media_do_score": 0.3433238595724106
+        },
+        "escuro": {
+          "pares": 40,
+          "decisao_mudou": 8,
+          "aceito_para_inconclusivo": 7,
+          "inconclusivo_para_aceito": 1,
+          "classe_prevista_mudou": 6,
+          "erros_aceitos": 2,
+          "erros_aceitos_novos": 2,
+          "queda_media_do_score": 0.09000131711363793
+        },
+        "superexposto": {
+          "pares": 40,
+          "decisao_mudou": 7,
+          "aceito_para_inconclusivo": 6,
+          "inconclusivo_para_aceito": 1,
+          "classe_prevista_mudou": 7,
+          "erros_aceitos": 2,
+          "erros_aceitos_novos": 1,
+          "queda_media_do_score": 0.058971721678972244
+        },
+        "cinza": {
+          "pares": 40,
+          "decisao_mudou": 12,
+          "aceito_para_inconclusivo": 11,
+          "inconclusivo_para_aceito": 1,
+          "classe_prevista_mudou": 12,
+          "erros_aceitos": 8,
+          "erros_aceitos_novos": 6,
+          "queda_media_do_score": 0.15265771374106407
+        },
+        "ruido": {
+          "pares": 40,
+          "decisao_mudou": 4,
+          "aceito_para_inconclusivo": 3,
+          "inconclusivo_para_aceito": 1,
+          "classe_prevista_mudou": 7,
+          "erros_aceitos": 3,
+          "erros_aceitos_novos": 2,
+          "queda_media_do_score": 0.061352059990167615
+        },
+        "jpeg_q10": {
+          "pares": 40,
+          "decisao_mudou": 4,
+          "aceito_para_inconclusivo": 3,
+          "inconclusivo_para_aceito": 1,
+          "classe_prevista_mudou": 3,
+          "erros_aceitos": 4,
+          "erros_aceitos_novos": 1,
+          "queda_media_do_score": 0.017414794862270357
+        },
+        "sujeito_pequeno": {
+          "pares": 40,
+          "decisao_mudou": 9,
+          "aceito_para_inconclusivo": 9,
+          "inconclusivo_para_aceito": 0,
+          "classe_prevista_mudou": 21,
+          "erros_aceitos": 13,
+          "erros_aceitos_novos": 11,
+          "queda_media_do_score": 0.16523860171437263
+        }
+      }
+    },
+    "INT8": {
+      "por_cenario": {
+        "sintetico": {
+          "imagens": 17,
+          "aceitos": 3,
+          "pct_aceitos": 0.17647058823529413,
+          "score_mediano": 0.40625,
+          "score_maximo": 0.91015625,
+          "score_minimo": 0.21484375,
+          "score_p90": 0.75,
+          "classes_mostradas": {
+            "0": 3
+          }
+        },
+        "fundo": {
+          "imagens": 60,
+          "aceitos": 18,
+          "pct_aceitos": 0.3,
+          "score_mediano": 0.4921875,
+          "score_maximo": 0.98828125,
+          "score_minimo": 0.171875,
+          "score_p90": 0.89453125,
+          "classes_mostradas": {
+            "0": 8,
+            "1": 5,
+            "2": 3,
+            "5": 1,
+            "10": 1
+          }
+        },
+        "original": {
+          "imagens": 40,
+          "aceitos": 37,
+          "pct_aceitos": 0.925,
+          "score_mediano": 0.99609375,
+          "score_maximo": 0.99609375,
+          "score_minimo": 0.5859375,
+          "score_p90": 0.99609375,
+          "classes_mostradas": {
+            "0": 16,
+            "3": 9,
+            "1": 5,
+            "2": 5,
+            "9": 1,
+            "10": 1
+          },
+          "acertos_aceitos": 33,
+          "acuracia_aceitos": 0.8918918918918919,
+          "acertos_sem_limiar": 35
+        },
+        "desfoque": {
+          "imagens": 40,
+          "aceitos": 14,
+          "pct_aceitos": 0.35,
+          "score_mediano": 0.490234375,
+          "score_maximo": 0.99609375,
+          "score_minimo": 0.18359375,
+          "score_p90": 0.953125,
+          "classes_mostradas": {
+            "10": 5,
+            "1": 4,
+            "0": 3,
+            "3": 1,
+            "12": 1
+          },
+          "acertos_aceitos": 8,
+          "acuracia_aceitos": 0.5714285714285714,
+          "acertos_sem_limiar": 21
+        },
+        "escuro": {
+          "imagens": 40,
+          "aceitos": 36,
+          "pct_aceitos": 0.9,
+          "score_mediano": 0.970703125,
+          "score_maximo": 0.99609375,
+          "score_minimo": 0.3203125,
+          "score_p90": 0.99609375,
+          "classes_mostradas": {
+            "0": 13,
+            "3": 9,
+            "1": 5,
+            "2": 4,
+            "10": 2,
+            "5": 1,
+            "8": 1,
+            "12": 1
+          },
+          "acertos_aceitos": 30,
+          "acuracia_aceitos": 0.8333333333333334,
+          "acertos_sem_limiar": 32
+        },
+        "superexposto": {
+          "imagens": 40,
+          "aceitos": 37,
+          "pct_aceitos": 0.925,
+          "score_mediano": 0.994140625,
+          "score_maximo": 0.99609375,
+          "score_minimo": 0.43359375,
+          "score_p90": 0.99609375,
+          "classes_mostradas": {
+            "0": 17,
+            "3": 10,
+            "2": 5,
+            "1": 4,
+            "12": 1
+          },
+          "acertos_aceitos": 33,
+          "acuracia_aceitos": 0.8918918918918919,
+          "acertos_sem_limiar": 34
+        },
+        "cinza": {
+          "imagens": 40,
+          "aceitos": 32,
+          "pct_aceitos": 0.8,
+          "score_mediano": 0.892578125,
+          "score_maximo": 0.99609375,
+          "score_minimo": 0.21875,
+          "score_p90": 0.99609375,
+          "classes_mostradas": {
+            "3": 9,
+            "2": 5,
+            "11": 5,
+            "0": 4,
+            "1": 4,
+            "9": 2,
+            "8": 1,
+            "10": 1,
+            "12": 1
+          },
+          "acertos_aceitos": 21,
+          "acuracia_aceitos": 0.65625,
+          "acertos_sem_limiar": 22
+        },
+        "ruido": {
+          "imagens": 40,
+          "aceitos": 35,
+          "pct_aceitos": 0.875,
+          "score_mediano": 0.9609375,
+          "score_maximo": 0.99609375,
+          "score_minimo": 0.31640625,
+          "score_p90": 0.99609375,
+          "classes_mostradas": {
+            "0": 13,
+            "3": 10,
+            "1": 5,
+            "2": 4,
+            "5": 1,
+            "8": 1,
+            "10": 1
+          },
+          "acertos_aceitos": 32,
+          "acuracia_aceitos": 0.9142857142857143,
+          "acertos_sem_limiar": 33
+        },
+        "jpeg_q10": {
+          "imagens": 40,
+          "aceitos": 38,
+          "pct_aceitos": 0.95,
+          "score_mediano": 0.994140625,
+          "score_maximo": 0.99609375,
+          "score_minimo": 0.5625,
+          "score_p90": 0.99609375,
+          "classes_mostradas": {
+            "0": 17,
+            "3": 10,
+            "1": 5,
+            "2": 4,
+            "8": 1,
+            "9": 1
+          },
+          "acertos_aceitos": 34,
+          "acuracia_aceitos": 0.8947368421052632,
+          "acertos_sem_limiar": 35
+        },
+        "sujeito_pequeno": {
+          "imagens": 40,
+          "aceitos": 30,
+          "pct_aceitos": 0.75,
+          "score_mediano": 0.814453125,
+          "score_maximo": 0.99609375,
+          "score_minimo": 0.36328125,
+          "score_p90": 0.98828125,
+          "classes_mostradas": {
+            "0": 12,
+            "2": 9,
+            "3": 4,
+            "11": 2,
+            "1": 1,
+            "8": 1,
+            "12": 1
+          },
+          "acertos_aceitos": 17,
+          "acuracia_aceitos": 0.5666666666666667,
+          "acertos_sem_limiar": 21
+        }
+      },
+      "pares_degradacao": {
+        "desfoque": {
+          "pares": 40,
+          "decisao_mudou": 25,
+          "aceito_para_inconclusivo": 24,
+          "inconclusivo_para_aceito": 1,
+          "classe_prevista_mudou": 20,
+          "erros_aceitos": 6,
+          "erros_aceitos_novos": 6,
+          "queda_media_do_score": 0.4017578125
+        },
+        "escuro": {
+          "pares": 40,
+          "decisao_mudou": 7,
+          "aceito_para_inconclusivo": 4,
+          "inconclusivo_para_aceito": 3,
+          "classe_prevista_mudou": 6,
+          "erros_aceitos": 6,
+          "erros_aceitos_novos": 5,
+          "queda_media_do_score": 0.0802734375
+        },
+        "superexposto": {
+          "pares": 40,
+          "decisao_mudou": 4,
+          "aceito_para_inconclusivo": 2,
+          "inconclusivo_para_aceito": 2,
+          "classe_prevista_mudou": 4,
+          "erros_aceitos": 4,
+          "erros_aceitos_novos": 2,
+          "queda_media_do_score": 0.0486328125
+        },
+        "cinza": {
+          "pares": 40,
+          "decisao_mudou": 11,
+          "aceito_para_inconclusivo": 8,
+          "inconclusivo_para_aceito": 3,
+          "classe_prevista_mudou": 13,
+          "erros_aceitos": 11,
+          "erros_aceitos_novos": 9,
+          "queda_media_do_score": 0.146875
+        },
+        "ruido": {
+          "pares": 40,
+          "decisao_mudou": 8,
+          "aceito_para_inconclusivo": 5,
+          "inconclusivo_para_aceito": 3,
+          "classe_prevista_mudou": 7,
+          "erros_aceitos": 3,
+          "erros_aceitos_novos": 2,
+          "queda_media_do_score": 0.06875
+        },
+        "jpeg_q10": {
+          "pares": 40,
+          "decisao_mudou": 5,
+          "aceito_para_inconclusivo": 2,
+          "inconclusivo_para_aceito": 3,
+          "classe_prevista_mudou": 0,
+          "erros_aceitos": 4,
+          "erros_aceitos_novos": 1,
+          "queda_media_do_score": 0.0119140625
+        },
+        "sujeito_pequeno": {
+          "pares": 40,
+          "decisao_mudou": 9,
+          "aceito_para_inconclusivo": 8,
+          "inconclusivo_para_aceito": 1,
+          "classe_prevista_mudou": 20,
+          "erros_aceitos": 13,
+          "erros_aceitos_novos": 11,
+          "queda_media_do_score": 0.168359375
+        }
+      }
+    }
+  },
+  "consistencia_ui": {
+    "Float16": {
+      "imagens": 397,
+      "divergentes": []
+    },
+    "INT8": {
+      "imagens": 397,
+      "divergentes": []
+    }
+  },
+  "inferencias": {
+    "esquema": "inferencias_web_T11_3_v1",
+    "manifesto_sha256": "b6ff54b024543fee43e6cc38c143ded70b8fa68149364c3d61ad171563a67802",
+    "limiar_politica": 0.65,
+    "navegador": "Chromium 156.0.8078.4",
+    "runtime": "LiteRT.js 2.6.0",
+    "modelo": {
+      "Float16": {
+        "sha256": "9c18f0a2ca4a4e2eb0d84dd415046f0bd35385ede8c47e14463d3a0f134647ec",
+        "sourceSha256": "c9a26ce13806a2fa26bffbd8cfbdac83ff4c05ffff1009ca9483bb587a5a8fa2",
+        "runtime": {
+          "name": "@litertjs/core",
+          "version": "2.6.0"
+        },
+        "requestedAccelerator": "wasm",
+        "fullyAccelerated": true,
+        "cpuThreads": 1,
+        "id": "candidato_T5_6_20261026",
+        "format": "Float16",
+        "bytes": 6833548,
+        "accelerator": "CPU / WebAssembly",
+        "fallback": false
+      },
+      "INT8": {
+        "sha256": "df2f5d4fe22b4d3f76c4b8f6dab6e0100231c83d606122999ed15ceb72c05978",
+        "sourceSha256": "456caec54fae3c57684f9afd6842cae611a1f6cb6587b40b0c5bd8256aea1340",
+        "runtime": {
+          "name": "@litertjs/core",
+          "version": "2.6.0"
+        },
+        "requestedAccelerator": "wasm",
+        "fullyAccelerated": false,
+        "cpuThreads": 1,
+        "id": "candidato_T5_6_20261026",
+        "format": "INT8",
+        "bytes": 4003624,
+        "accelerator": "CPU / WebAssembly",
+        "fallback": true
+      }
+    }
+  }
+}
