@@ -116,6 +116,7 @@ Validação de desempenho e integração web: [T12.1 — Tamanho dos modelos e p
 - [14.3 Avaliação e conversão](#143-avaliação-e-conversão)
 - [14.4 Arquitetura e integração web](#144-arquitetura-e-integração-web)
 - [14.5 Retreinamento e atualização do modelo](#145-retreinamento-e-atualização-do-modelo)
+- [14.6 Validação externa do guia](#146-validação-externa-do-guia)
 
 </details>
 
@@ -4353,3 +4354,9 @@ O [guia de arquitetura web](T14_4_Arquitetura_Web.md) reúne o fluxo da fotograf
 O [guia de retreinamento](T14_5_Guia_Retreinamento.md) reúne o procedimento para receber e revisar novas imagens, congelar grupos e partições, calcular hashes e pesos de treino, executar uma rodada e selecionar o checkpoint pela validação. A manutenção preserva o contrato de 13 classes e distingue o teste histórico exploratório de um eventual conjunto independente reservado antes do desenvolvimento.
 
 O guia descreve a preparação de um novo pacote com proveniência, calibração INT8 exclusivamente no treino, comparação dos formatos, avaliação após congelamento da decisão, integração web e verificação no aparelho. Explicita os caminhos que precisam substituir os defaults históricos e as referências de testes que devem acompanhar a nova versão. A publicação usa o pacote completo identificado por hashes e inclui procedimento de reversão para a versão anterior preservada. A conferência técnica dos exemplos não equivale à validação operacional por um participante externo nem a um novo treinamento executado.
+
+## 14.6 Validação externa do guia
+
+O [protocolo de validação externa](T14_6_Validacao_Externa.md) define o ensaio do guia por alguém que não participou diretamente do desenvolvimento. A avaliação registra ambiente, versão/hash do guia, passos executados, assistência, dúvidas, bloqueios e evidências, distinguindo leitura, execução parcial e reprodução do ciclo essencial.
+
+O [registro estruturado](../assets/data/validacao_externa_T14_6/registro.json) documenta o relato de execução do ciclo completo por Tobias em Windows, acompanhado por Rui, com funcionamento e sem dúvidas informados. A confirmação inclui preparação, treinamento, avaliação, conversão, atualização e reversão. A evidência recebida é o relato do acompanhante; versões das ferramentas, comandos, logs e arquivos gerados não foram enviados para conferência. O registro distingue essa execução relatada da validação técnica dos artefatos e do aceite formal do guia, sem atribuir verificações que não foram realizadas.
