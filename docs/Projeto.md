@@ -109,6 +109,14 @@ Validação de desempenho e integração web: [T12.1 — Tamanho dos modelos e p
 </details>
 
 <details>
+<summary><strong>13. Conteúdo técnico</strong></summary>
+
+- [13.1 Fichas técnicas da equipe e decisão formal (T13.1 e T13.2)](#131-fichas-técnicas-da-equipe-e-decisão-formal-t131-e-t132)
+- [13.2 Integração no aplicativo (T13.2)](#132-integração-no-aplicativo-t132)
+
+</details>
+
+<details>
 <summary><strong>14. Documentação técnica e transferência de conhecimento</strong></summary>
 
 - [14.1 Dataset final](#141-dataset-final)
@@ -3913,13 +3921,13 @@ O comando de inicialização e o build preparam os artefatos web a partir dos mo
 
 **Autor:** Lucas. **Revisor:** Glauco. **Data:** 08/11/2026.
 
-**Situação: entrega parcial.** A associação entre cada classe do modelo, o dicionário de classes e a base local de conteúdo está implementada e testada, e funciona sem rede. O **conteúdo técnico em si ainda não existe**: o catálogo do Agro App não foi recebido, então nenhuma das 13 classes tem texto de sintomas ou manejo, e todas resolvem como *indisponível*. O critério de aceite ("cada classe reconhecida é associada ao conteúdo técnico correspondente, consultável sem internet") só será atendido por completo quando o catálogo for preenchido. Até lá, o aplicativo deve dizer que o conteúdo está indisponível, sem afirmar nenhuma orientação. Existe material de referência para 11 das 13 classes (ver o [mapa de fontes](#mapa-de-fontes-de-conteúdo)), mas ele tem direitos reservados e não foi copiado.
+**Situação: concluída para o MVP, com fichas da equipe.** A associação entre cada classe do modelo, o dicionário de classes e a base local de conteúdo está implementada, testada e funciona sem rede. O catálogo do Agro App não foi recebido e o parceiro informou que não enviará o conteúdo técnico; por isso a equipe redigiu **fichas informativas próprias**, com citação de fonte e página em cada frase, conforme a [decisão formal da seção 13.1](#131-fichas-técnicas-da-equipe-e-decisão-formal-t131-e-t132). Em 23/11/2026 as 13 fichas foram **liberadas no aplicativo** (`validated: true`, registro da liberação em `validacao_conteudo`): as 13 classes resolvem para conteúdo e o RNF-08 (100% das classes com conteúdo) é atendido para o MVP. As fichas são **informativas, não oficiais e sem validação agronômica do parceiro**, e o app diz isso na tela; o conteúdo poderá ser aprimorado depois com o material do parceiro (seção 13.1, lacunas).
 
 ### Fluxo
 
 1. O modelo devolve o índice da classe (0 a 12), na ordem de [`classes.json`](../assets/modelos/candidato_T5_6_20261026/classes.json).
 2. A [associação](../assets/data/conteudo_T9_3/associacao_classes.json) liga o índice ao nome do modelo, à identificação da praga, aos IDs do inventário e do acervo anterior e à `chave_conteudo` oficial.
-3. A [base local](../assets/data/conteudo_T9_3/base_conteudo.json) guarda o texto de cada `chave_conteudo`, com fonte, data de revisão e o indicador `validated`.
+3. A [base local](../assets/data/conteudo_T9_3/base_conteudo.json) guarda a ficha de cada `chave_conteudo`: seções "Como reconhecer", "Danos ou sintomas" e, quando há, "Pode ser confundido com", cada frase com a sua fonte e página, mais data de revisão e o indicador `validated`.
 4. A função `associar_predicoes` ([`associacao_conteudo_t9_3.py`](../src/associacao_conteudo_t9_3.py)) enriquece cada previsão com a identificação e o estado do conteúdo. Mantém a ordem e o score do modelo e recusa índices fora das 13 classes.
 
 A T9.3 **não depende do limiar de confiança**. A [T9.2](#92-tratamento-do-limiar-de-confiança-t92) decide quais previsões aparecem (a proposta da [T6.5](#65-política-de-confiança-t65) é 3 hipóteses e limiar 0,65 no top-1) e o painel de orientações mostra o conteúdo da classe escolhida entre as hipóteses aceitas. O app não chama `associar_predicoes` (função Python, usada nos testes): ele lê o `frontend/src/data/content.ts`, gerado destes arquivos (ver abaixo). Mudar o limiar não altera esta entrega.
@@ -3928,27 +3936,27 @@ A T9.3 **não depende do limiar de confiança**. A [T9.2](#92-tratamento-do-limi
 
 | Índice | Classe (nome do modelo) | Cultura | IDs no inventário | ID no acervo anterior | Chave proposta | Classes relacionadas (T6.4) | Conteúdo |
 | ---: | --- | --- | --- | --- | --- | --- | --- |
-| 0 | Vaquinha (Diabrotica speciosa) | Milho/Soja | 0 | — | `praga.diabrotica_speciosa` | 1, 2, 5, 6, 10, 11, 12 | indisponível |
-| 1 | Cigarrinha-do-milho (Dalbulus maidis) | Milho | 1 | AGRO-001 | `praga.dalbulus_maidis` | 0 | indisponível |
-| 2 | Percevejo-barriga-verde (Dichelops/Diceraeus) | Milho/Soja | 2 | — | `praga.dichelops_sp` | 0, 3, 4, 5, 7, 9, 10, 11 | indisponível |
-| 3 | Lagarta-do-cartucho (Spodoptera frugiperda) | Milho/Soja | 3 | — | `praga.spodoptera_frugiperda` | 2, 7, 8, 9, 10 | indisponível |
-| 4 | Percevejo-marrom (Euschistus heros) | Soja | 4 | — | `praga.euschistus_heros` | 2, 7, 11 | indisponível |
-| 5 | Percevejo-verde (Nezara viridula) | Soja | 5 | — | `praga.nezara_viridula` | 0, 2, 6, 10 | indisponível |
-| 6 | Percevejo-asa-preta (Edessa meditabunda) | Soja | 6 | — | `praga.edessa_meditabunda` | 0, 5 | indisponível |
-| 7 | Percevejo-do-milho (Leptoglossus zonatus) | Milho | 7 | AGRO-003 | `praga.leptoglossus_zonatus` | 2, 3, 4, 11, 12 | indisponível |
-| 8 | Lagarta-falsa-medideira (Chrysodeixis includens) | Soja | 8 | — | `praga.chrysodeixis_includens` | 3, 10 | indisponível |
-| 9 | Lagarta-da-soja (Anticarsia gemmatalis) | Soja | 9 | AGRO-053 | `praga.anticarsia_gemmatalis` | 2, 3 | indisponível |
-| 10 | Lagarta-das-vagens (Spodoptera eridania e S. cosmioides) | Soja | 10, 11 | — | `praga.spodoptera_eridania_cosmioides` | 0, 2, 3, 5, 8, 11, 12 | indisponível |
-| 11 | Astylus variegatus | Milho | 12 | — | `praga.astylus_variegatus` | 0, 2, 4, 7, 10 | indisponível |
-| 12 | Cigarrinha-das-pastagens (Deois flavopicta) | Milho | 13 | — | `praga.deois_flavopicta` | 0, 7, 10 | indisponível |
+| 0 | Vaquinha (Diabrotica speciosa) | Milho/Soja | 0 | — | `praga.diabrotica_speciosa` | 1, 2, 5, 6, 10, 11, 12 | disponível (ficha da equipe) |
+| 1 | Cigarrinha-do-milho (Dalbulus maidis) | Milho | 1 | AGRO-001 | `praga.dalbulus_maidis` | 0 | disponível (ficha da equipe) |
+| 2 | Percevejo-barriga-verde (Dichelops/Diceraeus) | Milho/Soja | 2 | — | `praga.dichelops_sp` | 0, 3, 4, 5, 7, 9, 10, 11 | disponível (ficha da equipe) |
+| 3 | Lagarta-do-cartucho (Spodoptera frugiperda) | Milho/Soja | 3 | — | `praga.spodoptera_frugiperda` | 2, 7, 8, 9, 10 | disponível (ficha da equipe) |
+| 4 | Percevejo-marrom (Euschistus heros) | Soja | 4 | — | `praga.euschistus_heros` | 2, 7, 11 | disponível (ficha da equipe) |
+| 5 | Percevejo-verde (Nezara viridula) | Soja | 5 | — | `praga.nezara_viridula` | 0, 2, 6, 10 | disponível (ficha da equipe) |
+| 6 | Percevejo-asa-preta (Edessa meditabunda) | Soja | 6 | — | `praga.edessa_meditabunda` | 0, 5 | disponível (ficha da equipe) |
+| 7 | Percevejo-do-milho (Leptoglossus zonatus) | Milho | 7 | AGRO-003 | `praga.leptoglossus_zonatus` | 2, 3, 4, 11, 12 | disponível (ficha da equipe) |
+| 8 | Lagarta-falsa-medideira (Chrysodeixis includens) | Soja | 8 | — | `praga.chrysodeixis_includens` | 3, 10 | disponível (ficha da equipe) |
+| 9 | Lagarta-da-soja (Anticarsia gemmatalis) | Soja | 9 | AGRO-053 | `praga.anticarsia_gemmatalis` | 2, 3 | disponível (ficha da equipe) |
+| 10 | Lagarta-das-vagens (Spodoptera eridania e S. cosmioides) | Soja | 10, 11 | — | `praga.spodoptera_eridania_cosmioides` | 0, 2, 3, 5, 8, 11, 12 | disponível (ficha da equipe) |
+| 11 | Astylus variegatus | Milho | 12 | — | `praga.astylus_variegatus` | 0, 2, 4, 7, 10 | disponível (ficha da equipe) |
+| 12 | Cigarrinha-das-pastagens (Deois flavopicta) | Milho | 13 | — | `praga.deois_flavopicta` | 0, 7, 10 | disponível (ficha da equipe) |
 
 O nome exibido é o do modelo. Na classe 11, o dataset do parceiro usa também "larva-angorá"; esse nome comum não foi adotado, para não divergir do modelo e do restante da documentação. A coluna "Classes relacionadas" vem dos 27 pares da [T6.4](#64-proposta-de-tratamento-de-classes-t64). Na classe 10, os IDs 10 e 11 do inventário (*Spodoptera eridania* e *S. cosmioides*) formam uma única classe, conforme a [seção 3.5](#35-classes-do-mvp).
 
 ### Regras de associação
 
-- **Só a chave oficial abre conteúdo.** Enquanto `chave_conteudo` for `null`, ou o status não for `validado`, a classe resolve como indisponível. A `chave_conteudo_proposta` (`praga.<espécie>`) serve apenas à organização local e nunca é usada para abrir conteúdo; segue a regra da [seção do dicionário](#vinculação-ao-conteúdo-técnico).
+- **Só uma chave de conteúdo validada abre a ficha.** Enquanto `chave_conteudo` for `null`, ou o status não for `validado`, a classe resolve como indisponível. A `chave_conteudo_proposta` (`praga.<espécie>`) serve apenas à organização local e nunca abre conteúdo; segue a regra da [seção do dicionário](#vinculação-ao-conteúdo-técnico). A origem da chave é registrada em `origem_chave`: `oficial_agro_app` (catálogo do parceiro, se vier) ou `equipe` (fichas da seção 13.1, chaves `equipe.<espécie>`).
 - **Classes relacionadas na T6.4 ficam separadas.** O contrato recusa duas classes de um mesmo par com o mesmo conteúdo. A relação não soma scores, não altera o ranking e não força uma classe a aparecer.
-- **Nada é inventado.** Um item só é *disponível* com texto, fonte e data de revisão, `validated` verdadeiro, e a classe com `validacao_conteudo` (responsável, data e evidência).
+- **Nada é inventado.** Uma ficha só é *disponível* com todas as frases citadas (fonte e página ou seção), data de revisão, `validated` verdadeiro, e a classe com `validacao_conteudo` (data e evidência). O contrato recusa frase sem fonte, página fora da fonte e texto com mais de 240 caracteres.
 - **Sem rede.** A associação e a base são arquivos locais; o código não importa nenhum módulo de rede, e um teste confere isso.
 
 ### Origem da identificação
@@ -3957,12 +3965,12 @@ Nome comum e científico vêm da tabela das classes no `instruções.md` do data
 
 ### Mapa de fontes de conteúdo
 
-O [mapa de fontes](../assets/data/conteudo_T9_3/fontes_conteudo.json) indica, por classe, onde há material técnico de referência, com a citação da fonte e da página. Foram consultadas duas publicações da Embrapa citadas no [dicionário de classes](#dicionário-de-classes-t34), em 08/11/2026:
+O [mapa de fontes](../assets/data/conteudo_T9_3/fontes_conteudo.json) indica, por classe, as publicações em que as fichas se baseiam, com a citação da fonte e da página (ou da seção, quando a página web não é numerada). Em 08/11/2026 foram consultadas duas publicações da Embrapa citadas no [dicionário de classes](#dicionário-de-classes-t34); em 20 e 23/11/2026, outras quatorze, para as classes 1, 7 e 12 e para ampliar as demais (tabela da [seção 13.1](#131-fichas-técnicas-da-equipe-e-decisão-formal-t131-e-t132)). As duas primeiras:
 
 - **Manual da soja** (SOSA-GÓMEZ et al., 2014): 3ª edição, Embrapa Soja, 102 páginas no PDF. Cada ficha traz as fases do inseto e um parágrafo de danos. Não há seção de manejo.
 - **Artigo da cigarrinha-do-milho** (OLIVEIRA, 2025): artigo da Revista Cultivar Grandes Culturas, de Ivênio Rubens de Oliveira (Embrapa Milho e Sorgo). Trata de sintomas, período de controle e manejo químico e biológico.
 
-A tabela usa a numeração **impressa** das páginas (a do PDF é uma a mais no manual); o mapa registra as duas. As referências completas estão ao final da seção.
+A tabela usa a numeração **impressa** das páginas (a do PDF é uma a mais no manual); o mapa registra as duas. As referências completas estão ao final da seção. A tabela abaixo mostra a primeira rodada (08/11/2026); o mapa atual e o resumo por classe estão na seção 13.1.
 
 | Índice | Classe | Citação | O que a fonte traz | Observação |
 | ---: | --- | --- | --- | --- |
@@ -3973,33 +3981,35 @@ A tabela usa a numeração **impressa** das páginas (a do PDF é uma a mais no 
 | 4 | Percevejo-marrom (Euschistus heros) | (SOSA-GÓMEZ et al., 2014, p. 78) | descrição das fases, danos | A ficha faz menção pontual à resistência a inseticidas, sem seção de manejo. |
 | 5 | Percevejo-verde (Nezara viridula) | (SOSA-GÓMEZ et al., 2014, p. 82) | descrição das fases, danos | — |
 | 6 | Percevejo-asa-preta (Edessa meditabunda) | (SOSA-GÓMEZ et al., 2014, p. 86) | descrição das fases, danos | O manual chama a espécie de percevejo-edessa; o modelo, de percevejo-asa-preta. |
-| 7 | Percevejo-do-milho (Leptoglossus zonatus) | **sem fonte** | — | Obter a fonte com o parceiro. |
+| 7 | Percevejo-do-milho (Leptoglossus zonatus) | *(fonte localizada em 20/11/2026: ver seção 13.1)* | — | — |
 | 8 | Lagarta-falsa-medideira (Chrysodeixis includens) | (SOSA-GÓMEZ et al., 2014, p. 36) | descrição das fases, danos | — |
 | 9 | Lagarta-da-soja (Anticarsia gemmatalis) | (SOSA-GÓMEZ et al., 2014, p. 34) | descrição das fases, danos | — |
 | 10 | Lagarta-das-vagens (Spodoptera eridania e S. cosmioides) | (SOSA-GÓMEZ et al., 2014, p. 70) | descrição das fases, danos | A classe reúne duas espécies; há uma ficha para cada. |
 | 10 | Lagarta-das-vagens (Spodoptera eridania e S. cosmioides) | (SOSA-GÓMEZ et al., 2014, p. 72) | descrição das fases, danos | A classe reúne duas espécies; há uma ficha para cada. |
 | 11 | Astylus variegatus | (SOSA-GÓMEZ et al., 2014, p. 98) | descrição das fases, danos | A ficha descreve danos apenas eventuais. O manual usa o nome larva-angorá; o modelo usa o nome científico. |
-| 12 | Cigarrinha-das-pastagens (Deois flavopicta) | **sem fonte** | — | Obter a fonte com o parceiro. |
+| 12 | Cigarrinha-das-pastagens (Deois flavopicta) | *(fonte localizada em 20/11/2026: ver seção 13.1)* | — | — |
 
-**Onze das 13 classes têm material de referência; as classes 7 e 12 não têm.** Dez classes têm descrição e danos (manual) e a classe 1 tem sintomas e manejo (artigo). O manual é do contexto da soja, então para vaquinha, barriga-verde e lagarta-do-cartucho, que também ocorrem em milho, a ficha vale só para soja. O iNaturalist e o AgroInsect, consultados antes, trazem apenas identificação (taxonomia, nomes e fotos), sem sintomas nem manejo.
+**Na primeira rodada, 11 das 13 classes tinham material de referência; as classes 7 e 12 foram preenchidas depois (seção 13.1), e hoje as 13 têm fonte.** O manual é do contexto da soja, então para vaquinha, barriga-verde e lagarta-do-cartucho, que também ocorrem em milho, a ficha vale só para soja. O iNaturalist e o AgroInsect, consultados antes, trazem apenas identificação (taxonomia, nomes e fotos), sem sintomas nem manejo.
 
-O mapa **não contém texto das fontes** e o resolvedor não o usa. As duas publicações têm direitos reservados (Lei nº 9.610), e o repositório não as versiona; o hash de cada PDF consultado fica no mapa. O uso permitido é a referência bibliográfica e a redação própria a partir delas, **sempre com citação da fonte e da página**. Copiar o texto para o aplicativo depende de autorização da Embrapa ou do parceiro, e o manejo químico não entra sem validação. Um teste recusa o mapa se faltar a referência completa (com ano, link e data de acesso) ou a citação por página, se algum campo de texto for longo o bastante para conter trecho copiado, e se o uso do texto for marcado como autorizado sem registro de responsável, data e evidência.
+O mapa **não contém texto das fontes** e o resolvedor não o usa. As publicações têm direitos reservados ou licença não declarada, e o repositório não as versiona; o hash de cada arquivo consultado fica no mapa. O uso permitido é a referência bibliográfica e a **redação própria** a partir delas, sempre com citação da fonte e da página; `uso_do_texto` permanece `nao_autorizado` em todas, ou seja, nenhuma frase é cópia. O manejo químico não entra sem validação agronômica. Um teste recusa o mapa se faltar a referência completa (com ano, link e data de acesso) ou a citação por página, se algum campo de texto for longo o bastante para conter trecho copiado, e se o uso do texto for marcado como autorizado sem registro de responsável, data e evidência.
 
-### Como completar quando o catálogo chegar
+### Como liberar ou atualizar o conteúdo
 
-1. Receber do parceiro o catálogo com chaves oficiais, título, texto, fonte e data de cada praga.
-2. Em `associacao_classes.json`, preencher `chave_conteudo` e `validacao_conteudo` (responsável, data, evidência) e mudar `status_conteudo` para `validado`. O comando `python -m src.associacao_conteudo_t9_3 gerar` preserva esses campos ao atualizar o restante e nunca sobrescreve a base.
-3. Em `base_conteudo.json`, incluir um item por `chave` com `titulo`, `texto`, `fonte`, `revisado_em` e `validated: true`. No campo `fonte`, usar a citação do mapa de fontes (por exemplo, `SOSA-GÓMEZ et al., 2014, p. 78`) e listar a referência completa em Referências. Os campos coincidem com o `TechnicalContent` do frontend (`title`, `text`, `source`, `reviewedAt`, `validated`); gere o `frontend/src/data/content.ts` com `python -m src.associacao_conteudo_t9_3 frontend`, que inclui só as classes que o resolvedor dá como disponíveis.
-4. Executar `python -m src.associacao_conteudo_t9_3 verificar --exigir-conteudo`. O comando só termina com sucesso quando as 13 classes têm conteúdo validado, o que corresponde ao RNF-08 (100% das classes resolvem para conteúdo válido). Hoje ele falha de propósito.
+1. Revisar as fichas (texto no [bloco da seção 13.1](#fichas-por-classe) ou em `base_conteudo.json`) e conferir cada frase com a fonte citada.
+2. Liberar as fichas e registrar a validação (feito em 23/11/2026 para as 13 classes): `python -m src.associacao_conteudo_t9_3 aprovar --evidencia "<onde a decisão e a validação estão registradas>"` (opcional: `--data AAAA-MM-DD` e `--classes 0,1,...` para liberar só algumas). O comando marca as fichas como `validated: true`, grava `revisado_em` e preenche `validacao_conteudo` (data e evidência) das classes.
+3. Rodar `python -m src.associacao_conteudo_t9_3 docs` (atualiza o bloco de fichas deste documento) e `python -m src.associacao_conteudo_t9_3 frontend` (gera o `frontend/src/data/content.ts`, só com as classes que o resolvedor dá como disponíveis).
+4. Executar `python -m src.associacao_conteudo_t9_3 verificar --exigir-conteudo`. O comando só termina com sucesso quando as 13 classes têm conteúdo validado, o que corresponde ao RNF-08 (100% das classes resolvem para conteúdo válido). Desde 23/11/2026 ele termina com sucesso (13 de 13 classes disponíveis).
 5. Verificar a abertura do conteúdo no aparelho em modo avião (T9.4).
+
+Se o parceiro enviar o catálogo oficial depois, basta trocar `chave_conteudo` e `origem_chave` (`oficial_agro_app`) na associação e substituir a ficha; o `gerar` preserva esses campos.
 
 ### Pendências e limites
 
-- **Catálogo de conteúdo técnico do Agro App:** não recebido; sem ele, 0 das 13 classes tem conteúdo disponível e o critério de aceite não está completo.
-- **Fontes de referência:** as classes 7 (*Leptoglossus zonatus*) e 12 (*Deois flavopicta*) não têm fonte; as demais têm material com direitos reservados, cujo uso no aplicativo depende de autorização ou de redação própria validada.
-- **Validação do parceiro:** nomes científicos, cultura e associação de cada classe ao conteúdo precisam ser confirmados, e os pares da T6.4 dependem da decisão agronômica.
-- **Integração no aplicativo:** o `frontend/src/data/content.ts` é gerado da associação e da base (comando `frontend`), e um teste falha se ele ficar desatualizado. Hoje sai vazio, porque nenhuma classe tem conteúdo validado.
-- **RNF-08 completo** (100% de conteúdo válido) e a demonstração **sem rede no aparelho** (T9.4) continuam pendentes.
+- **Catálogo de conteúdo técnico do Agro App:** não será enviado pelo parceiro; a equipe usa as fichas próprias da seção 13.1.
+- **Validação agronômica das fichas:** a liberação de 23/11/2026 é decisão da equipe para o MVP (evidência: seção 13.1); a validação por agrônomo ou pelo parceiro continua pendente. As lacunas de cobertura estão na seção 13.1.
+- **Nomes e associações:** nomes científicos, cultura e associação de cada classe ao conteúdo seguem como referência a validar, e os pares da T6.4 dependem da decisão agronômica. As fichas são informativas e **não substituem** o engenheiro agrônomo.
+- **Integração no aplicativo:** o `frontend/src/data/content.ts` é gerado da associação e da base (comando `frontend`), e um teste falha se ele ficar desatualizado. Traz as 13 fichas liberadas.
+- A demonstração **sem rede no aparelho** (T9.4) continua pendente.
 
 ### Reprodução e verificação
 
@@ -4007,13 +4017,15 @@ O mapa **não contém texto das fontes** e o resolvedor não o usa. As duas publ
 python -m src.associacao_conteudo_t9_3 gerar
 python -m src.associacao_conteudo_t9_3 verificar
 python -m src.associacao_conteudo_t9_3 frontend
+python -m src.associacao_conteudo_t9_3 docs
 python tests/validar_associacao_conteudo_t9_3.py
 python tests/validar_fontes_conteudo_t9_3.py
+python tests/validar_fichas_t13.py
 ```
 
-Os comandos usam somente a biblioteca padrão do Python. Os **15 testes** da associação passam. Eles cobrem o `content.ts` do frontend gerado a partir da associação, a reprodução da associação a partir das fontes e seus hashes, as 13 classes na ordem do modelo, os IDs do inventário e do acervo, as chaves únicas e a recusa de URLs, as relações da T6.4, o estado indisponível sem catálogo, um catálogo sintético completo, os estados intermediários, o contrato de validação, a preservação do preenchimento manual ao regenerar, a recusa de índices inválidos e a ausência de acesso à rede.
+Os comandos usam somente a biblioteca padrão do Python. Os **19 testes** da associação passam. Eles cobrem o `content.ts` do frontend gerado a partir da associação, a reprodução da associação a partir das fontes e seus hashes, as 13 classes na ordem do modelo, os IDs do inventário e do acervo, as chaves únicas e a recusa de URLs, as relações da T6.4, o estado indisponível sem catálogo, um catálogo sintético completo, os estados intermediários, o contrato de validação, a preservação do preenchimento manual ao regenerar, a recusa de índices inválidos e a ausência de acesso à rede.
 
-Os **14 testes** do mapa de fontes também passam. Eles cobrem a coerência com as 13 classes, as lacunas, o intervalo e a numeração das páginas, o vocabulário das seções, a referência completa e a citação por página, os direitos e a autorização de uso, e a recusa de texto copiado.
+Os **15 testes** do mapa de fontes e os **8 testes** das fichas (T13) também passam. Eles cobrem a coerência com as 13 classes, as lacunas, o intervalo e a numeração das páginas, o vocabulário das seções, a referência completa e a citação por página, os direitos e a autorização de uso, e a recusa de texto copiado.
 
 ### Referências
 
@@ -4021,11 +4033,39 @@ ALMEIDA, G.; NAZARIO, L.; TEIXEIRA, M.; STIRLE, J.; FRANCA, H.; OLIVEIRA, M.; OL
 
 AGROTECH INTELI. **Dataset de pragas de soja e milho: AgroTech Inteli × Agro App**. Documento interno (instruções.md), pasta Agro_App/dataset/dataset do Drive da equipe, 2026.
 
+ÁVILA, C. J.; PAPA, G. **Manejo de pragas da parte aérea do milho**. Cultivar Grandes Culturas, n. 199, [s. d.]. Disponível em: https://revistacultivar.com.br/artigos/manejo-de-pragas-da-parte-aerea-do-milho. Acesso em: 20 nov. 2026.
+
+BOTELHO, A. B. R. Z.; SILVA, I. F. da; ÁVILA, C. J. **Aspectos biológicos da lagarta-falsa-medideira e sua criação em laboratório com dieta artificial**. Dourados: Embrapa Agropecuária Oeste, 2019. (Embrapa Agropecuária Oeste. Circular Técnica, 47). ISSN 1679-0464. Disponível em: https://www.infoteca.cnptia.embrapa.br/infoteca/bitstream/doc/1118272/1/36927.pdf. Acesso em: 23 nov. 2026.
+
+CANTONE, W. et al. **Danos de percevejos em sementes de soja**. In: JORNADA ACADÊMICA DA EMBRAPA SOJA, 6., [2011?], Londrina. Resumos expandidos. Londrina: Embrapa Soja, [2011?]. p. 16-20. (Embrapa Soja. Documentos, 328). Disponível em: https://www.alice.cnptia.embrapa.br/alice/bitstream/doc/909203/1/danos.pdf. Acesso em: 23 nov. 2026.
+
+CRUZ, I.; FIGUEIREDO, M. de L. C.; GONTIJO NETO, M. M.; SILVA, R. B. da. **Danos da cigarrinha-das-pastagens, Deois flavopicta Stal (Homoptera: Cercopidae) em milho consorciado com braquiárias**. Sete Lagoas: Embrapa Milho e Sorgo, 2010. (Embrapa Milho e Sorgo. Circular Técnica, 144). ISSN 1679-1150. Disponível em: https://www.infoteca.cnptia.embrapa.br/infoteca/bitstream/doc/880841/1/circ144.pdf. Acesso em: 23 nov. 2026.
+
+EICHOLZ, E. D. et al. (ed.). **Informações técnicas para o cultivo de milho e sorgo na região subtropical do Brasil: safras 2023/24 e 2024/25**. Sete Lagoas: Associação Brasileira de Milho e Sorgo, 2024. Cap. 8: Manejo integrado de pragas da cultura do milho e sorgo, p. 89-94. Disponível em: https://www.alice.cnptia.embrapa.br/alice/bitstream/doc/1168645/1/MANEJO-INTEGRADO-DE-PRAGAS-DA-CULTURA-DO-MILHO-E-SORGO.pdf. Acesso em: 23 nov. 2026.
+
+HOFFMANN-CAMPO, C. B. et al. **Pragas da soja no Brasil e seu manejo integrado**. Londrina: Embrapa Soja, 2000. 70 p. (Embrapa Soja. Circular Técnica, 30). ISSN 1516-7860. Disponível em: https://www.infoteca.cnptia.embrapa.br/infoteca/bitstream/doc/449719/1/ID6173.pdf. Acesso em: 23 nov. 2026.
+
 INATURALIST. **Observações de pragas de soja e milho no Brasil**. Disponível em: https://www.inaturalist.org. Acesso em: 4 out. 2026. Licenças CC0 e CC BY, foto a foto; os créditos individuais estão em `field_labels.csv`.
+
+MATRANGOLO, W. J. R.; WAQUIL, J. M. **Biologia de Leptoglossus zonatus (Dallas) (Hemiptera: Coreidae) alimentados com milho e sorgo**. Anais da Sociedade Entomológica do Brasil, Jaboticabal, v. 23, n. 3, p. 419-423, 1994. Disponível em: http://www.alice.cnptia.embrapa.br/alice/handle/doc/474805. Acesso em: 20 nov. 2026.
 
 OLIVEIRA, I. R. de. **Estratégias contra a cigarrinha-do-milho**. Cultivar Grandes Culturas, [S. l.], n. 312, p. 12-14, 2025. Disponível em: https://www.embrapa.br/en/busca-de-publicacoes/-/publicacao/1179329/estrategias-contra-a-cigarrinha-do-milho. Acesso em: 8 nov. 2026.
 
+SANTOS, P. M.; BALSALOBRE, M. A. A. **Cigarrinha das pastagens. 1. Caracterização**. MilkPoint, 2002. 3 p. Disponível em: http://www.infoteca.cnptia.embrapa.br/infoteca/handle/doc/46239. Acesso em: 20 nov. 2026.
+
 SOSA-GÓMEZ, D. R. et al. **Manual de identificação de insetos e outros invertebrados da cultura da soja**. 3. ed. Londrina: Embrapa Soja, 2014. (Embrapa Soja. Documentos, 269). ISSN 1516-781X. Disponível em: https://www.embrapa.br/en/busca-de-publicacoes/-/publicacao/991685/manual-de-identificacao-de-insetos-e-outros-invertebrados-da-cultura-da-soja. Acesso em: 8 nov. 2026.
+
+TEODORO, A. V. et al. **Spodoptera cosmioides (Walker) e Spodoptera eridania (Cramer) (Lepidoptera: Noctuidae): novas pragas de cultivos da Região Nordeste**. Aracaju: Embrapa Tabuleiros Costeiros, 2013. (Embrapa Tabuleiros Costeiros. Comunicado Técnico, 131). ISSN 1679-1937. Disponível em: https://www.infoteca.cnptia.embrapa.br/bitstream/doc/977975/1/cot131.pdf. Acesso em: 23 nov. 2026.
+
+VALICENTE, F. H. **Manejo integrado de pragas na cultura do milho**. Sete Lagoas: Embrapa Milho e Sorgo, 2015. (Embrapa Milho e Sorgo. Circular Técnica, 208). ISSN 1679-1150. Disponível em: https://www.infoteca.cnptia.embrapa.br/infoteca/bitstream/doc/1017489/1/circ208.pdf. Acesso em: 23 nov. 2026.
+
+VIANA, P. A. (ed.). **Principais pragas subterrâneas do milho no Brasil**. Sete Lagoas: Embrapa Milho e Sorgo, 2011. 61 p. (Embrapa Milho e Sorgo. Documentos, 129). ISSN 1518-4277. Disponível em: https://www.infoteca.cnptia.embrapa.br/infoteca/bitstream/doc/914556/1/doc129.pdf. Acesso em: 23 nov. 2026.
+
+VIANA, P. A.; CRUZ, I.; WAQUIL, J. M. **Cultivo do milho: pragas iniciais**. Sete Lagoas: Embrapa Milho e Sorgo, 2002. (Embrapa Milho e Sorgo. Comunicado Técnico, 59). ISSN 1679-0162. Disponível em: https://www.infoteca.cnptia.embrapa.br/bitstream/doc/487021/1/Com59.pdf. Acesso em: 23 nov. 2026.
+
+WAQUIL, J. M. **Cigarrinha-do-milho: vetor de molicutes e vírus**. Sete Lagoas: Embrapa Milho e Sorgo, 2004. 6 p. (Embrapa Milho e Sorgo. Circular Técnica, 41). ISSN 1518-4269. Disponível em: https://www.embrapa.br/documents/1344498/2767891/cigarrinha-do-milho-vetor-de-molicutes-e-virus.pdf/17d847e1-e4f1-4000-9d4f-7b7a0c720fd0. Acesso em: 20 nov. 2026.
+
+WORDELL FILHO, J. A. et al. **Pragas e doenças do milho: diagnose, danos e estratégias de manejo**. Florianópolis: Epagri, 2016. (Epagri. Boletim Técnico, 170). ISSN 0100-7416. Disponível em: https://ciram.epagri.sc.gov.br/ciram_arquivos/agroconnect/boletins/BT_PragasDoencasMilho.pdf. Acesso em: 23 nov. 2026.
 
 ## 9.4 Validação do funcionamento offline (T9.4)
 
@@ -4039,7 +4079,7 @@ SOSA-GÓMEZ, D. R. et al. **Manual de identificação de insetos e outros invert
 - **Pré-cache atômico.** Na primeira visita com rede, `cache.addAll` baixa tudo de uma vez. Se um arquivo falhar, nada é considerado pronto.
 - **Versão do cache.** O nome do cache é `agroapp-<hash>`, com os 16 primeiros caracteres do SHA-256 da lista e do conteúdo dos arquivos. Cada build novo troca o nome e apaga o cache anterior. Esse nome identifica o build na demonstração.
 - **Estado visível.** Quando o pré-cache termina, o status mostra **Modelo pronto · disponível offline**. Se ele falhar (cota do navegador ou queda de rede no meio do download), o status mostra **modo offline indisponível**, em vez de só registrar o erro no console.
-- **Conteúdo técnico.** O `content.ts` vai embutido no bundle JS, então entra no cache junto com o app. Hoje está vazio e o painel mostra "Conteúdo técnico ainda indisponível".
+- **Conteúdo técnico.** O `content.ts` vai embutido no bundle JS, então entra no cache junto com o app. Desde a liberação das fichas (seção 13.1), o painel mostra a ficha da classe escolhida, também sem rede.
 - No `npm run dev` o service worker não é registrado.
 
 ### Como foi validado
@@ -4049,7 +4089,7 @@ O projeto Playwright `offline` ([`tests/offline.spec.ts`](../frontend/tests/offl
 1. Abre o app com rede e espera **disponível offline**.
 2. Desliga a rede, recarrega e espera **Modelo pronto**.
 3. Escolhe uma foto e confere que a inferência real termina. A foto sintética fica abaixo do limiar da T9.2, então o teste aceita o estado inconclusivo ou as hipóteses.
-4. Ainda sem rede, recarrega com um dublê só do worker (como no `confidence.spec.ts`) para forçar um resultado aceito e confere o painel de orientações técnicas: hoje "indisponível"; quando o `content.ts` for preenchido, o painel com a fonte.
+4. Ainda sem rede, recarrega com um dublê só do worker (como no `confidence.spec.ts`) para forçar um resultado aceito e confere o painel de orientações técnicas: o teste aceita o painel com a ficha e a fonte ou o aviso de indisponível, então vale antes e depois da liberação.
 5. Confere que nenhuma requisição falhou com a rede desligada.
 
 Um segundo teste aborta o download de um `.tflite` pelo service worker e confere o aviso **modo offline indisponível**.
@@ -4082,7 +4122,7 @@ O critério pede capturar, classificar e ver o conteúdo em modo avião num apar
 - O teste automatizado roda no Chromium de desktop com a rede desligada pelo Playwright. Ele não prova o comportamento no Android, a câmera real nem o modo avião.
 - O service worker exige HTTPS (ou `localhost`). Pelo IP da rede local em HTTP, o app não fica disponível offline.
 - O pré-cache ocupa cerca de 60 MB. Em aparelhos com pouco espaço o navegador pode recusar, e o app avisa que o modo offline ficou indisponível. O navegador também pode apagar o cache sob pressão de armazenamento.
-- O conteúdo técnico está vazio (T9.3). O painel aparece offline, mas só com o aviso de indisponível.
+- O conteúdo técnico são as fichas da equipe (seção 13.1), sem validação agronômica do parceiro; o painel aparece offline com a ficha e o aviso de que ela não é oficial.
 - A demonstração congelada da Sprint 04 (`frontend/dist`, #49) foi gerada antes desta tarefa e não tem `sw.js`. O pacote da demo precisa ser gerado de novo depois do merge.
 - Modo offline e PWA instalável continuam fora do escopo do produto (`PRODUCT.md`). Esta tarefa só garante que o app, já aberto uma vez, volte a funcionar sem rede.
 
@@ -4324,6 +4364,407 @@ O campo de navegador do [primeiro JSON bruto](../assets/data/benchmark_T12_2/iph
 As baterias declaradas eram 71% e 70%, respectivamente, com temperatura percebida normal, modo avião declarado e ausência de conectividade reportada no início e no fim. O modo de economia de energia foi declarado desativado no Safari; o texto da coleta Chrome informa economia de rede, sem confirmar economia de energia. O cache estava pronto durante os lotes, mas não foi isolado durante a inicialização, cujos tempos incluem carregamento, compilação e aquecimento e não são percentis. A inferência fica numericamente abaixo da proposta de 300 ms sob a metodologia LiteRT.js; o resultado não comprova captura → resultado em 3 s nem desempenho em outros aparelhos. O protocolo e as amostras completas estão no [relatório de latência](Benchmark_T12_2.md).
 
 Uma gravação complementar de três capturas de imagens em monitor documentou duas respostas com hipóteses e uma inconclusiva, permitindo repetir a captura após esse resultado. A análise visual encontrou aproximadamente **1,0–1,2 s do retorno da câmera ao indicador de análise finalizada**. Até a decisão ficar legível após rolagem, os intervalos a partir do proxy visual da captura foram cerca de **7,6 s, 8,3 s e 4,1 s**, incluindo confirmação humana e navegação na página. Esses números não são inferência isolada nem p95 de cinquenta capturas: a gravação usa uma aproximação visual do disparo, tem interação humana e não comprova ausência de rede. Os [marcos e hashes dos quadros](../assets/data/benchmark_T12_2/camera_20261119/observacoes.json) preservam as evidências e as limitações da medição.
+
+# 13. Conteúdo técnico
+
+## 13.1 Fichas técnicas da equipe e decisão formal (T13.1 e T13.2)
+
+**Data:** 20/11/2026 (redação); 23/11/2026 (liberação no app). **Situação:** as 13 fichas estão **liberadas no aplicativo** como conteúdo informativo da equipe para o MVP, sem validação agronômica do parceiro. A integração no aplicativo está na [seção 13.2](#132-integração-no-aplicativo-t132).
+
+### Decisão formal
+
+O parceiro (Agro App) informou que **não enviará o conteúdo técnico** (sintomas, danos, manejo) das 13 classes. Sem ele, o aplicativo identificaria a praga e não diria nada sobre ela. A equipe decidiu:
+
+1. **Redigir fichas informativas próprias**, a partir de publicações técnicas públicas já consultadas (Embrapa e revistas técnicas), **com palavras da equipe**, sem copiar trechos, e com **fonte e página em cada frase**.
+2. **Não tratar as fichas como conteúdo oficial nem aprovado pelo parceiro.** São material informativo da equipe; o aplicativo deve dizer isso e **não substitui o engenheiro agrônomo**.
+3. **Não incluir manejo químico** (produtos, doses, calendário de aplicação), pois depende de recomendação agronômica e de registro. A ficha trata apenas de **como reconhecer** e de **danos ou sintomas**, mais a seção **pode ser confundido com**, quando há.
+4. **Liberar as fichas no MVP, com aviso.** Como o MVP precisa mostrar orientação ao usuário final, a equipe decidiu em 23/11/2026 liberar as 13 fichas (`validated: true`, com data e evidência em `validacao_conteudo`). A tela informa que o texto é da equipe, que não é conteúdo oficial do parceiro e que não substitui o engenheiro agrônomo. Uma classe sem ficha validada continuaria mostrando "conteúdo técnico ainda indisponível", sem afirmar orientação.
+5. **Se o parceiro enviar o catálogo oficial no futuro**, ele substitui as fichas da equipe classe a classe (ver a [seção 9.3](#como-liberar-o-conteúdo)).
+
+**Impacto no MVP:** o critério "cada classe reconhecida é associada ao conteúdo técnico" é atendido com as fichas da equipe, e não com material do parceiro; o RNF-08 (100% das classes com conteúdo) é atendido. O conteúdo poderá ser substituído ou ampliado depois, classe a classe, com o catálogo ou a validação do parceiro.
+
+### Formato
+
+Pensado para leitura rápida no campo, no celular e à luz do dia: lista curta, em vez de texto corrido.
+
+- **Nome** (comum e científico) e uma linha de contexto sobre a fonte.
+- **Como reconhecer:** lista de pontos sobre o que o agricultor vê (cor, tamanho, onde fica).
+- **Danos ou sintomas:** o que a praga causa na planta.
+- **Pode ser confundido com** (se houver): outra espécie citada na literatura ou classe que o modelo trocou com frequência no teste exploratório.
+
+Cada ponto tem até 240 caracteres e traz a fonte entre parênteses. A tela mostra ainda a linha "Fonte:" e as referências completas.
+
+### Método e verificação
+
+- **Redação própria.** As frases foram escritas pela equipe a partir da leitura das fontes (`uso_do_texto` permanece `nao_autorizado` no [mapa de fontes](../assets/data/conteudo_T9_3/fontes_conteudo.json): nada é cópia).
+- **Verificação de semelhança.** Cada frase foi comparada, em Python, com o texto extraído das fontes (comparação pelo esqueleto de consoantes, que ignora acentos e extração falha de PDF). Foram comparadas 166 frases com o texto de 15 fontes; a maior sequência idêntica foi de cerca de 6 palavras (mediana: cerca de 3), e nenhuma chegou a 9. As frases com sequências maiores foram reescritas e a comparação foi refeita. O artigo de Oliveira (2025) tem texto ilegível para extração; por isso nenhuma frase depende dele (a frase que citava a p. 13 foi trocada por uma de Waquil, 2004, p. 3).
+- **Pontos do modelo.** As frases "o app às vezes indicou esta praga quando a foto era de…" aparecem só onde o teste exploratório de 473 imagens (T6.2 a T6.4) registrou ao menos 3 erros no mesmo sentido; um teste confere a correspondência.
+- **Contexto da soja.** O manual da Embrapa descreve pragas da soja; para vaquinha, barriga-verde e lagarta-do-cartucho, que também ocorrem no milho, a ficha avisa que a descrição é baseada no manual da soja.
+- **Testes** (`python tests/validar_fichas_t13.py`, 8 testes): uma ficha por classe com o nome do modelo; estrutura das seções; toda frase com fonte conhecida e página dentro do que o mapa declara; nenhuma ficha com termos de manejo químico ou link; confusões do modelo iguais à análise de erros; sem frases repetidas entre classes.
+
+### Fontes por classe
+
+| Índice | Classe | Fontes (citação) | Direito declarado |
+| ---: | --- | --- | --- |
+| 0 | Vaquinha | SOSA-GÓMEZ et al., 2014, p. 42; VIANA, 2011, p. 22-23; VIANA; CRUZ; WAQUIL, 2002, p. 1; EICHOLZ et al., 2024, p. 90; WORDELL FILHO et al., 2016, p. 40 | direitos reservados; não declarado; reprodução parcial permitida com citação |
+| 1 | Cigarrinha-do-milho | WAQUIL, 2004, p. 1-4; OLIVEIRA, 2025, p. 12-14; EICHOLZ et al., 2024, p. 91-92 | direitos reservados; não declarado |
+| 2 | Percevejo-barriga-verde | SOSA-GÓMEZ et al., 2014, p. 84; VIANA; CRUZ; WAQUIL, 2002, p. 4-5; EICHOLZ et al., 2024, p. 91; WORDELL FILHO et al., 2016, p. 34 | direitos reservados; não declarado; reprodução parcial permitida com citação |
+| 3 | Lagarta-do-cartucho | SOSA-GÓMEZ et al., 2014, p. 74; VALICENTE, 2015, p. 4-6; VIANA; CRUZ; WAQUIL, 2002, p. 6; EICHOLZ et al., 2024, p. 90-92; TEODORO et al., 2013, p. 2 | direitos reservados; não declarado |
+| 4 | Percevejo-marrom | SOSA-GÓMEZ et al., 2014, p. 78; EICHOLZ et al., 2024, p. 91; HOFFMANN-CAMPO et al., 2000, p. 24; WORDELL FILHO et al., 2016, p. 36 | direitos reservados; não declarado; reprodução parcial permitida com citação |
+| 5 | Percevejo-verde | SOSA-GÓMEZ et al., 2014, p. 82; HOFFMANN-CAMPO et al., 2000, p. 21-22; VIANA; CRUZ; WAQUIL, 2002, p. 4 | direitos reservados; não declarado |
+| 6 | Percevejo-asa-preta | SOSA-GÓMEZ et al., 2014, p. 86; HOFFMANN-CAMPO et al., 2000, p. 25; CANTONE et al., [2011?], p. 16 | direitos reservados; não declarado |
+| 7 | Percevejo-do-milho | MATRANGOLO; WAQUIL, 1994, p. 420-422; ÁVILA; PAPA, s.d., seção “Percevejo-do-milho”; WORDELL FILHO et al., 2016, p. 38 | acesso aberto, sem licença declarada; direitos reservados; reprodução parcial permitida com citação |
+| 8 | Lagarta-falsa-medideira | SOSA-GÓMEZ et al., 2014, p. 36; SOSA-GÓMEZ et al., 2014, p. 34; HOFFMANN-CAMPO et al., 2000, p. 14; BOTELHO; SILVA; ÁVILA, 2019, p. 2-8 | direitos reservados; não declarado |
+| 9 | Lagarta-da-soja | SOSA-GÓMEZ et al., 2014, p. 34; HOFFMANN-CAMPO et al., 2000, p. 13 | direitos reservados |
+| 10 | Lagarta-das-vagens | SOSA-GÓMEZ et al., 2014, p. 70-72; TEODORO et al., 2013, p. 1-3 | direitos reservados; não declarado |
+| 11 | Astylus variegatus | SOSA-GÓMEZ et al., 2014, p. 98; VIANA, 2011, p. 58-59; WORDELL FILHO et al., 2016, p. 42 | direitos reservados; reprodução parcial permitida com citação |
+| 12 | Cigarrinha-das-pastagens | SANTOS; BALSALOBRE, 2002, p. 1; CRUZ et al., 2010, p. 1-2; VIANA; CRUZ; WAQUIL, 2002, p. 6; EICHOLZ et al., 2024, p. 93; WORDELL FILHO et al., 2016, p. 44 | CC BY-NC-ND 4.0; não declarado; reprodução parcial permitida com citação |
+
+As classes 1, 7 e 12 não tinham fonte na primeira rodada (seção 9.3) e foram completadas em 20/11/2026. Em 23/11/2026 duas buscas acrescentaram dez publicações (Embrapa, Epagri e Associação Brasileira de Milho e Sorgo), que trouxeram descrição e danos **no milho** para as classes 0, 2, 3, 7, 11 e 12 (antes descritas só com base no manual da soja ou em poucas fontes) e reforçaram as classes 1, 4, 5, 6, 8, 9 e 10. As referências completas, com link e data de acesso, estão ao final da seção 9.3.
+
+### Limites e riscos
+
+- **Direitos autorais.** Fatos e descrições técnicas não são protegidos, mas a redação das fontes é. A equipe usa palavras próprias e cita a fonte; ainda assim, vale a **confirmação da Embrapa/parceiro** de que o uso informativo é aceitável. A licença CC BY-NC-ND 4.0 da fonte da classe 12 proíbe obras derivadas; como a ficha é redação própria de fatos, o risco é baixo, mas fica registrado.
+- **Divergências entre fontes.** Em *Leptoglossus zonatus*, as fontes descrevem de modo diferente a cor da faixa do adulto; as fichas usam essa informação apenas de uma fonte (Ávila e Papa) para identificação.
+- **Manejo.** Várias fontes trazem manejo químico e biológico; ele **não** foi incluído nas fichas.
+- **Nomes.** O nome exibido é o do modelo (classe 11: "Astylus variegatus"). Os nomes científicos seguem como referência a validar por agrônomo.
+- **Leitura em campo.** O texto usa português simples e listas curtas; a legibilidade ao sol, no celular, ainda não foi testada no aparelho.
+
+### Fichas por classe
+
+As fichas abaixo são geradas por `python -m src.associacao_conteudo_t9_3 docs` a partir de `base_conteudo.json`; **não edite este bloco à mão**. Um teste confere se ele está atualizado.
+
+<!-- fichas:inicio -->
+#### 0. Vaquinha (*Diabrotica speciosa*)
+
+*Descrição baseada em manual sobre a cultura da soja e em publicações sobre o milho.*
+
+**Como reconhecer**
+- Adulto pequeno, de 5 a 6 mm: corpo verde, três manchas amarelas em cada asa da frente e cabeça avermelhada. (SOSA-GÓMEZ et al., 2014, p. 42)
+- A larva vive no solo. É amarelo-pálida, com cabeça, tórax e pernas pretos, e mede de 10 a 12 mm. (SOSA-GÓMEZ et al., 2014, p. 42)
+- Os ovos são postos em grupos, nas partes da planta que ficam debaixo da terra. (SOSA-GÓMEZ et al., 2014, p. 42)
+- A larva-alfinete é a fase jovem da vaquinha verde e amarela, também chamada de patriota. (EICHOLZ et al., 2024, p. 90)
+
+**Danos ou sintomas**
+- Os adultos comem folhas e brotos, de preferência os mais tenros, e deixam pequenos furos. (SOSA-GÓMEZ et al., 2014, p. 42)
+- Raramente causam grande desfolha. (SOSA-GÓMEZ et al., 2014, p. 42)
+- No milho, as larvas comem as raízes, e a planta passa a absorver menos água e nutrientes. (VIANA, 2011, p. 22)
+- Com a raiz estragada, o colmo fica curvado: é o sintoma chamado de pescoço-de-ganso. (VIANA, 2011, p. 22)
+- Planta com poucas raízes tomba mais fácil com vento forte e chuva intensa, o que atrapalha a colheita mecânica. (EICHOLZ et al., 2024, p. 90)
+- Mais de 3,5 larvas por planta já bastam para prejudicar as raízes. (VIANA; CRUZ; WAQUIL, 2002, p. 1)
+- No milho, os adultos podem furar folhas de plantas novas e, na polinização, comer os "cabelos" da espiga, o que prejudica a fertilização. (VIANA, 2011, p. 23)
+- A fase de maior risco vai da germinação até cerca de 45 dias depois da emergência da planta. (EICHOLZ et al., 2024, p. 90)
+- Os danos mais fortes aparecem em lavouras semeadas tarde ou na safrinha, quando há mais adultos; no Sul, o pico é de fevereiro a março. (WORDELL FILHO et al., 2016, p. 40)
+- Quando a planta cresce, a larva também ataca as raízes adventícias, e a planta lança raízes em nós acima do solo. (WORDELL FILHO et al., 2016, p. 40)
+
+**Pode ser confundido com**
+- Em testes, o app às vezes indicou esta praga quando a foto era de percevejo-verde, percevejo-barriga-verde ou cigarrinha-do-milho. (Análise de erros do modelo (seção 6.4 do Projeto.md))
+
+#### 1. Cigarrinha-do-milho (*Dalbulus maidis*)
+
+*Descrição baseada em publicações sobre a cultura do milho.*
+
+**Como reconhecer**
+- Adulto muito pequeno: cerca de 4 mm, cor de palha, com manchas pretas no abdômen e duas manchas pretas na cabeça. (WAQUIL, 2004, p. 1)
+- Os adultos costumam ficar e se alimentar dentro do cartucho do milho. (WAQUIL, 2004, p. 1)
+- As ninfas também têm cor de palha, mas o abdômen é manchado de escuro e os olhos são pretos. Ficam quietas na folha e só andam se forem incomodadas. (WAQUIL, 2004, p. 2)
+- Os ovos são minúsculos (menos de 1 mm), translúcidos e ficam dentro da nervura central da folha. (WAQUIL, 2004, p. 2)
+
+**Danos ou sintomas**
+- O principal problema é que ela transmite doenças: os enfezamentos (pálido e vermelho) e o rayado fino. (WAQUIL, 2004, p. 1)
+- Enfezamento pálido: na base das folhas novas surgem listras largas, amareladas ou verde-limão; as folhas mais velhas ficam amareladas ou avermelhadas. (WAQUIL, 2004, p. 3)
+- Enfezamento vermelho: folhas velhas avermelhadas e, depois, a planta toda avermelhada ou amarelada, mais baixa, com aspecto de arbusto e espigas mal granadas. (WAQUIL, 2004, p. 4)
+- Rayado fino: pontinhos amarelados alinhados nas folhas, que se juntam em riscas finas. (WAQUIL, 2004, p. 4)
+- Os sintomas aparecem de cerca de uma a quatro semanas depois da infecção, conforme a doença, e às vezes são leves ou nem aparecem. (WAQUIL, 2004, p. 3-4)
+- Quanto mais cedo a planta é infectada, maior o prejuízo. (WAQUIL, 2004, p. 4)
+- Conforme a idade em que foi infectada, a planta pode ficar com entrenós curtos, espigas pequenas, pendão deformado ou nem formar a espiga. (WAQUIL, 2004, p. 3)
+- Além dos enfezamentos, ela transmite a virose-da-risca e o mosaico-estriado-do-milho. (EICHOLZ et al., 2024, p. 91)
+- As perdas de produtividade podem passar de 90%, conforme o híbrido, o momento da infecção e o clima. (EICHOLZ et al., 2024, p. 91)
+- Nas plantas com enfezamento são comuns planta mais baixa, várias espigas pequenas e espigas e grãos mal formados. (EICHOLZ et al., 2024, p. 92)
+- Virose-da-risca: pontinhos amarelados alinhados e planta menor. Mosaico-estriado: manchas e estrias claras e planta bem mais baixa. (EICHOLZ et al., 2024, p. 92)
+
+**Pode ser confundido com**
+- As doenças que ela transmite se parecem e podem ocorrer juntas na mesma planta; só pelo olhar é difícil dizer qual é qual. (EICHOLZ et al., 2024, p. 92)
+
+#### 2. Percevejo-barriga-verde (*Diceraeus spp. (ex-Dichelops)*)
+
+*Descrição baseada em manual sobre a cultura da soja, que usa o nome Dichelops, e em publicações sobre o milho.*
+
+**Como reconhecer**
+- Adulto de 9 a 11 mm, castanho-amarelado a acinzentado, com a barriga verde. (SOSA-GÓMEZ et al., 2014, p. 84)
+- A cabeça termina em duas pontas, e a frente do tórax tem bordas serrilhadas e espinhos nas laterais. (SOSA-GÓMEZ et al., 2014, p. 84)
+- As ninfas são castanhas, com a barriga mais clara e pontinhos escuros. Logo depois de nascer ficam juntas sobre os ovos e depois se espalham. (SOSA-GÓMEZ et al., 2014, p. 84)
+- Os ovos são verde-claros, postos em grupos de cerca de 14, nas folhas ou nas vagens. (SOSA-GÓMEZ et al., 2014, p. 84)
+- O D. melacanthus mede cerca de 9 mm, tem o dorso pardo e a barriga verde-clara, e o espinho de cada lado do tórax tem a ponta marrom-escura. (WORDELL FILHO et al., 2016, p. 34)
+- As ninfas têm a barriga esverdeada e o dorso pardo, com manchas arroxeadas na cabeça e no tórax e avermelhadas no abdome. (WORDELL FILHO et al., 2016, p. 34)
+
+**Danos ou sintomas**
+- Ninfas e adultos sugam as vagens e estragam os grãos, o que reduz a produtividade e a qualidade da soja. (SOSA-GÓMEZ et al., 2014, p. 84)
+- Também ocorre em milho e trigo, com danos sérios principalmente em plantas jovens de milho. (SOSA-GÓMEZ et al., 2014, p. 84)
+- No milho, adultos e ninfas sugam a base das plantas novas, logo depois da emergência; ao abrirem, as folhas mostram furos simétricos com halos amarelados. (VIANA; CRUZ; WAQUIL, 2002, p. 4-5)
+- A planta atacada pode ficar deformada, soltar perfilhos que não produzem e até morrer. (VIANA; CRUZ; WAQUIL, 2002, p. 5)
+- As folhas ficam retorcidas, com furos perpendiculares às nervuras; a planta cresce devagar e pode dar espigas pequenas. (EICHOLZ et al., 2024, p. 91)
+- Quando o sintoma aparece, o dano já aconteceu e não tem volta. (EICHOLZ et al., 2024, p. 91)
+- Plantas com mais de 5 folhas abertas, ou com colmo de mais de 1 cm de espessura, sofrem pouco; quanto menor a planta, maior o estrago. (EICHOLZ et al., 2024, p. 91)
+- É praga típica da soja, mas passou a atacar o milho plantado em sucessão ou rotação com ela, logo após a emergência. (VIANA; CRUZ; WAQUIL, 2002, p. 4)
+- Um único percevejo pode estragar até seis plantas vizinhas. (WORDELL FILHO et al., 2016, p. 34)
+
+**Pode ser confundido com**
+- Em testes, o app às vezes indicou esta praga quando a foto era de percevejo-verde. (Análise de erros do modelo (seção 6.4 do Projeto.md))
+
+#### 3. Lagarta-do-cartucho (*Spodoptera frugiperda*)
+
+*Descrição baseada em manual sobre a cultura da soja, que usa o título lagarta-das-vagens, e em publicações sobre o milho.*
+
+**Como reconhecer**
+- Lagarta crescida: de 35 a 40 mm, com pontos pretos em pares dos dois lados de cada segmento do corpo, cada ponto com um pelo longo. (SOSA-GÓMEZ et al., 2014, p. 74)
+- No último segmento do corpo há quatro pontos pretos, dispostos como os cantos de um quadrado. (SOSA-GÓMEZ et al., 2014, p. 74)
+- A cabeça tem um desenho de épsilon invertido, mas só isso não basta para confirmar a espécie. (SOSA-GÓMEZ et al., 2014, p. 74)
+- O adulto é uma mariposa de 32 a 38 mm com as asas abertas: asas da frente cinza-amarronzadas (mais escuras nos machos) e asas de trás branco-prateadas. (SOSA-GÓMEZ et al., 2014, p. 74)
+- Os ovos são quase redondos, postos em camadas e cobertos por escamas do abdômen da fêmea. (SOSA-GÓMEZ et al., 2014, p. 74)
+- A lagarta recém-nascida tem a cabeça preta e o corpo claro; escurece a partir dos 3 dias de vida. (VALICENTE, 2015, p. 5)
+- A pupa fica no solo, é marrom-avermelhada e mede de 14 a 18 mm. (VALICENTE, 2015, p. 5)
+
+**Danos ou sintomas**
+- Na soja, pode atacar as vagens. (SOSA-GÓMEZ et al., 2014, p. 74)
+- É uma das principais pragas do milho: sem controle, pode reduzir a produção em 34% a 52%. (VALICENTE, 2015, p. 4)
+- Lagartas novas raspam só um lado da folha; depois do 2º ou 3º estágio passam a furá-la. (VALICENTE, 2015, p. 5)
+- Comendo no cartucho, deixam uma fileira de furos nas folhas, e o cartucho pode ficar totalmente destruído. (VALICENTE, 2015, p. 5-6)
+- Dentro do cartucho aparecem também os excrementos da lagarta. (EICHOLZ et al., 2024, p. 92)
+- Em plantas novas pode matar a planta, principalmente quando o milho é semeado logo depois da dessecação, no plantio direto. (VIANA; CRUZ; WAQUIL, 2002, p. 6)
+- O estrago é maior quando o ataque acontece em plantas com até 8 a 10 folhas abertas. (EICHOLZ et al., 2024, p. 92)
+- Também ataca a espiga, entrando pela base, pela ponta ou pelo meio. (VALICENTE, 2015, p. 5)
+- No milho, pode cortar a planta rente ao solo, como a lagarta-rosca, e reduzir o número de plantas na lavoura. (EICHOLZ et al., 2024, p. 90)
+
+**Pode ser confundido com**
+- Lagarta-rosca: nas plantas novas de milho os sintomas podem ser parecidos, com a planta cortada rente ao solo. (VALICENTE, 2015, p. 5)
+- As lagartas do gênero Spodoptera se parecem muito, e é difícil diferenciar as espécies. (TEODORO et al., 2013, p. 2)
+- Na espiga, a lagarta rasga a palha ao sair para virar pupa, e isso a diferencia da lagarta-da-espiga. (EICHOLZ et al., 2024, p. 92)
+- Em testes, o app às vezes indicou esta praga quando a foto era de lagarta-falsa-medideira ou de lagarta-das-vagens. (Análise de erros do modelo (seção 6.4 do Projeto.md))
+
+#### 4. Percevejo-marrom (*Euschistus heros*)
+
+*Descrição baseada em manual e circular sobre a cultura da soja e em publicação sobre o milho.*
+
+**Como reconhecer**
+- Adulto marrom-escuro, com dois pequenos espinhos nas laterais, perto da cabeça. (SOSA-GÓMEZ et al., 2014, p. 78)
+- A ninfa recém-nascida tem cerca de 1 mm, corpo alaranjado e cabeça preta. Passa por cinco fases e, nas maiores, a cor varia do cinza ao marrom. (SOSA-GÓMEZ et al., 2014, p. 78)
+- Os ovos são amarelados, postos nas folhas em pequenos grupos de 5 a 7; perto de nascer, ganham uma mancha rosada. (SOSA-GÓMEZ et al., 2014, p. 78)
+- O adulto mede cerca de 11 mm e tem uma mancha branca em forma de meia-lua na ponta de trás do escudo (escutelo). (EICHOLZ et al., 2024, p. 91)
+
+**Danos ou sintomas**
+- Adultos e ninfas sugam vagens e grãos, o que reduz a produtividade e piora a qualidade da semente. (SOSA-GÓMEZ et al., 2014, p. 78)
+- Provoca menos sintomas de retenção foliar do que o percevejo-verde e o percevejo-verde-pequeno. (SOSA-GÓMEZ et al., 2014, p. 78)
+- Ninfas do 3º ao 5º estágio também estragam os grãos da soja. (HOFFMANN-CAMPO et al., 2000, p. 24)
+- Em milho safrinha, plantado depois da soja, pode aparecer em grande número; sintomas e fase crítica são parecidos com os do barriga-verde. (EICHOLZ et al., 2024, p. 91)
+- No milho ele também pesa, sobretudo onde o clima é mais quente. (WORDELL FILHO et al., 2016, p. 36)
+
+#### 5. Percevejo-verde (*Nezara viridula*)
+
+*Descrição baseada em manual e circular sobre a cultura da soja e em publicação sobre o milho.*
+
+**Como reconhecer**
+- Adulto totalmente verde, de 12 a 15 mm; solta mau cheiro quando incomodado (por isso, "maria-fedida" ou "fede-fede"). (SOSA-GÓMEZ et al., 2014, p. 82)
+- A ninfa é verde ou preta, com manchas redondas brancas e pontinhos pretos pelo corpo; passa por cinco fases e se desenvolve em cerca de 25 dias. (SOSA-GÓMEZ et al., 2014, p. 82)
+- Os ovos são amarelados, postos de preferência na face de baixo das folhas, em massas regulares de 50 a 100, parecidas com favos de colmeia. (SOSA-GÓMEZ et al., 2014, p. 82)
+
+**Danos ou sintomas**
+- Ninfas e adultos causam dano parecido com o dos outros percevejos da soja. (SOSA-GÓMEZ et al., 2014, p. 82)
+- A capacidade de provocar haste verde é maior que a do percevejo-marrom e menor que a do percevejo-verde-pequeno. (SOSA-GÓMEZ et al., 2014, p. 82)
+- As ninfas só começam a comer os grãos de soja a partir do 3º estágio, e o estrago cresce até o 5º, o último. (HOFFMANN-CAMPO et al., 2000, p. 22)
+- Também ataca o milho novo semeado depois da soja, junto com o percevejo-barriga-verde. (VIANA; CRUZ; WAQUIL, 2002, p. 4)
+
+**Pode ser confundido com**
+- Em testes, o app às vezes indicou esta praga quando a foto era de percevejo-asa-preta. (Análise de erros do modelo (seção 6.4 do Projeto.md))
+
+#### 6. Percevejo-asa-preta (*Edessa meditabunda*)
+
+*Descrição baseada em manual e circular sobre a cultura da soja, que chamam a espécie de percevejo-edessa, e em resumo da Embrapa Soja.*
+
+**Como reconhecer**
+- Adulto de 13 mm, de corpo oval, com a cabeça e parte do tórax verdes e as asas marrom-escuras. (SOSA-GÓMEZ et al., 2014, p. 86)
+- A ninfa é verde-amarelada, com antenas e pernas da mesma cor; a barriga é amarelo-escura e brilhante. (SOSA-GÓMEZ et al., 2014, p. 86)
+- Os ovos são verde-claros, em geral nas folhas, em massas de 14 ovos dispostos em duas fileiras. (SOSA-GÓMEZ et al., 2014, p. 86)
+
+**Danos ou sintomas**
+- Os danos são parecidos com os dos outros percevejos que sugam sementes, mas a capacidade de dano é menor. (SOSA-GÓMEZ et al., 2014, p. 86)
+- Também pode sugar caules e causar lesões escuras. (SOSA-GÓMEZ et al., 2014, p. 86)
+- Em geral, as populações não são elevadas. (SOSA-GÓMEZ et al., 2014, p. 86)
+- Sozinha, a espécie costuma não formar populações que ameacem a produtividade, mas o dano dela se soma ao dos percevejos principais. (HOFFMANN-CAMPO et al., 2000, p. 25)
+- É um percevejo secundário da soja, que ataca só de vez em quando. (CANTONE et al., [2011?], p. 16)
+- O bico é mais curto que o dos principais percevejos da soja; por isso, as ninfas não completam o desenvolvimento só com vagens e precisam comer folhas também. (CANTONE et al., [2011?], p. 16)
+- As ninfas ficam agrupadas e comem com frequência, o que pode causar danos importantes à planta. (CANTONE et al., [2011?], p. 16)
+
+#### 7. Percevejo-do-milho (*Leptoglossus zonatus*)
+
+*Descrição baseada em textos sobre a cultura do milho.*
+
+**Como reconhecer**
+- Adulto com cerca de 20 mm, marrom-escuro, com duas manchas amarelas redondas na frente do tórax. (ÁVILA; PAPA, s.d., seção “Percevejo-do-milho”)
+- Nas asas da frente há uma faixa amarela em zigue-zague, e as pernas de trás têm um alargamento em forma de folha. (ÁVILA; PAPA, s.d., seção “Percevejo-do-milho”)
+- As fêmeas costumam ser maiores que os machos. (MATRANGOLO; WAQUIL, 1994, p. 421)
+- Os ovos são postos enfileirados, grudados na superfície; são esverdeados no início e ficam marrons em algumas horas. (MATRANGOLO; WAQUIL, 1994, p. 421)
+- As ninfas ficam agrupadas até o fim do 2º estágio e depois se espalham. Em milho, a maioria foi encontrada nas folhas. (MATRANGOLO; WAQUIL, 1994, p. 421-422)
+- As ninfas são alaranjadas e, no começo da vida, ficam agrupadas. (WORDELL FILHO et al., 2016, p. 38)
+- Do ovo ao adulto o ciclo dura de 40 a 60 dias. (WORDELL FILHO et al., 2016, p. 38)
+
+**Danos ou sintomas**
+- Adultos e ninfas sugam os grãos do milho. Os adultos ficam sobre as espigas e furam a palha para chegar aos grãos. (MATRANGOLO; WAQUIL, 1994, p. 422)
+- O furo da picada deixa entrar fungos. O resultado é espiga com falhas e grãos murchos e podres. (ÁVILA; PAPA, s.d., seção “Percevejo-do-milho”)
+- Há relatos de grãos contaminados por fungos, entre eles Fusarium moniliforme, Penicillium e Cephalosporium. (MATRANGOLO; WAQUIL, 1994, p. 420)
+- Prefere espigas de palha aberta, em que as sementes ficam mais expostas. (ÁVILA; PAPA, s.d., seção “Percevejo-do-milho”)
+- Também é citado em sorgo, laranja e tomate. (MATRANGOLO; WAQUIL, 1994, p. 420)
+- No milho, o ataque pode reduzir a produtividade em cerca de 15%. (WORDELL FILHO et al., 2016, p. 38)
+- Ninfas e adultos sugam as espigas, sobretudo na fase de enchimento dos grãos, e causam murcha e manchas que impedem o uso do milho verde em conserva. (WORDELL FILHO et al., 2016, p. 38)
+- Espigas atacadas têm mais grãos ardidos, o que piora a qualidade da ração e prejudica a produção de sementes. (WORDELL FILHO et al., 2016, p. 38)
+- Costuma chegar às plantas de milho a partir do aparecimento dos "cabelos" (estilos) da espiga. (WORDELL FILHO et al., 2016, p. 38)
+
+#### 8. Lagarta-falsa-medideira (*Chrysodeixis includens*)
+
+*Descrição baseada em manual e circulares sobre a cultura da soja.*
+
+**Como reconhecer**
+- A lagarta é verde-clara, com listras brancas ao longo do corpo e pontinhos pretos; anda "medindo palmos" (arqueando o corpo). (SOSA-GÓMEZ et al., 2014, p. 36)
+- No último estágio chega a 40 ou 45 mm e vira pupa sob uma teia, em geral na face de baixo das folhas. (SOSA-GÓMEZ et al., 2014, p. 36)
+- O adulto é uma mariposa que mantém as asas inclinadas; logo depois de sair da pupa, mostra manchas prateadas brilhantes no meio das asas da frente. (SOSA-GÓMEZ et al., 2014, p. 36)
+- A lagarta tem três pares de patas na frente, dois pares de falsas pernas no abdome e um par na ponta; por isso o corpo se arqueia ao andar. (BOTELHO; SILVA; ÁVILA, 2019, p. 4)
+- Os ovos são postos um a um, em geral na face de baixo das folhas; são cremes e brilhantes no começo e ficam marrom-claros perto de nascer. (BOTELHO; SILVA; ÁVILA, 2019, p. 4)
+- A mariposa mede cerca de 35 mm com as asas abertas; as asas da frente são escuras, com duas manchas prateadas no centro, e as de trás são marrons. (BOTELHO; SILVA; ÁVILA, 2019, p. 8)
+
+**Danos ou sintomas**
+- A lagarta come o tecido da folha e deixa as nervuras, o que dá aos folíolos um aspecto rendilhado. (SOSA-GÓMEZ et al., 2014, p. 36)
+- Cada lagarta come de 64 a 200 cm² de folha de soja, o que pode reduzir bastante a área que a planta usa para fazer fotossíntese. (BOTELHO; SILVA; ÁVILA, 2019, p. 7)
+- Até o 3º estágio as lagartas só raspam a folha; do 4º em diante furam e comem grandes áreas. (BOTELHO; SILVA; ÁVILA, 2019, p. 7)
+- Ela costuma ficar na parte de baixo das plantas de soja, onde fica mais protegida. (BOTELHO; SILVA; ÁVILA, 2019, p. 3)
+- Quando aparece junto com a lagarta-da-soja, ou depois dela, a desfolha da lavoura aumenta. (BOTELHO; SILVA; ÁVILA, 2019, p. 2)
+- Come mais de 170 espécies de plantas, mas prefere a soja. (BOTELHO; SILVA; ÁVILA, 2019, p. 2)
+
+**Pode ser confundido com**
+- Rachiplusia nu, mais frequente no Sul do Brasil; só um detalhe das mandíbulas ajuda a separar as duas. (SOSA-GÓMEZ et al., 2014, p. 36)
+- Enquanto pequenas, as lagartas da lagarta-da-soja são fáceis de trocar pelas da falsa-medideira. (SOSA-GÓMEZ et al., 2014, p. 34)
+
+#### 9. Lagarta-da-soja (*Anticarsia gemmatalis*)
+
+*Descrição baseada em manual e circular sobre a cultura da soja.*
+
+**Como reconhecer**
+- Lagarta pequena (até 10 mm), em geral verde, com quatro pares de pernas falsas no abdômen, duas delas reduzidas; por isso anda "medindo palmos". (SOSA-GÓMEZ et al., 2014, p. 34)
+- Lagartas maiores que 15 mm podem ser verdes ou escuras e têm três linhas brancas no dorso. (SOSA-GÓMEZ et al., 2014, p. 34)
+- O adulto é uma mariposa cinza-clara a marrom-escura, sempre com uma linha diagonal marrom-canela ligando as pontas das asas da frente. (SOSA-GÓMEZ et al., 2014, p. 34)
+- Os ovos são verde-claros, postos um a um, principalmente na face de baixo das folhas. (SOSA-GÓMEZ et al., 2014, p. 34)
+- Os ovos mudam de cor: de verde-claro passam a acinzentados e, perto de nascer, a marrom-escuros. (HOFFMANN-CAMPO et al., 2000, p. 13)
+
+**Danos ou sintomas**
+- A partir do 3º estágio a lagarta fura as folhas, mas deixa as nervuras. (SOSA-GÓMEZ et al., 2014, p. 34)
+- Do 4º ao 6º estágio ela consome mais de 95% de toda a folha que come ao longo da vida. (SOSA-GÓMEZ et al., 2014, p. 34)
+- Em populações altas pode causar desfolha acima de 30% e perda de produtividade. (SOSA-GÓMEZ et al., 2014, p. 34)
+- Em toda a vida, uma lagarta pode consumir de 100 a 150 cm² de folha. (HOFFMANN-CAMPO et al., 2000, p. 13)
+
+**Pode ser confundido com**
+- Enquanto pequenas, as lagartas são fáceis de trocar pelas da falsa-medideira. (SOSA-GÓMEZ et al., 2014, p. 34)
+
+#### 10. Lagarta-das-vagens (*Spodoptera eridania e S. cosmioides*)
+
+*Descrição baseada em manual sobre a cultura da soja e em comunicado técnico da Embrapa.*
+
+**Como reconhecer**
+- A classe junta duas espécies, Spodoptera cosmioides e S. eridania, que o manual trata em fichas separadas. (SOSA-GÓMEZ et al., 2014, p. 70-72)
+- As lagartas variam de amarelo-claro a preto, com listras no corpo, e podem chegar a 50 mm no último estágio (S. cosmioides). (SOSA-GÓMEZ et al., 2014, p. 70)
+- No dorso há manchas triangulares pretas: em S. cosmioides as do 7º e 8º segmentos do abdômen são maiores que as dos primeiros; em S. eridania, do 1º ao 8º, são grandes e de tamanho parecido. (SOSA-GÓMEZ et al., 2014, p. 70-72)
+- Os adultos de S. cosmioides são mariposas de 16 a 20 mm; as fêmeas põem os ovos em massas sobre as folhas. (SOSA-GÓMEZ et al., 2014, p. 70)
+- S. cosmioides: lagarta cinza-clara, castanha ou, mais comum, preta; no começo tem uma região escura entre o tórax e o abdômen e uma faixa laranja nas laterais. (TEODORO et al., 2013, p. 2)
+- S. eridania: lagarta marrom, de até 35 mm, com uma faixa esbranquiçada nas laterais, interrompida por uma mancha escura no tórax. (TEODORO et al., 2013, p. 3)
+- As lagartas de S. eridania costumam ficar na parte de baixo da planta e são mais ativas à noite. (TEODORO et al., 2013, p. 3)
+
+**Danos ou sintomas**
+- As lagartas atacam as vagens. (SOSA-GÓMEZ et al., 2014, p. 70-72)
+- S. eridania também desfolha soja e algodão. (SOSA-GÓMEZ et al., 2014, p. 72)
+- Podem atacar logo depois da emergência, diminuir o número de plantas e até exigir replantio. (TEODORO et al., 2013, p. 1)
+- Ao longo do ciclo causam desfolha forte e também furam as vagens. (TEODORO et al., 2013, p. 1)
+- São muito vorazes e atacam muitas culturas, como milho, algodão, amendoim e girassol; S. cosmioides come mais que S. eridania. (TEODORO et al., 2013, p. 2-3)
+
+**Pode ser confundido com**
+- Spodoptera albula (fora das classes do app): o manual compara as duas espécies com ela. S. eridania tem tom bronzeado nas asas da frente. (SOSA-GÓMEZ et al., 2014, p. 70-72)
+- S. frugiperda e S. albula também são comuns nas lavouras e muito parecidas; diferenciar as espécies do gênero é difícil. (TEODORO et al., 2013, p. 2)
+- Em testes, o app às vezes indicou esta praga quando a foto era de lagarta-do-cartucho. (Análise de erros do modelo (seção 6.4 do Projeto.md))
+
+#### 11. Astylus variegatus (*Astylus variegatus*)
+
+*Descrição baseada em manual sobre a cultura da soja e em publicação sobre pragas do milho.*
+
+**Como reconhecer**
+- Adulto com cerca de 8 mm, asas amarelas com pintas pretas. (SOSA-GÓMEZ et al., 2014, p. 98)
+- A larva vive no solo, é marrom-escura e tem pelos esparsos. (SOSA-GÓMEZ et al., 2014, p. 98)
+- Os adultos comem pólen e podem aparecer em grande número na lavoura, principalmente perto da floração. (SOSA-GÓMEZ et al., 2014, p. 98)
+- A fase de larva é longa e pode durar até um ano. (VIANA, 2011, p. 59)
+
+**Danos ou sintomas**
+- Os adultos não causam danos; as larvas podem, de vez em quando, comer raízes. (SOSA-GÓMEZ et al., 2014, p. 98)
+- No milho é praga secundária: só populações altas causam prejuízo, pois o milho é semeado com poucas sementes por área. (VIANA, 2011, p. 58)
+- As larvas comem sobretudo as sementes depois do plantio e as raízes, o que reduz a germinação e o número de plantas. (VIANA, 2011, p. 58)
+- É praga ocasional no início do milho: pode danificar as sementes e as raízes e prejudicar a formação da lavoura. (WORDELL FILHO et al., 2016, p. 42)
+
+**Pode ser confundido com**
+- Em testes, o app às vezes indicou esta praga quando a foto era de vaquinha. (Análise de erros do modelo (seção 6.4 do Projeto.md))
+
+#### 12. Cigarrinha-das-pastagens (*Deois flavopicta*)
+
+*Descrição baseada em material sobre pastagens e em publicações sobre o milho.*
+
+**Como reconhecer**
+- Adulto de cerca de 10 mm, preto, com duas faixas amarelas atravessadas nas asas; abdômen e pernas vermelhos. (SANTOS; BALSALOBRE, 2002, p. 1)
+- Os adultos vivem na parte de cima das gramíneas; as ninfas ficam na base das plantas, protegidas por uma espuma branca. (SANTOS; BALSALOBRE, 2002, p. 1)
+
+**Danos ou sintomas**
+- Suga a seiva e, ao picar, injeta toxinas na planta. (SANTOS; BALSALOBRE, 2002, p. 1)
+- Essas toxinas amarelam, secam e matam as folhas, efeito conhecido como "queima" do pasto. (SANTOS; BALSALOBRE, 2002, p. 1)
+- Ataca principalmente em épocas de muita umidade. (SANTOS; BALSALOBRE, 2002, p. 1)
+- No milho só os adultos atacam; as ninfas não vivem na lavoura. (CRUZ et al., 2010, p. 2)
+- Os adultos vêm de pastos vizinhos, principalmente de braquiária, porque o milho não permite à cigarrinha completar o ciclo. (VIANA; CRUZ; WAQUIL, 2002, p. 6)
+- Eles sugam a seiva: as folhas amarelam e secam, e a planta nova pode morrer. (CRUZ et al., 2010, p. 2)
+- O amarelo aparece em estrias nas folhas e nos colmos. (EICHOLZ et al., 2024, p. 93)
+- As plantas mais novas, até uns 20 dias, são as mais sensíveis: chegaram a secar com 3 a 4 cigarrinhas por planta. (EICHOLZ et al., 2024, p. 93)
+- Em teste da Embrapa, milho novo (fase V2) com 2 adultos por planta ficou amarelado em mais de 70% das folhas em 8 dias. (CRUZ et al., 2010, p. 1)
+
+**Pode ser confundido com**
+- Deois schach: também tem cerca de 10 mm e abdômen e pernas vermelhos, mas é preta-esverdeada e tem uma faixa laranja perto da ponta da asa. (SANTOS; BALSALOBRE, 2002, p. 1)
+- Zulia entreriana: menor (cerca de 7 mm), preta e brilhante, com uma faixa branco-amarelada perto da ponta da asa. (SANTOS; BALSALOBRE, 2002, p. 1)
+- No milho também aparecem outras cigarrinhas-das-pastagens, como as do gênero Mahanarva e a Deois flexuosa, com danos parecidos. (WORDELL FILHO et al., 2016, p. 44)
+- Em testes, o app às vezes indicou esta praga quando a foto era de percevejo-do-milho. (Análise de erros do modelo (seção 6.4 do Projeto.md))
+<!-- fichas:fim -->
+
+### Liberação e lacunas
+
+As 13 fichas foram liberadas no aplicativo em 23/11/2026 com o comando `aprovar` (seção 9.3), que grava em `validacao_conteudo` a data e a evidência: liberação para o MVP por decisão da equipe (esta seção); **validação agronômica pelo parceiro pendente**. Para alterar uma ficha, edite `base_conteudo.json`, rode `docs` e `frontend` e os testes.
+
+**Lacunas de cobertura (para aprimorar depois):**
+
+- **Classe 6 (percevejo-asa-preta):** só material da soja e um resumo da Embrapa Soja; faltam fonte dedicada com as fases do inseto e a variação de cor, e mais detalhes dos danos.
+- **Classe 11 (*Astylus*):** o dano é secundário e mal documentado; as fontes divergem sobre os pelos da larva (esparsos no manual da soja; densos no documento do milho), e a ficha não afirma nenhum dos dois.
+- **"Pode ser confundido com":** não existe para as classes 4, 6 e 7, porque o modelo não as trocou com frequência e as fontes consultadas não citam espécies parecidas. Isso não afirma que não haja confusão no campo.
+- **Classe 1 (cigarrinha-do-milho):** o artigo de Oliveira (2025) foi consultado, mas o texto não pôde ser lido por extração; nenhuma frase depende dele.
+- **Fontes não obtidas:** a Circular Técnica 21 da Embrapa (lagarta-do-cartucho no milho, 1995), a Circular Técnica 24 (percevejos da soja) e o capítulo "Manejo de pragas" da Embrapa passam de 10 MB e não puderam ser lidos pela ferramenta de busca; o PDF "Lagarta cartucho" da Embrapa e o artigo de Souza e Carvalho (1994) sobre o adulto de *Astylus* não têm texto legível (digitalização); o Panorama Fitossanitário da Embrapa Milho e Sorgo não respondeu.
+- **Todas:** sem manejo (químico ou biológico), sem fotos de referência e sem validação agronômica do parceiro.
+
+## 13.2 Integração no aplicativo (T13.2)
+
+**Data:** 23/11/2026. **Situação:** concluída. Ao classificar uma foto, o painel "Orientações técnicas" mostra a ficha da classe prevista, e as 13 classes têm ficha liberada (seção 13.1). Os testes funcionais de navegação e apresentação do conteúdo são a T13.3, tratada à parte.
+
+### Integração classe prevista → ficha
+
+1. O modelo devolve o índice da classe e a [política de confiança](#92-tratamento-do-limiar-de-confiança-t92) escolhe as hipóteses que aparecem. A primeira vem selecionada; o usuário pode escolher outra.
+2. O índice da hipótese selecionada indexa o `frontend/src/data/content.ts`, gerado por `python -m src.associacao_conteudo_t9_3 frontend` a partir da [associação](../assets/data/conteudo_T9_3/associacao_classes.json) e da [base de fichas](../assets/data/conteudo_T9_3/base_conteudo.json). Só entram as classes cuja ficha foi validada.
+3. O painel mostra a ficha: nome e nome científico, contexto, "Como reconhecer", "Danos ou sintomas", "Pode ser confundido com" (quando há), aviso de que a informação é da equipe e não substitui o engenheiro agrônomo, linha "Fonte:" e referências completas. A fonte de cada frase aparece sob ela. Sem ficha validada, o painel diz "Conteúdo técnico ainda indisponível para <classe>" e **não afirma nenhuma orientação**; se o resultado é inconclusivo, o painel não aparece.
+4. O conteúdo vai no bundle do aplicativo, então funciona sem rede (seção 9.4).
+
+### Verificação das 13 associações
+
+- `python -m src.associacao_conteudo_t9_3 verificar --exigir-conteudo`: 13 de 13 classes com conteúdo disponível, nenhuma indisponível.
+- `tests/validar_associacao_conteudo_t9_3.py` (19 testes): ordem das 13 classes do modelo, chaves únicas, nenhuma ficha compartilhada entre classes relacionadas na T6.4, `content.ts` igual ao gerado da base e bloco de fichas do Projeto.md atualizado.
+- `tests/validar_fichas_t13.py` (8 testes): uma ficha por classe, com nome e nome científico do modelo; seções, fonte e página de cada frase dentro do mapa de fontes; ausência de manejo químico e de links; confusões do modelo iguais à análise de erros.
+- Painel renderizado no navegador (390 px de largura) com a ficha liberada, em 23/11/2026, sem rolagem horizontal; a leitura ao sol em aparelho real não foi avaliada.
+
+**Dependência registrada:** a qualidade do texto depende da validação agronômica, ainda pendente (lacunas na seção 13.1). Até lá, o aviso na tela deixa claro o caráter informativo.
 
 # 14. Documentação técnica e transferência de conhecimento
 

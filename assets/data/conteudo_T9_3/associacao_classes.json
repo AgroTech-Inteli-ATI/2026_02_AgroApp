@@ -1,14 +1,15 @@
 {
-  "esquema": "associacao_conteudo_T9_3_v1",
-  "versao": "1.0.0",
-  "status": "parcial_aguardando_catalogo_do_parceiro",
+  "esquema": "associacao_conteudo_T9_3_v2",
+  "versao": "2.0.0",
+  "status": "fichas_da_equipe_validadas",
   "pacote": "assets/modelos/candidato_T5_6_20261026",
   "total_classes": 13,
   "identificacao_fonte": "Tabela da seção 2 do instruções.md do dataset (Drive Agro_App, dataset/dataset). Nomes científicos são referência a validar por agrônomo.",
   "regras": [
-    "O conteúdo só é aberto pela chave_conteudo oficial; a chave proposta nunca abre conteúdo.",
+    "O conteúdo só é aberto pela chave_conteudo (oficial do Agro App ou da equipe, conforme origem_chave); a chave proposta nunca abre conteúdo.",
     "Classes relacionadas na T6.4 mantêm conteúdo e chave separados; a relação não une classes nem altera o ranking.",
-    "Sem chave oficial, status validado e item validado na base, a classe resolve como indisponível."
+    "Sem chave, status validado e ficha validada na base, a classe resolve como indisponível.",
+    "Ficha da equipe: redação própria com citação de fonte e página; não é conteúdo oficial nem aprovado pelo parceiro."
   ],
   "fontes": {
     "classes_modelo": {
@@ -43,9 +44,13 @@
       ],
       "ids_acervo": [],
       "chave_conteudo_proposta": "praga.diabrotica_speciosa",
-      "chave_conteudo": null,
-      "status_conteudo": "aguardando_catalogo_agroapp",
-      "validacao_conteudo": null,
+      "chave_conteudo": "equipe.diabrotica_speciosa",
+      "origem_chave": "equipe",
+      "status_conteudo": "validado",
+      "validacao_conteudo": {
+        "data": "2026-11-23",
+        "evidencia": "Liberação das fichas no MVP por decisão da equipe (seção 13.1 do Projeto.md); validação agronômica pelo parceiro pendente."
+      },
       "relacionadas_t6_4": [
         {
           "indice": 1,
@@ -95,9 +100,13 @@
         }
       ],
       "chave_conteudo_proposta": "praga.dalbulus_maidis",
-      "chave_conteudo": null,
-      "status_conteudo": "aguardando_catalogo_agroapp",
-      "validacao_conteudo": null,
+      "chave_conteudo": "equipe.dalbulus_maidis",
+      "origem_chave": "equipe",
+      "status_conteudo": "validado",
+      "validacao_conteudo": {
+        "data": "2026-11-23",
+        "evidencia": "Liberação das fichas no MVP por decisão da equipe (seção 13.1 do Projeto.md); validação agronômica pelo parceiro pendente."
+      },
       "relacionadas_t6_4": [
         {
           "indice": 0,
@@ -119,9 +128,13 @@
       ],
       "ids_acervo": [],
       "chave_conteudo_proposta": "praga.dichelops_sp",
-      "chave_conteudo": null,
-      "status_conteudo": "aguardando_catalogo_agroapp",
-      "validacao_conteudo": null,
+      "chave_conteudo": "equipe.dichelops_sp",
+      "origem_chave": "equipe",
+      "status_conteudo": "validado",
+      "validacao_conteudo": {
+        "data": "2026-11-23",
+        "evidencia": "Liberação das fichas no MVP por decisão da equipe (seção 13.1 do Projeto.md); validação agronômica pelo parceiro pendente."
+      },
       "relacionadas_t6_4": [
         {
           "indice": 0,
@@ -171,9 +184,13 @@
       ],
       "ids_acervo": [],
       "chave_conteudo_proposta": "praga.spodoptera_frugiperda",
-      "chave_conteudo": null,
-      "status_conteudo": "aguardando_catalogo_agroapp",
-      "validacao_conteudo": null,
+      "chave_conteudo": "equipe.spodoptera_frugiperda",
+      "origem_chave": "equipe",
+      "status_conteudo": "validado",
+      "validacao_conteudo": {
+        "data": "2026-11-23",
+        "evidencia": "Liberação das fichas no MVP por decisão da equipe (seção 13.1 do Projeto.md); validação agronômica pelo parceiro pendente."
+      },
       "relacionadas_t6_4": [
         {
           "indice": 2,
@@ -210,9 +227,13 @@
       ],
       "ids_acervo": [],
       "chave_conteudo_proposta": "praga.euschistus_heros",
-      "chave_conteudo": null,
-      "status_conteudo": "aguardando_catalogo_agroapp",
-      "validacao_conteudo": null,
+      "chave_conteudo": "equipe.euschistus_heros",
+      "origem_chave": "equipe",
+      "status_conteudo": "validado",
+      "validacao_conteudo": {
+        "data": "2026-11-23",
+        "evidencia": "Liberação das fichas no MVP por decisão da equipe (seção 13.1 do Projeto.md); validação agronômica pelo parceiro pendente."
+      },
       "relacionadas_t6_4": [
         {
           "indice": 2,
@@ -241,9 +262,13 @@
       ],
       "ids_acervo": [],
       "chave_conteudo_proposta": "praga.nezara_viridula",
-      "chave_conteudo": null,
-      "status_conteudo": "aguardando_catalogo_agroapp",
-      "validacao_conteudo": null,
+      "chave_conteudo": "equipe.nezara_viridula",
+      "origem_chave": "equipe",
+      "status_conteudo": "validado",
+      "validacao_conteudo": {
+        "data": "2026-11-23",
+        "evidencia": "Liberação das fichas no MVP por decisão da equipe (seção 13.1 do Projeto.md); validação agronômica pelo parceiro pendente."
+      },
       "relacionadas_t6_4": [
         {
           "indice": 0,
@@ -276,9 +301,13 @@
       ],
       "ids_acervo": [],
       "chave_conteudo_proposta": "praga.edessa_meditabunda",
-      "chave_conteudo": null,
-      "status_conteudo": "aguardando_catalogo_agroapp",
-      "validacao_conteudo": null,
+      "chave_conteudo": "equipe.edessa_meditabunda",
+      "origem_chave": "equipe",
+      "status_conteudo": "validado",
+      "validacao_conteudo": {
+        "data": "2026-11-23",
+        "evidencia": "Liberação das fichas no MVP por decisão da equipe (seção 13.1 do Projeto.md); validação agronômica pelo parceiro pendente."
+      },
       "relacionadas_t6_4": [
         {
           "indice": 0,
@@ -308,9 +337,13 @@
         }
       ],
       "chave_conteudo_proposta": "praga.leptoglossus_zonatus",
-      "chave_conteudo": null,
-      "status_conteudo": "aguardando_catalogo_agroapp",
-      "validacao_conteudo": null,
+      "chave_conteudo": "equipe.leptoglossus_zonatus",
+      "origem_chave": "equipe",
+      "status_conteudo": "validado",
+      "validacao_conteudo": {
+        "data": "2026-11-23",
+        "evidencia": "Liberação das fichas no MVP por decisão da equipe (seção 13.1 do Projeto.md); validação agronômica pelo parceiro pendente."
+      },
       "relacionadas_t6_4": [
         {
           "indice": 2,
@@ -347,9 +380,13 @@
       ],
       "ids_acervo": [],
       "chave_conteudo_proposta": "praga.chrysodeixis_includens",
-      "chave_conteudo": null,
-      "status_conteudo": "aguardando_catalogo_agroapp",
-      "validacao_conteudo": null,
+      "chave_conteudo": "equipe.chrysodeixis_includens",
+      "origem_chave": "equipe",
+      "status_conteudo": "validado",
+      "validacao_conteudo": {
+        "data": "2026-11-23",
+        "evidencia": "Liberação das fichas no MVP por decisão da equipe (seção 13.1 do Projeto.md); validação agronômica pelo parceiro pendente."
+      },
       "relacionadas_t6_4": [
         {
           "indice": 3,
@@ -379,9 +416,13 @@
         }
       ],
       "chave_conteudo_proposta": "praga.anticarsia_gemmatalis",
-      "chave_conteudo": null,
-      "status_conteudo": "aguardando_catalogo_agroapp",
-      "validacao_conteudo": null,
+      "chave_conteudo": "equipe.anticarsia_gemmatalis",
+      "origem_chave": "equipe",
+      "status_conteudo": "validado",
+      "validacao_conteudo": {
+        "data": "2026-11-23",
+        "evidencia": "Liberação das fichas no MVP por decisão da equipe (seção 13.1 do Projeto.md); validação agronômica pelo parceiro pendente."
+      },
       "relacionadas_t6_4": [
         {
           "indice": 2,
@@ -407,9 +448,13 @@
       ],
       "ids_acervo": [],
       "chave_conteudo_proposta": "praga.spodoptera_eridania_cosmioides",
-      "chave_conteudo": null,
-      "status_conteudo": "aguardando_catalogo_agroapp",
-      "validacao_conteudo": null,
+      "chave_conteudo": "equipe.spodoptera_eridania_cosmioides",
+      "origem_chave": "equipe",
+      "status_conteudo": "validado",
+      "validacao_conteudo": {
+        "data": "2026-11-23",
+        "evidencia": "Liberação das fichas no MVP por decisão da equipe (seção 13.1 do Projeto.md); validação agronômica pelo parceiro pendente."
+      },
       "relacionadas_t6_4": [
         {
           "indice": 0,
@@ -454,9 +499,13 @@
       ],
       "ids_acervo": [],
       "chave_conteudo_proposta": "praga.astylus_variegatus",
-      "chave_conteudo": null,
-      "status_conteudo": "aguardando_catalogo_agroapp",
-      "validacao_conteudo": null,
+      "chave_conteudo": "equipe.astylus_variegatus",
+      "origem_chave": "equipe",
+      "status_conteudo": "validado",
+      "validacao_conteudo": {
+        "data": "2026-11-23",
+        "evidencia": "Liberação das fichas no MVP por decisão da equipe (seção 13.1 do Projeto.md); validação agronômica pelo parceiro pendente."
+      },
       "relacionadas_t6_4": [
         {
           "indice": 0,
@@ -493,9 +542,13 @@
       ],
       "ids_acervo": [],
       "chave_conteudo_proposta": "praga.deois_flavopicta",
-      "chave_conteudo": null,
-      "status_conteudo": "aguardando_catalogo_agroapp",
-      "validacao_conteudo": null,
+      "chave_conteudo": "equipe.deois_flavopicta",
+      "origem_chave": "equipe",
+      "status_conteudo": "validado",
+      "validacao_conteudo": {
+        "data": "2026-11-23",
+        "evidencia": "Liberação das fichas no MVP por decisão da equipe (seção 13.1 do Projeto.md); validação agronômica pelo parceiro pendente."
+      },
       "relacionadas_t6_4": [
         {
           "indice": 0,

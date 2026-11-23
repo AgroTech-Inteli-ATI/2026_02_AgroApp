@@ -105,7 +105,7 @@ Se o maior score for menor que 0,65, mostra a mensagem de resultado inconclusivo
 
 A mesma regra de interface é aplicada ao Float16 principal e ao INT8 de contingência, depois da desquantização já feita pelo worker. O valor de 0,65 vem da política T6.5, cuja calibração foi feita em Keras FP32: esta implementação não recalibra os modelos ou afirma garantia estatística de acerto. Um score alto não confirma diagnóstico nem detecta automaticamente fotos fora das 13 classes.
 
-O catálogo de conteúdo técnico fica em `src/data/content.ts`, indexado pelo índice exato da classe do modelo. Preencha somente com texto, fonte e data de revisão aprovados, marcando `validated: true` após validação. Enquanto isso, a interface mostra conteúdo indisponível. Não existem recomendações de manejo ou links oficiais inventados.
+O catálogo de conteúdo técnico fica em `src/data/content.ts`, indexado pelo índice exato da classe do modelo. **Não edite à mão:** o arquivo é gerado por `python -m src.associacao_conteudo_t9_3 frontend` a partir das fichas da equipe (`assets/data/conteudo_T9_3`, seção 13.1 do `docs/Projeto.md`) e só inclui as classes cuja ficha foi validada (comando `aprovar`). Cada ficha tem as seções "Como reconhecer", "Danos ou sintomas" e, quando há, "Pode ser confundido com", com fonte por frase; o painel em `src/App.tsx` a exibe junto do aviso de que não substitui o engenheiro agrônomo. Enquanto uma classe não tiver ficha validada, a interface mostra conteúdo indisponível. Não existem recomendações de manejo ou links oficiais inventados.
 
 A identidade visual usa cores, tipografia e elementos da apresentação fornecida pelo usuário; a origem dos rasters está registrada em `public/brand/PROVENANCE.md`.
 

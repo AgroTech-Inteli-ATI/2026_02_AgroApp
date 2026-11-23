@@ -1,16 +1,16 @@
 {
   "esquema": "fontes_conteudo_T9_3_v1",
-  "versao": "1.0.0",
-  "data": "2026-11-08",
+  "versao": "2.0.0",
+  "data": "2026-11-20",
   "status": "mapa_de_fontes_sem_texto_copiado",
   "finalidade": "Indicar, por classe do modelo, onde existe material técnico de referência. O mapa não contém texto das fontes e não abre conteúdo no aplicativo.",
   "regras": [
     "Nenhum trecho das fontes foi copiado para este repositório.",
-    "As duas fontes têm direitos reservados: copiar o texto para o aplicativo depende de autorização da Embrapa ou do parceiro.",
-    "Uso permitido por esta entrega: referência bibliográfica e base para redação própria, com citação e validação agronômica.",
-    "Manejo químico e biológico não entra no aplicativo sem validação agronômica.",
-    "Os PDFs não são versionados; o hash registrado identifica o arquivo consultado.",
-    "Toda informação extraída de uma fonte deve ser citada com a referência completa (referencia_abnt) e a página; o campo fonte de cada item da base usa essa citação."
+    "As fichas do aplicativo são de redação própria da equipe, com citação da fonte e da página em cada frase.",
+    "Copiar o texto das fontes para o aplicativo não é autorizado; uma fonte sem licença de reutilização só é usada como referência.",
+    "Manejo químico e biológico não entra nas fichas.",
+    "Toda informação extraída de uma fonte deve ser citada com a referência completa (referencia_abnt) e a página.",
+    "Os PDFs não são versionados; o hash registrado identifica o arquivo consultado."
   ],
   "fontes": [
     {
@@ -61,20 +61,331 @@
       "uso_do_texto": "nao_autorizado",
       "unidade_embrapa": "Embrapa Milho e Sorgo",
       "catalogo_embrapa": "Portal Embrapa: ano 2025, tipo artigo de periódico, unidade Embrapa Milho e Sorgo."
-    }
-  ],
-  "lacunas": [
-    {
-      "indice": 7,
-      "nome": "Percevejo-do-milho (Leptoglossus zonatus)",
-      "providencia": "Nenhuma das duas fontes cobre a classe; obter a fonte com o parceiro."
     },
     {
-      "indice": 12,
-      "nome": "Cigarrinha-das-pastagens (Deois flavopicta)",
-      "providencia": "Nenhuma das duas fontes cobre a classe; obter a fonte com o parceiro."
+      "id": "EMB-CT41",
+      "tipo": "circular_tecnica",
+      "titulo": "Cigarrinha-do-milho: vetor de molicutes e vírus",
+      "referencia_abnt": "WAQUIL, J. M. Cigarrinha-do-milho: vetor de molicutes e vírus. Sete Lagoas: Embrapa Milho e Sorgo, 2004. 6 p. (Embrapa Milho e Sorgo. Circular Técnica, 41). ISSN 1518-4269. Disponível em: https://www.embrapa.br/documents/1344498/2767891/cigarrinha-do-milho-vetor-de-molicutes-e-virus.pdf/17d847e1-e4f1-4000-9d4f-7b7a0c720fd0. Acesso em: 20 nov. 2026.",
+      "citacao_curta": "WAQUIL, 2004",
+      "serie": "Circular Técnica, 41 (ISSN 1518-4269)",
+      "instituicao": "Embrapa Milho e Sorgo, Sete Lagoas, MG",
+      "ano": 2004,
+      "autores": "Waquil, J. M.",
+      "paginas_total": 6,
+      "deslocamento_pagina_impressa": 0,
+      "url_publicacao": "https://www.embrapa.br/documents/1344498/2767891/cigarrinha-do-milho-vetor-de-molicutes-e-virus.pdf/17d847e1-e4f1-4000-9d4f-7b7a0c720fd0",
+      "url_pdf": "https://www.embrapa.br/documents/1344498/2767891/cigarrinha-do-milho-vetor-de-molicutes-e-virus.pdf/17d847e1-e4f1-4000-9d4f-7b7a0c720fd0",
+      "arquivo_consultado": "cigarrinha-do-milho-vetor-de-molicutes-e-virus.pdf",
+      "sha256_arquivo_consultado": "29c3fa3ed57ccaae72c58f14e97260df91eeb2870cec2c079fc301315b48f7c6",
+      "consultado_em": "2026-11-20",
+      "contexto": "milho",
+      "estrutura_das_fichas": "Texto corrido por seções: morfologia, biologia, hospedeiros, ecologia, enfezamentos e rayado fino, ciclo das doenças e manejo.",
+      "direitos": "nao_declarado_no_documento",
+      "base_dos_direitos": "O documento não traz declaração de licença; a página de catálogo da publicação não foi consultada.",
+      "uso_do_texto": "nao_autorizado"
+    },
+    {
+      "id": "AN-SEB-1994",
+      "tipo": "artigo_de_periodico",
+      "titulo": "Biologia de Leptoglossus zonatus (Dallas) (Hemiptera: Coreidae) alimentados com milho e sorgo",
+      "referencia_abnt": "MATRANGOLO, W. J. R.; WAQUIL, J. M. Biologia de Leptoglossus zonatus (Dallas) (Hemiptera: Coreidae) alimentados com milho e sorgo. Anais da Sociedade Entomológica do Brasil, Jaboticabal, v. 23, n. 3, p. 419-423, 1994. Disponível em: http://www.alice.cnptia.embrapa.br/alice/handle/doc/474805. Acesso em: 20 nov. 2026.",
+      "citacao_curta": "MATRANGOLO; WAQUIL, 1994",
+      "veiculo": "Anais da Sociedade Entomológica do Brasil, v. 23, n. 3, p. 419-423",
+      "instituicao": "Embrapa Milho e Sorgo (CNPMS), Sete Lagoas, MG",
+      "ano": 1994,
+      "autores": "Matrangolo, W. J. R.; Waquil, J. M.",
+      "paginas_total": 5,
+      "deslocamento_pagina_impressa": 418,
+      "url_publicacao": "http://www.alice.cnptia.embrapa.br/alice/handle/doc/474805",
+      "url_pdf": "https://www.alice.cnptia.embrapa.br/bitstream/doc/474805/1/Biologialeptoglossus.pdf",
+      "arquivo_consultado": "Biologialeptoglossus.pdf",
+      "sha256_arquivo_consultado": "88706142153b5b884fc8964b1cdef60f92299ea564794d8f950c0baf89529a37",
+      "consultado_em": "2026-11-20",
+      "contexto": "milho e sorgo",
+      "estrutura_das_fichas": "Artigo científico sobre a biologia da espécie, com observações de campo; não traz descrição do adulto. Parte dos danos é citada de outros autores.",
+      "direitos": "acesso_aberto_sem_licenca_declarada",
+      "base_dos_direitos": "O catálogo da Embrapa (ALICE) registra acesso aberto (dc.rights: openAccess), sem declarar licença de reutilização.",
+      "uso_do_texto": "nao_autorizado"
+    },
+    {
+      "id": "CULT-199",
+      "tipo": "artigo_de_revista",
+      "titulo": "Manejo de pragas da parte aérea do milho",
+      "referencia_abnt": "ÁVILA, C. J.; PAPA, G. Manejo de pragas da parte aérea do milho. Cultivar Grandes Culturas, n. 199, [s. d.]. Disponível em: https://revistacultivar.com.br/artigos/manejo-de-pragas-da-parte-aerea-do-milho. Acesso em: 20 nov. 2026.",
+      "citacao_curta": "ÁVILA; PAPA, s.d.",
+      "veiculo": "Cultivar Grandes Culturas, n. 199 (página da revista na internet, sem paginação)",
+      "instituicao": "Embrapa Agropecuária Oeste; Unesp, Campus de Ilha Solteira",
+      "ano": null,
+      "autores": "Ávila, C. J.; Papa, G.",
+      "paginas_total": null,
+      "deslocamento_pagina_impressa": null,
+      "url_publicacao": "https://revistacultivar.com.br/artigos/manejo-de-pragas-da-parte-aerea-do-milho",
+      "url_pdf": null,
+      "arquivo_consultado": "página HTML (texto extraído)",
+      "sha256_arquivo_consultado": "5ab0c0d29c8ddc4ec596f3c372640e82694a8b464a4a3647b720e9e35ac5102e",
+      "consultado_em": "2026-11-20",
+      "contexto": "milho",
+      "estrutura_das_fichas": "Artigo de divulgação técnica, em seções por praga; a descrição do percevejo-do-milho é curta. O ano de publicação não consta na página.",
+      "direitos": "direitos_reservados",
+      "base_dos_direitos": "O rodapé da página indica Copyright 2026 Grupo Cultivar, todos os direitos reservados.",
+      "uso_do_texto": "nao_autorizado"
+    },
+    {
+      "id": "EMB-SANTOS-2002",
+      "tipo": "artigo_na_midia",
+      "titulo": "Cigarrinha das pastagens. 1. Caracterização",
+      "referencia_abnt": "SANTOS, P. M.; BALSALOBRE, M. A. A. Cigarrinha das pastagens. 1. Caracterização. MilkPoint, 2002. 3 p. Disponível em: http://www.infoteca.cnptia.embrapa.br/infoteca/handle/doc/46239. Acesso em: 20 nov. 2026.",
+      "citacao_curta": "SANTOS; BALSALOBRE, 2002",
+      "veiculo": "MilkPoint (o cabeçalho da cópia consultada indica BeefPoint, 11/04/2002)",
+      "instituicao": "Embrapa Pecuária Sudeste (CPPSE); USP-ESALQ",
+      "ano": 2002,
+      "autores": "Santos, P. M.; Balsalobre, M. A. A.",
+      "paginas_total": 3,
+      "deslocamento_pagina_impressa": 0,
+      "url_publicacao": "http://www.infoteca.cnptia.embrapa.br/infoteca/handle/doc/46239",
+      "url_pdf": "https://www.infoteca.cnptia.embrapa.br/infoteca/bitstream/doc/46239/1/CigarrinhaPastagens1.pdf",
+      "arquivo_consultado": "CigarrinhaPastagens1.pdf",
+      "sha256_arquivo_consultado": "65906b6a7c9574cf48346d5d4a4ebf9de1b94d3b627fdf9a9aa6db454ebb39de",
+      "consultado_em": "2026-11-20",
+      "contexto": "pastagens",
+      "estrutura_das_fichas": "Artigo técnico de caracterização das cigarrinhas-das-pastagens, com tamanho, cor, ciclo e efeito sobre a planta; as informações de ciclo vêm de Silveira Neto (1994).",
+      "direitos": "cc_by_nc_nd_4_0",
+      "base_dos_direitos": "O rodapé do catálogo Infoteca (Embrapa) informa licença Creative Commons Atribuição-NãoComercial-SemDerivações 4.0 Internacional para o conteúdo do repositório. A ficha não reproduz nem adapta o texto: é redação própria.",
+      "uso_do_texto": "nao_autorizado"
+    },
+    {
+      "id": "EMB-CT59",
+      "tipo": "comunicado_tecnico",
+      "titulo": "Cultivo do milho: pragas iniciais",
+      "referencia_abnt": "VIANA, P. A.; CRUZ, I.; WAQUIL, J. M. Cultivo do milho: pragas iniciais. Sete Lagoas: Embrapa Milho e Sorgo, 2002. (Embrapa Milho e Sorgo. Comunicado Técnico, 59). ISSN 1679-0162. Disponível em: https://www.infoteca.cnptia.embrapa.br/bitstream/doc/487021/1/Com59.pdf. Acesso em: 23 nov. 2026.",
+      "citacao_curta": "VIANA; CRUZ; WAQUIL, 2002",
+      "serie": "Comunicado Técnico, 59 (ISSN 1679-0162)",
+      "instituicao": "Embrapa Milho e Sorgo, Sete Lagoas, MG",
+      "ano": 2002,
+      "autores": "Viana, P. A.; Cruz, I.; Waquil, J. M.",
+      "paginas_total": 13,
+      "deslocamento_pagina_impressa": 0,
+      "url_publicacao": "https://www.infoteca.cnptia.embrapa.br/bitstream/doc/487021/1/Com59.pdf",
+      "url_pdf": "https://www.infoteca.cnptia.embrapa.br/bitstream/doc/487021/1/Com59.pdf",
+      "arquivo_consultado": "Com59.pdf",
+      "sha256_arquivo_consultado": "d009a5a87f560432999389e452f858afde7a550afdbf2872fb10237cf3ef201b",
+      "consultado_em": "2026-11-23",
+      "contexto": "milho",
+      "estrutura_das_fichas": "Texto por praga (importância, sintomas de danos e métodos de controle), sobre insetos que atacam sementes, raízes e plântulas do milho.",
+      "direitos": "nao_declarado_no_documento",
+      "base_dos_direitos": "O documento não traz declaração de licença ou de direitos de reprodução.",
+      "uso_do_texto": "nao_autorizado"
+    },
+    {
+      "id": "EMB-CT208",
+      "tipo": "circular_tecnica",
+      "titulo": "Manejo integrado de pragas na cultura do milho",
+      "referencia_abnt": "VALICENTE, F. H. Manejo integrado de pragas na cultura do milho. Sete Lagoas: Embrapa Milho e Sorgo, 2015. (Embrapa Milho e Sorgo. Circular Técnica, 208). ISSN 1679-1150. Disponível em: https://www.infoteca.cnptia.embrapa.br/infoteca/bitstream/doc/1017489/1/circ208.pdf. Acesso em: 23 nov. 2026.",
+      "citacao_curta": "VALICENTE, 2015",
+      "serie": "Circular Técnica, 208 (ISSN 1679-1150)",
+      "instituicao": "Embrapa Milho e Sorgo, Sete Lagoas, MG",
+      "ano": 2015,
+      "autores": "Valicente, F. H.",
+      "paginas_total": 13,
+      "deslocamento_pagina_impressa": 0,
+      "url_publicacao": "https://www.infoteca.cnptia.embrapa.br/infoteca/bitstream/doc/1017489/1/circ208.pdf",
+      "url_pdf": "https://www.infoteca.cnptia.embrapa.br/infoteca/bitstream/doc/1017489/1/circ208.pdf",
+      "arquivo_consultado": "circ208.pdf",
+      "sha256_arquivo_consultado": "579eb2361021e2c30e729ee04fbe91a5d298dd104d938db324f7fc0deeab82f5",
+      "consultado_em": "2026-11-23",
+      "contexto": "milho",
+      "estrutura_das_fichas": "Texto corrido por praga (pragas de sementes e raízes, parte aérea e colmo), com descrição, danos e controle.",
+      "direitos": "nao_declarado_no_documento",
+      "base_dos_direitos": "O documento não traz declaração de licença ou de direitos de reprodução.",
+      "uso_do_texto": "nao_autorizado"
+    },
+    {
+      "id": "EMB-CT144",
+      "tipo": "circular_tecnica",
+      "titulo": "Danos da cigarrinha-das-pastagens, Deois flavopicta Stal (Homoptera: Cercopidae) em milho consorciado com braquiárias",
+      "referencia_abnt": "CRUZ, I.; FIGUEIREDO, M. de L. C.; GONTIJO NETO, M. M.; SILVA, R. B. da. Danos da cigarrinha-das-pastagens, Deois flavopicta Stal (Homoptera: Cercopidae) em milho consorciado com braquiárias. Sete Lagoas: Embrapa Milho e Sorgo, 2010. (Embrapa Milho e Sorgo. Circular Técnica, 144). ISSN 1679-1150. Disponível em: https://www.infoteca.cnptia.embrapa.br/infoteca/bitstream/doc/880841/1/circ144.pdf. Acesso em: 23 nov. 2026.",
+      "citacao_curta": "CRUZ et al., 2010",
+      "serie": "Circular Técnica, 144 (ISSN 1679-1150)",
+      "instituicao": "Embrapa Milho e Sorgo, Sete Lagoas, MG",
+      "ano": 2010,
+      "autores": "Cruz, I.; Figueiredo, M. de L. C.; Gontijo Neto, M. M.; Silva, R. B. da",
+      "paginas_total": 10,
+      "deslocamento_pagina_impressa": 0,
+      "url_publicacao": "https://www.infoteca.cnptia.embrapa.br/infoteca/bitstream/doc/880841/1/circ144.pdf",
+      "url_pdf": "https://www.infoteca.cnptia.embrapa.br/infoteca/bitstream/doc/880841/1/circ144.pdf",
+      "arquivo_consultado": "circ144.pdf",
+      "sha256_arquivo_consultado": "28b3bb29f9cf76d9407f1bdc2b315b49289a9f78f9bad649736940bfe5f1932b",
+      "consultado_em": "2026-11-23",
+      "contexto": "milho e pastagem",
+      "estrutura_das_fichas": "Artigo técnico com resumo, descrição do adulto, danos no milho e experimento em casa de vegetação.",
+      "direitos": "nao_declarado_no_documento",
+      "base_dos_direitos": "O documento não traz declaração de licença ou de direitos de reprodução.",
+      "uso_do_texto": "nao_autorizado"
+    },
+    {
+      "id": "EMB-DOC129",
+      "tipo": "documentos",
+      "titulo": "Principais pragas subterrâneas do milho no Brasil",
+      "referencia_abnt": "VIANA, P. A. (ed.). Principais pragas subterrâneas do milho no Brasil. Sete Lagoas: Embrapa Milho e Sorgo, 2011. 61 p. (Embrapa Milho e Sorgo. Documentos, 129). ISSN 1518-4277. Disponível em: https://www.infoteca.cnptia.embrapa.br/infoteca/bitstream/doc/914556/1/doc129.pdf. Acesso em: 23 nov. 2026.",
+      "citacao_curta": "VIANA, 2011",
+      "serie": "Documentos, 129 (ISSN 1518-4277)",
+      "instituicao": "Embrapa Milho e Sorgo, Sete Lagoas, MG",
+      "ano": 2011,
+      "autores": "Viana, P. A. (editor técnico); capítulos de Ávila e Santana (larva-alfinete) e de Viana, Cruz e Mendes (outros insetos subterrâneos)",
+      "paginas_total": 63,
+      "deslocamento_pagina_impressa": -1,
+      "url_publicacao": "https://www.infoteca.cnptia.embrapa.br/infoteca/bitstream/doc/914556/1/doc129.pdf",
+      "url_pdf": "https://www.infoteca.cnptia.embrapa.br/infoteca/bitstream/doc/914556/1/doc129.pdf",
+      "arquivo_consultado": "doc129.pdf",
+      "sha256_arquivo_consultado": "1004286605af523cfe167a472a77c4381676d812c4f6b4f8ca80d1c366c5af95",
+      "consultado_em": "2026-11-23",
+      "contexto": "milho",
+      "estrutura_das_fichas": "Livro com um capítulo por praga subterrânea (importância e danos, descrição, bioecologia, controle).",
+      "direitos": "direitos_reservados",
+      "base_dos_direitos": "A ficha catalográfica indica direitos reservados, conforme a Lei nº 9.610.",
+      "uso_do_texto": "nao_autorizado"
+    },
+    {
+      "id": "ABMS-MISOSUL-2024",
+      "tipo": "livro_capitulo",
+      "titulo": "Informações técnicas para o cultivo de milho e sorgo na região subtropical do Brasil: safras 2023/24 e 2024/25",
+      "referencia_abnt": "EICHOLZ, E. D. et al. (ed.). Informações técnicas para o cultivo de milho e sorgo na região subtropical do Brasil: safras 2023/24 e 2024/25. Sete Lagoas: Associação Brasileira de Milho e Sorgo, 2024. Cap. 8: Manejo integrado de pragas da cultura do milho e sorgo, p. 89-94. Disponível em: https://www.alice.cnptia.embrapa.br/alice/bitstream/doc/1168645/1/MANEJO-INTEGRADO-DE-PRAGAS-DA-CULTURA-DO-MILHO-E-SORGO.pdf. Acesso em: 23 nov. 2026.",
+      "citacao_curta": "EICHOLZ et al., 2024",
+      "serie": "Reunião Técnica Sul-Brasileira de Pesquisa de Milho e Sorgo (MISOSUL)",
+      "instituicao": "Associação Brasileira de Milho e Sorgo, Sete Lagoas, MG",
+      "ano": 2024,
+      "autores": "Eicholz, E. D. et al. (8 editores técnicos); capítulo 8 sem autoria nominal no extrato consultado",
+      "paginas_total": 19,
+      "deslocamento_pagina_impressa": 86,
+      "url_publicacao": "https://www.alice.cnptia.embrapa.br/alice/bitstream/doc/1168645/1/MANEJO-INTEGRADO-DE-PRAGAS-DA-CULTURA-DO-MILHO-E-SORGO.pdf",
+      "url_pdf": "https://www.alice.cnptia.embrapa.br/alice/bitstream/doc/1168645/1/MANEJO-INTEGRADO-DE-PRAGAS-DA-CULTURA-DO-MILHO-E-SORGO.pdf",
+      "arquivo_consultado": "MANEJO-INTEGRADO-DE-PRAGAS-DA-CULTURA-DO-MILHO-E-SORGO.pdf",
+      "sha256_arquivo_consultado": "9aaf55469a0826ea4b55444c2cb417a1705525c3c5bf6af09a99712fa908499d",
+      "consultado_em": "2026-11-23",
+      "contexto": "milho e sorgo, região subtropical",
+      "estrutura_das_fichas": "Capítulo em texto corrido, por grupo de pragas (sementes e raízes, colmos, folhas, espigas); o arquivo consultado é um extrato de 19 páginas (páginas impressas 89 a 94 e referências).",
+      "direitos": "nao_declarado_no_documento",
+      "base_dos_direitos": "O extrato consultado não traz declaração de licença ou de direitos de reprodução.",
+      "uso_do_texto": "nao_autorizado"
+    },
+    {
+      "id": "EMB-CT30",
+      "tipo": "circular_tecnica",
+      "titulo": "Pragas da soja no Brasil e seu manejo integrado",
+      "referencia_abnt": "HOFFMANN-CAMPO, C. B. et al. Pragas da soja no Brasil e seu manejo integrado. Londrina: Embrapa Soja, 2000. 70 p. (Embrapa Soja. Circular Técnica, 30). ISSN 1516-7860. Disponível em: https://www.infoteca.cnptia.embrapa.br/infoteca/bitstream/doc/449719/1/ID6173.pdf. Acesso em: 23 nov. 2026.",
+      "citacao_curta": "HOFFMANN-CAMPO et al., 2000",
+      "serie": "Circular Técnica, 30 (ISSN 1516-7860)",
+      "instituicao": "Embrapa Soja, Londrina, PR",
+      "ano": 2000,
+      "autores": "Hoffmann-Campo, C. B.; Moscardi, F.; Corrêa-Ferreira, B. S.; Oliveira, L. J.; Sosa-Gómez, D. R.; Panizzi, A. R.; Corso, I. C.; Gazzoni, D. L.; Oliveira, E. B. de",
+      "paginas_total": 69,
+      "deslocamento_pagina_impressa": 0,
+      "url_publicacao": "https://www.infoteca.cnptia.embrapa.br/infoteca/bitstream/doc/449719/1/ID6173.pdf",
+      "url_pdf": "https://www.infoteca.cnptia.embrapa.br/infoteca/bitstream/doc/449719/1/ID6173.pdf",
+      "arquivo_consultado": "ID6173.pdf",
+      "sha256_arquivo_consultado": "7ed27defb483ec0c5b8cfb91afbb7d71dfd483d71da79579c8c9f6963bce6da5",
+      "consultado_em": "2026-11-23",
+      "contexto": "soja",
+      "estrutura_das_fichas": "Texto corrido por praga (lagartas desfolhadoras, percevejos, lagartas das vagens), com descrição e danos.",
+      "direitos": "direitos_reservados",
+      "base_dos_direitos": "A ficha catalográfica traz a nota de direitos da Embrapa, conforme a Lei nº 9.610.",
+      "uso_do_texto": "nao_autorizado"
+    },
+    {
+      "id": "EMB-CT131",
+      "tipo": "comunicado_tecnico",
+      "titulo": "Spodoptera cosmioides (Walker) e Spodoptera eridania (Cramer) (Lepidoptera: Noctuidae): novas pragas de cultivos da Região Nordeste",
+      "referencia_abnt": "TEODORO, A. V. et al. Spodoptera cosmioides (Walker) e Spodoptera eridania (Cramer) (Lepidoptera: Noctuidae): novas pragas de cultivos da Região Nordeste. Aracaju: Embrapa Tabuleiros Costeiros, 2013. (Embrapa Tabuleiros Costeiros. Comunicado Técnico, 131). ISSN 1679-1937. Disponível em: https://www.infoteca.cnptia.embrapa.br/bitstream/doc/977975/1/cot131.pdf. Acesso em: 23 nov. 2026.",
+      "citacao_curta": "TEODORO et al., 2013",
+      "serie": "Comunicado Técnico, 131 (ISSN 1679-1937)",
+      "instituicao": "Embrapa Tabuleiros Costeiros, Aracaju, SE",
+      "ano": 2013,
+      "autores": "Teodoro, A. V. et al. (8 autores)",
+      "paginas_total": 8,
+      "deslocamento_pagina_impressa": 0,
+      "url_publicacao": "https://www.infoteca.cnptia.embrapa.br/bitstream/doc/977975/1/cot131.pdf",
+      "url_pdf": "https://www.infoteca.cnptia.embrapa.br/bitstream/doc/977975/1/cot131.pdf",
+      "arquivo_consultado": "cot131.pdf",
+      "sha256_arquivo_consultado": "0747baf2542874da9072a3ddd05c392dd6db2790d8505299fa7d3798620f2c2b",
+      "consultado_em": "2026-11-23",
+      "contexto": "soja e outras culturas",
+      "estrutura_das_fichas": "Texto corrido: ocorrência, aspectos biológicos das duas espécies, principais culturas atacadas e danos.",
+      "direitos": "nao_declarado_no_documento",
+      "base_dos_direitos": "O documento não traz declaração de licença ou de direitos de reprodução.",
+      "uso_do_texto": "nao_autorizado"
+    },
+    {
+      "id": "EPAGRI-BT170",
+      "tipo": "boletim_tecnico",
+      "titulo": "Pragas e doenças do milho: diagnose, danos e estratégias de manejo",
+      "referencia_abnt": "WORDELL FILHO, J. A. et al. Pragas e doenças do milho: diagnose, danos e estratégias de manejo. Florianópolis: Epagri, 2016. (Epagri. Boletim Técnico, 170). ISSN 0100-7416. Disponível em: https://ciram.epagri.sc.gov.br/ciram_arquivos/agroconnect/boletins/BT_PragasDoencasMilho.pdf. Acesso em: 23 nov. 2026.",
+      "citacao_curta": "WORDELL FILHO et al., 2016",
+      "serie": "Boletim Técnico, 170 (ISSN 0100-7416)",
+      "instituicao": "Epagri, Florianópolis, SC",
+      "ano": 2016,
+      "autores": "Wordell Filho, J. A.; Ribeiro, L. do P.; Chiaradia, L. A.; Madalóz, J. C.; Nesi, C. N.",
+      "paginas_total": 88,
+      "deslocamento_pagina_impressa": -2,
+      "url_publicacao": "https://ciram.epagri.sc.gov.br/ciram_arquivos/agroconnect/boletins/BT_PragasDoencasMilho.pdf",
+      "url_pdf": "https://ciram.epagri.sc.gov.br/ciram_arquivos/agroconnect/boletins/BT_PragasDoencasMilho.pdf",
+      "arquivo_consultado": "BT_PragasDoencasMilho.pdf",
+      "sha256_arquivo_consultado": "d6f77bdf654b31dac6eb055454419989ead3d30807c678fc0103a7f4d42223a5",
+      "consultado_em": "2026-11-23",
+      "contexto": "milho, Sul do Brasil",
+      "estrutura_das_fichas": "Uma ficha por praga (aspectos morfológicos e bioecológicos, danos, amostragem e medidas de controle), com fotos.",
+      "direitos": "reproducao_parcial_com_citacao",
+      "base_dos_direitos": "O boletim informa que é permitida a reprodução parcial, desde que citada a fonte.",
+      "uso_do_texto": "nao_autorizado"
+    },
+    {
+      "id": "EMB-CT47",
+      "tipo": "circular_tecnica",
+      "titulo": "Aspectos biológicos da lagarta-falsa-medideira e sua criação em laboratório com dieta artificial",
+      "referencia_abnt": "BOTELHO, A. B. R. Z.; SILVA, I. F. da; ÁVILA, C. J. Aspectos biológicos da lagarta-falsa-medideira e sua criação em laboratório com dieta artificial. Dourados: Embrapa Agropecuária Oeste, 2019. (Embrapa Agropecuária Oeste. Circular Técnica, 47). ISSN 1679-0464. Disponível em: https://www.infoteca.cnptia.embrapa.br/infoteca/bitstream/doc/1118272/1/36927.pdf. Acesso em: 23 nov. 2026.",
+      "citacao_curta": "BOTELHO; SILVA; ÁVILA, 2019",
+      "serie": "Circular Técnica, 47 (ISSN 1679-0464)",
+      "instituicao": "Embrapa Agropecuária Oeste, Dourados, MS",
+      "ano": 2019,
+      "autores": "Botelho, A. B. R. Z.; Silva, I. F. da; Ávila, C. J.",
+      "paginas_total": 24,
+      "deslocamento_pagina_impressa": 0,
+      "url_publicacao": "https://www.infoteca.cnptia.embrapa.br/infoteca/bitstream/doc/1118272/1/36927.pdf",
+      "url_pdf": "https://www.infoteca.cnptia.embrapa.br/infoteca/bitstream/doc/1118272/1/36927.pdf",
+      "arquivo_consultado": "36927.pdf",
+      "sha256_arquivo_consultado": "7daecce0d29747a7245c160207afebddf401ac6ee689bae2db7b7f27ffd568bc",
+      "consultado_em": "2026-11-23",
+      "contexto": "soja",
+      "estrutura_das_fichas": "Texto corrido: introdução, aspectos bioecológicos (ovo, lagarta, pupa, adulto), importância do cultivo em laboratório e dieta artificial.",
+      "direitos": "nao_declarado_no_documento",
+      "base_dos_direitos": "O documento não traz declaração de licença ou de direitos de reprodução.",
+      "uso_do_texto": "nao_autorizado"
+    },
+    {
+      "id": "EMB-JA-DOC328",
+      "tipo": "resumo_expandido",
+      "titulo": "Danos de percevejos em sementes de soja",
+      "referencia_abnt": "CANTONE, W. et al. Danos de percevejos em sementes de soja. In: JORNADA ACADÊMICA DA EMBRAPA SOJA, 6., [2011?], Londrina. Resumos expandidos. Londrina: Embrapa Soja, [2011?]. p. 16-20. (Embrapa Soja. Documentos, 328). Disponível em: https://www.alice.cnptia.embrapa.br/alice/bitstream/doc/909203/1/danos.pdf. Acesso em: 23 nov. 2026.",
+      "citacao_curta": "CANTONE et al., [2011?]",
+      "serie": "Documentos, 328 (VI Jornada Acadêmica da Embrapa Soja)",
+      "instituicao": "Embrapa Soja, Londrina, PR",
+      "ano": 2011,
+      "autores": "Cantone, W.; Silva, F. A. C.; Depieri, R. A.; Silva, J. J. da; Panizzi, A. R.",
+      "paginas_total": 5,
+      "deslocamento_pagina_impressa": 15,
+      "url_publicacao": "https://www.alice.cnptia.embrapa.br/alice/bitstream/doc/909203/1/danos.pdf",
+      "url_pdf": "https://www.alice.cnptia.embrapa.br/alice/bitstream/doc/909203/1/danos.pdf",
+      "arquivo_consultado": "danos.pdf",
+      "sha256_arquivo_consultado": "251c8feb2085489111a74b2cbca7af303e88250aeb2520f19211a799768f3905",
+      "consultado_em": "2026-11-23",
+      "contexto": "soja",
+      "estrutura_das_fichas": "Resumo expandido de 5 páginas: introdução sobre os percevejos da soja, método e resultados de um ensaio em casa de vegetação. O ano é estimado a partir do período do ensaio.",
+      "direitos": "nao_declarado_no_documento",
+      "base_dos_direitos": "O documento não traz declaração de licença ou de direitos de reprodução.",
+      "uso_do_texto": "nao_autorizado"
     }
   ],
+  "lacunas": [],
   "classes": [
     {
       "indice": 0,
@@ -93,6 +404,57 @@
             "danos"
           ],
           "observacao": "Ficha no contexto da soja; a classe do modelo também cobre milho."
+        },
+        {
+          "fonte": "EMB-DOC129",
+          "nome_na_fonte": "Larva-alfinete (Diabrotica speciosa)",
+          "pagina_pdf": 23,
+          "pagina_impressa": 22,
+          "paginas_citadas": "22-23",
+          "citacao": "VIANA, 2011, p. 22-23",
+          "secoes": [
+            "descricao_das_fases",
+            "danos"
+          ],
+          "observacao": "Capítulo sobre o milho."
+        },
+        {
+          "fonte": "EMB-CT59",
+          "nome_na_fonte": "Larva alfinete (Diabrotica spp.)",
+          "pagina_pdf": 1,
+          "pagina_impressa": 1,
+          "paginas_citadas": "1",
+          "citacao": "VIANA; CRUZ; WAQUIL, 2002, p. 1",
+          "secoes": [
+            "danos"
+          ],
+          "observacao": null
+        },
+        {
+          "fonte": "ABMS-MISOSUL-2024",
+          "nome_na_fonte": "Larva-alfinete (Diabrotica speciosa)",
+          "pagina_pdf": 4,
+          "pagina_impressa": 90,
+          "paginas_citadas": "90",
+          "citacao": "EICHOLZ et al., 2024, p. 90",
+          "secoes": [
+            "descricao_das_fases",
+            "danos"
+          ],
+          "observacao": null
+        },
+        {
+          "fonte": "EPAGRI-BT170",
+          "nome_na_fonte": "Larva-alfinete (Diabrotica speciosa)",
+          "pagina_pdf": 42,
+          "pagina_impressa": 40,
+          "paginas_citadas": "40",
+          "citacao": "WORDELL FILHO et al., 2016, p. 40",
+          "secoes": [
+            "descricao_das_fases",
+            "danos"
+          ],
+          "observacao": null
         }
       ]
     },
@@ -101,6 +463,20 @@
       "nome": "Cigarrinha-do-milho (Dalbulus maidis)",
       "cobertura": "sintomas_e_manejo",
       "fontes": [
+        {
+          "fonte": "EMB-CT41",
+          "nome_na_fonte": "Cigarrinha-do-milho: vetor de molicutes e vírus (Dalbulus maidis)",
+          "pagina_pdf": 1,
+          "pagina_impressa": 1,
+          "paginas_citadas": "1-4",
+          "citacao": "WAQUIL, 2004, p. 1-4",
+          "secoes": [
+            "descricao_das_fases",
+            "sintomas_nas_plantas",
+            "manejo_quimico_e_biologico"
+          ],
+          "observacao": "Circular Técnica de 6 páginas; a parte de manejo não é usada nas fichas."
+        },
         {
           "fonte": "CULT-312-CIGARRINHA",
           "nome_na_fonte": "Estratégias contra a cigarrinha-do-milho (Dalbulus maidis)",
@@ -113,7 +489,19 @@
             "periodo_de_controle",
             "manejo_quimico_e_biologico"
           ],
-          "observacao": "Artigo de 3 páginas (12 a 14 impressas, PDF 1 a 3). Inclui manejo químico e biológico, que exige validação agronômica."
+          "observacao": "Consultada (resumo e artigo); o texto do PDF é ilegível para extração automática, então nenhuma frase da ficha depende dela. Manejo químico e biológico não foi incluído."
+        },
+        {
+          "fonte": "ABMS-MISOSUL-2024",
+          "nome_na_fonte": "Cigarrinha-do-milho (Dalbulus maidis)",
+          "pagina_pdf": 5,
+          "pagina_impressa": 91,
+          "paginas_citadas": "91-92",
+          "citacao": "EICHOLZ et al., 2024, p. 91-92",
+          "secoes": [
+            "sintomas_nas_plantas"
+          ],
+          "observacao": null
         }
       ]
     },
@@ -134,6 +522,43 @@
             "danos"
           ],
           "observacao": "A fonte usa o gênero Dichelops; o modelo e o dataset usam Diceraeus spp. (ex-Dichelops)."
+        },
+        {
+          "fonte": "EMB-CT59",
+          "nome_na_fonte": "Percevejos barriga-verde (Dichelops furcatus, D. melacanthus)",
+          "pagina_pdf": 4,
+          "pagina_impressa": 4,
+          "paginas_citadas": "4-5",
+          "citacao": "VIANA; CRUZ; WAQUIL, 2002, p. 4-5",
+          "secoes": [
+            "danos"
+          ],
+          "observacao": "Danos no milho."
+        },
+        {
+          "fonte": "ABMS-MISOSUL-2024",
+          "nome_na_fonte": "Percevejo barriga-verde (Diceraeus melacanthus, D. furcatus)",
+          "pagina_pdf": 5,
+          "pagina_impressa": 91,
+          "paginas_citadas": "91",
+          "citacao": "EICHOLZ et al., 2024, p. 91",
+          "secoes": [
+            "danos"
+          ],
+          "observacao": null
+        },
+        {
+          "fonte": "EPAGRI-BT170",
+          "nome_na_fonte": "Percevejo-barriga-verde (Dichelops melacanthus)",
+          "pagina_pdf": 36,
+          "pagina_impressa": 34,
+          "paginas_citadas": "34",
+          "citacao": "WORDELL FILHO et al., 2016, p. 34",
+          "secoes": [
+            "descricao_das_fases",
+            "danos"
+          ],
+          "observacao": null
         }
       ]
     },
@@ -154,6 +579,55 @@
             "danos"
           ],
           "observacao": "No manual a ficha usa o título lagarta-das-vagens e o contexto da soja; o modelo chama a classe de lagarta-do-cartucho."
+        },
+        {
+          "fonte": "EMB-CT208",
+          "nome_na_fonte": "Lagarta-do-cartucho (Spodoptera frugiperda)",
+          "pagina_pdf": 4,
+          "pagina_impressa": 4,
+          "paginas_citadas": "4-6",
+          "citacao": "VALICENTE, 2015, p. 4-6",
+          "secoes": [
+            "descricao_das_fases",
+            "danos"
+          ],
+          "observacao": "Descrição e danos no milho."
+        },
+        {
+          "fonte": "EMB-CT59",
+          "nome_na_fonte": "Lagarta-do-cartucho (Spodoptera frugiperda)",
+          "pagina_pdf": 6,
+          "pagina_impressa": 6,
+          "paginas_citadas": "6",
+          "citacao": "VIANA; CRUZ; WAQUIL, 2002, p. 6",
+          "secoes": [
+            "danos"
+          ],
+          "observacao": null
+        },
+        {
+          "fonte": "ABMS-MISOSUL-2024",
+          "nome_na_fonte": "Lagarta-do-cartucho (Spodoptera frugiperda)",
+          "pagina_pdf": 4,
+          "pagina_impressa": 90,
+          "paginas_citadas": "90-92",
+          "citacao": "EICHOLZ et al., 2024, p. 90-92",
+          "secoes": [
+            "danos"
+          ],
+          "observacao": null
+        },
+        {
+          "fonte": "EMB-CT131",
+          "nome_na_fonte": "Spodoptera cosmioides e S. eridania",
+          "pagina_pdf": 2,
+          "pagina_impressa": 2,
+          "paginas_citadas": "2",
+          "citacao": "TEODORO et al., 2013, p. 2",
+          "secoes": [
+            "descricao_das_fases"
+          ],
+          "observacao": "Usada só para a dificuldade de diferenciar espécies do gênero."
         }
       ]
     },
@@ -174,6 +648,44 @@
             "danos"
           ],
           "observacao": "A ficha faz menção pontual à resistência a inseticidas, sem seção de manejo."
+        },
+        {
+          "fonte": "ABMS-MISOSUL-2024",
+          "nome_na_fonte": "Percevejo-marrom (Euschistus heros)",
+          "pagina_pdf": 5,
+          "pagina_impressa": 91,
+          "paginas_citadas": "91",
+          "citacao": "EICHOLZ et al., 2024, p. 91",
+          "secoes": [
+            "descricao_das_fases",
+            "danos"
+          ],
+          "observacao": "Descrição do adulto e danos no milho."
+        },
+        {
+          "fonte": "EMB-CT30",
+          "nome_na_fonte": "Euschistus heros",
+          "pagina_pdf": 24,
+          "pagina_impressa": 24,
+          "paginas_citadas": "24",
+          "citacao": "HOFFMANN-CAMPO et al., 2000, p. 24",
+          "secoes": [
+            "danos"
+          ],
+          "observacao": null
+        },
+        {
+          "fonte": "EPAGRI-BT170",
+          "nome_na_fonte": "Percevejo-marrom (Euchistus heros)",
+          "pagina_pdf": 38,
+          "pagina_impressa": 36,
+          "paginas_citadas": "36",
+          "citacao": "WORDELL FILHO et al., 2016, p. 36",
+          "secoes": [
+            "descricao_das_fases",
+            "danos"
+          ],
+          "observacao": null
         }
       ]
     },
@@ -194,6 +706,30 @@
             "danos"
           ],
           "observacao": null
+        },
+        {
+          "fonte": "EMB-CT30",
+          "nome_na_fonte": "Nezara viridula",
+          "pagina_pdf": 21,
+          "pagina_impressa": 21,
+          "paginas_citadas": "21-22",
+          "citacao": "HOFFMANN-CAMPO et al., 2000, p. 21-22",
+          "secoes": [
+            "danos"
+          ],
+          "observacao": null
+        },
+        {
+          "fonte": "EMB-CT59",
+          "nome_na_fonte": "Percevejos barriga-verde, verde (Nezara viridula)",
+          "pagina_pdf": 4,
+          "pagina_impressa": 4,
+          "paginas_citadas": "4",
+          "citacao": "VIANA; CRUZ; WAQUIL, 2002, p. 4",
+          "secoes": [
+            "danos"
+          ],
+          "observacao": "Danos no milho."
         }
       ]
     },
@@ -214,14 +750,75 @@
             "danos"
           ],
           "observacao": "O manual chama a espécie de percevejo-edessa; o modelo, de percevejo-asa-preta."
+        },
+        {
+          "fonte": "EMB-CT30",
+          "nome_na_fonte": "Edessa meditabunda",
+          "pagina_pdf": 25,
+          "pagina_impressa": 25,
+          "paginas_citadas": "25",
+          "citacao": "HOFFMANN-CAMPO et al., 2000, p. 25",
+          "secoes": [
+            "danos"
+          ],
+          "observacao": null
+        },
+        {
+          "fonte": "EMB-JA-DOC328",
+          "nome_na_fonte": "Edessa meditabunda",
+          "pagina_pdf": 1,
+          "pagina_impressa": 16,
+          "paginas_citadas": "16",
+          "citacao": "CANTONE et al., [2011?], p. 16",
+          "secoes": [
+            "danos"
+          ],
+          "observacao": null
         }
       ]
     },
     {
       "indice": 7,
       "nome": "Percevejo-do-milho (Leptoglossus zonatus)",
-      "cobertura": "sem_fonte",
-      "fontes": []
+      "cobertura": "descricao_e_danos",
+      "fontes": [
+        {
+          "fonte": "AN-SEB-1994",
+          "nome_na_fonte": "Biologia de Leptoglossus zonatus alimentados com milho e sorgo",
+          "pagina_pdf": 2,
+          "pagina_impressa": 420,
+          "paginas_citadas": "420-422",
+          "citacao": "MATRANGOLO; WAQUIL, 1994, p. 420-422",
+          "secoes": [
+            "danos"
+          ],
+          "observacao": "Não descreve o adulto; parte dos danos é citada de Sawazaki et al. (1989)."
+        },
+        {
+          "fonte": "CULT-199",
+          "nome_na_fonte": "Percevejo-do-milho ou gaúcho (Leptoglossus zonatus)",
+          "secao": "Percevejo-do-milho",
+          "citacao": "ÁVILA; PAPA, s.d., seção “Percevejo-do-milho”",
+          "secoes": [
+            "descricao_das_fases",
+            "danos"
+          ],
+          "observacao": "Descrição curta do adulto e dos danos no milho; página da revista, sem paginação."
+        },
+        {
+          "fonte": "EPAGRI-BT170",
+          "nome_na_fonte": "Percevejo-do-milho (Leptoglossus zonatus)",
+          "pagina_pdf": 40,
+          "pagina_impressa": 38,
+          "paginas_citadas": "38",
+          "citacao": "WORDELL FILHO et al., 2016, p. 38",
+          "secoes": [
+            "descricao_das_fases",
+            "danos"
+          ],
+          "observacao": null
+        }
+      ]
     },
     {
       "indice": 8,
@@ -235,6 +832,43 @@
           "pagina_impressa": 36,
           "paginas_citadas": "36",
           "citacao": "SOSA-GÓMEZ et al., 2014, p. 36",
+          "secoes": [
+            "descricao_das_fases",
+            "danos"
+          ],
+          "observacao": null
+        },
+        {
+          "fonte": "EMB-DOC269",
+          "nome_na_fonte": "Lagarta-da-soja (Anticarsia gemmatalis)",
+          "pagina_pdf": 35,
+          "pagina_impressa": 34,
+          "paginas_citadas": "34",
+          "citacao": "SOSA-GÓMEZ et al., 2014, p. 34",
+          "secoes": [
+            "descricao_das_fases"
+          ],
+          "observacao": "Usada só para a confusão entre as lagartas pequenas da lagarta-da-soja e da falsa-medideira."
+        },
+        {
+          "fonte": "EMB-CT30",
+          "nome_na_fonte": "Pseudoplusia includens (lagarta falsa-medideira)",
+          "pagina_pdf": 14,
+          "pagina_impressa": 14,
+          "paginas_citadas": "14",
+          "citacao": "HOFFMANN-CAMPO et al., 2000, p. 14",
+          "secoes": [
+            "danos"
+          ],
+          "observacao": null
+        },
+        {
+          "fonte": "EMB-CT47",
+          "nome_na_fonte": "Chrysodeixis includens (lagarta-falsa-medideira)",
+          "pagina_pdf": 2,
+          "pagina_impressa": 2,
+          "paginas_citadas": "2-8",
+          "citacao": "BOTELHO; SILVA; ÁVILA, 2019, p. 2-8",
           "secoes": [
             "descricao_das_fases",
             "danos"
@@ -260,6 +894,19 @@
             "danos"
           ],
           "observacao": null
+        },
+        {
+          "fonte": "EMB-CT30",
+          "nome_na_fonte": "Anticarsia gemmatalis",
+          "pagina_pdf": 13,
+          "pagina_impressa": 13,
+          "paginas_citadas": "13",
+          "citacao": "HOFFMANN-CAMPO et al., 2000, p. 13",
+          "secoes": [
+            "descricao_das_fases",
+            "danos"
+          ],
+          "observacao": null
         }
       ]
     },
@@ -270,29 +917,29 @@
       "fontes": [
         {
           "fonte": "EMB-DOC269",
-          "nome_na_fonte": "Lagarta-das-vagens (Spodoptera cosmioides)",
+          "nome_na_fonte": "Lagarta-das-vagens (Spodoptera cosmioides e S. eridania)",
           "pagina_pdf": 71,
           "pagina_impressa": 70,
-          "paginas_citadas": "70",
-          "citacao": "SOSA-GÓMEZ et al., 2014, p. 70",
+          "paginas_citadas": "70-72",
+          "citacao": "SOSA-GÓMEZ et al., 2014, p. 70-72",
           "secoes": [
             "descricao_das_fases",
             "danos"
           ],
-          "observacao": "A classe reúne duas espécies; há uma ficha para cada."
+          "observacao": "A classe reúne duas espécies; há uma ficha para cada, nas páginas 70 e 72."
         },
         {
-          "fonte": "EMB-DOC269",
-          "nome_na_fonte": "Lagarta-das-vagens (Spodoptera eridania)",
-          "pagina_pdf": 73,
-          "pagina_impressa": 72,
-          "paginas_citadas": "72",
-          "citacao": "SOSA-GÓMEZ et al., 2014, p. 72",
+          "fonte": "EMB-CT131",
+          "nome_na_fonte": "Spodoptera cosmioides e Spodoptera eridania",
+          "pagina_pdf": 1,
+          "pagina_impressa": 1,
+          "paginas_citadas": "1-3",
+          "citacao": "TEODORO et al., 2013, p. 1-3",
           "secoes": [
             "descricao_das_fases",
             "danos"
           ],
-          "observacao": "A classe reúne duas espécies; há uma ficha para cada."
+          "observacao": null
         }
       ]
     },
@@ -313,14 +960,102 @@
             "danos"
           ],
           "observacao": "A ficha descreve danos apenas eventuais. O manual usa o nome larva-angorá; o modelo usa o nome científico."
+        },
+        {
+          "fonte": "EMB-DOC129",
+          "nome_na_fonte": "Larva-angorá (Astylus variegatus)",
+          "pagina_pdf": 59,
+          "pagina_impressa": 58,
+          "paginas_citadas": "58-59",
+          "citacao": "VIANA, 2011, p. 58-59",
+          "secoes": [
+            "descricao_das_fases",
+            "danos"
+          ],
+          "observacao": "Capítulo sobre outros insetos subterrâneos."
+        },
+        {
+          "fonte": "EPAGRI-BT170",
+          "nome_na_fonte": "Larva-angorá (Astylus variegatus)",
+          "pagina_pdf": 44,
+          "pagina_impressa": 42,
+          "paginas_citadas": "42",
+          "citacao": "WORDELL FILHO et al., 2016, p. 42",
+          "secoes": [
+            "danos"
+          ],
+          "observacao": "Citada entre as pragas ocasionais do início do milho."
         }
       ]
     },
     {
       "indice": 12,
       "nome": "Cigarrinha-das-pastagens (Deois flavopicta)",
-      "cobertura": "sem_fonte",
-      "fontes": []
+      "cobertura": "descricao_e_danos",
+      "fontes": [
+        {
+          "fonte": "EMB-SANTOS-2002",
+          "nome_na_fonte": "Cigarrinha das pastagens. 1. Caracterização (Deois flavopicta)",
+          "pagina_pdf": 1,
+          "pagina_impressa": 1,
+          "paginas_citadas": "1",
+          "citacao": "SANTOS; BALSALOBRE, 2002, p. 1",
+          "secoes": [
+            "descricao_das_fases",
+            "danos"
+          ],
+          "observacao": "Material sobre pastagens; também descreve Deois schach e Zulia entreriana."
+        },
+        {
+          "fonte": "EMB-CT144",
+          "nome_na_fonte": "Cigarrinha-das-pastagens (Deois flavopicta)",
+          "pagina_pdf": 1,
+          "pagina_impressa": 1,
+          "paginas_citadas": "1-2",
+          "citacao": "CRUZ et al., 2010, p. 1-2",
+          "secoes": [
+            "descricao_das_fases",
+            "danos"
+          ],
+          "observacao": "Danos no milho."
+        },
+        {
+          "fonte": "EMB-CT59",
+          "nome_na_fonte": "Cigarrinha-das-pastagens (Deois flavopicta)",
+          "pagina_pdf": 6,
+          "pagina_impressa": 6,
+          "paginas_citadas": "6",
+          "citacao": "VIANA; CRUZ; WAQUIL, 2002, p. 6",
+          "secoes": [
+            "danos"
+          ],
+          "observacao": "Danos no milho."
+        },
+        {
+          "fonte": "ABMS-MISOSUL-2024",
+          "nome_na_fonte": "Cigarrinhas-das-pastagens (Deois e Notozulia)",
+          "pagina_pdf": 7,
+          "pagina_impressa": 93,
+          "paginas_citadas": "93",
+          "citacao": "EICHOLZ et al., 2024, p. 93",
+          "secoes": [
+            "danos"
+          ],
+          "observacao": null
+        },
+        {
+          "fonte": "EPAGRI-BT170",
+          "nome_na_fonte": "Cigarrinhas-das-pastagens (Mahanarva e Deois)",
+          "pagina_pdf": 46,
+          "pagina_impressa": 44,
+          "paginas_citadas": "44",
+          "citacao": "WORDELL FILHO et al., 2016, p. 44",
+          "secoes": [
+            "danos"
+          ],
+          "observacao": null
+        }
+      ]
     }
   ],
   "fontes_identificacao": [
@@ -344,6 +1079,13 @@
       "licenca": "documento interno do projeto",
       "referencia_abnt": "AGROTECH INTELI. Dataset de pragas de soja e milho: AgroTech Inteli × Agro App. Documento interno (instruções.md), pasta Agro_App/dataset/dataset do Drive da equipe, 2026.",
       "citacao_curta": "AGROTECH INTELI, 2026"
+    }
+  ],
+  "fontes_internas": [
+    {
+      "id": "ANALISE-MODELO",
+      "citacao_curta": "Análise de erros do modelo (seção 6.4 do Projeto.md)",
+      "descricao": "Erros do candidato no conjunto de teste exploratório de 473 imagens (T6.2 a T6.4): quantas vezes o app indicou uma classe quando a foto era de outra."
     }
   ]
 }

@@ -835,6 +835,60 @@
   font-size: 9px;
   margin-top: 5px;
 }
+/* Ficha técnica: texto maior que o resto do painel, para leitura ao sol, no celular. */
+.technicalContent .fichaTitle {
+  display: block;
+  font-size: 15px;
+}
+.technicalContent .fichaScientific {
+  display: block;
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+.technicalContent .fichaContext {
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+.fichaSection {
+  margin-top: 12px;
+}
+.fichaSection h4 {
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--green-dark);
+}
+.fichaSection ul {
+  list-style: disc;
+  padding-left: 18px;
+}
+.fichaSection li {
+  font-size: 13px;
+  line-height: 1.55;
+  margin-bottom: 6px;
+}
+.fichaSection li small {
+  font-size: 10px;
+  margin-top: 1px;
+}
+.technicalContent .fichaNotice {
+  font-size: 11px;
+  margin-top: 12px;
+}
+.fichaReferences {
+  margin-top: 8px;
+  font-size: 10px;
+  color: var(--muted);
+}
+.fichaReferences summary {
+  cursor: pointer;
+}
+.fichaReferences li {
+  margin: 6px 0 0 14px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
 .errorBanner {
   background: #fff3ee;
   color: #943c22;

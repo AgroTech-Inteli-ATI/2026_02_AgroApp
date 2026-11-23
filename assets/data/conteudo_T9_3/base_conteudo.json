@@ -1,14 +1,1599 @@
 {
-  "esquema": "base_conteudo_T9_3_v1",
-  "versao": "0.0.0",
-  "status": "vazia_aguardando_catalogo_do_parceiro",
+  "esquema": "base_conteudo_T9_3_v2",
+  "versao": "1.0.0",
+  "status": "fichas_da_equipe_aguardando_revisao",
   "campos_item": [
     "chave",
     "titulo",
-    "texto",
-    "fonte",
+    "nome_cientifico",
+    "contexto",
+    "secoes",
+    "elaborado_por",
+    "elaborado_em",
     "revisado_em",
     "validated"
   ],
-  "itens": []
+  "secoes": {
+    "como_reconhecer": "Como reconhecer",
+    "danos": "Danos ou sintomas",
+    "confusao": "Pode ser confundido com"
+  },
+  "itens": [
+    {
+      "chave": "equipe.diabrotica_speciosa",
+      "titulo": "Vaquinha",
+      "nome_cientifico": "Diabrotica speciosa",
+      "contexto": "Descrição baseada em manual sobre a cultura da soja e em publicações sobre o milho.",
+      "secoes": [
+        {
+          "id": "como_reconhecer",
+          "titulo": "Como reconhecer",
+          "itens": [
+            {
+              "texto": "Adulto pequeno, de 5 a 6 mm: corpo verde, três manchas amarelas em cada asa da frente e cabeça avermelhada.",
+              "fonte": {
+                "id": "EMB-DOC269",
+                "pagina": 42
+              }
+            },
+            {
+              "texto": "A larva vive no solo. É amarelo-pálida, com cabeça, tórax e pernas pretos, e mede de 10 a 12 mm.",
+              "fonte": {
+                "id": "EMB-DOC269",
+                "pagina": 42
+              }
+            },
+            {
+              "texto": "Os ovos são postos em grupos, nas partes da planta que ficam debaixo da terra.",
+              "fonte": {
+                "id": "EMB-DOC269",
+                "pagina": 42
+              }
+            },
+            {
+              "texto": "A larva-alfinete é a fase jovem da vaquinha verde e amarela, também chamada de patriota.",
+              "fonte": {
+                "id": "ABMS-MISOSUL-2024",
+                "pagina": 90
+              }
+            }
+          ]
+        },
+        {
+          "id": "danos",
+          "titulo": "Danos ou sintomas",
+          "itens": [
+            {
+              "texto": "Os adultos comem folhas e brotos, de preferência os mais tenros, e deixam pequenos furos.",
+              "fonte": {
+                "id": "EMB-DOC269",
+                "pagina": 42
+              }
+            },
+            {
+              "texto": "Raramente causam grande desfolha.",
+              "fonte": {
+                "id": "EMB-DOC269",
+                "pagina": 42
+              }
+            },
+            {
+              "texto": "No milho, as larvas comem as raízes, e a planta passa a absorver menos água e nutrientes.",
+              "fonte": {
+                "id": "EMB-DOC129",
+                "pagina": 22
+              }
+            },
+            {
+              "texto": "Com a raiz estragada, o colmo fica curvado: é o sintoma chamado de pescoço-de-ganso.",
+              "fonte": {
+                "id": "EMB-DOC129",
+                "pagina": 22
+              }
+            },
+            {
+              "texto": "Planta com poucas raízes tomba mais fácil com vento forte e chuva intensa, o que atrapalha a colheita mecânica.",
+              "fonte": {
+                "id": "ABMS-MISOSUL-2024",
+                "pagina": 90
+              }
+            },
+            {
+              "texto": "Mais de 3,5 larvas por planta já bastam para prejudicar as raízes.",
+              "fonte": {
+                "id": "EMB-CT59",
+                "pagina": 1
+              }
+            },
+            {
+              "texto": "No milho, os adultos podem furar folhas de plantas novas e, na polinização, comer os \"cabelos\" da espiga, o que prejudica a fertilização.",
+              "fonte": {
+                "id": "EMB-DOC129",
+                "pagina": 23
+              }
+            },
+            {
+              "texto": "A fase de maior risco vai da germinação até cerca de 45 dias depois da emergência da planta.",
+              "fonte": {
+                "id": "ABMS-MISOSUL-2024",
+                "pagina": 90
+              }
+            },
+            {
+              "texto": "Os danos mais fortes aparecem em lavouras semeadas tarde ou na safrinha, quando há mais adultos; no Sul, o pico é de fevereiro a março.",
+              "fonte": {
+                "id": "EPAGRI-BT170",
+                "pagina": 40
+              }
+            },
+            {
+              "texto": "Quando a planta cresce, a larva também ataca as raízes adventícias, e a planta lança raízes em nós acima do solo.",
+              "fonte": {
+                "id": "EPAGRI-BT170",
+                "pagina": 40
+              }
+            }
+          ]
+        },
+        {
+          "id": "confusao",
+          "titulo": "Pode ser confundido com",
+          "itens": [
+            {
+              "texto": "Em testes, o app às vezes indicou esta praga quando a foto era de percevejo-verde, percevejo-barriga-verde ou cigarrinha-do-milho.",
+              "fonte": {
+                "id": "ANALISE-MODELO"
+              }
+            }
+          ]
+        }
+      ],
+      "elaborado_por": "Equipe do projeto AgroApp (Inteli)",
+      "elaborado_em": "2026-11-20",
+      "revisado_em": "2026-11-23",
+      "validated": true
+    },
+    {
+      "chave": "equipe.dalbulus_maidis",
+      "titulo": "Cigarrinha-do-milho",
+      "nome_cientifico": "Dalbulus maidis",
+      "contexto": "Descrição baseada em publicações sobre a cultura do milho.",
+      "secoes": [
+        {
+          "id": "como_reconhecer",
+          "titulo": "Como reconhecer",
+          "itens": [
+            {
+              "texto": "Adulto muito pequeno: cerca de 4 mm, cor de palha, com manchas pretas no abdômen e duas manchas pretas na cabeça.",
+              "fonte": {
+                "id": "EMB-CT41",
+                "pagina": 1
+              }
+            },
+            {
+              "texto": "Os adultos costumam ficar e se alimentar dentro do cartucho do milho.",
+              "fonte": {
+                "id": "EMB-CT41",
+                "pagina": 1
+              }
+            },
+            {
+              "texto": "As ninfas também têm cor de palha, mas o abdômen é manchado de escuro e os olhos são pretos. Ficam quietas na folha e só andam se forem incomodadas.",
+              "fonte": {
+                "id": "EMB-CT41",
+                "pagina": 2
+              }
+            },
+            {
+              "texto": "Os ovos são minúsculos (menos de 1 mm), translúcidos e ficam dentro da nervura central da folha.",
+              "fonte": {
+                "id": "EMB-CT41",
+                "pagina": 2
+              }
+            }
+          ]
+        },
+        {
+          "id": "danos",
+          "titulo": "Danos ou sintomas",
+          "itens": [
+            {
+              "texto": "O principal problema é que ela transmite doenças: os enfezamentos (pálido e vermelho) e o rayado fino.",
+              "fonte": {
+                "id": "EMB-CT41",
+                "pagina": 1
+              }
+            },
+            {
+              "texto": "Enfezamento pálido: na base das folhas novas surgem listras largas, amareladas ou verde-limão; as folhas mais velhas ficam amareladas ou avermelhadas.",
+              "fonte": {
+                "id": "EMB-CT41",
+                "pagina": 3
+              }
+            },
+            {
+              "texto": "Enfezamento vermelho: folhas velhas avermelhadas e, depois, a planta toda avermelhada ou amarelada, mais baixa, com aspecto de arbusto e espigas mal granadas.",
+              "fonte": {
+                "id": "EMB-CT41",
+                "pagina": 4
+              }
+            },
+            {
+              "texto": "Rayado fino: pontinhos amarelados alinhados nas folhas, que se juntam em riscas finas.",
+              "fonte": {
+                "id": "EMB-CT41",
+                "pagina": 4
+              }
+            },
+            {
+              "texto": "Os sintomas aparecem de cerca de uma a quatro semanas depois da infecção, conforme a doença, e às vezes são leves ou nem aparecem.",
+              "fonte": {
+                "id": "EMB-CT41",
+                "paginas": "3-4"
+              }
+            },
+            {
+              "texto": "Quanto mais cedo a planta é infectada, maior o prejuízo.",
+              "fonte": {
+                "id": "EMB-CT41",
+                "pagina": 4
+              }
+            },
+            {
+              "texto": "Conforme a idade em que foi infectada, a planta pode ficar com entrenós curtos, espigas pequenas, pendão deformado ou nem formar a espiga.",
+              "fonte": {
+                "id": "EMB-CT41",
+                "pagina": 3
+              }
+            },
+            {
+              "texto": "Além dos enfezamentos, ela transmite a virose-da-risca e o mosaico-estriado-do-milho.",
+              "fonte": {
+                "id": "ABMS-MISOSUL-2024",
+                "pagina": 91
+              }
+            },
+            {
+              "texto": "As perdas de produtividade podem passar de 90%, conforme o híbrido, o momento da infecção e o clima.",
+              "fonte": {
+                "id": "ABMS-MISOSUL-2024",
+                "pagina": 91
+              }
+            },
+            {
+              "texto": "Nas plantas com enfezamento são comuns planta mais baixa, várias espigas pequenas e espigas e grãos mal formados.",
+              "fonte": {
+                "id": "ABMS-MISOSUL-2024",
+                "pagina": 92
+              }
+            },
+            {
+              "texto": "Virose-da-risca: pontinhos amarelados alinhados e planta menor. Mosaico-estriado: manchas e estrias claras e planta bem mais baixa.",
+              "fonte": {
+                "id": "ABMS-MISOSUL-2024",
+                "pagina": 92
+              }
+            }
+          ]
+        },
+        {
+          "id": "confusao",
+          "titulo": "Pode ser confundido com",
+          "itens": [
+            {
+              "texto": "As doenças que ela transmite se parecem e podem ocorrer juntas na mesma planta; só pelo olhar é difícil dizer qual é qual.",
+              "fonte": {
+                "id": "ABMS-MISOSUL-2024",
+                "pagina": 92
+              }
+            }
+          ]
+        }
+      ],
+      "elaborado_por": "Equipe do projeto AgroApp (Inteli)",
+      "elaborado_em": "2026-11-20",
+      "revisado_em": "2026-11-23",
+      "validated": true
+    },
+    {
+      "chave": "equipe.dichelops_sp",
+      "titulo": "Percevejo-barriga-verde",
+      "nome_cientifico": "Diceraeus spp. (ex-Dichelops)",
+      "contexto": "Descrição baseada em manual sobre a cultura da soja, que usa o nome Dichelops, e em publicações sobre o milho.",
+      "secoes": [
+        {
+          "id": "como_reconhecer",
+          "titulo": "Como reconhecer",
+          "itens": [
+            {
+              "texto": "Adulto de 9 a 11 mm, castanho-amarelado a acinzentado, com a barriga verde.",
+              "fonte": {
+                "id": "EMB-DOC269",
+                "pagina": 84
+              }
+            },
+            {
+              "texto": "A cabeça termina em duas pontas, e a frente do tórax tem bordas serrilhadas e espinhos nas laterais.",
+              "fonte": {
+                "id": "EMB-DOC269",
+                "pagina": 84
+              }
+            },
+            {
+              "texto": "As ninfas são castanhas, com a barriga mais clara e pontinhos escuros. Logo depois de nascer ficam juntas sobre os ovos e depois se espalham.",
+              "fonte": {
+                "id": "EMB-DOC269",
+                "pagina": 84
+              }
+            },
+            {
+              "texto": "Os ovos são verde-claros, postos em grupos de cerca de 14, nas folhas ou nas vagens.",
+              "fonte": {
+                "id": "EMB-DOC269",
+                "pagina": 84
+              }
+            },
+            {
+              "texto": "O D. melacanthus mede cerca de 9 mm, tem o dorso pardo e a barriga verde-clara, e o espinho de cada lado do tórax tem a ponta marrom-escura.",
+              "fonte": {
+                "id": "EPAGRI-BT170",
+                "pagina": 34
+              }
+            },
+            {
+              "texto": "As ninfas têm a barriga esverdeada e o dorso pardo, com manchas arroxeadas na cabeça e no tórax e avermelhadas no abdome.",
+              "fonte": {
+                "id": "EPAGRI-BT170",
+                "pagina": 34
+              }
+            }
+          ]
+        },
+        {
+          "id": "danos",
+          "titulo": "Danos ou sintomas",
+          "itens": [
+            {
+              "texto": "Ninfas e adultos sugam as vagens e estragam os grãos, o que reduz a produtividade e a qualidade da soja.",
+              "fonte": {
+                "id": "EMB-DOC269",
+                "pagina": 84
+              }
+            },
+            {
+              "texto": "Também ocorre em milho e trigo, com danos sérios principalmente em plantas jovens de milho.",
+              "fonte": {
+                "id": "EMB-DOC269",
+                "pagina": 84
+              }
+            },
+            {
+              "texto": "No milho, adultos e ninfas sugam a base das plantas novas, logo depois da emergência; ao abrirem, as folhas mostram furos simétricos com halos amarelados.",
+              "fonte": {
+                "id": "EMB-CT59",
+                "paginas": "4-5"
+              }
+            },
+            {
+              "texto": "A planta atacada pode ficar deformada, soltar perfilhos que não produzem e até morrer.",
+              "fonte": {
+                "id": "EMB-CT59",
+                "pagina": 5
+              }
+            },
+            {
+              "texto": "As folhas ficam retorcidas, com furos perpendiculares às nervuras; a planta cresce devagar e pode dar espigas pequenas.",
+              "fonte": {
+                "id": "ABMS-MISOSUL-2024",
+                "pagina": 91
+              }
+            },
+            {
+              "texto": "Quando o sintoma aparece, o dano já aconteceu e não tem volta.",
+              "fonte": {
+                "id": "ABMS-MISOSUL-2024",
+                "pagina": 91
+              }
+            },
+            {
+              "texto": "Plantas com mais de 5 folhas abertas, ou com colmo de mais de 1 cm de espessura, sofrem pouco; quanto menor a planta, maior o estrago.",
+              "fonte": {
+                "id": "ABMS-MISOSUL-2024",
+                "pagina": 91
+              }
+            },
+            {
+              "texto": "É praga típica da soja, mas passou a atacar o milho plantado em sucessão ou rotação com ela, logo após a emergência.",
+              "fonte": {
+                "id": "EMB-CT59",
+                "pagina": 4
+              }
+            },
+            {
+              "texto": "Um único percevejo pode estragar até seis plantas vizinhas.",
+              "fonte": {
+                "id": "EPAGRI-BT170",
+                "pagina": 34
+              }
+            }
+          ]
+        },
+        {
+          "id": "confusao",
+          "titulo": "Pode ser confundido com",
+          "itens": [
+            {
+              "texto": "Em testes, o app às vezes indicou esta praga quando a foto era de percevejo-verde.",
+              "fonte": {
+                "id": "ANALISE-MODELO"
+              }
+            }
+          ]
+        }
+      ],
+      "elaborado_por": "Equipe do projeto AgroApp (Inteli)",
+      "elaborado_em": "2026-11-20",
+      "revisado_em": "2026-11-23",
+      "validated": true
+    },
+    {
+      "chave": "equipe.spodoptera_frugiperda",
+      "titulo": "Lagarta-do-cartucho",
+      "nome_cientifico": "Spodoptera frugiperda",
+      "contexto": "Descrição baseada em manual sobre a cultura da soja, que usa o título lagarta-das-vagens, e em publicações sobre o milho.",
+      "secoes": [
+        {
+          "id": "como_reconhecer",
+          "titulo": "Como reconhecer",
+          "itens": [
+            {
+              "texto": "Lagarta crescida: de 35 a 40 mm, com pontos pretos em pares dos dois lados de cada segmento do corpo, cada ponto com um pelo longo.",
+              "fonte": {
+                "id": "EMB-DOC269",
+                "pagina": 74
+              }
+            },
+            {
+              "texto": "No último segmento do corpo há quatro pontos pretos, dispostos como os cantos de um quadrado.",
+              "fonte": {
+                "id": "EMB-DOC269",
+                "pagina": 74
+              }
+            },
+            {
+              "texto": "A cabeça tem um desenho de épsilon invertido, mas só isso não basta para confirmar a espécie.",
+              "fonte": {
+                "id": "EMB-DOC269",
+                "pagina": 74
+              }
+            },
+            {
+              "texto": "O adulto é uma mariposa de 32 a 38 mm com as asas abertas: asas da frente cinza-amarronzadas (mais escuras nos machos) e asas de trás branco-prateadas.",
+              "fonte": {
+                "id": "EMB-DOC269",
+                "pagina": 74
+              }
+            },
+            {
+              "texto": "Os ovos são quase redondos, postos em camadas e cobertos por escamas do abdômen da fêmea.",
+              "fonte": {
+                "id": "EMB-DOC269",
+                "pagina": 74
+              }
+            },
+            {
+              "texto": "A lagarta recém-nascida tem a cabeça preta e o corpo claro; escurece a partir dos 3 dias de vida.",
+              "fonte": {
+                "id": "EMB-CT208",
+                "pagina": 5
+              }
+            },
+            {
+              "texto": "A pupa fica no solo, é marrom-avermelhada e mede de 14 a 18 mm.",
+              "fonte": {
+                "id": "EMB-CT208",
+                "pagina": 5
+              }
+            }
+          ]
+        },
+        {
+          "id": "danos",
+          "titulo": "Danos ou sintomas",
+          "itens": [
+            {
+              "texto": "Na soja, pode atacar as vagens.",
+              "fonte": {
+                "id": "EMB-DOC269",
+                "pagina": 74
+              }
+            },
+            {
+              "texto": "É uma das principais pragas do milho: sem controle, pode reduzir a produção em 34% a 52%.",
+              "fonte": {
+                "id": "EMB-CT208",
+                "pagina": 4
+              }
+            },
+            {
+              "texto": "Lagartas novas raspam só um lado da folha; depois do 2º ou 3º estágio passam a furá-la.",
+              "fonte": {
+                "id": "EMB-CT208",
+                "pagina": 5
+              }
+            },
+            {
+              "texto": "Comendo no cartucho, deixam uma fileira de furos nas folhas, e o cartucho pode ficar totalmente destruído.",
+              "fonte": {
+                "id": "EMB-CT208",
+                "paginas": "5-6"
+              }
+            },
+            {
+              "texto": "Dentro do cartucho aparecem também os excrementos da lagarta.",
+              "fonte": {
+                "id": "ABMS-MISOSUL-2024",
+                "pagina": 92
+              }
+            },
+            {
+              "texto": "Em plantas novas pode matar a planta, principalmente quando o milho é semeado logo depois da dessecação, no plantio direto.",
+              "fonte": {
+                "id": "EMB-CT59",
+                "pagina": 6
+              }
+            },
+            {
+              "texto": "O estrago é maior quando o ataque acontece em plantas com até 8 a 10 folhas abertas.",
+              "fonte": {
+                "id": "ABMS-MISOSUL-2024",
+                "pagina": 92
+              }
+            },
+            {
+              "texto": "Também ataca a espiga, entrando pela base, pela ponta ou pelo meio.",
+              "fonte": {
+                "id": "EMB-CT208",
+                "pagina": 5
+              }
+            },
+            {
+              "texto": "No milho, pode cortar a planta rente ao solo, como a lagarta-rosca, e reduzir o número de plantas na lavoura.",
+              "fonte": {
+                "id": "ABMS-MISOSUL-2024",
+                "pagina": 90
+              }
+            }
+          ]
+        },
+        {
+          "id": "confusao",
+          "titulo": "Pode ser confundido com",
+          "itens": [
+            {
+              "texto": "Lagarta-rosca: nas plantas novas de milho os sintomas podem ser parecidos, com a planta cortada rente ao solo.",
+              "fonte": {
+                "id": "EMB-CT208",
+                "pagina": 5
+              }
+            },
+            {
+              "texto": "As lagartas do gênero Spodoptera se parecem muito, e é difícil diferenciar as espécies.",
+              "fonte": {
+                "id": "EMB-CT131",
+                "pagina": 2
+              }
+            },
+            {
+              "texto": "Na espiga, a lagarta rasga a palha ao sair para virar pupa, e isso a diferencia da lagarta-da-espiga.",
+              "fonte": {
+                "id": "ABMS-MISOSUL-2024",
+                "pagina": 92
+              }
+            },
+            {
+              "texto": "Em testes, o app às vezes indicou esta praga quando a foto era de lagarta-falsa-medideira ou de lagarta-das-vagens.",
+              "fonte": {
+                "id": "ANALISE-MODELO"
+              }
+            }
+          ]
+        }
+      ],
+      "elaborado_por": "Equipe do projeto AgroApp (Inteli)",
+      "elaborado_em": "2026-11-20",
+      "revisado_em": "2026-11-23",
+      "validated": true
+    },
+    {
+      "chave": "equipe.euschistus_heros",
+      "titulo": "Percevejo-marrom",
+      "nome_cientifico": "Euschistus heros",
+      "contexto": "Descrição baseada em manual e circular sobre a cultura da soja e em publicação sobre o milho.",
+      "secoes": [
+        {
+          "id": "como_reconhecer",
+          "titulo": "Como reconhecer",
+          "itens": [
+            {
+              "texto": "Adulto marrom-escuro, com dois pequenos espinhos nas laterais, perto da cabeça.",
+              "fonte": {
+                "id": "EMB-DOC269",
+                "pagina": 78
+              }
+            },
+            {
+              "texto": "A ninfa recém-nascida tem cerca de 1 mm, corpo alaranjado e cabeça preta. Passa por cinco fases e, nas maiores, a cor varia do cinza ao marrom.",
+              "fonte": {
+                "id": "EMB-DOC269",
+                "pagina": 78
+              }
+            },
+            {
+              "texto": "Os ovos são amarelados, postos nas folhas em pequenos grupos de 5 a 7; perto de nascer, ganham uma mancha rosada.",
+              "fonte": {
+                "id": "EMB-DOC269",
+                "pagina": 78
+              }
+            },
+            {
+              "texto": "O adulto mede cerca de 11 mm e tem uma mancha branca em forma de meia-lua na ponta de trás do escudo (escutelo).",
+              "fonte": {
+                "id": "ABMS-MISOSUL-2024",
+                "pagina": 91
+              }
+            }
+          ]
+        },
+        {
+          "id": "danos",
+          "titulo": "Danos ou sintomas",
+          "itens": [
+            {
+              "texto": "Adultos e ninfas sugam vagens e grãos, o que reduz a produtividade e piora a qualidade da semente.",
+              "fonte": {
+                "id": "EMB-DOC269",
+                "pagina": 78
+              }
+            },
+            {
+              "texto": "Provoca menos sintomas de retenção foliar do que o percevejo-verde e o percevejo-verde-pequeno.",
+              "fonte": {
+                "id": "EMB-DOC269",
+                "pagina": 78
+              }
+            },
+            {
+              "texto": "Ninfas do 3º ao 5º estágio também estragam os grãos da soja.",
+              "fonte": {
+                "id": "EMB-CT30",
+                "pagina": 24
+              }
+            },
+            {
+              "texto": "Em milho safrinha, plantado depois da soja, pode aparecer em grande número; sintomas e fase crítica são parecidos com os do barriga-verde.",
+              "fonte": {
+                "id": "ABMS-MISOSUL-2024",
+                "pagina": 91
+              }
+            },
+            {
+              "texto": "No milho ele também pesa, sobretudo onde o clima é mais quente.",
+              "fonte": {
+                "id": "EPAGRI-BT170",
+                "pagina": 36
+              }
+            }
+          ]
+        }
+      ],
+      "elaborado_por": "Equipe do projeto AgroApp (Inteli)",
+      "elaborado_em": "2026-11-20",
+      "revisado_em": "2026-11-23",
+      "validated": true
+    },
+    {
+      "chave": "equipe.nezara_viridula",
+      "titulo": "Percevejo-verde",
+      "nome_cientifico": "Nezara viridula",
+      "contexto": "Descrição baseada em manual e circular sobre a cultura da soja e em publicação sobre o milho.",
+      "secoes": [
+        {
+          "id": "como_reconhecer",
+          "titulo": "Como reconhecer",
+          "itens": [
+            {
+              "texto": "Adulto totalmente verde, de 12 a 15 mm; solta mau cheiro quando incomodado (por isso, \"maria-fedida\" ou \"fede-fede\").",
+              "fonte": {
+                "id": "EMB-DOC269",
+                "pagina": 82
+              }
+            },
+            {
+              "texto": "A ninfa é verde ou preta, com manchas redondas brancas e pontinhos pretos pelo corpo; passa por cinco fases e se desenvolve em cerca de 25 dias.",
+              "fonte": {
+                "id": "EMB-DOC269",
+                "pagina": 82
+              }
+            },
+            {
+              "texto": "Os ovos são amarelados, postos de preferência na face de baixo das folhas, em massas regulares de 50 a 100, parecidas com favos de colmeia.",
+              "fonte": {
+                "id": "EMB-DOC269",
+                "pagina": 82
+              }
+            }
+          ]
+        },
+        {
+          "id": "danos",
+          "titulo": "Danos ou sintomas",
+          "itens": [
+            {
+              "texto": "Ninfas e adultos causam dano parecido com o dos outros percevejos da soja.",
+              "fonte": {
+                "id": "EMB-DOC269",
+                "pagina": 82
+              }
+            },
+            {
+              "texto": "A capacidade de provocar haste verde é maior que a do percevejo-marrom e menor que a do percevejo-verde-pequeno.",
+              "fonte": {
+                "id": "EMB-DOC269",
+                "pagina": 82
+              }
+            },
+            {
+              "texto": "As ninfas só começam a comer os grãos de soja a partir do 3º estágio, e o estrago cresce até o 5º, o último.",
+              "fonte": {
+                "id": "EMB-CT30",
+                "pagina": 22
+              }
+            },
+            {
+              "texto": "Também ataca o milho novo semeado depois da soja, junto com o percevejo-barriga-verde.",
+              "fonte": {
+                "id": "EMB-CT59",
+                "pagina": 4
+              }
+            }
+          ]
+        },
+        {
+          "id": "confusao",
+          "titulo": "Pode ser confundido com",
+          "itens": [
+            {
+              "texto": "Em testes, o app às vezes indicou esta praga quando a foto era de percevejo-asa-preta.",
+              "fonte": {
+                "id": "ANALISE-MODELO"
+              }
+            }
+          ]
+        }
+      ],
+      "elaborado_por": "Equipe do projeto AgroApp (Inteli)",
+      "elaborado_em": "2026-11-20",
+      "revisado_em": "2026-11-23",
+      "validated": true
+    },
+    {
+      "chave": "equipe.edessa_meditabunda",
+      "titulo": "Percevejo-asa-preta",
+      "nome_cientifico": "Edessa meditabunda",
+      "contexto": "Descrição baseada em manual e circular sobre a cultura da soja, que chamam a espécie de percevejo-edessa, e em resumo da Embrapa Soja.",
+      "secoes": [
+        {
+          "id": "como_reconhecer",
+          "titulo": "Como reconhecer",
+          "itens": [
+            {
+              "texto": "Adulto de 13 mm, de corpo oval, com a cabeça e parte do tórax verdes e as asas marrom-escuras.",
+              "fonte": {
+                "id": "EMB-DOC269",
+                "pagina": 86
+              }
+            },
+            {
+              "texto": "A ninfa é verde-amarelada, com antenas e pernas da mesma cor; a barriga é amarelo-escura e brilhante.",
+              "fonte": {
+                "id": "EMB-DOC269",
+                "pagina": 86
+              }
+            },
+            {
+              "texto": "Os ovos são verde-claros, em geral nas folhas, em massas de 14 ovos dispostos em duas fileiras.",
+              "fonte": {
+                "id": "EMB-DOC269",
+                "pagina": 86
+              }
+            }
+          ]
+        },
+        {
+          "id": "danos",
+          "titulo": "Danos ou sintomas",
+          "itens": [
+            {
+              "texto": "Os danos são parecidos com os dos outros percevejos que sugam sementes, mas a capacidade de dano é menor.",
+              "fonte": {
+                "id": "EMB-DOC269",
+                "pagina": 86
+              }
+            },
+            {
+              "texto": "Também pode sugar caules e causar lesões escuras.",
+              "fonte": {
+                "id": "EMB-DOC269",
+                "pagina": 86
+              }
+            },
+            {
+              "texto": "Em geral, as populações não são elevadas.",
+              "fonte": {
+                "id": "EMB-DOC269",
+                "pagina": 86
+              }
+            },
+            {
+              "texto": "Sozinha, a espécie costuma não formar populações que ameacem a produtividade, mas o dano dela se soma ao dos percevejos principais.",
+              "fonte": {
+                "id": "EMB-CT30",
+                "pagina": 25
+              }
+            },
+            {
+              "texto": "É um percevejo secundário da soja, que ataca só de vez em quando.",
+              "fonte": {
+                "id": "EMB-JA-DOC328",
+                "pagina": 16
+              }
+            },
+            {
+              "texto": "O bico é mais curto que o dos principais percevejos da soja; por isso, as ninfas não completam o desenvolvimento só com vagens e precisam comer folhas também.",
+              "fonte": {
+                "id": "EMB-JA-DOC328",
+                "pagina": 16
+              }
+            },
+            {
+              "texto": "As ninfas ficam agrupadas e comem com frequência, o que pode causar danos importantes à planta.",
+              "fonte": {
+                "id": "EMB-JA-DOC328",
+                "pagina": 16
+              }
+            }
+          ]
+        }
+      ],
+      "elaborado_por": "Equipe do projeto AgroApp (Inteli)",
+      "elaborado_em": "2026-11-20",
+      "revisado_em": "2026-11-23",
+      "validated": true
+    },
+    {
+      "chave": "equipe.leptoglossus_zonatus",
+      "titulo": "Percevejo-do-milho",
+      "nome_cientifico": "Leptoglossus zonatus",
+      "contexto": "Descrição baseada em textos sobre a cultura do milho.",
+      "secoes": [
+        {
+          "id": "como_reconhecer",
+          "titulo": "Como reconhecer",
+          "itens": [
+            {
+              "texto": "Adulto com cerca de 20 mm, marrom-escuro, com duas manchas amarelas redondas na frente do tórax.",
+              "fonte": {
+                "id": "CULT-199",
+                "secao": "Percevejo-do-milho"
+              }
+            },
+            {
+              "texto": "Nas asas da frente há uma faixa amarela em zigue-zague, e as pernas de trás têm um alargamento em forma de folha.",
+              "fonte": {
+                "id": "CULT-199",
+                "secao": "Percevejo-do-milho"
+              }
+            },
+            {
+              "texto": "As fêmeas costumam ser maiores que os machos.",
+              "fonte": {
+                "id": "AN-SEB-1994",
+                "pagina": 421
+              }
+            },
+            {
+              "texto": "Os ovos são postos enfileirados, grudados na superfície; são esverdeados no início e ficam marrons em algumas horas.",
+              "fonte": {
+                "id": "AN-SEB-1994",
+                "pagina": 421
+              }
+            },
+            {
+              "texto": "As ninfas ficam agrupadas até o fim do 2º estágio e depois se espalham. Em milho, a maioria foi encontrada nas folhas.",
+              "fonte": {
+                "id": "AN-SEB-1994",
+                "paginas": "421-422"
+              }
+            },
+            {
+              "texto": "As ninfas são alaranjadas e, no começo da vida, ficam agrupadas.",
+              "fonte": {
+                "id": "EPAGRI-BT170",
+                "pagina": 38
+              }
+            },
+            {
+              "texto": "Do ovo ao adulto o ciclo dura de 40 a 60 dias.",
+              "fonte": {
+                "id": "EPAGRI-BT170",
+                "pagina": 38
+              }
+            }
+          ]
+        },
+        {
+          "id": "danos",
+          "titulo": "Danos ou sintomas",
+          "itens": [
+            {
+              "texto": "Adultos e ninfas sugam os grãos do milho. Os adultos ficam sobre as espigas e furam a palha para chegar aos grãos.",
+              "fonte": {
+                "id": "AN-SEB-1994",
+                "pagina": 422
+              }
+            },
+            {
+              "texto": "O furo da picada deixa entrar fungos. O resultado é espiga com falhas e grãos murchos e podres.",
+              "fonte": {
+                "id": "CULT-199",
+                "secao": "Percevejo-do-milho"
+              }
+            },
+            {
+              "texto": "Há relatos de grãos contaminados por fungos, entre eles Fusarium moniliforme, Penicillium e Cephalosporium.",
+              "fonte": {
+                "id": "AN-SEB-1994",
+                "pagina": 420
+              }
+            },
+            {
+              "texto": "Prefere espigas de palha aberta, em que as sementes ficam mais expostas.",
+              "fonte": {
+                "id": "CULT-199",
+                "secao": "Percevejo-do-milho"
+              }
+            },
+            {
+              "texto": "Também é citado em sorgo, laranja e tomate.",
+              "fonte": {
+                "id": "AN-SEB-1994",
+                "pagina": 420
+              }
+            },
+            {
+              "texto": "No milho, o ataque pode reduzir a produtividade em cerca de 15%.",
+              "fonte": {
+                "id": "EPAGRI-BT170",
+                "pagina": 38
+              }
+            },
+            {
+              "texto": "Ninfas e adultos sugam as espigas, sobretudo na fase de enchimento dos grãos, e causam murcha e manchas que impedem o uso do milho verde em conserva.",
+              "fonte": {
+                "id": "EPAGRI-BT170",
+                "pagina": 38
+              }
+            },
+            {
+              "texto": "Espigas atacadas têm mais grãos ardidos, o que piora a qualidade da ração e prejudica a produção de sementes.",
+              "fonte": {
+                "id": "EPAGRI-BT170",
+                "pagina": 38
+              }
+            },
+            {
+              "texto": "Costuma chegar às plantas de milho a partir do aparecimento dos \"cabelos\" (estilos) da espiga.",
+              "fonte": {
+                "id": "EPAGRI-BT170",
+                "pagina": 38
+              }
+            }
+          ]
+        }
+      ],
+      "elaborado_por": "Equipe do projeto AgroApp (Inteli)",
+      "elaborado_em": "2026-11-20",
+      "revisado_em": "2026-11-23",
+      "validated": true
+    },
+    {
+      "chave": "equipe.chrysodeixis_includens",
+      "titulo": "Lagarta-falsa-medideira",
+      "nome_cientifico": "Chrysodeixis includens",
+      "contexto": "Descrição baseada em manual e circulares sobre a cultura da soja.",
+      "secoes": [
+        {
+          "id": "como_reconhecer",
+          "titulo": "Como reconhecer",
+          "itens": [
+            {
+              "texto": "A lagarta é verde-clara, com listras brancas ao longo do corpo e pontinhos pretos; anda \"medindo palmos\" (arqueando o corpo).",
+              "fonte": {
+                "id": "EMB-DOC269",
+                "pagina": 36
+              }
+            },
+            {
+              "texto": "No último estágio chega a 40 ou 45 mm e vira pupa sob uma teia, em geral na face de baixo das folhas.",
+              "fonte": {
+                "id": "EMB-DOC269",
+                "pagina": 36
+              }
+            },
+            {
+              "texto": "O adulto é uma mariposa que mantém as asas inclinadas; logo depois de sair da pupa, mostra manchas prateadas brilhantes no meio das asas da frente.",
+              "fonte": {
+                "id": "EMB-DOC269",
+                "pagina": 36
+              }
+            },
+            {
+              "texto": "A lagarta tem três pares de patas na frente, dois pares de falsas pernas no abdome e um par na ponta; por isso o corpo se arqueia ao andar.",
+              "fonte": {
+                "id": "EMB-CT47",
+                "pagina": 4
+              }
+            },
+            {
+              "texto": "Os ovos são postos um a um, em geral na face de baixo das folhas; são cremes e brilhantes no começo e ficam marrom-claros perto de nascer.",
+              "fonte": {
+                "id": "EMB-CT47",
+                "pagina": 4
+              }
+            },
+            {
+              "texto": "A mariposa mede cerca de 35 mm com as asas abertas; as asas da frente são escuras, com duas manchas prateadas no centro, e as de trás são marrons.",
+              "fonte": {
+                "id": "EMB-CT47",
+                "pagina": 8
+              }
+            }
+          ]
+        },
+        {
+          "id": "danos",
+          "titulo": "Danos ou sintomas",
+          "itens": [
+            {
+              "texto": "A lagarta come o tecido da folha e deixa as nervuras, o que dá aos folíolos um aspecto rendilhado.",
+              "fonte": {
+                "id": "EMB-DOC269",
+                "pagina": 36
+              }
+            },
+            {
+              "texto": "Cada lagarta come de 64 a 200 cm² de folha de soja, o que pode reduzir bastante a área que a planta usa para fazer fotossíntese.",
+              "fonte": {
+                "id": "EMB-CT47",
+                "pagina": 7
+              }
+            },
+            {
+              "texto": "Até o 3º estágio as lagartas só raspam a folha; do 4º em diante furam e comem grandes áreas.",
+              "fonte": {
+                "id": "EMB-CT47",
+                "pagina": 7
+              }
+            },
+            {
+              "texto": "Ela costuma ficar na parte de baixo das plantas de soja, onde fica mais protegida.",
+              "fonte": {
+                "id": "EMB-CT47",
+                "pagina": 3
+              }
+            },
+            {
+              "texto": "Quando aparece junto com a lagarta-da-soja, ou depois dela, a desfolha da lavoura aumenta.",
+              "fonte": {
+                "id": "EMB-CT47",
+                "pagina": 2
+              }
+            },
+            {
+              "texto": "Come mais de 170 espécies de plantas, mas prefere a soja.",
+              "fonte": {
+                "id": "EMB-CT47",
+                "pagina": 2
+              }
+            }
+          ]
+        },
+        {
+          "id": "confusao",
+          "titulo": "Pode ser confundido com",
+          "itens": [
+            {
+              "texto": "Rachiplusia nu, mais frequente no Sul do Brasil; só um detalhe das mandíbulas ajuda a separar as duas.",
+              "fonte": {
+                "id": "EMB-DOC269",
+                "pagina": 36
+              }
+            },
+            {
+              "texto": "Enquanto pequenas, as lagartas da lagarta-da-soja são fáceis de trocar pelas da falsa-medideira.",
+              "fonte": {
+                "id": "EMB-DOC269",
+                "pagina": 34
+              }
+            }
+          ]
+        }
+      ],
+      "elaborado_por": "Equipe do projeto AgroApp (Inteli)",
+      "elaborado_em": "2026-11-20",
+      "revisado_em": "2026-11-23",
+      "validated": true
+    },
+    {
+      "chave": "equipe.anticarsia_gemmatalis",
+      "titulo": "Lagarta-da-soja",
+      "nome_cientifico": "Anticarsia gemmatalis",
+      "contexto": "Descrição baseada em manual e circular sobre a cultura da soja.",
+      "secoes": [
+        {
+          "id": "como_reconhecer",
+          "titulo": "Como reconhecer",
+          "itens": [
+            {
+              "texto": "Lagarta pequena (até 10 mm), em geral verde, com quatro pares de pernas falsas no abdômen, duas delas reduzidas; por isso anda \"medindo palmos\".",
+              "fonte": {
+                "id": "EMB-DOC269",
+                "pagina": 34
+              }
+            },
+            {
+              "texto": "Lagartas maiores que 15 mm podem ser verdes ou escuras e têm três linhas brancas no dorso.",
+              "fonte": {
+                "id": "EMB-DOC269",
+                "pagina": 34
+              }
+            },
+            {
+              "texto": "O adulto é uma mariposa cinza-clara a marrom-escura, sempre com uma linha diagonal marrom-canela ligando as pontas das asas da frente.",
+              "fonte": {
+                "id": "EMB-DOC269",
+                "pagina": 34
+              }
+            },
+            {
+              "texto": "Os ovos são verde-claros, postos um a um, principalmente na face de baixo das folhas.",
+              "fonte": {
+                "id": "EMB-DOC269",
+                "pagina": 34
+              }
+            },
+            {
+              "texto": "Os ovos mudam de cor: de verde-claro passam a acinzentados e, perto de nascer, a marrom-escuros.",
+              "fonte": {
+                "id": "EMB-CT30",
+                "pagina": 13
+              }
+            }
+          ]
+        },
+        {
+          "id": "danos",
+          "titulo": "Danos ou sintomas",
+          "itens": [
+            {
+              "texto": "A partir do 3º estágio a lagarta fura as folhas, mas deixa as nervuras.",
+              "fonte": {
+                "id": "EMB-DOC269",
+                "pagina": 34
+              }
+            },
+            {
+              "texto": "Do 4º ao 6º estágio ela consome mais de 95% de toda a folha que come ao longo da vida.",
+              "fonte": {
+                "id": "EMB-DOC269",
+                "pagina": 34
+              }
+            },
+            {
+              "texto": "Em populações altas pode causar desfolha acima de 30% e perda de produtividade.",
+              "fonte": {
+                "id": "EMB-DOC269",
+                "pagina": 34
+              }
+            },
+            {
+              "texto": "Em toda a vida, uma lagarta pode consumir de 100 a 150 cm² de folha.",
+              "fonte": {
+                "id": "EMB-CT30",
+                "pagina": 13
+              }
+            }
+          ]
+        },
+        {
+          "id": "confusao",
+          "titulo": "Pode ser confundido com",
+          "itens": [
+            {
+              "texto": "Enquanto pequenas, as lagartas são fáceis de trocar pelas da falsa-medideira.",
+              "fonte": {
+                "id": "EMB-DOC269",
+                "pagina": 34
+              }
+            }
+          ]
+        }
+      ],
+      "elaborado_por": "Equipe do projeto AgroApp (Inteli)",
+      "elaborado_em": "2026-11-20",
+      "revisado_em": "2026-11-23",
+      "validated": true
+    },
+    {
+      "chave": "equipe.spodoptera_eridania_cosmioides",
+      "titulo": "Lagarta-das-vagens",
+      "nome_cientifico": "Spodoptera eridania e S. cosmioides",
+      "contexto": "Descrição baseada em manual sobre a cultura da soja e em comunicado técnico da Embrapa.",
+      "secoes": [
+        {
+          "id": "como_reconhecer",
+          "titulo": "Como reconhecer",
+          "itens": [
+            {
+              "texto": "A classe junta duas espécies, Spodoptera cosmioides e S. eridania, que o manual trata em fichas separadas.",
+              "fonte": {
+                "id": "EMB-DOC269",
+                "paginas": "70-72"
+              }
+            },
+            {
+              "texto": "As lagartas variam de amarelo-claro a preto, com listras no corpo, e podem chegar a 50 mm no último estágio (S. cosmioides).",
+              "fonte": {
+                "id": "EMB-DOC269",
+                "pagina": 70
+              }
+            },
+            {
+              "texto": "No dorso há manchas triangulares pretas: em S. cosmioides as do 7º e 8º segmentos do abdômen são maiores que as dos primeiros; em S. eridania, do 1º ao 8º, são grandes e de tamanho parecido.",
+              "fonte": {
+                "id": "EMB-DOC269",
+                "paginas": "70-72"
+              }
+            },
+            {
+              "texto": "Os adultos de S. cosmioides são mariposas de 16 a 20 mm; as fêmeas põem os ovos em massas sobre as folhas.",
+              "fonte": {
+                "id": "EMB-DOC269",
+                "pagina": 70
+              }
+            },
+            {
+              "texto": "S. cosmioides: lagarta cinza-clara, castanha ou, mais comum, preta; no começo tem uma região escura entre o tórax e o abdômen e uma faixa laranja nas laterais.",
+              "fonte": {
+                "id": "EMB-CT131",
+                "pagina": 2
+              }
+            },
+            {
+              "texto": "S. eridania: lagarta marrom, de até 35 mm, com uma faixa esbranquiçada nas laterais, interrompida por uma mancha escura no tórax.",
+              "fonte": {
+                "id": "EMB-CT131",
+                "pagina": 3
+              }
+            },
+            {
+              "texto": "As lagartas de S. eridania costumam ficar na parte de baixo da planta e são mais ativas à noite.",
+              "fonte": {
+                "id": "EMB-CT131",
+                "pagina": 3
+              }
+            }
+          ]
+        },
+        {
+          "id": "danos",
+          "titulo": "Danos ou sintomas",
+          "itens": [
+            {
+              "texto": "As lagartas atacam as vagens.",
+              "fonte": {
+                "id": "EMB-DOC269",
+                "paginas": "70-72"
+              }
+            },
+            {
+              "texto": "S. eridania também desfolha soja e algodão.",
+              "fonte": {
+                "id": "EMB-DOC269",
+                "pagina": 72
+              }
+            },
+            {
+              "texto": "Podem atacar logo depois da emergência, diminuir o número de plantas e até exigir replantio.",
+              "fonte": {
+                "id": "EMB-CT131",
+                "pagina": 1
+              }
+            },
+            {
+              "texto": "Ao longo do ciclo causam desfolha forte e também furam as vagens.",
+              "fonte": {
+                "id": "EMB-CT131",
+                "pagina": 1
+              }
+            },
+            {
+              "texto": "São muito vorazes e atacam muitas culturas, como milho, algodão, amendoim e girassol; S. cosmioides come mais que S. eridania.",
+              "fonte": {
+                "id": "EMB-CT131",
+                "paginas": "2-3"
+              }
+            }
+          ]
+        },
+        {
+          "id": "confusao",
+          "titulo": "Pode ser confundido com",
+          "itens": [
+            {
+              "texto": "Spodoptera albula (fora das classes do app): o manual compara as duas espécies com ela. S. eridania tem tom bronzeado nas asas da frente.",
+              "fonte": {
+                "id": "EMB-DOC269",
+                "paginas": "70-72"
+              }
+            },
+            {
+              "texto": "S. frugiperda e S. albula também são comuns nas lavouras e muito parecidas; diferenciar as espécies do gênero é difícil.",
+              "fonte": {
+                "id": "EMB-CT131",
+                "pagina": 2
+              }
+            },
+            {
+              "texto": "Em testes, o app às vezes indicou esta praga quando a foto era de lagarta-do-cartucho.",
+              "fonte": {
+                "id": "ANALISE-MODELO"
+              }
+            }
+          ]
+        }
+      ],
+      "elaborado_por": "Equipe do projeto AgroApp (Inteli)",
+      "elaborado_em": "2026-11-20",
+      "revisado_em": "2026-11-23",
+      "validated": true
+    },
+    {
+      "chave": "equipe.astylus_variegatus",
+      "titulo": "Astylus variegatus",
+      "nome_cientifico": "Astylus variegatus",
+      "contexto": "Descrição baseada em manual sobre a cultura da soja e em publicação sobre pragas do milho.",
+      "secoes": [
+        {
+          "id": "como_reconhecer",
+          "titulo": "Como reconhecer",
+          "itens": [
+            {
+              "texto": "Adulto com cerca de 8 mm, asas amarelas com pintas pretas.",
+              "fonte": {
+                "id": "EMB-DOC269",
+                "pagina": 98
+              }
+            },
+            {
+              "texto": "A larva vive no solo, é marrom-escura e tem pelos esparsos.",
+              "fonte": {
+                "id": "EMB-DOC269",
+                "pagina": 98
+              }
+            },
+            {
+              "texto": "Os adultos comem pólen e podem aparecer em grande número na lavoura, principalmente perto da floração.",
+              "fonte": {
+                "id": "EMB-DOC269",
+                "pagina": 98
+              }
+            },
+            {
+              "texto": "A fase de larva é longa e pode durar até um ano.",
+              "fonte": {
+                "id": "EMB-DOC129",
+                "pagina": 59
+              }
+            }
+          ]
+        },
+        {
+          "id": "danos",
+          "titulo": "Danos ou sintomas",
+          "itens": [
+            {
+              "texto": "Os adultos não causam danos; as larvas podem, de vez em quando, comer raízes.",
+              "fonte": {
+                "id": "EMB-DOC269",
+                "pagina": 98
+              }
+            },
+            {
+              "texto": "No milho é praga secundária: só populações altas causam prejuízo, pois o milho é semeado com poucas sementes por área.",
+              "fonte": {
+                "id": "EMB-DOC129",
+                "pagina": 58
+              }
+            },
+            {
+              "texto": "As larvas comem sobretudo as sementes depois do plantio e as raízes, o que reduz a germinação e o número de plantas.",
+              "fonte": {
+                "id": "EMB-DOC129",
+                "pagina": 58
+              }
+            },
+            {
+              "texto": "É praga ocasional no início do milho: pode danificar as sementes e as raízes e prejudicar a formação da lavoura.",
+              "fonte": {
+                "id": "EPAGRI-BT170",
+                "pagina": 42
+              }
+            }
+          ]
+        },
+        {
+          "id": "confusao",
+          "titulo": "Pode ser confundido com",
+          "itens": [
+            {
+              "texto": "Em testes, o app às vezes indicou esta praga quando a foto era de vaquinha.",
+              "fonte": {
+                "id": "ANALISE-MODELO"
+              }
+            }
+          ]
+        }
+      ],
+      "elaborado_por": "Equipe do projeto AgroApp (Inteli)",
+      "elaborado_em": "2026-11-20",
+      "revisado_em": "2026-11-23",
+      "validated": true
+    },
+    {
+      "chave": "equipe.deois_flavopicta",
+      "titulo": "Cigarrinha-das-pastagens",
+      "nome_cientifico": "Deois flavopicta",
+      "contexto": "Descrição baseada em material sobre pastagens e em publicações sobre o milho.",
+      "secoes": [
+        {
+          "id": "como_reconhecer",
+          "titulo": "Como reconhecer",
+          "itens": [
+            {
+              "texto": "Adulto de cerca de 10 mm, preto, com duas faixas amarelas atravessadas nas asas; abdômen e pernas vermelhos.",
+              "fonte": {
+                "id": "EMB-SANTOS-2002",
+                "pagina": 1
+              }
+            },
+            {
+              "texto": "Os adultos vivem na parte de cima das gramíneas; as ninfas ficam na base das plantas, protegidas por uma espuma branca.",
+              "fonte": {
+                "id": "EMB-SANTOS-2002",
+                "pagina": 1
+              }
+            }
+          ]
+        },
+        {
+          "id": "danos",
+          "titulo": "Danos ou sintomas",
+          "itens": [
+            {
+              "texto": "Suga a seiva e, ao picar, injeta toxinas na planta.",
+              "fonte": {
+                "id": "EMB-SANTOS-2002",
+                "pagina": 1
+              }
+            },
+            {
+              "texto": "Essas toxinas amarelam, secam e matam as folhas, efeito conhecido como \"queima\" do pasto.",
+              "fonte": {
+                "id": "EMB-SANTOS-2002",
+                "pagina": 1
+              }
+            },
+            {
+              "texto": "Ataca principalmente em épocas de muita umidade.",
+              "fonte": {
+                "id": "EMB-SANTOS-2002",
+                "pagina": 1
+              }
+            },
+            {
+              "texto": "No milho só os adultos atacam; as ninfas não vivem na lavoura.",
+              "fonte": {
+                "id": "EMB-CT144",
+                "pagina": 2
+              }
+            },
+            {
+              "texto": "Os adultos vêm de pastos vizinhos, principalmente de braquiária, porque o milho não permite à cigarrinha completar o ciclo.",
+              "fonte": {
+                "id": "EMB-CT59",
+                "pagina": 6
+              }
+            },
+            {
+              "texto": "Eles sugam a seiva: as folhas amarelam e secam, e a planta nova pode morrer.",
+              "fonte": {
+                "id": "EMB-CT144",
+                "pagina": 2
+              }
+            },
+            {
+              "texto": "O amarelo aparece em estrias nas folhas e nos colmos.",
+              "fonte": {
+                "id": "ABMS-MISOSUL-2024",
+                "pagina": 93
+              }
+            },
+            {
+              "texto": "As plantas mais novas, até uns 20 dias, são as mais sensíveis: chegaram a secar com 3 a 4 cigarrinhas por planta.",
+              "fonte": {
+                "id": "ABMS-MISOSUL-2024",
+                "pagina": 93
+              }
+            },
+            {
+              "texto": "Em teste da Embrapa, milho novo (fase V2) com 2 adultos por planta ficou amarelado em mais de 70% das folhas em 8 dias.",
+              "fonte": {
+                "id": "EMB-CT144",
+                "pagina": 1
+              }
+            }
+          ]
+        },
+        {
+          "id": "confusao",
+          "titulo": "Pode ser confundido com",
+          "itens": [
+            {
+              "texto": "Deois schach: também tem cerca de 10 mm e abdômen e pernas vermelhos, mas é preta-esverdeada e tem uma faixa laranja perto da ponta da asa.",
+              "fonte": {
+                "id": "EMB-SANTOS-2002",
+                "pagina": 1
+              }
+            },
+            {
+              "texto": "Zulia entreriana: menor (cerca de 7 mm), preta e brilhante, com uma faixa branco-amarelada perto da ponta da asa.",
+              "fonte": {
+                "id": "EMB-SANTOS-2002",
+                "pagina": 1
+              }
+            },
+            {
+              "texto": "No milho também aparecem outras cigarrinhas-das-pastagens, como as do gênero Mahanarva e a Deois flexuosa, com danos parecidos.",
+              "fonte": {
+                "id": "EPAGRI-BT170",
+                "pagina": 44
+              }
+            },
+            {
+              "texto": "Em testes, o app às vezes indicou esta praga quando a foto era de percevejo-do-milho.",
+              "fonte": {
+                "id": "ANALISE-MODELO"
+              }
+            }
+          ]
+        }
+      ],
+      "elaborado_por": "Equipe do projeto AgroApp (Inteli)",
+      "elaborado_em": "2026-11-20",
+      "revisado_em": "2026-11-23",
+      "validated": true
+    }
+  ]
 }
