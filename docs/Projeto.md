@@ -4312,7 +4312,7 @@ O [relatório da T11.1](Avaliacao_Final_T11_1.md) traz acurácia (um-contra-todo
 
 ## 11.2 Matriz de confusão e análise de erros (T11.2)
 
-**Autor:** Lucas. **Revisor:** Glauco. **Data:** 23/11/2026. **Classificação: exploratória.** O teste histórico já foi consultado no desenvolvimento e não é conjunto independente ([seção 10.1](#101-independência-dos-conjuntos-de-dados)); os números descrevem o build entregue nesse recorte e não estimam desempenho em fotos novas.
+**Classificação: exploratória.** O teste histórico já foi consultado no desenvolvimento e não é conjunto independente ([seção 10.1](#101-independência-dos-conjuntos-de-dados)); os números descrevem o build entregue nesse recorte e não estimam desempenho em fotos novas.
 
 Calculamos as matrizes de confusão do build final (versão 1.0.0) a partir das predições que a [T11.1](#111-avaliação-final-e-métricas-por-classe-t111) publicou, sem nova inferência. O resultado de referência é o **Float16 (principal) no teste histórico**: 473 imagens, 401 acertos e **72 erros**. O [relatório da T11.2](Matriz_Erros_T11_2.md) traz também o INT8 e a validação, as matrizes normalizadas, todos os pares de confusão e as listas por imagem e por observação; os dados estão em [`assets/data/matriz_erros_T11_2`](../assets/data/matriz_erros_T11_2/matrizes.json).
 
@@ -4320,23 +4320,11 @@ Calculamos as matrizes de confusão do build final (versão 1.0.0) a partir das 
 
 Linhas: classe real; colunas: classe prevista. Os índices são os de `classes.json` (0 Vaquinha, 1 Cigarrinha-do-milho, 2 Percevejo-barriga-verde, 3 Lagarta-do-cartucho, 4 Percevejo-marrom, 5 Percevejo-verde, 6 Percevejo-asa-preta, 7 Percevejo-do-milho, 8 Lagarta-falsa-medideira, 9 Lagarta-da-soja, 10 Lagarta-das-vagens, 11 *Astylus variegatus*, 12 Cigarrinha-das-pastagens). É a mesma matriz da T11.1; um teste confere a igualdade.
 
-| Real \ Prevista | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | Suporte |
-| ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| **0** | **147** | 1 | 2 | · | · | · | · | · | · | · | 1 | 5 | 1 | 157 |
-| **1** | 3 | **26** | · | · | · | · | · | · | · | · | · | · | · | 29 |
-| **2** | 3 | · | **34** | 1 | · | · | · | · | · | 1 | 2 | 1 | · | 42 |
-| **3** | · | · | 1 | **55** | · | · | · | 1 | · | 1 | 3 | · | · | 61 |
-| **4** | · | · | 2 | · | **5** | · | · | 2 | · | · | · | 1 | · | 10 |
-| **5** | 4 | · | 4 | · | · | **5** | · | · | · | · | 1 | · | · | 14 |
-| **6** | 2 | · | · | · | · | 5 | **4** | · | · | · | · | · | · | 11 |
-| **7** | · | · | · | · | · | · | · | **9** | · | · | · | · | 3 | 12 |
-| **8** | · | · | · | 6 | · | · | · | · | **4** | · | 2 | · | · | 12 |
-| **9** | · | · | 1 | · | · | · | · | · | · | **5** | · | · | · | 6 |
-| **10** | · | · | 1 | 5 | · | · | · | · | 1 | · | **16** | 1 | · | 24 |
-| **11** | 1 | · | · | · | · | · | · | 1 | · | · | 1 | **68** | · | 71 |
-| **12** | · | · | · | · | · | · | · | · | · | · | 1 | · | **23** | 24 |
-
-![Matriz de confusão do build final Float16 no teste exploratório, com classe real nas linhas e classe prevista nas colunas](../assets/matriz_confusao_T11_2_float16_teste.svg)
+<div align="center">
+  <p><strong>Figura 1 — Matriz de confusão: build final Float16, teste exploratório</strong></p>
+  <img src="../assets/matriz_confusao_T11_2_float16_teste.svg" alt="Matriz de confusão do build final Float16 no teste exploratório, com classe real nas linhas e classe prevista nas colunas" width="800">
+  <p><em>Fonte: previsões do build final Float16 no teste exploratório, consolidadas na T11.2 (2026).</em></p>
+</div>
 
 A figura segue o padrão das matrizes da [T6.2](#62-matriz-de-confusão-t62): cada célula mostra a contagem; a cor é a fração da classe real (verde nos acertos, vermelho nas confusões); os pares com pelo menos dois erros têm borda e mostram também o percentual da classe real. As figuras do INT8 e da validação estão em [`assets/data/matriz_erros_T11_2`](../assets/data/matriz_erros_T11_2/matriz_int8_teste.svg) (`matriz_<modelo>_<conjunto>.svg`).
 
