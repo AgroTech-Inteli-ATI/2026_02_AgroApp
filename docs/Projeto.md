@@ -4367,13 +4367,13 @@ Uma gravação complementar de três capturas de imagens em monitor documentou d
 
 # 13. Conteúdo técnico
 
-## 13.1 Fichas técnicas da equipe e decisão formal (T13.1 e T13.2)
+## 13.1 Fichas técnicas da equipe e decisão formal (T13.1)
 
-**Data:** 20/11/2026 (redação); 23/11/2026 (liberação no app). **Situação:** as 13 fichas estão **liberadas no aplicativo** como conteúdo informativo da equipe para o MVP, sem validação agronômica do parceiro. A integração no aplicativo está na [seção 13.2](#132-integração-no-aplicativo-t132).
+**Situação:** as 13 fichas estão **liberadas no aplicativo** como conteúdo informativo da equipe para o MVP, sem validação agronômica do parceiro. A integração no aplicativo está na [seção 13.2](#132-integração-no-aplicativo-t132).
 
 ### Decisão formal
 
-O parceiro (Agro App) informou que **não enviará o conteúdo técnico** (sintomas, danos, manejo) das 13 classes. Sem ele, o aplicativo identificaria a praga e não diria nada sobre ela. A equipe decidiu:
+A equipe decidiu:
 
 1. **Redigir fichas informativas próprias**, a partir de publicações técnicas públicas já consultadas (Embrapa e revistas técnicas), **com palavras da equipe**, sem copiar trechos, e com **fonte e página em cada frase**.
 2. **Não tratar as fichas como conteúdo oficial nem aprovado pelo parceiro.** São material informativo da equipe; o aplicativo deve dizer isso e **não substitui o engenheiro agrônomo**.
