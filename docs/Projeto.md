@@ -4345,7 +4345,7 @@ A inferência foi feita no próprio aplicativo (Playwright, Chromium 156, LiteRT
 ### Erros com score elevado
 
 - **27 dos 72 erros do Float16 no teste têm score ≥ 0,90**, e 6 têm 0,995 ou mais. Nesses casos o usuário veria uma classe errada com aparência de alta confiança. Em 38 dos 52 erros aceitos, a classe real aparece entre as três hipóteses mostradas.
-- **Acerto quando a classe é mostrada** (Float16, teste): Percevejo-verde 55,5% (5 de 9), Lagarta-das-vagens 69,5% (16 de 23), Percevejo-do-milho 75,0% (9 de 12), Percevejo-barriga-verde 78,9% (30 de 38), contra 94,1% na Vaquinha e 100% no Percevejo-marrom e no Percevejo-asa-preta (poucas imagens mostradas). Um limiar único não dá a mesma garantia a todas as classes.
+- **Acerto quando a classe é mostrada** (Float16, teste): Percevejo-verde 55,6% (5 de 9), Lagarta-das-vagens 69,6% (16 de 23), Percevejo-do-milho 75,0% (9 de 12), Percevejo-barriga-verde 78,9% (30 de 38), contra 94,2% na Vaquinha e 100% no Percevejo-marrom e no Percevejo-asa-preta (poucas imagens mostradas). Um limiar único não dá a mesma garantia a todas as classes.
 - **Sensibilidade (sem recalibrar):** subir o limiar de 0,65 para 0,80 reduz os erros aceitos de 52 para 37 no teste, ao custo de cobertura de 93,2% para 86,7%; mesmo em 0,95 ainda há 22 erros aceitos. A tabela completa (0,50 a 0,95) está no relatório.
 
 ### O score não é probabilidade de acerto

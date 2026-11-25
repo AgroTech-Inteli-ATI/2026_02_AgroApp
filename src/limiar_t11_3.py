@@ -319,7 +319,6 @@ def relatorio(res: dict) -> str:
     fp = web.get("Float16")
     L: list[str] = []
     L.append("# T11.3 — Avaliação do limiar de confiança e casos inadequados\n")
-    L.append("Autor: Lucas · Revisor: Glauco · Meta de entrega: a definir\n")
     L.append("Relatório gerado por [`limiar_t11_3.py`](../src/limiar_t11_3.py) a partir das predições da [T11.1](Avaliacao_Final_T11_1.md) "
              "e das inferências feitas no próprio aplicativo (LiteRT.js no Chromium) com o modelo do build; artefatos em "
              "[`assets/data/limiar_T11_3`](../assets/data/limiar_T11_3/resultados.json).\n")
@@ -559,7 +558,10 @@ def _caixas(rotulo: Path) -> list[tuple[float, float, float, float]]:
 
 
 def regiao_sem_inseto(caixas: list[tuple], minimo: float = 0.30):
-    """Maior faixa retangular (esquerda, direita, topo ou base) que não toca nenhuma caixa, em coordenadas normalizadas."""
+    """Maior faixa retangular (esquerda, direita, topo ou base) que não toca nenhuma caixa, em coordenadas normalizadas.
+    Sem nenhuma caixa anotada não há como saber onde está o inseto, então não devolve região."""
+    if not caixas:
+        return None
     candidatas = []
     esq = min((c[0] for c in caixas), default=1.0)
     dire = max((c[2] for c in caixas), default=0.0)

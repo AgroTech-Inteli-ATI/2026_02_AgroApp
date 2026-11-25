@@ -1,7 +1,5 @@
 # T11.3 — Avaliação do limiar de confiança e casos inadequados
 
-Autor: Lucas · Revisor: Glauco · Meta de entrega: a definir
-
 Relatório gerado por [`limiar_t11_3.py`](../src/limiar_t11_3.py) a partir das predições da [T11.1](Avaliacao_Final_T11_1.md) e das inferências feitas no próprio aplicativo (LiteRT.js no Chromium) com o modelo do build; artefatos em [`assets/data/limiar_T11_3`](../assets/data/limiar_T11_3/resultados.json).
 
 > **Classificação: exploratória.** O teste histórico já foi consultado no desenvolvimento e não é independente ([T10.1](../assets/data/independencia_T10_1/README.md)). Esta avaliação **não recalibra** o limiar e **não apresenta nenhum score como probabilidade de acerto**: o valor mostrado é o softmax do modelo, sem calibração.

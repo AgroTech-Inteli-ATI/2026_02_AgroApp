@@ -60,6 +60,8 @@ class RegraTest(unittest.TestCase):
             separados = x1 <= cx0 or x0 >= cx1 or y1 <= cy0 or y0 >= cy1
             self.assertTrue(separados)
         self.assertIsNone(t.regiao_sem_inseto([(0.0, 0.0, 1.0, 1.0)]))
+        # Foto sem rótulo (nenhuma caixa): não há como saber onde está o inseto, então não se recorta.
+        self.assertIsNone(t.regiao_sem_inseto([]))
 
 
 class HistoricoTest(unittest.TestCase):
@@ -199,6 +201,59 @@ class PublicadoTest(unittest.TestCase):
         q = t.analisar_historico(t.carregar_historico(), 0.65)["Float16|teste"]["quadrantes"]
         self.assertIn(f"**{q['erro_aceito']} erros são aceitos**", texto)
         self.assertIn(f"{q['acerto_aceito']} | {q['acerto_inconclusivo']} | {q['erro_aceito']} | {q['erro_inconclusivo']}", texto)
+
+    def test_relatorio_nao_repete_a_autoria_do_projeto_md(self):
+        cabecalho = t.DOC.read_text(encoding="utf-8").split("## Resumo")[0]
+        for termo in ("Autor:", "Revisor:", "Meta de entrega"):
+            self.assertNotIn(termo, cabecalho)
+
+    def test_projeto_md_confere_os_numeros_da_secao_11_3_com_os_dados(self):
+        texto = (RAIZ / "docs/Projeto.md").read_text(encoding="utf-8")
+        secao = texto[texto.index("## 11.3 Avaliação do limiar"):texto.index("# 12. Validação de desempenho no dispositivo")]
+        res = t.analisar()
+        h = res["historico"]
+        pct = lambda x, n=1: f"{100 * x:.{n}f}%".replace(".", ",")  # noqa: E731
+        dec = lambda x, n=2: f"{x:.{n}f}".replace(".", ",")  # noqa: E731
+        ref = h["Float16|teste"]
+        # acerto quando a classe é mostrada: valores arredondados (não truncados), como no relatório
+        for c in ref["por_classe"]:
+            if c["indice"] in (5, 10, 7, 2):
+                certos = round(c["precisao_quando_mostrada"] * c["mostrada_como_principal"])
+                esperado = f"{c['classe'].split(' (')[0]} {pct(c['precisao_quando_mostrada'])} ({certos} de {c['mostrada_como_principal']})"
+                self.assertIn(esperado, secao)
+        vaquinha = ref["por_classe"][0]
+        self.assertIn(f"contra {pct(vaquinha['precisao_quando_mostrada'])} na Vaquinha", secao)
+        # calibração e sensibilidade
+        self.assertIn(f"**{dec(ref['calibracao']['ece'], 3)}** ({dec(h['Float16|validacao']['calibracao']['ece'], 3)} na validação)", secao)
+        curva = {round(c["limiar"], 2): c for c in ref["curva"]}
+        self.assertIn(f"de 52 para {curva[0.8]['erros_aceitos']} no teste", secao)
+        self.assertIn(f"cobertura de {pct(curva[0.65]['cobertura'])} para {pct(curva[0.8]['cobertura'])}", secao)
+        self.assertIn(f"ainda há {curva[0.95]['erros_aceitos']} erros aceitos", secao)
+        # decisões e origem dos erros aceitos
+        o = h["origem_teste_referencia"]
+        self.assertIn(f"{o['iNaturalist']['erros_aceitos']} dos {o['iNaturalist']['aceitos']} aceitos de fotos do iNaturalist "
+                      f"({pct(o['iNaturalist']['erros_aceitos'] / o['iNaturalist']['aceitos'])})", secao)
+        self.assertIn(f"{o['AgroInsect']['erros_aceitos']} dos {o['AgroInsect']['aceitos']} aceitos do AgroInsect "
+                      f"({pct(o['AgroInsect']['erros_aceitos'] / o['AgroInsect']['aceitos'])})", secao)
+        # fora do recorte, por formato
+        for formato in t.MODELOS:
+            pc = res["web"]["formatos"][formato]["por_cenario"]
+            total = sum(pc[c]["imagens"] for c in t.FORA_DO_RECORTE if c in pc)
+            aceitos = sum(pc[c]["aceitos"] for c in t.FORA_DO_RECORTE if c in pc)
+            self.assertIn(f"{aceitos} das {total}" if formato == "Float16" else f"{aceitos} de {total}", secao)
+            self.assertIn(f"({pct(aceitos / total)}", secao)
+        # degradações, Float16
+        pares = res["web"]["formatos"]["Float16"]["pares_degradacao"]
+        d = pares["desfoque"]
+        self.assertIn(f"{d['aceito_para_inconclusivo']} dos {d['pares']} pares passam de aceito para inconclusivo "
+                      f"(queda média do score de {dec(d['queda_media_do_score'])})", secao)
+        sp = pares["sujeito_pequeno"]
+        aceitas_sp = res["web"]["formatos"]["Float16"]["por_cenario"]["sujeito_pequeno"]["aceitos"]
+        self.assertIn(f"{aceitas_sp} das {sp['pares']} fotos continuam aceitas, a classe prevista muda em {sp['classe_prevista_mudou']} "
+                      f"e **{sp['erros_aceitos']} terminam como erro aceito ({sp['erros_aceitos_novos']} novos", secao)
+        # tabela de cenários fora do recorte (Float16)
+        for cenario, d in res["web"]["formatos"]["Float16"]["por_cenario"].items():
+            self.assertIn(f"| {d['imagens']} | {d['aceitos']} ({pct(d['pct_aceitos'])}) | {dec(d['score_mediano'])} | {dec(d['score_maximo'])} |", secao)
 
     def test_nao_usa_rede(self):
         codigo = (RAIZ / "src/limiar_t11_3.py").read_text(encoding="utf-8")
