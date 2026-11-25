@@ -117,6 +117,14 @@ Validação de desempenho e integração web: [T12.1 — Tamanho dos modelos e p
 </details>
 
 <details>
+<summary><strong>11. Avaliação final do modelo</strong></summary>
+
+- [11.1 Avaliação final e métricas por classe (T11.1)](#111-avaliação-final-e-métricas-por-classe-t111)
+- [11.3 Avaliação do limiar de confiança e casos inadequados (T11.3)](#113-avaliação-do-limiar-de-confiança-e-casos-inadequados-t113)
+
+</details>
+
+<details>
 <summary><strong>13. Testes de usabilidade e navegação</strong></summary>
 
 - [13.3 Testes de navegação e apresentação do conteúdo (T13.3)](#133-testes-de-navegação-e-apresentação-do-conteúdo-t133)
@@ -4387,6 +4395,91 @@ python tests/validar_matriz_erros_t11_2.py   # 17 testes
 ```
 
 O módulo lê só arquivos versionados (predições da T11.1, índice histórico, classes, vínculos da T10.1 e revisão visual da T6.3) e não usa rede. Os testes conferem que as matrizes são iguais às da T11.1, que as linhas somam o suporte de cada classe, que pares e erros por imagem fecham com a matriz, que os pares principais coincidem com os da T6.3 e que o relatório publicado está atualizado.
+
+## 11.3 Avaliação do limiar de confiança e casos inadequados (T11.3)
+
+**Classificação: exploratória.** O teste histórico já foi consultado no desenvolvimento e não é conjunto independente ([seção 10.1](#101-independência-dos-conjuntos-de-dados)). A avaliação **não recalibra** o limiar e **não apresenta nenhum score como probabilidade de acerto**: o valor exibido é o softmax do modelo, sem calibração ([seção 6.5](#65-política-de-confiança-t65)).
+
+Testamos a política da T6.5 (top-1 **≥ 0,65** mostra três hipóteses; abaixo disso, resultado inconclusivo, sem indicar classe) em dois grupos de cenários. O [relatório da T11.3](Avaliacao_Limiar_T11_3.md) traz todas as tabelas, e os dados estão em [`assets/data/limiar_T11_3`](../assets/data/limiar_T11_3/resultados.json).
+
+### Cenários testados
+
+| Grupo | Cenário | Como foi medido |
+| --- | --- | --- |
+| Conjunto histórico | Previsão correta aceita; correta inconclusiva; incorreta aceita; incorreta inconclusiva | Predições do build final publicadas na T11.1 (Float16 e INT8; teste e validação) |
+| Conjunto histórico | Erros com score elevado, relação entre score e acerto, sensibilidade ao limiar | As mesmas predições |
+| Fora do recorte | 17 controles sintéticos sem inseto (cores lisas, gradientes, ruído, xadrez, listras, texto) | Inferência no aplicativo real |
+| Fora do recorte | 60 fotos reais sem o inseto (recortes de fundo das imagens do AgroInsect, fora das caixas anotadas) | Inferência no aplicativo real |
+| Inadequadas | 40 fotos do teste, originais e degradadas (desfoque, escuro, superexposição, cinza, ruído, JPEG q=10, sujeito pequeno e distante) | Inferência no aplicativo real |
+
+A inferência foi feita no próprio aplicativo (Playwright, Chromium 156, LiteRT.js 2.6.0 CPU/WebAssembly), com os dois modelos do build (hashes conferidos contra o manifesto), nas 397 imagens por formato. O resultado vem da saída do worker e da tela: **em todas as imagens, nos dois formatos, a interface mostrou as hipóteses exatamente quando o top-1 atingiu 0,65 (0 divergências)**.
+
+### Decisões com o limiar de 0,65 (conjunto histórico)
+
+| Modelo | Conjunto | Acerto aceito | Acerto inconclusivo | Erro aceito | Erro inconclusivo | Cobertura | Acerto entre aceitas |
+| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Float16 (principal) | teste histórico | 389 | 12 | 52 | 20 | 93,2% | 88,2% |
+| Float16 (principal) | validação | 390 | 17 | 40 | 27 | 90,7% | 90,7% |
+| INT8 (contingência) | teste histórico | 385 | 14 | 55 | 19 | 93,0% | 87,5% |
+| INT8 (contingência) | validação | 391 | 16 | 42 | 25 | 91,4% | 90,3% |
+
+- **Previsões corretas:** 389 de 473 imagens do teste (Float16) são acertos aceitos; 12 acertos ficam inconclusivos (custo de cobertura).
+- **Previsões incorretas:** o limiar barra 20 erros (62,5% das 32 imagens inconclusivas eram erros), mas **52 erros são aceitos** e aparecem como hipótese principal.
+- **Inconclusivas:** abaixo de 0,65, o app mostra a mensagem e a orientação de nova foto e não indica classe, como definido na T6.5.
+- **Origem do erro aceito:** 40 dos 251 aceitos de fotos do iNaturalist (15,9%) e 12 dos 190 aceitos do AgroInsect (6,3%) estão errados.
+
+### Erros com score elevado
+
+- **27 dos 72 erros do Float16 no teste têm score ≥ 0,90**, e 6 têm 0,995 ou mais. Nesses casos o usuário veria uma classe errada com aparência de alta confiança. Em 38 dos 52 erros aceitos, a classe real aparece entre as três hipóteses mostradas.
+- **Acerto quando a classe é mostrada** (Float16, teste): Percevejo-verde 55,6% (5 de 9), Lagarta-das-vagens 69,6% (16 de 23), Percevejo-do-milho 75,0% (9 de 12), Percevejo-barriga-verde 78,9% (30 de 38), contra 94,2% na Vaquinha e 100% no Percevejo-marrom e no Percevejo-asa-preta (poucas imagens mostradas). Um limiar único não dá a mesma garantia a todas as classes.
+- **Sensibilidade (sem recalibrar):** subir o limiar de 0,65 para 0,80 reduz os erros aceitos de 52 para 37 no teste, ao custo de cobertura de 93,2% para 86,7%; mesmo em 0,95 ainda há 22 erros aceitos. A tabela completa (0,50 a 0,95) está no relatório.
+
+### O score não é probabilidade de acerto
+
+Para o Float16 no teste, o erro de calibração esperado (ECE) é **0,094** (0,077 na validação). Nas faixas intermediárias o score supera o acerto: entre 0,70 e 0,80 o score médio é 0,75 e o acerto observado é 52,0% (25 imagens); entre 0,80 e 0,90, 0,85 contra 60,0% (25 imagens). Acima de 0,90, o score médio é 0,99 e o acerto, 93,0% (385 imagens). Portanto, **o score deve ser chamado de score do modelo e nunca de probabilidade, chance ou garantia de acerto**; faixas com poucas imagens (menos de 15) são instáveis.
+
+### Imagens fora do recorte e inadequadas
+
+| Cenário (Float16) | Imagens | Aceitas: o app indica uma classe | Score mediano | Score máximo |
+| --- | ---: | ---: | ---: | ---: |
+| Controles sintéticos sem inseto | 17 | 3 (17,6%) | 0,39 | 0,81 |
+| Fotos reais sem o inseto (fundo) | 60 | 21 (35,0%) | 0,51 | 0,99 |
+| Foto original (referência) | 40 | 39 (97,5%) | 1,00 | 1,00 |
+| Desfoque forte | 40 | 14 (35,0%) | 0,59 | 1,00 |
+| Foto escura | 40 | 33 (82,5%) | 0,99 | 1,00 |
+| Foto superexposta | 40 | 34 (85,0%) | 0,99 | 1,00 |
+| Escala de cinza | 40 | 29 (72,5%) | 0,89 | 1,00 |
+| Ruído forte | 40 | 37 (92,5%) | 0,97 | 1,00 |
+| Compressão JPEG q=10 | 40 | 37 (92,5%) | 1,00 | 1,00 |
+| Sujeito pequeno e distante | 40 | 30 (75,0%) | 0,84 | 1,00 |
+
+- **O limiar não detecta imagem fora do escopo.** O app aceitou e indicou uma classe em **24 das 77** imagens sem inseto do Float16 (31,2%; 21 de 60 fotos reais de fundo, com até 0,99 de score, em geral Vaquinha ou Cigarrinha-do-milho). O INT8 aceitou 21 de 77 (27,3%). O modelo escolhe sempre uma das 13 classes; a mensagem de inconclusivo não funciona como "não é uma praga".
+- **Desfoque é o caso em que o limiar mais ajuda:** 26 dos 40 pares passam de aceito para inconclusivo (queda média do score de 0,34), mas 5 ficam como erro aceito.
+- **Sujeito pequeno e distante é o mais perigoso:** 30 das 40 fotos continuam aceitas, a classe prevista muda em 21 e **13 terminam como erro aceito (11 novos em relação à foto original)**. O mesmo valor de 13 aparece no INT8.
+- **Escuro, superexposição, ruído e JPEG q=10** mudam pouco a decisão (de 4 a 8 pares), mas somam de 2 a 4 erros aceitos cada; a **escala de cinza** gera 8 (Float16) e 11 (INT8) erros aceitos.
+- **Fotos originais do par:** 39 de 40 aceitas, com 89,7% de acerto entre elas (Float16), coerente com o conjunto histórico.
+
+### Limitações das previsões
+
+- Sem conjunto independente; os números descrevem o build nesse recorte e não estimam o desempenho em fotos novas de campo.
+- As imagens fora do recorte são controles sintéticos e recortes de fundo. **Doenças, outras culturas, insetos de outras espécies e plantas sadias reais não foram medidos**; para incluí-los, basta passar uma pasta de fotos em `--pasta-extras` e repetir a medição. Os recortes de fundo não foram revisados um a um: um recorte pode conter um inseto pequeno não anotado (há uma formiga minúscula em `fundo_IMG_01779`).
+- As degradações são sintéticas e não reproduzem todos os problemas de captura no campo; só foram usadas fotos do AgroInsect.
+- O limiar de 0,65 foi escolhido na validação em Keras FP32 e não foi recalibrado para o Float16 nem para o INT8; com suportes de 6 a 157 imagens por classe, os resultados por classe são instáveis.
+- O runtime medido é o Chromium desktop com LiteRT.js CPU/WASM; WebGPU, Safari, Firefox e aparelhos físicos não foram reavaliados.
+
+### Reprodução e verificação
+
+```powershell
+python -m src.limiar_t11_3 preparar --raiz-imagens "C:\caminho\agroapp - imagens" --saida-imagens "C:\tmp\t11_3"
+cd frontend
+$env:T11_3_IMAGENS = "C:\tmp\t11_3"; npx playwright test tests/limiar-t11-3.spec.ts --project=chromium
+cd ..
+python -m src.limiar_t11_3 analisar
+python -m src.limiar_t11_3 --verificar
+python tests/validar_limiar_t11_3.py
+```
+
+O passo do navegador é opt-in (`tests/limiar-t11-3.spec.ts` é pulado sem `T11_3_IMAGENS`) e grava `assets/data/limiar_T11_3/inferencias_web.json`. A análise, os testes e o relatório usam apenas arquivos versionados, sem modelo, imagens ou rede. O manifesto registra o hash de cada imagem gerada; as imagens não são versionadas.
 
 # 12. Validação de desempenho no dispositivo
 
