@@ -7,19 +7,41 @@ import { technicalContent, type TechnicalContent } from "../src/data/content";
 // T13.3: apresentação do conteúdo técnico após a classificação.
 // O worker é um dublê de transporte (como em confidence.spec.ts) para escolher a classe
 // e o momento de cada resposta; a inferência real fica em analysis.spec.ts.
-// O catálogo real ainda está vazio (T9.3), então os casos com conteúdo usam um catálogo
-// fictício entregue no lugar do módulo content.ts pelo servidor de desenvolvimento.
+// Os casos com conteúdo usam um catálogo fictício entregue no lugar do módulo content.ts pelo
+// servidor de desenvolvimento, para não depender do texto das fichas reais (T13.1); o CAT-01
+// confere o catálogo versionado.
 
 const foto = fileURLToPath(new URL("./fixtures/pattern.png", import.meta.url));
 const nomes = classes.map((c) => c.nome);
 const comum = (indice: number) => nomes[indice].split(" (")[0];
 
+const ficha = (indice: number, fonte: string, reviewedAt: string, validated: boolean): TechnicalContent => ({
+  title: `TESTE-T13.3 título da classe ${indice}`,
+  scientificName: `TESTE-T13.3 nome científico ${indice}`,
+  context: null,
+  sections: [{
+    id: "como_reconhecer",
+    title: "Como reconhecer",
+    items: [{ text: `TESTE-T13.3 texto da classe ${indice}`, source: `${fonte}, p. 1` }],
+  }],
+  sources: [`${fonte}, p. 1`],
+  references: [`${fonte}. Referência completa fictícia.`],
+  author: "Equipe fictícia",
+  reviewedAt,
+  validated,
+});
+
 const catalogoTeste: Record<number, TechnicalContent> = {
-  0: { title: "TESTE-T13.3 título da classe 0", text: "TESTE-T13.3 texto da classe 0", source: "Fonte fictícia A", reviewedAt: "01/01/2000", validated: true },
-  5: { title: "TESTE-T13.3 título da classe 5", text: "TESTE-T13.3 texto da classe 5", source: "Fonte fictícia B", reviewedAt: "02/02/2000", validated: true },
+  0: ficha(0, "Fonte fictícia A", "2000-01-01", true),
+  5: ficha(5, "Fonte fictícia B", "2000-02-02", true),
   // Item presente mas não validado: não pode ser exibido.
-  2: { title: "TESTE-T13.3 título da classe 2", text: "TESTE-T13.3 texto da classe 2", source: "Fonte fictícia C", reviewedAt: "03/03/2000", validated: false },
+  2: ficha(2, "Fonte fictícia C", "2000-03-03", false),
 };
+
+// Primeira frase da ficha (o <li> traz também a fonte dela) e linha "Fonte:" como o painel de App.tsx as monta.
+const primeiraFrase = (item: TechnicalContent) => item.sections[0].items[0].text;
+const rodape = (item: TechnicalContent) =>
+  `Fonte: ${item.sources.join("; ")} · Elaborado por ${item.author} · Revisado em ${item.reviewedAt}`;
 
 type Passo = {
   top?: [number, number][];
@@ -96,15 +118,15 @@ async function conferirConteudo(page: Page, indice: number | null) {
   for (const item of Object.values(catalogoTeste))
     if (item !== mostrado) {
       await expect(regiao.getByText(item.title)).toHaveCount(0);
-      await expect(regiao.getByText(item.text)).toHaveCount(0);
+      await expect(regiao.getByText(primeiraFrase(item))).toHaveCount(0);
     }
   if (indice === null) {
     await expect(regiao.getByRole("heading", { name: "Orientações técnicas" })).toHaveCount(0);
     await expect(regiao.getByText(/Conteúdo técnico ainda indisponível|Fonte:/)).toHaveCount(0);
   } else if (mostrado) {
     await expect(regiao.getByText(mostrado.title, { exact: true })).toBeVisible();
-    await expect(regiao.getByText(mostrado.text, { exact: true })).toBeVisible();
-    await expect(regiao.getByText(`Fonte: ${mostrado.source} · Revisado em ${mostrado.reviewedAt}`)).toBeVisible();
+    await expect(regiao.getByRole("listitem").filter({ hasText: primeiraFrase(mostrado) })).toBeVisible();
+    await expect(regiao.getByText(rodape(mostrado), { exact: true })).toBeVisible();
     await expect(regiao.getByText(/Conteúdo técnico ainda indisponível/)).toHaveCount(0);
   } else {
     await expect(regiao.getByText(`Conteúdo técnico ainda indisponível para ${comum(indice)}.`, { exact: true })).toBeVisible();
@@ -296,8 +318,9 @@ test("CAT-01: com o catálogo versionado, cada hipótese mostra o conteúdo vali
     await hipoteses.getByRole("button", { name: new RegExp(comum(indice)) }).click();
     const item = technicalContent[indice];
     if (item?.validated) {
-      await expect(regiao.getByText(item.title, { exact: true })).toBeVisible();
-      await expect(regiao.getByText(`Fonte: ${item.source} · Revisado em ${item.reviewedAt}`)).toBeVisible();
+      // O título real repete o nome comum do botão da hipótese; a frase e o rodapé são únicos do painel.
+      await expect(regiao.getByRole("listitem").filter({ hasText: primeiraFrase(item) })).toBeVisible();
+      await expect(regiao.getByText(rodape(item), { exact: true })).toBeVisible();
     } else {
       await expect(regiao.getByText(`Conteúdo técnico ainda indisponível para ${comum(indice)}.`, { exact: true })).toBeVisible();
       await expect(regiao.getByText(/Fonte:/)).toHaveCount(0);

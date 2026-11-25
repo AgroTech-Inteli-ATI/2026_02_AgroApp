@@ -1,7 +1,12 @@
-"""Valida a associação classe -> conteúdo técnico (T9.3), com catálogo sintético para o caminho completo."""
+"""Valida a associação classe -> ficha técnica (T9.3 e T13), com fichas sintéticas para o caminho completo.
+
+Os testes valem antes e depois da revisão técnica das fichas: o que muda com a aprovação é só o estado
+publicado, e os testes que dependem dele partem de um estado sem chaves ("vazio") ou comparam com os dados.
+"""
 import copy
 import json
 import re
+import shutil
 import sys
 import tempfile
 import unittest
@@ -14,26 +19,38 @@ from src import associacao_conteudo_t9_3 as t93
 PASTA = RAIZ / t93.SAIDA
 
 
-def item(chave, titulo="Título", validated=True):
-    return {"chave": chave, "titulo": titulo, "texto": f"texto de {chave}", "fonte": "fonte de teste",
-            "revisado_em": "2026-11-07", "validated": validated}
+def ficha(chave, titulo="Título", validated=True):
+    linha = {"texto": "frase de teste", "fonte": {"id": "EMB-DOC269", "pagina": 78}}
+    return {"chave": chave, "titulo": titulo, "nome_cientifico": "Gênero espécie", "contexto": None,
+            "secoes": [{"id": "como_reconhecer", "titulo": "Como reconhecer", "itens": [linha]},
+                       {"id": "danos", "titulo": "Danos ou sintomas", "itens": [linha]}],
+            "elaborado_por": "Equipe de teste", "elaborado_em": "2026-11-20",
+            "revisado_em": "2026-11-21" if validated else None, "validated": validated}
 
 
-def validar_classe(assoc, base, indice, chave):
+def validar_classe(assoc, base, indice, chave, origem="equipe"):
     c = assoc["classes"][indice]
-    c.update({"chave_conteudo": chave, "status_conteudo": "validado",
-              "validacao_conteudo": {"responsavel": "Parceiro", "data": "2026-11-07", "evidencia": "ata de teste"}})
-    base["itens"].append(item(chave, titulo=c["nome"]))
+    c.update({"chave_conteudo": chave, "origem_chave": origem, "status_conteudo": "validado",
+              "validacao_conteudo": {"responsavel": "Equipe de teste", "data": "2026-11-21",
+                                     "evidencia": "ata de teste"}})
+    base["itens"].append(ficha(chave, titulo=c["nome"]))
 
 
 class AssociacaoTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.assoc, cls.base = t93.carregar(RAIZ)
+        cls.fontes = t93.carregar_fontes(RAIZ)
         cls.modelo = json.loads((RAIZ / t93.CLASSES).read_text(encoding="utf-8"))
 
-    def novo(self):
-        return copy.deepcopy(self.assoc), copy.deepcopy(self.base)
+    def vazio(self):
+        """Estado sem chaves nem fichas, para testar o contrato sem depender do que foi aprovado."""
+        assoc, base = copy.deepcopy(self.assoc), copy.deepcopy(self.base)
+        for c in assoc["classes"]:
+            c.update({"chave_conteudo": None, "origem_chave": None, "status_conteudo": "aguardando_catalogo_agroapp",
+                      "validacao_conteudo": None})
+        base["itens"] = []
+        return assoc, base
 
     def test_publicado_reproduz_as_fontes(self):
         self.assertEqual(t93.montar(RAIZ, self.assoc), self.assoc, "rode: python -m src.associacao_conteudo_t9_3 gerar")
@@ -45,7 +62,7 @@ class AssociacaoTest(unittest.TestCase):
         self.assertEqual([c["indice"] for c in classes], list(range(13)))
         self.assertEqual([c["nome"] for c in classes], [m["nome"] for m in self.modelo])
         self.assertEqual(self.assoc["total_classes"], 13)
-        t93.validar_contrato(self.assoc, self.base)
+        t93.validar_contrato(self.assoc, self.base, self.fontes)
 
     def test_chaves_propostas_unicas_e_nunca_urls(self):
         chaves = [c["chave_conteudo_proposta"] for c in self.assoc["classes"]]
@@ -71,14 +88,26 @@ class AssociacaoTest(unittest.TestCase):
                 self.assertIn(c["indice"], [x["indice"] for x in classes[r["indice"]]["relacionadas_t6_4"]])
         self.assertEqual([r["indice"] for r in classes[3]["relacionadas_t6_4"]], [2, 7, 8, 9, 10])
 
-    def test_sem_catalogo_toda_classe_e_indisponivel_sem_usar_a_chave_proposta(self):
+    def test_estado_publicado_e_coerente_com_a_aprovacao(self):
+        """Disponível só com chave, status validado e ficha validada; nunca pela chave proposta."""
         for c in self.assoc["classes"]:
             r = t93.resolver(c["indice"], self.assoc, self.base)
+            item = next((x for x in self.base["itens"] if x["chave"] == c["chave_conteudo"]), None)
+            esperado = c["status_conteudo"] == "validado" and item is not None and item["validated"]
+            self.assertEqual(r["disponivel"], esperado, c["indice"])
+            self.assertEqual(r["conteudo"] is not None, esperado)
+            if not esperado:
+                self.assertIn(r["motivo"], {"aguardando_validacao", "item_nao_validado", "sem_chave_oficial"})
+            self.assertEqual(r["nome"], c["nome"])
+
+    def test_sem_chave_toda_classe_e_indisponivel_sem_usar_a_chave_proposta(self):
+        assoc, base = self.vazio()
+        for c in assoc["classes"]:
+            r = t93.resolver(c["indice"], assoc, base)
             self.assertFalse(r["disponivel"])
             self.assertIsNone(r["conteudo"])
             self.assertEqual(r["motivo"], "sem_chave_oficial")
-            self.assertEqual(r["nome"], c["nome"])
-        self.assertEqual(t93.cobertura(self.assoc, self.base),
+        self.assertEqual(t93.cobertura(assoc, base),
                          {"classes": 13, "com_registro": 13, "com_conteudo_disponivel": 0,
                           "indisponiveis_por_motivo": {"sem_chave_oficial": 13}})
 
@@ -88,21 +117,21 @@ class AssociacaoTest(unittest.TestCase):
         self.assertIsNone(r["nome_comum"])
         self.assertNotIn("angorá", json.dumps(self.assoc, ensure_ascii=False))
 
-    def test_catalogo_completo_resolve_cada_classe_ao_seu_conteudo(self):
-        assoc, base = self.novo()
+    def test_fichas_completas_resolvem_cada_classe_a_sua_ficha(self):
+        assoc, base = self.vazio()
         for i in range(13):
-            validar_classe(assoc, base, i, f"catalogo.{i:02d}")
-        t93.validar_contrato(assoc, base)
+            validar_classe(assoc, base, i, f"equipe.teste_{i:02d}")
+        t93.validar_contrato(assoc, base, self.fontes)
         for i in range(13):
             r = t93.resolver(i, assoc, base)
             self.assertTrue(r["disponivel"])
-            self.assertEqual(r["conteudo"]["texto"], f"texto de catalogo.{i:02d}")
             self.assertEqual(r["conteudo"]["titulo"], assoc["classes"][i]["nome"])
+            self.assertEqual([s["id"] for s in r["conteudo"]["secoes"]], ["como_reconhecer", "danos"])
         self.assertEqual(t93.cobertura(assoc, base)["com_conteudo_disponivel"], 13)
 
     def test_estados_intermediarios_nao_afirmam_conteudo(self):
-        assoc, base = self.novo()
-        validar_classe(assoc, base, 3, "catalogo.03")
+        assoc, base = self.vazio()
+        validar_classe(assoc, base, 3, "equipe.teste_03")
         base["itens"][0]["validated"] = False
         self.assertEqual(t93.resolver(3, assoc, base)["motivo"], "item_nao_validado")
         base["itens"].clear()
@@ -111,29 +140,55 @@ class AssociacaoTest(unittest.TestCase):
         self.assertEqual(t93.resolver(3, assoc, base)["motivo"], "aguardando_validacao")
         self.assertFalse(t93.resolver(3, assoc, base)["disponivel"])
 
-    def test_contrato_recusa_validacao_incompleta_e_conteudo_compartilhado(self):
-        assoc, base = self.novo()
-        validar_classe(assoc, base, 3, "catalogo.03")
+    def test_contrato_recusa_validacao_incompleta_conteudo_compartilhado_e_chave_invalida(self):
+        assoc, base = self.vazio()
+        validar_classe(assoc, base, 3, "equipe.teste_03")
         assoc["classes"][3]["validacao_conteudo"]["evidencia"] = ""
         with self.assertRaises(ValueError):
             t93.validar_contrato(assoc, base)
-        assoc, base = self.novo()
-        validar_classe(assoc, base, 3, "catalogo.compartilhado")
-        validar_classe(assoc, base, 10, "catalogo.compartilhado")
+        assoc, base = self.vazio()
+        validar_classe(assoc, base, 3, "equipe.teste_03")
+        del assoc["classes"][3]["validacao_conteudo"]["responsavel"]
+        with self.assertRaises(ValueError):
+            t93.validar_contrato(assoc, base)
+        assoc, base = self.vazio()
+        validar_classe(assoc, base, 3, "equipe.compartilhada")
+        validar_classe(assoc, base, 10, "equipe.compartilhada")
         base["itens"].pop()  # evita item repetido: o problema testado é o conteúdo único do par 3 e 10
         with self.assertRaises(ValueError):
             t93.validar_contrato(assoc, base)
-        assoc, base = self.novo()
+        assoc, base = self.vazio()
         validar_classe(assoc, base, 3, "https://exemplo.com/conteudo")
         with self.assertRaises(ValueError):
             t93.validar_contrato(assoc, base)
+        assoc, base = self.vazio()
+        validar_classe(assoc, base, 3, "equipe.teste_03", origem="parceiro")
+        with self.assertRaises(ValueError):
+            t93.validar_contrato(assoc, base)
+        assoc, base = self.vazio()
+        assoc["classes"][3]["chave_conteudo"] = "equipe.teste_03"  # chave sem origem
+        with self.assertRaises(ValueError):
+            t93.validar_contrato(assoc, base)
+
+    def test_contrato_recusa_ficha_mal_formada(self):
+        for alteracao in (lambda i: i["secoes"].pop(1),                                   # falta a seção obrigatória
+                          lambda i: i["secoes"][0]["itens"].append({"texto": "x" * 241, "fonte": {"id": "EMB-DOC269", "pagina": 78}}),
+                          lambda i: i["secoes"][0]["itens"].append({"texto": "sem fonte"}),
+                          lambda i: i["secoes"][0]["itens"].append({"texto": "fonte inexistente", "fonte": {"id": "XXX", "pagina": 1}}),
+                          lambda i: i.update({"revisado_em": None}),                       # validada sem data
+                          lambda i: i.update({"extra": 1})):
+            assoc, base = self.vazio()
+            validar_classe(assoc, base, 3, "equipe.teste_03")
+            alteracao(base["itens"][0])
+            with self.subTest(), self.assertRaises((ValueError, KeyError)):
+                t93.validar_contrato(assoc, base, self.fontes)
 
     def test_conteudo_de_classes_do_mesmo_par_permanece_separado(self):
-        assoc, base = self.novo()
-        validar_classe(assoc, base, 3, "catalogo.03")
-        validar_classe(assoc, base, 10, "catalogo.10")
+        assoc, base = self.vazio()
+        validar_classe(assoc, base, 3, "equipe.teste_03")
+        validar_classe(assoc, base, 10, "equipe.teste_10")
         a, b = t93.resolver(3, assoc, base), t93.resolver(10, assoc, base)
-        self.assertNotEqual(a["conteudo"]["texto"], b["conteudo"]["texto"])
+        self.assertNotEqual(a["conteudo"]["titulo"], b["conteudo"]["titulo"])
         self.assertIn(10, a["relacionadas"])
         self.assertIn(3, b["relacionadas"])
 
@@ -149,26 +204,83 @@ class AssociacaoTest(unittest.TestCase):
     def test_gerar_preserva_o_que_foi_preenchido_a_mao_e_nao_sobrescreve_a_base(self):
         with tempfile.TemporaryDirectory() as tmp:
             saida = Path(tmp)
-            t93.gerar(RAIZ, saida)
-            assoc, base = json.loads((saida / t93.ASSOCIACAO).read_text(encoding="utf-8")), None
-            validar_classe(assoc, self.novo()[1], 7, "catalogo.07")
+            assoc, base = self.vazio()
+            validar_classe(assoc, base, 7, "equipe.teste_07")
             t93.gravar_json(saida / t93.ASSOCIACAO, assoc)
-            curada = {**t93.base_vazia(), "itens": [item("catalogo.07")]}
+            curada = {**t93.base_vazia(), "itens": [ficha("equipe.teste_07")]}
             t93.gravar_json(saida / t93.BASE, curada)
             novo = t93.gerar(RAIZ, saida)
-            self.assertEqual(novo["classes"][7]["chave_conteudo"], "catalogo.07")
+            self.assertEqual(novo["classes"][7]["chave_conteudo"], "equipe.teste_07")
+            self.assertEqual(novo["classes"][7]["origem_chave"], "equipe")
             self.assertEqual(novo["classes"][7]["status_conteudo"], "validado")
             self.assertEqual(json.loads((saida / t93.BASE).read_text(encoding="utf-8")), curada)
 
-    def test_content_ts_do_frontend_reproduz_a_associacao(self):
+    def test_content_ts_do_frontend_reproduz_a_associacao_e_traz_as_fontes(self):
         atual = (RAIZ / t93.CONTENT_TS).read_text(encoding="utf-8")
-        self.assertEqual(t93.content_ts(self.assoc, self.base), atual, "rode: python -m src.associacao_conteudo_t9_3 frontend")
-        assoc, base = self.novo()
-        validar_classe(assoc, base, 4, "oficial.percevejo_marrom")
-        gerado = t93.content_ts(assoc, base)
+        self.assertEqual(t93.content_ts(self.assoc, self.base, self.fontes), atual,
+                         "rode: python -m src.associacao_conteudo_t9_3 frontend")
+        assoc, base = self.vazio()
+        validar_classe(assoc, base, 4, "equipe.teste_04")
+        gerado = t93.content_ts(assoc, base, self.fontes)
         self.assertIn('"4": {', gerado)
-        self.assertIn('"source": "fonte de teste"', gerado)
-        self.assertNotIn('"0": {', gerado)  # classe sem conteúdo validado não entra
+        self.assertIn('"source": "SOSA-GÓMEZ et al., 2014, p. 78"', gerado)
+        self.assertIn('"sources": [\n      "SOSA-GÓMEZ et al., 2014, p. 78"', gerado)
+        self.assertIn("SOSA-GÓMEZ, D. R. et al. Manual de identificação", gerado)  # referência completa no app
+        self.assertNotIn('"0": {', gerado)  # classe sem ficha validada não entra
+
+    def test_aprovar_valida_so_as_classes_escolhidas_e_exige_ficha(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            raiz = Path(tmp)
+            (raiz / t93.SAIDA).mkdir(parents=True)
+            for nome in (t93.ASSOCIACAO, t93.BASE, t93.FONTES):
+                shutil.copy(PASTA / nome, raiz / t93.SAIDA / nome)
+            # parte do estado "aguardando": o teste não depende de a equipe já ter aprovado
+            assoc, base = t93.carregar(raiz)
+            for c in assoc["classes"]:
+                c.update({"status_conteudo": "aguardando_validacao", "validacao_conteudo": None})
+            for i in base["itens"]:
+                i.update({"validated": False, "revisado_em": None})
+            t93.gravar_json(raiz / t93.SAIDA / t93.ASSOCIACAO, assoc)
+            t93.gravar_json(raiz / t93.SAIDA / t93.BASE, base)
+            feitos = t93.aprovar(raiz, "Equipe de teste", "ata de teste", "2026-11-21", [1, 0, 1])
+            assoc, base = t93.carregar(raiz)
+            self.assertEqual(feitos, [0, 1])
+            self.assertEqual([c["status_conteudo"] for c in assoc["classes"][:3]], ["validado", "validado", "aguardando_validacao"])
+            self.assertEqual(assoc["status"], "fichas_da_equipe_em_revisao")
+            self.assertEqual(t93.cobertura(assoc, base)["com_conteudo_disponivel"], 2)
+            self.assertEqual(assoc["classes"][0]["validacao_conteudo"],
+                             {"responsavel": "Equipe de teste", "data": "2026-11-21", "evidencia": "ata de teste"})
+            # sem índices, só as pendentes: a data das já validadas (0 e 1) não muda
+            self.assertEqual(t93.aprovar(raiz, "Equipe de teste", "ata de teste", "2026-11-22"), list(range(2, 13)))
+            assoc, base = t93.carregar(raiz)
+            self.assertEqual(assoc["classes"][0]["validacao_conteudo"]["data"], "2026-11-21")
+            self.assertEqual(assoc["classes"][2]["validacao_conteudo"]["data"], "2026-11-22")
+            self.assertEqual(assoc["status"], "fichas_da_equipe_validadas")
+            self.assertEqual(t93.cobertura(assoc, base)["com_conteudo_disponivel"], 13)
+            self.assertEqual(t93.content_ts(assoc, base, t93.carregar_fontes(raiz)).count('"validated": true'), 13)
+            base["itens"].pop()  # classe sem ficha na base não pode ser aprovada
+            t93.gravar_json(raiz / t93.SAIDA / t93.BASE, base)
+            with self.assertRaises(ValueError):
+                t93.aprovar(raiz, "Equipe de teste", "ata de teste", "2026-11-21", [12])
+            for args in (("Equipe de teste", "ata", "2026-11-21", [13]),   # índice fora do modelo
+                         ("Equipe de teste", "ata", "2026-11-21", [-1]),
+                         ("Equipe de teste", "ata", "21/11/2026", [0]),    # data fora do formato
+                         ("", "ata", "2026-11-21", [0]),                   # sem responsável
+                         ("Equipe de teste", " ", "2026-11-21", [0])):     # sem evidência
+                with self.assertRaises(ValueError, msg=args):
+                    t93.aprovar(raiz, *args)
+
+    def test_citacao_recusa_fonte_desconhecida_e_referencia_sem_pagina_nem_secao(self):
+        self.assertEqual(t93.citacao({"id": "EMB-DOC269", "paginas": "70-72"}, self.fontes), "SOSA-GÓMEZ et al., 2014, p. 70-72")
+        for ref in ({"id": "EMB-DOC269"}, {"id": "NAO-EXISTE", "pagina": 1}):
+            with self.assertRaises(ValueError, msg=ref):
+                t93.citacao(ref, self.fontes)
+
+    def test_fichas_do_projeto_md_estao_atualizadas(self):
+        texto = (RAIZ / t93.PROJETO_MD).read_text(encoding="utf-8")
+        bloco = texto.split(t93.MARCA_INICIO, 1)[1].split(t93.MARCA_FIM, 1)[0].strip("\n")
+        self.assertEqual(bloco, t93.fichas_markdown(self.assoc, self.base, self.fontes),
+                         "rode: python -m src.associacao_conteudo_t9_3 docs")
 
     def test_nenhum_acesso_a_rede(self):
         codigo = (RAIZ / "src/associacao_conteudo_t9_3.py").read_text(encoding="utf-8")

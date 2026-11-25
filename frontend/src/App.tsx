@@ -720,12 +720,51 @@ export default function App() {
                         <h3>Orientações técnicas</h3>
                         {content?.validated ? (
                           <>
-                            <strong>{content.title}</strong>
-                            <p>{content.text}</p>
+                            <strong className={styles.fichaTitle}>
+                              {content.title}
+                            </strong>
+                            <em className={styles.fichaScientific}>
+                              {content.scientificName}
+                            </em>
+                            {content.context && (
+                              <p className={styles.fichaContext}>
+                                {content.context}
+                              </p>
+                            )}
+                            {content.sections.map((section) => (
+                              <section
+                                key={section.id}
+                                className={styles.fichaSection}
+                              >
+                                <h4>{section.title}</h4>
+                                <ul>
+                                  {section.items.map((item) => (
+                                    <li key={`${section.id}-${item.text}`}>
+                                      {item.text}
+                                      <small>{item.source}</small>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </section>
+                            ))}
+                            <p className={styles.fichaNotice}>
+                              Informação da equipe do projeto a partir de
+                              publicações técnicas. Não é conteúdo oficial do
+                              parceiro e não substitui o engenheiro agrônomo.
+                            </p>
                             <small>
-                              Fonte: {content.source} · Revisado em{" "}
+                              Fonte: {content.sources.join("; ")} · Elaborado
+                              por {content.author} · Revisado em{" "}
                               {content.reviewedAt}
                             </small>
+                            <details className={styles.fichaReferences}>
+                              <summary>Referências</summary>
+                              <ul>
+                                {content.references.map((reference) => (
+                                  <li key={reference}>{reference}</li>
+                                ))}
+                              </ul>
+                            </details>
                           </>
                         ) : (
                           <>
