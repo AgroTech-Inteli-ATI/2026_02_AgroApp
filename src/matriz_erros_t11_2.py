@@ -141,7 +141,8 @@ def analisar(dados: dict) -> dict:
             t = treino_por_classe[ref["classe"]]
             t["imagens"] += 1
             t["grupos"].add(ref["grupo"])
-            t["obs"].add(ref["obs"]) if ref["obs"] else None
+            if ref["obs"]:
+                t["obs"].add(ref["obs"])
             t["agroinsect"] += 0 if ref["obs"] else 1
         elif ref["particao"] == "teste" and ref["obs"]:
             teste_obs_por_classe[ref["classe"]].add(ref["obs"])
@@ -357,10 +358,6 @@ def _dec4(x) -> str:
     return f"{x:.4f}".replace(".", ",")
 
 
-def nome_curto(nomes: list[str], i: int) -> str:
-    return nomes[i]
-
-
 def tabela_matriz(m: list[list[int]], titulo_linha: str = "Real \\ Prevista", normalizada: bool = False) -> str:
     cab = f"| {titulo_linha} | " + " | ".join(str(j) for j in range(13)) + " | Suporte |"
     sep = "| ---: | " + " | ".join("---:" for _ in range(13)) + " | ---: |"
@@ -400,7 +397,6 @@ def relatorio(dados: dict, res: dict) -> str:
     vis = sum(1 for e in erros_ref if e["causa_t6_3"])
     L: list[str] = []
     L.append("# T11.2 — Matriz de confusão e análise de erros\n")
-    L.append("Autor: Lucas · Revisor: Glauco · Meta de entrega: a definir\n")
     L.append("Relatório gerado por [`matriz_erros_t11_2.py`](../src/matriz_erros_t11_2.py) a partir das predições da "
              "[T11.1](Avaliacao_Final_T11_1.md) (build entregue, versão 1.0.0); artefatos em "
              "[`assets/data/matriz_erros_T11_2`](../assets/data/matriz_erros_T11_2/matrizes.json).\n")

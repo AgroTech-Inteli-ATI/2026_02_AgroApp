@@ -1,7 +1,5 @@
 # T11.2 — Matriz de confusão e análise de erros
 
-Autor: Lucas · Revisor: Glauco · Meta de entrega: a definir
-
 Relatório gerado por [`matriz_erros_t11_2.py`](../src/matriz_erros_t11_2.py) a partir das predições da [T11.1](Avaliacao_Final_T11_1.md) (build entregue, versão 1.0.0); artefatos em [`assets/data/matriz_erros_T11_2`](../assets/data/matriz_erros_T11_2/matrizes.json).
 
 > **Classificação: análise exploratória.** O teste histórico já foi consultado no desenvolvimento e não é um conjunto independente ([T10.1](../assets/data/independencia_T10_1/README.md)). As matrizes descrevem o comportamento do build nesse recorte; não estimam desempenho em fotos novas de campo.

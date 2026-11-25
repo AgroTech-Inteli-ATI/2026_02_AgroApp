@@ -116,14 +116,26 @@ class PublicadoTest(unittest.TestCase):
     def test_artefatos_e_relatorio_estao_atualizados(self):
         self.assertEqual(t112.divergentes(), [], "rode: python -m src.matriz_erros_t11_2")
 
-    def test_projeto_md_traz_a_matriz_publicada_e_os_numeros_do_resumo(self):
+    def test_projeto_md_traz_a_figura_da_matriz_e_os_numeros_do_resumo(self):
         texto = (RAIZ / "docs/Projeto.md").read_text(encoding="utf-8")
         self.assertIn("## 11.2 Matriz de confusão e análise de erros (T11.2)", texto)
-        self.assertIn(t112.tabela_matriz(self.res["matrizes"]["Float16|teste"]), texto)
+        # No Projeto.md a matriz aparece na figura; a tabela 13x13 (contagens e normalizada) fica no relatório.
+        self.assertIn(f'src="../{t112.FIGURA_REFERENCIA}"', texto)
+        self.assertTrue((RAIZ / t112.FIGURA_REFERENCIA).exists())
+        relatorio = t112.DOC.read_text(encoding="utf-8")
+        m = self.res["matrizes"]["Float16|teste"]
+        self.assertIn(t112.tabela_matriz(m), relatorio)
+        self.assertIn(t112.tabela_matriz(m, normalizada=True), relatorio)
         r = t112.resumo_modelo(self.res, *t112.REFERENCIA)
         self.assertIn(f"{r['imagens']} imagens, {r['acertos']} acertos e **{r['erros']} erros**", texto)
         pares = [p for p in self.res["pares"] if (p["modelo"], p["particao"]) == t112.REFERENCIA]
         self.assertIn(f"Os {r['erros']} erros formam {len(pares)} pares direcionais", texto)
+
+    def test_relatorio_nao_repete_a_autoria_do_projeto_md(self):
+        # O Projeto.md é a referência da autoria; o relatório gerado não traz linha de autor, revisor ou meta.
+        cabecalho = t112.DOC.read_text(encoding="utf-8").split("## Resumo")[0]
+        for termo in ("Autor:", "Revisor:", "Meta de entrega"):
+            self.assertNotIn(termo, cabecalho)
 
     def test_figuras_seguem_o_padrao_da_t6_2_com_verde_e_vermelho(self):
         arquivos = {"Float16|teste": RAIZ / t112.FIGURA_REFERENCIA}

@@ -4318,7 +4318,7 @@ Calculamos as matrizes de confusão do build final (versão 1.0.0) a partir das 
 
 ### Matriz de confusão — Float16, teste histórico
 
-Linhas: classe real; colunas: classe prevista. Os índices são os de `classes.json` (0 Vaquinha, 1 Cigarrinha-do-milho, 2 Percevejo-barriga-verde, 3 Lagarta-do-cartucho, 4 Percevejo-marrom, 5 Percevejo-verde, 6 Percevejo-asa-preta, 7 Percevejo-do-milho, 8 Lagarta-falsa-medideira, 9 Lagarta-da-soja, 10 Lagarta-das-vagens, 11 *Astylus variegatus*, 12 Cigarrinha-das-pastagens). É a mesma matriz da T11.1; um teste confere a igualdade.
+A figura mostra a matriz do Float16 no teste, com a classe real nas linhas e a classe prevista nas colunas. A tabela numérica 13×13 (contagens e normalizada por classe real), com os índices de `classes.json`, está no [relatório da T11.2](Matriz_Erros_T11_2.md). É a mesma matriz da T11.1; um teste confere a igualdade.
 
 <div align="center">
   <p><strong>Figura 1 — Matriz de confusão: build final Float16, teste exploratório</strong></p>
@@ -4376,7 +4376,7 @@ Os 53 erros em fotos do iNaturalist vêm de 34 observações (1,56 por observaç
 ```powershell
 python -m src.matriz_erros_t11_2             # regenera artefatos e relatório
 python -m src.matriz_erros_t11_2 --verificar # falha se algo estiver desatualizado
-python tests/validar_matriz_erros_t11_2.py   # 16 testes
+python tests/validar_matriz_erros_t11_2.py   # 17 testes
 ```
 
 O módulo lê só arquivos versionados (predições da T11.1, índice histórico, classes, vínculos da T10.1 e revisão visual da T6.3) e não usa rede. Os testes conferem que as matrizes são iguais às da T11.1, que as linhas somam o suporte de cada classe, que pares e erros por imagem fecham com a matriz, que os pares principais coincidem com os da T6.3 e que o relatório publicado está atualizado.
