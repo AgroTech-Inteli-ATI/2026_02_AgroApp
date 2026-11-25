@@ -117,6 +117,13 @@ Validação de desempenho e integração web: [T12.1 — Tamanho dos modelos e p
 </details>
 
 <details>
+<summary><strong>13. Testes de usabilidade e navegação</strong></summary>
+
+- [13.3 Testes de navegação e apresentação do conteúdo (T13.3)](#133-testes-de-navegação-e-apresentação-do-conteúdo-t133)
+
+</details>
+
+<details>
 <summary><strong>14. Documentação técnica e transferência de conhecimento</strong></summary>
 
 - [14.1 Dataset final](#141-dataset-final)
@@ -4417,6 +4424,14 @@ O campo de navegador do [primeiro JSON bruto](../assets/data/benchmark_T12_2/iph
 As baterias declaradas eram 71% e 70%, respectivamente, com temperatura percebida normal, modo avião declarado e ausência de conectividade reportada no início e no fim. O modo de economia de energia foi declarado desativado no Safari; o texto da coleta Chrome informa economia de rede, sem confirmar economia de energia. O cache estava pronto durante os lotes, mas não foi isolado durante a inicialização, cujos tempos incluem carregamento, compilação e aquecimento e não são percentis. A inferência fica numericamente abaixo da proposta de 300 ms sob a metodologia LiteRT.js; o resultado não comprova captura → resultado em 3 s nem desempenho em outros aparelhos. O protocolo e as amostras completas estão no [relatório de latência](Benchmark_T12_2.md).
 
 Uma gravação complementar de três capturas de imagens em monitor documentou duas respostas com hipóteses e uma inconclusiva, permitindo repetir a captura após esse resultado. A análise visual encontrou aproximadamente **1,0–1,2 s do retorno da câmera ao indicador de análise finalizada**. Até a decisão ficar legível após rolagem, os intervalos a partir do proxy visual da captura foram cerca de **7,6 s, 8,3 s e 4,1 s**, incluindo confirmação humana e navegação na página. Esses números não são inferência isolada nem p95 de cinquenta capturas: a gravação usa uma aproximação visual do disparo, tem interação humana e não comprova ausência de rede. Os [marcos e hashes dos quadros](../assets/data/benchmark_T12_2/camera_20261119/observacoes.json) preservam as evidências e as limitações da medição.
+
+# 13. Testes de usabilidade e navegação
+
+## 13.3 Testes de navegação e apresentação do conteúdo (T13.3)
+
+Oito testes funcionais automatizados ([`conteudo.spec.ts`](../frontend/tests/conteudo.spec.ts)) verificam, sobre o aplicativo real, o painel de orientações técnicas após a classificação. Cobrem hipótese com conteúdo, troca de hipótese, item não validado, classe sem conteúdo, diagnóstico inconclusivo, nova imagem, resposta atrasada da análise anterior, falha ou recusa da nova foto, troca de abas, ajuda e remoção da foto. Em 22/11/2026, os 19 casos passaram: nenhuma informação incorreta foi exibida e nenhum resultado anterior foi reaproveitado. O aplicativo não precisou de alteração.
+
+Como o catálogo real ainda tem 0 de 13 classes com conteúdo ([T9.3](#93-associação-da-predição-ao-conteúdo-técnico-t93)), os casos com conteúdo usam um catálogo fictício identificado como `TESTE-T13.3`, e um caso separado confere a tela contra o `content.ts` versionado. O worker de inferência é substituído por um dublê de transporte para controlar classe, score e momento de cada resposta; a inferência real segue coberta pelos testes da T9.1/T9.2. Cinco defeitos introduzidos de propósito na interface foram todos detectados. Os casos, os resultados, a verificação de sensibilidade e os limites estão no [relatório da T13.3](Testes_Navegacao_Conteudo_T13_3.md).
 
 # 14. Documentação técnica e transferência de conhecimento
 
