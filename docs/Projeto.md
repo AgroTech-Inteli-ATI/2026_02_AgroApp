@@ -112,6 +112,14 @@ Validação de desempenho e integração web: [T12.1 — Tamanho dos modelos e p
 <summary><strong>11. Avaliação final do modelo</strong></summary>
 
 - [11.1 Avaliação final e métricas por classe (T11.1)](#111-avaliação-final-e-métricas-por-classe-t111)
+- [11.2 Matriz de confusão e análise de erros (T11.2)](#112-matriz-de-confusão-e-análise-de-erros-t112)
+
+</details>
+
+<details>
+<summary><strong>11. Avaliação final do modelo</strong></summary>
+
+- [11.1 Avaliação final e métricas por classe (T11.1)](#111-avaliação-final-e-métricas-por-classe-t111)
 - [11.3 Avaliação do limiar de confiança e casos inadequados (T11.3)](#113-avaliação-do-limiar-de-confiança-e-casos-inadequados-t113)
 
 </details>
@@ -4316,6 +4324,77 @@ Avaliamos os dois arquivos `.tflite` do build entregue (`frontend/dist/models`, 
 As predições do build coincidem com as da T8.1 em 473/473 imagens nos dois formatos. Com o limiar de 0,65, o Float16 aceita 93,2% das imagens do teste, com acurácia de 0,8821 entre as aceitas. Esse valor fica abaixo da meta de 0,90 definida na validação. Percevejo-verde, Percevejo-asa-preta e Lagarta-falsa-medideira têm F1 abaixo de 0,60, com suportes de 11 a 14 imagens. Excluir as duas imagens de teste vinculadas na T10.1 (`IMG_01835`, `IMG_01874`) muda o F1 macro em no máximo 0,0001 e a acurácia em 0,0007 nos dois formatos.
 
 O [relatório da T11.1](Avaliacao_Final_T11_1.md) traz acurácia (um-contra-todos), precisão, recall, F1 e suporte das 13 classes para cada modelo e conjunto, além da matriz de confusão, intervalos bootstrap, política de confiança, sensibilidade, identificação completa do build e runtime, limitações metodológicas e reprodução. Predições com os 13 scores e métricas em CSV/JSON estão em [`assets/data/avaliacao_final_T11_1`](../assets/data/avaliacao_final_T11_1/metricas.json).
+
+## 11.2 Matriz de confusão e análise de erros (T11.2)
+
+**Classificação: exploratória.** O teste histórico já foi consultado no desenvolvimento e não é conjunto independente ([seção 10.1](#101-independência-dos-conjuntos-de-dados)); os números descrevem o build entregue nesse recorte e não estimam desempenho em fotos novas.
+
+Calculamos as matrizes de confusão do build final (versão 1.0.0) a partir das predições que a [T11.1](#111-avaliação-final-e-métricas-por-classe-t111) publicou, sem nova inferência. O resultado de referência é o **Float16 (principal) no teste histórico**: 473 imagens, 401 acertos e **72 erros**. O [relatório da T11.2](Matriz_Erros_T11_2.md) traz também o INT8 e a validação, as matrizes normalizadas, todos os pares de confusão e as listas por imagem e por observação; os dados estão em [`assets/data/matriz_erros_T11_2`](../assets/data/matriz_erros_T11_2/matrizes.json).
+
+### Matriz de confusão — Float16, teste histórico
+
+A figura mostra a matriz do Float16 no teste, com a classe real nas linhas e a classe prevista nas colunas. A tabela numérica 13×13 (contagens e normalizada por classe real), com os índices de `classes.json`, está no [relatório da T11.2](Matriz_Erros_T11_2.md). É a mesma matriz da T11.1; um teste confere a igualdade.
+
+<div align="center">
+  <p><strong>Figura 1 — Matriz de confusão: build final Float16, teste exploratório</strong></p>
+  <img src="../assets/matriz_confusao_T11_2_float16_teste.svg" alt="Matriz de confusão do build final Float16 no teste exploratório, com classe real nas linhas e classe prevista nas colunas" width="800">
+  <p><em>Fonte: previsões do build final Float16 no teste exploratório, consolidadas na T11.2 (2026).</em></p>
+</div>
+
+A figura segue o padrão das matrizes da [T6.2](#62-matriz-de-confusão-t62): cada célula mostra a contagem; a cor é a fração da classe real (verde nos acertos, vermelho nas confusões); os pares com pelo menos dois erros têm borda e mostram também o percentual da classe real. As figuras do INT8 e da validação estão em [`assets/data/matriz_erros_T11_2`](../assets/data/matriz_erros_T11_2/matriz_int8_teste.svg) (`matriz_<modelo>_<conjunto>.svg`).
+
+### Principais confusões
+
+Os 72 erros formam 35 pares direcionais (real → previsto); 16 têm pelo menos dois erros e reúnem 53 imagens.
+
+| Real → Prevista | Erros / suporte | Observações do iNaturalist | Erros com score ≥ 0,65 |
+| --- | ---: | ---: | ---: |
+| Lagarta-falsa-medideira → Lagarta-do-cartucho | 6 / 12 | 5 | 5 |
+| Vaquinha → *Astylus variegatus* | 5 / 157 | 3 (e 1 foto do AgroInsect) | 5 |
+| Percevejo-asa-preta → Percevejo-verde | 5 / 11 | 1 | 4 |
+| Lagarta-das-vagens → Lagarta-do-cartucho | 5 / 24 | 5 | 3 |
+| Percevejo-verde → Vaquinha | 4 / 14 | 3 | 3 |
+| Percevejo-verde → Percevejo-barriga-verde | 4 / 14 | 1 | 2 |
+
+- **Confusões entre classes parecidas.** 37 dos 72 erros (51,4%) ocorrem entre classes do mesmo tipo de inseto: percevejos entre si, lagartas entre si, Vaquinha e *Astylus*. Os outros 35 cruzam tipos, e 17 deles envolvem a Vaquinha, a classe com mais imagens (157 no teste). Os pares Lagarta-do-cartucho ↔ Lagarta-das-vagens (8 erros nos dois sentidos) e Lagarta-do-cartucho ↔ Lagarta-falsa-medideira (6) repetem o que a [T6.3](#63-análise-de-erros-t63) encontrou no candidato Keras FP32.
+- **Erros com score alto.** 52 dos 72 erros têm score ≥ 0,65 e apareceriam como hipótese principal ao usuário; 6 têm score de 0,995 ou mais. O limiar não separa esses erros dos acertos; o comportamento da política de confiança é objeto da T11.3.
+- **INT8.** Erra 74 imagens no teste; 67 delas também são erradas pelo Float16 (que tem 5 erros próprios, e o INT8, 7). A diferença entre os formatos é pequena frente à diferença entre classes.
+
+### Classes com menor desempenho
+
+Critério: F1 ou recall abaixo de 0,60 no Float16, teste histórico.
+
+| Classe | Suporte (obs. iNaturalist) | Treino (fotos / grupos) | Recall | Precisão | F1 | Erros | Observações por trás dos erros |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
+| Percevejo-marrom | 10 (8) | 45 / 31 | 0,50 | 1,00 | 0,67 | 5 | 3 (uma delas com 3 erros) |
+| Percevejo-verde | 14 (8) | 64 / 33 | 0,36 | 0,50 | 0,42 | 9 | 4 (uma delas com 5 erros) |
+| Percevejo-asa-preta | 11 (5) | 53 / 18 | 0,36 | 1,00 | 0,53 | 7 | 2 (uma delas com 6 erros) |
+| Lagarta-falsa-medideira | 12 (7) | 55 / 26 | 0,33 | 0,80 | 0,47 | 8 | 5 (uma delas com 3 erros) |
+
+- **Poucas observações independentes.** Cada uma dessas classes tem de 10 a 14 imagens no teste, vindas de 5 a 8 observações. No Percevejo-asa-preta, 6 dos 7 erros são da observação 147542055 (fotos IMG_03086 a IMG_03091); no Percevejo-verde, 5 dos 9 são da observação 368128786. Os recalls de 0,36 refletem poucas cenas erradas, e não 7 ou 9 ocorrências independentes.
+- **Menos fotos de treino ajudam a explicar, mas não bastam.** Entre as 13 classes, o F1 tem correlação de 0,64 com o logaritmo do número de fotos de treino (13 pontos; não permite concluir causa). O Percevejo-asa-preta, com só 18 grupos de treino, está entre os piores; porém o Percevejo-do-milho e a Lagarta-da-soja, com treino igualmente pequeno (55 e 28 fotos), têm recall de 0,75 e 0,83, e a Lagarta-das-vagens (110 fotos) tem recall de 0,67 e se confunde com a Lagarta-do-cartucho (285 fotos) mesmo com bastante treino.
+- **Percevejo-marrom e Percevejo-asa-preta têm precisão 1,00:** o modelo quase nunca prevê essas classes por engano, mas deixa de reconhecê-las. A T6.3 já indicou, por inspeção visual, que há erros do asa-preta em ninfas (metadado `Nymph`) com pouca cobertura no treino; isso é hipótese, não confirmação.
+- **Imagens do AgroInsect.** 19 dos 72 erros são fotos do AgroInsect, que não têm identificador de observação, então não é possível saber se são independentes. Todos são de quatro classes: Percevejo-barriga-verde (8), Lagarta-do-cartucho (6), Cigarrinha-do-milho (3) e Vaquinha (2).
+
+### Imagens da mesma observação
+
+Os 53 erros em fotos do iNaturalist vêm de 34 observações (1,56 por observação); 10 observações têm mais de um erro e reúnem 29 deles. A de maior peso (147542055, Percevejo-asa-preta) tem 6 erros. Nenhum erro está em observação presente também em outra partição, e nenhum está entre as imagens com vínculo registrado na T10.1. O relatório lista as dez observações, e a coluna `obs_inat` de `erros_por_imagem.csv` permite agrupar os erros.
+
+### Limitações e próximos passos
+
+- Sem conjunto independente; suportes de 6 a 157 imagens (9 das 13 classes com menos de 30) tornam instáveis os percentuais por classe e por par, e não há intervalo de confiança por classe.
+- As contagens mostram onde o modelo erra e quão dependentes são os erros, não por que erra. A revisão visual da T6.3 é hipótese, não validação por especialista; a T11.2 não reabriu as fotos.
+- Para uma próxima versão do conjunto de dados, a análise sugere reunir **novas observações independentes** das classes Percevejo-marrom, Percevejo-verde, Percevejo-asa-preta e Lagarta-falsa-medideira (hoje de 5 a 8 observações no teste) e revisar com agrônomo os rótulos dos pares de percevejos e das lagartas *Spodoptera* ↔ *Chrysodeixis*, em linha com a [proposta da T6.4](#64-proposta-de-tratamento-de-classes-t64).
+
+### Reprodução e verificação
+
+```powershell
+python -m src.matriz_erros_t11_2             # regenera artefatos e relatório
+python -m src.matriz_erros_t11_2 --verificar # falha se algo estiver desatualizado
+python tests/validar_matriz_erros_t11_2.py   # 17 testes
+```
+
+O módulo lê só arquivos versionados (predições da T11.1, índice histórico, classes, vínculos da T10.1 e revisão visual da T6.3) e não usa rede. Os testes conferem que as matrizes são iguais às da T11.1, que as linhas somam o suporte de cada classe, que pares e erros por imagem fecham com a matriz, que os pares principais coincidem com os da T6.3 e que o relatório publicado está atualizado.
 
 ## 11.3 Avaliação do limiar de confiança e casos inadequados (T11.3)
 
