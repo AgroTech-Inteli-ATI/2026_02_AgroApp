@@ -37,7 +37,7 @@ MARCA_INICIO, MARCA_FIM = "<!-- fichas:inicio -->", "<!-- fichas:fim -->"
 
 ESQUEMA_ASSOCIACAO = "associacao_conteudo_T9_3_v2"
 ESQUEMA_BASE = "base_conteudo_T9_3_v2"
-CAMPOS_VALIDACAO = ("data", "evidencia")  # registro da liberação; sem nome de responsável
+CAMPOS_VALIDACAO = ("responsavel", "data", "evidencia")  # responsável: papel (ex.: equipe), não nome de pessoa
 CAMPOS_ITEM = ("chave", "titulo", "nome_cientifico", "contexto", "secoes", "elaborado_por", "elaborado_em",
                "revisado_em", "validated")
 ORIGENS_CHAVE = ("oficial_agro_app", "equipe")
@@ -194,12 +194,16 @@ def _paginas(ref: dict) -> tuple[int, int] | None:
 
 def citacao(ref: dict, fontes: dict) -> str:
     """Citação curta de uma referência de item (fonte + página ou seção)."""
-    f = _fontes_por_id(fontes)[ref["id"]]
+    f = _fontes_por_id(fontes).get(ref["id"])
+    if f is None:
+        raise ValueError(f"fonte {ref['id']} fora do mapa de fontes")
     if f["id"] in {i["id"] for i in fontes.get("fontes_internas", [])}:
         return f["citacao_curta"]
     if "secao" in ref:
         return f"{f['citacao_curta']}, seção “{ref['secao']}”"
     p = _paginas(ref)
+    if p is None:
+        raise ValueError(f"referência a {ref['id']} sem página nem seção")
     return f"{f['citacao_curta']}, p. {p[0]}" if p[0] == p[1] else f"{f['citacao_curta']}, p. {p[0]}-{p[1]}"
 
 
@@ -246,7 +250,8 @@ def validar_contrato(associacao: dict, base: dict, fontes: dict | None = None) -
         if (chave is None) != (c["origem_chave"] is None) or c["origem_chave"] not in (None, *ORIGENS_CHAVE):
             raise ValueError(f"classe {c['indice']}: chave e origem_chave inconsistentes")
         if c["status_conteudo"] == "validado":
-            if not chave or not c["validacao_conteudo"] or                     not all(c["validacao_conteudo"].get(k) for k in CAMPOS_VALIDACAO):
+            validacao = c["validacao_conteudo"] or {}
+            if not chave or not all(validacao.get(k) for k in CAMPOS_VALIDACAO):
                 raise ValueError(f"classe {c['indice']} validada sem chave ou sem registro de validação")
         elif chave is not None and c["status_conteudo"] != "aguardando_validacao":
             raise ValueError(f"classe {c['indice']} com chave e status inesperado: {c['status_conteudo']}")
@@ -425,17 +430,35 @@ def atualizar_projeto(raiz: Path = RAIZ) -> bool:
     return novo != texto
 
 
-def aprovar(raiz: Path, evidencia: str, dia: str, indices: list[int] | None = None) -> list[int]:
-    """Libera as fichas das classes escolhidas (todas, por padrão) e registra a validação (data e evidência)."""
+def aprovar(raiz: Path, responsavel: str, evidencia: str, dia: str, indices: list[int] | None = None) -> list[int]:
+    """Libera as fichas das classes escolhidas e registra a validação (responsável, data e evidência).
+
+    Sem `indices`, libera só as classes ainda não validadas: rodar de novo não reescreve datas já registradas.
+    Para registrar nova revisão de uma ficha já liberada, passe o índice dela.
+    """
+    if not responsavel.strip() or not evidencia.strip():
+        raise ValueError("aprovar exige responsável e evidência")
+    try:
+        date.fromisoformat(dia)
+    except ValueError:
+        raise ValueError(f"data fora do formato AAAA-MM-DD: {dia!r}") from None
     associacao, base = carregar(raiz)
     por_chave = {i["chave"]: i for i in base["itens"]}
-    alvo = indices if indices is not None else [c["indice"] for c in associacao["classes"]]
+    total = len(associacao["classes"])
+    if indices is None:
+        alvo = [c["indice"] for c in associacao["classes"] if c["status_conteudo"] != "validado"]
+    else:
+        fora = [i for i in indices if isinstance(i, bool) or not isinstance(i, int) or not 0 <= i < total]
+        if fora:
+            raise ValueError(f"índices fora das classes do modelo (0 a {total - 1}): {fora}")
+        alvo = sorted(set(indices))
     for i in alvo:
         c = associacao["classes"][i]
         if c["chave_conteudo"] not in por_chave:
             raise ValueError(f"classe {i} sem ficha na base")
         por_chave[c["chave_conteudo"]].update({"validated": True, "revisado_em": dia})
-        c.update({"status_conteudo": "validado", "validacao_conteudo": {"data": dia, "evidencia": evidencia}})
+        c.update({"status_conteudo": "validado",
+                  "validacao_conteudo": {"responsavel": responsavel, "data": dia, "evidencia": evidencia}})
     associacao["status"] = _status(associacao["classes"])
     validar_contrato(associacao, base, carregar_fontes(raiz))
     gravar_json(raiz / SAIDA / ASSOCIACAO, associacao)
@@ -449,9 +472,10 @@ if __name__ == "__main__":
     ap.add_argument("--saida", type=Path, default=None, help=f"pasta de saída do gerar (padrão: {SAIDA})")
     ap.add_argument("--exigir-conteudo", action="store_true",
                     help="falha se alguma classe não tiver conteúdo validado (RNF-08 completo)")
+    ap.add_argument("--responsavel", help="aprovar: papel de quem libera (ex.: \"Equipe do projeto\"), não nome de pessoa")
     ap.add_argument("--evidencia", help="aprovar: onde a decisão de liberar e a validação estão registradas")
     ap.add_argument("--data", default=date.today().isoformat(), help="aprovar: data da validação (AAAA-MM-DD)")
-    ap.add_argument("--classes", help="aprovar: índices separados por vírgula (padrão: todas)")
+    ap.add_argument("--classes", help="aprovar: índices separados por vírgula (padrão: as ainda não validadas)")
     args = ap.parse_args()
     if args.comando == "frontend":
         (RAIZ / CONTENT_TS).write_text(content_ts(*carregar()), encoding="utf-8", newline="\n")
@@ -459,10 +483,13 @@ if __name__ == "__main__":
     elif args.comando == "docs":
         print("Projeto.md atualizado." if atualizar_projeto() else "Projeto.md já estava atualizado.")
     elif args.comando == "aprovar":
-        if not args.evidencia:
-            sys.exit("aprovar exige --evidencia")
-        alvo = [int(x) for x in args.classes.split(",")] if args.classes else None
-        feitos = aprovar(RAIZ, args.evidencia, args.data, alvo)
+        if not args.responsavel or not args.evidencia:
+            sys.exit("aprovar exige --responsavel e --evidencia")
+        try:
+            alvo = [int(x) for x in args.classes.split(",")] if args.classes else None
+            feitos = aprovar(RAIZ, args.responsavel, args.evidencia, args.data, alvo)
+        except ValueError as erro:
+            sys.exit(f"aprovar: {erro}")
         (RAIZ / CONTENT_TS).write_text(content_ts(*carregar()), encoding="utf-8", newline="\n")
         print(f"{len(feitos)} classes validadas; {CONTENT_TS} gerado. Rode também: python -m src.associacao_conteudo_t9_3 docs")
     elif args.comando == "gerar":

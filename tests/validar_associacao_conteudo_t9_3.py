@@ -31,7 +31,8 @@ def ficha(chave, titulo="Título", validated=True):
 def validar_classe(assoc, base, indice, chave, origem="equipe"):
     c = assoc["classes"][indice]
     c.update({"chave_conteudo": chave, "origem_chave": origem, "status_conteudo": "validado",
-              "validacao_conteudo": {"data": "2026-11-21", "evidencia": "ata de teste"}})
+              "validacao_conteudo": {"responsavel": "Equipe de teste", "data": "2026-11-21",
+                                     "evidencia": "ata de teste"}})
     base["itens"].append(ficha(chave, titulo=c["nome"]))
 
 
@@ -146,6 +147,11 @@ class AssociacaoTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             t93.validar_contrato(assoc, base)
         assoc, base = self.vazio()
+        validar_classe(assoc, base, 3, "equipe.teste_03")
+        del assoc["classes"][3]["validacao_conteudo"]["responsavel"]
+        with self.assertRaises(ValueError):
+            t93.validar_contrato(assoc, base)
+        assoc, base = self.vazio()
         validar_classe(assoc, base, 3, "equipe.compartilhada")
         validar_classe(assoc, base, 10, "equipe.compartilhada")
         base["itens"].pop()  # evita item repetido: o problema testado é o conteúdo único do par 3 e 10
@@ -236,23 +242,39 @@ class AssociacaoTest(unittest.TestCase):
                 i.update({"validated": False, "revisado_em": None})
             t93.gravar_json(raiz / t93.SAIDA / t93.ASSOCIACAO, assoc)
             t93.gravar_json(raiz / t93.SAIDA / t93.BASE, base)
-            feitos = t93.aprovar(raiz, "ata de teste", "2026-11-21", [0, 1])
+            feitos = t93.aprovar(raiz, "Equipe de teste", "ata de teste", "2026-11-21", [1, 0, 1])
             assoc, base = t93.carregar(raiz)
             self.assertEqual(feitos, [0, 1])
             self.assertEqual([c["status_conteudo"] for c in assoc["classes"][:3]], ["validado", "validado", "aguardando_validacao"])
             self.assertEqual(assoc["status"], "fichas_da_equipe_em_revisao")
             self.assertEqual(t93.cobertura(assoc, base)["com_conteudo_disponivel"], 2)
-            self.assertEqual(assoc["classes"][0]["validacao_conteudo"], {"data": "2026-11-21", "evidencia": "ata de teste"})
-            self.assertNotIn("responsavel", assoc["classes"][0]["validacao_conteudo"])
-            t93.aprovar(raiz, "ata de teste", "2026-11-21")
+            self.assertEqual(assoc["classes"][0]["validacao_conteudo"],
+                             {"responsavel": "Equipe de teste", "data": "2026-11-21", "evidencia": "ata de teste"})
+            # sem índices, só as pendentes: a data das já validadas (0 e 1) não muda
+            self.assertEqual(t93.aprovar(raiz, "Equipe de teste", "ata de teste", "2026-11-22"), list(range(2, 13)))
             assoc, base = t93.carregar(raiz)
+            self.assertEqual(assoc["classes"][0]["validacao_conteudo"]["data"], "2026-11-21")
+            self.assertEqual(assoc["classes"][2]["validacao_conteudo"]["data"], "2026-11-22")
             self.assertEqual(assoc["status"], "fichas_da_equipe_validadas")
             self.assertEqual(t93.cobertura(assoc, base)["com_conteudo_disponivel"], 13)
             self.assertEqual(t93.content_ts(assoc, base, t93.carregar_fontes(raiz)).count('"validated": true'), 13)
             base["itens"].pop()  # classe sem ficha na base não pode ser aprovada
             t93.gravar_json(raiz / t93.SAIDA / t93.BASE, base)
             with self.assertRaises(ValueError):
-                t93.aprovar(raiz, "ata de teste", "2026-11-21", [12])
+                t93.aprovar(raiz, "Equipe de teste", "ata de teste", "2026-11-21", [12])
+            for args in (("Equipe de teste", "ata", "2026-11-21", [13]),   # índice fora do modelo
+                         ("Equipe de teste", "ata", "2026-11-21", [-1]),
+                         ("Equipe de teste", "ata", "21/11/2026", [0]),    # data fora do formato
+                         ("", "ata", "2026-11-21", [0]),                   # sem responsável
+                         ("Equipe de teste", " ", "2026-11-21", [0])):     # sem evidência
+                with self.assertRaises(ValueError, msg=args):
+                    t93.aprovar(raiz, *args)
+
+    def test_citacao_recusa_fonte_desconhecida_e_referencia_sem_pagina_nem_secao(self):
+        self.assertEqual(t93.citacao({"id": "EMB-DOC269", "paginas": "70-72"}, self.fontes), "SOSA-GÓMEZ et al., 2014, p. 70-72")
+        for ref in ({"id": "EMB-DOC269"}, {"id": "NAO-EXISTE", "pagina": 1}):
+            with self.assertRaises(ValueError, msg=ref):
+                t93.citacao(ref, self.fontes)
 
     def test_fichas_do_projeto_md_estao_atualizadas(self):
         texto = (RAIZ / t93.PROJETO_MD).read_text(encoding="utf-8")
