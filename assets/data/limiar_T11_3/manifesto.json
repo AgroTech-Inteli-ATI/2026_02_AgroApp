@@ -1,0 +1,3806 @@
+{
+  "esquema": "limiar_T11_3_v1",
+  "semente": 42,
+  "regra": "imagens geradas por `python -m src.limiar_t11_3 preparar`; os arquivos não são versionados, e os hashes identificam os usados na medição",
+  "imagens": [
+    {
+      "id": "sintetico_preto",
+      "cenario": "sintetico",
+      "arquivo": "sintetico/preto.png",
+      "parametro": "cor (0, 0, 0)",
+      "sha256": "68a8ac65194feaf3b3aa15ea854d89c6571ad2e39bea989503b3f557b47c27a6"
+    },
+    {
+      "id": "sintetico_branco",
+      "cenario": "sintetico",
+      "arquivo": "sintetico/branco.png",
+      "parametro": "cor (255, 255, 255)",
+      "sha256": "39c09c0fa3d79588381ca31a4365b8ebd87a88b54afe7bff1448fc95c153691f"
+    },
+    {
+      "id": "sintetico_cinza",
+      "cenario": "sintetico",
+      "arquivo": "sintetico/cinza.png",
+      "parametro": "cor (128, 128, 128)",
+      "sha256": "56e4cd36830ae94733b8e1c3b2fd5141df5ea90bb7a58b4770987fae5b9fcf31"
+    },
+    {
+      "id": "sintetico_verde_folha",
+      "cenario": "sintetico",
+      "arquivo": "sintetico/verde_folha.png",
+      "parametro": "cor (60, 140, 60)",
+      "sha256": "407d57b9f212f44e18f5e4d5aacdca28b64e68bc3d069c797253b924d8144cd1"
+    },
+    {
+      "id": "sintetico_marrom_solo",
+      "cenario": "sintetico",
+      "arquivo": "sintetico/marrom_solo.png",
+      "parametro": "cor (110, 80, 50)",
+      "sha256": "3129828c947bcff4cba2537da314093b4dfeb096d828ea01c5f41cc61df2aa66"
+    },
+    {
+      "id": "sintetico_amarelo",
+      "cenario": "sintetico",
+      "arquivo": "sintetico/amarelo.png",
+      "parametro": "cor (230, 200, 30)",
+      "sha256": "1b2a3822563165b1751fd94671de4ec766af5b71e1d9eb10682c9a5628992ab4"
+    },
+    {
+      "id": "sintetico_vermelho",
+      "cenario": "sintetico",
+      "arquivo": "sintetico/vermelho.png",
+      "parametro": "cor (200, 30, 30)",
+      "sha256": "de3c59338272b4f5a2bf26aa36e506d419ccc7707b7e35dfe7520872247e206e"
+    },
+    {
+      "id": "sintetico_azul_ceu",
+      "cenario": "sintetico",
+      "arquivo": "sintetico/azul_ceu.png",
+      "parametro": "cor (100, 150, 220)",
+      "sha256": "43b51c3ab15e4d6582f219002b7690d0004515a11b5062bbf3ec836fe252b80a"
+    },
+    {
+      "id": "sintetico_gradiente_verde_marrom",
+      "cenario": "sintetico",
+      "arquivo": "sintetico/gradiente_verde_marrom.png",
+      "parametro": "horizontal",
+      "sha256": "1349169f522fadbe9909767c87fe01e5cf369ecf31cb43206c72ab7860c7d48c"
+    },
+    {
+      "id": "sintetico_gradiente_cinza",
+      "cenario": "sintetico",
+      "arquivo": "sintetico/gradiente_cinza.png",
+      "parametro": "vertical",
+      "sha256": "d6c53072fe90da338a545934fa1c69760b3d27bc864d0b7922b14521d3109048"
+    },
+    {
+      "id": "sintetico_ruido_colorido",
+      "cenario": "sintetico",
+      "arquivo": "sintetico/ruido_colorido.png",
+      "parametro": "semente 42",
+      "sha256": "7194832002b97ec3eabda2abda31468853c6c6ba5db465a600e8c75b1687f5c2"
+    },
+    {
+      "id": "sintetico_ruido_cinza",
+      "cenario": "sintetico",
+      "arquivo": "sintetico/ruido_cinza.png",
+      "parametro": "semente 42",
+      "sha256": "82e44deda7cda622aa21d215cdc6ae12179311c4ab89bd8a77b18befecf57c60"
+    },
+    {
+      "id": "sintetico_xadrez",
+      "cenario": "sintetico",
+      "arquivo": "sintetico/xadrez.png",
+      "parametro": "casas de 32 px",
+      "sha256": "c49183e948eb14cae3d1c33d724d4e874285a91df0908d30f90845038a8996c7"
+    },
+    {
+      "id": "sintetico_listras_diagonais",
+      "cenario": "sintetico",
+      "arquivo": "sintetico/listras_diagonais.png",
+      "parametro": "largura 16 px",
+      "sha256": "af59f5e8a7ea320f3cc7a8c8595e503d6f328961db32f93121467169ac38b1f1"
+    },
+    {
+      "id": "sintetico_circulos_concentricos",
+      "cenario": "sintetico",
+      "arquivo": "sintetico/circulos_concentricos.png",
+      "parametro": "raios de 30 em 30",
+      "sha256": "a15d4e8281460ebe82a61bcef6f26c3e3d6926708fedf3f25553b7a2c455eae0"
+    },
+    {
+      "id": "sintetico_pagina_de_texto",
+      "cenario": "sintetico",
+      "arquivo": "sintetico/pagina_de_texto.png",
+      "parametro": "fonte padrão",
+      "sha256": "02b78216b6694705453df00ddcaff57edc47926eaedcf5b4cc64ecd6c66f13a4"
+    },
+    {
+      "id": "sintetico_mosaico_aleatorio",
+      "cenario": "sintetico",
+      "arquivo": "sintetico/mosaico_aleatorio.png",
+      "parametro": "blocos de 64 px",
+      "sha256": "f4384650fe4eca1db50d883930a125fefb273fc8dacaba63bf040144f6fc4c7b"
+    },
+    {
+      "id": "fundo_IMG_01779",
+      "cenario": "fundo",
+      "arquivo": "fundo/IMG_01779.jpg",
+      "pai": "IMG_01779",
+      "parametro": "região 0.45,0.00,1.00,1.00",
+      "sha256": "2820c721691450d5340a9381aeac2f3ab72369dac1c449de39e58b6cb14e019e"
+    },
+    {
+      "id": "fundo_IMG_02602",
+      "cenario": "fundo",
+      "arquivo": "fundo/IMG_02602.jpg",
+      "pai": "IMG_02602",
+      "parametro": "região 0.00,0.00,1.00,0.41",
+      "sha256": "3d09facca4278c1e00be3938c440785fde3f74300a48784a650e9e9b40b412c1"
+    },
+    {
+      "id": "fundo_IMG_02110",
+      "cenario": "fundo",
+      "arquivo": "fundo/IMG_02110.jpg",
+      "pai": "IMG_02110",
+      "parametro": "região 0.00,0.56,1.00,1.00",
+      "sha256": "fc323a102cb4d74a475aa6163b428d4597de1b0262e5d836511f3a19c3aa7452"
+    },
+    {
+      "id": "fundo_IMG_02217",
+      "cenario": "fundo",
+      "arquivo": "fundo/IMG_02217.jpg",
+      "pai": "IMG_02217",
+      "parametro": "região 0.53,0.00,1.00,1.00",
+      "sha256": "648fcdc692feb112e269e459d48ab5dfd93caea0d3c9ca55ecc2ac56563a3769"
+    },
+    {
+      "id": "fundo_IMG_01794",
+      "cenario": "fundo",
+      "arquivo": "fundo/IMG_01794.jpg",
+      "pai": "IMG_01794",
+      "parametro": "região 0.00,0.49,1.00,1.00",
+      "sha256": "68cecd947e3d4aaf326d4e32d367b811e7ca0a099906b590b1cbe46aae0622b5"
+    },
+    {
+      "id": "fundo_IMG_01580",
+      "cenario": "fundo",
+      "arquivo": "fundo/IMG_01580.jpg",
+      "pai": "IMG_01580",
+      "parametro": "região 0.00,0.00,0.44,1.00",
+      "sha256": "3d36d359793600b84751381acca289a6d63b384d3778c45fb28ff2f60b700786"
+    },
+    {
+      "id": "fundo_IMG_00694",
+      "cenario": "fundo",
+      "arquivo": "fundo/IMG_00694.jpg",
+      "pai": "IMG_00694",
+      "parametro": "região 0.60,0.00,1.00,1.00",
+      "sha256": "24d2d9cb8b589f2e3949ec7ac1d2f7f10363726552d9cdcce34de392dd979883"
+    },
+    {
+      "id": "fundo_IMG_01531",
+      "cenario": "fundo",
+      "arquivo": "fundo/IMG_01531.jpg",
+      "pai": "IMG_01531",
+      "parametro": "região 0.00,0.00,1.00,0.42",
+      "sha256": "e707fbff8a54ad314f72aa4217b48d814e1b2dea1c23d7ea932e53156e58ba0b"
+    },
+    {
+      "id": "fundo_IMG_02175",
+      "cenario": "fundo",
+      "arquivo": "fundo/IMG_02175.jpg",
+      "pai": "IMG_02175",
+      "parametro": "região 0.68,0.00,1.00,1.00",
+      "sha256": "5b8e8e4a1ef251c4245412722a3da617bc1ab409c6089612f1742224c7177e13"
+    },
+    {
+      "id": "fundo_IMG_02124",
+      "cenario": "fundo",
+      "arquivo": "fundo/IMG_02124.jpg",
+      "pai": "IMG_02124",
+      "parametro": "região 0.53,0.00,1.00,1.00",
+      "sha256": "ad57ccc68dcdf3b256d1fd67139f99ca1d684ac4154caca2b92c3067d343b5cf"
+    },
+    {
+      "id": "fundo_IMG_01813",
+      "cenario": "fundo",
+      "arquivo": "fundo/IMG_01813.jpg",
+      "pai": "IMG_01813",
+      "parametro": "região 0.00,0.00,0.31,1.00",
+      "sha256": "56c5f1d2c8c56db553c06810867439fd047c69447407e9d877b47bc7c4b8f506"
+    },
+    {
+      "id": "fundo_IMG_01977",
+      "cenario": "fundo",
+      "arquivo": "fundo/IMG_01977.jpg",
+      "pai": "IMG_01977",
+      "parametro": "região 0.00,0.00,0.39,1.00",
+      "sha256": "e51738a733bc95ce5c93cf0f5382fa79bca714ddaaee6288e53e0b8bba900f70"
+    },
+    {
+      "id": "fundo_IMG_00498",
+      "cenario": "fundo",
+      "arquivo": "fundo/IMG_00498.jpg",
+      "pai": "IMG_00498",
+      "parametro": "região 0.00,0.00,0.44,1.00",
+      "sha256": "e3a6b1d82826398d7e424f68c3e32a6d5f61b9d796b70dc2a270d9b28aa2c948"
+    },
+    {
+      "id": "fundo_IMG_02701",
+      "cenario": "fundo",
+      "arquivo": "fundo/IMG_02701.jpg",
+      "pai": "IMG_02701",
+      "parametro": "região 0.00,0.00,0.38,1.00",
+      "sha256": "d525a656e8933a7d6ad53ca2f44e72c2f4d8194de4f4931967d476685515fe6a"
+    },
+    {
+      "id": "fundo_IMG_02191",
+      "cenario": "fundo",
+      "arquivo": "fundo/IMG_02191.jpg",
+      "pai": "IMG_02191",
+      "parametro": "região 0.00,0.62,1.00,1.00",
+      "sha256": "4f68505521ad1ea5f35081d5644af24b66721bd71481af302debbf8f806ca19f"
+    },
+    {
+      "id": "fundo_IMG_01593",
+      "cenario": "fundo",
+      "arquivo": "fundo/IMG_01593.jpg",
+      "pai": "IMG_01593",
+      "parametro": "região 0.00,0.00,0.47,1.00",
+      "sha256": "33141d304eca5757eefd87fcd7de8595eb9e688e455741fb091fea7f0a107243"
+    },
+    {
+      "id": "fundo_IMG_01641",
+      "cenario": "fundo",
+      "arquivo": "fundo/IMG_01641.jpg",
+      "pai": "IMG_01641",
+      "parametro": "região 0.00,0.00,1.00,0.62",
+      "sha256": "0bcfa9236edcaaed87ffb2a05d449e55f7a0dc135a426dbe5f0f20ee580c10c3"
+    },
+    {
+      "id": "fundo_IMG_02252",
+      "cenario": "fundo",
+      "arquivo": "fundo/IMG_02252.jpg",
+      "pai": "IMG_02252",
+      "parametro": "região 0.00,0.62,1.00,1.00",
+      "sha256": "ab35ad46faebccec9bfddffda8c722ff220f662b217809dbd4b22163884a8e07"
+    },
+    {
+      "id": "fundo_IMG_02544",
+      "cenario": "fundo",
+      "arquivo": "fundo/IMG_02544.jpg",
+      "pai": "IMG_02544",
+      "parametro": "região 0.00,0.64,1.00,1.00",
+      "sha256": "c5ca4172dee7f36aa33e20af43ad6ef86e0f236563bdbf529bea0b08ee722ab5"
+    },
+    {
+      "id": "fundo_IMG_01910",
+      "cenario": "fundo",
+      "arquivo": "fundo/IMG_01910.jpg",
+      "pai": "IMG_01910",
+      "parametro": "região 0.00,0.00,0.48,1.00",
+      "sha256": "5b495268aeff273c8c81c18db0293e5c1f19bc1efbf955b47c29c68c7259e4cd"
+    },
+    {
+      "id": "fundo_IMG_00529",
+      "cenario": "fundo",
+      "arquivo": "fundo/IMG_00529.jpg",
+      "pai": "IMG_00529",
+      "parametro": "região 0.52,0.00,1.00,1.00",
+      "sha256": "bfd108c36910ef163c48bb1a953ca62596d27ab6a395a9a8740dde2d9ff9cb83"
+    },
+    {
+      "id": "fundo_IMG_02283",
+      "cenario": "fundo",
+      "arquivo": "fundo/IMG_02283.jpg",
+      "pai": "IMG_02283",
+      "parametro": "região 0.57,0.00,1.00,1.00",
+      "sha256": "1f87b97ce6652b2ca1933f5a80d221d87e965d5185e59757e5ba77ca033099b0"
+    },
+    {
+      "id": "fundo_IMG_01677",
+      "cenario": "fundo",
+      "arquivo": "fundo/IMG_01677.jpg",
+      "pai": "IMG_01677",
+      "parametro": "região 0.00,0.00,1.00,0.47",
+      "sha256": "23d6c305fb1bbdc6c23a5ca824afb261743af541521de3fd0b2128fc59280065"
+    },
+    {
+      "id": "fundo_IMG_01852",
+      "cenario": "fundo",
+      "arquivo": "fundo/IMG_01852.jpg",
+      "pai": "IMG_01852",
+      "parametro": "região 0.00,0.00,0.48,1.00",
+      "sha256": "be85fb47e630fa72a342487d5b458ab00debcea02dd6b12c86b79afab24160c9"
+    },
+    {
+      "id": "fundo_IMG_02172",
+      "cenario": "fundo",
+      "arquivo": "fundo/IMG_02172.jpg",
+      "pai": "IMG_02172",
+      "parametro": "região 0.00,0.00,1.00,0.55",
+      "sha256": "b52724903d74f1afa2063ea499be803b9c30677a823526a290c099e23b2256d3"
+    },
+    {
+      "id": "fundo_IMG_02321",
+      "cenario": "fundo",
+      "arquivo": "fundo/IMG_02321.jpg",
+      "pai": "IMG_02321",
+      "parametro": "região 0.00,0.00,1.00,0.51",
+      "sha256": "e4d7b038aaca3dd516d369e69dee3f5874ab5d73c0ac1b2e960ef7ac8a1b2513"
+    },
+    {
+      "id": "fundo_IMG_01896",
+      "cenario": "fundo",
+      "arquivo": "fundo/IMG_01896.jpg",
+      "pai": "IMG_01896",
+      "parametro": "região 0.00,0.00,1.00,0.44",
+      "sha256": "4a8ecbfb6f1146bb25d2289e856dbb8acb1f8936163ec746357ac405e288b071"
+    },
+    {
+      "id": "fundo_IMG_00533",
+      "cenario": "fundo",
+      "arquivo": "fundo/IMG_00533.jpg",
+      "pai": "IMG_00533",
+      "parametro": "região 0.00,0.00,1.00,0.30",
+      "sha256": "c1e6e715b5828fa08972170e43cf277ea0880853ddde8eeffa09770bea3a3d2f"
+    },
+    {
+      "id": "fundo_IMG_01581",
+      "cenario": "fundo",
+      "arquivo": "fundo/IMG_01581.jpg",
+      "pai": "IMG_01581",
+      "parametro": "região 0.00,0.00,0.48,1.00",
+      "sha256": "20318780d16c64644b6b364aefe147c877976e262c440227480a9c776c14ddc2"
+    },
+    {
+      "id": "fundo_IMG_02492",
+      "cenario": "fundo",
+      "arquivo": "fundo/IMG_02492.jpg",
+      "pai": "IMG_02492",
+      "parametro": "região 0.00,0.00,1.00,0.35",
+      "sha256": "088d9bb7742c6810d9f853b22fd429cc96df2444a59c24c683379110eb8050c0"
+    },
+    {
+      "id": "fundo_IMG_02061",
+      "cenario": "fundo",
+      "arquivo": "fundo/IMG_02061.jpg",
+      "pai": "IMG_02061",
+      "parametro": "região 0.55,0.00,1.00,1.00",
+      "sha256": "811996023ef7aa6320065e2104ccb87cc6d5d8a5d05fb3f8de970a2484c8d2cb"
+    },
+    {
+      "id": "fundo_IMG_02030",
+      "cenario": "fundo",
+      "arquivo": "fundo/IMG_02030.jpg",
+      "pai": "IMG_02030",
+      "parametro": "região 0.00,0.00,1.00,0.65",
+      "sha256": "22b7868ea1a8925c5862aa64357bbf22a11761ce4ebe60fd391d030e92d05fc9"
+    },
+    {
+      "id": "fundo_IMG_02792",
+      "cenario": "fundo",
+      "arquivo": "fundo/IMG_02792.jpg",
+      "pai": "IMG_02792",
+      "parametro": "região 0.00,0.65,1.00,1.00",
+      "sha256": "c295d43a85a3a80b182bfd09f20a5782a0549f68c379eaaf3b8fdf88cf2b5629"
+    },
+    {
+      "id": "fundo_IMG_01534",
+      "cenario": "fundo",
+      "arquivo": "fundo/IMG_01534.jpg",
+      "pai": "IMG_01534",
+      "parametro": "região 0.62,0.00,1.00,1.00",
+      "sha256": "ccecfdb74c593048a28d9a7620acbb77e81ca4b7290741ecc7791f9d55b6ee83"
+    },
+    {
+      "id": "fundo_IMG_02611",
+      "cenario": "fundo",
+      "arquivo": "fundo/IMG_02611.jpg",
+      "pai": "IMG_02611",
+      "parametro": "região 0.00,0.69,1.00,1.00",
+      "sha256": "4c96198bffde210b8227a238f7f838782a68b8a3ae51fa25afddfea3c5efbf48"
+    },
+    {
+      "id": "fundo_IMG_00635",
+      "cenario": "fundo",
+      "arquivo": "fundo/IMG_00635.jpg",
+      "pai": "IMG_00635",
+      "parametro": "região 0.54,0.00,1.00,1.00",
+      "sha256": "8d1749a86b9d01415ccf388dfc6bff8f98eba9cdef8e2dcc9593d7d930658426"
+    },
+    {
+      "id": "fundo_IMG_02637",
+      "cenario": "fundo",
+      "arquivo": "fundo/IMG_02637.jpg",
+      "pai": "IMG_02637",
+      "parametro": "região 0.00,0.00,1.00,0.30",
+      "sha256": "287c70c37a563a3e01b770ad3235245db68e3a1e59d61ee8ff50bd6a62a45b9c"
+    },
+    {
+      "id": "fundo_IMG_02592",
+      "cenario": "fundo",
+      "arquivo": "fundo/IMG_02592.jpg",
+      "pai": "IMG_02592",
+      "parametro": "região 0.66,0.00,1.00,1.00",
+      "sha256": "d48b45b88883e283464fa0f30a570a503e2d36359593a269ab3f64a57e01499d"
+    },
+    {
+      "id": "fundo_IMG_02369",
+      "cenario": "fundo",
+      "arquivo": "fundo/IMG_02369.jpg",
+      "pai": "IMG_02369",
+      "parametro": "região 0.00,0.00,0.37,1.00",
+      "sha256": "0b61dd98f7940dc950659a1ec32cd095e8f81333305aa398c1871c7f34ff427a"
+    },
+    {
+      "id": "fundo_IMG_02271",
+      "cenario": "fundo",
+      "arquivo": "fundo/IMG_02271.jpg",
+      "pai": "IMG_02271",
+      "parametro": "região 0.49,0.00,1.00,1.00",
+      "sha256": "635b2032f4350213d4b9b38c70add0e4c7690da8f952716b17611a03e3a3be39"
+    },
+    {
+      "id": "fundo_IMG_02338",
+      "cenario": "fundo",
+      "arquivo": "fundo/IMG_02338.jpg",
+      "pai": "IMG_02338",
+      "parametro": "região 0.58,0.00,1.00,1.00",
+      "sha256": "6d1c762e885bbdb8f01ebc0a9e6d06030629de1198b252cad86ee0d34bc8e41c"
+    },
+    {
+      "id": "fundo_IMG_01894",
+      "cenario": "fundo",
+      "arquivo": "fundo/IMG_01894.jpg",
+      "pai": "IMG_01894",
+      "parametro": "região 0.59,0.00,1.00,1.00",
+      "sha256": "e09e33fa88313dd1075c48975a8c246072c9ccb2d916de46a66a7eaec540c7ad"
+    },
+    {
+      "id": "fundo_IMG_02093",
+      "cenario": "fundo",
+      "arquivo": "fundo/IMG_02093.jpg",
+      "pai": "IMG_02093",
+      "parametro": "região 0.00,0.00,1.00,0.49",
+      "sha256": "a01e42403e0edcd80168a05fabd91189db7ab1909faf4330c945c149b7716289"
+    },
+    {
+      "id": "fundo_IMG_02004",
+      "cenario": "fundo",
+      "arquivo": "fundo/IMG_02004.jpg",
+      "pai": "IMG_02004",
+      "parametro": "região 0.00,0.00,1.00,0.53",
+      "sha256": "bd6912bb4fceb4d75823f8c637d76aa8acbb4e4a2b0cbcc980274571c63120f8"
+    },
+    {
+      "id": "fundo_IMG_02149",
+      "cenario": "fundo",
+      "arquivo": "fundo/IMG_02149.jpg",
+      "pai": "IMG_02149",
+      "parametro": "região 0.57,0.00,1.00,1.00",
+      "sha256": "290dfb669cef636063a64a88fb6251a6a6d1121b9a7895fa2b898ebe08844a5c"
+    },
+    {
+      "id": "fundo_IMG_02581",
+      "cenario": "fundo",
+      "arquivo": "fundo/IMG_02581.jpg",
+      "pai": "IMG_02581",
+      "parametro": "região 0.00,0.59,1.00,1.00",
+      "sha256": "75dd74a5b9c9d4eba7088d12dcaee2737dc77c408b3ff929d8ee1fab045e9241"
+    },
+    {
+      "id": "fundo_IMG_00683",
+      "cenario": "fundo",
+      "arquivo": "fundo/IMG_00683.jpg",
+      "pai": "IMG_00683",
+      "parametro": "região 0.00,0.00,0.31,1.00",
+      "sha256": "0f79d1288f58c64c83ed8523dee6b2da9ed6be98b78307d7074e529395299bbc"
+    },
+    {
+      "id": "fundo_IMG_01855",
+      "cenario": "fundo",
+      "arquivo": "fundo/IMG_01855.jpg",
+      "pai": "IMG_01855",
+      "parametro": "região 0.31,0.00,1.00,1.00",
+      "sha256": "0b9198ed0a06643e19ff2ee3669db1b25f16a7a253a7d9d2ef4738c86defd670"
+    },
+    {
+      "id": "fundo_IMG_01771",
+      "cenario": "fundo",
+      "arquivo": "fundo/IMG_01771.jpg",
+      "pai": "IMG_01771",
+      "parametro": "região 0.00,0.55,1.00,1.00",
+      "sha256": "76c43a9c7ed3322125375dda699ed163fceee530b9fde49c9e10e7298ae383a5"
+    },
+    {
+      "id": "fundo_IMG_01676",
+      "cenario": "fundo",
+      "arquivo": "fundo/IMG_01676.jpg",
+      "pai": "IMG_01676",
+      "parametro": "região 0.00,0.56,1.00,1.00",
+      "sha256": "b08a3b86ae559be99fb52d6331a5b2f4f9a1638ac52f0f45d835de37c9143246"
+    },
+    {
+      "id": "fundo_IMG_01747",
+      "cenario": "fundo",
+      "arquivo": "fundo/IMG_01747.jpg",
+      "pai": "IMG_01747",
+      "parametro": "região 0.00,0.48,1.00,1.00",
+      "sha256": "1d9437ce4768e485bc910a44a4e23586701bc9f5846996b6e7e3bc482fef39b1"
+    },
+    {
+      "id": "fundo_IMG_01838",
+      "cenario": "fundo",
+      "arquivo": "fundo/IMG_01838.jpg",
+      "pai": "IMG_01838",
+      "parametro": "região 0.57,0.00,1.00,1.00",
+      "sha256": "978ed1cfe510b6a63500698c98e6f71397bea2ca9bbc77f836ceaa3b58cf1ea9"
+    },
+    {
+      "id": "fundo_IMG_01791",
+      "cenario": "fundo",
+      "arquivo": "fundo/IMG_01791.jpg",
+      "pai": "IMG_01791",
+      "parametro": "região 0.00,0.00,1.00,0.36",
+      "sha256": "d8c1f04e3e328d03b92146cc6dde7d9d6cfe763c24910b633c43bebd6f7c5aa0"
+    },
+    {
+      "id": "fundo_IMG_02777",
+      "cenario": "fundo",
+      "arquivo": "fundo/IMG_02777.jpg",
+      "pai": "IMG_02777",
+      "parametro": "região 0.00,0.64,1.00,1.00",
+      "sha256": "7f58aa4e3a9fe895b0d7944b7d0d3bf14b03a82c318aafaeba9f5e5beece4852"
+    },
+    {
+      "id": "fundo_IMG_01753",
+      "cenario": "fundo",
+      "arquivo": "fundo/IMG_01753.jpg",
+      "pai": "IMG_01753",
+      "parametro": "região 0.52,0.00,1.00,1.00",
+      "sha256": "6751a7fc7040d047d70f901da7c7fd2c7efa3d55995ae9b89afc383f147f15b9"
+    },
+    {
+      "id": "fundo_IMG_01876",
+      "cenario": "fundo",
+      "arquivo": "fundo/IMG_01876.jpg",
+      "pai": "IMG_01876",
+      "parametro": "região 0.00,0.69,1.00,1.00",
+      "sha256": "5e26499f63fe10a3d06386fcc1bb2a795b4f630f4678f5e0d49adafac449adc1"
+    },
+    {
+      "id": "fundo_IMG_01561",
+      "cenario": "fundo",
+      "arquivo": "fundo/IMG_01561.jpg",
+      "pai": "IMG_01561",
+      "parametro": "região 0.00,0.64,1.00,1.00",
+      "sha256": "df1b507533d58f27f50d51df841bf78b54870f3d9af1acb4e052f62b6cc420fa"
+    },
+    {
+      "id": "fundo_IMG_02236",
+      "cenario": "fundo",
+      "arquivo": "fundo/IMG_02236.jpg",
+      "pai": "IMG_02236",
+      "parametro": "região 0.63,0.00,1.00,1.00",
+      "sha256": "00b80caab17e9adc5488f1a1c4de595565a6df9d25119813f1af0d04a304db9d"
+    },
+    {
+      "id": "fundo_IMG_01770",
+      "cenario": "fundo",
+      "arquivo": "fundo/IMG_01770.jpg",
+      "pai": "IMG_01770",
+      "parametro": "região 0.00,0.00,0.50,1.00",
+      "sha256": "811f5615d12f25616b5f250eb89d7f79758229542f0b1b07b01bb7f9e3289240"
+    },
+    {
+      "id": "fundo_IMG_00686",
+      "cenario": "fundo",
+      "arquivo": "fundo/IMG_00686.jpg",
+      "pai": "IMG_00686",
+      "parametro": "região 0.00,0.00,1.00,0.39",
+      "sha256": "fd57965385e53836b1be04fdcc72eb400838608389ffde8b24cd642d092d2ea9"
+    },
+    {
+      "id": "original_IMG_01597",
+      "cenario": "original",
+      "arquivo": "original/IMG_01597.jpg",
+      "pai": null,
+      "classe_real": 0,
+      "origem_imagem": "IMG_01597",
+      "parametro": "original",
+      "sha256": "596f1ab2e6e782b0e81cdf11d1156d5f3b0e2973d3c0b73cc33acf35542924bc"
+    },
+    {
+      "id": "desfoque_IMG_01597",
+      "cenario": "desfoque",
+      "arquivo": "desfoque/IMG_01597.jpg",
+      "pai": "original_IMG_01597",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01597",
+      "parametro": "desfoque",
+      "sha256": "e4415d24ab9c15620f9bf336d6d527b2c515ca26cc30046af9947ee8fd85d17b"
+    },
+    {
+      "id": "escuro_IMG_01597",
+      "cenario": "escuro",
+      "arquivo": "escuro/IMG_01597.jpg",
+      "pai": "original_IMG_01597",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01597",
+      "parametro": "escuro",
+      "sha256": "b0bc7b31bf6099d86821fa723b31f227e3307fbd8cb7d153977f892f63ebb0b9"
+    },
+    {
+      "id": "superexposto_IMG_01597",
+      "cenario": "superexposto",
+      "arquivo": "superexposto/IMG_01597.jpg",
+      "pai": "original_IMG_01597",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01597",
+      "parametro": "superexposto",
+      "sha256": "386db55340f1147ccf29211f691e4d8baf8f26c78c8d2c26ec29e8355d3452a7"
+    },
+    {
+      "id": "cinza_IMG_01597",
+      "cenario": "cinza",
+      "arquivo": "cinza/IMG_01597.jpg",
+      "pai": "original_IMG_01597",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01597",
+      "parametro": "cinza",
+      "sha256": "cc9101c65402d3a5f9a31a0b1a5b91830d7efd8e9c897ccbc1a7be86917aa623"
+    },
+    {
+      "id": "ruido_IMG_01597",
+      "cenario": "ruido",
+      "arquivo": "ruido/IMG_01597.jpg",
+      "pai": "original_IMG_01597",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01597",
+      "parametro": "ruido",
+      "sha256": "f41436f8063e44363e195a1fa31f020adb3988535b5771823e065fd78c8f0693"
+    },
+    {
+      "id": "sujeito_pequeno_IMG_01597",
+      "cenario": "sujeito_pequeno",
+      "arquivo": "sujeito_pequeno/IMG_01597.jpg",
+      "pai": "original_IMG_01597",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01597",
+      "parametro": "sujeito_pequeno",
+      "sha256": "6cdb8f4611c1ca2f32278c0a45235b63c5f0c61e55e7795a0339f175aa9165f4"
+    },
+    {
+      "id": "jpeg_q10_IMG_01597",
+      "cenario": "jpeg_q10",
+      "arquivo": "jpeg_q10/IMG_01597.jpg",
+      "pai": "original_IMG_01597",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01597",
+      "parametro": "qualidade 10",
+      "sha256": "a9e1bf3228ed5987daa4c0641e4c8fb56a3bd247281e1d1dcc0975bc6c40bb74"
+    },
+    {
+      "id": "original_IMG_01717",
+      "cenario": "original",
+      "arquivo": "original/IMG_01717.jpg",
+      "pai": null,
+      "classe_real": 0,
+      "origem_imagem": "IMG_01717",
+      "parametro": "original",
+      "sha256": "3835d72d35d35d0aaafe9f24561b248cce1faa4d30afcafe1cc0dc7ab733796c"
+    },
+    {
+      "id": "desfoque_IMG_01717",
+      "cenario": "desfoque",
+      "arquivo": "desfoque/IMG_01717.jpg",
+      "pai": "original_IMG_01717",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01717",
+      "parametro": "desfoque",
+      "sha256": "47b72d101fb0677a2058e3e30a1c550bf56fcca28d7c86fc706e7ff442c04374"
+    },
+    {
+      "id": "escuro_IMG_01717",
+      "cenario": "escuro",
+      "arquivo": "escuro/IMG_01717.jpg",
+      "pai": "original_IMG_01717",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01717",
+      "parametro": "escuro",
+      "sha256": "f5b6a4028c22c691d6d68696fc89abc5ffed290c169e400a41381f9037f0e05c"
+    },
+    {
+      "id": "superexposto_IMG_01717",
+      "cenario": "superexposto",
+      "arquivo": "superexposto/IMG_01717.jpg",
+      "pai": "original_IMG_01717",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01717",
+      "parametro": "superexposto",
+      "sha256": "44284102ff5b00961c454e6fe0e75f5e2269d88cc76c28dcc5735b2dfe1a124b"
+    },
+    {
+      "id": "cinza_IMG_01717",
+      "cenario": "cinza",
+      "arquivo": "cinza/IMG_01717.jpg",
+      "pai": "original_IMG_01717",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01717",
+      "parametro": "cinza",
+      "sha256": "3c19cb6c9d211f96c83e9e0338a951c83f5505916fb7dfad7fefddbd48f9ab00"
+    },
+    {
+      "id": "ruido_IMG_01717",
+      "cenario": "ruido",
+      "arquivo": "ruido/IMG_01717.jpg",
+      "pai": "original_IMG_01717",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01717",
+      "parametro": "ruido",
+      "sha256": "9c859416629b496859db560f8c3a3db8378b7e7fd2d5c953afd6f0972f2fe68b"
+    },
+    {
+      "id": "sujeito_pequeno_IMG_01717",
+      "cenario": "sujeito_pequeno",
+      "arquivo": "sujeito_pequeno/IMG_01717.jpg",
+      "pai": "original_IMG_01717",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01717",
+      "parametro": "sujeito_pequeno",
+      "sha256": "43f622b7644223d85015613fa28742b2572146b50d7f5aebc90e3310a5948104"
+    },
+    {
+      "id": "jpeg_q10_IMG_01717",
+      "cenario": "jpeg_q10",
+      "arquivo": "jpeg_q10/IMG_01717.jpg",
+      "pai": "original_IMG_01717",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01717",
+      "parametro": "qualidade 10",
+      "sha256": "35e8cc7f229fff2ec6f767a7f172a8516f346c1db2c5cb1fa0a7acb002d7517c"
+    },
+    {
+      "id": "original_IMG_01531",
+      "cenario": "original",
+      "arquivo": "original/IMG_01531.jpg",
+      "pai": null,
+      "classe_real": 0,
+      "origem_imagem": "IMG_01531",
+      "parametro": "original",
+      "sha256": "11c2bde73c3ca5fb994c2ac5acc3953ed150ceda98428f3bce220136d26d8e80"
+    },
+    {
+      "id": "desfoque_IMG_01531",
+      "cenario": "desfoque",
+      "arquivo": "desfoque/IMG_01531.jpg",
+      "pai": "original_IMG_01531",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01531",
+      "parametro": "desfoque",
+      "sha256": "1958ff3d0c1bdf7e7883f1f710aba3537dbf397abcc0084e730ce4b50c96f4c0"
+    },
+    {
+      "id": "escuro_IMG_01531",
+      "cenario": "escuro",
+      "arquivo": "escuro/IMG_01531.jpg",
+      "pai": "original_IMG_01531",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01531",
+      "parametro": "escuro",
+      "sha256": "5a3aaa938109a87e518626d8083c5fdfb190adf4f990f2ca64bab3421acce0b9"
+    },
+    {
+      "id": "superexposto_IMG_01531",
+      "cenario": "superexposto",
+      "arquivo": "superexposto/IMG_01531.jpg",
+      "pai": "original_IMG_01531",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01531",
+      "parametro": "superexposto",
+      "sha256": "6ba6a8af1e32147d51caadb6676e717909c5ccf75d63f152284689b1ade19643"
+    },
+    {
+      "id": "cinza_IMG_01531",
+      "cenario": "cinza",
+      "arquivo": "cinza/IMG_01531.jpg",
+      "pai": "original_IMG_01531",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01531",
+      "parametro": "cinza",
+      "sha256": "02811ca2faf8fbf5fa4b0e6ce9685a8a3d9017b729a6f14b1ab5655498973359"
+    },
+    {
+      "id": "ruido_IMG_01531",
+      "cenario": "ruido",
+      "arquivo": "ruido/IMG_01531.jpg",
+      "pai": "original_IMG_01531",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01531",
+      "parametro": "ruido",
+      "sha256": "c34ec90c7e9d3d83b6b93cf4c7bb72789788716ccb4a2d356a4bab0c66014e22"
+    },
+    {
+      "id": "sujeito_pequeno_IMG_01531",
+      "cenario": "sujeito_pequeno",
+      "arquivo": "sujeito_pequeno/IMG_01531.jpg",
+      "pai": "original_IMG_01531",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01531",
+      "parametro": "sujeito_pequeno",
+      "sha256": "6b4d5050cd13cf8e2ce15f6f2eefa9cef768dbe9f344655a6eada1f8f2dde258"
+    },
+    {
+      "id": "jpeg_q10_IMG_01531",
+      "cenario": "jpeg_q10",
+      "arquivo": "jpeg_q10/IMG_01531.jpg",
+      "pai": "original_IMG_01531",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01531",
+      "parametro": "qualidade 10",
+      "sha256": "e9674bd6cfce9fdf85923edc627a1a536c7c584f5f2b01cc3a88f762da7696fd"
+    },
+    {
+      "id": "original_IMG_01851",
+      "cenario": "original",
+      "arquivo": "original/IMG_01851.jpg",
+      "pai": null,
+      "classe_real": 0,
+      "origem_imagem": "IMG_01851",
+      "parametro": "original",
+      "sha256": "69f4fdf31e9a01a68db66dccfc1481644ae8ec6808e89c441f6dfb62d490dc6f"
+    },
+    {
+      "id": "desfoque_IMG_01851",
+      "cenario": "desfoque",
+      "arquivo": "desfoque/IMG_01851.jpg",
+      "pai": "original_IMG_01851",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01851",
+      "parametro": "desfoque",
+      "sha256": "554e815e6c793e062ae5f20d29a802764e0b9c55de08c6486bf66541773100ae"
+    },
+    {
+      "id": "escuro_IMG_01851",
+      "cenario": "escuro",
+      "arquivo": "escuro/IMG_01851.jpg",
+      "pai": "original_IMG_01851",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01851",
+      "parametro": "escuro",
+      "sha256": "99c206c42a32ca8e15ac02d2e566559badfbf09dccb58fde1fafd94d062e18f5"
+    },
+    {
+      "id": "superexposto_IMG_01851",
+      "cenario": "superexposto",
+      "arquivo": "superexposto/IMG_01851.jpg",
+      "pai": "original_IMG_01851",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01851",
+      "parametro": "superexposto",
+      "sha256": "9da305ef5f3b6973e176a04a6ca1033aef6885a515923e08d7159da96631b15a"
+    },
+    {
+      "id": "cinza_IMG_01851",
+      "cenario": "cinza",
+      "arquivo": "cinza/IMG_01851.jpg",
+      "pai": "original_IMG_01851",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01851",
+      "parametro": "cinza",
+      "sha256": "70081f04d112badda542d9c06bb006961d8c4b65a79749404bb76a6109704ee8"
+    },
+    {
+      "id": "ruido_IMG_01851",
+      "cenario": "ruido",
+      "arquivo": "ruido/IMG_01851.jpg",
+      "pai": "original_IMG_01851",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01851",
+      "parametro": "ruido",
+      "sha256": "d3c74e1650f009574990ca4bfa68e4f895c2d21d2f0f279b6aa26f4321028176"
+    },
+    {
+      "id": "sujeito_pequeno_IMG_01851",
+      "cenario": "sujeito_pequeno",
+      "arquivo": "sujeito_pequeno/IMG_01851.jpg",
+      "pai": "original_IMG_01851",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01851",
+      "parametro": "sujeito_pequeno",
+      "sha256": "d8e52cdbfc4fc512215c3690f2f461efcb0a4a0b4add846a388cdbe7017a4457"
+    },
+    {
+      "id": "jpeg_q10_IMG_01851",
+      "cenario": "jpeg_q10",
+      "arquivo": "jpeg_q10/IMG_01851.jpg",
+      "pai": "original_IMG_01851",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01851",
+      "parametro": "qualidade 10",
+      "sha256": "29794deedfd981df2507e2567e6435e8061f8be3367f32e9512efa4b96e29c2f"
+    },
+    {
+      "id": "original_IMG_01896",
+      "cenario": "original",
+      "arquivo": "original/IMG_01896.jpg",
+      "pai": null,
+      "classe_real": 0,
+      "origem_imagem": "IMG_01896",
+      "parametro": "original",
+      "sha256": "c4cfa2307f79dde9837402ec22daffe2ca8ba96a5872465264cedaf68e592e9c"
+    },
+    {
+      "id": "desfoque_IMG_01896",
+      "cenario": "desfoque",
+      "arquivo": "desfoque/IMG_01896.jpg",
+      "pai": "original_IMG_01896",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01896",
+      "parametro": "desfoque",
+      "sha256": "69507051247c6190519fea43fe657bf5a4553bb2563bbd181829ed919f46c4f6"
+    },
+    {
+      "id": "escuro_IMG_01896",
+      "cenario": "escuro",
+      "arquivo": "escuro/IMG_01896.jpg",
+      "pai": "original_IMG_01896",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01896",
+      "parametro": "escuro",
+      "sha256": "64ebbe8b424eccdd2d266e19dda78750c1340515aa0ca9fce1a0ebce6dea07e5"
+    },
+    {
+      "id": "superexposto_IMG_01896",
+      "cenario": "superexposto",
+      "arquivo": "superexposto/IMG_01896.jpg",
+      "pai": "original_IMG_01896",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01896",
+      "parametro": "superexposto",
+      "sha256": "34c204a287b560c190cab3dc8d06181edc3f5568423f89aa0f19a0eb9acdb04b"
+    },
+    {
+      "id": "cinza_IMG_01896",
+      "cenario": "cinza",
+      "arquivo": "cinza/IMG_01896.jpg",
+      "pai": "original_IMG_01896",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01896",
+      "parametro": "cinza",
+      "sha256": "3b3624922de93bc2bcc1da989b6734cd8f633fd6f6e1c3ad21c10a7a09fd6bfa"
+    },
+    {
+      "id": "ruido_IMG_01896",
+      "cenario": "ruido",
+      "arquivo": "ruido/IMG_01896.jpg",
+      "pai": "original_IMG_01896",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01896",
+      "parametro": "ruido",
+      "sha256": "8c9ec71a13fd9e1a12d1648a30779c35deadf72364cb16bf88183d2ef10b6e86"
+    },
+    {
+      "id": "sujeito_pequeno_IMG_01896",
+      "cenario": "sujeito_pequeno",
+      "arquivo": "sujeito_pequeno/IMG_01896.jpg",
+      "pai": "original_IMG_01896",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01896",
+      "parametro": "sujeito_pequeno",
+      "sha256": "c688afbd7049abae531a6cb7594f2290f0e7948c052ed8b5241e1f2f8bc08070"
+    },
+    {
+      "id": "jpeg_q10_IMG_01896",
+      "cenario": "jpeg_q10",
+      "arquivo": "jpeg_q10/IMG_01896.jpg",
+      "pai": "original_IMG_01896",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01896",
+      "parametro": "qualidade 10",
+      "sha256": "237de78330f88d5710bef6690d3103b1dcb9b9edafe5e00441dfd86a427a5019"
+    },
+    {
+      "id": "original_IMG_02486",
+      "cenario": "original",
+      "arquivo": "original/IMG_02486.jpg",
+      "pai": null,
+      "classe_real": 3,
+      "origem_imagem": "IMG_02486",
+      "parametro": "original",
+      "sha256": "c7bef451e76be83f808b38ee5bba04355a613a7c23c03fde2235e9dc582d070a"
+    },
+    {
+      "id": "desfoque_IMG_02486",
+      "cenario": "desfoque",
+      "arquivo": "desfoque/IMG_02486.jpg",
+      "pai": "original_IMG_02486",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02486",
+      "parametro": "desfoque",
+      "sha256": "743ad4f09080cfddaabbf11e05fa42b53bd5f7092eb9ce9974581d1d33536a45"
+    },
+    {
+      "id": "escuro_IMG_02486",
+      "cenario": "escuro",
+      "arquivo": "escuro/IMG_02486.jpg",
+      "pai": "original_IMG_02486",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02486",
+      "parametro": "escuro",
+      "sha256": "2713d530052631d5292f3b31532350312ef357fe56c226b4a8b6fbd016470b6c"
+    },
+    {
+      "id": "superexposto_IMG_02486",
+      "cenario": "superexposto",
+      "arquivo": "superexposto/IMG_02486.jpg",
+      "pai": "original_IMG_02486",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02486",
+      "parametro": "superexposto",
+      "sha256": "6da56aad1a9e8e4ade6a6c9bb524b41f582d1dbd1209b9c605a64299acad9ab4"
+    },
+    {
+      "id": "cinza_IMG_02486",
+      "cenario": "cinza",
+      "arquivo": "cinza/IMG_02486.jpg",
+      "pai": "original_IMG_02486",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02486",
+      "parametro": "cinza",
+      "sha256": "dbbabfaf40651a06f9efe6895f8ce9b5420c1406a6ba8d2f87b9172f0f3be5b1"
+    },
+    {
+      "id": "ruido_IMG_02486",
+      "cenario": "ruido",
+      "arquivo": "ruido/IMG_02486.jpg",
+      "pai": "original_IMG_02486",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02486",
+      "parametro": "ruido",
+      "sha256": "f5471b6416be142eb3f30f4439c3affd0bc36ed38709ab521d26a0b2446490c0"
+    },
+    {
+      "id": "sujeito_pequeno_IMG_02486",
+      "cenario": "sujeito_pequeno",
+      "arquivo": "sujeito_pequeno/IMG_02486.jpg",
+      "pai": "original_IMG_02486",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02486",
+      "parametro": "sujeito_pequeno",
+      "sha256": "655b81484f2269a622cf09857e4cb6581a5472da4d6b8ae7941e8b1e0a8e4a94"
+    },
+    {
+      "id": "jpeg_q10_IMG_02486",
+      "cenario": "jpeg_q10",
+      "arquivo": "jpeg_q10/IMG_02486.jpg",
+      "pai": "original_IMG_02486",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02486",
+      "parametro": "qualidade 10",
+      "sha256": "3c76a632030684f86b6406010142b002659be6d1a0a949c6f6b7ef2055b4c515"
+    },
+    {
+      "id": "original_IMG_01450",
+      "cenario": "original",
+      "arquivo": "original/IMG_01450.jpg",
+      "pai": null,
+      "classe_real": 0,
+      "origem_imagem": "IMG_01450",
+      "parametro": "original",
+      "sha256": "ca8b4f36d94704dc68d6298f0dca9bd84ea887fa82c6db890145bc8abcfd9242"
+    },
+    {
+      "id": "desfoque_IMG_01450",
+      "cenario": "desfoque",
+      "arquivo": "desfoque/IMG_01450.jpg",
+      "pai": "original_IMG_01450",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01450",
+      "parametro": "desfoque",
+      "sha256": "686b9b2b993154cef3e060f43c1779c220d6ac885c7eb72a4649675ef4bf93d1"
+    },
+    {
+      "id": "escuro_IMG_01450",
+      "cenario": "escuro",
+      "arquivo": "escuro/IMG_01450.jpg",
+      "pai": "original_IMG_01450",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01450",
+      "parametro": "escuro",
+      "sha256": "bc13eaceffe2abc20e61cef1d86c1df72f0ff94d4030ab8a7fad98a6b02873f9"
+    },
+    {
+      "id": "superexposto_IMG_01450",
+      "cenario": "superexposto",
+      "arquivo": "superexposto/IMG_01450.jpg",
+      "pai": "original_IMG_01450",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01450",
+      "parametro": "superexposto",
+      "sha256": "a45d99011737a071e9570f59ecf432d5fb7efaa8a9cb1a156c907928cb5c1356"
+    },
+    {
+      "id": "cinza_IMG_01450",
+      "cenario": "cinza",
+      "arquivo": "cinza/IMG_01450.jpg",
+      "pai": "original_IMG_01450",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01450",
+      "parametro": "cinza",
+      "sha256": "8c8b5685e78fb1fa892a8779cae4bcbb1ad30e79bfd585977c82b3397555319b"
+    },
+    {
+      "id": "ruido_IMG_01450",
+      "cenario": "ruido",
+      "arquivo": "ruido/IMG_01450.jpg",
+      "pai": "original_IMG_01450",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01450",
+      "parametro": "ruido",
+      "sha256": "0bb337220be15bc18561c209a5db268e8e10aa38b0906fe291aa9a1be1dbf6e4"
+    },
+    {
+      "id": "sujeito_pequeno_IMG_01450",
+      "cenario": "sujeito_pequeno",
+      "arquivo": "sujeito_pequeno/IMG_01450.jpg",
+      "pai": "original_IMG_01450",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01450",
+      "parametro": "sujeito_pequeno",
+      "sha256": "bb5a586095ec13f1276307d86a07ac0dda3ff3437c3eb4f8d6f89a578d5f8ef8"
+    },
+    {
+      "id": "jpeg_q10_IMG_01450",
+      "cenario": "jpeg_q10",
+      "arquivo": "jpeg_q10/IMG_01450.jpg",
+      "pai": "original_IMG_01450",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01450",
+      "parametro": "qualidade 10",
+      "sha256": "14c40b6e30771af120681052aa26cdec41ac6eef462df056a60a7826ee7f5826"
+    },
+    {
+      "id": "original_IMG_02123",
+      "cenario": "original",
+      "arquivo": "original/IMG_02123.jpg",
+      "pai": null,
+      "classe_real": 2,
+      "origem_imagem": "IMG_02123",
+      "parametro": "original",
+      "sha256": "eb31cce5fcab76daa43a491f385712eba0a91415e843d0b6f3b260b7e2725d7c"
+    },
+    {
+      "id": "desfoque_IMG_02123",
+      "cenario": "desfoque",
+      "arquivo": "desfoque/IMG_02123.jpg",
+      "pai": "original_IMG_02123",
+      "classe_real": 2,
+      "origem_imagem": "IMG_02123",
+      "parametro": "desfoque",
+      "sha256": "f2566925a3dab72cb45ac93639adc8bcf719700964c503e60bed8472cfaf04c5"
+    },
+    {
+      "id": "escuro_IMG_02123",
+      "cenario": "escuro",
+      "arquivo": "escuro/IMG_02123.jpg",
+      "pai": "original_IMG_02123",
+      "classe_real": 2,
+      "origem_imagem": "IMG_02123",
+      "parametro": "escuro",
+      "sha256": "9c11b4772f1197cd3f21d5573d0d419c9c3f28a916c0b1f10f13b2af96f997ae"
+    },
+    {
+      "id": "superexposto_IMG_02123",
+      "cenario": "superexposto",
+      "arquivo": "superexposto/IMG_02123.jpg",
+      "pai": "original_IMG_02123",
+      "classe_real": 2,
+      "origem_imagem": "IMG_02123",
+      "parametro": "superexposto",
+      "sha256": "4aa0d6d09f990c4279285ba5f38c675200c0eba7e571cf515229a3bf1e28cba4"
+    },
+    {
+      "id": "cinza_IMG_02123",
+      "cenario": "cinza",
+      "arquivo": "cinza/IMG_02123.jpg",
+      "pai": "original_IMG_02123",
+      "classe_real": 2,
+      "origem_imagem": "IMG_02123",
+      "parametro": "cinza",
+      "sha256": "a1b15ac3800c47b4d58cd50e875eab2386a6a9bb97012ce37e7b623a8e88354d"
+    },
+    {
+      "id": "ruido_IMG_02123",
+      "cenario": "ruido",
+      "arquivo": "ruido/IMG_02123.jpg",
+      "pai": "original_IMG_02123",
+      "classe_real": 2,
+      "origem_imagem": "IMG_02123",
+      "parametro": "ruido",
+      "sha256": "20b6ed334b9163fa10dce57b96c3007d23d95e0f3ddd34cefad00b742f7959c5"
+    },
+    {
+      "id": "sujeito_pequeno_IMG_02123",
+      "cenario": "sujeito_pequeno",
+      "arquivo": "sujeito_pequeno/IMG_02123.jpg",
+      "pai": "original_IMG_02123",
+      "classe_real": 2,
+      "origem_imagem": "IMG_02123",
+      "parametro": "sujeito_pequeno",
+      "sha256": "e8d0b042d6232ec979b715e0680677d2de29080f888b34d181064bf841153ca0"
+    },
+    {
+      "id": "jpeg_q10_IMG_02123",
+      "cenario": "jpeg_q10",
+      "arquivo": "jpeg_q10/IMG_02123.jpg",
+      "pai": "original_IMG_02123",
+      "classe_real": 2,
+      "origem_imagem": "IMG_02123",
+      "parametro": "qualidade 10",
+      "sha256": "a1c7ba54fa6b93918e2aa5f37d9303fb2a0f9e508750a9445d5110857bc18a5e"
+    },
+    {
+      "id": "original_IMG_01794",
+      "cenario": "original",
+      "arquivo": "original/IMG_01794.jpg",
+      "pai": null,
+      "classe_real": 0,
+      "origem_imagem": "IMG_01794",
+      "parametro": "original",
+      "sha256": "c3007eddc4edfba3a7cfc14681df3d0b7eec89c7a277300b9db1cf471f7730e0"
+    },
+    {
+      "id": "desfoque_IMG_01794",
+      "cenario": "desfoque",
+      "arquivo": "desfoque/IMG_01794.jpg",
+      "pai": "original_IMG_01794",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01794",
+      "parametro": "desfoque",
+      "sha256": "57586907df3addc2803087ead461dfc03c7b749c5b14e6de1f3de2310c3f4665"
+    },
+    {
+      "id": "escuro_IMG_01794",
+      "cenario": "escuro",
+      "arquivo": "escuro/IMG_01794.jpg",
+      "pai": "original_IMG_01794",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01794",
+      "parametro": "escuro",
+      "sha256": "3c93708a623b7943f85141545e9e68fcdaf7d5d3f00dc89e7ec2b2c408f91e9d"
+    },
+    {
+      "id": "superexposto_IMG_01794",
+      "cenario": "superexposto",
+      "arquivo": "superexposto/IMG_01794.jpg",
+      "pai": "original_IMG_01794",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01794",
+      "parametro": "superexposto",
+      "sha256": "bf06abfa45cee161f508dd899cd067a902621539bc2afc01dfce5eb98c9a192d"
+    },
+    {
+      "id": "cinza_IMG_01794",
+      "cenario": "cinza",
+      "arquivo": "cinza/IMG_01794.jpg",
+      "pai": "original_IMG_01794",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01794",
+      "parametro": "cinza",
+      "sha256": "cc8f67d2cea383a06d97b2bc242ef1033ffc0f8156236cf51958668a6b21deb8"
+    },
+    {
+      "id": "ruido_IMG_01794",
+      "cenario": "ruido",
+      "arquivo": "ruido/IMG_01794.jpg",
+      "pai": "original_IMG_01794",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01794",
+      "parametro": "ruido",
+      "sha256": "dffe33350abc48d8ca676befe98cc3ab58df72d6cedc98a0677eaec728939e89"
+    },
+    {
+      "id": "sujeito_pequeno_IMG_01794",
+      "cenario": "sujeito_pequeno",
+      "arquivo": "sujeito_pequeno/IMG_01794.jpg",
+      "pai": "original_IMG_01794",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01794",
+      "parametro": "sujeito_pequeno",
+      "sha256": "c1342e0373ff24527d96485badf7638b6b4140de619678e37f9320d036b3b1c7"
+    },
+    {
+      "id": "jpeg_q10_IMG_01794",
+      "cenario": "jpeg_q10",
+      "arquivo": "jpeg_q10/IMG_01794.jpg",
+      "pai": "original_IMG_01794",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01794",
+      "parametro": "qualidade 10",
+      "sha256": "05d8f4dd8069262b35202f738f11ae92d1a3b8eddbbf45d8d7d767a68a5e4fb8"
+    },
+    {
+      "id": "original_IMG_01852",
+      "cenario": "original",
+      "arquivo": "original/IMG_01852.jpg",
+      "pai": null,
+      "classe_real": 0,
+      "origem_imagem": "IMG_01852",
+      "parametro": "original",
+      "sha256": "5288aafacdff0d69eeb233758a5992e14344da2f46ecdc6058146b4f5428f9a5"
+    },
+    {
+      "id": "desfoque_IMG_01852",
+      "cenario": "desfoque",
+      "arquivo": "desfoque/IMG_01852.jpg",
+      "pai": "original_IMG_01852",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01852",
+      "parametro": "desfoque",
+      "sha256": "a2b92be0954106f7977156d94268b358551bcfd6b8a20f61a5cd1e927c7aa9fa"
+    },
+    {
+      "id": "escuro_IMG_01852",
+      "cenario": "escuro",
+      "arquivo": "escuro/IMG_01852.jpg",
+      "pai": "original_IMG_01852",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01852",
+      "parametro": "escuro",
+      "sha256": "b30d33564b7407bf2da4cfe937a2fcfc205dd201d337c5ea3606335e2ac8a3e3"
+    },
+    {
+      "id": "superexposto_IMG_01852",
+      "cenario": "superexposto",
+      "arquivo": "superexposto/IMG_01852.jpg",
+      "pai": "original_IMG_01852",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01852",
+      "parametro": "superexposto",
+      "sha256": "2d75a45292bf8626de5c4d2267754e6d02ea62f4b5071e575432b633fa36ef91"
+    },
+    {
+      "id": "cinza_IMG_01852",
+      "cenario": "cinza",
+      "arquivo": "cinza/IMG_01852.jpg",
+      "pai": "original_IMG_01852",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01852",
+      "parametro": "cinza",
+      "sha256": "33884b1f36108fd3c2d8fccf84608c75b01d1efed197f352493b9eaf17049df0"
+    },
+    {
+      "id": "ruido_IMG_01852",
+      "cenario": "ruido",
+      "arquivo": "ruido/IMG_01852.jpg",
+      "pai": "original_IMG_01852",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01852",
+      "parametro": "ruido",
+      "sha256": "1c118d9e37a4fc5e756b57d21ce316afe1d2691baf649495052eaa5d4fdbd78c"
+    },
+    {
+      "id": "sujeito_pequeno_IMG_01852",
+      "cenario": "sujeito_pequeno",
+      "arquivo": "sujeito_pequeno/IMG_01852.jpg",
+      "pai": "original_IMG_01852",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01852",
+      "parametro": "sujeito_pequeno",
+      "sha256": "b001bf509830eb9875c908759cedb417e795be5c6fe51ee0b43d96788727891f"
+    },
+    {
+      "id": "jpeg_q10_IMG_01852",
+      "cenario": "jpeg_q10",
+      "arquivo": "jpeg_q10/IMG_01852.jpg",
+      "pai": "original_IMG_01852",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01852",
+      "parametro": "qualidade 10",
+      "sha256": "93166c25a4717f0a23e72099d5a2640acc1cf5a719c900700d57d0a06ef120f0"
+    },
+    {
+      "id": "original_IMG_02637",
+      "cenario": "original",
+      "arquivo": "original/IMG_02637.jpg",
+      "pai": null,
+      "classe_real": 3,
+      "origem_imagem": "IMG_02637",
+      "parametro": "original",
+      "sha256": "5f0d5d9e920769501067a77987c5718e74d7ea02b4e0917a283a3d2dd5a5c271"
+    },
+    {
+      "id": "desfoque_IMG_02637",
+      "cenario": "desfoque",
+      "arquivo": "desfoque/IMG_02637.jpg",
+      "pai": "original_IMG_02637",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02637",
+      "parametro": "desfoque",
+      "sha256": "94b510a687fd46be8f53b520eac3b84af7c92f1b3d04f28b6eb5eb09f713d9a2"
+    },
+    {
+      "id": "escuro_IMG_02637",
+      "cenario": "escuro",
+      "arquivo": "escuro/IMG_02637.jpg",
+      "pai": "original_IMG_02637",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02637",
+      "parametro": "escuro",
+      "sha256": "92dbbb046267fc33ec722a04ed1815cbe833a1f88e97c588ea3605e7c6868958"
+    },
+    {
+      "id": "superexposto_IMG_02637",
+      "cenario": "superexposto",
+      "arquivo": "superexposto/IMG_02637.jpg",
+      "pai": "original_IMG_02637",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02637",
+      "parametro": "superexposto",
+      "sha256": "2d7a2622491397e0bb567481ce2a7d81573d64b50959c466a0c7301ac5a0c72e"
+    },
+    {
+      "id": "cinza_IMG_02637",
+      "cenario": "cinza",
+      "arquivo": "cinza/IMG_02637.jpg",
+      "pai": "original_IMG_02637",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02637",
+      "parametro": "cinza",
+      "sha256": "b5510105b895721ad6b77bc4317c8d34aba56e9007f12110879392c620793876"
+    },
+    {
+      "id": "ruido_IMG_02637",
+      "cenario": "ruido",
+      "arquivo": "ruido/IMG_02637.jpg",
+      "pai": "original_IMG_02637",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02637",
+      "parametro": "ruido",
+      "sha256": "0bd09fdc5ed6bfc281d5fa0a1efdc7fdcfaf31ae54979144f3f443d4f86ddd9c"
+    },
+    {
+      "id": "sujeito_pequeno_IMG_02637",
+      "cenario": "sujeito_pequeno",
+      "arquivo": "sujeito_pequeno/IMG_02637.jpg",
+      "pai": "original_IMG_02637",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02637",
+      "parametro": "sujeito_pequeno",
+      "sha256": "727afcdad7c0c95c03dbd7fa8daf41b067f17a984ccaf5e37467e5866ccf7767"
+    },
+    {
+      "id": "jpeg_q10_IMG_02637",
+      "cenario": "jpeg_q10",
+      "arquivo": "jpeg_q10/IMG_02637.jpg",
+      "pai": "original_IMG_02637",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02637",
+      "parametro": "qualidade 10",
+      "sha256": "7065d07cf7a1a8ee940332e2fe6c5584e0fea76a4241c0887c508630888c9a85"
+    },
+    {
+      "id": "original_IMG_01977",
+      "cenario": "original",
+      "arquivo": "original/IMG_01977.jpg",
+      "pai": null,
+      "classe_real": 0,
+      "origem_imagem": "IMG_01977",
+      "parametro": "original",
+      "sha256": "26c17f4923f58f102078debc527fdcffb68e392f50122818fec8f216efbc375d"
+    },
+    {
+      "id": "desfoque_IMG_01977",
+      "cenario": "desfoque",
+      "arquivo": "desfoque/IMG_01977.jpg",
+      "pai": "original_IMG_01977",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01977",
+      "parametro": "desfoque",
+      "sha256": "7ebbf2f6dc3b9d5be9a43c0439de0f4bf81171382879e73bcec479142c91436f"
+    },
+    {
+      "id": "escuro_IMG_01977",
+      "cenario": "escuro",
+      "arquivo": "escuro/IMG_01977.jpg",
+      "pai": "original_IMG_01977",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01977",
+      "parametro": "escuro",
+      "sha256": "8085e5c0b8f7ab5f8111d251bc29c424ad79fc156b0eb34b2c503506a96c767d"
+    },
+    {
+      "id": "superexposto_IMG_01977",
+      "cenario": "superexposto",
+      "arquivo": "superexposto/IMG_01977.jpg",
+      "pai": "original_IMG_01977",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01977",
+      "parametro": "superexposto",
+      "sha256": "6924c6e8cbd5140e5dd7d15eef480e617d04a4eeb28fd20a48006cb35512192f"
+    },
+    {
+      "id": "cinza_IMG_01977",
+      "cenario": "cinza",
+      "arquivo": "cinza/IMG_01977.jpg",
+      "pai": "original_IMG_01977",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01977",
+      "parametro": "cinza",
+      "sha256": "7f6ce44026c4209f69e0a577263f0511e6304a9629a193b1ae21954cebb477ff"
+    },
+    {
+      "id": "ruido_IMG_01977",
+      "cenario": "ruido",
+      "arquivo": "ruido/IMG_01977.jpg",
+      "pai": "original_IMG_01977",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01977",
+      "parametro": "ruido",
+      "sha256": "963336da5127581988c812e14c9948efd88bad1e1f71361e250734cc27962053"
+    },
+    {
+      "id": "sujeito_pequeno_IMG_01977",
+      "cenario": "sujeito_pequeno",
+      "arquivo": "sujeito_pequeno/IMG_01977.jpg",
+      "pai": "original_IMG_01977",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01977",
+      "parametro": "sujeito_pequeno",
+      "sha256": "4ab43df7eddeb39b6bdd2cb94dd564177830bccd70e9ad6ef72acc8cdde8ce3b"
+    },
+    {
+      "id": "jpeg_q10_IMG_01977",
+      "cenario": "jpeg_q10",
+      "arquivo": "jpeg_q10/IMG_01977.jpg",
+      "pai": "original_IMG_01977",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01977",
+      "parametro": "qualidade 10",
+      "sha256": "437a84bd6c27961fdc61f752f5b7b0943f11958ccef2296c42846d97be368a88"
+    },
+    {
+      "id": "original_IMG_01511",
+      "cenario": "original",
+      "arquivo": "original/IMG_01511.jpg",
+      "pai": null,
+      "classe_real": 0,
+      "origem_imagem": "IMG_01511",
+      "parametro": "original",
+      "sha256": "87009e23b8d89c8e92795cbf2dfd34c5fbf52e7b4e55dee40e0c43fa74f13e45"
+    },
+    {
+      "id": "desfoque_IMG_01511",
+      "cenario": "desfoque",
+      "arquivo": "desfoque/IMG_01511.jpg",
+      "pai": "original_IMG_01511",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01511",
+      "parametro": "desfoque",
+      "sha256": "94d0d2199640e54bf15f24967c122a5c1f6ff2e10ac6788d99b4f6054723a075"
+    },
+    {
+      "id": "escuro_IMG_01511",
+      "cenario": "escuro",
+      "arquivo": "escuro/IMG_01511.jpg",
+      "pai": "original_IMG_01511",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01511",
+      "parametro": "escuro",
+      "sha256": "385b5d590c28324174bcb3290804ccdf0f9eceb6c10dd07827def166485290c4"
+    },
+    {
+      "id": "superexposto_IMG_01511",
+      "cenario": "superexposto",
+      "arquivo": "superexposto/IMG_01511.jpg",
+      "pai": "original_IMG_01511",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01511",
+      "parametro": "superexposto",
+      "sha256": "2db419fa78fb002c2b32646f6baa74e25715897526205440ab152cc3493eb0a5"
+    },
+    {
+      "id": "cinza_IMG_01511",
+      "cenario": "cinza",
+      "arquivo": "cinza/IMG_01511.jpg",
+      "pai": "original_IMG_01511",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01511",
+      "parametro": "cinza",
+      "sha256": "4fcecc6649adc990271d0a3358346ef83db1c141dc8fa3981f189b6c769261fc"
+    },
+    {
+      "id": "ruido_IMG_01511",
+      "cenario": "ruido",
+      "arquivo": "ruido/IMG_01511.jpg",
+      "pai": "original_IMG_01511",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01511",
+      "parametro": "ruido",
+      "sha256": "550f8c9aa3f6c448e503aea01ba675e497ad6f48064b0a1e077eeb7984d8afc1"
+    },
+    {
+      "id": "sujeito_pequeno_IMG_01511",
+      "cenario": "sujeito_pequeno",
+      "arquivo": "sujeito_pequeno/IMG_01511.jpg",
+      "pai": "original_IMG_01511",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01511",
+      "parametro": "sujeito_pequeno",
+      "sha256": "11b99320fc5bd39bed0832bdf1ae4f869c29a9048a5114e36206fc2a2636fffb"
+    },
+    {
+      "id": "jpeg_q10_IMG_01511",
+      "cenario": "jpeg_q10",
+      "arquivo": "jpeg_q10/IMG_01511.jpg",
+      "pai": "original_IMG_01511",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01511",
+      "parametro": "qualidade 10",
+      "sha256": "568810b9485c3d261b395b2f27085f4f3fbf4b65f9e9fa0dc1185c9d46113c4f"
+    },
+    {
+      "id": "original_IMG_01855",
+      "cenario": "original",
+      "arquivo": "original/IMG_01855.jpg",
+      "pai": null,
+      "classe_real": 0,
+      "origem_imagem": "IMG_01855",
+      "parametro": "original",
+      "sha256": "acc450d509f35604f7da3a6b5ab37aa0b3461b394536020325959497a6d2a160"
+    },
+    {
+      "id": "desfoque_IMG_01855",
+      "cenario": "desfoque",
+      "arquivo": "desfoque/IMG_01855.jpg",
+      "pai": "original_IMG_01855",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01855",
+      "parametro": "desfoque",
+      "sha256": "352f023bbca8b8f087916fb07eadb37fe77afb54135dc597e841517bcc9fe979"
+    },
+    {
+      "id": "escuro_IMG_01855",
+      "cenario": "escuro",
+      "arquivo": "escuro/IMG_01855.jpg",
+      "pai": "original_IMG_01855",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01855",
+      "parametro": "escuro",
+      "sha256": "0d77f0ffba3da176fc8a345fb71b03d55299bd8c98cd31a0d1112b47c338833a"
+    },
+    {
+      "id": "superexposto_IMG_01855",
+      "cenario": "superexposto",
+      "arquivo": "superexposto/IMG_01855.jpg",
+      "pai": "original_IMG_01855",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01855",
+      "parametro": "superexposto",
+      "sha256": "d9e95eced28fc012d52b9887b10267a3e556be59e7a97d098b1f2fcdf76bd277"
+    },
+    {
+      "id": "cinza_IMG_01855",
+      "cenario": "cinza",
+      "arquivo": "cinza/IMG_01855.jpg",
+      "pai": "original_IMG_01855",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01855",
+      "parametro": "cinza",
+      "sha256": "3d301250e3a08b76afd1dc529fb308d49068fecaaae707a4c82ee8db258f3662"
+    },
+    {
+      "id": "ruido_IMG_01855",
+      "cenario": "ruido",
+      "arquivo": "ruido/IMG_01855.jpg",
+      "pai": "original_IMG_01855",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01855",
+      "parametro": "ruido",
+      "sha256": "a59957ac9f1785c19520844f9b98197f0713934f48fddffd63924df9eda5930a"
+    },
+    {
+      "id": "sujeito_pequeno_IMG_01855",
+      "cenario": "sujeito_pequeno",
+      "arquivo": "sujeito_pequeno/IMG_01855.jpg",
+      "pai": "original_IMG_01855",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01855",
+      "parametro": "sujeito_pequeno",
+      "sha256": "a0ab4a35b722170809d3897aa8124127ef8210a080e8247b81994ac294008422"
+    },
+    {
+      "id": "jpeg_q10_IMG_01855",
+      "cenario": "jpeg_q10",
+      "arquivo": "jpeg_q10/IMG_01855.jpg",
+      "pai": "original_IMG_01855",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01855",
+      "parametro": "qualidade 10",
+      "sha256": "2ed3e3441f08b15f6566c73a9a64a6053f228dbd1ff0a376eb871fffb50fbb51"
+    },
+    {
+      "id": "original_IMG_00683",
+      "cenario": "original",
+      "arquivo": "original/IMG_00683.jpg",
+      "pai": null,
+      "classe_real": 1,
+      "origem_imagem": "IMG_00683",
+      "parametro": "original",
+      "sha256": "e39cbbb5d934e92c2ba67efc165bc34ceb712fd1ff08606ac0380e47ba5ad82b"
+    },
+    {
+      "id": "desfoque_IMG_00683",
+      "cenario": "desfoque",
+      "arquivo": "desfoque/IMG_00683.jpg",
+      "pai": "original_IMG_00683",
+      "classe_real": 1,
+      "origem_imagem": "IMG_00683",
+      "parametro": "desfoque",
+      "sha256": "f2675948c413afe796afbbab6ee3407e1b9dc1add0dbfe11d4a88ccd4093acc4"
+    },
+    {
+      "id": "escuro_IMG_00683",
+      "cenario": "escuro",
+      "arquivo": "escuro/IMG_00683.jpg",
+      "pai": "original_IMG_00683",
+      "classe_real": 1,
+      "origem_imagem": "IMG_00683",
+      "parametro": "escuro",
+      "sha256": "352bd968702550ebeef3c92b6afebde89a71061467c3e0b3965e2e1d5ebca27f"
+    },
+    {
+      "id": "superexposto_IMG_00683",
+      "cenario": "superexposto",
+      "arquivo": "superexposto/IMG_00683.jpg",
+      "pai": "original_IMG_00683",
+      "classe_real": 1,
+      "origem_imagem": "IMG_00683",
+      "parametro": "superexposto",
+      "sha256": "484d90e179073d5de3268492099292a7992799db11d4b82b183f87b4d0eaa242"
+    },
+    {
+      "id": "cinza_IMG_00683",
+      "cenario": "cinza",
+      "arquivo": "cinza/IMG_00683.jpg",
+      "pai": "original_IMG_00683",
+      "classe_real": 1,
+      "origem_imagem": "IMG_00683",
+      "parametro": "cinza",
+      "sha256": "a4670bf33e84f348ed94cbbc97207660a8044551dbebc9a0b3fd67ebdea4d641"
+    },
+    {
+      "id": "ruido_IMG_00683",
+      "cenario": "ruido",
+      "arquivo": "ruido/IMG_00683.jpg",
+      "pai": "original_IMG_00683",
+      "classe_real": 1,
+      "origem_imagem": "IMG_00683",
+      "parametro": "ruido",
+      "sha256": "20b2f52068d6e21869a07dd23b772276365f0b94f1b98f174005b4c14f2d7586"
+    },
+    {
+      "id": "sujeito_pequeno_IMG_00683",
+      "cenario": "sujeito_pequeno",
+      "arquivo": "sujeito_pequeno/IMG_00683.jpg",
+      "pai": "original_IMG_00683",
+      "classe_real": 1,
+      "origem_imagem": "IMG_00683",
+      "parametro": "sujeito_pequeno",
+      "sha256": "8799643b433f6a038af9d6faddd5a6b351476f4eb6f6351ce5c12d164114a69c"
+    },
+    {
+      "id": "jpeg_q10_IMG_00683",
+      "cenario": "jpeg_q10",
+      "arquivo": "jpeg_q10/IMG_00683.jpg",
+      "pai": "original_IMG_00683",
+      "classe_real": 1,
+      "origem_imagem": "IMG_00683",
+      "parametro": "qualidade 10",
+      "sha256": "fa503eefc19766e1a62b8457167b55dbbfe8f2d56e5ce47317930ce04cbe7bec"
+    },
+    {
+      "id": "original_IMG_02521",
+      "cenario": "original",
+      "arquivo": "original/IMG_02521.jpg",
+      "pai": null,
+      "classe_real": 3,
+      "origem_imagem": "IMG_02521",
+      "parametro": "original",
+      "sha256": "5230999c6eef1b227b612edf8486d7b824e636f2c4c7dfe0ffed412ad7b87d13"
+    },
+    {
+      "id": "desfoque_IMG_02521",
+      "cenario": "desfoque",
+      "arquivo": "desfoque/IMG_02521.jpg",
+      "pai": "original_IMG_02521",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02521",
+      "parametro": "desfoque",
+      "sha256": "55b33d3e4cd9499e219e1ac5a30e9b85fac135bd1c588ae88f1e57526f404605"
+    },
+    {
+      "id": "escuro_IMG_02521",
+      "cenario": "escuro",
+      "arquivo": "escuro/IMG_02521.jpg",
+      "pai": "original_IMG_02521",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02521",
+      "parametro": "escuro",
+      "sha256": "1012b5f885ec09b2ea97628e9e7c75066f90858f08df4799727a7461c3ae5fd3"
+    },
+    {
+      "id": "superexposto_IMG_02521",
+      "cenario": "superexposto",
+      "arquivo": "superexposto/IMG_02521.jpg",
+      "pai": "original_IMG_02521",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02521",
+      "parametro": "superexposto",
+      "sha256": "e378eed8bc8d410da5e5be07218daaf4d0ca83ee1a76064c1762f26a4c7a3f2d"
+    },
+    {
+      "id": "cinza_IMG_02521",
+      "cenario": "cinza",
+      "arquivo": "cinza/IMG_02521.jpg",
+      "pai": "original_IMG_02521",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02521",
+      "parametro": "cinza",
+      "sha256": "61cb12c963979b8f91ea897b3c05f7b940040d3f3d1bae23cee0a7d2f1d63db5"
+    },
+    {
+      "id": "ruido_IMG_02521",
+      "cenario": "ruido",
+      "arquivo": "ruido/IMG_02521.jpg",
+      "pai": "original_IMG_02521",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02521",
+      "parametro": "ruido",
+      "sha256": "334c62427b46627f76c42a9b4abf85c39da3ed111a5aa4ed0dd94d300b6cc915"
+    },
+    {
+      "id": "sujeito_pequeno_IMG_02521",
+      "cenario": "sujeito_pequeno",
+      "arquivo": "sujeito_pequeno/IMG_02521.jpg",
+      "pai": "original_IMG_02521",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02521",
+      "parametro": "sujeito_pequeno",
+      "sha256": "01fb46801770cc16c9b380a52ece2951b4ce327d97495398284017488275cbc4"
+    },
+    {
+      "id": "jpeg_q10_IMG_02521",
+      "cenario": "jpeg_q10",
+      "arquivo": "jpeg_q10/IMG_02521.jpg",
+      "pai": "original_IMG_02521",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02521",
+      "parametro": "qualidade 10",
+      "sha256": "4588776bac9c848f04171e290551a9a74e5427d45fbf91cdacda8b83c4414a83"
+    },
+    {
+      "id": "original_IMG_02735",
+      "cenario": "original",
+      "arquivo": "original/IMG_02735.jpg",
+      "pai": null,
+      "classe_real": 3,
+      "origem_imagem": "IMG_02735",
+      "parametro": "original",
+      "sha256": "70eb2fb9dc51d4f20c713300d617e1fbe7d451584d862f3ff94c1a5b613a0418"
+    },
+    {
+      "id": "desfoque_IMG_02735",
+      "cenario": "desfoque",
+      "arquivo": "desfoque/IMG_02735.jpg",
+      "pai": "original_IMG_02735",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02735",
+      "parametro": "desfoque",
+      "sha256": "7c492f51fad82061885cfef0df380347320f74eeb692035276498570621ad1b0"
+    },
+    {
+      "id": "escuro_IMG_02735",
+      "cenario": "escuro",
+      "arquivo": "escuro/IMG_02735.jpg",
+      "pai": "original_IMG_02735",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02735",
+      "parametro": "escuro",
+      "sha256": "7df34f276f4eef873ec47d98f7e8936a5297bb34b05e68631774505f19f21b2a"
+    },
+    {
+      "id": "superexposto_IMG_02735",
+      "cenario": "superexposto",
+      "arquivo": "superexposto/IMG_02735.jpg",
+      "pai": "original_IMG_02735",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02735",
+      "parametro": "superexposto",
+      "sha256": "e8fcd62a0c6829e8c60377ae7b54da17529f715392e45aa1bd82b9db05b4c04f"
+    },
+    {
+      "id": "cinza_IMG_02735",
+      "cenario": "cinza",
+      "arquivo": "cinza/IMG_02735.jpg",
+      "pai": "original_IMG_02735",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02735",
+      "parametro": "cinza",
+      "sha256": "23d18bbad2b2c8083e2b0f907a04701bc71d8be7c50eacbcddc7c323b486b02b"
+    },
+    {
+      "id": "ruido_IMG_02735",
+      "cenario": "ruido",
+      "arquivo": "ruido/IMG_02735.jpg",
+      "pai": "original_IMG_02735",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02735",
+      "parametro": "ruido",
+      "sha256": "f7320095354fa1f90584cc33c58d87808b2aebdc44e2577c88dc7e3cf8674616"
+    },
+    {
+      "id": "sujeito_pequeno_IMG_02735",
+      "cenario": "sujeito_pequeno",
+      "arquivo": "sujeito_pequeno/IMG_02735.jpg",
+      "pai": "original_IMG_02735",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02735",
+      "parametro": "sujeito_pequeno",
+      "sha256": "7eb0984cad351b298cb78f73f63d4acbb46d12e832a0ec04d6aa3434f410bd78"
+    },
+    {
+      "id": "jpeg_q10_IMG_02735",
+      "cenario": "jpeg_q10",
+      "arquivo": "jpeg_q10/IMG_02735.jpg",
+      "pai": "original_IMG_02735",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02735",
+      "parametro": "qualidade 10",
+      "sha256": "a80186e33c48640f738ab43b666740cef3001573d2cda43460dd8cb164cf4bfe"
+    },
+    {
+      "id": "original_IMG_02304",
+      "cenario": "original",
+      "arquivo": "original/IMG_02304.jpg",
+      "pai": null,
+      "classe_real": 2,
+      "origem_imagem": "IMG_02304",
+      "parametro": "original",
+      "sha256": "485ea0270af736d3db04a0ce77cac0111a5631738ba78a035ba748d449982cb0"
+    },
+    {
+      "id": "desfoque_IMG_02304",
+      "cenario": "desfoque",
+      "arquivo": "desfoque/IMG_02304.jpg",
+      "pai": "original_IMG_02304",
+      "classe_real": 2,
+      "origem_imagem": "IMG_02304",
+      "parametro": "desfoque",
+      "sha256": "e7ba7af1028194fb99db2110f28821a0322c9e919c1ae991ca71f7526b64339e"
+    },
+    {
+      "id": "escuro_IMG_02304",
+      "cenario": "escuro",
+      "arquivo": "escuro/IMG_02304.jpg",
+      "pai": "original_IMG_02304",
+      "classe_real": 2,
+      "origem_imagem": "IMG_02304",
+      "parametro": "escuro",
+      "sha256": "5e6b6f79105a46d3c3a6e11bec7838ac7b0a3182abfc7d33bac965c40c85b9d7"
+    },
+    {
+      "id": "superexposto_IMG_02304",
+      "cenario": "superexposto",
+      "arquivo": "superexposto/IMG_02304.jpg",
+      "pai": "original_IMG_02304",
+      "classe_real": 2,
+      "origem_imagem": "IMG_02304",
+      "parametro": "superexposto",
+      "sha256": "9250340a91e6b4b0f62bcebe3da846da68512e4e22783fdc9680f4a6bd43062f"
+    },
+    {
+      "id": "cinza_IMG_02304",
+      "cenario": "cinza",
+      "arquivo": "cinza/IMG_02304.jpg",
+      "pai": "original_IMG_02304",
+      "classe_real": 2,
+      "origem_imagem": "IMG_02304",
+      "parametro": "cinza",
+      "sha256": "974f792b9c78d76b46ba4e7cc1cf72ebfa8109fec9f9481f8a89a768632e7439"
+    },
+    {
+      "id": "ruido_IMG_02304",
+      "cenario": "ruido",
+      "arquivo": "ruido/IMG_02304.jpg",
+      "pai": "original_IMG_02304",
+      "classe_real": 2,
+      "origem_imagem": "IMG_02304",
+      "parametro": "ruido",
+      "sha256": "95eda7de5460b0eb97487a6f3400e0f02dd871239d3b7f2ba43789de286785b4"
+    },
+    {
+      "id": "sujeito_pequeno_IMG_02304",
+      "cenario": "sujeito_pequeno",
+      "arquivo": "sujeito_pequeno/IMG_02304.jpg",
+      "pai": "original_IMG_02304",
+      "classe_real": 2,
+      "origem_imagem": "IMG_02304",
+      "parametro": "sujeito_pequeno",
+      "sha256": "3bf65dcdee3b9076e4c6692e494229b20635e90b69b8f0b85feb2854337d36eb"
+    },
+    {
+      "id": "jpeg_q10_IMG_02304",
+      "cenario": "jpeg_q10",
+      "arquivo": "jpeg_q10/IMG_02304.jpg",
+      "pai": "original_IMG_02304",
+      "classe_real": 2,
+      "origem_imagem": "IMG_02304",
+      "parametro": "qualidade 10",
+      "sha256": "b40d52d18e1e8290f6e51d68beb00684e6fd4a4244fa43dde9ba5de030240fd2"
+    },
+    {
+      "id": "original_IMG_02312",
+      "cenario": "original",
+      "arquivo": "original/IMG_02312.jpg",
+      "pai": null,
+      "classe_real": 2,
+      "origem_imagem": "IMG_02312",
+      "parametro": "original",
+      "sha256": "d5bc7545dc723af83f9d2c222fe9d45a6848741b31baa89909715ba645e0b8cf"
+    },
+    {
+      "id": "desfoque_IMG_02312",
+      "cenario": "desfoque",
+      "arquivo": "desfoque/IMG_02312.jpg",
+      "pai": "original_IMG_02312",
+      "classe_real": 2,
+      "origem_imagem": "IMG_02312",
+      "parametro": "desfoque",
+      "sha256": "561af195f9b3539679361f301dba42a28830c666dbee1c0cfb2ecf705139aae5"
+    },
+    {
+      "id": "escuro_IMG_02312",
+      "cenario": "escuro",
+      "arquivo": "escuro/IMG_02312.jpg",
+      "pai": "original_IMG_02312",
+      "classe_real": 2,
+      "origem_imagem": "IMG_02312",
+      "parametro": "escuro",
+      "sha256": "edd59b7868c03184208be3ab689bc02842650553979086c4c09230d48bab7b2d"
+    },
+    {
+      "id": "superexposto_IMG_02312",
+      "cenario": "superexposto",
+      "arquivo": "superexposto/IMG_02312.jpg",
+      "pai": "original_IMG_02312",
+      "classe_real": 2,
+      "origem_imagem": "IMG_02312",
+      "parametro": "superexposto",
+      "sha256": "e044309b91edf80619a6ad8a8c1822b52201c1a18a31ad865d639fa316540a54"
+    },
+    {
+      "id": "cinza_IMG_02312",
+      "cenario": "cinza",
+      "arquivo": "cinza/IMG_02312.jpg",
+      "pai": "original_IMG_02312",
+      "classe_real": 2,
+      "origem_imagem": "IMG_02312",
+      "parametro": "cinza",
+      "sha256": "a9b0162b8ec66b499782406fe766897abb38a6f4966963dc1b2ba83b29a7a24b"
+    },
+    {
+      "id": "ruido_IMG_02312",
+      "cenario": "ruido",
+      "arquivo": "ruido/IMG_02312.jpg",
+      "pai": "original_IMG_02312",
+      "classe_real": 2,
+      "origem_imagem": "IMG_02312",
+      "parametro": "ruido",
+      "sha256": "3c050b4dff28dc3c381ce8846b8129815611aefa02db137d56390a9c422cf24e"
+    },
+    {
+      "id": "sujeito_pequeno_IMG_02312",
+      "cenario": "sujeito_pequeno",
+      "arquivo": "sujeito_pequeno/IMG_02312.jpg",
+      "pai": "original_IMG_02312",
+      "classe_real": 2,
+      "origem_imagem": "IMG_02312",
+      "parametro": "sujeito_pequeno",
+      "sha256": "a85cc741aede2d6aa467587865328ada0c4ab733a870a6106b9a832badb063b1"
+    },
+    {
+      "id": "jpeg_q10_IMG_02312",
+      "cenario": "jpeg_q10",
+      "arquivo": "jpeg_q10/IMG_02312.jpg",
+      "pai": "original_IMG_02312",
+      "classe_real": 2,
+      "origem_imagem": "IMG_02312",
+      "parametro": "qualidade 10",
+      "sha256": "bcfa05dd2f654cd0efe7771aa6c22867310d552943ff23040f5edc4adc9f99e6"
+    },
+    {
+      "id": "original_IMG_00510",
+      "cenario": "original",
+      "arquivo": "original/IMG_00510.jpg",
+      "pai": null,
+      "classe_real": 1,
+      "origem_imagem": "IMG_00510",
+      "parametro": "original",
+      "sha256": "43d0575037a3a81e4c617661969b201f7eedf38b4b7d6442522a80431cd98370"
+    },
+    {
+      "id": "desfoque_IMG_00510",
+      "cenario": "desfoque",
+      "arquivo": "desfoque/IMG_00510.jpg",
+      "pai": "original_IMG_00510",
+      "classe_real": 1,
+      "origem_imagem": "IMG_00510",
+      "parametro": "desfoque",
+      "sha256": "12405f163e368637c966662c930eedbab40ee9fd83f42f04fbafeea55c0400eb"
+    },
+    {
+      "id": "escuro_IMG_00510",
+      "cenario": "escuro",
+      "arquivo": "escuro/IMG_00510.jpg",
+      "pai": "original_IMG_00510",
+      "classe_real": 1,
+      "origem_imagem": "IMG_00510",
+      "parametro": "escuro",
+      "sha256": "4dccaffadff8ef096fd9a1cf588fb488a6001f852cb51c3cd541272f61da9dd9"
+    },
+    {
+      "id": "superexposto_IMG_00510",
+      "cenario": "superexposto",
+      "arquivo": "superexposto/IMG_00510.jpg",
+      "pai": "original_IMG_00510",
+      "classe_real": 1,
+      "origem_imagem": "IMG_00510",
+      "parametro": "superexposto",
+      "sha256": "03ee9d02813f9c450cb7d3e78def117adbab75f2c777a75a780dddc87aa54a4c"
+    },
+    {
+      "id": "cinza_IMG_00510",
+      "cenario": "cinza",
+      "arquivo": "cinza/IMG_00510.jpg",
+      "pai": "original_IMG_00510",
+      "classe_real": 1,
+      "origem_imagem": "IMG_00510",
+      "parametro": "cinza",
+      "sha256": "4dd7c2d95b69cb0bde9d3be58b05c708eb20005693ad6bc42002bb1e36f3cdb8"
+    },
+    {
+      "id": "ruido_IMG_00510",
+      "cenario": "ruido",
+      "arquivo": "ruido/IMG_00510.jpg",
+      "pai": "original_IMG_00510",
+      "classe_real": 1,
+      "origem_imagem": "IMG_00510",
+      "parametro": "ruido",
+      "sha256": "786905d6ede35abcd2ec73457e4e221d467d4fadce9ec235d0b0f51ecaa20f50"
+    },
+    {
+      "id": "sujeito_pequeno_IMG_00510",
+      "cenario": "sujeito_pequeno",
+      "arquivo": "sujeito_pequeno/IMG_00510.jpg",
+      "pai": "original_IMG_00510",
+      "classe_real": 1,
+      "origem_imagem": "IMG_00510",
+      "parametro": "sujeito_pequeno",
+      "sha256": "21d54a23251a186390f0c738c2e1339aaeff7954cf3df35aae94e6da592ab6e5"
+    },
+    {
+      "id": "jpeg_q10_IMG_00510",
+      "cenario": "jpeg_q10",
+      "arquivo": "jpeg_q10/IMG_00510.jpg",
+      "pai": "original_IMG_00510",
+      "classe_real": 1,
+      "origem_imagem": "IMG_00510",
+      "parametro": "qualidade 10",
+      "sha256": "41f6fe73dd32d8ef0d1fdae669cf2f8b52d618fa28c36711bf1fdf6dba581dda"
+    },
+    {
+      "id": "original_IMG_00646",
+      "cenario": "original",
+      "arquivo": "original/IMG_00646.jpg",
+      "pai": null,
+      "classe_real": 1,
+      "origem_imagem": "IMG_00646",
+      "parametro": "original",
+      "sha256": "513675fdaab838d77f739e2cb2e8b8f17c7ef213a8700bd25c40121c8fb6424c"
+    },
+    {
+      "id": "desfoque_IMG_00646",
+      "cenario": "desfoque",
+      "arquivo": "desfoque/IMG_00646.jpg",
+      "pai": "original_IMG_00646",
+      "classe_real": 1,
+      "origem_imagem": "IMG_00646",
+      "parametro": "desfoque",
+      "sha256": "5f4aad90f49bd20a9baede817d8e7243eacee84d107504ac0969bf8580088247"
+    },
+    {
+      "id": "escuro_IMG_00646",
+      "cenario": "escuro",
+      "arquivo": "escuro/IMG_00646.jpg",
+      "pai": "original_IMG_00646",
+      "classe_real": 1,
+      "origem_imagem": "IMG_00646",
+      "parametro": "escuro",
+      "sha256": "e508c7fc695f50a98b40419814b5cc8ae6b3cd29f23d8fbf0f37328535fb94ee"
+    },
+    {
+      "id": "superexposto_IMG_00646",
+      "cenario": "superexposto",
+      "arquivo": "superexposto/IMG_00646.jpg",
+      "pai": "original_IMG_00646",
+      "classe_real": 1,
+      "origem_imagem": "IMG_00646",
+      "parametro": "superexposto",
+      "sha256": "e463b6bd0cf3b93c770c1352bd3f0982defcce59959c3b2626ee5389e3aaaaf3"
+    },
+    {
+      "id": "cinza_IMG_00646",
+      "cenario": "cinza",
+      "arquivo": "cinza/IMG_00646.jpg",
+      "pai": "original_IMG_00646",
+      "classe_real": 1,
+      "origem_imagem": "IMG_00646",
+      "parametro": "cinza",
+      "sha256": "e76a942524fc133e5820b40dce977da4c6c89db6198b25dfd63137a9c2bce1b3"
+    },
+    {
+      "id": "ruido_IMG_00646",
+      "cenario": "ruido",
+      "arquivo": "ruido/IMG_00646.jpg",
+      "pai": "original_IMG_00646",
+      "classe_real": 1,
+      "origem_imagem": "IMG_00646",
+      "parametro": "ruido",
+      "sha256": "b874ddf7f199ac356342fc443e649d08a1c5636d4bd8ea6a1cd073c2134e4062"
+    },
+    {
+      "id": "sujeito_pequeno_IMG_00646",
+      "cenario": "sujeito_pequeno",
+      "arquivo": "sujeito_pequeno/IMG_00646.jpg",
+      "pai": "original_IMG_00646",
+      "classe_real": 1,
+      "origem_imagem": "IMG_00646",
+      "parametro": "sujeito_pequeno",
+      "sha256": "8c8b0f3a74c445d3871735c80a6843ed9f0c7d181e09f50110bfd627e096112e"
+    },
+    {
+      "id": "jpeg_q10_IMG_00646",
+      "cenario": "jpeg_q10",
+      "arquivo": "jpeg_q10/IMG_00646.jpg",
+      "pai": "original_IMG_00646",
+      "classe_real": 1,
+      "origem_imagem": "IMG_00646",
+      "parametro": "qualidade 10",
+      "sha256": "149676e7d82e9564ee889b8643c818dfb2b7650ec84c5c95925e07e0c18e5685"
+    },
+    {
+      "id": "original_IMG_02666",
+      "cenario": "original",
+      "arquivo": "original/IMG_02666.jpg",
+      "pai": null,
+      "classe_real": 3,
+      "origem_imagem": "IMG_02666",
+      "parametro": "original",
+      "sha256": "09e37654d77db8a02677d6aec18ca771b0e161b75411f57e96e9cc4324c71eb9"
+    },
+    {
+      "id": "desfoque_IMG_02666",
+      "cenario": "desfoque",
+      "arquivo": "desfoque/IMG_02666.jpg",
+      "pai": "original_IMG_02666",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02666",
+      "parametro": "desfoque",
+      "sha256": "32e91da58532e762aa87a782d4404eb318d82ec1ec0318aba18da8973a8778d3"
+    },
+    {
+      "id": "escuro_IMG_02666",
+      "cenario": "escuro",
+      "arquivo": "escuro/IMG_02666.jpg",
+      "pai": "original_IMG_02666",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02666",
+      "parametro": "escuro",
+      "sha256": "2bdd6fdc7e143f5dddf919ffef1ca983ffb95b8d340aeafbed75153b7717ce81"
+    },
+    {
+      "id": "superexposto_IMG_02666",
+      "cenario": "superexposto",
+      "arquivo": "superexposto/IMG_02666.jpg",
+      "pai": "original_IMG_02666",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02666",
+      "parametro": "superexposto",
+      "sha256": "f5f28adb2b0d1738500d9b98dc94054701b249f52ee4ab21f82eb186e6df8af6"
+    },
+    {
+      "id": "cinza_IMG_02666",
+      "cenario": "cinza",
+      "arquivo": "cinza/IMG_02666.jpg",
+      "pai": "original_IMG_02666",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02666",
+      "parametro": "cinza",
+      "sha256": "88d84bb8c53f54270c7690fcada3ca7947bfa2992a91514b165a2149ec27a8b1"
+    },
+    {
+      "id": "ruido_IMG_02666",
+      "cenario": "ruido",
+      "arquivo": "ruido/IMG_02666.jpg",
+      "pai": "original_IMG_02666",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02666",
+      "parametro": "ruido",
+      "sha256": "3ba0974e306676b4a70cf4b4d3eb3626d3b172d2a1bd73f4050bb2cff2e6ab46"
+    },
+    {
+      "id": "sujeito_pequeno_IMG_02666",
+      "cenario": "sujeito_pequeno",
+      "arquivo": "sujeito_pequeno/IMG_02666.jpg",
+      "pai": "original_IMG_02666",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02666",
+      "parametro": "sujeito_pequeno",
+      "sha256": "0e4bfb069a5fab2ac20d8b04c8e8e8183801232efeba4803862b38d827422f75"
+    },
+    {
+      "id": "jpeg_q10_IMG_02666",
+      "cenario": "jpeg_q10",
+      "arquivo": "jpeg_q10/IMG_02666.jpg",
+      "pai": "original_IMG_02666",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02666",
+      "parametro": "qualidade 10",
+      "sha256": "0ac6dcf99fc68b6fd71f4792e58287eb593ca99a1fa8aef63fd8664c79c9a4d5"
+    },
+    {
+      "id": "original_IMG_00621",
+      "cenario": "original",
+      "arquivo": "original/IMG_00621.jpg",
+      "pai": null,
+      "classe_real": 1,
+      "origem_imagem": "IMG_00621",
+      "parametro": "original",
+      "sha256": "065c657b65141d33db2d56e1e0d8c7e4b4f09d69bac5bcd39db379c7d641a702"
+    },
+    {
+      "id": "desfoque_IMG_00621",
+      "cenario": "desfoque",
+      "arquivo": "desfoque/IMG_00621.jpg",
+      "pai": "original_IMG_00621",
+      "classe_real": 1,
+      "origem_imagem": "IMG_00621",
+      "parametro": "desfoque",
+      "sha256": "d1c4bd9d7b2756f570f6f659ddc4bf9cf08ed85c9dab37f802dc3dd981c84de1"
+    },
+    {
+      "id": "escuro_IMG_00621",
+      "cenario": "escuro",
+      "arquivo": "escuro/IMG_00621.jpg",
+      "pai": "original_IMG_00621",
+      "classe_real": 1,
+      "origem_imagem": "IMG_00621",
+      "parametro": "escuro",
+      "sha256": "15ae52cebda079ae5c28865c098f321eca246dc21b9f9002338a95bce39eea3e"
+    },
+    {
+      "id": "superexposto_IMG_00621",
+      "cenario": "superexposto",
+      "arquivo": "superexposto/IMG_00621.jpg",
+      "pai": "original_IMG_00621",
+      "classe_real": 1,
+      "origem_imagem": "IMG_00621",
+      "parametro": "superexposto",
+      "sha256": "fd540bfe4da5c3b5d48373604eb1d498b08d7ef8cef80d29eb2f6dc73ed08aa7"
+    },
+    {
+      "id": "cinza_IMG_00621",
+      "cenario": "cinza",
+      "arquivo": "cinza/IMG_00621.jpg",
+      "pai": "original_IMG_00621",
+      "classe_real": 1,
+      "origem_imagem": "IMG_00621",
+      "parametro": "cinza",
+      "sha256": "d53bccb7718313d7955f7192d6e8fe816db4350ee29b70b48090adf49adefff7"
+    },
+    {
+      "id": "ruido_IMG_00621",
+      "cenario": "ruido",
+      "arquivo": "ruido/IMG_00621.jpg",
+      "pai": "original_IMG_00621",
+      "classe_real": 1,
+      "origem_imagem": "IMG_00621",
+      "parametro": "ruido",
+      "sha256": "d366f9ad762181d003c88881d2cf6e157df242c1cb7f7931f626ccc761c11cee"
+    },
+    {
+      "id": "sujeito_pequeno_IMG_00621",
+      "cenario": "sujeito_pequeno",
+      "arquivo": "sujeito_pequeno/IMG_00621.jpg",
+      "pai": "original_IMG_00621",
+      "classe_real": 1,
+      "origem_imagem": "IMG_00621",
+      "parametro": "sujeito_pequeno",
+      "sha256": "2eb8d70678b5f49ca150bc5397ba79c7fb71c06e5ced8eba186dd02a134fd30d"
+    },
+    {
+      "id": "jpeg_q10_IMG_00621",
+      "cenario": "jpeg_q10",
+      "arquivo": "jpeg_q10/IMG_00621.jpg",
+      "pai": "original_IMG_00621",
+      "classe_real": 1,
+      "origem_imagem": "IMG_00621",
+      "parametro": "qualidade 10",
+      "sha256": "e2a9742225cc3216eb48f34e7b1dab9044477b874be1485c52553c5d90c6830f"
+    },
+    {
+      "id": "original_IMG_00675",
+      "cenario": "original",
+      "arquivo": "original/IMG_00675.jpg",
+      "pai": null,
+      "classe_real": 1,
+      "origem_imagem": "IMG_00675",
+      "parametro": "original",
+      "sha256": "a40b988c1b5a7ae6d8b30fcac836fa7686a7dd0fdaa2cfa67cda430963d86201"
+    },
+    {
+      "id": "desfoque_IMG_00675",
+      "cenario": "desfoque",
+      "arquivo": "desfoque/IMG_00675.jpg",
+      "pai": "original_IMG_00675",
+      "classe_real": 1,
+      "origem_imagem": "IMG_00675",
+      "parametro": "desfoque",
+      "sha256": "d8f57976f5098c553cd8b99c6bfc5dd74064cf0303e4956bf2bfe8572b49061b"
+    },
+    {
+      "id": "escuro_IMG_00675",
+      "cenario": "escuro",
+      "arquivo": "escuro/IMG_00675.jpg",
+      "pai": "original_IMG_00675",
+      "classe_real": 1,
+      "origem_imagem": "IMG_00675",
+      "parametro": "escuro",
+      "sha256": "5d90a397e90186804b081357f6546965ee58d5f6ace98cff76ecac98472eef35"
+    },
+    {
+      "id": "superexposto_IMG_00675",
+      "cenario": "superexposto",
+      "arquivo": "superexposto/IMG_00675.jpg",
+      "pai": "original_IMG_00675",
+      "classe_real": 1,
+      "origem_imagem": "IMG_00675",
+      "parametro": "superexposto",
+      "sha256": "4a6b051449a26199c5106ccc4c1a74b5cfdbfaa7dc21daa12d792c245fa71559"
+    },
+    {
+      "id": "cinza_IMG_00675",
+      "cenario": "cinza",
+      "arquivo": "cinza/IMG_00675.jpg",
+      "pai": "original_IMG_00675",
+      "classe_real": 1,
+      "origem_imagem": "IMG_00675",
+      "parametro": "cinza",
+      "sha256": "a4f8c35f0c26bb3f6e1075bcef7ec1819efb5b7495d943119332027c9c8546e1"
+    },
+    {
+      "id": "ruido_IMG_00675",
+      "cenario": "ruido",
+      "arquivo": "ruido/IMG_00675.jpg",
+      "pai": "original_IMG_00675",
+      "classe_real": 1,
+      "origem_imagem": "IMG_00675",
+      "parametro": "ruido",
+      "sha256": "1cb798b1eb646c9d92a9e8819072e8458a176f910966d3694e31afa86838a3da"
+    },
+    {
+      "id": "sujeito_pequeno_IMG_00675",
+      "cenario": "sujeito_pequeno",
+      "arquivo": "sujeito_pequeno/IMG_00675.jpg",
+      "pai": "original_IMG_00675",
+      "classe_real": 1,
+      "origem_imagem": "IMG_00675",
+      "parametro": "sujeito_pequeno",
+      "sha256": "3720e72bd9af815a022d5fe1cc8658d4ab62d0ad7ce0ac5c105a5c3490cc5134"
+    },
+    {
+      "id": "jpeg_q10_IMG_00675",
+      "cenario": "jpeg_q10",
+      "arquivo": "jpeg_q10/IMG_00675.jpg",
+      "pai": "original_IMG_00675",
+      "classe_real": 1,
+      "origem_imagem": "IMG_00675",
+      "parametro": "qualidade 10",
+      "sha256": "6c61987ad045726ba981722ab07a4d28466bc0b3cd2f2c5b4aab7124faba5e89"
+    },
+    {
+      "id": "original_IMG_02689",
+      "cenario": "original",
+      "arquivo": "original/IMG_02689.jpg",
+      "pai": null,
+      "classe_real": 3,
+      "origem_imagem": "IMG_02689",
+      "parametro": "original",
+      "sha256": "4bbb3f69e42bcc11236e8753ebc86873ae5a30745553cdf5f29eb3015f700815"
+    },
+    {
+      "id": "desfoque_IMG_02689",
+      "cenario": "desfoque",
+      "arquivo": "desfoque/IMG_02689.jpg",
+      "pai": "original_IMG_02689",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02689",
+      "parametro": "desfoque",
+      "sha256": "431f5b499e1df4ded437d3bec8bbd7a2c9d533eecc8ab8048fec3fab42e4c411"
+    },
+    {
+      "id": "escuro_IMG_02689",
+      "cenario": "escuro",
+      "arquivo": "escuro/IMG_02689.jpg",
+      "pai": "original_IMG_02689",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02689",
+      "parametro": "escuro",
+      "sha256": "b379285b4ea2928c2ae6b29f73b57893dc268e5bdb2bbf854d69551a8871e3b6"
+    },
+    {
+      "id": "superexposto_IMG_02689",
+      "cenario": "superexposto",
+      "arquivo": "superexposto/IMG_02689.jpg",
+      "pai": "original_IMG_02689",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02689",
+      "parametro": "superexposto",
+      "sha256": "9ad42eec37637870bd81f377773e8edac29d4fdb22adf6d66563af43822bb966"
+    },
+    {
+      "id": "cinza_IMG_02689",
+      "cenario": "cinza",
+      "arquivo": "cinza/IMG_02689.jpg",
+      "pai": "original_IMG_02689",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02689",
+      "parametro": "cinza",
+      "sha256": "c6c4dc8353d4dac032dfe34e5897521d23e369b2a51f6dca1660c3aaf5515f49"
+    },
+    {
+      "id": "ruido_IMG_02689",
+      "cenario": "ruido",
+      "arquivo": "ruido/IMG_02689.jpg",
+      "pai": "original_IMG_02689",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02689",
+      "parametro": "ruido",
+      "sha256": "78cd5d34c2c29a315b3de15ff1f8158824874010e6da1cbe4c3f747e2c7f4455"
+    },
+    {
+      "id": "sujeito_pequeno_IMG_02689",
+      "cenario": "sujeito_pequeno",
+      "arquivo": "sujeito_pequeno/IMG_02689.jpg",
+      "pai": "original_IMG_02689",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02689",
+      "parametro": "sujeito_pequeno",
+      "sha256": "35752805f5f5ccdb3f8a0bd0a8d92de3fae77e2ab09986e6c456f6b75e44ba15"
+    },
+    {
+      "id": "jpeg_q10_IMG_02689",
+      "cenario": "jpeg_q10",
+      "arquivo": "jpeg_q10/IMG_02689.jpg",
+      "pai": "original_IMG_02689",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02689",
+      "parametro": "qualidade 10",
+      "sha256": "581a53146a108434e800e839b181cc774ec50a853fd320aaa08caa861cf05a47"
+    },
+    {
+      "id": "original_IMG_02455",
+      "cenario": "original",
+      "arquivo": "original/IMG_02455.jpg",
+      "pai": null,
+      "classe_real": 3,
+      "origem_imagem": "IMG_02455",
+      "parametro": "original",
+      "sha256": "73ba38417b2f80af0fd5b5936d8c6b6c05372d735d147f681c05e5a63765230f"
+    },
+    {
+      "id": "desfoque_IMG_02455",
+      "cenario": "desfoque",
+      "arquivo": "desfoque/IMG_02455.jpg",
+      "pai": "original_IMG_02455",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02455",
+      "parametro": "desfoque",
+      "sha256": "92bac6549f481cd65598f584b22cbe908e9711e747a9f6db0541eb929ec1c72e"
+    },
+    {
+      "id": "escuro_IMG_02455",
+      "cenario": "escuro",
+      "arquivo": "escuro/IMG_02455.jpg",
+      "pai": "original_IMG_02455",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02455",
+      "parametro": "escuro",
+      "sha256": "7af6b2059a1a38a543cc934498b881d4d3788b102efc386aa5ccad8a76ff947e"
+    },
+    {
+      "id": "superexposto_IMG_02455",
+      "cenario": "superexposto",
+      "arquivo": "superexposto/IMG_02455.jpg",
+      "pai": "original_IMG_02455",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02455",
+      "parametro": "superexposto",
+      "sha256": "289aabcd269ff4b4df6406fa3b7e45006d41208558f4b97b4d70411972e6ac21"
+    },
+    {
+      "id": "cinza_IMG_02455",
+      "cenario": "cinza",
+      "arquivo": "cinza/IMG_02455.jpg",
+      "pai": "original_IMG_02455",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02455",
+      "parametro": "cinza",
+      "sha256": "6f1069550a5272e92177d4ce586c84f774dc8e39f72ce310a88f7e6e44b7382a"
+    },
+    {
+      "id": "ruido_IMG_02455",
+      "cenario": "ruido",
+      "arquivo": "ruido/IMG_02455.jpg",
+      "pai": "original_IMG_02455",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02455",
+      "parametro": "ruido",
+      "sha256": "52bcb1fccde5904905527560e7413490890d3d197dbcaea99ab78b9b216294ec"
+    },
+    {
+      "id": "sujeito_pequeno_IMG_02455",
+      "cenario": "sujeito_pequeno",
+      "arquivo": "sujeito_pequeno/IMG_02455.jpg",
+      "pai": "original_IMG_02455",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02455",
+      "parametro": "sujeito_pequeno",
+      "sha256": "9fb894234e8596382516b52fb9c550cad8c2cb8ffcfbdfed6bd2bd1fb5c27d73"
+    },
+    {
+      "id": "jpeg_q10_IMG_02455",
+      "cenario": "jpeg_q10",
+      "arquivo": "jpeg_q10/IMG_02455.jpg",
+      "pai": "original_IMG_02455",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02455",
+      "parametro": "qualidade 10",
+      "sha256": "d8a34abd68ae06b4f278a867391dfaa7d177baa782c4dcca83451c1f558e4125"
+    },
+    {
+      "id": "original_IMG_01504",
+      "cenario": "original",
+      "arquivo": "original/IMG_01504.jpg",
+      "pai": null,
+      "classe_real": 0,
+      "origem_imagem": "IMG_01504",
+      "parametro": "original",
+      "sha256": "fa4d87cded4e42bc07e00b7475ec7aafb4f7f9f8113ec18c2b3d3b6784ee5fa3"
+    },
+    {
+      "id": "desfoque_IMG_01504",
+      "cenario": "desfoque",
+      "arquivo": "desfoque/IMG_01504.jpg",
+      "pai": "original_IMG_01504",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01504",
+      "parametro": "desfoque",
+      "sha256": "9d5194d0607f01ff7d37fabe819f971262bf9424cad61f73147c252e13f391c0"
+    },
+    {
+      "id": "escuro_IMG_01504",
+      "cenario": "escuro",
+      "arquivo": "escuro/IMG_01504.jpg",
+      "pai": "original_IMG_01504",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01504",
+      "parametro": "escuro",
+      "sha256": "bf58e9bc761bd28c40d5d9d203d3357318055d8cefafe456d89bb4e3e8dceab6"
+    },
+    {
+      "id": "superexposto_IMG_01504",
+      "cenario": "superexposto",
+      "arquivo": "superexposto/IMG_01504.jpg",
+      "pai": "original_IMG_01504",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01504",
+      "parametro": "superexposto",
+      "sha256": "5c411532315ad8c1f90dd58203e5681d74f3771db01b756b1063b08f9cae46ce"
+    },
+    {
+      "id": "cinza_IMG_01504",
+      "cenario": "cinza",
+      "arquivo": "cinza/IMG_01504.jpg",
+      "pai": "original_IMG_01504",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01504",
+      "parametro": "cinza",
+      "sha256": "059e64a632f1c048d008ffbeab82849b8644a5adaf48c2c4cd143bccd631e117"
+    },
+    {
+      "id": "ruido_IMG_01504",
+      "cenario": "ruido",
+      "arquivo": "ruido/IMG_01504.jpg",
+      "pai": "original_IMG_01504",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01504",
+      "parametro": "ruido",
+      "sha256": "773724638908faf6d8b2ee7278f28f4bbb9bb36c92e856de76b0691588387645"
+    },
+    {
+      "id": "sujeito_pequeno_IMG_01504",
+      "cenario": "sujeito_pequeno",
+      "arquivo": "sujeito_pequeno/IMG_01504.jpg",
+      "pai": "original_IMG_01504",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01504",
+      "parametro": "sujeito_pequeno",
+      "sha256": "b369ba3f85bd12babf31b46ce99f0beb2fe234f99178195dc4cf960d6ea6558b"
+    },
+    {
+      "id": "jpeg_q10_IMG_01504",
+      "cenario": "jpeg_q10",
+      "arquivo": "jpeg_q10/IMG_01504.jpg",
+      "pai": "original_IMG_01504",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01504",
+      "parametro": "qualidade 10",
+      "sha256": "15351932ca42092e4c83cc3d1646092f8373e0941a906be00699917dcfe5e754"
+    },
+    {
+      "id": "original_IMG_01755",
+      "cenario": "original",
+      "arquivo": "original/IMG_01755.jpg",
+      "pai": null,
+      "classe_real": 0,
+      "origem_imagem": "IMG_01755",
+      "parametro": "original",
+      "sha256": "a039740d17e5fdad99b0c58eda48e45aa39cb3a58ba8b8ac20c5c78736b75325"
+    },
+    {
+      "id": "desfoque_IMG_01755",
+      "cenario": "desfoque",
+      "arquivo": "desfoque/IMG_01755.jpg",
+      "pai": "original_IMG_01755",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01755",
+      "parametro": "desfoque",
+      "sha256": "c982dd81de100f85cfac7a1d818d63457a6b63bfc00fb0ffdccc8d1c556101e6"
+    },
+    {
+      "id": "escuro_IMG_01755",
+      "cenario": "escuro",
+      "arquivo": "escuro/IMG_01755.jpg",
+      "pai": "original_IMG_01755",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01755",
+      "parametro": "escuro",
+      "sha256": "1753265219fcd8b2670e66d106b6ca1fd35574460bb727eb0650c064b1f8b8bb"
+    },
+    {
+      "id": "superexposto_IMG_01755",
+      "cenario": "superexposto",
+      "arquivo": "superexposto/IMG_01755.jpg",
+      "pai": "original_IMG_01755",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01755",
+      "parametro": "superexposto",
+      "sha256": "3d72068e65edf292fc5ede681b939dd9618a395ea8d149e20086415d6b498a59"
+    },
+    {
+      "id": "cinza_IMG_01755",
+      "cenario": "cinza",
+      "arquivo": "cinza/IMG_01755.jpg",
+      "pai": "original_IMG_01755",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01755",
+      "parametro": "cinza",
+      "sha256": "c623ba39fabeb67be6ade0acd34b36bffc5db18dac2305b8b7aac13afa8ee8ed"
+    },
+    {
+      "id": "ruido_IMG_01755",
+      "cenario": "ruido",
+      "arquivo": "ruido/IMG_01755.jpg",
+      "pai": "original_IMG_01755",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01755",
+      "parametro": "ruido",
+      "sha256": "c62d35d2a6a77928d765a0ba6e297cbd7673aaf8016ae9483752a8ebd5ff76dd"
+    },
+    {
+      "id": "sujeito_pequeno_IMG_01755",
+      "cenario": "sujeito_pequeno",
+      "arquivo": "sujeito_pequeno/IMG_01755.jpg",
+      "pai": "original_IMG_01755",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01755",
+      "parametro": "sujeito_pequeno",
+      "sha256": "fb23ded6957cc181907828d9522ac0267f72e56f33da129ef558766d5e48fb16"
+    },
+    {
+      "id": "jpeg_q10_IMG_01755",
+      "cenario": "jpeg_q10",
+      "arquivo": "jpeg_q10/IMG_01755.jpg",
+      "pai": "original_IMG_01755",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01755",
+      "parametro": "qualidade 10",
+      "sha256": "4a38ed630723e8d55d843bcd42047dd8526714cb7e3b03c89c43a451775ac957"
+    },
+    {
+      "id": "original_IMG_02818",
+      "cenario": "original",
+      "arquivo": "original/IMG_02818.jpg",
+      "pai": null,
+      "classe_real": 3,
+      "origem_imagem": "IMG_02818",
+      "parametro": "original",
+      "sha256": "680b46c311a46875fe95a2d7da5ed32c28c252105e5f4358ecfc51250144475e"
+    },
+    {
+      "id": "desfoque_IMG_02818",
+      "cenario": "desfoque",
+      "arquivo": "desfoque/IMG_02818.jpg",
+      "pai": "original_IMG_02818",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02818",
+      "parametro": "desfoque",
+      "sha256": "8018f186a1fdd3a8be7744d3188a85efb26c05362d99d78da35a64dd6cddae4f"
+    },
+    {
+      "id": "escuro_IMG_02818",
+      "cenario": "escuro",
+      "arquivo": "escuro/IMG_02818.jpg",
+      "pai": "original_IMG_02818",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02818",
+      "parametro": "escuro",
+      "sha256": "e973db913e78476f1aaef3b3c24a28f7def75e3c0305d13e960bca794b4e19ab"
+    },
+    {
+      "id": "superexposto_IMG_02818",
+      "cenario": "superexposto",
+      "arquivo": "superexposto/IMG_02818.jpg",
+      "pai": "original_IMG_02818",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02818",
+      "parametro": "superexposto",
+      "sha256": "11ac8fad003a65639a658910681f1403ec65d3e2e0cdb7d3a1056657dedc922f"
+    },
+    {
+      "id": "cinza_IMG_02818",
+      "cenario": "cinza",
+      "arquivo": "cinza/IMG_02818.jpg",
+      "pai": "original_IMG_02818",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02818",
+      "parametro": "cinza",
+      "sha256": "0fb46682c1f4732a38ff9c1e4dc3d29f13043c69600fb6ee5ffda1aeeb45e677"
+    },
+    {
+      "id": "ruido_IMG_02818",
+      "cenario": "ruido",
+      "arquivo": "ruido/IMG_02818.jpg",
+      "pai": "original_IMG_02818",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02818",
+      "parametro": "ruido",
+      "sha256": "f7df702bc2b4327b35ed844148dc58fb97e0956ef53884f612e05df008a0b3eb"
+    },
+    {
+      "id": "sujeito_pequeno_IMG_02818",
+      "cenario": "sujeito_pequeno",
+      "arquivo": "sujeito_pequeno/IMG_02818.jpg",
+      "pai": "original_IMG_02818",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02818",
+      "parametro": "sujeito_pequeno",
+      "sha256": "0cde877a749878632d3c9a66872814e27b8e68853ab3afdd70bcfde92b0e5d8c"
+    },
+    {
+      "id": "jpeg_q10_IMG_02818",
+      "cenario": "jpeg_q10",
+      "arquivo": "jpeg_q10/IMG_02818.jpg",
+      "pai": "original_IMG_02818",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02818",
+      "parametro": "qualidade 10",
+      "sha256": "bfabe2d6157e3e6562fa4101b2a6b2df0b6641f470f27fa2ce88ae753d030e20"
+    },
+    {
+      "id": "original_IMG_01747",
+      "cenario": "original",
+      "arquivo": "original/IMG_01747.jpg",
+      "pai": null,
+      "classe_real": 0,
+      "origem_imagem": "IMG_01747",
+      "parametro": "original",
+      "sha256": "ee5acec8195258070e388366f1057616cfa42f182f45042c8c44ffbfa3502e2c"
+    },
+    {
+      "id": "desfoque_IMG_01747",
+      "cenario": "desfoque",
+      "arquivo": "desfoque/IMG_01747.jpg",
+      "pai": "original_IMG_01747",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01747",
+      "parametro": "desfoque",
+      "sha256": "7aeb73dd411fa3c0d2dfb340efb030ac6fff118ee1d9adf0590eba70358ca185"
+    },
+    {
+      "id": "escuro_IMG_01747",
+      "cenario": "escuro",
+      "arquivo": "escuro/IMG_01747.jpg",
+      "pai": "original_IMG_01747",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01747",
+      "parametro": "escuro",
+      "sha256": "36e360e9dd1d576a5d3936249b1cdadf478eec00ba831d5cb0a3020448b07e44"
+    },
+    {
+      "id": "superexposto_IMG_01747",
+      "cenario": "superexposto",
+      "arquivo": "superexposto/IMG_01747.jpg",
+      "pai": "original_IMG_01747",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01747",
+      "parametro": "superexposto",
+      "sha256": "390aa37f97f3d7e245bdc885009b2f01332ccf5687a1c8b0c37f3e3a0cbe3f98"
+    },
+    {
+      "id": "cinza_IMG_01747",
+      "cenario": "cinza",
+      "arquivo": "cinza/IMG_01747.jpg",
+      "pai": "original_IMG_01747",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01747",
+      "parametro": "cinza",
+      "sha256": "392ac81262f527cd901f049bf21165c9896b18a22c6e73befa8827b925fbcb2e"
+    },
+    {
+      "id": "ruido_IMG_01747",
+      "cenario": "ruido",
+      "arquivo": "ruido/IMG_01747.jpg",
+      "pai": "original_IMG_01747",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01747",
+      "parametro": "ruido",
+      "sha256": "299dce2d6daed38fabf283fdb42f2c1afd9f2e93f7cc561cf6e2604b235f5a54"
+    },
+    {
+      "id": "sujeito_pequeno_IMG_01747",
+      "cenario": "sujeito_pequeno",
+      "arquivo": "sujeito_pequeno/IMG_01747.jpg",
+      "pai": "original_IMG_01747",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01747",
+      "parametro": "sujeito_pequeno",
+      "sha256": "415ca3cd6001b87cb892ecf8e42ef1ac6242dbe6ab7607a225924a2d829fe964"
+    },
+    {
+      "id": "jpeg_q10_IMG_01747",
+      "cenario": "jpeg_q10",
+      "arquivo": "jpeg_q10/IMG_01747.jpg",
+      "pai": "original_IMG_01747",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01747",
+      "parametro": "qualidade 10",
+      "sha256": "545eaff12441d3212f99299da09937cdfe081fd9e9f2113a7bdd87f25ccba885"
+    },
+    {
+      "id": "original_IMG_02160",
+      "cenario": "original",
+      "arquivo": "original/IMG_02160.jpg",
+      "pai": null,
+      "classe_real": 2,
+      "origem_imagem": "IMG_02160",
+      "parametro": "original",
+      "sha256": "9c9b3101e7470818ad9011105a824b4399a8f4eb70c4846ebff943d6b65af904"
+    },
+    {
+      "id": "desfoque_IMG_02160",
+      "cenario": "desfoque",
+      "arquivo": "desfoque/IMG_02160.jpg",
+      "pai": "original_IMG_02160",
+      "classe_real": 2,
+      "origem_imagem": "IMG_02160",
+      "parametro": "desfoque",
+      "sha256": "b833eaf5d5e62ff1f81fdc0e48c40ddf753061ebd03107e7227c1a3d7d11edb2"
+    },
+    {
+      "id": "escuro_IMG_02160",
+      "cenario": "escuro",
+      "arquivo": "escuro/IMG_02160.jpg",
+      "pai": "original_IMG_02160",
+      "classe_real": 2,
+      "origem_imagem": "IMG_02160",
+      "parametro": "escuro",
+      "sha256": "5b657d61ebfe8bc3caa2ba5a94eb225c52bbe6268b41108824288618bff111b1"
+    },
+    {
+      "id": "superexposto_IMG_02160",
+      "cenario": "superexposto",
+      "arquivo": "superexposto/IMG_02160.jpg",
+      "pai": "original_IMG_02160",
+      "classe_real": 2,
+      "origem_imagem": "IMG_02160",
+      "parametro": "superexposto",
+      "sha256": "a4158dff30675ea0deb723991a8556504e6e69bdc15b1add22a7c9e984e70233"
+    },
+    {
+      "id": "cinza_IMG_02160",
+      "cenario": "cinza",
+      "arquivo": "cinza/IMG_02160.jpg",
+      "pai": "original_IMG_02160",
+      "classe_real": 2,
+      "origem_imagem": "IMG_02160",
+      "parametro": "cinza",
+      "sha256": "45e9ad4f59002132cad49ed735e17aff38d85075f8477af0a98dabf16da88597"
+    },
+    {
+      "id": "ruido_IMG_02160",
+      "cenario": "ruido",
+      "arquivo": "ruido/IMG_02160.jpg",
+      "pai": "original_IMG_02160",
+      "classe_real": 2,
+      "origem_imagem": "IMG_02160",
+      "parametro": "ruido",
+      "sha256": "bcdaf71dc629dd93d51f974f1a9ddc95988789d5e9f89026da941f14db31098d"
+    },
+    {
+      "id": "sujeito_pequeno_IMG_02160",
+      "cenario": "sujeito_pequeno",
+      "arquivo": "sujeito_pequeno/IMG_02160.jpg",
+      "pai": "original_IMG_02160",
+      "classe_real": 2,
+      "origem_imagem": "IMG_02160",
+      "parametro": "sujeito_pequeno",
+      "sha256": "7722061b54cc86a0be931c160448f082a466926f1e2a56d80e658b3cbb1ee293"
+    },
+    {
+      "id": "jpeg_q10_IMG_02160",
+      "cenario": "jpeg_q10",
+      "arquivo": "jpeg_q10/IMG_02160.jpg",
+      "pai": "original_IMG_02160",
+      "classe_real": 2,
+      "origem_imagem": "IMG_02160",
+      "parametro": "qualidade 10",
+      "sha256": "5a4e836c00ba7e287b197d41c484be14dbe1d1d5a3c2f6bcc2b05aa1c47d4d6c"
+    },
+    {
+      "id": "original_IMG_01873",
+      "cenario": "original",
+      "arquivo": "original/IMG_01873.jpg",
+      "pai": null,
+      "classe_real": 0,
+      "origem_imagem": "IMG_01873",
+      "parametro": "original",
+      "sha256": "96528def929b7fa4a337c42d9290d99c4f696761759f17fb55acbfb32a666360"
+    },
+    {
+      "id": "desfoque_IMG_01873",
+      "cenario": "desfoque",
+      "arquivo": "desfoque/IMG_01873.jpg",
+      "pai": "original_IMG_01873",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01873",
+      "parametro": "desfoque",
+      "sha256": "d9367badacffcbe102eccf4afd396eaf0a2e2a4f858d441e38a417268d5cb56c"
+    },
+    {
+      "id": "escuro_IMG_01873",
+      "cenario": "escuro",
+      "arquivo": "escuro/IMG_01873.jpg",
+      "pai": "original_IMG_01873",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01873",
+      "parametro": "escuro",
+      "sha256": "45eae7e63f3495449c87e482696e0dc64851700916c477cc2b94336e022ba9e5"
+    },
+    {
+      "id": "superexposto_IMG_01873",
+      "cenario": "superexposto",
+      "arquivo": "superexposto/IMG_01873.jpg",
+      "pai": "original_IMG_01873",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01873",
+      "parametro": "superexposto",
+      "sha256": "2ffe474287b9f2237d712613f36380265e03ca3725b0a317d41fa78ac4cc618c"
+    },
+    {
+      "id": "cinza_IMG_01873",
+      "cenario": "cinza",
+      "arquivo": "cinza/IMG_01873.jpg",
+      "pai": "original_IMG_01873",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01873",
+      "parametro": "cinza",
+      "sha256": "c075c87c3dbdca0a9ac3990a9b90fe2a3e04c4ee2da2989514888f43b924949a"
+    },
+    {
+      "id": "ruido_IMG_01873",
+      "cenario": "ruido",
+      "arquivo": "ruido/IMG_01873.jpg",
+      "pai": "original_IMG_01873",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01873",
+      "parametro": "ruido",
+      "sha256": "9fcbfa5211d4bd8e5d6e1a42f08cc6c875db1cf9ff88f81ac41f524b23be68d8"
+    },
+    {
+      "id": "sujeito_pequeno_IMG_01873",
+      "cenario": "sujeito_pequeno",
+      "arquivo": "sujeito_pequeno/IMG_01873.jpg",
+      "pai": "original_IMG_01873",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01873",
+      "parametro": "sujeito_pequeno",
+      "sha256": "90da9ba091420be4c21f97269a25f0de0dc0f71d80d516b65c83260b3f949259"
+    },
+    {
+      "id": "jpeg_q10_IMG_01873",
+      "cenario": "jpeg_q10",
+      "arquivo": "jpeg_q10/IMG_01873.jpg",
+      "pai": "original_IMG_01873",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01873",
+      "parametro": "qualidade 10",
+      "sha256": "afdc9798b05014ad9cbcc4d3f3af70c9ea823153d83e23b5401d2ce3ce27b5bf"
+    },
+    {
+      "id": "original_IMG_02694",
+      "cenario": "original",
+      "arquivo": "original/IMG_02694.jpg",
+      "pai": null,
+      "classe_real": 3,
+      "origem_imagem": "IMG_02694",
+      "parametro": "original",
+      "sha256": "4ec22229bafe51c19e38eead69e9453ba6dc1f23a9dda6c441216e0dff6c5f14"
+    },
+    {
+      "id": "desfoque_IMG_02694",
+      "cenario": "desfoque",
+      "arquivo": "desfoque/IMG_02694.jpg",
+      "pai": "original_IMG_02694",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02694",
+      "parametro": "desfoque",
+      "sha256": "6e15dc6af944728247fabf2d0fffd93eac4c6b86f56b2b481dce9c03954b6f5f"
+    },
+    {
+      "id": "escuro_IMG_02694",
+      "cenario": "escuro",
+      "arquivo": "escuro/IMG_02694.jpg",
+      "pai": "original_IMG_02694",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02694",
+      "parametro": "escuro",
+      "sha256": "08a1b9d8b92f10d05f44ec896f339fc779118ae8bf494ec022327447eb8a9c85"
+    },
+    {
+      "id": "superexposto_IMG_02694",
+      "cenario": "superexposto",
+      "arquivo": "superexposto/IMG_02694.jpg",
+      "pai": "original_IMG_02694",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02694",
+      "parametro": "superexposto",
+      "sha256": "a99737e2aab13f3effdf5944de3f3e4d847773d0b26b5b11a4a45d1be40fb259"
+    },
+    {
+      "id": "cinza_IMG_02694",
+      "cenario": "cinza",
+      "arquivo": "cinza/IMG_02694.jpg",
+      "pai": "original_IMG_02694",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02694",
+      "parametro": "cinza",
+      "sha256": "89597bdf1f5498fc6b5f07522a74c9aa9f3b7573ceccda31bd4d780c625d329d"
+    },
+    {
+      "id": "ruido_IMG_02694",
+      "cenario": "ruido",
+      "arquivo": "ruido/IMG_02694.jpg",
+      "pai": "original_IMG_02694",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02694",
+      "parametro": "ruido",
+      "sha256": "39f5e0b878e010e924871598b7dffd7f619ccc27f7a6772c8701e1abb1760461"
+    },
+    {
+      "id": "sujeito_pequeno_IMG_02694",
+      "cenario": "sujeito_pequeno",
+      "arquivo": "sujeito_pequeno/IMG_02694.jpg",
+      "pai": "original_IMG_02694",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02694",
+      "parametro": "sujeito_pequeno",
+      "sha256": "bcd3f69102e6d85e9373a2100be87aa177f0eb2c334f831e6a126b85e2a75159"
+    },
+    {
+      "id": "jpeg_q10_IMG_02694",
+      "cenario": "jpeg_q10",
+      "arquivo": "jpeg_q10/IMG_02694.jpg",
+      "pai": "original_IMG_02694",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02694",
+      "parametro": "qualidade 10",
+      "sha256": "8c7f12d327906886f5cf2209e8ce53120a47367f7786d9c5078fc8632b2e0a9e"
+    },
+    {
+      "id": "original_IMG_01777",
+      "cenario": "original",
+      "arquivo": "original/IMG_01777.jpg",
+      "pai": null,
+      "classe_real": 0,
+      "origem_imagem": "IMG_01777",
+      "parametro": "original",
+      "sha256": "698e4b71097ad144d0401ee43a0de2d75fe81bd1cba3a61325b36e3eac7d6e7b"
+    },
+    {
+      "id": "desfoque_IMG_01777",
+      "cenario": "desfoque",
+      "arquivo": "desfoque/IMG_01777.jpg",
+      "pai": "original_IMG_01777",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01777",
+      "parametro": "desfoque",
+      "sha256": "6afcf5d372d3949da66583d82ef85aa18ba39006098c9f160ba1e952fababae4"
+    },
+    {
+      "id": "escuro_IMG_01777",
+      "cenario": "escuro",
+      "arquivo": "escuro/IMG_01777.jpg",
+      "pai": "original_IMG_01777",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01777",
+      "parametro": "escuro",
+      "sha256": "70d848e352f996dbacddd355a97569d64eae4692eaadf3a3b9fc8e99a5dc47c9"
+    },
+    {
+      "id": "superexposto_IMG_01777",
+      "cenario": "superexposto",
+      "arquivo": "superexposto/IMG_01777.jpg",
+      "pai": "original_IMG_01777",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01777",
+      "parametro": "superexposto",
+      "sha256": "46365322f2a9c8b36f4cc195d5bbc25f9d4930c4d0c560c9f404839a1e9b50fc"
+    },
+    {
+      "id": "cinza_IMG_01777",
+      "cenario": "cinza",
+      "arquivo": "cinza/IMG_01777.jpg",
+      "pai": "original_IMG_01777",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01777",
+      "parametro": "cinza",
+      "sha256": "c8b7e34875c4595c07f1b2e8d9ac2425dcadcfc37fba5cadad80221644d50617"
+    },
+    {
+      "id": "ruido_IMG_01777",
+      "cenario": "ruido",
+      "arquivo": "ruido/IMG_01777.jpg",
+      "pai": "original_IMG_01777",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01777",
+      "parametro": "ruido",
+      "sha256": "a5090d40dd9ea6f49a8f60cd3cc5ec98e4e334de27af2c67393a01da9d5e0501"
+    },
+    {
+      "id": "sujeito_pequeno_IMG_01777",
+      "cenario": "sujeito_pequeno",
+      "arquivo": "sujeito_pequeno/IMG_01777.jpg",
+      "pai": "original_IMG_01777",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01777",
+      "parametro": "sujeito_pequeno",
+      "sha256": "11e3f42862f5aa69ce11c9ee60407d06c87f01d322914f3aaaa7ae05c97fdcf0"
+    },
+    {
+      "id": "jpeg_q10_IMG_01777",
+      "cenario": "jpeg_q10",
+      "arquivo": "jpeg_q10/IMG_01777.jpg",
+      "pai": "original_IMG_01777",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01777",
+      "parametro": "qualidade 10",
+      "sha256": "c4a2dfad1900ea5d432c84444f55aa4038122a9c6e768519bb0d15bf3e083045"
+    },
+    {
+      "id": "original_IMG_02283",
+      "cenario": "original",
+      "arquivo": "original/IMG_02283.jpg",
+      "pai": null,
+      "classe_real": 2,
+      "origem_imagem": "IMG_02283",
+      "parametro": "original",
+      "sha256": "6accd1a9afcfd2c9d4ccbcd18054273a9eef6294c3999a6753077a2af3339800"
+    },
+    {
+      "id": "desfoque_IMG_02283",
+      "cenario": "desfoque",
+      "arquivo": "desfoque/IMG_02283.jpg",
+      "pai": "original_IMG_02283",
+      "classe_real": 2,
+      "origem_imagem": "IMG_02283",
+      "parametro": "desfoque",
+      "sha256": "fb2037af50e443239a563fbed9e969e14e1b6ebe14a9dd606358383d2d53653d"
+    },
+    {
+      "id": "escuro_IMG_02283",
+      "cenario": "escuro",
+      "arquivo": "escuro/IMG_02283.jpg",
+      "pai": "original_IMG_02283",
+      "classe_real": 2,
+      "origem_imagem": "IMG_02283",
+      "parametro": "escuro",
+      "sha256": "39d2c1c0947bc4ca536c8443bee64b1e2deb5d5d906140ef90a7a2ef505c3b94"
+    },
+    {
+      "id": "superexposto_IMG_02283",
+      "cenario": "superexposto",
+      "arquivo": "superexposto/IMG_02283.jpg",
+      "pai": "original_IMG_02283",
+      "classe_real": 2,
+      "origem_imagem": "IMG_02283",
+      "parametro": "superexposto",
+      "sha256": "26733f2d03d2b36641d230896450295ead978e70ca77d2a7c5d6f32906b4004f"
+    },
+    {
+      "id": "cinza_IMG_02283",
+      "cenario": "cinza",
+      "arquivo": "cinza/IMG_02283.jpg",
+      "pai": "original_IMG_02283",
+      "classe_real": 2,
+      "origem_imagem": "IMG_02283",
+      "parametro": "cinza",
+      "sha256": "3e8a011102ba910300510b1b636a417cd79f5f8c7e37895e77de237a1a475b65"
+    },
+    {
+      "id": "ruido_IMG_02283",
+      "cenario": "ruido",
+      "arquivo": "ruido/IMG_02283.jpg",
+      "pai": "original_IMG_02283",
+      "classe_real": 2,
+      "origem_imagem": "IMG_02283",
+      "parametro": "ruido",
+      "sha256": "f1f385ad44769579d743f5f29a561c44fa3e09aab63548f98b5f3be3c755a06d"
+    },
+    {
+      "id": "sujeito_pequeno_IMG_02283",
+      "cenario": "sujeito_pequeno",
+      "arquivo": "sujeito_pequeno/IMG_02283.jpg",
+      "pai": "original_IMG_02283",
+      "classe_real": 2,
+      "origem_imagem": "IMG_02283",
+      "parametro": "sujeito_pequeno",
+      "sha256": "5e692388257737cb1c3d9c98f77ed7aaa9029111cd2534f22386c247c82c6f55"
+    },
+    {
+      "id": "jpeg_q10_IMG_02283",
+      "cenario": "jpeg_q10",
+      "arquivo": "jpeg_q10/IMG_02283.jpg",
+      "pai": "original_IMG_02283",
+      "classe_real": 2,
+      "origem_imagem": "IMG_02283",
+      "parametro": "qualidade 10",
+      "sha256": "971bc1c82059fac70c63a4972e3096304bc1213c07648e9f6c6307d9fcaee6b8"
+    },
+    {
+      "id": "original_IMG_02743",
+      "cenario": "original",
+      "arquivo": "original/IMG_02743.jpg",
+      "pai": null,
+      "classe_real": 3,
+      "origem_imagem": "IMG_02743",
+      "parametro": "original",
+      "sha256": "8f9c2c196a3b42b30db3c125b3844a7e51657df6300b31d7e2cf3e07d110a7cf"
+    },
+    {
+      "id": "desfoque_IMG_02743",
+      "cenario": "desfoque",
+      "arquivo": "desfoque/IMG_02743.jpg",
+      "pai": "original_IMG_02743",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02743",
+      "parametro": "desfoque",
+      "sha256": "0b65b191bc0096aaf799e1b1e3c83c12f9803d404d9178fda1f1cf3bc9bb0fbe"
+    },
+    {
+      "id": "escuro_IMG_02743",
+      "cenario": "escuro",
+      "arquivo": "escuro/IMG_02743.jpg",
+      "pai": "original_IMG_02743",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02743",
+      "parametro": "escuro",
+      "sha256": "31c17fa23ca748972a50e5c8690c4ba3bf05ca83a2cf5d2c2df5f3116025833c"
+    },
+    {
+      "id": "superexposto_IMG_02743",
+      "cenario": "superexposto",
+      "arquivo": "superexposto/IMG_02743.jpg",
+      "pai": "original_IMG_02743",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02743",
+      "parametro": "superexposto",
+      "sha256": "1976e6c646ea2786d4a0b5b63d1bf6a46c16dcb02fb8db049d79006466c96acc"
+    },
+    {
+      "id": "cinza_IMG_02743",
+      "cenario": "cinza",
+      "arquivo": "cinza/IMG_02743.jpg",
+      "pai": "original_IMG_02743",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02743",
+      "parametro": "cinza",
+      "sha256": "09dc8894346c6cdaef5b96d758e46e4c9335c3bba9c615671e690f4631d68154"
+    },
+    {
+      "id": "ruido_IMG_02743",
+      "cenario": "ruido",
+      "arquivo": "ruido/IMG_02743.jpg",
+      "pai": "original_IMG_02743",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02743",
+      "parametro": "ruido",
+      "sha256": "590cbbf066408361e83158780c36ae6a5fc9d9d7bceb906d1d319b28ae472f75"
+    },
+    {
+      "id": "sujeito_pequeno_IMG_02743",
+      "cenario": "sujeito_pequeno",
+      "arquivo": "sujeito_pequeno/IMG_02743.jpg",
+      "pai": "original_IMG_02743",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02743",
+      "parametro": "sujeito_pequeno",
+      "sha256": "cf45d8bb21dfad9720a0db009f4b787744fa66f39b58a659e8a860e4571d988b"
+    },
+    {
+      "id": "jpeg_q10_IMG_02743",
+      "cenario": "jpeg_q10",
+      "arquivo": "jpeg_q10/IMG_02743.jpg",
+      "pai": "original_IMG_02743",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02743",
+      "parametro": "qualidade 10",
+      "sha256": "a9d15dbf6bff9c8dd5d65ea8757da96368f151ec0e076f5e4a2cc67587f82ba8"
+    },
+    {
+      "id": "original_IMG_02112",
+      "cenario": "original",
+      "arquivo": "original/IMG_02112.jpg",
+      "pai": null,
+      "classe_real": 2,
+      "origem_imagem": "IMG_02112",
+      "parametro": "original",
+      "sha256": "5dc791f657027fca95564b96b4bc7d1241664b63f73da62f77660db9931b18a8"
+    },
+    {
+      "id": "desfoque_IMG_02112",
+      "cenario": "desfoque",
+      "arquivo": "desfoque/IMG_02112.jpg",
+      "pai": "original_IMG_02112",
+      "classe_real": 2,
+      "origem_imagem": "IMG_02112",
+      "parametro": "desfoque",
+      "sha256": "e6f3f7a98ed681ce56915b037cd100ed300f6cd6d1bf0067c869475209b8714b"
+    },
+    {
+      "id": "escuro_IMG_02112",
+      "cenario": "escuro",
+      "arquivo": "escuro/IMG_02112.jpg",
+      "pai": "original_IMG_02112",
+      "classe_real": 2,
+      "origem_imagem": "IMG_02112",
+      "parametro": "escuro",
+      "sha256": "c562fde8346e0a7da2cfba4b6bf2aaea85275a3091659c1b365d3c2eab2377df"
+    },
+    {
+      "id": "superexposto_IMG_02112",
+      "cenario": "superexposto",
+      "arquivo": "superexposto/IMG_02112.jpg",
+      "pai": "original_IMG_02112",
+      "classe_real": 2,
+      "origem_imagem": "IMG_02112",
+      "parametro": "superexposto",
+      "sha256": "c5706d738d6ff8f8923b1dde19681aef541a64e1f8070ed76a260d88d20de7d9"
+    },
+    {
+      "id": "cinza_IMG_02112",
+      "cenario": "cinza",
+      "arquivo": "cinza/IMG_02112.jpg",
+      "pai": "original_IMG_02112",
+      "classe_real": 2,
+      "origem_imagem": "IMG_02112",
+      "parametro": "cinza",
+      "sha256": "619dfad04e9c6d19a66abbe49ddfa49fc763f49d014d0d0705ed711bee8084ff"
+    },
+    {
+      "id": "ruido_IMG_02112",
+      "cenario": "ruido",
+      "arquivo": "ruido/IMG_02112.jpg",
+      "pai": "original_IMG_02112",
+      "classe_real": 2,
+      "origem_imagem": "IMG_02112",
+      "parametro": "ruido",
+      "sha256": "708d4171d2b224e4690d46edd22d59d525397650bbf97d149555af3cf2e164c7"
+    },
+    {
+      "id": "sujeito_pequeno_IMG_02112",
+      "cenario": "sujeito_pequeno",
+      "arquivo": "sujeito_pequeno/IMG_02112.jpg",
+      "pai": "original_IMG_02112",
+      "classe_real": 2,
+      "origem_imagem": "IMG_02112",
+      "parametro": "sujeito_pequeno",
+      "sha256": "6338490d64c83da4da4f0dffdd5683335d5ab0313e0c367b902d516483ca6a8c"
+    },
+    {
+      "id": "jpeg_q10_IMG_02112",
+      "cenario": "jpeg_q10",
+      "arquivo": "jpeg_q10/IMG_02112.jpg",
+      "pai": "original_IMG_02112",
+      "classe_real": 2,
+      "origem_imagem": "IMG_02112",
+      "parametro": "qualidade 10",
+      "sha256": "a3b27721e29677c65810bfcb01d1c5b7fcc8fdf73dd3005991515bf2c9a08826"
+    },
+    {
+      "id": "original_IMG_00567",
+      "cenario": "original",
+      "arquivo": "original/IMG_00567.jpg",
+      "pai": null,
+      "classe_real": 1,
+      "origem_imagem": "IMG_00567",
+      "parametro": "original",
+      "sha256": "8e330515521ef6a87047b7b94d0cb34cfa143b425d53748e27c758d320c35d63"
+    },
+    {
+      "id": "desfoque_IMG_00567",
+      "cenario": "desfoque",
+      "arquivo": "desfoque/IMG_00567.jpg",
+      "pai": "original_IMG_00567",
+      "classe_real": 1,
+      "origem_imagem": "IMG_00567",
+      "parametro": "desfoque",
+      "sha256": "413f73b7b533352933c384baf79b7a01d962ecaecf74bd50877150dd8967e697"
+    },
+    {
+      "id": "escuro_IMG_00567",
+      "cenario": "escuro",
+      "arquivo": "escuro/IMG_00567.jpg",
+      "pai": "original_IMG_00567",
+      "classe_real": 1,
+      "origem_imagem": "IMG_00567",
+      "parametro": "escuro",
+      "sha256": "4bb194489bef0d46b676ab15b30615ba02f667e4a84be57d42104a1c8a93feea"
+    },
+    {
+      "id": "superexposto_IMG_00567",
+      "cenario": "superexposto",
+      "arquivo": "superexposto/IMG_00567.jpg",
+      "pai": "original_IMG_00567",
+      "classe_real": 1,
+      "origem_imagem": "IMG_00567",
+      "parametro": "superexposto",
+      "sha256": "c49dac24aa39cdc3ee99b845bd8db9306d60c9274080a6910faad9ae411500f6"
+    },
+    {
+      "id": "cinza_IMG_00567",
+      "cenario": "cinza",
+      "arquivo": "cinza/IMG_00567.jpg",
+      "pai": "original_IMG_00567",
+      "classe_real": 1,
+      "origem_imagem": "IMG_00567",
+      "parametro": "cinza",
+      "sha256": "d518dcb154a9c51ce4fd1a1e1d4a69a4cbe461a549eb4d98dd406ddb6ba5a44b"
+    },
+    {
+      "id": "ruido_IMG_00567",
+      "cenario": "ruido",
+      "arquivo": "ruido/IMG_00567.jpg",
+      "pai": "original_IMG_00567",
+      "classe_real": 1,
+      "origem_imagem": "IMG_00567",
+      "parametro": "ruido",
+      "sha256": "137e3753b47645498710eadfb3a5b32b718072fad2e85c8be50a48760de97322"
+    },
+    {
+      "id": "sujeito_pequeno_IMG_00567",
+      "cenario": "sujeito_pequeno",
+      "arquivo": "sujeito_pequeno/IMG_00567.jpg",
+      "pai": "original_IMG_00567",
+      "classe_real": 1,
+      "origem_imagem": "IMG_00567",
+      "parametro": "sujeito_pequeno",
+      "sha256": "25bd82d2e25dcfed3f4a5655ca68977905a6e6be76c7998e995d55821f5c2d3d"
+    },
+    {
+      "id": "jpeg_q10_IMG_00567",
+      "cenario": "jpeg_q10",
+      "arquivo": "jpeg_q10/IMG_00567.jpg",
+      "pai": "original_IMG_00567",
+      "classe_real": 1,
+      "origem_imagem": "IMG_00567",
+      "parametro": "qualidade 10",
+      "sha256": "fed3f849ca67538ca120494fb7cac6cdef8ba4536c620dc6a502c95d59f09618"
+    },
+    {
+      "id": "original_IMG_01677",
+      "cenario": "original",
+      "arquivo": "original/IMG_01677.jpg",
+      "pai": null,
+      "classe_real": 0,
+      "origem_imagem": "IMG_01677",
+      "parametro": "original",
+      "sha256": "f686371b931cc796164336cc8857740c9878a5c68d6f5bb190b9da0a489cb615"
+    },
+    {
+      "id": "desfoque_IMG_01677",
+      "cenario": "desfoque",
+      "arquivo": "desfoque/IMG_01677.jpg",
+      "pai": "original_IMG_01677",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01677",
+      "parametro": "desfoque",
+      "sha256": "09767da3662c0e75adf5628963668f7ab270fe83c36a5fb3d86a92bc678dbb53"
+    },
+    {
+      "id": "escuro_IMG_01677",
+      "cenario": "escuro",
+      "arquivo": "escuro/IMG_01677.jpg",
+      "pai": "original_IMG_01677",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01677",
+      "parametro": "escuro",
+      "sha256": "5e22f8ae4e3f324aeb2868d1d0bb04d6ed9e6791e4cc6a5a1e34ef69f33a3c4e"
+    },
+    {
+      "id": "superexposto_IMG_01677",
+      "cenario": "superexposto",
+      "arquivo": "superexposto/IMG_01677.jpg",
+      "pai": "original_IMG_01677",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01677",
+      "parametro": "superexposto",
+      "sha256": "3c3c09395695ec27f6971ce80f72aedeb633eff59bb5d68b5ef72cc1508646eb"
+    },
+    {
+      "id": "cinza_IMG_01677",
+      "cenario": "cinza",
+      "arquivo": "cinza/IMG_01677.jpg",
+      "pai": "original_IMG_01677",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01677",
+      "parametro": "cinza",
+      "sha256": "2f67e52e8ad4c16498ab755400a80898ce07329fdec4fe1e912b83c68d75f665"
+    },
+    {
+      "id": "ruido_IMG_01677",
+      "cenario": "ruido",
+      "arquivo": "ruido/IMG_01677.jpg",
+      "pai": "original_IMG_01677",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01677",
+      "parametro": "ruido",
+      "sha256": "db9a4ea897cff221c97100e0d1a004664838efb52521386efd57e7c15191eb9c"
+    },
+    {
+      "id": "sujeito_pequeno_IMG_01677",
+      "cenario": "sujeito_pequeno",
+      "arquivo": "sujeito_pequeno/IMG_01677.jpg",
+      "pai": "original_IMG_01677",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01677",
+      "parametro": "sujeito_pequeno",
+      "sha256": "0989456207f4c129f233dfc372b5b6e2f6c37fb2e933c81a408c4dd0573ee38b"
+    },
+    {
+      "id": "jpeg_q10_IMG_01677",
+      "cenario": "jpeg_q10",
+      "arquivo": "jpeg_q10/IMG_01677.jpg",
+      "pai": "original_IMG_01677",
+      "classe_real": 0,
+      "origem_imagem": "IMG_01677",
+      "parametro": "qualidade 10",
+      "sha256": "a2cd34128a448f4fa216d10ccaae296cb4c4f9fa8ae3dfac482e181cd11fd588"
+    },
+    {
+      "id": "original_IMG_02581",
+      "cenario": "original",
+      "arquivo": "original/IMG_02581.jpg",
+      "pai": null,
+      "classe_real": 3,
+      "origem_imagem": "IMG_02581",
+      "parametro": "original",
+      "sha256": "a6df7e38b74b5982604d312f29082f1c16f72fe42fb4292b7441a051e2c336ca"
+    },
+    {
+      "id": "desfoque_IMG_02581",
+      "cenario": "desfoque",
+      "arquivo": "desfoque/IMG_02581.jpg",
+      "pai": "original_IMG_02581",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02581",
+      "parametro": "desfoque",
+      "sha256": "6de10f00364c0d81dff906ea32c48d006b49d60a327619082039de9375dc5b52"
+    },
+    {
+      "id": "escuro_IMG_02581",
+      "cenario": "escuro",
+      "arquivo": "escuro/IMG_02581.jpg",
+      "pai": "original_IMG_02581",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02581",
+      "parametro": "escuro",
+      "sha256": "e797abddc2e7cb7548583db0ad8fcd5cdbc7af7e51c492e74d48d6fd9ec7a6bd"
+    },
+    {
+      "id": "superexposto_IMG_02581",
+      "cenario": "superexposto",
+      "arquivo": "superexposto/IMG_02581.jpg",
+      "pai": "original_IMG_02581",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02581",
+      "parametro": "superexposto",
+      "sha256": "f7fe73db08302c1691f2f01713bd5446b45314fd34df7d40e7ce10274a440fed"
+    },
+    {
+      "id": "cinza_IMG_02581",
+      "cenario": "cinza",
+      "arquivo": "cinza/IMG_02581.jpg",
+      "pai": "original_IMG_02581",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02581",
+      "parametro": "cinza",
+      "sha256": "e7b99f3405edd516785b7f170c3a73e31f2c1abed5bb780e13aa1cac4b2ea30e"
+    },
+    {
+      "id": "ruido_IMG_02581",
+      "cenario": "ruido",
+      "arquivo": "ruido/IMG_02581.jpg",
+      "pai": "original_IMG_02581",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02581",
+      "parametro": "ruido",
+      "sha256": "b952e660fd419b991cdf590e093f89aee108fea72e5ae516877880231ffa9ffc"
+    },
+    {
+      "id": "sujeito_pequeno_IMG_02581",
+      "cenario": "sujeito_pequeno",
+      "arquivo": "sujeito_pequeno/IMG_02581.jpg",
+      "pai": "original_IMG_02581",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02581",
+      "parametro": "sujeito_pequeno",
+      "sha256": "c15da6954555d3ceb6907e4bc8475340a330914e524e58b7147c48f6ba91534f"
+    },
+    {
+      "id": "jpeg_q10_IMG_02581",
+      "cenario": "jpeg_q10",
+      "arquivo": "jpeg_q10/IMG_02581.jpg",
+      "pai": "original_IMG_02581",
+      "classe_real": 3,
+      "origem_imagem": "IMG_02581",
+      "parametro": "qualidade 10",
+      "sha256": "a83d997564b9b624750e1c005bbeb6025ac021a3a60810c50d114bcf31b47fb1"
+    }
+  ]
+}
