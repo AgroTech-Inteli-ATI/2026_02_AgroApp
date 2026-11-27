@@ -1,8 +1,8 @@
 # Documentação do Projeto — AgroApp
 
-Validação de desempenho e integração web: [T12.1 — Tamanho dos modelos e pacote](Validacao_T12_1.md).
-
 ## Sumário
+
+O [índice da documentação](README.md) lista também os guias e relatórios em arquivos separados.
 
 <details>
 <summary><strong>1. Entendimento de Negócio</strong></summary>
@@ -23,9 +23,6 @@ Validação de desempenho e integração web: [T12.1 — Tamanho dos modelos e p
 - [2.4 Diagrama da arquitetura da solução](#24-diagrama-da-arquitetura-da-solução)
 - [2.5 Consolidação técnica](#25-consolidação-técnica)
 
-- [Entendimento dos dados](#entendimento-dos-dados)
-- [T3.4 — Dicionário de classes](#dicionário-de-classes-t34)
-
 </details>
 
 <details>
@@ -34,16 +31,18 @@ Validação de desempenho e integração web: [T12.1 — Tamanho dos modelos e p
 - [3.1 Inventário do acervo](#31-inventário-do-acervo)
 - [3.2 Análise exploratória visual](#32-análise-exploratória-visual)
 - [3.3 Diagnóstico de qualidade do acervo](#33-diagnóstico-de-qualidade-do-acervo)
+- [3.4 Dicionário de classes (T3.4)](#34-dicionário-de-classes-t34)
+- [3.5 Classes do MVP (T3.5)](#35-classes-do-mvp-t35)
 
 </details>
 
 <details>
 <summary><strong>4. Preparação dos dados</strong></summary>
 
-- [4.1 Padronização das imagens (T4.1)](#41-padronização-das-imagens)
-- [4.2 Particionamento por grupo (T4.2)](#42-particionamento-por-grupo-t42)
+- [4.1 Padronização das imagens](#41-padronização-das-imagens)
+- [4.2 Particionamento por grupo](#42-particionamento-por-grupo)
 - [4.3 Estratégia de balanceamento](#43-estratégia-de-balanceamento)
-- [4.4 Rotinas de aumento de dados (T4.4)](#44-rotinas-de-aumento-de-dados)
+- [4.4 Rotinas de aumento de dados](#44-rotinas-de-aumento-de-dados)
 - [4.5 Pipeline reprodutível (T4.5)](#45-pipeline-reprodutível-t45)
 
 </details>
@@ -95,6 +94,7 @@ Validação de desempenho e integração web: [T12.1 — Tamanho dos modelos e p
 - [9.1 Pipeline de captura e processamento de imagens (T9.1)](#91-pipeline-de-captura-e-processamento-de-imagens-t91)
 - [9.2 Tratamento do limiar de confiança (T9.2)](#92-tratamento-do-limiar-de-confiança-t92)
 - [9.3 Associação da predição ao conteúdo técnico (T9.3)](#93-associação-da-predição-ao-conteúdo-técnico-t93)
+- [9.4 Validação do funcionamento offline (T9.4)](#94-validação-do-funcionamento-offline-t94)
 
 </details>
 
@@ -104,7 +104,7 @@ Validação de desempenho e integração web: [T12.1 — Tamanho dos modelos e p
 - [10.1 Independência dos conjuntos de dados](#101-independência-dos-conjuntos-de-dados)
 - [10.2 Correspondência do preprocessing Python e web](#102-correspondência-do-preprocessing-python-e-web)
 - [10.3 Comparação dos modelos Float16 e INT8 entre Python e web](#103-comparação-dos-modelos-float16-e-int8-entre-python-e-web)
-- [10.4 Consolidação da seleção e versionamento do modelo final](#104-consolidação-da-seleção-e-versionamento-do-modelo-final-t104)
+- [10.4 Consolidação da seleção e versionamento do modelo final (T10.4)](#104-consolidação-da-seleção-e-versionamento-do-modelo-final-t104)
 
 </details>
 
@@ -113,29 +113,25 @@ Validação de desempenho e integração web: [T12.1 — Tamanho dos modelos e p
 
 - [11.1 Avaliação final e métricas por classe (T11.1)](#111-avaliação-final-e-métricas-por-classe-t111)
 - [11.2 Matriz de confusão e análise de erros (T11.2)](#112-matriz-de-confusão-e-análise-de-erros-t112)
-
-</details>
-
-<details>
-<summary><strong>11. Avaliação final do modelo</strong></summary>
-
-- [11.1 Avaliação final e métricas por classe (T11.1)](#111-avaliação-final-e-métricas-por-classe-t111)
 - [11.3 Avaliação do limiar de confiança e casos inadequados (T11.3)](#113-avaliação-do-limiar-de-confiança-e-casos-inadequados-t113)
 
 </details>
 
 <details>
-<summary><strong>13. Testes de usabilidade e navegação</strong></summary>
+<summary><strong>12. Validação de desempenho no dispositivo</strong></summary>
 
-- [13.3 Testes de navegação e apresentação do conteúdo (T13.3)](#133-testes-de-navegação-e-apresentação-do-conteúdo-t133)
+- [12.1 Tamanho do modelo e do pacote web (T12.1)](#121-tamanho-do-modelo-e-do-pacote-web-t121)
+- [12.2 Medição de latência no navegador do dispositivo](#122-medição-de-latência-no-navegador-do-dispositivo)
+- [12.3 Testes funcionais no dispositivo (T12.3)](#123-testes-funcionais-no-dispositivo-t123)
 
 </details>
 
 <details>
-<summary><strong>13. Conteúdo técnico</strong></summary>
+<summary><strong>13. Conteúdo técnico e navegação</strong></summary>
 
-- [13.1 Fichas técnicas da equipe e decisão formal (T13.1 e T13.2)](#131-fichas-técnicas-da-equipe-e-decisão-formal-t131-e-t132)
+- [13.1 Fichas técnicas da equipe e decisão formal (T13.1)](#131-fichas-técnicas-da-equipe-e-decisão-formal-t131)
 - [13.2 Integração no aplicativo (T13.2)](#132-integração-no-aplicativo-t132)
+- [13.3 Testes de navegação e apresentação do conteúdo (T13.3)](#133-testes-de-navegação-e-apresentação-do-conteúdo-t133)
 
 </details>
 
@@ -777,7 +773,7 @@ Etapas:
    "nematóide" no nome), foram levantados pares e clusters candidatos a confusão.
 3. Validação Cada par candidato só foi considerado
    efetivamente confuso após a checagem individual das imagens, pares com nomes parecidos mas distintas nessa
-   checagem foram descartados (ver [Pares avaliados e descartados](#pares-avaliados-e-descartados)).
+   checagem foram descartados.
 
 4. Registro. Para cada par/cluster confirmado, foi registrado o que efetivamente
    causa a confusão e o que permite diferenciar as classes, consolidado nas pranchas comparativas desta seção.
@@ -890,117 +886,7 @@ Boa parte das classes de Soja/Doenças tem hoje apenas 1 a 3 imagens, abaixo do 
 desejável de 5 a 10 indicado como objetivo mínimo para avaliação visual, a análise foi feita com
 todo o material disponível, mas os pares e clusters aqui identificados devem ser
 revisados quando o acervo for complementado pelo parceiro ou por bases públicas
-
-validadas (Seção 1.4, item 7). A associação formal entre os pares/clusters aqui
-levantados e a decisão de unificar ou manter classes separadas será complementada a
-partir do dicionário de classes desenvolvido na T3.4.
-
----
-
-# 4. Preparação dos dados
-
-## 4.3 Estratégia de balanceamento
-
-### Objetivo e decisão
-
-Adotar **ponderação de classes na função de perda**, com amostragem natural das imagens de treino, como estratégia inicial para reduzir a preferência do modelo pelas classes mais frequentes. A reamostragem será avaliada em um experimento separado caso a ponderação não ofereça recuperação adequada das classes minoritárias. Não aplicar as duas correções simultaneamente na configuração inicial.
-
-Esta é a decisão inicial de balanceamento. O [pipeline T4.5](../assets/data/pipeline_T4_5/pesos_classes.json) calcula os pesos a partir do [particionamento das 13 classes](../assets/data/particionamento_T4_2/manifesto_modelo.csv). A [T5.3](#53-varredura-de-arquiteturas-t53) já treinou quatro modelos **exploratoriamente** com ponderação calculada somente a partir das 2.214 imagens de treino. A T5.3 não comparou os experimentos E0 e E1 previstos abaixo, portanto ainda não demonstra o ganho causado pela ponderação. Se o acervo, as classes ou a partição de treino mudarem, os pesos e os treinos terão de ser refeitos. A estratégia atende à mitigação do risco R02.
-
-### Diagnóstico do acervo
-
-O [inventário atualizado da T3.1](#31-inventário-do-acervo) reúne **3.334 imagens em 14 classes de origem**: 1.510 do AgroInsect e 1.824 do iNaturalist / field. A T3.5 define **13 classes de saída**, reunindo *Spodoptera eridania* e *S. cosmioides* em lagarta-das-vagens. Após as decisões de qualidade e escopo da T4.2, incluindo os complementos do acervo anterior, o manifesto atual contém **3.163 imagens**: **2.214 de treino, 475 de validação e 474 de teste**. As contagens de seleção da T3.5 e as do inventário bruto representam etapas anteriores; para balanceamento, prevalece o manifesto por imagem da T4.2.
-
-A tabela usa o [resumo atual por classe](../assets/data/particionamento_T4_2/resumo_modelo.csv), com os mesmos índices da [lista definitiva](../assets/data/classes-modelo.csv). Os pesos foram calculados exclusivamente com os originais de treino e conferidos contra o [artefato da T4.5](../assets/data/pipeline_T4_5/pesos_classes.json); são exibidos com seis casas decimais, mantendo a precisão completa no JSON.
-
-| Índice | Classe | Total no modelo | Treino | Validação | Teste | Peso de treino |
-| ---: | --- | ---: | ---: | ---: | ---: | ---: |
-| 0 | Vaquinha (Diabrotica speciosa) | 1.049 | 735 | 157 | 157 | 0,231711 |
-| 1 | Cigarrinha-do-milho (Dalbulus maidis) | 198 | 138 | 30 | 30 | 1,234114 |
-| 2 | Percevejo-barriga-verde (Dichelops/Diceraeus) | 282 | 198 | 42 | 42 | 0,860140 |
-| 3 | Lagarta-do-cartucho (Spodoptera frugiperda) | 407 | 285 | 61 | 61 | 0,597571 |
-| 4 | Percevejo-marrom (Euschistus heros) | 65 | 45 | 10 | 10 | 3,784615 |
-| 5 | Percevejo-verde (Nezara viridula) | 92 | 64 | 14 | 14 | 2,661058 |
-| 6 | Percevejo-asa-preta (Edessa meditabunda) | 75 | 53 | 11 | 11 | 3,213353 |
-| 7 | Percevejo-do-milho (Leptoglossus zonatus) | 79 | 55 | 12 | 12 | 3,096503 |
-| 8 | Lagarta-falsa-medideira (Chrysodeixis includens) | 79 | 55 | 12 | 12 | 3,096503 |
-| 9 | Lagarta-da-soja (Anticarsia gemmatalis) | 43 | 30 | 7 | 6 | 5,676923 |
-| 10 | Lagarta-das-vagens (Spodoptera eridania e S. cosmioides) | 158 | 110 | 24 | 24 | 1,548252 |
-| 11 | Astylus variegatus | 474 | 332 | 71 | 71 | 0,512975 |
-| 12 | Cigarrinha-das-pastagens (Deois flavopicta) | 162 | 114 | 24 | 24 | 1,493927 |
-| **Total** | **13 classes** | **3.163** | **2.214** | **475** | **474** | — |
-
-No treino, a razão entre a maior e a menor classe é **735/30 = 24,5:1**. A vaquinha concentra **33,2%** das imagens de treino, enquanto a lagarta-da-soja representa **1,4%**. Todas as classes têm grupos nas três partições, conforme a auditoria da T4.2. Essa distribuição fundamenta a ponderação inicial. Se houver modelos separados por cultura, as frequências e os pesos deverão ser recalculados separadamente para cada modelo.
-
-A limitação principal combina desbalanceamento e escassez de exemplos independentes. Nenhuma técnica de balanceamento substitui a coleta de imagens novas ou a definição de classes visualmente distinguíveis.
-
-### Comparação das abordagens
-
-| Abordagem | Benefício | Limitação no acervo atual | Decisão |
-| --- | --- | --- | --- |
-| Ponderação de classes | Aumenta a contribuição das classes raras na perda e conserva todas as imagens disponíveis. | Também aumenta a influência de eventuais erros de rótulo e pode favorecer memorização de classes com poucos exemplos. | Aplicada exploratoriamente na T5.3; reavaliar quando o acervo for ampliado. |
-| Sobreamostragem | Faz as classes raras aparecerem mais vezes nos lotes de treino. | Repete os mesmos exemplares; não acrescenta diversidade independente e pode causar sobreajuste. | Alternativa a comparar, sem pesos inversos simultâneos. |
-| Subamostragem | Reduz a participação das classes mais frequentes. | Descartaria imagens úteis das classes majoritárias sem acrescentar diversidade às minoritárias. | Não adotar inicialmente. |
-| Ponderação + sobreamostragem | Permite ajustar frequência e contribuição na perda separadamente. | Aplicar ambas integralmente sobrecorrige as classes raras e dificulta atribuir a origem de um ganho. | Não adotar inicialmente; exige novo experimento com pesos ajustados à distribuição efetivamente amostrada. |
-
-A [documentação do TensorFlow sobre dados desbalanceados](https://www.tensorflow.org/tutorials/structured_data/imbalanced_data) apresenta ponderação e sobreamostragem e discute suas diferenças na atualização por lotes. Essa referência trata de classificação binária; a comparação experimental aqui será multiclasse, no acervo do Agro App, sem assumir transferência dos resultados do tutorial.
-
-### Cálculo e aplicação dos pesos
-
-Para cada classe aprovada `c`, calcular:
-
-```text
-N = número de imagens originais no conjunto de treino do modelo
-K = número de classes aprovadas para esse modelo
-n_c = número de imagens originais da classe c no treino
-w_c = N / (K × n_c)
-```
-
-Essa é a regra de ponderação balanceada descrita pelo [scikit-learn em `compute_class_weight`](https://scikit-learn.org/stable/modules/generated/sklearn.utils.class_weight.compute_class_weight.html). Com amostragem natural, a contribuição potencial de cada classe passa a ser `n_c × w_c = N/K`. A média dos pesos sobre as imagens de treino é 1, preservando a escala média da ponderação.
-
-No treinamento multiclasse, multiplicar a entropia cruzada de cada exemplo pelo peso de sua classe antes de calcular a média do lote. No fluxo Keras previsto para os experimentos, fornecer o mapa de índices de saída para pesos por meio de `class_weight`; não aplicar simultaneamente o mesmo peso via `sample_weight`. O mapa de índices deve corresponder exatamente ao manifesto de classes do modelo.
-
-Na partição atual, **`N = 2.214` e `K = 13`**. Assim, vaquinha (`n_c = 735`) recebe `2214 / (13 × 735) ≈ 0,231711`, e lagarta-da-soja (`n_c = 30`) recebe `2214 / (13 × 30) ≈ 5,676923`. Validação, teste e versões aumentadas não entram em `N` nem em `n_c`.
-
-O cálculo está implementado em `_pesos_balanceados` no [pipeline T4.5](../src/pipeline_preparacao_t4_5.py), que filtra `particao == "treino"` antes de contar os registros originais. Para reproduzir os pesos, executar `python -m src.pipeline_preparacao_t4_5` na raiz do repositório. O treinamento T5.1 consome esse contrato por meio de [dados_treino.py](../src/dados_treino.py). A sobreamostragem permanece apenas como alternativa E2 para comparação; não integra a configuração inicial.
-
-Recalcular os pesos em cada partição de treinamento, inclusive em cada rodada de validação cruzada. Não utilizar as frequências de validação ou teste, nem contar versões aumentadas como novas imagens originais. Uma classe com `n_c = 0` torna a configuração inválida: revisar a partição ou o escopo antes de treinar, sem substituir a divisão por zero por um peso arbitrário.
-
-### Partições, classes escassas e aumento de dados
-
-1. Usar as classes e decisões de duplicidade registradas no inventário, com rastreabilidade das fusões e exclusões até os IDs de origem.
-2. Separar treino, validação e teste por grupos de origem: imagens idênticas, versões derivadas e fotos correlacionadas da mesma planta ou captura devem permanecer na mesma partição. Preservar as proporções de classes quando houver grupos suficientes; a separação por grupos tem prioridade sobre a estratificação. A [documentação do scikit-learn sobre validação cruzada](https://scikit-learn.org/stable/modules/cross_validation.html) descreve a combinação de grupos e estratificação.
-3. Conferir a presença de exemplos independentes de cada classe nas partições. Uma única imagem não permite avaliar a mesma classe em treino e em uma partição independente. Duas imagens ou grupos não permitem representá-la simultaneamente em treino, validação e teste. Não forçar uma divisão percentual fixa quando a integridade dos grupos exigir outra distribuição.
-4. Priorizar a complementação das classes insuficientes. Até que haja grupos independentes para treinamento, seleção e avaliação, tratá-las como exploratórias e não declarar desempenho validado para elas. Se for necessário restringir o MVP, registrar o escopo efetivamente avaliado; agrupamentos só podem decorrer de decisão agronômica, não da necessidade de aumentar contagens.
-5. Aplicar aumento de dados somente depois da divisão, durante o treino, preservando o ID e a partição do original. Usar transformações moderadas e agronomicamente plausíveis, que não removam lesões nem alterem cores diagnósticas. As transformações deverão ser inspecionadas por amostra; não fixar parâmetros sem observar as imagens.
-
-Validação e teste mantêm suas imagens originais, com apenas o pré-processamento determinístico exigido pelo modelo, sem sobreamostragem, subamostragem ou pesos de balanceamento nas métricas. O teste T4.2 foi consultado na T5.3 e passou a ter caráter exploratório; a avaliação final dependerá do novo conjunto descrito na seção 5.3. Quando se usar validação cruzada para selecionar a estratégia, verificar previamente se cada classe possui grupos suficientes para as rodadas escolhidas.
-
-### Plano de comparação e seleção
-
-Comparar as configurações abaixo no mesmo escopo de classes avaliáveis e nas mesmas partições. Manter arquitetura, inicialização, transformações, orçamento de atualizações do otimizador e regra de parada equivalentes; registrar as sementes. Quando viável, usar três sementes por configuração e apresentar média e dispersão dos resultados.
-
-| Experimento | Amostragem de treino | Peso na perda | Finalidade |
-| --- | --- | --- | --- |
-| E0 — Referência | Natural, embaralhada | 1 para todas as classes | Medir o comportamento sem correção. |
-| E1 — Estratégia inicial | Natural, embaralhada | `N / (K × n_c)` | Medir o efeito da ponderação. |
-| E2 — Alternativa | Selecionar a classe uniformemente e depois uma imagem dessa classe, com reposição | 1 para todas as classes | Medir o efeito da sobreamostragem sem dupla correção. |
-
-Em E2, realizar exatamente o mesmo número de atualizações que nos demais experimentos e gerar transformações de treino a cada apresentação da imagem. A repetição não será registrada como aumento do número de imagens independentes. Não usar a quantidade de épocas isoladamente para igualar o orçamento se o tamanho lógico do conjunto amostrado mudar.
-
-Selecionar a configuração pela **F1 macro na validação**, reportando também precisão, recall, F1 e suporte por classe, balanced accuracy (média do recall das classes) e matriz de confusão. A acurácia global será complementar. Classes sem exemplos em uma partição devem ser indicadas como não avaliadas, com a cobertura explicitada; não omitir silenciosamente essas classes nem interpretar métricas sem suporte como desempenho observado.
-
-Verificar especialmente as classes minoritárias e os pares confundíveis apontados na análise visual. Se a correção elevar recall às custas de muitas identificações incorretas, investigar a matriz de confusão e a precisão por classe antes de adotá-la. Em caso de resultados próximos à variação entre sementes, preferir a configuração mais simples; se E1 não apresentar benefício demonstrável frente a E0, registrar o resultado e rever a decisão inicial. Não escolher a estratégia a partir do teste final.
-
-Depois da seleção, ajustar a política de confiança usando somente dados de validação independentes: o balanceamento pode mudar a distribuição das saídas do modelo. Confirmar o desempenho e o comportamento inconclusivo no teste final, inclusive após a quantização. Não interpretar a confiança bruta como probabilidade calibrada sem avaliação.
-
-### Registros e critérios de conclusão
-
-O experimento deverá guardar versão do dataset, classes aprovadas e respectivos índices, IDs e grupos de cada partição, contagens originais de treino por classe, pesos aplicados, configuração de amostragem, transformações, sementes, orçamento de treinamento e métricas por classe. Esses registros permitem reproduzir o cálculo e identificar alterações após a ampliação do acervo.
-
-A **definição da T4.3** fica consolidada nesta seção: ponderação como escolha inicial, justificativa baseada no dataset atualizado e nas 13 classes finais, pesos calculados somente sobre os originais de treino e integração com o contrato da T4.5. A verificação reproduzível está em `python tests/validar_pipeline_t4_5.py`, que confere as partições, o cálculo dos pesos e sua média ponderada igual a 1. A **validação experimental** ficará concluída após a execução de E0/E1 (e E2 se necessário), registro das métricas e justificativa da configuração selecionada. Até lá, não há evidência para afirmar melhora de desempenho ou generalização nas classes do modelo.
-
-validadas (Seção 1.4, item 7). O [dicionário de classes da T3.4](#dicionário-de-classes-t34)
+validadas (Seção 1.4, item 7). O [dicionário de classes da T3.4](#34-dicionário-de-classes-t34)
 registra as relações entre os rótulos candidatos a duplicidade. A decisão de unificar
 ou manter classes separadas depende de validação agronômica e do conteúdo técnico do parceiro.
 
@@ -1166,7 +1052,7 @@ Essas exclusões se referem ao treinamento do modelo de reconhecimento por fotos
 ### Observação
 
 **Nenhuma imagem permanece em revisar** na planilha de decisões desta etapa. A inspeção visual registrada nela cobriu as **126 imagens** dos acervos anteriores e **381 imagens distintas de `dataset`**, incluindo as pendências e amostras adicionais. As outras **2.953 imagens de `dataset` não receberam inspeção visual individual**; a ausência de pendências na planilha não equivale a uma revisão visual completa do acervo. A marcação **excluir** retira a imagem da seleção de treinamento; os arquivos originais foram preservados. Não foram feitos testes de desempenho do modelo para quantificar o efeito das exclusões.
-## Dicionário de classes (T3.4)
+## 3.4 Dicionário de classes (T3.4)
 
 O dicionário relaciona as **55 ocorrências e 126 imagens** do inventário às culturas, aos agentes causais de referência e ao vínculo de conteúdo técnico. Cobre 4 ocorrências de milho/pragas (16 imagens), 10 de soja/pragas (13 imagens) e 41 de soja/doenças (97 imagens). Não inclui classes de plantas daninhas, deficiências ou plantas sadias, pois não há registros dessas categorias no inventário recebido.
 
@@ -1285,7 +1171,7 @@ As associações usam como referência os [manuais de doenças de soja da Embrap
 
 Para atualizar a tabela após editar o JSON: `python assets/data/gerar_dicionario.py`. Para verificar cobertura do inventário, contagens, unicidade e integridade das relações: `python tests/validar_dicionario.py`. Os comandos usam somente a biblioteca padrão do Python.
 
-## 3.5. Classes do MVP
+## 3.5 Classes do MVP (T3.5)
 
 ### Objetivo
 
@@ -1293,7 +1179,7 @@ Definir quais classes de pragas e doenças entram e quais ficam de fora do MVP, 
 
 ### Metodologia
 
-A definição partiu do [Inventário do acervo](#inventário-do-acervo) do Agro App, complementado por fotos de campo do iNaturalist e pelas imagens do AgroInsect. Os dados foram tratados como uma base única, desconsiderando imagens repetidas e figuras que não são fotografias. Classes com mais de uma pasta ou nome na base foram reunidas em uma só (por exemplo, os corós e as duas espécies da lagarta-das-vagens).
+A definição partiu do [Inventário do acervo](#31-inventário-do-acervo) do Agro App, complementado por fotos de campo do iNaturalist e pelas imagens do AgroInsect. Os dados foram tratados como uma base única, desconsiderando imagens repetidas e figuras que não são fotografias. Classes com mais de uma pasta ou nome na base foram reunidas em uma só (por exemplo, os corós e as duas espécies da lagarta-das-vagens).
 
 A decisão considerou dois pontos: o **volume de imagens**, principal critério, porque um volume maior dá melhores condições de treinar e avaliar o modelo, e a **qualidade das imagens**, isto é, se o inseto ou o sintoma aparece com nitidez. Entram as classes com maior volume e imagens adequadas; ficam de fora as que têm poucas imagens.
 
@@ -1427,6 +1313,107 @@ O agrupamento registrado impede que vínculos conhecidos e duplicatas confirmada
 A conferência do [manifesto](../assets/data/particionamento_T4_2/manifesto_modelo.csv) com a planilha [T3.3 revisada](../assets/data/diagnostico_qualidade_T3_3_revisado.xlsx) encontrou **3.163 imagens mantidas no modelo** e **178 imagens excluídas das mesmas classes candidatas**. A T3.5 registrava 3.233 imagens aproveitáveis, mas não fornece uma lista nominal que permita identificar, uma a uma, quais imagens compunham essa contagem. A diferença de 70 se divide em **4 imagens AGRO-003**, mantidas no acervo e fora do escopo das 13 classes do modelo, e **66 imagens de diferença líquida** entre as contagens T3.5 e as decisões da T3.3 revisada. A origem individual dessas 66 não pode ser determinada apenas com a contagem agregada da T3.5; não foram adicionadas nem excluídas imagens do manifesto nesta conferência.
 
 No manifesto, nenhum `grupo_particao`, `grupo_origem`, grupo de duplicatas exatas ou visuais confirmado, nem hash SHA-256 presente atravessa duas partições. Essa verificação usa os vínculos disponíveis nos arquivos versionados.
+
+## 4.3 Estratégia de balanceamento
+
+### Objetivo e decisão
+
+Adotar **ponderação de classes na função de perda**, com amostragem natural das imagens de treino, como estratégia inicial para reduzir a preferência do modelo pelas classes mais frequentes. A reamostragem será avaliada em um experimento separado caso a ponderação não ofereça recuperação adequada das classes minoritárias. Não aplicar as duas correções simultaneamente na configuração inicial.
+
+Esta é a decisão inicial de balanceamento. O [pipeline T4.5](../assets/data/pipeline_T4_5/pesos_classes.json) calcula os pesos a partir do [particionamento das 13 classes](../assets/data/particionamento_T4_2/manifesto_modelo.csv). A [T5.3](#53-varredura-de-arquiteturas-t53) já treinou quatro modelos **exploratoriamente** com ponderação calculada somente a partir das 2.214 imagens de treino. A T5.3 não comparou os experimentos E0 e E1 previstos abaixo, portanto ainda não demonstra o ganho causado pela ponderação. Se o acervo, as classes ou a partição de treino mudarem, os pesos e os treinos terão de ser refeitos. A estratégia atende à mitigação do risco R02.
+
+### Diagnóstico do acervo
+
+O [inventário atualizado da T3.1](#31-inventário-do-acervo) reúne **3.334 imagens em 14 classes de origem**: 1.510 do AgroInsect e 1.824 do iNaturalist / field. A T3.5 define **13 classes de saída**, reunindo *Spodoptera eridania* e *S. cosmioides* em lagarta-das-vagens. Após as decisões de qualidade e escopo da T4.2, incluindo os complementos do acervo anterior, o manifesto atual contém **3.163 imagens**: **2.214 de treino, 475 de validação e 474 de teste**. As contagens de seleção da T3.5 e as do inventário bruto representam etapas anteriores; para balanceamento, prevalece o manifesto por imagem da T4.2.
+
+A tabela usa o [resumo atual por classe](../assets/data/particionamento_T4_2/resumo_modelo.csv), com os mesmos índices da [lista definitiva](../assets/data/classes-modelo.csv). Os pesos foram calculados exclusivamente com os originais de treino e conferidos contra o [artefato da T4.5](../assets/data/pipeline_T4_5/pesos_classes.json); são exibidos com seis casas decimais, mantendo a precisão completa no JSON.
+
+| Índice | Classe | Total no modelo | Treino | Validação | Teste | Peso de treino |
+| ---: | --- | ---: | ---: | ---: | ---: | ---: |
+| 0 | Vaquinha (Diabrotica speciosa) | 1.049 | 735 | 157 | 157 | 0,231711 |
+| 1 | Cigarrinha-do-milho (Dalbulus maidis) | 198 | 138 | 30 | 30 | 1,234114 |
+| 2 | Percevejo-barriga-verde (Dichelops/Diceraeus) | 282 | 198 | 42 | 42 | 0,860140 |
+| 3 | Lagarta-do-cartucho (Spodoptera frugiperda) | 407 | 285 | 61 | 61 | 0,597571 |
+| 4 | Percevejo-marrom (Euschistus heros) | 65 | 45 | 10 | 10 | 3,784615 |
+| 5 | Percevejo-verde (Nezara viridula) | 92 | 64 | 14 | 14 | 2,661058 |
+| 6 | Percevejo-asa-preta (Edessa meditabunda) | 75 | 53 | 11 | 11 | 3,213353 |
+| 7 | Percevejo-do-milho (Leptoglossus zonatus) | 79 | 55 | 12 | 12 | 3,096503 |
+| 8 | Lagarta-falsa-medideira (Chrysodeixis includens) | 79 | 55 | 12 | 12 | 3,096503 |
+| 9 | Lagarta-da-soja (Anticarsia gemmatalis) | 43 | 30 | 7 | 6 | 5,676923 |
+| 10 | Lagarta-das-vagens (Spodoptera eridania e S. cosmioides) | 158 | 110 | 24 | 24 | 1,548252 |
+| 11 | Astylus variegatus | 474 | 332 | 71 | 71 | 0,512975 |
+| 12 | Cigarrinha-das-pastagens (Deois flavopicta) | 162 | 114 | 24 | 24 | 1,493927 |
+| **Total** | **13 classes** | **3.163** | **2.214** | **475** | **474** | — |
+
+No treino, a razão entre a maior e a menor classe é **735/30 = 24,5:1**. A vaquinha concentra **33,2%** das imagens de treino, enquanto a lagarta-da-soja representa **1,4%**. Todas as classes têm grupos nas três partições, conforme a auditoria da T4.2. Essa distribuição fundamenta a ponderação inicial. Se houver modelos separados por cultura, as frequências e os pesos deverão ser recalculados separadamente para cada modelo.
+
+A limitação principal combina desbalanceamento e escassez de exemplos independentes. Nenhuma técnica de balanceamento substitui a coleta de imagens novas ou a definição de classes visualmente distinguíveis.
+
+### Comparação das abordagens
+
+| Abordagem | Benefício | Limitação no acervo atual | Decisão |
+| --- | --- | --- | --- |
+| Ponderação de classes | Aumenta a contribuição das classes raras na perda e conserva todas as imagens disponíveis. | Também aumenta a influência de eventuais erros de rótulo e pode favorecer memorização de classes com poucos exemplos. | Aplicada exploratoriamente na T5.3; reavaliar quando o acervo for ampliado. |
+| Sobreamostragem | Faz as classes raras aparecerem mais vezes nos lotes de treino. | Repete os mesmos exemplares; não acrescenta diversidade independente e pode causar sobreajuste. | Alternativa a comparar, sem pesos inversos simultâneos. |
+| Subamostragem | Reduz a participação das classes mais frequentes. | Descartaria imagens úteis das classes majoritárias sem acrescentar diversidade às minoritárias. | Não adotar inicialmente. |
+| Ponderação + sobreamostragem | Permite ajustar frequência e contribuição na perda separadamente. | Aplicar ambas integralmente sobrecorrige as classes raras e dificulta atribuir a origem de um ganho. | Não adotar inicialmente; exige novo experimento com pesos ajustados à distribuição efetivamente amostrada. |
+
+A [documentação do TensorFlow sobre dados desbalanceados](https://www.tensorflow.org/tutorials/structured_data/imbalanced_data) apresenta ponderação e sobreamostragem e discute suas diferenças na atualização por lotes. Essa referência trata de classificação binária; a comparação experimental aqui será multiclasse, no acervo do Agro App, sem assumir transferência dos resultados do tutorial.
+
+### Cálculo e aplicação dos pesos
+
+Para cada classe aprovada `c`, calcular:
+
+```text
+N = número de imagens originais no conjunto de treino do modelo
+K = número de classes aprovadas para esse modelo
+n_c = número de imagens originais da classe c no treino
+w_c = N / (K × n_c)
+```
+
+Essa é a regra de ponderação balanceada descrita pelo [scikit-learn em `compute_class_weight`](https://scikit-learn.org/stable/modules/generated/sklearn.utils.class_weight.compute_class_weight.html). Com amostragem natural, a contribuição potencial de cada classe passa a ser `n_c × w_c = N/K`. A média dos pesos sobre as imagens de treino é 1, preservando a escala média da ponderação.
+
+No treinamento multiclasse, multiplicar a entropia cruzada de cada exemplo pelo peso de sua classe antes de calcular a média do lote. No fluxo Keras previsto para os experimentos, fornecer o mapa de índices de saída para pesos por meio de `class_weight`; não aplicar simultaneamente o mesmo peso via `sample_weight`. O mapa de índices deve corresponder exatamente ao manifesto de classes do modelo.
+
+Na partição atual, **`N = 2.214` e `K = 13`**. Assim, vaquinha (`n_c = 735`) recebe `2214 / (13 × 735) ≈ 0,231711`, e lagarta-da-soja (`n_c = 30`) recebe `2214 / (13 × 30) ≈ 5,676923`. Validação, teste e versões aumentadas não entram em `N` nem em `n_c`.
+
+O cálculo está implementado em `_pesos_balanceados` no [pipeline T4.5](../src/pipeline_preparacao_t4_5.py), que filtra `particao == "treino"` antes de contar os registros originais. Para reproduzir os pesos, executar `python -m src.pipeline_preparacao_t4_5` na raiz do repositório. O treinamento T5.1 consome esse contrato por meio de [dados_treino.py](../src/dados_treino.py). A sobreamostragem permanece apenas como alternativa E2 para comparação; não integra a configuração inicial.
+
+Recalcular os pesos em cada partição de treinamento, inclusive em cada rodada de validação cruzada. Não utilizar as frequências de validação ou teste, nem contar versões aumentadas como novas imagens originais. Uma classe com `n_c = 0` torna a configuração inválida: revisar a partição ou o escopo antes de treinar, sem substituir a divisão por zero por um peso arbitrário.
+
+### Partições, classes escassas e aumento de dados
+
+1. Usar as classes e decisões de duplicidade registradas no inventário, com rastreabilidade das fusões e exclusões até os IDs de origem.
+2. Separar treino, validação e teste por grupos de origem: imagens idênticas, versões derivadas e fotos correlacionadas da mesma planta ou captura devem permanecer na mesma partição. Preservar as proporções de classes quando houver grupos suficientes; a separação por grupos tem prioridade sobre a estratificação. A [documentação do scikit-learn sobre validação cruzada](https://scikit-learn.org/stable/modules/cross_validation.html) descreve a combinação de grupos e estratificação.
+3. Conferir a presença de exemplos independentes de cada classe nas partições. Uma única imagem não permite avaliar a mesma classe em treino e em uma partição independente. Duas imagens ou grupos não permitem representá-la simultaneamente em treino, validação e teste. Não forçar uma divisão percentual fixa quando a integridade dos grupos exigir outra distribuição.
+4. Priorizar a complementação das classes insuficientes. Até que haja grupos independentes para treinamento, seleção e avaliação, tratá-las como exploratórias e não declarar desempenho validado para elas. Se for necessário restringir o MVP, registrar o escopo efetivamente avaliado; agrupamentos só podem decorrer de decisão agronômica, não da necessidade de aumentar contagens.
+5. Aplicar aumento de dados somente depois da divisão, durante o treino, preservando o ID e a partição do original. Usar transformações moderadas e agronomicamente plausíveis, que não removam lesões nem alterem cores diagnósticas. As transformações deverão ser inspecionadas por amostra; não fixar parâmetros sem observar as imagens.
+
+Validação e teste mantêm suas imagens originais, com apenas o pré-processamento determinístico exigido pelo modelo, sem sobreamostragem, subamostragem ou pesos de balanceamento nas métricas. O teste T4.2 foi consultado na T5.3 e passou a ter caráter exploratório; a avaliação final dependerá do novo conjunto descrito na seção 5.3. Quando se usar validação cruzada para selecionar a estratégia, verificar previamente se cada classe possui grupos suficientes para as rodadas escolhidas.
+
+### Plano de comparação e seleção
+
+Comparar as configurações abaixo no mesmo escopo de classes avaliáveis e nas mesmas partições. Manter arquitetura, inicialização, transformações, orçamento de atualizações do otimizador e regra de parada equivalentes; registrar as sementes. Quando viável, usar três sementes por configuração e apresentar média e dispersão dos resultados.
+
+| Experimento | Amostragem de treino | Peso na perda | Finalidade |
+| --- | --- | --- | --- |
+| E0 — Referência | Natural, embaralhada | 1 para todas as classes | Medir o comportamento sem correção. |
+| E1 — Estratégia inicial | Natural, embaralhada | `N / (K × n_c)` | Medir o efeito da ponderação. |
+| E2 — Alternativa | Selecionar a classe uniformemente e depois uma imagem dessa classe, com reposição | 1 para todas as classes | Medir o efeito da sobreamostragem sem dupla correção. |
+
+Em E2, realizar exatamente o mesmo número de atualizações que nos demais experimentos e gerar transformações de treino a cada apresentação da imagem. A repetição não será registrada como aumento do número de imagens independentes. Não usar a quantidade de épocas isoladamente para igualar o orçamento se o tamanho lógico do conjunto amostrado mudar.
+
+Selecionar a configuração pela **F1 macro na validação**, reportando também precisão, recall, F1 e suporte por classe, balanced accuracy (média do recall das classes) e matriz de confusão. A acurácia global será complementar. Classes sem exemplos em uma partição devem ser indicadas como não avaliadas, com a cobertura explicitada; não omitir silenciosamente essas classes nem interpretar métricas sem suporte como desempenho observado.
+
+Verificar especialmente as classes minoritárias e os pares confundíveis apontados na análise visual. Se a correção elevar recall às custas de muitas identificações incorretas, investigar a matriz de confusão e a precisão por classe antes de adotá-la. Em caso de resultados próximos à variação entre sementes, preferir a configuração mais simples; se E1 não apresentar benefício demonstrável frente a E0, registrar o resultado e rever a decisão inicial. Não escolher a estratégia a partir do teste final.
+
+Depois da seleção, ajustar a política de confiança usando somente dados de validação independentes: o balanceamento pode mudar a distribuição das saídas do modelo. Confirmar o desempenho e o comportamento inconclusivo no teste final, inclusive após a quantização. Não interpretar a confiança bruta como probabilidade calibrada sem avaliação.
+
+### Registros e critérios de conclusão
+
+O experimento deverá guardar versão do dataset, classes aprovadas e respectivos índices, IDs e grupos de cada partição, contagens originais de treino por classe, pesos aplicados, configuração de amostragem, transformações, sementes, orçamento de treinamento e métricas por classe. Esses registros permitem reproduzir o cálculo e identificar alterações após a ampliação do acervo.
+
+A **definição da T4.3** fica consolidada nesta seção: ponderação como escolha inicial, justificativa baseada no dataset atualizado e nas 13 classes finais, pesos calculados somente sobre os originais de treino e integração com o contrato da T4.5. A verificação reproduzível está em `python tests/validar_pipeline_t4_5.py`, que confere as partições, o cálculo dos pesos e sua média ponderada igual a 1. A **validação experimental** ficará concluída após a execução de E0/E1 (e E2 se necessário), registro das métricas e justificativa da configuração selecionada. Até lá, não há evidência para afirmar melhora de desempenho ou generalização nas classes do modelo.
 
 ## 4.4 Rotinas de aumento de dados
 
@@ -2673,7 +2660,7 @@ avaliador para aceitar esse novo índice sem confundi-lo com o índice de treino
 
 ### Candidato selecionado na T5.6 — Keras FP32
 
-A matriz abaixo corresponde ao **EfficientNet-Lite0 do pacote `candidato_T5_6_20261026`**, o mesmo checkpoint avaliado na [T6.1](#61-metricas-por-classe-t61). Foi reconstruída a partir das previsões salvas naquela avaliação: **473 imagens de teste, 13 classes, 401 acertos e 72 erros**. Não houve nova inferência ou treinamento. As matrizes históricas de 474 imagens, apresentadas adiante, pertencem às rodadas anteriores.
+A matriz abaixo corresponde ao **EfficientNet-Lite0 do pacote `candidato_T5_6_20261026`**, o mesmo checkpoint avaliado na [T6.1](#61-métricas-por-classe-t61). Foi reconstruída a partir das previsões salvas naquela avaliação: **473 imagens de teste, 13 classes, 401 acertos e 72 erros**. Não houve nova inferência ou treinamento. As matrizes históricas de 474 imagens, apresentadas adiante, pertencem às rodadas anteriores.
 
 ![Matriz de confusão do candidato Keras FP32, com contagens e normalização por classe real](../assets/matriz_confusao_T6_2_candidato_keras.png)
 
@@ -3944,7 +3931,7 @@ O comando de inicialização e o build preparam os artefatos web a partir dos mo
 
 **Autor:** Lucas. **Revisor:** Glauco. **Data:** 08/11/2026.
 
-**Situação: concluída para o MVP, com fichas da equipe.** A associação entre cada classe do modelo, o dicionário de classes e a base local de conteúdo está implementada, testada e funciona sem rede. O catálogo do Agro App não foi recebido e o parceiro informou que não enviará o conteúdo técnico; por isso a equipe redigiu **fichas informativas próprias**, com a fonte citada em cada frase (página; seção, quando a fonte é uma página web; ou a análise de erros do modelo, nas frases de confusão), conforme a [decisão formal da seção 13.1](#131-fichas-técnicas-da-equipe-e-decisão-formal-t131-e-t132). Em 23/11/2026 as 13 fichas foram **liberadas no aplicativo** (`validated: true`, registro da liberação em `validacao_conteudo`). Neste projeto, **`validado` quer dizer liberado pela equipe para o MVP, não validação agronômica**: as 13 classes resolvem para conteúdo e o RNF-08 (100% das classes com conteúdo) é atendido para o MVP. As fichas são **informativas, não oficiais e sem validação agronômica do parceiro**, e o app diz isso na tela; o conteúdo poderá ser aprimorado depois com o material do parceiro (seção 13.1, lacunas).
+**Situação: concluída para o MVP, com fichas da equipe.** A associação entre cada classe do modelo, o dicionário de classes e a base local de conteúdo está implementada, testada e funciona sem rede. O catálogo do Agro App não foi recebido e o parceiro informou que não enviará o conteúdo técnico; por isso a equipe redigiu **fichas informativas próprias**, com a fonte citada em cada frase (página; seção, quando a fonte é uma página web; ou a análise de erros do modelo, nas frases de confusão), conforme a [decisão formal da seção 13.1](#131-fichas-técnicas-da-equipe-e-decisão-formal-t131). Em 23/11/2026 as 13 fichas foram **liberadas no aplicativo** (`validated: true`, registro da liberação em `validacao_conteudo`). Neste projeto, **`validado` quer dizer liberado pela equipe para o MVP, não validação agronômica**: as 13 classes resolvem para conteúdo e o RNF-08 (100% das classes com conteúdo) é atendido para o MVP. As fichas são **informativas, não oficiais e sem validação agronômica do parceiro**, e o app diz isso na tela; o conteúdo poderá ser aprimorado depois com o material do parceiro (seção 13.1, lacunas).
 
 ### Fluxo
 
@@ -3973,7 +3960,7 @@ A T9.3 **não depende do limiar de confiança**. A [T9.2](#92-tratamento-do-limi
 | 11 | Astylus variegatus | Milho | 12 | — | `praga.astylus_variegatus` | 0, 2, 4, 7, 10 | disponível (ficha da equipe) |
 | 12 | Cigarrinha-das-pastagens (Deois flavopicta) | Milho | 13 | — | `praga.deois_flavopicta` | 0, 7, 10 | disponível (ficha da equipe) |
 
-O nome exibido é o do modelo. Na classe 11, o dataset do parceiro usa também "larva-angorá"; esse nome comum não foi adotado, para não divergir do modelo e do restante da documentação. A coluna "Classes relacionadas" vem dos 27 pares da [T6.4](#64-proposta-de-tratamento-de-classes-t64). Na classe 10, os IDs 10 e 11 do inventário (*Spodoptera eridania* e *S. cosmioides*) formam uma única classe, conforme a [seção 3.5](#35-classes-do-mvp).
+O nome exibido é o do modelo. Na classe 11, o dataset do parceiro usa também "larva-angorá"; esse nome comum não foi adotado, para não divergir do modelo e do restante da documentação. A coluna "Classes relacionadas" vem dos 27 pares da [T6.4](#64-proposta-de-tratamento-de-classes-t64). Na classe 10, os IDs 10 e 11 do inventário (*Spodoptera eridania* e *S. cosmioides*) formam uma única classe, conforme a [seção 3.5](#35-classes-do-mvp-t35).
 
 ### Regras de associação
 
@@ -3984,11 +3971,11 @@ O nome exibido é o do modelo. Na classe 11, o dataset do parceiro usa também "
 
 ### Origem da identificação
 
-Nome comum e científico vêm da tabela das classes no `instruções.md` do dataset do parceiro (pasta `Agro_App/dataset/dataset` do Drive da equipe). Os nomes científicos são **referência a validar por agrônomo**, como o próprio arquivo indica. As pastas `Milho`, `Soja` e `dataset` do Drive contêm só imagens e metadados de imagem; não há texto técnico nelas. A associação com o dicionário da [T3.4](#dicionário-de-classes-t34) existe só para as três classes que também constam do acervo anterior (índices 1, 7 e 9); as demais não têm ID `AGRO-xxx`.
+Nome comum e científico vêm da tabela das classes no `instruções.md` do dataset do parceiro (pasta `Agro_App/dataset/dataset` do Drive da equipe). Os nomes científicos são **referência a validar por agrônomo**, como o próprio arquivo indica. As pastas `Milho`, `Soja` e `dataset` do Drive contêm só imagens e metadados de imagem; não há texto técnico nelas. A associação com o dicionário da [T3.4](#34-dicionário-de-classes-t34) existe só para as três classes que também constam do acervo anterior (índices 1, 7 e 9); as demais não têm ID `AGRO-xxx`.
 
 ### Mapa de fontes de conteúdo
 
-O [mapa de fontes](../assets/data/conteudo_T9_3/fontes_conteudo.json) indica, por classe, as publicações em que as fichas se baseiam, com a citação da fonte e da página (ou da seção, quando a página web não é numerada). Em 08/11/2026 foram consultadas duas publicações da Embrapa citadas no [dicionário de classes](#dicionário-de-classes-t34); em 20 e 23/11/2026, outras quatorze, para as classes 1, 7 e 12 e para ampliar as demais (tabela da [seção 13.1](#131-fichas-técnicas-da-equipe-e-decisão-formal-t131-e-t132)). As duas primeiras:
+O [mapa de fontes](../assets/data/conteudo_T9_3/fontes_conteudo.json) indica, por classe, as publicações em que as fichas se baseiam, com a citação da fonte e da página (ou da seção, quando a página web não é numerada). Em 08/11/2026 foram consultadas duas publicações da Embrapa citadas no [dicionário de classes](#34-dicionário-de-classes-t34); em 20 e 23/11/2026, outras quatorze, para as classes 1, 7 e 12 e para ampliar as demais (tabela da [seção 13.1](#131-fichas-técnicas-da-equipe-e-decisão-formal-t131)). As duas primeiras:
 
 - **Manual da soja** (SOSA-GÓMEZ et al., 2014): 3ª edição, Embrapa Soja, 102 páginas no PDF. Cada ficha traz as fases do inseto e um parágrafo de danos. Não há seção de manejo.
 - **Artigo da cigarrinha-do-milho** (OLIVEIRA, 2025): artigo da Revista Cultivar Grandes Culturas, de Ivênio Rubens de Oliveira (Embrapa Milho e Sorgo). Trata de sintomas, período de controle e manejo químico e biológico.
@@ -4147,7 +4134,7 @@ O critério pede capturar, classificar e ver o conteúdo em modo avião num apar
 - O pré-cache ocupa cerca de 60 MB. Em aparelhos com pouco espaço o navegador pode recusar, e o app avisa que o modo offline ficou indisponível. O navegador também pode apagar o cache sob pressão de armazenamento.
 - O conteúdo técnico são as fichas da equipe (seção 13.1), sem validação agronômica do parceiro; o painel aparece offline com a ficha e o aviso de que ela não é oficial.
 - A demonstração congelada da Sprint 04 (`frontend/dist`, #49) foi gerada antes desta tarefa e não tem `sw.js`. O pacote da demo precisa ser gerado de novo depois do merge.
-- Modo offline e PWA instalável continuam fora do escopo do produto (`PRODUCT.md`). Esta tarefa só garante que o app, já aberto uma vez, volte a funcionar sem rede.
+- Modo offline e PWA instalável continuam fora do escopo do produto (`frontend/PRODUCT.md`). Esta tarefa só garante que o app, já aberto uma vez, volte a funcionar sem rede.
 
 # 10. Consolidação da avaliação
 
@@ -4523,6 +4510,10 @@ O passo do navegador é opt-in (`tests/limiar-t11-3.spec.ts` é pulado sem `T11_
 
 # 12. Validação de desempenho no dispositivo
 
+## 12.1 Tamanho do modelo e do pacote web (T12.1)
+
+O [relatório T12.1](Validacao_T12_1.md) mede os arquivos Float16 e INT8, o manifesto e os componentes do pacote web da versão 1.0.0, e compara os valores com os limites propostos nos requisitos não funcionais.
+
 ## 12.2 Medição de latência no navegador do dispositivo
 
 O benchmark da aplicação é habilitado por `?benchmark=1`. Executa três aquecimentos e cinquenta análises sequenciais pelo fluxo de produção, sem envio das fotos ao servidor. O relatório JSON preserva amostras brutas e p50/p95, aparelho e condições declarados, user-agent, identidade do modelo efetivamente carregado, runtime, configuração de aceleração e hashes dos arquivos.
@@ -4544,15 +4535,11 @@ As baterias declaradas eram 71% e 70%, respectivamente, com temperatura percebid
 
 Uma gravação complementar de três capturas de imagens em monitor documentou duas respostas com hipóteses e uma inconclusiva, permitindo repetir a captura após esse resultado. A análise visual encontrou aproximadamente **1,0–1,2 s do retorno da câmera ao indicador de análise finalizada**. Até a decisão ficar legível após rolagem, os intervalos a partir do proxy visual da captura foram cerca de **7,6 s, 8,3 s e 4,1 s**, incluindo confirmação humana e navegação na página. Esses números não são inferência isolada nem p95 de cinquenta capturas: a gravação usa uma aproximação visual do disparo, tem interação humana e não comprova ausência de rede. Os [marcos e hashes dos quadros](../assets/data/benchmark_T12_2/camera_20261119/observacoes.json) preservam as evidências e as limitações da medição.
 
-# 13. Testes de usabilidade e navegação
+## 12.3 Testes funcionais no dispositivo (T12.3)
 
-## 13.3 Testes de navegação e apresentação do conteúdo (T13.3)
+O [protocolo T12.3](Testes_Dispositivo_T12_3.md) descreve os testes do pipeline completo no aparelho: captura, galeria, inferência, limiar de confiança, conteúdo técnico e funcionamento offline, com o registro das execuções e das pendências.
 
-Oito testes funcionais automatizados ([`conteudo.spec.ts`](../frontend/tests/conteudo.spec.ts)) verificam, sobre o aplicativo real, o painel de orientações técnicas após a classificação. Cobrem hipótese com conteúdo, troca de hipótese, item não validado, classe sem conteúdo, diagnóstico inconclusivo, nova imagem, resposta atrasada da análise anterior, falha ou recusa da nova foto, troca de abas, ajuda e remoção da foto. Em 22/11/2026, os 19 casos passaram: nenhuma informação incorreta foi exibida e nenhum resultado anterior foi reaproveitado. O aplicativo não precisou de alteração. Com as fichas da T13.1 o painel mudou de formato (seções, fonte por frase e linha "Fonte: … · Elaborado por … · Revisado em …"), e o catálogo fictício e as checagens do teste foram migrados para esse formato.
-
-Os casos com conteúdo usam um catálogo fictício identificado como `TESTE-T13.3`, para não depender do texto das fichas reais, e um caso separado (CAT-01) confere a tela contra o `content.ts` versionado, que desde a T13.1 tem as 13 classes. O worker de inferência é substituído por um dublê de transporte para controlar classe, score e momento de cada resposta; a inferência real segue coberta pelos testes da T9.1/T9.2. Cinco defeitos introduzidos de propósito na interface foram todos detectados. Os casos, os resultados, a verificação de sensibilidade e os limites estão no [relatório da T13.3](Testes_Navegacao_Conteudo_T13_3.md).
-
-# 13. Conteúdo técnico
+# 13. Conteúdo técnico e navegação
 
 ## 13.1 Fichas técnicas da equipe e decisão formal (T13.1)
 
@@ -4566,7 +4553,7 @@ A equipe decidiu:
 2. **Não tratar as fichas como conteúdo oficial nem aprovado pelo parceiro.** São material informativo da equipe; o aplicativo deve dizer isso e **não substitui o engenheiro agrônomo**.
 3. **Não incluir manejo químico** (produtos, doses, calendário de aplicação), pois depende de recomendação agronômica e de registro. A ficha trata apenas de **como reconhecer** e de **danos ou sintomas**, mais a seção **pode ser confundido com**, quando há.
 4. **Liberar as fichas no MVP, com aviso.** Como o MVP precisa mostrar orientação ao usuário final, a equipe decidiu em 23/11/2026 liberar as 13 fichas (`validated: true`, com data e evidência em `validacao_conteudo`). A tela informa que o texto é da equipe, que não é conteúdo oficial do parceiro e que não substitui o engenheiro agrônomo. Uma classe sem ficha validada continuaria mostrando "conteúdo técnico ainda indisponível", sem afirmar orientação.
-5. **Se o parceiro enviar o catálogo oficial no futuro**, ele substitui as fichas da equipe classe a classe (ver a [seção 9.3](#como-liberar-o-conteúdo)).
+5. **Se o parceiro enviar o catálogo oficial no futuro**, ele substitui as fichas da equipe classe a classe (ver a [seção 9.3](#como-liberar-ou-atualizar-o-conteúdo)).
 
 **Impacto no MVP:** o critério "cada classe reconhecida é associada ao conteúdo técnico" é atendido com as fichas da equipe, e não com material do parceiro; o RNF-08 (100% das classes com conteúdo) é atendido. O conteúdo poderá ser substituído ou ampliado depois, classe a classe, com o catálogo ou a validação do parceiro.
 
@@ -4952,6 +4939,12 @@ As 13 fichas foram liberadas no aplicativo em 23/11/2026 com o comando `aprovar`
 - Painel renderizado no navegador (390 px de largura) com a ficha liberada, em 23/11/2026, sem rolagem horizontal; a leitura ao sol em aparelho real não foi avaliada.
 
 **Dependência registrada:** a qualidade do texto depende da validação agronômica, ainda pendente (lacunas na seção 13.1). Até lá, o aviso na tela deixa claro o caráter informativo.
+
+## 13.3 Testes de navegação e apresentação do conteúdo (T13.3)
+
+Oito testes funcionais automatizados ([`conteudo.spec.ts`](../frontend/tests/conteudo.spec.ts)) verificam, sobre o aplicativo real, o painel de orientações técnicas após a classificação. Cobrem hipótese com conteúdo, troca de hipótese, item não validado, classe sem conteúdo, diagnóstico inconclusivo, nova imagem, resposta atrasada da análise anterior, falha ou recusa da nova foto, troca de abas, ajuda e remoção da foto. Em 22/11/2026, os 19 casos passaram: nenhuma informação incorreta foi exibida e nenhum resultado anterior foi reaproveitado. O aplicativo não precisou de alteração. Com as fichas da T13.1 o painel mudou de formato (seções, fonte por frase e linha "Fonte: … · Elaborado por … · Revisado em …"), e o catálogo fictício e as checagens do teste foram migrados para esse formato.
+
+Os casos com conteúdo usam um catálogo fictício identificado como `TESTE-T13.3`, para não depender do texto das fichas reais, e um caso separado (CAT-01) confere a tela contra o `content.ts` versionado, que desde a T13.1 tem as 13 classes. O worker de inferência é substituído por um dublê de transporte para controlar classe, score e momento de cada resposta; a inferência real segue coberta pelos testes da T9.1/T9.2. Cinco defeitos introduzidos de propósito na interface foram todos detectados. Os casos, os resultados, a verificação de sensibilidade e os limites estão no [relatório da T13.3](Testes_Navegacao_Conteudo_T13_3.md).
 
 # 14. Documentação técnica e transferência de conhecimento
 
