@@ -1,0 +1,109 @@
+{
+  "diagnostico_sha256": "6aecd46f952d5ea21f23f9f865ffcb924daa1e2b4845a4e58609032377da1666",
+  "dicionario_sha256": "ac521371b3790dbbe702794925d97c62de05cfbb92f007be85e54471aa0ccb30",
+  "total_diagnostico": 3460,
+  "total_mantidas": 3262,
+  "grupos_independentes": 2299,
+  "pares_visuais_confirmados": 95,
+  "pares_visuais_falsos": 4,
+  "vinculos_manuais": 0,
+  "vinculos_manuais_sha256": null,
+  "semente": 42,
+  "proporcoes_alvo": {
+    "treino": 0.7,
+    "validacao": 0.15,
+    "teste": 0.15
+  },
+  "imagens_por_particao": {
+    "treino": 2214,
+    "validacao": 475,
+    "teste": 474
+  },
+  "grupos_por_particao": {
+    "treino": 1594,
+    "validacao": 352,
+    "teste": 353
+  },
+  "classes_exploratorias": 0,
+  "classes_candidatas_a_avaliacao": 13,
+  "classes_candidatas_sem_cobertura": [],
+  "pendencias_da_ancoragem": [],
+  "rotulos_finais_aprovados": false,
+  "inspecao_visual_completa": false,
+  "independencia_de_planta_confirmada_para_catalogo": false,
+  "classes_modelo_sha256": "917fb14444b397646c23c73b2d1670f9e40fe3eddc73ae8411f0a45138552e1c",
+  "status_revisao": "aprovado_por_glauco_no_pr_21",
+  "criterio_rotulos": "lista T3.5 aplicada como escopo interno; AGRO-003 retido até identificação da espécie",
+  "classes_modelo": 13,
+  "imagens_no_modelo": 3163,
+  "imagens_mantidas_fora_modelo": 99,
+  "imagens_agro_003_retidas": 4,
+  "contagens_t3_5_versus_manifesto": {
+    "0": {
+      "csv_t3_5": 1055,
+      "manifesto_t3_3": 1049,
+      "diferenca": 6
+    },
+    "1": {
+      "csv_t3_5": 212,
+      "manifesto_t3_3": 198,
+      "diferenca": 14
+    },
+    "2": {
+      "csv_t3_5": 283,
+      "manifesto_t3_3": 282,
+      "diferenca": 1
+    },
+    "3": {
+      "csv_t3_5": 434,
+      "manifesto_t3_3": 407,
+      "diferenca": 27
+    },
+    "4": {
+      "csv_t3_5": 65,
+      "manifesto_t3_3": 65,
+      "diferenca": 0
+    },
+    "5": {
+      "csv_t3_5": 94,
+      "manifesto_t3_3": 92,
+      "diferenca": 2
+    },
+    "6": {
+      "csv_t3_5": 75,
+      "manifesto_t3_3": 75,
+      "diferenca": 0
+    },
+    "7": {
+      "csv_t3_5": 83,
+      "manifesto_t3_3": 79,
+      "diferenca": 4
+    },
+    "8": {
+      "csv_t3_5": 82,
+      "manifesto_t3_3": 79,
+      "diferenca": 3
+    },
+    "9": {
+      "csv_t3_5": 43,
+      "manifesto_t3_3": 43,
+      "diferenca": 0
+    },
+    "10": {
+      "csv_t3_5": 159,
+      "manifesto_t3_3": 158,
+      "diferenca": 1
+    },
+    "11": {
+      "csv_t3_5": 480,
+      "manifesto_t3_3": 474,
+      "diferenca": 6
+    },
+    "12": {
+      "csv_t3_5": 168,
+      "manifesto_t3_3": 162,
+      "diferenca": 6
+    }
+  },
+  "diferenca_total_t3_5": 70
+}

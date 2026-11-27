@@ -1,0 +1,50 @@
+{
+  "rawFile": "iphone13_20261119_183217.json",
+  "rawSha256": "3903453d0d92c9dff4ee31149e79768358a611ea4ec83bc4ce92cb84bd3e9ec4",
+  "checks": {
+    "samples": true,
+    "percentilesRecomputed": true,
+    "manifestMatchesBuild": true,
+    "modelHashes": true,
+    "serviceWorkerHash": true,
+    "scriptsListedInBuild": true,
+    "tenMeasurementsPerImage": true
+  },
+  "summaryMs": {
+    "preparationMs": {
+      "n": 50,
+      "p50": 43.93000000000757,
+      "p95": 134.35100000000384,
+      "min": 18.419999999983702,
+      "max": 138.73999999996158
+    },
+    "inferenceMs": {
+      "n": 50,
+      "p50": 10.010000000009313,
+      "p95": 13.38200000000361,
+      "min": 8.339999999996508,
+      "max": 20.479999999981374
+    },
+    "fileToPaintMs": {
+      "n": 50,
+      "p50": 83.44000000000233,
+      "p95": 166.88400000000547,
+      "min": 49.71999999997206,
+      "max": 183.39999999999418
+    }
+  },
+  "deviceMetadataStatus": "Rui confirmou abertura no Safari; campo browser do JSON bruto foi preenchido como Chrome e está incorreto. Original preservado.",
+  "initializationCacheStatus": "Rui confirmou que já havia aberto/recarregado o link; cache durante inicialização não isolado. Cache offline pronto durante lote.",
+  "airplaneModeDeclared": true,
+  "onlineAtBothEnds": [
+    false,
+    false
+  ],
+  "cameraToResultMeasured": false,
+  "browserCorrection": {
+    "application": "Safari",
+    "versionReportedByUserAgent": "26.6.1",
+    "confirmationSource": "Rui, neste chat, 19/11/2026",
+    "os": "iOS 26.6.2 declarado por Rui; user-agent não confirma versão exata do sistema"
+  }
+}

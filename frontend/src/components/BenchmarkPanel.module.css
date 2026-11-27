@@ -1,0 +1,31 @@
+.panel {
+  min-width: 0;
+  padding: 20px;
+  border: 2px solid #277547;
+  border-radius: 12px;
+  margin-bottom: 24px;
+  background: #fff;
+}
+.panel p { margin: 12px 0; }
+.fields { display: grid; gap: 12px; min-width: 0; padding: 12px; }
+.fields label { display: grid; gap: 4px; min-width: 0; }
+.fields input, .fields textarea {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  padding: 8px;
+  font: inherit;
+}
+.fields .check { display: flex; align-items: start; gap: 8px; }
+.fields .check input { width: auto; margin-top: 4px; }
+.panel button {
+  padding: 10px 14px;
+  border: 1px solid #277547;
+  border-radius: 8px;
+  background: #eaf4ed;
+  color: #163e25;
+  cursor: pointer;
+  font: inherit;
+}
+.panel button:disabled { opacity: .5; cursor: default; }
+.summary { max-width: 100%; overflow-x: auto; }

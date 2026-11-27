@@ -1,0 +1,236 @@
+{
+  "esquema": "validacao_externa_T14_6_v1",
+  "estado": "ciclo_completo_relatado_pendente_revisao",
+  "preparacao_data": "2026-11-22",
+  "autor_responsavel": "Rui",
+  "revisora": "Karol",
+  "guia": {
+    "arquivo": "docs/T14_5_Guia_Retreinamento.md",
+    "sha256": "485af963dcd5a109dc1e17d0df39412cd42a264b2c00904422e3afe5b4b33202",
+    "commit_base": "42c280ddc0fe5df4e81a737083347388b66f512f"
+  },
+  "participante": {
+    "identificacao": "Tobias",
+    "papel": "participante informado por Rui para o ensaio externo",
+    "nao_participou_diretamente_do_desenvolvimento": null,
+    "confirmacao_do_relato": null
+  },
+  "sessao": {
+    "inicio": null,
+    "fim": null,
+    "fuso": "America/Sao_Paulo",
+    "sistema": "Windows (versão não informada)",
+    "python": null,
+    "node": null,
+    "powershell": null,
+    "hardware": null,
+    "acessos_confirmados": []
+  },
+  "etapas": [
+    {
+      "numero": 1,
+      "nome": "Acesso e leitura",
+      "estado": "execucao_relatada",
+      "comandos": [],
+      "evidencias": [
+        {
+          "tipo": "relato_do_acompanhante",
+          "fonte": "Rui, neste chat",
+          "confirmacao": "ciclo completo; funcionou; não houve dúvidas"
+        }
+      ],
+      "duvidas": [],
+      "ajuda_recebida": [],
+      "observacoes": "Abrangida pela confirmação de Rui de execução do ciclo completo. Comandos, arquivos gerados e assistência não foram detalhados ou conferidos."
+    },
+    {
+      "numero": 2,
+      "nome": "Ambiente",
+      "estado": "execucao_relatada",
+      "comandos": [],
+      "evidencias": [
+        {
+          "tipo": "relato_do_acompanhante",
+          "fonte": "Rui, neste chat",
+          "confirmacao": "ciclo completo; funcionou; não houve dúvidas"
+        }
+      ],
+      "duvidas": [],
+      "ajuda_recebida": [],
+      "observacoes": "Abrangida pela confirmação de Rui de execução do ciclo completo. Comandos, arquivos gerados e assistência não foram detalhados ou conferidos."
+    },
+    {
+      "numero": 3,
+      "nome": "Dados",
+      "estado": "execucao_relatada",
+      "comandos": [],
+      "evidencias": [
+        {
+          "tipo": "relato_do_acompanhante",
+          "fonte": "Rui, neste chat",
+          "confirmacao": "ciclo completo; funcionou; não houve dúvidas"
+        }
+      ],
+      "duvidas": [],
+      "ajuda_recebida": [],
+      "observacoes": "Abrangida pela confirmação de Rui de execução do ciclo completo. Comandos, arquivos gerados e assistência não foram detalhados ou conferidos."
+    },
+    {
+      "numero": 4,
+      "nome": "Treinamento",
+      "estado": "execucao_relatada",
+      "comandos": [],
+      "evidencias": [
+        {
+          "tipo": "relato_do_acompanhante",
+          "fonte": "Rui, neste chat",
+          "confirmacao": "ciclo completo; funcionou; não houve dúvidas"
+        }
+      ],
+      "duvidas": [],
+      "ajuda_recebida": [],
+      "observacoes": "Abrangida pela confirmação de Rui de execução do ciclo completo. Comandos, arquivos gerados e assistência não foram detalhados ou conferidos."
+    },
+    {
+      "numero": 5,
+      "nome": "Decisão pela validação",
+      "estado": "execucao_relatada",
+      "comandos": [],
+      "evidencias": [
+        {
+          "tipo": "relato_do_acompanhante",
+          "fonte": "Rui, neste chat",
+          "confirmacao": "ciclo completo; funcionou; não houve dúvidas"
+        }
+      ],
+      "duvidas": [],
+      "ajuda_recebida": [],
+      "observacoes": "Abrangida pela confirmação de Rui de execução do ciclo completo. Comandos, arquivos gerados e assistência não foram detalhados ou conferidos."
+    },
+    {
+      "numero": 6,
+      "nome": "Calibração",
+      "estado": "execucao_relatada",
+      "comandos": [],
+      "evidencias": [
+        {
+          "tipo": "relato_do_acompanhante",
+          "fonte": "Rui, neste chat",
+          "confirmacao": "ciclo completo; funcionou; não houve dúvidas"
+        }
+      ],
+      "duvidas": [],
+      "ajuda_recebida": [],
+      "observacoes": "Abrangida pela confirmação de Rui de execução do ciclo completo. Comandos, arquivos gerados e assistência não foram detalhados ou conferidos."
+    },
+    {
+      "numero": 7,
+      "nome": "Conversão e comparação",
+      "estado": "execucao_relatada",
+      "comandos": [],
+      "evidencias": [
+        {
+          "tipo": "relato_do_acompanhante",
+          "fonte": "Rui, neste chat",
+          "confirmacao": "ciclo completo; funcionou; não houve dúvidas"
+        }
+      ],
+      "duvidas": [],
+      "ajuda_recebida": [],
+      "observacoes": "Abrangida pela confirmação de Rui de execução do ciclo completo. Comandos, arquivos gerados e assistência não foram detalhados ou conferidos."
+    },
+    {
+      "numero": 8,
+      "nome": "Avaliação final",
+      "estado": "execucao_relatada",
+      "comandos": [],
+      "evidencias": [
+        {
+          "tipo": "relato_do_acompanhante",
+          "fonte": "Rui, neste chat",
+          "confirmacao": "ciclo completo; funcionou; não houve dúvidas"
+        }
+      ],
+      "duvidas": [],
+      "ajuda_recebida": [],
+      "observacoes": "Abrangida pela confirmação de Rui de execução do ciclo completo. Comandos, arquivos gerados e assistência não foram detalhados ou conferidos."
+    },
+    {
+      "numero": 9,
+      "nome": "Integração web",
+      "estado": "execucao_relatada",
+      "comandos": [],
+      "evidencias": [
+        {
+          "tipo": "relato_do_acompanhante",
+          "fonte": "Rui, neste chat",
+          "confirmacao": "ciclo completo; funcionou; não houve dúvidas"
+        }
+      ],
+      "duvidas": [],
+      "ajuda_recebida": [],
+      "observacoes": "Abrangida pela confirmação de Rui de execução do ciclo completo. Comandos, arquivos gerados e assistência não foram detalhados ou conferidos."
+    },
+    {
+      "numero": 10,
+      "nome": "Publicação em ensaio",
+      "estado": "execucao_relatada",
+      "comandos": [],
+      "evidencias": [
+        {
+          "tipo": "relato_do_acompanhante",
+          "fonte": "Rui, neste chat",
+          "confirmacao": "ciclo completo; funcionou; não houve dúvidas"
+        }
+      ],
+      "duvidas": [],
+      "ajuda_recebida": [],
+      "observacoes": "Abrangida pela confirmação de Rui de execução do ciclo completo. Comandos, arquivos gerados e assistência não foram detalhados ou conferidos."
+    },
+    {
+      "numero": 11,
+      "nome": "Reversão em ensaio",
+      "estado": "execucao_relatada",
+      "comandos": [],
+      "evidencias": [
+        {
+          "tipo": "relato_do_acompanhante",
+          "fonte": "Rui, neste chat",
+          "confirmacao": "ciclo completo; funcionou; não houve dúvidas"
+        }
+      ],
+      "duvidas": [],
+      "ajuda_recebida": [],
+      "observacoes": "Abrangida pela confirmação de Rui de execução do ciclo completo. Comandos, arquivos gerados e assistência não foram detalhados ou conferidos."
+    }
+  ],
+  "problemas_e_correcoes": [],
+  "conclusao": {
+    "tipo": "ciclo_completo_relatado_pendente_revisao",
+    "etapas_essenciais_reproduzidas": true,
+    "base_da_confirmacao": "relato de Rui, que informou ter acompanhado Tobias",
+    "reproducao_tecnica_conferida": false,
+    "guia_operacionalmente_validado": false,
+    "resultado_relatado": "ciclo completo funcionou sem dúvidas",
+    "limites": [
+      "Windows informado sem versão, hardware ou versões das ferramentas.",
+      "A data de execução e o hash do guia utilizado na sessão não foram confirmados.",
+      "Execução completa confirmada por Rui; comandos, logs e arquivos gerados não foram recebidos para conferência.",
+      "Não há confirmação direta de Tobias anexada ao registro."
+    ],
+    "pendencias": [
+      "Revisão de Karol sobre o registro do ensaio e o alcance da evidência disponível.",
+      "Vincular logs, arquivos ou confirmação do participante se disponíveis, preservando os limites quando não existirem."
+    ]
+  },
+  "relato_recebido": {
+    "data_recebimento": "2026-11-22",
+    "fonte": "Rui, neste chat",
+    "texto_original": "funcionou aqui. fiz com o tobias. ele usou windows. nao teve duvidas",
+    "resultado_informado": "Rui informou execução do ciclo completo com Tobias em Windows, com funcionamento e sem dúvidas.",
+    "alcance_das_etapas": "ciclo completo, confirmado por Rui em resposta à pergunta sobre preparação, treinamento, avaliação, conversão, atualização e reversão",
+    "guia_exato_executado_confirmado": false,
+    "logs_e_artefatos_recebidos": false,
+    "confirmacao_alcance_texto_original": "todo"
+  }
+}

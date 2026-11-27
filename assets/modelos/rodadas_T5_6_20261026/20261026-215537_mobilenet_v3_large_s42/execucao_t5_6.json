@@ -1,0 +1,22 @@
+{
+  "backbone": "mobilenet_v3_large",
+  "comando": [
+    "/Users/ruifaco/Developer/faculdade/AgroApp/2026_02_AgroApp/.venv-treino/bin/python",
+    "-m",
+    "src.treinamento_t5_1",
+    "--config",
+    "/Users/ruifaco/Developer/faculdade/AgroApp/2026_02_AgroApp/assets/data/retreino_t5_3/config_mobilenet_v3_large.json",
+    "--raiz-imagens",
+    "/Users/ruifaco/Downloads",
+    "--indice",
+    "/Users/ruifaco/Developer/faculdade/AgroApp/2026_02_AgroApp/assets/data/treino_T5_2/indice_dataset.csv",
+    "--pesos",
+    "/Users/ruifaco/Developer/faculdade/AgroApp/2026_02_AgroApp/assets/data/treino_T5_2/pesos_dataset.json",
+    "--saida",
+    "runs/rodadas_T5_6_20261026/mobilenet_v3_large"
+  ],
+  "codigo_saida": 0,
+  "origem": "nova execução T5.6, não é o checkpoint histórico da T5.4",
+  "threads_intraop": 4,
+  "threads_interop": 1
+}

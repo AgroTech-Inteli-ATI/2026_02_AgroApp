@@ -1,0 +1,405 @@
+{
+  "esquema": "revisao_iluminacao_T7_3_v1",
+  "data": "2026-11-04",
+  "metodo": "Inspeção visual assistida por IA de 37 fotos (extremos e ponto intermediário por classe/faixa disponível) e 12 exemplos adicionais de campo com baixo brilho; sem revisão agronômica ou medição fotométrica.",
+  "limites": "Condições aparentes nas imagens, não medição da luz física ou da câmera. Fundo preto não comprova sombra, fundo branco não comprova luz forte. Revisão de uma amostra de 49 fotos, não anotação visual das 200 nem garantia de cobertura de todas as condições do campo.",
+  "imagens": [
+    {
+      "image_id": "IMG_01846",
+      "sha256_original": "5795553e7a6b4978f88a6b9fb7e00b11ad34091d4c1795d9e84c40f38a68ded2",
+      "condicoes": [
+        "luz_direta_ou_realces"
+      ],
+      "observacao": "Inseto e botão floral iluminados sobre fundo preto; o baixo brilho global é dominado pelo fundo, não prova sombra no sujeito."
+    },
+    {
+      "image_id": "IMG_01137",
+      "sha256_original": "040488fa7dbd570e3524f890a9f25646caac26ecd5bbfc1a1475bfee94f884f8",
+      "condicoes": [
+        "luz_difusa"
+      ],
+      "observacao": "Inseto sobre folha com luz aparentemente suave e sem sombra dura evidente no corpo."
+    },
+    {
+      "image_id": "IMG_01850",
+      "sha256_original": "82aaf3b1a58115155250783028913f613904cc2c1966153de1bb21cee8c58ff7",
+      "condicoes": [
+        "luz_direta_ou_realces"
+      ],
+      "observacao": "Reflexos claros no dorso brilhante do inseto e fundo muito claro."
+    },
+    {
+      "image_id": "IMG_00685",
+      "sha256_original": "de6aac3a9eb0d008ace3ca7ba7f67cb532bec70f1a5cc292de419daa656dafd4",
+      "condicoes": [
+        "nao_inferivel"
+      ],
+      "observacao": "Inseto claro sobre fundo preto uniforme; a foto não permite deduzir a iluminação física pelo brilho médio."
+    },
+    {
+      "image_id": "IMG_00632",
+      "sha256_original": "b1336be5a692758b82da687fc0235a6eab79a469fc3c026d074fd820dfe16e6d",
+      "condicoes": [
+        "luz_difusa"
+      ],
+      "observacao": "Inseto pequeno sobre folha verde, com aparência de luz suave e contraste moderado."
+    },
+    {
+      "image_id": "IMG_00619",
+      "sha256_original": "e73a631147f5fe02269d9fce64ffd895bceed1d9a8cec80286982ce6ce0e4c3b",
+      "condicoes": [
+        "luz_difusa"
+      ],
+      "observacao": "Inseto claro sobre superfície clara, com contraste baixo e sem sombra dura marcante."
+    },
+    {
+      "image_id": "IMG_02364",
+      "sha256_original": "37f2efad984741d2fd4ad6dfc4bf9dbe4c4fc77a1366f17bdd90451bd1133582",
+      "condicoes": [
+        "iluminacao_mista",
+        "luz_direta_ou_realces"
+      ],
+      "observacao": "Inseto e folha iluminados em primeiro plano contra fundo quase preto; detalhes claros e regiões escuras coexistem."
+    },
+    {
+      "image_id": "IMG_02230",
+      "sha256_original": "ebfa5964bf757f3a4055e2d5fbd42f6d37391184c35a489416763c0e2dc2f9d5",
+      "condicoes": [
+        "sombra_ou_baixa_luz"
+      ],
+      "observacao": "Foto de chão com áreas sombreadas entre torrões e sujeito pequeno pouco destacado; condição de sombra aparente no enquadramento."
+    },
+    {
+      "image_id": "IMG_02102",
+      "sha256_original": "73f2b1061dad6793e4082bd50041cd2f958b0a741b917edcb61cd9e4e0b77cc8",
+      "condicoes": [
+        "luz_difusa"
+      ],
+      "observacao": "Inseto fotografado sobre fundo branco, com iluminação aparentemente distribuída no corpo e sombras suaves."
+    },
+    {
+      "image_id": "IMG_02537",
+      "sha256_original": "4baa727c7bbdb606dbd0dd7e94c860f2ba062b5226051ad7754336284654d81c",
+      "condicoes": [
+        "luz_direta_ou_realces"
+      ],
+      "observacao": "Mariposa clara e ramo com realces fortes sobre fundo preto; baixo brilho médio não significa sujeito escuro."
+    },
+    {
+      "image_id": "IMG_02793",
+      "sha256_original": "7a9cc4741d148e6a52501cd3fc09920d5c0e307ec79a3c48528297c84e32a0a2",
+      "condicoes": [
+        "iluminacao_mista"
+      ],
+      "observacao": "Mariposa em parede clara com gradiente acentuado entre área iluminada e área sombreada."
+    },
+    {
+      "image_id": "IMG_02659",
+      "sha256_original": "a2345f199f02412a99f4784894c87525c6f36a60ef19046535941ce31a48a786",
+      "condicoes": [
+        "luz_difusa"
+      ],
+      "observacao": "Mariposa sobre fundo azul claro, com aparência de luz uniforme e pouco contraste de sombra."
+    },
+    {
+      "image_id": "IMG_03168",
+      "sha256_original": "f472d7393d9242a7f08019d03b81e355135dce20f95065564f746b743de41397",
+      "condicoes": [
+        "luz_direta_ou_realces"
+      ],
+      "observacao": "Inseto com detalhes bem iluminados no ramo e fundo muito escuro."
+    },
+    {
+      "image_id": "IMG_03182",
+      "sha256_original": "90aeea0c9dcf06f7de4217e0bc61b21486903588157c0780f50c7ff2143e43e0",
+      "condicoes": [
+        "luz_difusa"
+      ],
+      "observacao": "Inseto em folha com aparência de luz suave e fundo verde desfocado."
+    },
+    {
+      "image_id": "IMG_03181",
+      "sha256_original": "a656ca6684c8503e6f4a52d98ca384d58a69f3e132310a1f291c9e539d762f2b",
+      "condicoes": [
+        "nao_inferivel"
+      ],
+      "observacao": "A parede clara ocupa quase todo o quadro; o inseto é pequeno e a iluminação física do sujeito não pode ser deduzida da média."
+    },
+    {
+      "image_id": "IMG_03280",
+      "sha256_original": "aa0ede5284483f19871c3aeabad531ddd2139be9c47448ffe6473589a347ae57",
+      "condicoes": [
+        "iluminacao_mista"
+      ],
+      "observacao": "Inseto verde em primeiro plano contra fundo preto, com variação visível de claro e escuro na região da cabeça e nas bordas."
+    },
+    {
+      "image_id": "IMG_03232",
+      "sha256_original": "e8795c794df50279bb2ce5a4e8d8c233bf1a0e64bc7f25eb05f8e09bc575a78e",
+      "condicoes": [
+        "iluminacao_mista"
+      ],
+      "observacao": "Ninfa em folha com regiões iluminadas e regiões sombreadas na vegetação próxima."
+    },
+    {
+      "image_id": "IMG_03274",
+      "sha256_original": "3ba71c75aa54c2200a901cace32a695855b2b686cfaf9074c52217effb6d83d4",
+      "condicoes": [
+        "luz_difusa"
+      ],
+      "observacao": "Inseto castanho sobre fundo claro, com sombra suave e contraste moderado no corpo; não se reidentifica espécie nesta revisão."
+    },
+    {
+      "image_id": "IMG_03073",
+      "sha256_original": "6d07346e93432f27988b8d5860cf0f7dbcae1c43fd813737d93b51844ab6242b",
+      "condicoes": [
+        "luz_difusa"
+      ],
+      "observacao": "Inseto em folha com luz aparentemente suave, cores pouco contrastadas e fundo verde desfocado."
+    },
+    {
+      "image_id": "IMG_03101",
+      "sha256_original": "c12d00bfdc9f87f0be6b42f6b5f8d1f78e2833ccc8448493748f6fc926c6673d",
+      "condicoes": [
+        "luz_direta_ou_realces"
+      ],
+      "observacao": "Dois insetos sobre folha clara com regiões amareladas e realces intensos no entorno."
+    },
+    {
+      "image_id": "IMG_00915",
+      "sha256_original": "baf1979c6c32246fcfa05e1392774339d50efd73ffe4735ba7658810c7d9de97",
+      "condicoes": [
+        "nao_inferivel"
+      ],
+      "observacao": "Inseto naturalmente escuro sobre parede castanha; a cor do corpo não basta para classificar a fonte ou intensidade da luz."
+    },
+    {
+      "image_id": "IMG_00916",
+      "sha256_original": "23ffdb31d3bdb2e2e2865efe7f74d2f2183c8202f047b6a23ce55ec90eff7f40",
+      "condicoes": [
+        "luz_difusa"
+      ],
+      "observacao": "Inseto sobre tecido branco com aparência de iluminação suave, sem sombra dura dominante."
+    },
+    {
+      "image_id": "IMG_03000",
+      "sha256_original": "69b8e66f210c167eb40d4644541f2ce8736febe9029118fafbca221975421790",
+      "condicoes": [
+        "luz_direta_ou_realces"
+      ],
+      "observacao": "Mariposa e folhas bem iluminadas com fundo preto e pontos muito claros nas asas."
+    },
+    {
+      "image_id": "IMG_03028",
+      "sha256_original": "8729629a448dadf35a509652da3537fc9b35860e1434194d45969b0a41d4e42d",
+      "condicoes": [
+        "luz_direta_ou_realces"
+      ],
+      "observacao": "Mariposa em recipiente transparente com reflexos especulares fortes no plástico."
+    },
+    {
+      "image_id": "IMG_02980",
+      "sha256_original": "76133e952486e43c65c4faef91e8bc38cdb7aa4ece710c79c3778552c8660c2f",
+      "condicoes": [
+        "iluminacao_mista",
+        "luz_direta_ou_realces"
+      ],
+      "observacao": "Mariposa em parede branca com sombra projetada nítida e contraste entre superfície iluminada e sombra."
+    },
+    {
+      "image_id": "IMG_02934",
+      "sha256_original": "922b1ccde01be30c5f982dbd8c1efba368aea4734e7c2075801d8db01f9a936a",
+      "condicoes": [
+        "iluminacao_mista"
+      ],
+      "observacao": "Mariposa castanha sobre folhas escuras, com contraste entre sujeito iluminado e fundo sombreado."
+    },
+    {
+      "image_id": "IMG_02936",
+      "sha256_original": "1dd4fbe3b35e7d35753d5a3426064922639bf6e87605cb9fdb4c481cd4aa90c6",
+      "condicoes": [
+        "luz_difusa"
+      ],
+      "observacao": "Mariposa de asas abertas sobre vegetação com luz aparentemente uniforme e fundo suave."
+    },
+    {
+      "image_id": "IMG_02942",
+      "sha256_original": "2800a07e5b9e79c3c20fade43424dd87aacdb373495b64e39d861e2e07bfc589",
+      "condicoes": [
+        "luz_difusa"
+      ],
+      "observacao": "Mariposa sobre parede muito clara, com iluminação distribuída e pequena sombra sob as asas."
+    },
+    {
+      "image_id": "IMG_03382",
+      "sha256_original": "9c0822f44f0c10a2d0a9bde9297db9788d7abfb7aab0aeb60a81af0ed70ecc2e",
+      "condicoes": [
+        "luz_direta_ou_realces"
+      ],
+      "observacao": "Mariposa muito clara sobre fundo preto; realces intensos nas asas, com contraste extremo entre sujeito e fundo."
+    },
+    {
+      "image_id": "IMG_03409",
+      "sha256_original": "7ef0298037a500b7860a3d12fc292ca1d097bd591050ce36ea3392dda7872aa9",
+      "condicoes": [
+        "nao_inferivel"
+      ],
+      "observacao": "Mariposa junto de tela e régua; a imagem permite observar contraste entre materiais, mas não identificar a condição física de luz."
+    },
+    {
+      "image_id": "IMG_03433",
+      "sha256_original": "3185640b402cda3d2d5e57e64dbce6b6e5ce62582e2287624552b7e5028673f9",
+      "condicoes": [
+        "luz_difusa"
+      ],
+      "observacao": "Larva escura sobre superfície clara, com iluminação relativamente uniforme e sem sombra dura dominante."
+    },
+    {
+      "image_id": "IMG_00122",
+      "sha256_original": "691db7a63c734d01b43a64607ad66b29bf9e8a466744ad76640d296e4eae20ab",
+      "condicoes": [
+        "sombra_ou_baixa_luz"
+      ],
+      "observacao": "Inseto em superfície azul escura com aspecto pouco iluminado nas partes escuras do corpo; manchas claras continuam visíveis."
+    },
+    {
+      "image_id": "IMG_00046",
+      "sha256_original": "4e1da77cce93b3fb6b2a59aee7805f90065c4b7933b2a5438bd217cc39692c47",
+      "condicoes": [
+        "iluminacao_mista"
+      ],
+      "observacao": "Besouro entre flores brancas com partes muito claras nas flores e regiões escuras no sujeito e no fundo."
+    },
+    {
+      "image_id": "IMG_00481",
+      "sha256_original": "0e05236f9f469b29cee9d1d5b1a0fee83a44f3ae86eb2b25bd915023fb557fee",
+      "condicoes": [
+        "luz_direta_ou_realces"
+      ],
+      "observacao": "Flores amarelas com áreas muito claras e realces intensos ao redor de insetos manchados."
+    },
+    {
+      "image_id": "IMG_00766",
+      "sha256_original": "337ddaab148d72409a9d38c1c7f668ad4db9bc21611d78f5f0175ba22c15c530",
+      "condicoes": [
+        "iluminacao_mista",
+        "luz_direta_ou_realces"
+      ],
+      "observacao": "Inseto com realces brilhantes de um lado e sombra projetada escura do outro sobre madeira."
+    },
+    {
+      "image_id": "IMG_00851",
+      "sha256_original": "2351a9aa7ee8c5fe7cfed508e76e200be709883ef9ac28c5c166d42c385ab10a",
+      "condicoes": [
+        "luz_difusa"
+      ],
+      "observacao": "Inseto sobre ramo com luz aparentemente suave e fundo cinza esverdeado uniforme."
+    },
+    {
+      "image_id": "IMG_00745",
+      "sha256_original": "bcc056a8ff135fe6d9f7539680e1ac5e0db80485f285f0f1cbfdd46fe61d5058",
+      "condicoes": [
+        "luz_difusa"
+      ],
+      "observacao": "Inseto sobre superfície clara rosada com luz suave e sombra pouco marcada."
+    },
+    {
+      "image_id": "IMG_01229",
+      "sha256_original": "f502dff699d3c29f5b94aa9a2191cc40abea2d4ecad7dda1f409da11f9f8cab3",
+      "condicoes": [
+        "sombra_ou_baixa_luz"
+      ],
+      "observacao": "Inseto pequeno em vegetação predominantemente escura, com folhas e fundo sob sombra aparente."
+    },
+    {
+      "image_id": "IMG_01291",
+      "sha256_original": "0602279cca913be3e632d10f97712c960700ff40536dac95662c1430e38eb809",
+      "condicoes": [
+        "iluminacao_mista"
+      ],
+      "observacao": "Pequena região iluminada com inseto e folha contra grande área de vegetação escura."
+    },
+    {
+      "image_id": "IMG_01347",
+      "sha256_original": "a1c10f7f438f699dff8e0b0212b35dfb978239bd0568fa208bf362b484a71092",
+      "condicoes": [
+        "iluminacao_mista",
+        "sombra_ou_baixa_luz"
+      ],
+      "observacao": "Inseto junto de folha com sombra visível sob a borda e partes do corpo mais escuras, em contraste com bordas iluminadas."
+    },
+    {
+      "image_id": "IMG_01441",
+      "sha256_original": "6ac2cd804e0d73d4b3f07a3186ed1e44d9a0b5caf73189474eb6e318a2bea245",
+      "condicoes": [
+        "iluminacao_mista"
+      ],
+      "observacao": "Inseto e folha iluminados com fundo preto; o contraste entre planos influencia o brilho global."
+    },
+    {
+      "image_id": "IMG_01443",
+      "sha256_original": "239abc932455a8c42549b50bce50a641d952201eaa2526a02303d510a86a0194",
+      "condicoes": [
+        "luz_direta_ou_realces"
+      ],
+      "observacao": "Inseto com reflexos fortes no dorso e pelos claros da folha, contra fundo escuro."
+    },
+    {
+      "image_id": "IMG_03171",
+      "sha256_original": "782a0369442094640ad3f27dff669bc431353084446b2fc0a9ebd674743c14cd",
+      "condicoes": [
+        "luz_difusa"
+      ],
+      "observacao": "Inseto sobre haste perto de flor roxa, com luz aparentemente suave e fundo escuro desfocado."
+    },
+    {
+      "image_id": "IMG_03176",
+      "sha256_original": "2f66ab5eb1e49b722cad14ede5adec3b1349d9ea3ed6a43791e470c0e61e7b9d",
+      "condicoes": [
+        "iluminacao_mista"
+      ],
+      "observacao": "Inseto e flor em primeiro plano contrastam com áreas de vegetação escura e regiões iluminadas ao fundo."
+    },
+    {
+      "image_id": "IMG_03252",
+      "sha256_original": "5ce13f6c97915687c6fbdfb3eea6c50efb778489a06b2af0d99dc3133b2785ab",
+      "condicoes": [
+        "sombra_ou_baixa_luz"
+      ],
+      "observacao": "Close do inseto verde com corpo predominantemente escurecido e pouco contraste; condição de sombra ou baixa luz aparente."
+    },
+    {
+      "image_id": "IMG_03269",
+      "sha256_original": "24893c7bd75a6e2aa6fd2e38e0ffd32719398046286f13c048423834ef55ef2f",
+      "condicoes": [
+        "sombra_ou_baixa_luz"
+      ],
+      "observacao": "Inseto sobre madeira escura com aparência de iluminação fraca e poucos realces no corpo."
+    },
+    {
+      "image_id": "IMG_03002",
+      "sha256_original": "c168f5d8bd41c38c02b96698ca8777a3bfb63041eb8d0e61575db5134f91a287",
+      "condicoes": [
+        "iluminacao_mista",
+        "luz_direta_ou_realces"
+      ],
+      "observacao": "Mariposa e flores com pontos claros e partes sombreadas na vegetação; contraste forte no mesmo enquadramento."
+    },
+    {
+      "image_id": "IMG_03041",
+      "sha256_original": "8627ad6049c0e493d132848bb9d89596cd089a83fcea86330882fd9746f7a902",
+      "condicoes": [
+        "iluminacao_mista"
+      ],
+      "observacao": "Mariposa em folha com sombra projetada definida para a direita e áreas do corpo iluminadas."
+    },
+    {
+      "image_id": "IMG_02937",
+      "sha256_original": "e624211a30115f12671d1ef2f7fb6b895dc7de667cf42446a271abefef763b6c",
+      "condicoes": [
+        "iluminacao_mista"
+      ],
+      "observacao": "Mariposa clara sobre folhas secas, com áreas de sombra no entorno e parte das asas iluminada."
+    }
+  ]
+}

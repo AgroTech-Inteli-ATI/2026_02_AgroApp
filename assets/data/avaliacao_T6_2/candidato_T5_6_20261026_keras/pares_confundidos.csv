@@ -1,0 +1,36 @@
+indice_real;classe_real;indice_previsto;classe_prevista;erros;suporte_real;percentual_da_classe;destacado
+8;Lagarta-falsa-medideira (Chrysodeixis includens);3;Lagarta-do-cartucho (Spodoptera frugiperda);6;12;50.000000;sim
+6;Percevejo-asa-preta (Edessa meditabunda);5;Percevejo-verde (Nezara viridula);5;11;45.454545;sim
+10;Lagarta-das-vagens (Spodoptera eridania e S. cosmioides);3;Lagarta-do-cartucho (Spodoptera frugiperda);5;24;20.833333;sim
+0;Vaquinha (Diabrotica speciosa);11;Astylus variegatus;5;157;3.184713;sim
+5;Percevejo-verde (Nezara viridula);0;Vaquinha (Diabrotica speciosa);4;14;28.571429;sim
+5;Percevejo-verde (Nezara viridula);2;Percevejo-barriga-verde (Dichelops/Diceraeus);4;14;28.571429;sim
+7;Percevejo-do-milho (Leptoglossus zonatus);12;Cigarrinha-das-pastagens (Deois flavopicta);3;12;25.000000;sim
+1;Cigarrinha-do-milho (Dalbulus maidis);0;Vaquinha (Diabrotica speciosa);3;29;10.344828;sim
+2;Percevejo-barriga-verde (Dichelops/Diceraeus);0;Vaquinha (Diabrotica speciosa);3;42;7.142857;sim
+3;Lagarta-do-cartucho (Spodoptera frugiperda);10;Lagarta-das-vagens (Spodoptera eridania e S. cosmioides);3;61;4.918033;sim
+4;Percevejo-marrom (Euschistus heros);2;Percevejo-barriga-verde (Dichelops/Diceraeus);2;10;20.000000;sim
+4;Percevejo-marrom (Euschistus heros);7;Percevejo-do-milho (Leptoglossus zonatus);2;10;20.000000;sim
+6;Percevejo-asa-preta (Edessa meditabunda);0;Vaquinha (Diabrotica speciosa);2;11;18.181818;sim
+8;Lagarta-falsa-medideira (Chrysodeixis includens);10;Lagarta-das-vagens (Spodoptera eridania e S. cosmioides);2;12;16.666667;sim
+2;Percevejo-barriga-verde (Dichelops/Diceraeus);10;Lagarta-das-vagens (Spodoptera eridania e S. cosmioides);2;42;4.761905;sim
+0;Vaquinha (Diabrotica speciosa);2;Percevejo-barriga-verde (Dichelops/Diceraeus);2;157;1.273885;sim
+9;Lagarta-da-soja (Anticarsia gemmatalis);2;Percevejo-barriga-verde (Dichelops/Diceraeus);1;6;16.666667;nao
+4;Percevejo-marrom (Euschistus heros);11;Astylus variegatus;1;10;10.000000;nao
+5;Percevejo-verde (Nezara viridula);10;Lagarta-das-vagens (Spodoptera eridania e S. cosmioides);1;14;7.142857;nao
+10;Lagarta-das-vagens (Spodoptera eridania e S. cosmioides);2;Percevejo-barriga-verde (Dichelops/Diceraeus);1;24;4.166667;nao
+10;Lagarta-das-vagens (Spodoptera eridania e S. cosmioides);8;Lagarta-falsa-medideira (Chrysodeixis includens);1;24;4.166667;nao
+10;Lagarta-das-vagens (Spodoptera eridania e S. cosmioides);11;Astylus variegatus;1;24;4.166667;nao
+12;Cigarrinha-das-pastagens (Deois flavopicta);10;Lagarta-das-vagens (Spodoptera eridania e S. cosmioides);1;24;4.166667;nao
+2;Percevejo-barriga-verde (Dichelops/Diceraeus);3;Lagarta-do-cartucho (Spodoptera frugiperda);1;42;2.380952;nao
+2;Percevejo-barriga-verde (Dichelops/Diceraeus);9;Lagarta-da-soja (Anticarsia gemmatalis);1;42;2.380952;nao
+2;Percevejo-barriga-verde (Dichelops/Diceraeus);11;Astylus variegatus;1;42;2.380952;nao
+3;Lagarta-do-cartucho (Spodoptera frugiperda);2;Percevejo-barriga-verde (Dichelops/Diceraeus);1;61;1.639344;nao
+3;Lagarta-do-cartucho (Spodoptera frugiperda);7;Percevejo-do-milho (Leptoglossus zonatus);1;61;1.639344;nao
+3;Lagarta-do-cartucho (Spodoptera frugiperda);9;Lagarta-da-soja (Anticarsia gemmatalis);1;61;1.639344;nao
+11;Astylus variegatus;0;Vaquinha (Diabrotica speciosa);1;71;1.408451;nao
+11;Astylus variegatus;7;Percevejo-do-milho (Leptoglossus zonatus);1;71;1.408451;nao
+11;Astylus variegatus;10;Lagarta-das-vagens (Spodoptera eridania e S. cosmioides);1;71;1.408451;nao
+0;Vaquinha (Diabrotica speciosa);1;Cigarrinha-do-milho (Dalbulus maidis);1;157;0.636943;nao
+0;Vaquinha (Diabrotica speciosa);10;Lagarta-das-vagens (Spodoptera eridania e S. cosmioides);1;157;0.636943;nao
+0;Vaquinha (Diabrotica speciosa);12;Cigarrinha-das-pastagens (Deois flavopicta);1;157;0.636943;nao

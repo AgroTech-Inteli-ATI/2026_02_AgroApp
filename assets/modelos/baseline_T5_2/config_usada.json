@@ -1,0 +1,31 @@
+{
+  "backbone": "cnn_baseline",
+  "semente": 42,
+  "deterministico": true,
+  "otimizador": {
+    "nome": "adam",
+    "taxa_aprendizado": 0.001
+  },
+  "batch": 32,
+  "epocas_max": 20,
+  "parada": {
+    "monitor": "val_f1_macro",
+    "paciencia": 4,
+    "restaurar_melhores_pesos": true
+  },
+  "augmentation": {
+    "ativo": true
+  },
+  "balanceamento": {
+    "class_weight": true
+  },
+  "cabeca": {
+    "dropout": 0.2
+  },
+  "fine_tuning": {
+    "ativo": false,
+    "blocos_descongelados": 0,
+    "taxa_aprendizado": 1e-05,
+    "epocas_max": 0
+  }
+}

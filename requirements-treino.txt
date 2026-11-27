@@ -1,0 +1,6 @@
+# Treinamento (T5.1): Python 3.12, Keras 3 com backend TensorFlow.
+# Versões validadas juntas com as dependências do pipeline de dados.
+-r requirements.txt
+tensorflow==2.21.0
+keras==3.15.1
+keras-hub==0.32.0

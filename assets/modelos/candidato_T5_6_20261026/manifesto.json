@@ -1,0 +1,87 @@
+{
+  "esquema": "selecao_T5_6_v1",
+  "data": "2026-10-26",
+  "status": "candidato_versionado_benchmark_celular_pendente",
+  "origem": "nova rodada T5.6 com configurações da T5.4",
+  "artefato_para_embarque": "modelo_int8.tflite",
+  "demais_modelos": "checkpoint Keras e TFLite FP32 preservados para auditoria; não são o pacote móvel",
+  "arquitetura": "efficientnet_lite0",
+  "execucao_t5_5": "rodadas_T5_6_20261026/20261026-213017_efficientnet_lite0_s42",
+  "criterio": "maior F1 macro de validação entre as novas rodadas comparáveis que cabem em 8 MB; empate exato por balanced accuracy e nome",
+  "f1_macro_validacao_keras": 0.7811062377780755,
+  "tamanho_int8_bytes": 4003624,
+  "comparacao": [
+    {
+      "execucao": "rodadas_T5_6_20261026/20261026-213017_efficientnet_lite0_s42",
+      "arquitetura": "efficientnet_lite0",
+      "f1_macro_validacao": 0.7811062377780755,
+      "balanced_accuracy": 0.7550322366924672,
+      "modelo_keras_sha256": "089a8d903a78898badf385f0d57006a4fb556d76e3e8fae719babdaf564aa51a",
+      "int8_bytes": 4003624
+    },
+    {
+      "execucao": "rodadas_T5_6_20261026/20261026-215537_mobilenet_v3_large_s42",
+      "arquitetura": "mobilenet_v3_large",
+      "f1_macro_validacao": 0.7780246460267607,
+      "balanced_accuracy": 0.7435932111733834,
+      "modelo_keras_sha256": "4d3de3d45634c8d007995cd4f7857ba63e7fe4e2e5dfd4ad994a240fe3b51666",
+      "int8_bytes": 3534344
+    },
+    {
+      "execucao": "rodadas_T5_6_20261026/20261026-222906_mobilenet_v2_s42",
+      "arquitetura": "mobilenet_v2",
+      "f1_macro_validacao": 0.7077924928488071,
+      "balanced_accuracy": 0.6733199450412464,
+      "modelo_keras_sha256": "00a76333ee4bdfcf09a3a030b48a32475bef2ad78c672652e0f7116464a8ca1f",
+      "int8_bytes": 2750824
+    }
+  ],
+  "limite_modelo_bytes_proposto": 8000000,
+  "latencia_celular": {
+    "status": "pendente",
+    "limite_p95_ms_proposto": 300
+  },
+  "aprovacao_parceiro": "pendente",
+  "teste_utilizado_na_selecao": false,
+  "indice_sha256": "28ee662885202f0bda3dec9660e44b28f99b8bd183210bcbdd795b103269b2eb",
+  "pesos_sha256": "b342f9a821778840d6a86024ddaef8ccbe6ff18b250b540f0025fadf222046b9",
+  "registro_comparativo_sha256": "0e97eb2aba4e7af606988d2a495af66e7eecc063e950c978300b55890381a3d8",
+  "codigo_sha256": {
+    "analise_confusao_t6_2.py": "8dfb9805de29accbcf3a12c38f8476826cb1de8575b50834ae463386e6eb90bd",
+    "aumento.py": "cc0103b28177bb8d28bab05110d74784a8d85da6ea213e0a8b22052efe6831df",
+    "avaliacao.py": "4b60b2efd74a88e900e745b638af21c341e8f6866c8c27cce99f754ce0a3c7af",
+    "avaliacao_t6_1.py": "21afabce168f3b3d2d44f31d1f31c0ca81f078fb9fe618f00fe8c10f6cef88b8",
+    "backbones.py": "fb618588f6f50f7569f0b9ab4b705a35144affc69faef1cf30f8770661c37774",
+    "benchmark_t5_6.py": "c44decee72eeb2cf51bbadf2cce16a707c640cc76410bdc5c144db56cfaaa2c7",
+    "busca_hiperparametros_t5_3.py": "7d2d27a7dd26f859f2e587eb6ea918c3f8580ca6b6b2b04c0f6191a07ef9d804",
+    "busca_hiperparametros_t5_4.py": "03ac0c1e83b19fe912eeee1bbf8aba0e1cf5a6d365bda46a4f86a75f7566d8dd",
+    "config_treino.py": "8bb319fb16fcf24ebf32cf4e7fe90255b5f7081fc890ce8d2ea653d392df790b",
+    "consolidar_predicoes_t6_2.py": "4b0ed99d4f75ce972d41b1b48cfb28bc40bd19559554e07843003cb856dee0a3",
+    "converter_t5_6.py": "2f0c6be70a6d34557512c514e911e8711686f5e2fe11215e60023c9fee835881",
+    "dados_treino.py": "0ef6635646731aeebc68c325b06342b2477cde906e713ba4efe90cce44707d15",
+    "finalizar_t5_6.py": "86eeedf8386fa3f3c043e5d45bfd9e71e457223cc0e159a3c00e92b85f4f3c33",
+    "gerar_manifesto_modelo_t4_2.py": "09e8d9af06bdcd2966b53f3d532d1bb73fdd0231801cdf4cb5c22b0781ca3869",
+    "particionamento_t4_2.py": "813480e410008b2fe76fd27b5deececaa38dd0cbab102931814772094ff512ab",
+    "pipeline_preparacao_t4_5.py": "3faaa126de86690f5d0e7e54391f97673a2dee7ff8889e06404471076e92a0b8",
+    "plotar_matriz_confusao_t6_2.py": "a393264354ec7d420784bfe58925abd83d05de059d4d61a3cd213dcca0976145",
+    "preparar_baseline_t5_2.py": "6591e9d36741f67bbe20531723e8ad403c6e6cecf38fbb883360a1ccc7486505",
+    "preprocessamento.py": "6a2eacb95cbbb0ceb21db5f70d9e178b2c0b844b070e2d4fac4c4a39d0131820",
+    "registro_experimentos_t5_5.py": "975d62cb5468d0ec93a8442eaf54139be64289bcbeba4084a16ddb1da619d64b",
+    "revisar_erros_t6_2.py": "9b436beb785a0f5c7d0909d31a3610db53bbd69a896fe9c6da00c4e6f9dac70b",
+    "rodadas_t5_6.py": "53febf205b7c48a1e34ab7d89cab0d48d13f6842919716aa573aa32fb61bb36b",
+    "selecao_t5_6.py": "be283ff85bb64278beae761b95946dfefabfb193fdb272728f28a85d66056b75",
+    "treinamento_t5_1.py": "d6252f05f8babda481da22204e41f931930d2d188f168edb573ccd1e628def32"
+  },
+  "sha256": {
+    "ambiente_treino.json": "522021e24273569b1afa7f718558bdc5dd0b3ffb9fcaadaa3ab179d773b1cccb",
+    "avaliacao_validacao.json": "93300711a2622edfccfffc28a0fd8376791eb4b02644c0abaa688ce8aeef10f9",
+    "classes.json": "1058619e188ffd7fa42bfc6821e2e122356b35d8503af71b987f37ae1e4572f4",
+    "configuracao_treino.json": "ca177cde5aff96e418cb045eb86320fb14afc5f7b85514f0da2f3bd54aa8a86f",
+    "conversao.json": "135873eecbb14d4e9784caa0f4e5fa7414aecb923378fee1443f3cd7666d37e1",
+    "historico.csv": "5db9244dff4191300c1a3d829383d59273d53e817e1dea38703868990e552064",
+    "modelo.keras": "089a8d903a78898badf385f0d57006a4fb556d76e3e8fae719babdaf564aa51a",
+    "modelo_fp32.tflite": "0b02b285e924f4577b1d4ad6084369f1f6fef14aea149ab818185d6fcf893569",
+    "modelo_int8.tflite": "07e787453ab3775473f15e5081b0e0f0b67b67e4394c13ecbbea01b69c1c90cd",
+    "registro_t5_5.csv": "0e97eb2aba4e7af606988d2a495af66e7eecc063e950c978300b55890381a3d8"
+  }
+}

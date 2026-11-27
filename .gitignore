@@ -1,0 +1,25 @@
+/.work/
+.claude/
+node_modules/
+.venv/
+venv/
+
+.env
+.env.*
+!.env.example
+!.env.sample
+
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+
+# Treinamento (T5.1)
+.venv-treino/
+runs/
+
+# Plano local da comparacao de backbones
+/CONTEXTO_TASK_BACKBONES.md
+
+# Arquivos locais de planejamento
+/entregas.md
+/PLANO_*.md

@@ -1,0 +1,9 @@
+node_modules/
+.work/
+.vite/
+dist/
+public/runtime/
+public/models/
+test-results/
+playwright-report/
+*.tsbuildinfo

@@ -1,0 +1,5 @@
+{
+  "status": "descartada",
+  "motivo_descarte": "não selecionada: F1 macro de validação inferior ou desempate declarado",
+  "origem": "nova rodada T5.6; hiperparâmetros fixos da T5.4; recorte dataset-only"
+}

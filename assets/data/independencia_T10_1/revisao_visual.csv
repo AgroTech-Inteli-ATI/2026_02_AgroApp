@@ -1,0 +1,46 @@
+image_id_1,image_id_2,resultado,justificativa
+IMG_00726,IMG_01962,sem_vinculo_confirmado,"Insetos com formatos e padrões diferentes sobre tecido. Colisão de pHash, inclusive com distância zero."
+IMG_01019,IMG_01874,duplicata_confirmada,"Mesma fotografia de vaquinha sobre pele. Pelos, posição das pernas e detalhes do fundo coincidem em versões de resolução/enquadramento diferentes."
+IMG_01128,IMG_01911,sem_vinculo_confirmado,"Poses, escala do inseto e textura do fundo diferentes. A semelhança visual não estabelece uma mesma captura ou sessão."
+IMG_00702,IMG_01552,sem_vinculo_confirmado,"Insetos e substratos distintos, parede clara e tecido rosado."
+IMG_00703,IMG_01344,sem_vinculo_confirmado,Insetos diferentes sobre piso rugoso e parede clara.
+IMG_00703,IMG_02072,sem_vinculo_confirmado,Insetos diferentes sobre piso rugoso e parede clara.
+IMG_00717,IMG_00991,sem_vinculo_confirmado,Insetos com formatos e padrões diferentes em fundo claro.
+IMG_00832,IMG_01127,sem_vinculo_confirmado,"Insetos com formatos e padrões diferentes, apesar do fundo claro."
+IMG_00832,IMG_01965,sem_vinculo_confirmado,"Insetos e substratos diferentes, parede e tecido."
+IMG_01037,IMG_02982,sem_vinculo_confirmado,Besouro e mariposa em enquadramentos e superfícies diferentes.
+IMG_01129,IMG_01911,sem_vinculo_confirmado,"Poses, escala e fundo diferentes. Relação de indivíduo ou sessão não comprovada."
+IMG_01752,IMG_01835,relacao_suspeita,"Inseto em posição semelhante sobre folhas com nervuras e enquadramento muito próximos. Forte suspeita de mesma cena/sequência, sem confirmar identidade da fotografia."
+IMG_01908,IMG_01911,sem_vinculo_confirmado,"Fundo de tecido rosado e superfície branca, com posições diferentes do inseto."
+IMG_01911,IMG_01973,sem_vinculo_confirmado,"Inseto em posições e escalas diferentes, sobre superfícies de texturas diferentes."
+IMG_00291,IMG_00980,sem_vinculo_confirmado,Insetos com padrões e corpos diferentes sobre parede e tecido.
+IMG_00702,IMG_00833,sem_vinculo_confirmado,"Posições, iluminação e enquadramentos diferentes. Mesma captura ou sessão não estabelecida."
+IMG_00702,IMG_01652,sem_vinculo_confirmado,"Insetos e superfícies distintos, parede clara e tecido."
+IMG_00703,IMG_01156,sem_vinculo_confirmado,Insetos de formatos diferentes sobre piso rugoso e parede.
+IMG_00717,IMG_01713,sem_vinculo_confirmado,Insetos com formatos e padrões diferentes em fundo claro.
+IMG_00832,IMG_01129,sem_vinculo_confirmado,"Insetos de formatos diferentes, apesar da composição de fundo claro."
+IMG_00832,IMG_01880,sem_vinculo_confirmado,"Insetos e substratos diferentes, parede e tecido."
+IMG_00832,IMG_01908,sem_vinculo_confirmado,"Insetos e substratos diferentes, parede e tecido rosado."
+IMG_01037,IMG_01704,sem_vinculo_confirmado,"Insetos com poses diferentes, sobre superfície branca e tecido."
+IMG_01085,IMG_01704,sem_vinculo_confirmado,"Insetos com poses diferentes, sobre superfície branca e tecido."
+IMG_01127,IMG_01708,sem_vinculo_confirmado,"Posições e padrões visíveis diferentes, assim como iluminação e textura do fundo."
+IMG_01127,IMG_03144,sem_vinculo_confirmado,Besouro em superfície clara e percevejo sobre pele.
+IMG_01128,IMG_01305,sem_vinculo_confirmado,"Inseto em superfície branca e em estrutura vegetal amarela, com poses diferentes."
+IMG_01128,IMG_01704,sem_vinculo_confirmado,"Insetos com poses diferentes, sobre superfície branca e tecido."
+IMG_01129,IMG_01880,sem_vinculo_confirmado,"Insetos com poses diferentes, sobre superfície branca e tecido."
+IMG_01156,IMG_01565,sem_vinculo_confirmado,"Posições, escala e enquadramentos diferentes. Sem identificação comum de sessão que estabeleça relação."
+IMG_01183,IMG_01708,sem_vinculo_confirmado,Posições e enquadramentos diferentes. Superfície clara semelhante não comprova identidade de captura ou sessão.
+IMG_01344,IMG_01565,sem_vinculo_confirmado,Posições e enquadramentos diferentes. Superfície clara semelhante não comprova identidade de captura ou sessão.
+IMG_01344,IMG_03268,sem_vinculo_confirmado,Besouro e percevejo com formatos diferentes em superfície clara.
+IMG_01502,IMG_01512,sem_vinculo_confirmado,"Fotos distintas com orientação, iluminação e sombras diferentes em tecido. Não há comprovação de mesma observação ou sessão."
+IMG_01565,IMG_02072,sem_vinculo_confirmado,"Fotos distintas com posição, orientação e escala diferentes sobre parede clara. Relação de sessão permanece não comprovada."
+IMG_01594,IMG_01930,sem_vinculo_confirmado,"Fotos distintas com orientação, iluminação e sombras diferentes em tecido. Não há comprovação de mesma observação ou sessão."
+IMG_01594,IMG_03268,sem_vinculo_confirmado,Besouro em tecido e percevejo em superfície lisa.
+IMG_01880,IMG_01908,sem_vinculo_confirmado,"Inseto em tecido claro e em tecido rosado, com posições diferentes."
+IMG_01880,IMG_01911,sem_vinculo_confirmado,"Inseto em tecido e em superfície lisa clara, com posições diferentes."
+IMG_02072,IMG_03268,sem_vinculo_confirmado,Besouro e percevejo com formatos diferentes em superfície clara.
+IMG_02365,IMG_02425,sem_vinculo_confirmado,Percevejo e mariposa em superfície clara.
+IMG_02365,IMG_03356,sem_vinculo_confirmado,Percevejo e mariposa em superfície clara.
+IMG_02433,IMG_02831,sem_vinculo_confirmado,"Mariposas com padrões de asas, iluminação e fundos diferentes. Mesma fotografia não confirmada."
+IMG_02610,IMG_02735,sem_vinculo_confirmado,"Mariposas com padrões, ângulos e texturas de fundo diferentes. Mesma fotografia não confirmada."
+IMG_02693,IMG_02831,sem_vinculo_confirmado,"Mariposas com padrões e fundos diferentes, dobras claras e tecido. Mesma fotografia não confirmada."

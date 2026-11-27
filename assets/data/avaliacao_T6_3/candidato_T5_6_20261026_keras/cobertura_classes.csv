@@ -1,0 +1,40 @@
+indice_classe,classe,particao,imagens,grupos_particao,imagens_field,imagens_agroinsect,observacoes_inat,field_Adult,field_Egg,field_Larva,field_Nymph,field_Pupa,field_sem_estagio
+0,Vaquinha (Diabrotica speciosa),treino,735,592,330,405,187,143,0,0,0,0,187
+0,Vaquinha (Diabrotica speciosa),validacao,157,127,73,84,43,35,0,0,0,0,38
+0,Vaquinha (Diabrotica speciosa),teste,157,127,73,84,43,23,0,0,0,0,50
+1,Cigarrinha-do-milho (Dalbulus maidis),treino,135,135,0,135,0,0,0,0,0,0,0
+1,Cigarrinha-do-milho (Dalbulus maidis),validacao,29,29,0,29,0,0,0,0,0,0,0
+1,Cigarrinha-do-milho (Dalbulus maidis),teste,29,29,0,29,0,0,0,0,0,0,0
+2,Percevejo-barriga-verde (Dichelops/Diceraeus),treino,198,189,12,186,3,0,0,0,0,0,12
+2,Percevejo-barriga-verde (Dichelops/Diceraeus),validacao,42,42,0,42,0,0,0,0,0,0,0
+2,Percevejo-barriga-verde (Dichelops/Diceraeus),teste,42,41,2,40,1,2,0,0,0,0,0
+3,Lagarta-do-cartucho (Spodoptera frugiperda),treino,285,250,56,229,21,41,0,4,0,0,11
+3,Lagarta-do-cartucho (Spodoptera frugiperda),validacao,61,54,11,50,4,11,0,0,0,0,0
+3,Lagarta-do-cartucho (Spodoptera frugiperda),teste,61,54,10,51,3,10,0,0,0,0,0
+4,Percevejo-marrom (Euschistus heros),treino,45,31,45,0,31,12,0,0,0,0,33
+4,Percevejo-marrom (Euschistus heros),validacao,10,7,10,0,7,1,0,0,0,0,9
+4,Percevejo-marrom (Euschistus heros),teste,10,8,10,0,8,2,0,0,0,0,8
+5,Percevejo-verde (Nezara viridula),treino,64,33,64,0,33,14,0,0,5,0,45
+5,Percevejo-verde (Nezara viridula),validacao,14,8,14,0,8,2,0,0,3,0,9
+5,Percevejo-verde (Nezara viridula),teste,14,8,14,0,8,4,0,0,0,0,10
+6,Percevejo-asa-preta (Edessa meditabunda),treino,53,18,53,0,18,27,0,0,0,0,26
+6,Percevejo-asa-preta (Edessa meditabunda),validacao,11,5,11,0,5,5,0,0,1,0,5
+6,Percevejo-asa-preta (Edessa meditabunda),teste,11,5,11,0,5,0,0,0,7,0,4
+7,Percevejo-do-milho (Leptoglossus zonatus),treino,55,21,55,0,21,28,0,0,0,0,27
+7,Percevejo-do-milho (Leptoglossus zonatus),validacao,12,6,12,0,6,4,0,0,0,0,8
+7,Percevejo-do-milho (Leptoglossus zonatus),teste,12,6,12,0,6,8,0,0,0,0,4
+8,Lagarta-falsa-medideira (Chrysodeixis includens),treino,55,26,55,0,26,48,0,0,0,0,7
+8,Lagarta-falsa-medideira (Chrysodeixis includens),validacao,12,7,12,0,7,9,0,1,0,0,2
+8,Lagarta-falsa-medideira (Chrysodeixis includens),teste,12,7,12,0,7,8,0,0,0,0,4
+9,Lagarta-da-soja (Anticarsia gemmatalis),treino,28,20,28,0,20,28,0,0,0,0,0
+9,Lagarta-da-soja (Anticarsia gemmatalis),validacao,7,6,7,0,6,6,0,0,0,0,1
+9,Lagarta-da-soja (Anticarsia gemmatalis),teste,6,5,6,0,5,5,0,0,0,0,1
+10,Lagarta-das-vagens (Spodoptera eridania e S. cosmioides),treino,110,45,110,0,45,39,0,39,0,8,24
+10,Lagarta-das-vagens (Spodoptera eridania e S. cosmioides),validacao,24,11,24,0,11,1,0,14,0,0,9
+10,Lagarta-das-vagens (Spodoptera eridania e S. cosmioides),teste,24,11,24,0,11,4,0,12,0,0,8
+11,Astylus variegatus,treino,332,182,332,0,182,88,0,0,0,0,244
+11,Astylus variegatus,validacao,71,39,71,0,39,19,0,0,0,0,52
+11,Astylus variegatus,teste,71,40,71,0,40,10,0,0,0,0,61
+12,Cigarrinha-das-pastagens (Deois flavopicta),treino,114,47,114,0,47,22,0,0,0,0,92
+12,Cigarrinha-das-pastagens (Deois flavopicta),validacao,24,10,24,0,10,3,0,0,0,0,21
+12,Cigarrinha-das-pastagens (Deois flavopicta),teste,24,11,24,0,11,10,0,0,0,0,14
