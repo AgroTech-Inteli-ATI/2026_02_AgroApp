@@ -245,4 +245,6 @@ Contato: agrotech@inteli.edu.br
 
 ## Uso e licença
 
-Este repositório não tem licença de código aberto. O código, os modelos e os metadados do acervo foram produzidos para o Agro App, e seu uso segue o acordo entre a AgroTech Inteli e o parceiro. As imagens de bases públicas mantêm as licenças de origem registradas na [ficha do dataset](docs/T14_1_Dataset_Final.md).
+O código e a documentação deste repositório estão sob a [licença MIT](LICENSE), com copyright da AgroTech Inteli. O Agro App, ou qualquer pessoa, pode usar, modificar e redistribuir o MVP, desde que mantenha o aviso de copyright e o texto da licença.
+
+A licença MIT não se aplica às imagens de bases públicas, que mantêm as licenças de origem registradas na [ficha do dataset](docs/T14_1_Dataset_Final.md). Antes de usar o acervo ou os modelos treinados com ele, confira essas licenças, principalmente se o uso for comercial.
